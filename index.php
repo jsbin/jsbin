@@ -11,6 +11,7 @@ body {
   font-size: 13px;
   min-width: 976px;
   overflow: hidden;
+  background: url(/images/jsbin-bg.png) repeat-x 0 -3px;
 }
 
 p {
@@ -18,8 +19,7 @@ p {
 }
 
 #control {
-  height: 70px;
-  background: url(/images/jsbin-bg.png) repeat-x 0 -3px;
+  height: 63px;
   position: relative;
   width: 100%;
 }
@@ -62,7 +62,7 @@ ul.flat li {
 }
 
 #control > *, a {
-  color: #EF812C;
+  color: #232323;
   text-shadow: #fff 1px 1px 1px;
 }
 
@@ -72,10 +72,7 @@ a {
 
 a:hover {
   text-shadow: #fff -1px -1px 3px;
-/*  top: 1px;
-  left: -1px;
-  position: relative;
-*/}
+}
 
 .light {
   font-weight: normal;
@@ -91,7 +88,7 @@ a:hover {
 }
 
 #bin {
-  top: 70px;
+  top: 64px;
   width: 100%;
 }
 

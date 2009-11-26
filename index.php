@@ -143,7 +143,7 @@ iframe.javascript {
     <p><a class="light" href="#">Revert</a> &mdash; <a class="light" href="#">New milestone</a></p>
   </div>
   <div class="starting">
-    <a class="light" href="#">Use this code as<br /> my starting point</a>
+    <a id="startingpoint" class="light" href="#">Use this code as<br /> my starting point</a>
   </div>
   <div class="help">
     <ul class="flat">
@@ -156,25 +156,10 @@ iframe.javascript {
 <div id="bin" class="stretch javascript">
   <div class="source binview stretch">
     <div class="code stretch javascript">
-      <textarea id="javascript">if (document.getElementById('hello')) {
-  document.getElementById('hello').innerHTML = 'Hello World - this was inserted using JavaScript';
-}</textarea>
+      <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">
-      <textarea id="html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;JS Bin Sandbox&lt;/title&gt;
-  &lt;style&gt;
-    body { font: 13px Helvetica, Arial; }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;Hello from JS Bin&lt;/p&gt;
-  &lt;p id=&quot;hello&quot;&gt;&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
+      <textarea id="html"></textarea>
     </div>
   </div>
   <div class="preview binview stretch">
@@ -182,10 +167,10 @@ iframe.javascript {
   </div>
 </div>
 <script src="js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
-<script src="/js/vendor/json2.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="/js/storage.js"></script>
 <script src="/js/editors.js"></script>
+<script src="/js/app.js"></script>
 </body>
 </html>
 

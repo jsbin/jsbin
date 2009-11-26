@@ -24,8 +24,13 @@ editors.javascript = CodeMirror.fromTextArea('javascript', {
 });
 
 function focused(event) {
+  console.log('focused ' + this.id);
   focusPanel = this.id;
-  // console.log('focused ' + this.id);
+  console.log('ok', this.id);
+  $('#bin').toggleClass('javascript', this.id == 'javascript');
+  $(editors['html'].win.document).find('body').removeClass('focus');
+  $(editors['javascript'].win.document).find('body').removeClass('focus');
+  $(this).find('body').addClass('focus');
 }
 
 function getFocusedPanel() {
@@ -37,18 +42,13 @@ function setupEditor(panel) {
   
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
-  e.win.document.id = 'html';
+  e.win.document.id = panel;
   $(e.win.document).bind('keydown', keycontrol);
-  $(e.win.document).bind('focus', focused);
+  $(e.win.document).focus(focused);
   
-  // populate
-  var data = sessionStorage.getItem(panel);
-  var saved = localStorage.getItem('saved-' + panel);
-  if (data) {
-    e.setCode(data);
-  } else if (saved) {
-    e.setCode(saved);
-  }
+  // console.log(panel, e.win.document);
+  
+  populateEditor(panel);
   
   if (sessionStorage.getItem('panel') == panel) {
     e.focus();
@@ -56,16 +56,25 @@ function setupEditor(panel) {
   }
 }
 
+function populateEditor(panel) {
+  // populate - should eventually use: session, saved data, local storage
+  var data = sessionStorage.getItem(panel);
+  var saved = localStorage.getItem('saved-' + panel);
+  if (data) {
+    editors[panel].setCode(data);
+  } else if (saved) {
+    editors[panel].setCode(saved);
+  }
+}
+
 function keycontrol(event) {
   if (event.ctrlKey == true && event.keyCode == 39 && this.id == 'javascript') {
     // go right
-    htmleditor.focus();
-    $('#bin').removeClass('javascript');
+    editors['html'].focus();
     return false;
   } else if (event.ctrlKey == true && event.keyCode == 37 && this.id == 'html') {
     // go left
-    jseditor.focus();
-    $('#bin').addClass('javascript');
+    editors['javascript'].focus();
     return false;
   }
 }

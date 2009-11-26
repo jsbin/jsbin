@@ -92,22 +92,27 @@ a:hover {
   width: 100%;
 }
 
+.html {
+  left: 50%;
+}
+
+#bin div.html {
+  margin-left: -2px;
+}
+
 #bin.javascript div.javascript,
 #bin div.html {
-/*  opacity: 1;
-  -moz-opacity: 1;
-  filter:alpha(opacity=1);
-*/}
+  border: 1px solid #0080FF;
+}
+
+#bin div.javascript {
+/*  border-right: 3px solid #0080FF;*/
+}
+
 
 #bin.javascript div.html,
 #bin div.javascript {
-/*  opacity: 0.7;
-  -moz-opacity: 0.7;
-  filter:alpha(opacity=70);
-*/}
-
-.html {
-  left: 50%;
+  border: 0;
 }
 
 .code {
@@ -130,17 +135,13 @@ a:hover {
   padding-right: 0;
   margin-left: 1px;
 }
-
-iframe.javascript {
-  border-right: 1px solid #ccc !important;
-}
 </style>
 </head>
 <body>
 <div id="control">
   <div class="control">
     <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a>
-    <p><a class="light" href="#">Revert</a> &mdash; <a class="light" href="#">New milestone</a></p>
+    <p><a class="light" id="revert" href="#">Revert</a> &mdash; <a class="light" href="#">New milestone</a></p>
   </div>
   <div class="starting">
     <a id="startingpoint" class="light" href="#">Use this code as<br /> my starting point</a>
@@ -153,7 +154,7 @@ iframe.javascript {
     </ul>
   </div>
 </div>
-<div id="bin" class="stretch javascript">
+<div id="bin" class="stretch">
   <div class="source binview stretch">
     <div class="code stretch javascript">
       <textarea id="javascript"></textarea>
@@ -167,6 +168,7 @@ iframe.javascript {
   </div>
 </div>
 <script src="js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
+<script src="js/vendor/json2.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="/js/storage.js"></script>
 <script src="/js/editors.js"></script>

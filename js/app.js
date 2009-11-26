@@ -6,6 +6,18 @@ $('#startingpoint').click(function () {
   return false;
 });
 
+$('#revert').click(function () {
+  sessionStorage.removeItem('javascript');
+  sessionStorage.removeItem('html');
+  
+  populateEditor('javascript');
+  populateEditor('html');
+  
+  editors.javascript.focus();
+  
+  return false;
+});
+
 // has to be first because we need to set first
 $(window).unload(function () {
   sessionStorage.setItem('javascript', editors.javascript.getCode());

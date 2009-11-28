@@ -92,34 +92,29 @@ a:hover {
   width: 100%;
 }
 
-.html {
+div.html {
   left: 50%;
 }
 
-#bin div.html {
+.mozilla #bin div.html {
   margin-left: -2px;
 }
 
-#bin.javascript div.javascript,
-#bin div.html {
+.mozilla #bin.javascript div.javascript,
+.mozilla #bin div.html {
   border: 1px solid #0080FF;
 }
-
-#bin div.javascript {
-/*  border-right: 3px solid #0080FF;*/
-}
-
 
 #bin.javascript div.html,
 #bin div.javascript {
   border: 0;
 }
 
-.code {
+div.code {
   width: 50%;
 }
 
-.preview {
+div.preview {
   display: none;
   width: 100%;
 }
@@ -135,11 +130,65 @@ a:hover {
   padding-right: 0;
   margin-left: 1px;
 }
+
+iframe.javascript {
+  border-right: 1px solid #ccc !important;
+}
+
+.mozilla iframe.javascript {
+  border-right: 0 !important;
+}
+
+.buttons {
+  float: left;
+  display: block;
+  margin-right: 10px;
+}
+
+body.preview #source,
+body.source #preview {
+  display: none;
+}
+
+body.preview #preview,
+body.source #source {
+  display: block;
+}
+
+a.button {
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  height: 12px;
+  line-height: 12px;
+  padding: 10px;
+  display: block;
+  float: left;
+  text-decoration: none;
+  margin: 0px 5px;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+body.source a.source,
+body.preview a.preview {
+  background: #000;
+  background: rgba(0, 0, 0, 0.25);
+  text-shadow: none;
+  border: 1px solid #ccc;
+  -moz-box-shadow: #fff 0px 0px 5px;
+  -webkit-box-shadow: #fff 0px 0px 5px;
+}
 </style>
 </head>
-<body>
+<body class="source">
 <div id="control">
   <div class="control">
+    <div class="buttons">
+      <a class="button source" href="#source">Code</a>
+      <a class="button preview" href="#preview">Preview</a>
+    </div>
     <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a>
     <p><a class="light" id="revert" href="#">Revert</a> &mdash; <a class="light" href="#">New milestone</a></p>
   </div>
@@ -155,7 +204,7 @@ a:hover {
   </div>
 </div>
 <div id="bin" class="stretch">
-  <div class="source binview stretch">
+  <div id="source" class="binview stretch">
     <div class="code stretch javascript">
       <textarea id="javascript"></textarea>
     </div>
@@ -163,13 +212,13 @@ a:hover {
       <textarea id="html"></textarea>
     </div>
   </div>
-  <div class="preview binview stretch">
+  <div id="preview" class="binview stretch">
     
   </div>
 </div>
 <script src="js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
 <script src="js/vendor/json2.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="js/vendor/jquery-1.3.2.min.js"></script>
 <script src="/js/storage.js"></script>
 <script src="/js/editors.js"></script>
 <script src="/js/app.js"></script>

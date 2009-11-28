@@ -96,7 +96,7 @@ div.html {
   left: 50%;
 }
 
-.mozilla #bin div.html {
+/*.mozilla #bin div.html {
   margin-left: -2px;
 }
 
@@ -109,7 +109,7 @@ div.html {
 #bin div.javascript {
   border: 0;
 }
-
+*/
 div.code {
   width: 50%;
 }
@@ -117,10 +117,6 @@ div.code {
 div.preview {
   display: none;
   width: 100%;
-}
-
-.codeframe {
-/*  top: 40px;*/
 }
 
 .code p {
@@ -133,10 +129,6 @@ div.preview {
 
 iframe.javascript {
   border-right: 1px solid #ccc !important;
-}
-
-.mozilla iframe.javascript {
-  border-right: 0 !important;
 }
 
 .buttons {

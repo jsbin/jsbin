@@ -18,6 +18,10 @@ $('#revert').click(function () {
   return false;
 });
 
+$('#control .button').click(function () {
+  $('body').removeAttr('class').addClass(this.hash.substr(1));
+});
+
 // has to be first because we need to set first
 $(window).unload(function () {
   sessionStorage.setItem('javascript', editors.javascript.getCode());

@@ -24,9 +24,7 @@ editors.javascript = CodeMirror.fromTextArea('javascript', {
 });
 
 function focused(event) {
-  console.log('focused ' + this.id);
   focusPanel = this.id;
-  console.log('ok', this.id);
   $('#bin').toggleClass('javascript', this.id == 'javascript');
   $(editors['html'].win.document).find('body').removeClass('focus');
   $(editors['javascript'].win.document).find('body').removeClass('focus');

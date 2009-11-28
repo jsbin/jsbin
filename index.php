@@ -13,7 +13,7 @@
       <a class="button preview" accesskey="2" href="#preview">Preview</a>
     </div>
     <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a>
-    <p><a class="light" id="revert" href="#">Revert</a> &mdash; <a class="light" href="#">New milestone</a></p>
+    <p><a class="light" id="revert" href="#">Revert</a> &mdash; <a class="light" href="#">New revision</a></p>
   </div>
   <div class="starting">
     <a id="startingpoint" class="light" href="#">Use this code as<br /> my starting point</a>

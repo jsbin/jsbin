@@ -29,7 +29,7 @@
 <div id="bin" class="stretch">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
-      <div class="label">JavaScript</div>
+      <div class="label"><p>JavaScript</p></div>
       <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">

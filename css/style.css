@@ -218,3 +218,7 @@ body.preview #preview,
 body.source #source {
   display: block;
 }
+
+body.preview #source select {
+  display: none;
+}

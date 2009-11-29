@@ -29,9 +29,23 @@
 <div id="bin" class="stretch">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
+      <div class="label">JavaScript</div>
       <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">
+      <div class="label">
+        <p>HTML</p>
+        <label for="library">Include</label>
+        <select id="library">
+          <option value="">None</option>
+          <option value="jquery">jQuery</option>
+          <option value="jquery+jqueryui">jQuery UI</option>
+          <option value="yui">YUI</option>
+          <option value="protoype">Prototype</option>
+          <option value="protoype+scriptalicious">Prototype + Scriptalicious</option>
+          <option value="mootools">Mootools</option>
+        </select>
+      </div>
       <textarea id="html"></textarea>
     </div>
   </div>

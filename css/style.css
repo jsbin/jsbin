@@ -5,7 +5,7 @@ body {
   font-size: 13px;
   min-width: 976px;
   overflow: hidden;
-  background: url(/images/jsbin-bg.png) repeat-x 0 -3px;
+  background: url(/images/jsbin-bg.gif) repeat-x top left;
 }
 
 p {
@@ -26,6 +26,11 @@ p {
 
 .control, .starting {
   width: 30%;
+}
+
+.control {
+  padding-right: 0;
+  width: 33%;
 }
 
 .starting {
@@ -113,12 +118,23 @@ div.preview {
   width: 100%;
 }
 
-.code p {
-  font-weight: bold;
-  background: #fff;
+.code .label {
   padding: 10px;
+  margin: 0 10px;
   padding-right: 0;
   margin-left: 1px;
+  position: absolute;
+  z-index: 10;
+}
+
+.code .label p {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#library {
+  padding: 2px;
+  width: 100px;
 }
 
 iframe.javascript {

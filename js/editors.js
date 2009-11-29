@@ -44,7 +44,16 @@ function setupEditor(panel) {
   $(e.win.document).bind('keydown', keycontrol);
   $(e.win.document).focus(focused);
   
-  // console.log(panel, e.win.document);
+  var $label = $('.code.' + panel + ' > .label');
+  $(e.win.document).bind('scroll', function (event) {
+    if (this.body.scrollTop > 0) {
+      $label.stop().animate({ opacity: 0 }, 50, function () {
+        $(this).hide();
+      });
+    } else {
+      $label.show().stop().animate({ opacity: 1 }, 250);
+    }
+  });
   
   populateEditor(panel);
   
@@ -66,13 +75,21 @@ function populateEditor(panel) {
 }
 
 function keycontrol(event) {
-  if (event.ctrlKey == true && event.keyCode == 39 && this.id == 'javascript') {
+  var ctrl = event.ctrlKey == true;
+  
+  if (ctrl && event.keyCode == 39 && this.id == 'javascript') {
     // go right
     editors['html'].focus();
     return false;
-  } else if (event.ctrlKey == true && event.keyCode == 37 && this.id == 'html') {
+  } else if (ctrl && event.keyCode == 37 && this.id == 'html') {
     // go left
     editors['javascript'].focus();
     return false;
+  } else if (ctrl && event.keyCode == 49) { // 49 == 1 key
+    $('#control a.source').click();
+  } else if (ctrl && event.keyCode == 50) {
+    $('#control a.preview').click();
   }
+  
+  return true;
 }

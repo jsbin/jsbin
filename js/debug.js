@@ -14,6 +14,8 @@ var _console = (function () {
       el.style.bottom = '0';
       el.style.left = '0';
       el.style.width = '100%';
+      el.style.maxHeight = '150px';
+      el.style.overflowY = 'auto';
 
       body.appendChild(el);      
       holding = el;

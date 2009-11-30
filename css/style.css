@@ -38,7 +38,7 @@ p {
 }
 
 .help {
-  width: 300px;
+  width: 250px;
   text-align: right;
   float: right;
 }
@@ -302,7 +302,12 @@ body.preview #source select {
 
 #revert {
   display: none;
-  opacity: 0;
-  -moz-opacity: 0;
-  filter:alpha(opacity=0);
+}
+
+#revert:after {
+  content: ' &mdash; ';
+}
+
+#newRevision {
+  display: none;
 }

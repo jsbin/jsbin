@@ -173,8 +173,6 @@ function renderPreview() {
     source = source.replace(/<\/body>/, "<script src=\"/js/debug.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {_console.error(e)}\n</script>\n</body>");
   }
   
-  
-  
   win.open();
   
   if (debug) {

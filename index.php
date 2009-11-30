@@ -6,6 +6,29 @@
 <link rel="stylesheet" href="/css/style.css" type="text/css" />
 </head>
 <body class="source">
+<div id="intro">
+  <div class="lightbox">
+    <div>
+      <h1>Collaborative JavaScript Debugging</h1>
+      <ol class="intro">
+        <li>Test live JavaScript with HTML and CSS context</li>
+        <li>Public URLs render outside of JS Bin</li>
+        <li>Inject major JavaScript libraries</li>
+        <li>Debug remote Ajax calls</li>
+      </ol>
+      
+      <ul class="keyboardShortcuts">
+        <li><strong>Keyboard Shortcuts:</strong></li>
+        <li><code>ctrl + 1</code> View source</li>
+        <li><code>ctrl + 2</code> View preview</li>
+        <li><code>ctrl + &larr;</code> Focus JavaScript</li>
+        <li><code>ctrl + &rarr;</code> Focus HTML</li>
+      </ul>
+
+      <p class="screencasts">Screencasts: <a href="/about#video">About</a> - <a href="/about#ajax">Ajax debugging</a></p>
+    </div>
+  </div>
+</div>
 <div id="control">
   <div class="control">
     <div class="buttons">
@@ -37,13 +60,15 @@
         <p>HTML</p>
         <label for="library">Include</label>
         <select id="library">
-          <option value="">None</option>
+          <option value="none">None</option>
           <option value="jquery">jQuery</option>
           <option value="jquery+jqueryui">jQuery UI</option>
           <option value="yui">YUI</option>
-          <option value="protoype">Prototype</option>
-          <option value="protoype+scriptalicious">Prototype + Scriptalicious</option>
+          <option value="prototype">Prototype</option>
+          <option value="prototype+scriptaculous">Prototype + Scriptalicious</option>
           <option value="mootools">Mootools</option>
+          <option value="dojo">Dojo</option>
+          <option value="ext">Ext js</option>
         </select>
       </div>
       <textarea id="html"></textarea>

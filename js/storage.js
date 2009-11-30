@@ -21,3 +21,8 @@ if (!window.sessionStorage) {
     };
   })();
 }
+
+if (!window.localStorage) {
+  // dirty, but will do for our purposes
+  window.localStorage = window.sessionStorage;
+}

@@ -128,6 +128,7 @@ div.preview {
 }
 
 .code .label p {
+/*  display: inline;*/
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -221,4 +222,87 @@ body.source #source {
 
 body.preview #source select {
   display: none;
+}
+
+.overlay {
+  z-index: 98;
+  background: #000;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+#intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: url(/images/op7.png) repeat;
+  display: none;
+}
+
+#intro .lightbox {
+  background: #ccc;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  color: #000;
+  padding: 10px;
+  width: 600px;
+  margin: 100px auto;
+  position: relative;
+}
+
+#intro .lightbox div {
+  background: #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;  
+  border: 1px solid #fff;
+  padding: 20px;
+}
+
+#intro h1 {
+  margin: 0 0 22px 0;
+}
+
+#intro ul,
+#intro ol {
+  padding-left: 10px;
+  margin: 0;
+}
+
+#intro ul {
+  list-style: none;
+}
+
+#intro ul li {
+  margin-left: 0;
+}
+
+#intro li {
+  margin: 20px;
+  font-size: 120%;
+}
+
+#intro .intro, #intro .keyboardShortcuts {
+  float: left;
+  width: 48%;
+}
+
+#intro .keyboardShortcuts {
+  border-left: 1px dashed #ccc;
+}
+
+#intro .screencasts {
+  text-align: center;
+  font-size: 130%;
+  padding: 20px 0 0 0;
+  clear: left;
+  border-top: 1px solid #ccc;
+}
+
+#revert {
+  display: none;
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:alpha(opacity=0);
 }

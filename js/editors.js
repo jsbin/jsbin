@@ -46,7 +46,7 @@ function setupEditor(panel) {
   
   var $label = $('.code.' + panel + ' > .label');
   $(e.win.document).bind('scroll', function (event) {
-    if (this.body.scrollTop > 0) {
+    if (this.body.scrollTop > 10) {
       $label.stop().animate({ opacity: 0 }, 50, function () {
         $(this).hide();
       });

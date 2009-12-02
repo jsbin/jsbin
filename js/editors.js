@@ -3,8 +3,8 @@ var editors = {};
 
 editors.html = CodeMirror.fromTextArea('html', {
   parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
-  stylesheet: ["css/xmlcolors.css", "css/jscolors.css", "css/csscolors.css", "css/htmlcodeframe.css"],
-  path: 'js/vendor/codemirror/',
+  stylesheet: ["/css/xmlcolors.css", "/css/jscolors.css", "/css/csscolors.css", "/css/htmlcodeframe.css"],
+  path: '/js/vendor/codemirror/',
   tabMode: 'shift',
   iframeClass: 'stretch codeframe',
   initCallback: function () {
@@ -14,8 +14,8 @@ editors.html = CodeMirror.fromTextArea('html', {
 
 editors.javascript = CodeMirror.fromTextArea('javascript', {
   parserfile: ["tokenizejavascript.js", "parsejavascript.js"],
-  stylesheet: ["css/jscolors.css", "css/codeframe.css"],
-  path: 'js/vendor/codemirror/',
+  stylesheet: ["/css/jscolors.css", "/css/codeframe.css"],
+  path: '/js/vendor/codemirror/',
   iframeClass: 'stretch codeframe javascript',
   tabMode: 'shift',
   initCallback: function () {

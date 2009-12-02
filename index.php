@@ -1,3 +1,4 @@
+<?php include('app.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
       <a class="button preview" accesskey="2" href="#preview">Preview</a>
     </div>
     <!-- <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a> -->
-    <a href="http://jsbin.com/create">Create public link</a>
+    <a id="save" href="http://jsbin.com/create">Create public link</a>
     <p><a class="light" id="revert" href="#">Revert</a> <a id="newRevision" class="light" href="#">New revision</a></p>
   </div>
   <div class="starting">
@@ -79,26 +80,11 @@
     <iframe class="stretch"></iframe>
   </div>
 </div>
-<script src="js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
-<script src="js/vendor/json2.js" type="text/javascript"></script>
-<script src="js/vendor/jquery-1.3.2.min.js"></script>
+<script src="/js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
+<script src="/js/vendor/json2.js" type="text/javascript"></script>
+<script src="/js/vendor/jquery-1.3.2.min.js"></script>
 <script src="/js/storage.js"></script>
 <script src="/js/editors.js"></script>
 <script src="/js/app.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

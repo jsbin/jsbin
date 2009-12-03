@@ -130,7 +130,10 @@ div.preview {
 .code .label p {
 /*  display: inline;*/
   font-weight: bold;
-  margin-bottom: 10px;
+}
+
+.code .label label {
+  margin-top: 10px;
 }
 
 #library {

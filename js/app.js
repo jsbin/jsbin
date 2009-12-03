@@ -46,7 +46,7 @@ var libraries = {
   }
 };
 
-  
+
 $('#startingpoint').click(function () {
   if (localStorage) {
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
@@ -161,8 +161,8 @@ function renderPreview() {
       js = editors.javascript.getCode();
       
   // redirect JS console logged to our custom log while debugging
-  if (useConsole && /console/.test(js)) {
-    js = js.replace(/console/g, '_console');
+  if (useConsole && /(^|[^.])console/.test(js)) {
+    js = js.replace(/(^|[^.])console/g, '_console');
   }
   
   if (!$.trim(source)) {

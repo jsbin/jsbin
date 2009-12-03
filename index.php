@@ -80,6 +80,26 @@
     <iframe class="stretch"></iframe>
   </div>
 </div>
+<?php 
+// construct the correct query string, if we're injecting the html or JS
+$qs = '';
+if (isset($_GET['js']) || isset($_GET['html'])) {
+  $qs .= '?';
+}
+
+if (@$_GET['js']) {
+  $qs .= 'js=' . rawurlencode($_GET['js']);
+  
+  if (@$_GET['html']) {
+    $qs .= '&amp;';
+  }
+}
+
+if (@$_GET['html']) {
+  $qs .= 'html=' . rawurlencode($_GET['html']);
+}
+?>
+<script src="<?=$code_id ? '/' . $code_id : '' ?>/source/<?=$qs?>"></script>
 <script src="/js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
 <script src="/js/vendor/json2.js" type="text/javascript"></script>
 <script src="/js/vendor/jquery-1.3.2.min.js"></script>

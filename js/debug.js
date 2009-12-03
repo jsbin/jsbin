@@ -53,6 +53,8 @@ var _console = (function () {
       } else {
         line = e.line;
       }
+      
+      var oline = line;
     
       // Firefox counts 1 less
       // Safari counts 3 less
@@ -61,6 +63,7 @@ var _console = (function () {
         sourceEl = body;
         line++;
       } else if (/webkit/.test(ua)) {
+        // if the error is on the last line it confuses the debugger... :(
         sourceEl = document.getElementsByTagName('html')[0];
         line -= 4;
       } else {
@@ -69,7 +72,7 @@ var _console = (function () {
       }
     
       if (line) {
-        el.innerHTML += '<br />Caused by line: <code>' + sourceEl.innerHTML.split(/\n/)[line] + '</code>';
+        el.innerHTML += '<br />Caused by line (' + oline + '/' + line + '): <code>' + sourceEl.innerHTML.split(/\n/)[line] + '</code>';
       }
     
       // body.appendChild(el);

@@ -36,7 +36,8 @@ function getFocusedPanel() {
 }
 
 function setupEditor(panel) {
-  var e = editors[panel];
+  var e = editors[panel], 
+      focusedPanel = sessionStorage.getItem('panel');
   
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
@@ -57,7 +58,7 @@ function setupEditor(panel) {
   
   populateEditor(panel);
   
-  if (sessionStorage.getItem('panel') == panel) {
+  if (focusedPanel == panel || focusedPanel == null && panel == 'javascript') {
     e.focus();
     e.selectLines(e.nthLine(sessionStorage.getItem('line')), sessionStorage.getItem('character'));
   }
@@ -67,10 +68,12 @@ function populateEditor(panel) {
   // populate - should eventually use: session, saved data, local storage
   var data = sessionStorage.getItem(panel);
   var saved = localStorage.getItem('saved-' + panel);
-  if (data) {
+  if (data) { // try to restore the session first
     editors[panel].setCode(data);
-  } else if (saved) {
+  } else if (saved) { // then their saved preference
     editors[panel].setCode(saved);
+  } else { // otherwise fall back on the JS Bin default
+    editors[panel].setCode(template[panel]);
   }
 }
 

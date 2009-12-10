@@ -123,6 +123,24 @@ $('#library').bind('change', function () {
   editors.html.selectLines(editors.html.nthLine(state.line), state.character);
 });
 
+var $bin = $('#bin');
+$('div.label p').click(function () {
+  var speed = 500;
+  if ($bin.is('.html-only')) {
+    // only the html tab could have been clicked
+    $bin.find('.html').animate({ left: '50%', width: '50%' }, speed);
+    $bin.find('.javascript').show().animate({ left: '0%' }, speed, function () {
+      $bin.removeClass('html-only');
+    });
+  } else {
+    $bin.find('.html').animate({ left: '00%', width: '100%' }, speed);
+    $bin.find('.javascript').animate({ left: '-50%' }, speed, function () { 
+      $(this).hide();
+      $bin.addClass('html-only');
+    });
+  }
+});
+
 // $(document).bind('online', function () {
 //   console.log("we're online");
 // }).bind('offline', function () {

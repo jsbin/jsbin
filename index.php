@@ -54,12 +54,12 @@
 <div id="bin" class="stretch">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
-      <div class="label"><p>JavaScript</p></div>
+      <div class="label"><p>JavaScript<span>&larr;</span></p></div>
       <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">
       <div class="label">
-        <p>HTML</p>
+        <p>HTML<span>&rarr;</span></p>
         <label for="library">Include</label>
         <select id="library">
           <option value="none">None</option>

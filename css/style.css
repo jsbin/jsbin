@@ -130,10 +130,31 @@ div.preview {
 .code .label p {
 /*  display: inline;*/
   font-weight: bold;
+  cursor: pointer;
 }
 
 .code .label label {
   margin-top: 10px;
+}
+
+.code .label p span {
+  opacity: 0;
+  filter:alpha(opacity=0);
+  -webkit-transition: opacity 250ms linear;
+  -moz-transition: opacity 250ms linear;
+}
+
+.html .label p span {
+  display: none;
+}
+
+.html-only .html .label p span {
+  display: inline;
+}
+
+.code .label p:hover span {
+  opacity: 1;
+  filter:alpha(opacity=1);
 }
 
 #library {

@@ -131,15 +131,25 @@ $('div.label p').click(function () {
     $bin.find('.html').animate({ left: '50%', width: '50%' }, speed);
     $bin.find('.javascript').show().animate({ left: '0%' }, speed, function () {
       $bin.removeClass('html-only');
+      if (localStorage) {
+        localStorage.removeItem('html-only');
+      }
     });
   } else {
     $bin.find('.html').animate({ left: '00%', width: '100%' }, speed);
     $bin.find('.javascript').animate({ left: '-50%' }, speed, function () { 
       $(this).hide();
       $bin.addClass('html-only');
+      // we're not reading 'true', only that it's been set
+      localStorage.setItem('html-only', 'true');
     });
   }
 });
+
+/* Boot code */
+if (localStorage && localStorage.getItem('html-only')) {
+  $bin.addClass('html-only');
+}
 
 // $(document).bind('online', function () {
 //   console.log("we're online");
@@ -158,6 +168,7 @@ $(window).unload(function () {
   sessionStorage.setItem('character', editors[panel].cursorPosition().character);    
 });
 
+// hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {
   setInterval(function () {
     sessionStorage.setItem('javascript', editors.javascript.getCode());

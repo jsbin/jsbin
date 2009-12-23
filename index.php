@@ -38,10 +38,10 @@
     </div>
     <!-- <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a> -->
     <a id="save" href="http://jsbin.com/create">Create public link</a>
-    <p><a class="light" id="revert" href="#">Revert</a> <a id="newRevision" class="light" href="#">New revision</a></p>
+    <p><a class="light" id="revert" href="#">Revert</a><span id="revision"> &mdash; <a id="newRevision" class="light" href="#">New revision</a></span></p>
   </div>
   <div class="starting">
-    <a id="startingpoint" class="light" href="#">Use this code as<br /> my starting point</a>
+    <a id="startingpoint" class="light" href="#">Use as my template</a>
   </div>
   <div class="help">
     <ul class="flat">

@@ -13,7 +13,7 @@ p {
 }
 
 #control {
-  height: 63px;
+  height: 61px;
   position: relative;
   width: 100%;
 }
@@ -41,6 +41,10 @@ p {
   width: 250px;
   text-align: right;
   float: right;
+}
+
+.starting, .help {
+  line-height: 32px;
 }
 
 ul.flat {
@@ -87,7 +91,7 @@ a:hover {
 }
 
 #bin {
-  top: 64px;
+  top: 62px;
   width: 100%;
 }
 
@@ -325,15 +329,19 @@ body.preview #source select {
 }
 
 #revert {
-  display: none;
+/*  display: none;*/
 }
 
 #revert:after {
-  content: ' &mdash; ';
+/*  content: ' \U2014 ';*/
+}
+
+#revision {
+  display: none;
 }
 
 #newRevision {
-  display: none;
+/*  display: none;*/
 }
 
 .html-only div.javascript {

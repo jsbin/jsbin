@@ -26,8 +26,8 @@ editors.javascript = CodeMirror.fromTextArea('javascript', {
 function focused(event) {
   focusPanel = this.id;
   $('#bin').toggleClass('javascript', this.id == 'javascript');
-  $(editors['html'].win.document).find('body').removeClass('focus');
-  $(editors['javascript'].win.document).find('body').removeClass('focus');
+  $(editors.html.win.document).find('body').removeClass('focus');
+  $(editors.javascript.win.document).find('body').removeClass('focus');
   $(this).find('body').addClass('focus');
 }
 
@@ -82,16 +82,21 @@ function keycontrol(event) {
   
   if (ctrl && event.keyCode == 39 && this.id == 'javascript') {
     // go right
-    editors['html'].focus();
+    editors.html.focus();
     return false;
   } else if (ctrl && event.keyCode == 37 && this.id == 'html') {
     // go left
-    editors['javascript'].focus();
+    editors.javascript.focus();
     return false;
   } else if (ctrl && event.keyCode == 49) { // 49 == 1 key
     $('#control a.source').click();
   } else if (ctrl && event.keyCode == 50) {
     $('#control a.preview').click();
+  }
+  
+  // sends message to the document saying that a key has been pressed, we'll ignore the control keys
+  if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.keyCode] ) {
+    $(document).trigger('codeChange');
   }
   
   return true;

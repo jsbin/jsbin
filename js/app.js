@@ -65,6 +65,8 @@ $('#revert').click(function () {
   editors.javascript.focus();
   $('#library').val('none');
 
+  $(document).trigger('codeChange', [ true ]);
+
   return false;
 });
 
@@ -75,6 +77,19 @@ $('#control .button').click(function (event) {
   if ($(this).is('.preview')) {
     renderPreview();
   } 
+});
+
+$(document).bind('codeChange', function (event, revert) {
+  if (revert == undefined) revert = false;
+  
+  if (!revert && !/\*$/.test(document.title)) {
+    if (/debug/i.test(document.title)) {
+      document.title = 'JS Bin - [unsaved]';
+    }
+    document.title += '*';
+  } else if (revert && /\*$/.test(document.title)) {
+    document.title = document.title.replace(/\*$/, '');
+  }
 });
 
 $('#library').bind('change', function () {
@@ -124,24 +139,28 @@ $('#library').bind('change', function () {
 });
 
 var $bin = $('#bin');
+
 $('div.label p').click(function () {
   var speed = 500;
   if ($bin.is('.html-only')) {
     // only the html tab could have been clicked
-    $bin.find('.html').animate({ left: '50%', width: '50%' }, speed);
-    $bin.find('.javascript').show().animate({ left: '0%' }, speed, function () {
+    $bin.find('div.html').animate({ left: '50%', width: '50%' }, speed);
+    $bin.find('div.javascript').show().animate({ left: '0%' }, speed, function () {
       $bin.removeClass('html-only');
-      if (localStorage) {
-        localStorage.removeItem('html-only');
-      }
+      localStorage && localStorage.removeItem('html-only');
     });
   } else {
-    $bin.find('.html').animate({ left: '00%', width: '100%' }, speed);
-    $bin.find('.javascript').animate({ left: '-50%' }, speed, function () { 
+    $bin.find('div.html').animate({ left: '00%', width: '100%' }, speed);
+    $bin.find('div.javascript').animate({ left: '-50%' }, speed, function () { 
       $(this).hide();
       $bin.addClass('html-only');
-      // we're not reading 'true', only that it's been set
-      localStorage.setItem('html-only', 'true');
+      // makes me sad, but we have to put this in a try/catch because Safari
+      // sometimes throws an error when using localStorage, then jQuery goes
+      // in to an infinite loop if an animation callback throws an exeception!
+      try {
+        // we're not reading 'true', only that it's been set
+        localStorage && localStorage.setItem('html-only', 'true');        
+      } catch (e) {}
     });
   }
 });
@@ -151,7 +170,7 @@ if (localStorage && localStorage.getItem('html-only')) {
   $bin.addClass('html-only');
 }
 
-// $(document).bind('online', function () {
+// $(window).bind('online', function () {
 //   console.log("we're online");
 // }).bind('offline', function () {
 //   console.log("we're offline");
@@ -217,18 +236,3 @@ function renderPreview() {
 }  
 
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

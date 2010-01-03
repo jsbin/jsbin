@@ -1,8 +1,10 @@
 <?php
+include('config.php'); // contains DB
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']))));
 $action = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
+$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
 
 // doesn't require a connection when we're landing for the first time
 if ($action) {
@@ -32,20 +34,14 @@ if (!$action) {
   
 }
 
-if (!$edit_mode) {
+if (!$edit_mode || $ajax) {
   exit;
 }
 
 function connect() {
   // sniff, and if on my mac...
-  if (is_dir('/Users/')) {
-    $link = mysql_connect('localhost', 'root', '');    
-  } else {
-    $link = mysql_connect('localhost', 'todged', 't0dg3d');
-  }
-  
-  // TODO rename the database, todge is a legacy name
-  mysql_select_db('todged', $link);
+  $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);    
+  mysql_select_db(DB_NAME, $link);
 }
 
 // returns the app loaded with json html + js content

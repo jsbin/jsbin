@@ -1,50 +1,51 @@
 (function () {
 
-var googleajaxapi = 'http://ajax.googleapis.com/ajax/libs/';
-var libraries = {
-  yui : {
+var debug = true,
+  googleajaxapi = 'http://ajax.googleapis.com/ajax/libs/',
+  libraries = {
+    yui : {
       version : '2.7.0',
       host : googleajaxapi + 'yui',
       file : 'build/yuiloader/yuiloader-min.js'
-  },
-  mootools : {
+    },
+    mootools : {
       version : '1.2.3',
       host : googleajaxapi + 'mootools',
       file : 'mootools-yui-compressed.js'
-  },
-  prototype : {
+    },
+    prototype : {
       version : '1.6.0.3',
       host : googleajaxapi + 'prototype',
       file : 'prototype.js'
-  },
-  jquery : {
+    },
+    jquery : {
       version : '1.3.2',
       host : googleajaxapi + 'jquery',
       file : 'jquery.min.js'
-  },
-  jqueryui : {
+    },
+    jqueryui : {
       version : '1.7.2',
       host : googleajaxapi + 'jqueryui',
       file : 'jquery-ui.min.js',
       extra : '<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />'
-  },
-  scriptaculous : {
+    },
+    scriptaculous : {
       version : '1.8.2', 
       host : googleajaxapi + 'scriptaculous',
       file : 'scriptaculous.js'
-  },
-  dojo : {
+    },
+    dojo : {
       version : '1.3.0',
       host : googleajaxapi + 'dojo',
       file : 'dojo/dojo.xd.js'
-  },
-  ext : {
+    },
+    ext : {
       version: '3.0.0',
       host : googleajaxapi + 'ext-core',
       file : 'ext-core.js',
       extra : '<link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css" />'
-  }
-};
+    }
+  };
 
 
 $('#startingpoint').click(function () {
@@ -125,7 +126,10 @@ $('#library').bind('change', function () {
     };
 
     sources = this.value.split(/\+/);
-    for (i = 0; i < sources.length; i++) {
+    i = sources.length;
+    
+    // need to go in reverse because we're prepending the scripts, i.e. first library should be prepended first
+    while (i--) {
       code = code.replace('<head', "<head>\n<" + 'script src="' + [libraries[sources[i]].host, libraries[sources[i]].version, libraries[sources[i]].file].join('/') + '"><' + '/script');
       if (libraries[sources[i]].extra) {
         code = code.replace('<head>', "<head>\n" + libraries[sources[i]].extra);
@@ -204,21 +208,26 @@ function renderPreview() {
   var doc = $('#preview iframe')[0], 
       win = doc.contentDocument || doc.contentWindow.document,
       source = editors.html.getCode(),
-      debug = false,
       useConsole = true;
+      parts = [],
       js = editors.javascript.getCode();
-      
+   
   // redirect JS console logged to our custom log while debugging
   if (useConsole && /(^|[^.])console/.test(js)) {
     js = js.replace(/(^|[^.])console/g, '_console');
   }
-  
+
+  // note that I'm using split and reconcat instead of replace, because if the js var
+  // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
+  // gets around the problem.
   if (!$.trim(source)) {
     source = "<pre>\n" + js + "</pre>";
   } else if (/%code%/.test(source)) {
-    source = source.replace(/%code%/, js);
-  } else { // insert before the body close tag
-    source = source.replace(/<\/body>/, "<script src=\"/js/debug.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {_console.error(e)}\n</script>\n</body>");
+    parts = source.split('%code%');
+    source = parts[0] + js + parts[1];
+  } else {
+    parts = source.split('</body>');
+    source = parts[0] + "<script src=\"/js/debug.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {_console.error(e)}\n</script>\n</body>" + parts[1];
   }
   
   win.open();

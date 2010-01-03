@@ -1,6 +1,6 @@
 (function () {
 
-var debug = true,
+var debug = false,
   googleajaxapi = 'http://ajax.googleapis.com/ajax/libs/',
   libraries = {
     yui : {

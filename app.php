@@ -1,5 +1,5 @@
 <?php
-include('config.php'); // contains DB
+include('config.php'); // contains DB & important versioning
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']))));
 $action = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php

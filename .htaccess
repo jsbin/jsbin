@@ -9,7 +9,16 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.jsbin\.com$ [NC]
 RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
-# if the file or directory don't exist
+# following two versions controlled through config.php
+# rule to allow dynamic versioning of our code when live and hit a sprocketized script
+RewriteRule js/[\d\.]+/(.*)\.js js/$2.js [QSA]
+
+# role a sprocket for offline and debug
+RewriteRule js/debug/.*\.js$ sprocketize.php [QSA]
+RewriteRule \.js$ sprocketize.php [QSA]
+# RewriteRule \.css$ lib/sprocketize.php [QSA]
+
+# if the file or directory exists
 RewriteCond %{REQUEST_FILENAME} -d [OR]
 RewriteCond %{REQUEST_FILENAME} -f
 RewriteRule .* - [L]

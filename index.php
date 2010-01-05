@@ -100,11 +100,7 @@ if (@$_GET['html']) {
 }
 ?>
 <script src="<?=$code_id ? '/' . $code_id : '' ?>/source/<?=$qs?>"></script>
-<script src="/js/vendor/codemirror/codemirror.js" type="text/javascript"></script>
-<script src="/js/vendor/json2.js" type="text/javascript"></script>
-<script src="/js/vendor/jquery-1.3.2.min.js"></script>
-<script src="/js/storage.js"></script>
-<script src="/js/editors.js"></script>
-<script src="/js/app.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js"></script>
+<script src="/js/<?=VERSION?>/jsbin.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ function renderPreview() {
     source = parts[0] + js + parts[1];
   } else {
     parts = source.split('</body>');
-    source = parts[0] + "<script src=\"/js/console.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {_console.error(e)}\n</script>\n</body>" + parts[1];
+    source = parts[0] + "<script src=\"/js/render/console.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {_console.error(e)}\n</script>\n</body>" + parts[1];
   }
   
   win.open();

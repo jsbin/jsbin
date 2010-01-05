@@ -1,5 +1,11 @@
 # JS Bin
 
+## Build Process
+
+JS Bin is currently designed to work offline in development mode and online in production mode - which should trigger automatically.
+
+This is controlled through the config.php and the `jsbin.js` file that is pulled in.  When offline, this file is generated on the fly through a php version of Sprockets (tweaked by me to support multiple base paths).  The production version will be pre-built, via Sprockets & Google's closure compiler.
+
 ## Collaborative JavaScript Debugging
 
 * Test live JavaScript with HTML and CSS context

@@ -11,11 +11,11 @@ RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
 # following two versions controlled through config.php
 # rule to allow dynamic versioning of our code when live and hit a sprocketized script
-RewriteRule js/[\d\.]+/(.*)\.js js/$2.js [QSA]
+RewriteRule js/[\d\.]+/(.*)\.js js/$1.js [QSA]
 
 # role a sprocket for offline and debug
 RewriteRule js/debug/.*\.js$ sprocketize.php [QSA]
-RewriteRule \.js$ sprocketize.php [QSA]
+# RewriteRule \.js$ sprocketize.php [QSA]
 # RewriteRule \.css$ lib/sprocketize.php [QSA]
 
 # if the file or directory exists

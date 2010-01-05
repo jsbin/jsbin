@@ -67,7 +67,7 @@
           <option value="jquery+jqueryui">jQuery UI</option>
           <option value="yui">YUI</option>
           <option value="prototype">Prototype</option>
-          <option value="prototype+scriptaculous">Prototype + Scriptalicious</option>
+          <option value="prototype+scriptaculous">Scriptaculous</option>
           <option value="mootools">Mootools</option>
           <option value="dojo">Dojo</option>
           <option value="ext">Ext js</option>

@@ -1,3 +1,5 @@
+//= require <codemirror>
+//= require "libraries"
 var focusPanel = 'javascript';
 var editors = {};
 

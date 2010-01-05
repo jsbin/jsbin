@@ -1,3 +1,6 @@
+// I would like to lazy load json2, but I'm worried we're trying to access
+// JSON very early in the code
+//= require <json2>
 if (!window.sessionStorage) {
   window.sessionStorage = (function () {
     var data = window.top.name ? JSON.parse(window.top.name) : {};

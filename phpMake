@@ -2,7 +2,7 @@
 require('config.php');
 
 define('SPROCKETIZED', './js/tmp.' . VERSION . '.js');
-define('PRODUCTION', './js/jsbin.' . VERSION . '.js');
+define('PRODUCTION', './js/jsbin-' . VERSION . '.js');
 
 // sprocketize the code in to _jsbin.VERSION.js
 require_once('lib/sprockets/sprocket.php');

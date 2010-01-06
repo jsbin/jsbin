@@ -1,6 +1,6 @@
 <?php 
 require_once('config.php');
-require_once('sprockets/sprocket.php');
+require_once('lib/sprockets/sprocket.php');
  
 // get path from request
 $filePath = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);

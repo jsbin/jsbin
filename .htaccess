@@ -11,7 +11,7 @@ RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
 # following two versions controlled through config.php
 # rule to allow dynamic versioning of our code when live and hit a sprocketized script
-RewriteRule js/[\d\.]+/(.*)\.js js/$1.js [QSA]
+RewriteRule js/([0-9\.]+)/(.*)\.js js/$2-$1.js [QSA]
 
 # role a sprocket for offline and debug
 RewriteRule js/debug/.*\.js$ sprocketize.php [QSA]

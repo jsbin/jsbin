@@ -27,8 +27,8 @@ if (localStorage && localStorage.getItem('html-only')) {
 }
 
 // if a gist has been requested, lazy load the gist library and plug it in
-if (/gist\/\d+/.test(window.location.pathname)) {
-  window.editors = editors;
+if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {
+  window.editors = editors; // needs to be global when the callback triggers to set the content
   $.getScript('/js/chrome/gist.js', function () {
     var gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
   });

@@ -43,6 +43,10 @@ p {
   float: right;
 }
 
+.help a {
+  outline: 0;
+}
+
 .starting, .help {
   line-height: 32px;
 }
@@ -352,4 +356,64 @@ body.preview #source select {
 .html-only div.html {
   left: 0%;
   width: 100%;
+}
+
+/* lightbox */
+.lightboxWrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;  
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
+}
+
+.overlay {
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+  filter:alpha(opacity=50);
+  background: #fff;
+}
+
+.lightbox {
+  position: relative;
+  width: 600px;
+  z-index: 12;
+  border: 10px solid #ccc;
+  margin: 0 auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  -moz-box-shadow: #666 0px 0px 5px;
+  -webkit-box-shadow: #666 0px 0px 5px;
+  box-shadow: #666 0px 0px 5px;
+  top: 75px;
+  width: 80%;
+  max-height: 65%;
+}
+
+.lightbox h1 {
+  margin-top: 0;
+  background: #000;
+  padding: 20px;
+  color: #fff;
+  position: relative;
+/*  width: 100%;*/
+}
+
+.lightbox p,
+.lightbox h2 {
+  margin: 14px 20px;
+}
+  
+.lightbox p {
+  font-size: 16px;
 }

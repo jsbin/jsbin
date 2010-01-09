@@ -11,9 +11,9 @@ var Gist = function (id) {
     });
     gist.code = code.join("\n");
     
-    var type = $('.gist-meta a:first', win.body).attr('href').substr(-2) == 'js' ? 'javascript' : 'html';
+    gist.type = $('.gist-meta a:first', win.body).attr('href').substr(-2) == 'js' ? 'javascript' : 'html';
     
-    editors[type].setCode(gist.code);
+    editors[gist.type].setCode(gist.code);
     iframe.remove();
   });
   win.open();

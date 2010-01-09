@@ -7,7 +7,7 @@ var debug = false,
     unload = function () {
       sessionStorage.setItem('javascript', editors.javascript.getCode());
       sessionStorage.setItem('html', editors.html.getCode());
-
+      
       var panel = getFocusedPanel();
       sessionStorage.setItem('panel', panel);
       sessionStorage.setItem('line', editors[panel].currentLine());
@@ -30,7 +30,7 @@ if (localStorage && localStorage.getItem('html-only')) {
 if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {
   window.editors = editors; // needs to be global when the callback triggers to set the content
   $.getScript('/js/chrome/gist.js', function () {
-    var gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
+    window.gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
   });
 }
 

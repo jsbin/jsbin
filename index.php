@@ -45,9 +45,9 @@
   </div>
   <div class="help">
     <ul class="flat">
-      <li><a href="#">About</a></li>
+      <li><a href="/about">About</a></li>
       <li><a href="#">Ajax Debugging</a></li>
-      <li><a href="#">Help</a></li>      
+      <li><a href="/faq">Help</a></li>      
     </ul>
   </div>
 </div>

@@ -2,7 +2,6 @@
 //= require "libraries"
 var focusPanel = 'javascript';
 var editors = {};
-
 editors.html = CodeMirror.fromTextArea('html', {
   parserfile: ["parsexml.js", "parsecss.js", "tokenizejavascript.js", "parsejavascript.js", "parsehtmlmixed.js"],
   stylesheet: ["/css/xmlcolors.css", "/css/jscolors.css", "/css/csscolors.css", "/css/htmlcodeframe.css"],

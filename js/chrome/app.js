@@ -26,6 +26,14 @@ if (localStorage && localStorage.getItem('html-only')) {
   $bin.addClass('html-only');
 }
 
+// if a gist has been requested, lazy load the gist library and plug it in
+if (/gist\/\d+/.test(window.location.pathname)) {
+  window.editors = editors;
+  $.getScript('/js/chrome/gist.js', function () {
+    var gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
+  });
+}
+
 $(document).bind('codeChange', function (event, revert) {
   if (revert == undefined) revert = false;
   

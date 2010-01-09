@@ -82,7 +82,7 @@ function getCode($code_id) {
   }
 }
 
-function defaultCode() {
+function defaultCode($not_found = false) {
   $library = '';
   
   if (@$_GET['html']) {

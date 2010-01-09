@@ -17,6 +17,6 @@ var Gist = function (id) {
     iframe.remove();
   });
   win.open();
-  win.write('<' + 'script src="http://gist.github.com/' + id + '.js"><'+'/script>');
+  win.write('<script src="http://gist.github.com/' + id + '.js"></script>');
   win.close();
 };

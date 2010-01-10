@@ -105,14 +105,8 @@ function getCode($code_id) {
     $sql = 'update sandbox set last_viewed=now() where id=' . $row->id;
     mysql_query($sql);
     
-    if (!get_magic_quotes_gpc()) {
-      // escape in - frankly: fucking stupid.
-      $javascript = str_replace('\\', '\\\\', $row->javascript);
-      $html = str_replace('\\', '\\\\', $row->html);
-    } else {
-      $javascript = $row->javascript;
-      $html = $row->html;
-    }
+    $javascript = $row->javascript;
+    $html = $row->html;
     
     return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
   }

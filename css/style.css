@@ -332,22 +332,6 @@ body.preview #source select {
   border-top: 1px solid #ccc;
 }
 
-#revert {
-/*  display: none;*/
-}
-
-#revert:after {
-/*  content: ' \U2014 ';*/
-}
-
-#revision {
-  display: none;
-}
-
-#newRevision {
-/*  display: none;*/
-}
-
 .html-only div.javascript {
   left: -50%;
   display: none;

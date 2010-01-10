@@ -8,7 +8,7 @@ $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
 
 // doesn't require a connection when we're landing for the first time
 if ($action) {
-  // connect();
+  connect();
 }
 
 if (!$action) {

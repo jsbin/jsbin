@@ -151,8 +151,8 @@ function defaultCode($not_found = false) {
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <style>
-  article, aside, dialog, figure, footer, header,
-  hgroup, menu, nav, section { display: block; }
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
 </style>
 </head>
 <body>

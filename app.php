@@ -67,7 +67,30 @@ if (!$action) {
   
   
 } else if ($action) { // this should be an id
+  $code_id = $action;
+  list($html, $javascript) = getCode($code_id);
   
+  if (stripos($html, '%code%') === false) {
+    $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
+  }
+  
+  $html = preg_replace("/%code%/", $javascript, $html);
+  $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
+  
+  if (!$ajax) {
+    $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
+  }
+  
+  if (!$html && !$ajax) {
+    $javascript = "/*\n  Created using http://jsbin.com\n  Source can be edit via http://jsbin.com/$code_id/edit\n*/\n\n" . $javascript;
+  }
+  
+  if (!$html) {
+    header("Content-type: text/javascript");
+  }
+
+  echo $html ? $html : $javascript;
+  $edit_mode = false;
 }
 
 if (!$edit_mode || $ajax) {
@@ -193,5 +216,19 @@ function generateURL() {
 
 	return $word;
 }
+
+function googleAnalytics() {
+  return <<<HERE_DOC
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-1656750-13");
+pageTracker._trackPageview();
+</script>
+HERE_DOC;
+}
+
 
 ?>

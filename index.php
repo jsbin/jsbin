@@ -82,7 +82,7 @@
   <div id="preview" class="binview stretch">
     <iframe class="stretch"></iframe>
   </div>
-  <form action="/save"></form>
+  <form method="post" action="/save"></form>
 </div>
 <?php 
 // construct the correct query string, if we're injecting the html or JS

@@ -29,6 +29,42 @@ if (!$action) {
   $code_id = array_pop($request);
   
 } else if ($action == 'save') {
+  $code_id = generateCodeId();
+  $javascript = @$_POST['javascript'];
+  $html = @$_POST['html'];
+  
+  $sql = 'select url from sandbox where javascript="' . mysql_real_escape_string($javascript) . '" and html="' . mysql_real_escape_string($html) . '"';
+  $results = mysql_query($sql);
+
+  if (mysql_num_rows($results)) {
+    $row = mysql_fetch_object($results);
+    $code_id = $row->url;
+  } else {
+    $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url) values ("%s", "%s", now(), now(), "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id));
+    mysql_query($sql);
+  }
+  
+  if ($ajax) {
+    // supports plugins making use of JS Bin via ajax calls and callbacks
+    if (@$_REQUEST['callback']) {
+      echo $_REQUEST['callback'] . '("';
+    }
+    $url = 'http://jsbin.com/' . $code_id;
+    if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
+      echo $url;          
+    } else {
+      echo '{ "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit" }';
+    }
+    
+    if ($_REQUEST['callback']) {
+      echo '")';
+    }
+  } else {
+    // code was saved, so lets do a location redirect to the newly saved code
+    $edit_mode = false;
+    header('Location: /' . $code_id . '/edit');
+  }
+  
   
 } else if ($action) { // this should be an id
   

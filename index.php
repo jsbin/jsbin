@@ -36,9 +36,12 @@
       <a class="button source" accesskey="1" href="#source">Code</a>
       <a class="button preview" accesskey="2" href="#preview">Preview</a>
     </div>
-    <!-- <a href="http://jsbin.com/ebabu">http://jsbin.com/ebabu</a> -->
-    <a id="save" href="http://jsbin.com/create">Create public link</a>
-    <p><a class="light" id="revert" href="#">Revert</a><span id="revision"> &mdash; <a id="newRevision" class="light" href="#">New revision</a></span></p>
+    <?php if ($code_id) : ?>
+    <a href="http://jsbin.com/<?=$code_id?>">http://jsbin.com/<?=$code_id?></a>
+    <?php else : ?>
+    <a id="save" href="/create">Create public link</a>
+    <?php endif ?>
+    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &mdash; <a id="newRevision" class="light" href="#">New revision</a></span><?php endif ?></p>
   </div>
   <div class="starting">
     <a id="startingpoint" class="light" href="#">Use as my template</a>

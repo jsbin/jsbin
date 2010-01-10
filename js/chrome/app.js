@@ -1,6 +1,7 @@
 //= require "storage"
 //= require "events"
 //= require "navigation"
+//= require "save"
 
 var debug = false,
     $bin = $('#bin'),

@@ -93,7 +93,6 @@ if (!$action) {
   $edit_mode = false;
 }
 
-mysql_close();
 if (!$edit_mode || $ajax) {
   exit;
 }

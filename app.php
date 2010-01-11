@@ -24,7 +24,8 @@ if (!$action) {
     list($html, $javascript) = defaultCode();
   }
   
-  echo 'var template = ' . json_encode(array('html' => $html, 'javascript' => $javascript)) . ';';
+  // echo 'var template = ' . json_encode(array('html' => $html, 'javascript' => $javascript)) . ';';
+  echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';
 } else if ($action == 'edit') {
   $code_id = array_pop($request);
   
@@ -101,6 +102,11 @@ function connect() {
   // sniff, and if on my mac...
   $link = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);    
   mysql_select_db(DB_NAME, $link);
+}
+
+function encode($s) {
+  static $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
+  return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $s) . '"';
 }
 
 // returns the app loaded with json html + js content

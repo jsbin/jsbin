@@ -2,6 +2,7 @@
 include('config.php'); // contains DB & important versioning
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']))));
 $action = array_pop($request);
+$subaction = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
@@ -13,6 +14,8 @@ if ($action) {
 
 if (!$action) {
   // do nothing and serve up the page
+} else if ($subaction == 'gist') {
+  // do nothing - the JavaScript will handle loading this bad boy in
 } else if ($action == 'source' || $action == 'js') {
   header('Content-type: text/javascript');
   $code_id = array_pop($request);

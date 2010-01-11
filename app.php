@@ -24,7 +24,6 @@ if (!$action) {
     list($html, $javascript) = defaultCode();
   }
   
-  // echo 'var template = ' . json_encode(array('html' => $html, 'javascript' => $javascript)) . ';';
   echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';
 } else if ($action == 'edit') {
   $code_id = array_pop($request);

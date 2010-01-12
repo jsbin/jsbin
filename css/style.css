@@ -401,3 +401,12 @@ body.preview #source select {
 .lightbox p {
   font-size: 16px;
 }
+
+.video {
+  padding-left: 20px;
+  background: url(/images/play.gif) no-repeat center left;
+}
+
+#startingpoint {
+  outline: 0;
+}

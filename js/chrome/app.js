@@ -15,6 +15,12 @@ var debug = false,
       sessionStorage.setItem('character', editors[panel].cursorPosition().character);    
     };
 
+// if the user linked directly to #html, initially hide the JS panel
+if (window.location.hash == '#html') {
+  document.getElementById('bin').className += ' html-only';
+}
+
+
 $(window).unload(unload);
 
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer

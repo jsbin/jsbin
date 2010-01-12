@@ -79,6 +79,8 @@ if (!$action) {
   
   $html = preg_replace("/%code%/", $javascript, $html);
   $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
+  $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+  
   
   if (!$ajax) {
     $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
@@ -139,7 +141,8 @@ function getCode($code_id) {
     $javascript = $row->javascript;
     $html = $row->html;
     
-    return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
+    // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
+    return array(get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, $row->streaming, $row->active_tab, $row->active_cursor);
   }
 }
 

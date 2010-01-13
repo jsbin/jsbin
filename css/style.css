@@ -398,8 +398,13 @@ body.preview #source select {
   margin: 14px 20px;
 }
   
-.lightbox p {
+.lightbox p,
+.lightbox li {
   font-size: 16px;
+}
+
+.lightbox li {
+  margin: 8px 0;
 }
 
 .video {

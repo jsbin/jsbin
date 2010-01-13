@@ -50,7 +50,7 @@
     <ul class="flat">
       <li><a class="video" href="/about">About</a></li>
       <li><a class="video" href="#">Ajax Debugging</a></li>
-      <li><a href="/faq">Help</a></li>      
+      <li><a href="/help">Help</a></li>      
     </ul>
   </div>
 </div>

@@ -427,5 +427,7 @@ body.preview #source select {
 }
 
 textarea {
-  visibility: hidden;
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:alpha(opacity=0);
 }

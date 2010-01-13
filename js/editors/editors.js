@@ -99,6 +99,4 @@ function keycontrol(event) {
   if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.keyCode] ) {
     $(document).trigger('codeChange');
   }
-  
-  return true;
 }

@@ -403,10 +403,24 @@ body.preview #source select {
 }
 
 .video {
-  padding-left: 20px;
-  background: url(/images/play.gif) no-repeat center left;
+  padding-left: 18px;
+  background: url(/images/icons.gif) no-repeat 0 -20px;
+}
+
+.save {
+  padding-left: 14px;
+  background: url(/images/icons.gif) no-repeat 0 4px;  
+}
+
+#revert {
+  padding-left: 14px;
+  background: url(/images/icons.gif) no-repeat 0 -39px;  
 }
 
 #startingpoint {
   outline: 0;
+}
+
+textarea {
+  visibility: hidden;
 }

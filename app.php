@@ -24,7 +24,11 @@ if (!$action) {
     list($html, $javascript) = defaultCode();
   }
   
-  echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';
+  if ($action == 'js') {
+    echo $javascript;
+  } else {
+    echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
+  }
 } else if ($action == 'edit') {
   $code_id = array_pop($request);
   

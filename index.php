@@ -39,9 +39,9 @@
     <?php if ($code_id) : ?>
     <a href="http://jsbin.com/<?=$code_id?>">http://jsbin.com/<?=$code_id?></a>
     <?php else : ?>
-    <a id="save" href="/save">Create public link</a>
+    <a id="save" class="save" href="/save">Create public link</a>
     <?php endif ?>
-    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &mdash; <a id="newRevision" class="light" href="/save">New revision</a></span><?php endif ?></p>
+    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &mdash; <a id="newRevision" class="light save" href="/save">New revision</a></span><?php endif ?></p>
   </div>
   <div class="starting">
     <a id="startingpoint" class="light" href="#"><span>Use as my template</span></a>

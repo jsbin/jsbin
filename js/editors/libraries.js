@@ -16,7 +16,7 @@ var googleajaxapi = 'http://ajax.googleapis.com/ajax/libs/',
         file : 'prototype.js'
       },
       jquery : {
-        version : '1.3.2',
+        version : '1.4.0',
         host : googleajaxapi + 'jquery',
         file : 'jquery.min.js'
       },

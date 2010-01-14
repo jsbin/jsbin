@@ -1,94 +1,108 @@
-var googleajaxapi = 'http://ajax.googleapis.com/ajax/libs/',
-    libraries = {
-      yui : {
-        version : '2.7.0',
-        host : googleajaxapi + 'yui',
-        file : 'build/yuiloader/yuiloader-min.js'
-      },
-      mootools : {
-        version : '1.2.3',
-        host : googleajaxapi + 'mootools',
-        file : 'mootools-yui-compressed.js'
-      },
-      prototype : {
-        version : '1.6.0.3',
-        host : googleajaxapi + 'prototype',
-        file : 'prototype.js'
-      },
-      jquery : {
-        version : '1.4.0',
-        host : googleajaxapi + 'jquery',
-        file : 'jquery.min.js'
-      },
-      jqueryui : {
-        version : '1.7.2',
-        host : googleajaxapi + 'jqueryui',
-        file : 'jquery-ui.min.js',
-        extra : '<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />'
-      },
-      scriptaculous : {
-        version : '1.8.2', 
-        host : googleajaxapi + 'scriptaculous',
-        file : 'scriptaculous.js'
-      },
-      dojo : {
-        version : '1.3.0',
-        host : googleajaxapi + 'dojo',
-        file : 'dojo/dojo.xd.js'
-      },
-      ext : {
-        version: '3.0.0',
-        host : googleajaxapi + 'ext-core',
-        file : 'ext-core.js',
-        extra : '<link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css" />'
-      }
-    };
+//= require "../chrome/storage"
 
-$('#library').bind('change', function () {
-  var sources = [],
-      state = {},
-      re,
-      i,
-      code = editors.html.getCode();
+var push = Array.prototype.push;
 
-  // strip existing libraries out
-  code = code.replace(/(<script.*src=".*".*><\/script>)\n?/g, function (s, m) {
-    if (m.match(/googleapis/i)) {
-      return '';
-    } else if (m.match(/yahooapis/i)) {
-      return '';
-    } else if (m.match(/jquery\-ui\.googlecode/i)) {
-      return '';
-    } else {
-      return s;
-    }
-  });
+var Libraries = function () {
+  this.init();
 
-  for (i in libraries) {
-    re = new RegExp('\s+' + libraries[i].extra);
-    code = code.replace(re, ''); 
+  this.userSpecified = JSON.parse(localStorage.getItem('libraries')) || [];
+  
+  // read from storage
+  for (i = 0; i < this.userSpecified.length; i++) {
+    push.call(this, this.userSpecified[i]);
   }
+};
 
-  if (this.value != 'none') {
-    // to restore
-    state = {
-      line: editors.html.currentLine(),
-      character: editors.html.cursorPosition().character
-    };
-
-    sources = this.value.split(/\+/);
-    i = sources.length;
-
-    // need to go in reverse because we're prepending the scripts, i.e. first library should be prepended first
-    while (i--) {
-      code = code.replace('<head', "<head>\n<" + 'script src="' + [libraries[sources[i]].host, libraries[sources[i]].version, libraries[sources[i]].file].join('/') + '"><' + '/script');
-      if (libraries[sources[i]].extra) {
-        code = code.replace('<head>', "<head>\n" + libraries[sources[i]].extra);
-      }
+Libraries.prototype.init = function () {
+  var libs = {
+    yui: {
+      text: 'YUI',
+      scripts: [
+        { text: 'YUI 2.7.0', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/yuiloader/yuiloader-min.js' },
+        { text: 'YUI 2.8.0r4', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/yuiloader/yuiloader-min.js'}
+      ]
+    },
+    mootools: {
+      text: 'MooTools',
+      scripts: [
+        { text: 'Mootools 1.2.4', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js' },
+        { text: 'Mootools 1.2.3', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.3/mootools-yui-compressed.js'}
+      ]
+    },
+    prototype: {
+      text: 'Prototype',
+      scripts: [
+        { text: 'Prototype latest', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js' },
+        { text: 'Prototype 1.6.1.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' },
+        { text: 'Prototype 1.6.0.3', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.3/prototype.js'}
+      ]
+    },
+    jquery: {
+      text: 'jQuery',
+      scripts: [
+        { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
+        { text: 'jQuery 1.4.0', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js' },
+        { text: 'jQuery 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' },
+        { text: 'jQuery 1.2.6', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' }
+      ]
+    },
+    jqueryui : {
+      text: 'jQuery UI',
+      requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
+      style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css',
+      scripts: [
+        { text: 'jQuery UI 1.7.2', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' }
+        // { text: 'jQuery UI 1.6', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.6/jquery-ui.min.js' }
+      ]
+    },
+    scriptaculous: {
+      text: 'script.aculo.us',
+      requires: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
+      scripts: [
+        { text: 'script.aculo.us 1.8.3', url: 'http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js' }
+      ]
+    },
+    dojo : {
+      text: 'Dojo',
+      scripts: [
+        { text: 'Dojo 1.4.0', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojo/dojo.xd.js' },
+        { text: 'Dojo 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.3.2/dojo/dojo.xd.js' }
+      ]
+    },
+    ext : {
+      text: 'Ext Core',
+      style: 'http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css',
+      scripts: [
+        { text: 'Ext Core 3.1', url: 'http://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js' }
+      ]
     }
+  },
+  order = 'jquery jqueryui prototype scriptaculous yui mootools dojo ext'.split(' '),
+  i = 0;
+  
+  this.length = 0; // triggers support for length prop
+  for (i = 0; i < order.length; i++) {
+    push.call(this, libs[order[i]]);
   }
+};
 
-  editors.html.setCode(code);
-  editors.html.focus();
-  editors.html.selectLines(editors.html.nthLine(state.line), state.character);
-});
+Libraries.prototype.add = function (lib) {
+  // save to localStorage
+  this.userSpecified.push(lib);
+  try {
+    localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
+  } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
+  push.call(this, lib);
+  $('#library').trigger('init');
+};
+
+Libraries.prototype.clear = function () {
+  this.userSpecified = [];
+  localStorage.removeItem('libraries');
+  this.init();
+  $('#library').trigger('init');
+};
+
+// OO based to all me to fiddle the object to resemble an array
+var libraries = new Libraries();
+window.libraries = libraries; // expose a command line API

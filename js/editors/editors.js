@@ -1,5 +1,5 @@
 //= require <codemirror>
-//= require "libraries"
+//= require "library"
 var focusPanel = 'javascript';
 var editors = {};
 editors.html = CodeMirror.fromTextArea('html', {

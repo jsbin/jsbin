@@ -19,7 +19,9 @@ var debug = false,
 // if the user linked directly to #html, initially hide the JS panel
 if (window.location.hash == '#html') {
   document.getElementById('bin').className += ' html-only';
-}
+} // else if (window.location.hash == '#output' || window.location.hash == '#preview') {
+//   document.body.className = 'preview';
+// }
 
 
 $(window).unload(unload);
@@ -64,7 +66,7 @@ $(document).bind('codeChange', function (event, revert) {
 });
 
 $('div.label p').click(function () {
-  var speed = 500;
+  var speed = 150;
   if ($bin.is('.html-only')) {
     // only the html tab could have been clicked
     $bin.find('div.html').animate({ left: '50%', width: '50%' }, speed);

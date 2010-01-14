@@ -1,5 +1,6 @@
 //= require "../chrome/storage"
 
+// shortcut method
 var push = Array.prototype.push;
 
 var Libraries = function () {

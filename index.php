@@ -104,7 +104,7 @@ if (@$_GET['html']) {
 }
 ?>
 <script src="<?=$code_id ? '/' . $code_id : '' ?>/source/<?=$qs?>"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 </body>
 </html>

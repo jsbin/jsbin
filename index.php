@@ -7,29 +7,6 @@
 <link rel="stylesheet" href="/css/style.css" type="text/css" />
 </head>
 <body class="source">
-<div id="intro">
-  <div class="lightbox">
-    <div>
-      <h1>Collaborative JavaScript Debugging</h1>
-      <ol class="intro">
-        <li>Test live JavaScript with HTML and CSS context</li>
-        <li>Public URLs render outside of JS Bin</li>
-        <li>Inject major JavaScript libraries</li>
-        <li>Debug remote Ajax calls</li>
-      </ol>
-      
-      <ul class="keyboardShortcuts">
-        <li><strong>Keyboard Shortcuts:</strong></li>
-        <li><code>ctrl + 1</code> View source</li>
-        <li><code>ctrl + 2</code> View preview</li>
-        <li><code>ctrl + &larr;</code> Focus JavaScript</li>
-        <li><code>ctrl + &rarr;</code> Focus HTML</li>
-      </ul>
-
-      <p class="screencasts">Screencasts: <a href="/about#video">About</a> - <a href="/about#ajax">Ajax debugging</a></p>
-    </div>
-  </div>
-</div>
 <div id="control">
   <div class="control">
     <div class="buttons">
@@ -41,6 +18,7 @@
     <?php else : ?>
     <a id="save" class="save" href="/save">Create public link</a>
     <?php endif ?>
+    <a class="light" id="info" href="/info">&nbsp;</a>
     <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &mdash; <a id="newRevision" class="light save" href="/save">New revision</a></span><?php endif ?></p>
   </div>
   <div class="starting">

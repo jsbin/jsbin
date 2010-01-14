@@ -5,6 +5,7 @@
 
 var debug = false,
     $bin = $('#bin'),
+    loadGist,
     unload = function () {
       sessionStorage.setItem('javascript', editors.javascript.getCode());
       sessionStorage.setItem('html', editors.html.getCode());
@@ -36,9 +37,17 @@ if (localStorage && localStorage.getItem('html-only')) {
 // if a gist has been requested, lazy load the gist library and plug it in
 if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {
   window.editors = editors; // needs to be global when the callback triggers to set the content
-  $.getScript('/js/chrome/gist.js', function () {
-    window.gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
-  });
+  loadGist = function () {
+    $.getScript('/js/chrome/gist.js', function () {
+      window.gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
+    });
+  };
+  
+  if (editors.ready) {
+    loadGist();
+  } else {
+    editors.onReady = loadGist;
+  }
 }
 
 $(document).bind('codeChange', function (event, revert) {

@@ -64,7 +64,7 @@ $('#control div.help a').click(function (event) {
         // console.log(arguments);
       },
       complete: function (res) {
-        var content = $('<div />').append(res.responseText.replace(/<script(.|\s)*?\/script>/g, "")).find('#content').html();
+        var content = $('<div />').append(res.responseText.replace(/<script(.|\s)*?\/script>/g, "")).find('#content').html();        
         var lightbox = new Lightbox(content, 100).show();
       }
     });

@@ -8,78 +8,90 @@
   <div id="content">
     <h1 id="help">Help</h1>
 
-    <h2 id="tips">Tips</h2>
+    <div>
+      <h2 id="tips">Tips</h2>
+      <ul>
+      <li>Click on the HTML or JavaScript labels to hide the JavaScript panel (this is stored to your preferences).</li>
+      <li>To only show the HTML panel use #html on the end of the url, such as <a href="http://jsbin.com/#html">http://jsbin.com/#html</a></li>
+      <li>&#8220;Use as my template&#8221; stores the current code as the default code you see when you open a new JS Bin window.</li>
+      <li>Refreshing the window will not lose your changes.</li>
+      <li>Use <code>console.log</code> to display debug information. If Firebug is present, then the logging goes there, otherwise it will show in a custom console window.</li>
+      <li>To view only the JavaScript append <code>/js</code> to the url, i.e. http://jsbin.com/ujayi/js</li>
+      </ul>
+      
+    </div>
 
-    <ul>
-    <li>Click on the HTML or JavaScript labels to hide the JavaScript panel (this is stored to your preferences).</li>
-    <li>To only show the HTML panel use #html on the end of the url, such as http://jsbin.com/#html</li>
-    <li>&#8220;Use as my template&#8221; stores the current code as the default code you see when you open a new JS Bin window.</li>
-    <li>Refreshing the window will not lose your changes.</li>
-    <li>Use <code>console.log</code> to display debug information. If Firebug is present, then the logging goes there, otherwise it will show in a custom console window.</li>
-    <li>To view only the JavaScript append <code>/js</code> to the url, i.e. http://jsbin.com/ujayi/js</li>
-    </ul>
+    <div>
+      <h2 id="keyboard_navigation">Keyboard navigation</h2>
 
-    <h2 id="keyboard_navigation">Keyboard navigation</h2>
+      <ul class="keyboardShortcuts">
+        <li><code>ctrl + 1</code> View source</li>
+        <li><code>ctrl + 2</code> View preview</li>
+        <li><code>ctrl + &larr;</code> Focus JavaScript</li>
+        <li><code>ctrl + &rarr;</code> Focus HTML</li>
+      </ul>
+    </div>
 
-    <ul>
-    <li>View source: ctrl + 1</li>
-    <li>Preview: ctrl + 2</li>
-    <li>Switch source code panel: ctrl + left cursor (for switching from HTML to JavaScript), ctrl + right cursor (for switching from JavaScript to HTML)</li>
-    </ul>
+    <div>
+      <h2 id="faq">FAQ</h2>
+    
+      <h3>When I change the url to a different JS Bin, it still has the old code</h3>
 
-    <h2 id="faq">FAQ</h2>
+      <p>Click the <strong>revert</strong> button and it will reload the code from the database based on the url you requested.</p>
 
-    <ul>
-    <li>When I change the url to a different JS Bin, it still has the old code</li>
-    </ul>
+      <h3>Can I run a Gist in JS Bin?</h3>
 
-    <p>Click the <strong>revert</strong> button and it will reload the code from the database based on the url you requested.</p>
+      <p>Funny you ask! Absolutely you can - just save the <a href="http://gist.github.com" title="Gist">gist</a> in Github, and either using the <a href="javascript:(function(){window.location='http://jsbin.com/gist'+window.location.pathname})()">gist to JS Bin</a> bookmarklet, or change the url from <a href="http://gist.github.com/271333">http://gist.github.com/<strong>271333</strong></a> to <a href="http://jsbin.com/gist/271333">http://jsbin.com/<strong>gist/271333</strong></a></p>
 
-    <ul>
-    <li>I didn&#8217;t insert the JavaScript and it still runs</li>
-    </ul>
+      <h3>I didn't insert the JavaScript and it still runs</h3>
 
-    <p>When you tab to the output panel, JS Bin automatically inserts your JavaScript on the fly, so you don&#8217;t need to worry about it.</p>
+      <p>When you tab to the output panel, JS Bin automatically inserts your JavaScript on the fly, so you don&#8217;t need to worry about it.</p>
 
-    <ul>
-    <li>I need my JavaScript inserted in a specific position</li>
-    </ul>
+      <h3>I need my JavaScript inserted in a specific position</h3>
 
-    <p>Either insert the JavaScript directly in to the HTML panel, or you can use the special <code>%code%</code> command.  Add <code>&lt;script&gt;%code%&lt;/script&gt;</code> to your HTML and the contents of the JavaScript panel will be inserted at that point.</p>
+      <p>Either insert the JavaScript directly in to the HTML panel, or you can use the special <code>%code%</code> command.  Add <code>&lt;script&gt;%code%&lt;/script&gt;</code> to your HTML and the contents of the JavaScript panel will be inserted at that point.</p>
 
-    <ul>
-    <li>How do I re-run or re-render the code</li>
-    </ul>
+      <h3>How do I re-run or re-render the code</h3>
 
-    <p>Just click the &#8216;Preview&#8217; button, and your entire code will re-run.</p>
+      <p>Just click the &#8216;Preview&#8217; button, and your entire code will re-run.</p>
 
-    <ul>
-    <li>Can JS Bin respond to Ajax requests?</li>
-    </ul>
+      <h3>Can JS Bin respond to Ajax requests?</h3>
 
-    <p>Yes. See the Ajax debugging video (in the top of the navigation) for a demo. Or, it&#8217;s as simple as removing the HTML output, saving the code, then requesting the URL via a new snippet. JS Bin will respond to Ajax requests appropriately.</p>
+      <p>Yes. See the Ajax debugging video (in the top of the navigation) for a demo. Or, it&#8217;s as simple as removing the HTML output, saving the code, then requesting the URL via a new snippet. JS Bin will respond to Ajax requests appropriately.</p>
 
-    <ul>
-    <li>IE6?</li>
-    </ul>
+      <h3>IE6?</h3>
 
-    <p>I&#8217;m afraid not, but the application is open source, so if you think you can get it working - please go ahead: <a href="http://github.com/remy/jsbin">http://github.com/remy/jsbin</a></p>
+      <p>I&#8217;m afraid not, but the application is open source, so if you think you can get it working - please go ahead: <a href="http://github.com/remy/jsbin">http://github.com/remy/jsbin</a></p>
 
-    <ul>
-    <li>My question isn&#8217;t answered</li>
-    </ul>
+      <h3>My question isn&#8217;t answered</h3>
 
-    <p>Feel free to get in touch and if appropriate I&#8217;ll add it to the FAQ.</p>
+      <p>Feel free to get in touch and if appropriate I&#8217;ll add it to the FAQ.</p>
+    </div>
+    <div>
+      <h2 id="who_built_this">Who built this?</h2>
 
-    <h2 id="who_built_this">Who built this?</h2>
+      <p>JS Bin was built by <a href="http://remysharp.com">Remy Sharp</a> and is completely open source and available <a href="http://github.com/remy/jsbin">http://github.com/remy/jsbin</a>.  If you would like to work with me on a front end development project, <a href="http://leftlogic.com/contact?message=Found%20through%20jsbin.com">please get in touch</a>.</p>
+      <p>You can also follow <a href="http://twitter.com/rem">@rem</a> on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.</p>
 
-    <p>JS Bin was built by <a href="http://remysharp.com">Remy Sharp</a> and is completely open source and available <a href="http://github.com/remy/jsbin">http://github.com/remy/jsbin</a>.  If you would like to work with me on a front end development project, <a href="http://leftlogic.com/contact?message=Found%20through%20jsbin.com">please get in touch</a>. You should follow me on Twitter <a href="http://twitter.com/rem">here</a> where I tweet about JavaScript, HTML 5 and other such gems.</p>
+      <p>UX was kindly donated by <a href="http://yandleblog.com">Danny Hope</a> who also tweets <a href="http://twitter.com/yandle">here</a>.</p>
+    </div>
 
-    <p>UX was kindly donated by <a href="http://yandleblog.com">Danny Hope</a> who also tweets <a href="http://twitter.com/yandle">here</a>.</p>
+    <div>
+      <h2 id="about">About</h2>
+      <p><a href="/">JS Bin</a> is a webapp specifically designed to help JavaScript and CSS folk test snippets of code, within some context, and debug the code collaboratively.</p>
+      <p>JS Bin allows you to edit and test JavaScript and HTML (reloading the URL also maintains the state of your code - new tabs doesn't). Once you're happy you can save, and send the URL to a peer for review or help. They can then make further changes saving anew if required.</p>
+      <p>The original idea spawned from a conversation with another developer in trying to help him debug an Ajax issue. The original aim was to build it using Google's app engine, but in the end, it was <a href="http://ejohn.org">John Resig</a>'s <a href="http://ejohn.org/apps/learn">Learning app</a> that inspired me to build the whole solution in JavaScript with liberal dashes of jQuery and a tiny bit of LAMP for the saving process.</p>
 
-    <h2 id="bug_feedback">Bug / Feedback</h2>
+      <p><a href="">Version 1 of JS Bin</a> took me the best part of 4 hours to develop, but version 2, this version, has been rewritten from the ground up and is completely <a href="http://github.com/remy/jsbin">open source</a>.</p>
+      <p><em>This webapp was built by <a href="http://remysharp.com">Remy Sharp</a> (<a href="http://twitter.com/rem">@rem</a>) of <a href="http://leftlogic.com">Left Logic</a>. <a href="http://leftlogic.com/contact?message=Found%20through%20jsbin.com">Please get in touch</a> if you're interested in working with me.</em></p>
+    </div>
 
-    <p>Please log an issues or feedback via the <a href="http://github.com/remy/jsbin/issues">issue tracker</a>.</p>
+
+    <div>
+      <h2 id="bug_feedback">Bugs / Feedback</h2>
+
+      <p>Please log an issues or feedback via the <a href="http://github.com/remy/jsbin/issues">issue tracker</a>.</p>
+    </div>
   </div>
 </body>
 </html>

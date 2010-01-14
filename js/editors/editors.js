@@ -24,6 +24,14 @@ editors.javascript = CodeMirror.fromTextArea('javascript', {
   }
 });
 
+var editorsReady = setInterval(function () {
+  if (editors.html.ready && editors.javascript.ready) {
+    clearInterval(editorsReady);
+    editors.ready = true;
+    if (typeof editors.onReady == 'function') editors.onReady();
+  }
+}, 100);
+
 function focused(event) {
   focusPanel = this.id;
   $('#bin').toggleClass('javascript', this.id == 'javascript');
@@ -40,6 +48,7 @@ function setupEditor(panel) {
   var e = editors[panel], 
       focusedPanel = sessionStorage.getItem('panel');
   
+  e.ready = true;
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
   e.win.document.id = panel;

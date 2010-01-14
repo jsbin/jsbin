@@ -24,6 +24,14 @@ editors.javascript = CodeMirror.fromTextArea('javascript', {
   }
 });
 
+var editorsReady = setInterval(function () {
+  if (editors.html.ready && editors.javascript.ready) {
+    clearInterval(editorsReady);
+    editors.ready = true;
+    if (typeof editors.onReady == 'function') editors.onReady();
+  }
+}, 100);
+
 function focused(event) {
   focusPanel = this.id;
   $('#bin').toggleClass('javascript', this.id == 'javascript');
@@ -40,6 +48,7 @@ function setupEditor(panel) {
   var e = editors[panel], 
       focusedPanel = sessionStorage.getItem('panel');
   
+  e.ready = true;
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
   e.win.document.id = panel;
@@ -71,7 +80,7 @@ function populateEditor(panel) {
   var saved = localStorage.getItem('saved-' + panel);
   if (data) { // try to restore the session first
     editors[panel].setCode(data);
-  } else if (saved) { // then their saved preference
+  } else if (saved && !/edit/.test(window.location)) { // then their saved preference
     editors[panel].setCode(saved);
   } else { // otherwise fall back on the JS Bin default
     editors[panel].setCode(template[panel]);
@@ -99,6 +108,4 @@ function keycontrol(event) {
   if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.keyCode] ) {
     $(document).trigger('codeChange');
   }
-  
-  return true;
 }

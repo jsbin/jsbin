@@ -2,7 +2,6 @@
 include('config.php'); // contains DB & important versioning
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']))));
 $action = array_pop($request);
-$subaction = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
@@ -14,8 +13,6 @@ if ($action) {
 
 if (!$action) {
   // do nothing and serve up the page
-} else if ($subaction == 'gist') {
-  // do nothing - the JavaScript will handle loading this bad boy in
 } else if ($action == 'source' || $action == 'js') {
   header('Content-type: text/javascript');
   $code_id = array_pop($request);
@@ -27,8 +24,11 @@ if (!$action) {
     list($html, $javascript) = defaultCode();
   }
   
-  // echo 'var template = ' . json_encode(array('html' => $html, 'javascript' => $javascript)) . ';';
-  echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';
+  if ($action == 'js') {
+    echo $javascript;
+  } else {
+    echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
+  }
 } else if ($action == 'edit') {
   $code_id = array_pop($request);
   
@@ -71,30 +71,37 @@ if (!$action) {
   
   
 } else if ($action) { // this should be an id
-  $code_id = $action;
-  list($html, $javascript) = getCode($code_id);
+  $subaction = array_pop($request);
   
-  if (stripos($html, '%code%') === false) {
-    $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
-  }
-  
-  $html = preg_replace("/%code%/", $javascript, $html);
-  $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
-  
-  if (!$ajax) {
-    $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
-  }
-  
-  if (!$html && !$ajax) {
-    $javascript = "/*\n  Created using http://jsbin.com\n  Source can be edit via http://jsbin.com/$code_id/edit\n*/\n\n" . $javascript;
-  }
-  
-  if (!$html) {
-    header("Content-type: text/javascript");
-  }
+  // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
+  if ($subaction != 'gist') {
+    $code_id = $action;
+    list($html, $javascript) = getCode($code_id);
 
-  echo $html ? $html : $javascript;
-  $edit_mode = false;
+    if (stripos($html, '%code%') === false) {
+      $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
+    }
+
+    $html = preg_replace("/%code%/", $javascript, $html);
+    $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
+    $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+
+
+    if (!$ajax) {
+      $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
+    }
+
+    if (!$html && !$ajax) {
+      $javascript = "/*\n  Created using http://jsbin.com\n  Source can be edit via http://jsbin.com/$code_id/edit\n*/\n\n" . $javascript;
+    }
+
+    if (!$html) {
+      header("Content-type: text/javascript");
+    }
+
+    echo $html ? $html : $javascript;
+    $edit_mode = false;
+  }
 }
 
 if (!$edit_mode || $ajax) {
@@ -137,10 +144,11 @@ function getCode($code_id) {
     $sql = 'update sandbox set last_viewed=now() where id=' . $row->id;
     mysql_query($sql);
     
-    $javascript = $row->javascript;
-    $html = $row->html;
+    $javascript = preg_replace('/\r/', '', $row->javascript);
+    $html = preg_replace('/\r/', '', $row->html);
     
-    return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
+    // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
+    return array(get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, $row->streaming, $row->active_tab, $row->active_cursor);
   }
 }
 

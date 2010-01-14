@@ -262,76 +262,6 @@ body.preview #source select {
   background: rgba(255, 255, 255, 0.3);
 }
 
-#intro {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 99;
-  background: url(/images/op7.png) repeat;
-  display: none;
-}
-
-#intro .lightbox {
-  background: #ccc;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  color: #000;
-  padding: 10px;
-  width: 600px;
-  margin: 100px auto;
-  position: relative;
-}
-
-#intro .lightbox div {
-  background: #fff;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;  
-  border: 1px solid #fff;
-  padding: 20px;
-}
-
-#intro h1 {
-  margin: 0 0 22px 0;
-}
-
-#intro ul,
-#intro ol {
-  padding-left: 10px;
-  margin: 0;
-}
-
-#intro ul {
-  list-style: none;
-}
-
-#intro ul li {
-  margin-left: 0;
-}
-
-#intro li {
-  margin: 20px;
-  font-size: 120%;
-}
-
-#intro .intro, #intro .keyboardShortcuts {
-  float: left;
-  width: 48%;
-}
-
-#intro .keyboardShortcuts {
-  border-left: 1px dashed #ccc;
-}
-
-#intro .screencasts {
-  text-align: center;
-  font-size: 130%;
-  padding: 20px 0 0 0;
-  clear: left;
-  border-top: 1px solid #ccc;
-}
-
 .html-only div.javascript {
   left: -50%;
   display: none;
@@ -385,7 +315,7 @@ body.preview #source select {
 }
 
 .lightbox h1 {
-  margin-top: 0;
+  margin: 0;
   background: #000;
   padding: 20px;
   color: #fff;
@@ -394,10 +324,128 @@ body.preview #source select {
 }
 
 .lightbox p,
-.lightbox h2 {
+.lightbox h2,
+.lightbox h3 {
   margin: 14px 20px;
 }
   
-.lightbox p {
+.lightbox p,
+.lightbox li {
   font-size: 16px;
+}
+
+.lightbox li {
+  margin: 8px 0;
+}
+
+.video {
+  padding-left: 20px;
+  background: url(/images/play.gif) no-repeat left center;
+}
+
+#info {
+  display: inline-block;
+  background: url(/images/info.gif) no-repeat bottom left;
+  color: #fff;
+  font-weight: bold;
+  font-style: italic;
+  font-family: georgia;
+  font-size: 10px;
+  height: 14px;
+  line-height: 14px;
+  width: 14px;
+  text-align: center;
+  text-shadow: none;
+}
+
+#info:hover {
+  background: url(/images/info.gif) no-repeat top left;  
+}
+
+#startingpoint {
+  outline: 0;
+}
+
+textarea {
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:alpha(opacity=0);
+}
+
+/* tab based help pages */
+#navigation {
+  margin: 0;
+  float: left;
+  display: block;
+  width: 200px;
+  padding-left: 0px;
+  list-style: none;
+}
+
+#navigation li {
+  margin: 1px 0;
+}
+
+#navigation a {
+  background: #A2B2CC;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  margin: 1px 0;
+  text-shadow: none;
+}
+
+#navigation a:hover,
+#navigation a.selected:hover {
+  background: #89C;
+  font-weight: bold;
+}
+
+#navigation a:active {
+  border: 2px solid #647ECC;
+  padding: 8px;
+}
+
+#navigation a.selected {
+  background: #768BCC;
+  font-weight: bold;  
+}
+
+.panels {
+  margin-left: 210px;
+}
+
+.panels li {
+  margin: 14px 0;
+}
+
+.panels code {
+  font-size: 16px;
+}
+
+/* hud - apply style hud */
+.hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: url(/images/op7.png) repeat;
+}
+
+.hud .outercontainer {
+  background: #1B1B1B;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #fff;
+  position: relative;
+}
+
+.hud .title {
+  text-align: center;
+  text-shadow: #000 1px 1px 1px;
+  background: #454645;
 }

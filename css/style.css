@@ -14,8 +14,10 @@ p {
 
 #control {
   height: 61px;
-  position: relative;
-  width: 100%;
+  position: absolute;
+/*  width: 100%;*/
+  left: 0;
+  right: 0;
 }
 
 .control, .help, .starting {
@@ -24,13 +26,9 @@ p {
   float: left;
 }
 
-.control, .starting {
-  width: 30%;
-}
-
 .control {
   padding-right: 0;
-  width: 33%;
+  width: 50%;
 }
 
 .starting {
@@ -38,7 +36,7 @@ p {
 }
 
 .help {
-  width: 250px;
+  width: 40%;
   text-align: right;
   float: right;
 }
@@ -301,7 +299,7 @@ body.preview #source select {
   position: relative;
   width: 600px;
   z-index: 12;
-  border: 10px solid #ccc;
+/*  border: 10px solid #ccc;*/
   margin: 0 auto;
   overflow-y: auto;
   overflow-x: hidden;

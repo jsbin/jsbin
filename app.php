@@ -15,11 +15,12 @@ if (!$action) {
   // do nothing and serve up the page
 } else if ($action == 'source' || $action == 'js') {
   header('Content-type: text/javascript');
-  $code_id = array_pop($request);
+  list($code_id, $revision) = getCodeIdParams($request);
+  
   $edit_mode = false;
   
   if ($code_id) {
-    list($html, $javascript) = getCode($code_id);
+    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
   } else {
     list($html, $javascript) = defaultCode();
   }
@@ -30,30 +31,39 @@ if (!$action) {
     echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
   }
 } else if ($action == 'edit') {
-  $code_id = array_pop($request);
+  list($code_id, $revision) = getCodeIdParams($request);
   
 } else if ($action == 'save') {
-  $code_id = generateCodeId();
+  list($code_id, $revision) = getCodeIdParams($request);
+  if (!$code_id) {
+    $code_id = generateCodeId();
+    $revision = 1;
+  } else {
+    list($revision) = getCode($code_id, $revision);
+    $revision++;
+  }
+
   $javascript = @$_POST['javascript'];
   $html = @$_POST['html'];
   
-  $sql = 'select url from sandbox where javascript="' . mysql_real_escape_string($javascript) . '" and html="' . mysql_real_escape_string($html) . '"';
-  $results = mysql_query($sql);
+  // $sql = 'select url, revision from sandbox where javascript="' . mysql_real_escape_string($javascript) . '" and html="' . mysql_real_escape_string($html) . '"';
+  // $results = mysql_query($sql);
 
-  if (mysql_num_rows($results)) {
-    $row = mysql_fetch_object($results);
-    $code_id = $row->url;
-  } else {
-    $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url) values ("%s", "%s", now(), now(), "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id));
-    mysql_query($sql);
-  }
+  // if (mysql_num_rows($results)) { // if there's matching code, switch to that. Could this be confusing?
+  //   $row = mysql_fetch_object($results);
+  //   $code_id = $row->url;
+  //   $revision = $row->revision;
+  // } else {
+  $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+  mysql_query($sql);
+  // }
   
   if ($ajax) {
     // supports plugins making use of JS Bin via ajax calls and callbacks
     if (@$_REQUEST['callback']) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = 'http://jsbin.com/' . $code_id;
+    $url = 'http://jsbin.com/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;          
     } else {
@@ -66,7 +76,11 @@ if (!$action) {
   } else {
     // code was saved, so lets do a location redirect to the newly saved code
     $edit_mode = false;
-    header('Location: /' . $code_id . '/edit');
+    if ($revision == 1) {
+      header('Location: /' . $code_id . '/edit');
+    } else {
+      header('Location: /' . $code_id . '/' . $revision . '/edit');
+    }
   }
   
   
@@ -75,8 +89,14 @@ if (!$action) {
   
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
   if ($subaction != 'gist') {
-    $code_id = $action;
-    list($html, $javascript) = getCode($code_id);
+    if ($subaction) {
+      $code_id = $subaction;
+      $revision = $action;
+    } else {
+      $code_id = $action;
+      $revision = 1;
+    }
+    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
 
     if (stripos($html, '%code%') === false) {
       $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
@@ -130,8 +150,20 @@ function save() {
   
 }
 
-function getCode($code_id) {
-  $sql = sprintf('select * from sandbox where url="%s"', mysql_real_escape_string($code_id));
+function getCodeIdParams($request) {
+  $revision = array_pop($request);
+  $code_id = array_pop($request);
+  
+  if ($code_id == null) {
+    $code_id = $revision;
+    $revision = 1;
+  }
+  
+  return array($code_id, $revision);
+}
+
+function getCode($code_id, $revision) {
+  $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
   $result = mysql_query($sql);
   
   if (!mysql_num_rows($result)) {
@@ -147,8 +179,10 @@ function getCode($code_id) {
     $javascript = preg_replace('/\r/', '', $row->javascript);
     $html = preg_replace('/\r/', '', $row->html);
     
+    $revision = $row->revision;
+    
     // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
-    return array(get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, $row->streaming, $row->active_tab, $row->active_cursor);
+    return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, $row->streaming, $row->active_tab, $row->active_cursor);
   }
 }
 

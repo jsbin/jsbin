@@ -1,4 +1,9 @@
-<?php include('app.php'); ?>
+<?php include('app.php'); 
+if ($revision != 1 && $revision) {
+  $code_id .= '/' . $revision;
+}
+$code_id = '/' . $code_id;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,21 +19,22 @@
       <a class="button preview" accesskey="2" href="#preview">Preview</a>
     </div>
     <?php if ($code_id) : ?>
-    <a href="http://jsbin.com/<?=$code_id?>">http://jsbin.com/<?=$code_id?></a>
+    <a href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
     <?php else : ?>
     <a id="save" class="save" href="/save">Create public link</a>
     <?php endif ?>
-    <a class="light" id="info" href="/info">&nbsp;</a>
-    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &mdash; <a id="newRevision" class="light save" href="/save">New revision</a></span><?php endif ?></p>
+    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &ndash; <a id="save" class="light save" href="<?=$code_id?>/save">New revision</a></span><?php endif ?>
+    </p>
   </div>
-  <div class="starting">
-    <a id="startingpoint" class="light" href="#"><span>Use as my template</span></a>
-  </div>
+  <!-- <div class="starting">
+    
+  </div> -->
   <div class="help">
     <ul class="flat">
-      <li><a class="video" href="/about">About</a></li>
-      <li><a class="video" href="#">Ajax Debugging</a></li>
-      <li><a href="/help">Help</a></li>      
+      <li><a id="startingpoint" href="#"><span>Save as my template</span></a></li>
+      <!-- <li><a class="video" href="/about">About</a></li>
+      <li><a class="video" href="#">Ajax Debugging</a></li> -->
+      <li><a href="/help">Help &amp; tutorials</a></li>
     </ul>
   </div>
 </div>
@@ -60,7 +66,7 @@
   <div id="preview" class="binview stretch">
     <iframe class="stretch"></iframe>
   </div>
-  <form method="post" action="/save"></form>
+  <form method="post" action="<?=$code_id?>/save"></form>
 </div>
 <?php 
 // construct the correct query string, if we're injecting the html or JS
@@ -81,7 +87,7 @@ if (@$_GET['html']) {
   $qs .= 'html=' . rawurlencode($_GET['html']);
 }
 ?>
-<script src="<?=$code_id ? '/' . $code_id : '' ?>/source/<?=$qs?>"></script>
+<script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 </body>

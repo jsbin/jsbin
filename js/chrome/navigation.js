@@ -45,7 +45,7 @@ $('#control .button').click(function (event) {
   } 
 });
 
-$('#control div.help a').click(function (event) {
+$('#control div.help a.video').click(function (event) {
   event.preventDefault();
   var useAjax = false,
       url = $(this).attr('href'); // using href to ensure the url doesn't resolve
@@ -71,7 +71,24 @@ $('#control div.help a').click(function (event) {
   }
 });
 
+$('#control div.help a:last').click(function () {
+  $(window).trigger('togglehelp');
+  return false;
+});
 
+var helpOpen = false;
+$(window).bind('togglehelp', function () {
+  var s = 100, right = helpOpen ? 0 : 300;
+  $bin.find('> div').animate({ right: right }, { duration: s });
+  $('#control').animate({ right: right }, { duration: s });
+  helpOpen = helpOpen ? false : true;
+});
+
+$(document).keyup(function (event) {
+  if (helpOpen && event.keyCode == 27) {
+    $(window).trigger('togglehelp');
+  }
+});
 
 
 

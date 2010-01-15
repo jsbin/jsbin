@@ -2,7 +2,9 @@
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
 }
-$code_id = '/' . $code_id;
+if ($code_id) {
+  $code_id = '/' . $code_id;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

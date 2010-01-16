@@ -1,16 +1,20 @@
+var consoleTest = /(^.|\b)console\./;
+
 function renderPreview() {
   var doc = $('#preview iframe')[0], 
       win = doc.contentDocument || doc.contentWindow.document,
       source = editors.html.getCode(),
-      useConsole = true;
       parts = [],
-      js = editors.javascript.getCode();
+      js = editors.javascript.getCode(),
+      useCustomConsole = window.console == undefined;
    
   // redirect JS console logged to our custom log while debugging
-  if (window.console != undefined) {
-    js = js.replace(/(^|[^.])console/g, 'window.top.console');
-  } else if (useConsole && /(^|[^.])console/.test(js)) {
-    js = js.replace(/(^|[^.])console/g, '_console');
+  if (consoleTest.test(js)) {
+    if (useCustomConsole) {
+      js = js.replace(/(^.|\b)console\./g, '_console.');
+    } else {
+      js = js.replace(/(^.|\b)console\./g, 'window.top.console.');
+    }
   }
 
   // note that I'm using split and reconcat instead of replace, because if the js var

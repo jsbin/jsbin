@@ -39,10 +39,10 @@ if (!$action) {
     $code_id = generateCodeId();
     $revision = 1;
   } else {
-    list($revision) = getCode($code_id, $revision);
+    list($revision) = getCode($code_id, $revision, $testonly = true);
     $revision++;
   }
-
+  
   $javascript = @$_POST['javascript'];
   $html = @$_POST['html'];
   
@@ -162,13 +162,15 @@ function getCodeIdParams($request) {
   return array($code_id, $revision);
 }
 
-function getCode($code_id, $revision) {
+function getCode($code_id, $revision, $testonly = false) {
   $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
   $result = mysql_query($sql);
   
-  if (!mysql_num_rows($result)) {
+  if (!mysql_num_rows($result) && $testonly == false) {
     header("HTTP/1.0 404 Not Found");
     return defaultCode(true);
+  } else if (!mysql_num_rows($result)) {
+    return array($revision);
   } else {
     $row = mysql_fetch_object($result);
     

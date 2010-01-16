@@ -78,7 +78,7 @@ if (isset($_GET['js']) || isset($_GET['html'])) {
 }
 
 if (@$_GET['js']) {
-  $qs .= 'js=' . rawurlencode($_GET['js']);
+  $qs .= 'js=' . rawurlencode(stripslashes($_GET['js']));
   
   if (@$_GET['html']) {
     $qs .= '&amp;';
@@ -86,11 +86,19 @@ if (@$_GET['js']) {
 }
 
 if (@$_GET['html']) {
-  $qs .= 'html=' . rawurlencode($_GET['html']);
+  $qs .= 'html=' . rawurlencode(stripslashes($_GET['html']));
 }
 ?>
 <script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
+<script>
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script>
+var pageTracker = _gat._getTracker("UA-1656750-13");
+pageTracker._trackPageview();
+</script>
 </body>
 </html>

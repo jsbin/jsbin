@@ -80,7 +80,7 @@ function populateEditor(panel) {
   var saved = localStorage.getItem('saved-' + panel);
   if (data) { // try to restore the session first
     editors[panel].setCode(data);
-  } else if (saved && !/edit/.test(window.location)) { // then their saved preference
+  } else if (saved && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
     editors[panel].setCode(saved);
   } else { // otherwise fall back on the JS Bin default
     editors[panel].setCode(template[panel]);

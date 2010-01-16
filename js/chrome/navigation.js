@@ -76,11 +76,23 @@ $('#control div.help a:last').click(function () {
   return false;
 });
 
+$('#help a[host=' + window.location.host + ']').live('click', function () {
+  $('#help #content').load(this.href);
+  return false;    
+});
+
 var helpOpen = false;
 $(window).bind('togglehelp', function () {
   var s = 100, right = helpOpen ? 0 : 300;
+
+  if (helpOpen == false) {
+    $('#help #content').load('/help/index.html');    
+  }
   $bin.find('> div').animate({ right: right }, { duration: s });
   $('#control').animate({ right: right }, { duration: s });
+  
+  $('#help').animate({ right: helpOpen ? -300 : 0 }, { duration: s});
+  
   helpOpen = helpOpen ? false : true;
 });
 

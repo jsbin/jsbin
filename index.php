@@ -70,6 +70,7 @@ if ($code_id) {
   </div>
   <form method="post" action="<?=$code_id?>/save"></form>
 </div>
+<div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div>
 <?php 
 // construct the correct query string, if we're injecting the html or JS
 $qs = '';

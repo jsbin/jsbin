@@ -447,3 +447,21 @@ textarea {
   text-shadow: #000 1px 1px 1px;
   background: #454645;
 }
+
+#help pre {
+  padding: 10px;
+  background: #eee;
+  overflow-x: auto;
+}
+
+#help {
+  position: absolute;
+  right: -300px;
+  width: 279px;
+  top: 0;
+  height: 100%;
+  border-left: 1px solid #ccc;
+  background: #fff;
+  padding: 0 10px;
+  overflow: auto;
+}

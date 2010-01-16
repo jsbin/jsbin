@@ -465,3 +465,15 @@ textarea {
   padding: 10px;
   overflow: auto;
 }
+
+#help p {
+  margin: 14px 0;
+}
+
+#help ol, #help ul {
+  padding-left: 20px;
+}
+
+#help li {
+  margin: 10px 0;  
+}

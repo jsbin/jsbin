@@ -459,9 +459,9 @@ textarea {
   right: -300px;
   width: 279px;
   top: 0;
-  height: 100%;
+  bottom: 0;
   border-left: 1px solid #ccc;
   background: #fff;
-  padding: 0 10px;
+  padding: 10px;
   overflow: auto;
 }

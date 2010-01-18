@@ -21,7 +21,7 @@ JS Bin is an open source collaborative JavaScript debugging tool.
 
 JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open source and available [http://github.com/remy/jsbin](http://github.com/remy/jsbin). You can also follow [@rem](http://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.
     
-If you would like to work with me and my company, [Left Logic](http://leftlogic.com) on a front end development project, [please get in touch](http://leftlogic.com/contact?message=Found%20through%20jsbin.com).
+If you would like to work with Remy and his company, [Left Logic](http://leftlogic.com) on a front end development project, [please get in touch](http://leftlogic.com/contact?message=Found%20through%20jsbin.com).
 
 UX was kindly donated by [Danny Hope](http://yandleblog.com) who also tweets [here](http://twitter.com/yandle).
 

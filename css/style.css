@@ -461,9 +461,10 @@ textarea {
   top: 0;
   bottom: 0;
   border-left: 1px solid #ccc;
-  background: #fff;
+  background: #F7F4EB;
   padding: 10px;
   overflow: auto;
+/*  text-shadow: #fff 1px 1px 1px;*/
 }
 
 #help p {
@@ -477,3 +478,34 @@ textarea {
 #help li {
   margin: 10px 0;  
 }
+
+
+#help dl.shortcuts {
+	margin-bottom: 1em;
+	margin-left: 26px; }
+#help dl.shortcuts * {
+	margin: 0;
+	line-height: 2.25;
+	font-weight: normal; }
+#help .shortcuts dt {
+	float: left;
+	display: block;
+	width: 7em;
+	clear: both; }
+#help kbd {
+	/* not sure if this should be more specific ie. ".shortcuts kbd" */
+	background: -webkit-gradient(linear, left top, center bottom, from(#000), to(#222));
+	background-color: #000;
+	color: #fff;
+	font-family: "VAG Rounded", sans-serif;
+	font-size: 90%;
+	padding: 1ex;
+	letter-spacing: 0.2ex;
+	text-shadow: rgba(0,255,255,0.5) 0 0 4px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 1px 1px 0px #000; }
+#help .shortcuts.a dt {
+	width: 7em; }
+#help .shortcuts.b dt {
+	width: 10em; }

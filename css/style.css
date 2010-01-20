@@ -1,7 +1,7 @@
 body { 
   margin: 0; 
   padding: 0;
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
   min-width: 976px;
   overflow: hidden;
@@ -210,7 +210,7 @@ a.button {
 
 body.source a.source,
 body.preview a.preview {
-  background: #000;
+  background: #aaa;
   background: rgba(0, 0, 0, 0.25);
   text-shadow: none;
   border: 1px solid #ccc;

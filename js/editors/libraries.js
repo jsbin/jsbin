@@ -6,7 +6,7 @@ var push = Array.prototype.push;
 var Libraries = function () {
   this.init();
 
-  this.userSpecified = JSON.parse(localStorage.getItem('libraries')) || [];
+  this.userSpecified = localStorage.getItem('libraries') || [];
   
   // read from storage
   for (i = 0; i < this.userSpecified.length; i++) {
@@ -91,7 +91,7 @@ Libraries.prototype.add = function (lib) {
   // save to localStorage
   this.userSpecified.push(lib);
   try {
-    localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
+    localStorage.setItem('libraries', this.userSpecified);
   } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
   push.call(this, lib);
   $('#library').trigger('init');

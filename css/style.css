@@ -230,6 +230,10 @@ body.preview a.preview {
   
 }
 
+#preview {
+  z-index: 11; /* gets over the labels in IE */
+}
+
 #preview iframe {
   height: 100%;
   width: 100%;

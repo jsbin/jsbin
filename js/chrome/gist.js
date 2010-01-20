@@ -3,20 +3,30 @@ var Gist = function (id) {
   var iframe = $('<iframe id="gistloader' + id + '" />').css('display', 'none').appendTo(document.body),
       win = iframe[0].contentDocument || iframe[0].contentWindow.document,
       gist = this;
+
+  this.code = {};
   
   iframe.load(function () {
-    var code = [];
-    $('pre .line', win.body).each(function () { 
-      code.push($(this).text());
+    $('.gist-file', win.body).each(function () {
+      var code = [];
+      $('pre .line', this).each(function () { 
+        code.push($(this).text());
+      });
+
+      var type = $('.gist-meta a:first', this).attr('href').substr(-2) == 'js' ? 'javascript' : 'html';
+
+      gist.code[type] = code.join("\n");
     });
-    gist.code = code.join("\n");
-    
-    gist.type = $('.gist-meta a:first', win.body).attr('href').substr(-2) == 'js' ? 'javascript' : 'html';
-    
-    editors[gist.type].setCode(gist.code);
+    gist.setCode();
     iframe.remove();
   });
   win.open();
   win.write('<script src="http://gist.github.com/' + id + '.js"></script>');
   win.close();
+};
+
+Gist.prototype.setCode = function () {
+  for (var type in this.code) {
+    editors[type].setCode(gist.code[type]);
+  }
 };

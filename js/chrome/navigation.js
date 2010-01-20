@@ -28,7 +28,7 @@ $('#revert').click(function () {
   $('#library').val('none');
   
   if (window.gist != undefined) {
-    editors[gist.type].setCode(gist.code);
+    gist.setCode();
   }
 
   $(document).trigger('codeChange', [ true ]);

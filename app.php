@@ -39,7 +39,7 @@ if (!$action) {
     $code_id = generateCodeId();
     $revision = 1;
   } else {
-    list($revision) = getCode($code_id, $revision, $testonly = true);
+    $revision = getMaxRevision($code_id);
     $revision++;
   }
   
@@ -160,6 +160,13 @@ function getCodeIdParams($request) {
   }
   
   return array($code_id, $revision);
+}
+
+function getMaxRevision($code_id) {
+  $sql = sprintf('select max(revision) as rev from sandbox where url="%s"', mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+  $result = mysql_query($sql);
+  $row = mysql_fetch_object($result);
+  return $row->rev ? $row->rev : 0;
 }
 
 function getCode($code_id, $revision, $testonly = false) {

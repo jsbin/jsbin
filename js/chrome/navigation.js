@@ -45,32 +45,6 @@ $('#control .button').click(function (event) {
   } 
 });
 
-// $('#control div.help a.video').click(function (event) {
-//   event.preventDefault();
-//   var useAjax = false,
-//       url = $(this).attr('href'); // using href to ensure the url doesn't resolve
-//       
-//   if (url.substr(0, 1) == '#') {
-//     url = this.hash; // id based
-//   } else {
-//     useAjax = true;
-//   }
-//   
-//   if (useAjax) {
-//     $.ajax({
-//       url: url,
-//       dataType: 'html',
-//       error: function () {
-//         // console.log(arguments);
-//       },
-//       complete: function (res) {
-//         var content = $('<div />').append(res.responseText.replace(/<script(.|\s)*?\/script>/g, "")).find('#content').html();        
-//         var lightbox = new Lightbox(content, 100).show();
-//       }
-//     });
-//   }
-// });
-
 $('#control div.help a:last').click(function () {
   $(window).trigger('togglehelp');
   return false;
@@ -101,10 +75,3 @@ $(document).keyup(function (event) {
     $(window).trigger('togglehelp');
   }
 });
-
-
-
-
-
-
-

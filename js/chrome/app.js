@@ -19,10 +19,7 @@ var debug = false,
 // if the user linked directly to #html, initially hide the JS panel
 if (window.location.hash == '#html') {
   document.getElementById('bin').className += ' html-only';
-} // else if (window.location.hash == '#output' || window.location.hash == '#preview') {
-//   document.body.className = 'preview';
-// }
-
+}
 
 $(window).unload(unload);
 
@@ -53,7 +50,9 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
 }
 
 $(document).bind('codeChange', function (event, revert) {
-  if (revert == undefined) revert = false;
+  if (revert == undefined) {
+    revert = false;
+  }
   
   if (!revert && !/\*$/.test(document.title)) {
     if (/debug/i.test(document.title)) {

@@ -127,22 +127,22 @@ function accessKey(event) {
 function keycontrol(event) {
   var ctrl = accessKey(event);
   
-  if (ctrl && event.keyCode == 39 && this.id == 'javascript') {
+  if (ctrl && event.which == 39 && this.id == 'javascript') {
     // go right
     editors.html.focus();
     return false;
-  } else if (ctrl && event.keyCode == 37 && this.id == 'html') {
+  } else if (ctrl && event.which == 37 && this.id == 'html') {
     // go left
     editors.javascript.focus();
     return false;
-  } else if (ctrl && event.keyCode == 49) { // 49 == 1 key
+  } else if (ctrl && event.which == 49) { // 49 == 1 key
     $('#control a.source').click();
-  } else if (ctrl && event.keyCode == 50) {
+  } else if (ctrl && event.which == 50) {
     $('#control a.preview').click();
   }
   
   // sends message to the document saying that a key has been pressed, we'll ignore the control keys
-  if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.keyCode] ) {
+  if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.which] ) {
     $(document).trigger('codeChange');
   }
   

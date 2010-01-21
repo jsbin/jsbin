@@ -51,6 +51,7 @@ function setupEditor(panel) {
   e.ready = true;
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
+    
   e.win.document.id = panel;
   $(e.win.document).bind('keydown', keycontrol);
   $(e.win.document).focus(focused);
@@ -87,8 +88,44 @@ function populateEditor(panel) {
   }
 }
 
+// work out the browser platform
+var ua = navigator.userAgent;
+if (/macintosh|mac os x/.test(ua)) { 
+  $.browser.platform = 'mac'; 
+} else if (/windows|win32/.test(ua)) { 
+  $.browser.platform = 'win'; 
+} else if (/linux/.test(ua)) { 
+  $.browser.platform = 'linux'; 
+} else { 
+  $.browser.platform = ''; 
+} 
+
+
+// Based on http://en.wikipedia.org/wiki/Access_key
+function accessKey(event) {
+  var on = false;
+  if ($.browser.webkit) {
+    if ($.browser.platform == 'win') {
+      on = event.altKey;
+    } else { // mac
+      if ($.browser.version < 4) {
+        on = event.ctrlKey;
+      } else {
+        on = event.ctrlKey && event.altKey;      
+      }
+    }
+  } else if ($.browser.mozilla) {
+    on = event.shiftKey && event.altKey;
+  } else if ($.browser.msie) {
+    on = event.altKey;
+  } 
+  // Opera requires completely different handling, will set aside for now and issues are raised, I'll fix this too.
+  
+  return on;
+}
+
 function keycontrol(event) {
-  var ctrl = event.ctrlKey == true;
+  var ctrl = accessKey(event);
   
   if (ctrl && event.keyCode == 39 && this.id == 'javascript') {
     // go right
@@ -108,4 +145,6 @@ function keycontrol(event) {
   if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.keyCode] ) {
     $(document).trigger('codeChange');
   }
+  
+  return true;
 }

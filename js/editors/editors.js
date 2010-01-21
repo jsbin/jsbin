@@ -137,8 +137,10 @@ function keycontrol(event) {
     return false;
   } else if (ctrl && event.which == 49) { // 49 == 1 key
     $('#control a.source').click();
+    return false;
   } else if (ctrl && event.which == 50) {
     $('#control a.preview').click();
+    return false;
   }
   
   // sends message to the document saying that a key has been pressed, we'll ignore the control keys

@@ -1,5 +1,6 @@
 //= require <codemirror>
 //= require "library"
+//= require "unsaved"
 var focusPanel = 'javascript';
 var editors = {};
 editors.html = CodeMirror.fromTextArea('html', {
@@ -54,6 +55,7 @@ function setupEditor(panel) {
     
   e.win.document.id = panel;
   $(e.win.document).bind('keydown', keycontrol);
+  $(e.win.document).bind('keyup', changecontrol);
   $(e.win.document).focus(focused);
   
   var $label = $('.code.' + panel + ' > .label');
@@ -77,14 +79,25 @@ function setupEditor(panel) {
 
 function populateEditor(panel) {
   // populate - should eventually use: session, saved data, local storage
-  var data = sessionStorage.getItem(panel);
-  var saved = localStorage.getItem('saved-' + panel);
-  if (data) { // try to restore the session first
+  var data = sessionStorage.getItem(panel),
+      saved = localStorage.getItem('saved-' + panel),
+      changed = false;
+  
+  if (data == template[panel]) { // restored from original saved
     editors[panel].setCode(data);
+  } else if (data) { // try to restore the session first
+    editors[panel].setCode(data);
+    // tell the document that it's currently being edited, but check that it doesn't match the saved template
+    // because sessionStorage gets set on a reload
+    changed = data != saved;
   } else if (saved && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
     editors[panel].setCode(saved);
   } else { // otherwise fall back on the JS Bin default
     editors[panel].setCode(template[panel]);
+  }
+  
+  if (changed) {
+    $(document).trigger('codeChange');    
   }
 }
 
@@ -143,6 +156,10 @@ function keycontrol(event) {
     return false;
   }
   
+  return true;
+}
+
+function changecontrol(event) {
   // sends message to the document saying that a key has been pressed, we'll ignore the control keys
   if (! ({ 16:1, 17:1, 18:1, 20:1, 27:1, 37:1, 38:1, 39:1, 40:1, 91:1, 93:1 })[event.which] ) {
     $(document).trigger('codeChange');

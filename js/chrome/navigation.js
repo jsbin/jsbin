@@ -18,6 +18,12 @@ $('#startingpoint').click(function () {
 }).find('span').after('<span style="display: none;">Saved</span>');
 
 $('#revert').click(function () {
+  var $revert = $(this);
+  
+  if ($revert.is(':not(.enable)')) {
+    return false;
+  }
+  
   sessionStorage.removeItem('javascript');
   sessionStorage.removeItem('html');
 
@@ -36,7 +42,7 @@ $('#revert').click(function () {
   return false;
 });
 
-$('#control .button').click(function (event) {
+$('#control .tab').click(function (event) {
   event.preventDefault();
   $('body').removeAttr('class').addClass(this.hash.substr(1));
 

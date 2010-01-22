@@ -37,7 +37,7 @@ class SprocketCommand {
 	 * Return filecontext
 	 */
 	function getFileContext($context, $param) {
-		return dirname($context.'/'.$param.'.'.$this->Sprocket->fileExt);
+		return dirname(realpath($context.'/'.$param.'.'.$this->Sprocket->fileExt));
 	}
 }
 ?>

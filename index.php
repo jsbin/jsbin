@@ -17,16 +17,16 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <a class="button source" accesskey="1" href="#source">Code</a>
-      <a class="button preview" accesskey="2" href="#preview">Preview</a>
-    </div>
+      <a class="tab button source group left" accesskey="1" href="#source">Code</a>
+      <a class="tab button preview group right gap" accesskey="2" href="#preview">Preview</a>
+      <a title="Revert" class="button light group left enable" id="revert" href="#"><img class="enabled" src="/images/revert.png" /><img class="disabled" src="/images/revert-disabled.png" /></a>
     <?php if ($code_id) : ?>
-    <a href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
+    <a class="button group light left" href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
     <?php else : ?>
-    <a id="save" class="save" href="/save">Create public link</a>
+    <a id="save" class="button save group right left" href="/save">Create public link</a>
     <?php endif ?>
-    <p><a class="light" id="revert" href="#">Revert</a><?php if ($code_id) : ?><span id="revision"> &ndash; <a id="save" class="light save" href="<?=$code_id?>/save">New revision</a></span><?php endif ?>
-    </p>
+    <?php if ($code_id) : ?><a id="save" class="button light save group right" href="<?=$code_id?>/save">New revision</a><?php endif ?>
+    </div>
   </div>
   <!-- <div class="starting">
     
@@ -91,7 +91,6 @@ if (@$_GET['html']) {
 }
 ?>
 <script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 <script>
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

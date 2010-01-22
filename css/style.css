@@ -24,6 +24,7 @@ p {
   width: 100px;
   padding: 15px;
   float: left;
+  white-space: nowrap;
 }
 
 .control {
@@ -189,9 +190,13 @@ a.button {
   display: block;
   float: left;
   text-decoration: none;
-  margin: 0px 5px;
+  margin: 0px 0px;
   background: #fff;
   background: rgba(255, 255, 255, 0.3);
+}
+
+a.gap {
+  margin-right: 10px;
 }
 
 .button:hover {
@@ -229,6 +234,33 @@ body.preview a.preview {
     );
   
 }
+
+body.preview a.preview {
+  border-left: 0;
+}
+
+a.group {
+  border-left: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+}
+
+a.left {
+  border-left: 1px solid #ccc;
+  -moz-border-radius-topleft: 3px;
+  -webkit-border-top-left-radius: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+}
+
+a.right {
+  border-right: 1px solid #ccc;
+  -moz-border-radius-topright: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+}
+
 
 #preview {
   z-index: 11; /* gets over the labels in IE */
@@ -513,3 +545,25 @@ textarea {
 	width: 7em; }
 #help .shortcuts.b dt {
 	width: 10em; }
+
+#revert {
+  display: none;
+}
+
+#revert img {
+  margin-top: -2px;
+  margin-right: -1px;
+  border: 0;
+}
+
+#revert img.enabled {
+  display: none;
+}
+
+#revert.enable img.disabled {
+  display: none;
+}
+
+#revert.enable img.enabled {
+  display: inline;
+}

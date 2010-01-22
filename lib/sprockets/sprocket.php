@@ -99,6 +99,8 @@ class Sprocket
 		if (!is_file(realpath($this->filePath))) 
 			$this->fileNotFound();				
 		
+    if (!$this->requiresProcessing(realpath($context.'/'.$file))) return;
+
 		$source = file_get_contents($context.'/'.$file);
 				
 		// Parse Commands
@@ -128,7 +130,8 @@ class Sprocket
 			}
 		}		
 		
-		$this->stripComments();		
+		// this doesn't work properly, because it could strip two slashes inside a string, which would be wrong
+    // $this->stripComments();
 		
 		return $source;
 	}	
@@ -296,6 +299,17 @@ class Sprocket
 		return $this;
 	}
 	
+	function requiresProcessing($file) {
+	  $processed = true;
+	  if (in_array($file, $this->_processed) != 1) {
+	    $this->_processed[] = $file;
+	  } else {
+	    $processed = false;
+	  }
+	  
+	  return $processed;
+	}
+	
 	/**
 	 * Base URI - Path to webroot
 	 * @var string
@@ -365,5 +379,13 @@ class Sprocket
 	 * @access private
 	 */
 	var $_fromCache = false;	
+	
+	/**
+	 * Keep track of loaded JS script to avoid loading more than once
+	 * @var array
+	 * @access private
+	 */
+	var $_processed = array();
+	
 }
 ?>

@@ -49,21 +49,6 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
   }
 }
 
-$(document).bind('codeChange', function (event, revert) {
-  if (revert == undefined) {
-    revert = false;
-  }
-  
-  if (!revert && !/\*$/.test(document.title)) {
-    if (/debug/i.test(document.title)) {
-      document.title = 'JS Bin - [unsaved]';
-    }
-    document.title += '*';
-  } else if (revert && /\*$/.test(document.title)) {
-    document.title = document.title.replace(/\*$/, '');
-  }
-});
-
 $('div.label p').click(function () {
   var speed = 150;
   if ($bin.is('.html-only')) {

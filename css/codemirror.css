@@ -1,0 +1,155 @@
+.editbox {
+  margin: .4em;
+  padding: 0;
+  font-family: Monaco, consolas, monospace;
+  font-size: 10pt;
+  color: black;
+}
+
+.editbox p {
+  margin: 0;
+}
+
+span.xml-tagname {
+  color: #A0B;
+}
+
+span.xml-attribute {
+  color: #281;
+}
+
+span.xml-punctuation {
+  color: black;
+}
+
+span.xml-attname {
+  color: #00F;
+}
+
+span.xml-comment {
+  color: #A70;
+}
+
+span.xml-cdata {
+  color: #48A;
+}
+
+span.xml-processing {
+  color: #999;
+}
+
+span.xml-entity {
+  color: #A22;
+}
+
+span.xml-error {
+  color: #F00;
+}
+
+span.xml-text {
+  color: black;
+}
+
+.editbox {
+  margin: .4em;
+  padding: 0;
+  font-family: monaco, consolas, monospace;
+  font-size: 12pt;
+  color: black;
+}
+
+pre.code, .editbox {
+  color: #666666;
+}
+
+.editbox p {
+  margin: 0;
+}
+
+span.js-punctuation {
+  color: #666666;
+}
+
+span.js-operator {
+  color: #666666;
+}
+
+span.js-keyword {
+  color: #770088;
+}
+
+span.js-atom {
+  color: #228811;
+}
+
+span.js-variable {
+  color: black;
+}
+
+span.js-variabledef {
+  color: #0000FF;
+}
+
+span.js-localvariable {
+  color: #004499;
+}
+
+span.js-property {
+  color: black;
+}
+
+span.js-comment {
+  color: #AA7700;
+}
+
+span.js-string {
+  color: #AA2222;
+}
+
+.editbox {
+  margin: .4em;
+  padding: 0;
+  font-family: Monaco, consolas, monospace;
+  font-size: 10pt;
+  color: black;
+}
+
+pre.code, .editbox {
+  color: #666666;
+}
+
+.editbox p {
+  margin: 0;
+}
+
+span.css-at {
+  color: #770088;
+}
+
+span.css-unit {
+  color: #228811;
+}
+
+span.css-value {
+  color: #770088;
+}
+
+span.css-identifier {
+  color: black;
+}
+
+span.css-important {
+  color: #0000FF;
+}
+
+span.css-colorcode {
+  color: #004499;
+}
+
+span.css-comment {
+  color: #AA7700;
+}
+
+span.css-string {
+  color: #AA2222;
+}

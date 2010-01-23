@@ -43,12 +43,12 @@ if ($code_id) {
 <div id="bin" class="stretch">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
-      <div class="label"><p>JavaScript<span> (hide HTML)</span></p></div>
+      <div class="label"><p>JavaScript<span> (<span class="hide">hide</span><span class="show">show</span> HTML)</span></p></div>
       <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">
       <div class="label">
-        <p>HTML<span> (show JavaScript)</span></p>
+        <p>HTML<span>  (<span class="hide">hide</span><span class="show">show</span> JavaScript)</span></p>
         <label for="library">Include</label>
         <select id="library">
           <option value="none">None</option>

@@ -144,19 +144,11 @@ div.preview {
   margin-top: 10px;
 }
 
-.code .label p span {
+.code .label p > span {
   opacity: 0;
   filter:alpha(opacity=0);
   -webkit-transition: opacity 250ms linear;
   -moz-transition: opacity 250ms linear;
-}
-
-.html .label p span {
-  display: none;
-}
-
-.html-only .html .label p span {
-  display: inline;
 }
 
 .code .label p:hover span {
@@ -305,6 +297,20 @@ body.preview #source select {
   display: none;
   left: 100%;
   width: 100%;
+}
+
+.label .show {
+  display: none;
+}
+
+.javascript-only .label .hide,
+.html-only .label .hide {
+  display: none;
+}
+
+.javascript-only .label .show,
+.html-only .label .show {
+  display: inline;
 }
 
 .html-only div.javascript {

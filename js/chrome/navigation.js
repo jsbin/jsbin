@@ -1,5 +1,3 @@
-//= require "../render/lightbox"
-
 $('#startingpoint').click(function () {
   if (localStorage) {
     localStorage.setItem('saved-javascript', editors.javascript.getCode());

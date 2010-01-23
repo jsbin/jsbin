@@ -16,10 +16,6 @@ var debug = false,
       sessionStorage.setItem('character', editors[panel].cursorPosition().character);    
     };
 
-// if the user linked directly to #html, initially hide the JS panel
-if (window.location.hash == '#html') {
-  document.getElementById('bin').className += ' html-only';
-}
 
 $(window).unload(unload);
 
@@ -29,7 +25,10 @@ if ($.browser.opera) {
 }
 
 /* Boot code */
-if (localStorage && localStorage.getItem('visible-panel')) {
+// if the user linked directly to #html, initially hide the JS panel
+if (({ '#html':1, '#javascript':1 })[window.location.hash]) {
+  document.getElementById('bin').className += ' ' + window.location.hash.substr(1) + '-only';
+} else if (localStorage && localStorage.getItem('visible-panel')) {
   $bin.addClass(localStorage.getItem('visible-panel') + '-only');
 }
 

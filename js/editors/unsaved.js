@@ -1,5 +1,5 @@
 var $revert = $('#revert'); //.next().addClass('left').end();
-$(document).bind('codeChange', function (event, revert) {
+$(document).bind('codeChange', function (event, revert, onload) {
   if (revert == undefined) {
     revert = false;
   } else {
@@ -13,7 +13,7 @@ $(document).bind('codeChange', function (event, revert) {
     document.title += '*';
     
     if ($revert.addClass('enable').is(':hidden')) {
-      $revert.show().next().removeClass('left').end().fadeIn();
+      $revert[onload ? 'show' : 'fadeIn']().next().removeClass('left');
     }
   } else if (revert && /\*$/.test(document.title)) {
     document.title = document.title.replace(/\*$/, '');

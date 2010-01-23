@@ -99,7 +99,7 @@ function populateEditor(panel) {
   }
   
   if (changed) {
-    $(document).trigger('codeChange');    
+    $(document).trigger('codeChange', [ /* revert triggered */ false, /* don't use fade */ true ]);    
   }
 }
 

@@ -296,6 +296,17 @@ body.preview #source select {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.javascript-only div.javascript {
+  width: 100%;
+  left: 0%;
+}
+
+.javascript-only div.html {
+  display: none;
+  left: 100%;
+  width: 100%;
+}
+
 .html-only div.javascript {
   left: -50%;
   display: none;

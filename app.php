@@ -103,7 +103,7 @@ if (!$action) {
     }
 
     // protect any $0's appearing in the source js, would be corrupted in the following %code% line
-    $javascript = preg_replace('/\$0/', '\\\\$0', $javascript);
+    $javascript = preg_replace('/\$(\d)/', "\\\\$0", $javascript);
 
     $html = preg_replace("/%code%/", $javascript, $html);
     $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);

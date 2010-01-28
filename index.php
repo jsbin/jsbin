@@ -65,9 +65,7 @@ if ($code_id) {
       <textarea id="html"></textarea>
     </div>
   </div>
-  <div id="preview" class="binview stretch">
-    <iframe class="stretch"></iframe>
-  </div>
+  <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?=$code_id?>/save"></form>
 </div>
 <div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div>

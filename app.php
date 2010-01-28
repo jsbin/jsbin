@@ -32,7 +32,12 @@ if (!$action) {
   }
 } else if ($action == 'edit') {
   list($code_id, $revision) = getCodeIdParams($request);
-  
+  if ($revision == 'latest') {
+    $latest_revision = getMaxRevision($code_id);
+    header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
+    $edit_mode = false;
+    
+  }
 } else if ($action == 'save') {
   list($code_id, $revision) = getCodeIdParams($request);
   if (!$code_id) {
@@ -87,8 +92,16 @@ if (!$action) {
 } else if ($action) { // this should be an id
   $subaction = array_pop($request);
   
+  if ($action == 'latest') {
+    // find the latest revision and redirect to that.
+    $code_id = $subaction;
+    $latest_revision = getMaxRevision($code_id);
+    header('Location: /' . $code_id . '/' . $latest_revision);
+    $edit_mode = false;
+  }
+  
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
-  if ($subaction != 'gist') {
+  else if ($subaction != 'gist') {
     if ($subaction) {
       $code_id = $subaction;
       $revision = $action;

@@ -1,6 +1,7 @@
 // shows this is run through jsbin & you can edit
 (function () {
   if (window.location.hash == '#noedit') return;
+  var ie = !/*@cc_on!@*/0;
   
   function set(el, props) {
     for (prop in props) {
@@ -9,7 +10,11 @@
   }
   
   function hide() {
-    emile(el, 'opacity: 0', { duration: 500 });
+    if (ie) {
+      set(el, { display: 'none' });
+    } else {
+      emile(el, 'opacity: 0', { duration: 500 });
+    }  
   }
 
   // slightly modded http://github.com/madrobby/emile/
@@ -26,8 +31,10 @@
   setTimeout(hide, 1000);
   var moveTimer = null;
   event(document, 'mousemove', function () {
-    if (el.style.opacity == 0) { // TODO IE compat
+    if (!ie && el.style.opacity == 0) { // TODO IE compat
       el.style.opacity = 1;
+    } else if (ie) {
+      set(el, { display: 'block' });
     }
     clearTimeout(moveTimer);
     moveTimer = setTimeout(hide, 2000);

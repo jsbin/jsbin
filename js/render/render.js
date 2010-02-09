@@ -1,12 +1,21 @@
 var consoleTest = /(^.|\b)console\./;
 
+var useCustomConsole = (function () {
+  var ok = window.console != undefined;
+  try {
+    window.console.log('jsbin init test');
+  } catch (e) {
+    ok = false;
+  }
+  return ok;
+})();
+
 function renderPreview() {
   var doc = $('#preview iframe')[0], 
       win = doc.contentDocument || doc.contentWindow.document,
       source = editors.html.getCode(),
       parts = [],
-      js = editors.javascript.getCode(),
-      useCustomConsole = window.console == undefined;
+      js = editors.javascript.getCode();
    
   // redirect JS console logged to our custom log while debugging
   if (consoleTest.test(js)) {

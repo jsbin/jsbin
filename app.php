@@ -117,7 +117,9 @@ if (!$action) {
 
     // protect any $0's appearing in the source js, would be corrupted in the following %code% line
     $javascript = preg_replace('/\$(\d)/', "\\\\$0", $javascript);
-
+    // protect escape charaters, which would normally be nuked in the next line
+    $javascript = preg_replace('/\\\/', "\\\\\\\\", $javascript);
+    
     $html = preg_replace("/%code%/", $javascript, $html);
     $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
     $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);

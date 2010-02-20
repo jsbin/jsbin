@@ -114,11 +114,10 @@ if (!$action) {
     if (stripos($html, '%code%') === false) {
       $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
     }
-
-    // protect any $0's appearing in the source js, would be corrupted in the following %code% line
-    $javascript = preg_replace('/\$(\d)/', "\\\\$0", $javascript);
-    // protect escape charaters, which would normally be nuked in the next line
-    $javascript = preg_replace('/\\\/', "\\\\\\\\", $javascript);
+    
+    // removed the regex completely to try to protect $n variables in JavaScript
+    $htmlParts = explode("%code%", $html);
+    $html = $htmlParts[0] . $javascript . $htmlParts[1];
     
     $html = preg_replace("/%code%/", $javascript, $html);
     $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);

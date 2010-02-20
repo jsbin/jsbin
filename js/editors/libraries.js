@@ -19,8 +19,8 @@ Libraries.prototype.init = function () {
     yui: {
       text: 'YUI',
       scripts: [
-        { text: 'YUI 2.7.0', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/yuiloader/yuiloader-min.js' },
-        { text: 'YUI 2.8.0r4', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/yuiloader/yuiloader-min.js'}
+        { text: 'YUI 2.8.0r4', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/yuiloader/yuiloader-min.js'},
+        { text: 'YUI 2.7.0', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/yuiloader/yuiloader-min.js' }
       ]
     },
     mootools: {
@@ -42,6 +42,7 @@ Libraries.prototype.init = function () {
       text: 'jQuery',
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
+        { text: 'jQuery 1.4.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' },
         { text: 'jQuery 1.4.0', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js' },
         { text: 'jQuery 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' },
         { text: 'jQuery 1.2.6', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' }
@@ -66,7 +67,7 @@ Libraries.prototype.init = function () {
     dojo : {
       text: 'Dojo',
       scripts: [
-        { text: 'Dojo 1.4.0', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.4.0/dojo/dojo.xd.js' },
+        { text: 'Dojo 1.4.1', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.4.1/dojo/dojo.xd.js' },
         { text: 'Dojo 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.3.2/dojo/dojo.xd.js' }
       ]
     },

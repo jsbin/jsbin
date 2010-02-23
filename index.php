@@ -65,9 +65,7 @@ if ($code_id) {
       <textarea id="html"></textarea>
     </div>
   </div>
-  <div id="preview" class="binview stretch">
-    <iframe class="stretch"></iframe>
-  </div>
+  <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?=$code_id?>/save"></form>
 </div>
 <div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div>
@@ -99,6 +97,7 @@ if (@$_POST['inject'] && @$_POST['html']) :
 <script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>  
 <?php endif ?>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
+<?php if (!OFFLINE) : ?>
 <script>
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-1656750-13']);
@@ -110,5 +109,6 @@ _gaq.push(['_trackPageview']);
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
 })();
 </script>
+<?php endif ?>
 </body>
 </html>

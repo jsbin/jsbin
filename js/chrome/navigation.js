@@ -45,8 +45,12 @@ $('#control .tab').click(function (event) {
   $('body').removeAttr('class').addClass(this.hash.substr(1));
 
   if ($(this).is('.preview')) {
+    $('#preview').append('<iframe class="stretch"></iframe>');
     renderPreview();
-  } 
+  } else {
+    // remove iframe and thus removing any (I *think*) memory resident JS
+    $('#preview iframe').remove();
+  }
 });
 
 $('#control div.help a:last').click(function () {

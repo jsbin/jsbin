@@ -232,17 +232,20 @@ body.preview a.preview {
 }
 
 a.group {
-  border-left: 0;
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
+  border-radius: 0;
+  border-left: 0;
 }
 
 a.left {
   border-left: 1px solid #ccc;
   -moz-border-radius-topleft: 3px;
   -webkit-border-top-left-radius: 3px;
+  border-top-left-radius: 3px;
   -moz-border-radius-bottomleft: 3px;
   -webkit-border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 
 a.right {
@@ -251,6 +254,8 @@ a.right {
   -webkit-border-top-right-radius: 3px;
   -moz-border-radius-bottomright: 3px;
   -webkit-border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 
@@ -557,6 +562,7 @@ textarea {
 	text-shadow: rgba(0,255,255,0.5) 0 0 4px;
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
+	border-radius: 2px;
 	-webkit-box-shadow: 1px 1px 0px #000; }
 #help .shortcuts.a dt {
 	width: 7em; }

@@ -32,7 +32,12 @@ if (!$action) {
   }
 } else if ($action == 'edit') {
   list($code_id, $revision) = getCodeIdParams($request);
-  
+  if ($revision == 'latest') {
+    $latest_revision = getMaxRevision($code_id);
+    header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
+    $edit_mode = false;
+    
+  }
 } else if ($action == 'save') {
   list($code_id, $revision) = getCodeIdParams($request);
   if (!$code_id) {
@@ -87,8 +92,16 @@ if (!$action) {
 } else if ($action) { // this should be an id
   $subaction = array_pop($request);
   
+  if ($action == 'latest') {
+    // find the latest revision and redirect to that.
+    $code_id = $subaction;
+    $latest_revision = getMaxRevision($code_id);
+    header('Location: /' . $code_id . '/' . $latest_revision);
+    $edit_mode = false;
+  }
+  
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
-  if ($subaction != 'gist') {
+  else if ($subaction != 'gist') {
     if ($subaction) {
       $code_id = $subaction;
       $revision = $action;
@@ -101,10 +114,11 @@ if (!$action) {
     if (stripos($html, '%code%') === false) {
       $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
     }
-
-    // protect any $0's appearing in the source js, would be corrupted in the following %code% line
-    $javascript = preg_replace('/\$(\d)/', "\\\\$0", $javascript);
-
+    
+    // removed the regex completely to try to protect $n variables in JavaScript
+    $htmlParts = explode("%code%", $html);
+    $html = $htmlParts[0] . $javascript . $htmlParts[1];
+    
     $html = preg_replace("/%code%/", $javascript, $html);
     $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
     $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);

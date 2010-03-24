@@ -72,7 +72,7 @@ if ($code_id) {
 <?php 
 // construct the correct query string, if we're injecting the html or JS
 $qs = '';
-if (isset($_GET['js']) || isset($_GET['html'])) {
+if (isset($_GET['js']) || isset($_GET['html']) || (@$_POST['inject'] && isset($_POST['html'])) ) {
   $qs .= '?';
 }
 
@@ -87,17 +87,27 @@ if (@$_GET['js']) {
 if (@$_GET['html']) {
   $qs .= 'html=' . rawurlencode(stripslashes($_GET['html']));
 }
+
+if (@$_POST['inject'] && @$_POST['html']) :
+  $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
+  $html = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']) . '"';
 ?>
-<script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>
+<script>var template = { html : <?=$html?>, javascript: '' };</script>
+<?php else : ?>
+<script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>  
+<?php endif ?>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script>
-var pageTracker = _gat._getTracker("UA-1656750-13");
-pageTracker._trackPageview();
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-1656750-13']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+})();
 </script>
 <?php endif ?>
 </body>

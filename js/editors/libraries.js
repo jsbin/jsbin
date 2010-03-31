@@ -50,12 +50,11 @@ Libraries.prototype.init = function () {
     },
     jqueryui : {
       text: 'jQuery UI',
-      requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-      style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css',
+      requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+      style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/themes/base/jquery-ui.css',
       scripts: [
         { text: 'jQuery UI 1.8.0', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js' },
         { text: 'jQuery UI 1.7.2', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' }
-        // { text: 'jQuery UI 1.6', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.6/jquery-ui.min.js' }
       ]
     },
     scriptaculous: {

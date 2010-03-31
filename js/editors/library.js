@@ -45,7 +45,7 @@ $('#library').bind('change', function () {
     }
     
     if (lib.style) {
-      code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css"><' + '/link');
+      code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css"/');
     }
   }
 

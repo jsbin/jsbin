@@ -23,7 +23,7 @@ if ($code_id) {
     <?php if ($code_id) : ?>
     <a class="button group light left" href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
     <?php else : ?>
-    <a id="save" class="button save group right left" href="/save">Create public link</a>
+    <a id="save" class="button save group right left" href="/save">Save</a>
     <?php endif ?>
     <?php if ($code_id) : ?><a id="save" class="button light save group right" href="<?=$code_id?>/save">New revision</a><?php endif ?>
     </div>

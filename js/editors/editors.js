@@ -81,13 +81,14 @@ function setupEditor(panel) {
 
 function populateEditor(panel) {
   // populate - should eventually use: session, saved data, local storage
-  var data = sessionStorage.getItem(panel),
-      saved = localStorage.getItem('saved-' + panel),
+  var data = sessionStorage.getItem(panel), // session code
+      saved = localStorage.getItem('saved-' + panel), // user template
+      sessionURL = sessionStorage.getItem('url'),
       changed = false;
   
   if (data == template[panel]) { // restored from original saved
     editors[panel].setCode(data);
-  } else if (data) { // try to restore the session first
+  } else if (data && sessionURL == template.url) { // try to restore the session first - only if it matches this url
     editors[panel].setCode(data);
     // tell the document that it's currently being edited, but check that it doesn't match the saved template
     // because sessionStorage gets set on a reload

@@ -9,6 +9,7 @@ var debug = false,
     unload = function () {
       sessionStorage.setItem('javascript', editors.javascript.getCode());
       sessionStorage.setItem('html', editors.html.getCode());
+      sessionStorage.setItem('url', template.url);
       
       var panel = getFocusedPanel();
       sessionStorage.setItem('panel', panel);

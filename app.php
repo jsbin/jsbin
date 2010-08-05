@@ -28,7 +28,8 @@ if (!$action) {
   if ($action == 'js') {
     echo $javascript;
   } else {
-    echo 'var template = { html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
+    $url = 'http://jsbin.com/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    echo 'var template = { url : "' . $url . '", html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
   }
 } else if ($action == 'edit') {
   list($code_id, $revision) = getCodeIdParams($request);

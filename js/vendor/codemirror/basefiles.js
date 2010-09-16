@@ -2148,7 +2148,7 @@ function tokenizer(source, state) {
 var select = {};
 
 (function() {
-  select.ie_selection = false; //document.selection && document.selection.createRangeCollection;
+  select.ie_selection = document.selection && document.selection.createRangeCollection;
   
   // Find the 'top-level' (defined as 'a direct child of the node
   // passed as the top argument') node that the given node is

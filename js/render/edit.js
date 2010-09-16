@@ -22,8 +22,9 @@
   
   var event = (function(){return document.addEventListener?function(a,b,c){a.addEventListener(b,c,false)}:function(a,b,c){a.attachEvent("on"+b,function(){return c.call(a,window.event)})}})();
 
-  var el = document.createElement('a');
-  set(el, { opacity: 0, position: 'fixed', top: 0, right: 0, padding: '5px', background: '#eee', color: '#212121', WebkitBorderBottomLeftRadius: '10px', BorderBottomLeftRadius: '10px', MozBorderRadiusBottomleft: '10px', border: '1px solid #999', borderRight: 0, borderTop: 0, textDecoration: 'none', font: '12px "Helvetica Neue", Arial, Helvetica' });
+  var el = document.createElement('a'); 
+  
+  set(el, { opacity: 0, position: 'fixed', top: 0, right: 0, padding: '5px', background: '#eee', color: '#212121', 'border-bottom-left-radius': '10px', MozBorderRadiusBottomleft: '10px', border: '1px solid #999', borderRight: 0, borderTop: 0, textDecoration: 'none', font: '12px "Helvetica Neue", Arial, Helvetica' });
   el.innerHTML = 'Edit using JS Bin';
   el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
   
@@ -34,7 +35,7 @@
     if (!ie && (el.style.opacity*1) == 0) { // TODO IE compat
       el.style.opacity = 1;
     } else if (ie) {
-      set(el, { display: 'block' });
+      set(el, { display: 'block', opacity: '1' });
     }
     clearTimeout(moveTimer);
     moveTimer = setTimeout(hide, 2000);

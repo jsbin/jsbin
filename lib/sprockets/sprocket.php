@@ -101,7 +101,8 @@ class Sprocket
 		
     if (!$this->requiresProcessing(realpath($context.'/'.$file))) return;
 
-		$source = file_get_contents($context.'/'.$file);
+    $source = "// SCRIPT: " . $context.'/'.$file . "\n";
+		$source .= file_get_contents($context.'/'.$file);
 				
 		// Parse Commands
 		preg_match_all('/\/\/= ([a-z]+) ([^\n]+)/', $source, $matches);

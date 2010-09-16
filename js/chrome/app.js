@@ -13,8 +13,13 @@ var debug = false,
       
       var panel = getFocusedPanel();
       sessionStorage.setItem('panel', panel);
-      sessionStorage.setItem('line', editors[panel].currentLine());
-      sessionStorage.setItem('character', editors[panel].cursorPosition().character);    
+      try { // this causes errors in IE9 - so we'll use a try/catch to get through it
+        sessionStorage.setItem('line', editors[panel].currentLine());
+        sessionStorage.setItem('character', editors[panel].cursorPosition().character);        
+      } catch (e) {
+        sessionStorage.setItem('line', 0);
+        sessionStorage.setItem('character', 0);
+      }
     };
 
 
@@ -84,6 +89,8 @@ $('div.label p').click(function () {
     });
   }
 });
+
+window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 
 // $(window).bind('online', function () {
 //   console.log("we're online");

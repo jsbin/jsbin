@@ -1,7 +1,7 @@
 var consoleTest = /(^.|\b)console\./;
 
 var useCustomConsole = (function () {
-  var ok = window.console != undefined;
+  var ok = window.console !== undefined;
   try {
     window.console.log('jsbin init test');
   } catch (e) {
@@ -36,7 +36,7 @@ function renderPreview() {
     source = parts[0] + js + parts[1];
   } else {
     parts = source.split('</body>');
-    source = parts[0] + "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console == undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n</body>" + parts[1];
+    source = parts[0] + "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n</body>" + parts[1];
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)

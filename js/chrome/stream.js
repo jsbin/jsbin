@@ -1,35 +1,74 @@
 (function () {
 
-var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span></div>').prependTo('body'),
+var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</div>').prependTo('body'),
     streaming = false,
     $body = $('body'),
     key = null,
     captureTimer = null,
     last = {};
 
-$(document).keyup(function (event) {
-  if (streaming && event.keyCode == 27) {
-    window.stream.stop();
+function capture() {
+  var javascript = editors.javascript.getCode(),
+      html = editors.html.getCode(),
+      changed = false,
+      msg = {};
+  
+  if (javascript != last.javascript) {
+    msg.javascript = javascript;
+    changed = true;
   }
-});
+  
+  if (html != last.html) {
+    msg.html = html;
+    changed = true;
+  }
+  
+  if (changed) {
+    last = {
+      javascript: javascript,
+      html: html
+    };
+    
+    msg.panel = getFocusedPanel();
+    
+    msg.line = editors[msg.panel].currentLine();
+    msg.character = editors[msg.panel].cursorPosition().character;
+    
+    forbind.send(msg);
+  }
+}
 
 forbind.bind('join', function () {
-  $body.addClass('streaming');
+  $body.addClass('streaming').removeClass('pausestream');
   streaming = true;
 }).bind('leave', function () {
-  $body.removeClass('streaming');
+  $body.addClass('pausestream');
   streaming = false;  
-  clearInterval(captureTimer);
-  captureTimer = null;
+  
+  $stream.one('click', function () {
+    window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
+      window.stream.join(key);
+    });
+  });
+  
 }).bind('message', function (msg) {
-  for (var type in msg.data) {
-    editors[type].setCode(msg.data[type]);
+  if (msg.data.javascript) {
+    editors.javascript.setCode(msg.data.javascript);
+  }
+  
+  if (msg.data.html) {
+    editors.html.setCode(msg.data.html);
   }
   
   // update preview if required
   if ($body.is('.preview')) {
     $('#preview').append('<iframe class="stretch"></iframe>');
     renderPreview();
+  } else {
+    var focused = editors[msg.data.panel];
+    focused.focus();
+    focused.selectLines(focused.nthLine(msg.data.line), msg.data.character);
+    
   }
 }).bind('error', function (data) {
   console.log('error in forbind', data);
@@ -37,34 +76,21 @@ forbind.bind('join', function () {
 
 window.stream = {
   create: function () {
+    var type, editorTimer = { javascript: null, html: null };
+    
     key = (Math.abs(~~(Math.random()*+new Date))).toString(32); // OTT?
-    forbind.join(key);
     
     var join = function () {
-      captureTimer = setInterval(function () {
-        var javascript = editors.javascript.getCode(),
-            html = editors.html.getCode(),
-            changed = false,
-            msg = {};
-        
-        if (javascript != last.javascript) {
-          msg.javascript = javascript;
-          changed = true;
-        }
-        
-        if (html != last.html) {
-          msg.html = html;
-          changed = true;
-        }
-        
-        if (changed) {
-          last = {
-            javascript: javascript,
-            html: html
-          };
-          forbind.send(msg);
-        }
-      }, 500);
+      for (type in editors) {
+        (function (type) {
+          $(editors[type].win.document).bind('keyup', function () {
+            if (streaming) {
+              clearTimeout(editorTimer[type]);
+              setTimeout(capture, 250);              
+            }
+          });
+        })(type);
+      }      
     };
     
     forbind.unbind('join', join).bind('join', join);
@@ -73,19 +99,39 @@ window.stream = {
     forbind.unbind('create').bind('create', function () {
       $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #').end().find('.n').html('0 users');
       // -1 because we're excluding counting ourselves
-      forbind.unbind('connection').bind('connection disconnection', function (data) {
+      forbind.unbind('connection disconnection').bind('connection disconnection', function (data) {
         var txt = (data.total - 1) == 1 ? ' user' : ' users';
         $stream.find('.n').html((data.total - 1) + txt);
       });
     });
+
+    forbind.create(key);
 
     return key;
   },
   join: function (key) {
     forbind.unbind('create');
     forbind.join(key);
-    $stream.find('.msg').html('following live stream...');
     
+    $(document).one('keyup', function (event) {
+      if (streaming && event.which == 27) {
+        window.stream.leave();
+      }
+    });
+
+    $stream.one('click', function () {
+      window.stream.leave();
+    });
+
+    for (var type in editors) {
+      $(editors[type].win.document).one('keyup', function (event) {
+        if (event.which == 27) {
+          window.stream.leave();
+        }
+      });      
+    }
+    
+    $stream.find('.msg').html('following live stream...');
   },
   leave: function () {
     forbind.leave();
@@ -93,7 +139,7 @@ window.stream = {
 };
 
 window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-  stream.join(key);
+  window.stream.join(key);
 });
 
 })();

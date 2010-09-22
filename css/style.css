@@ -610,11 +610,34 @@ body.streaming {
   display: block;
   background: #0c0;
   border-bottom: 1px solid #0a0;
+  cursor: pointer;
 }
 
 #streaming a {
   text-shadow: #0A0 0px 1px 0px;
   color: #fff;
+}
+
+body.pausestream #streaming .pause {
+  display: none;
+}
+
+body.streaming #streaming .resume {
+  display: none;
+}
+
+body.pausestream #streaming .resume {
+  display: inline;
+}
+
+body.pausestream #streaming {
+  background: #c00;
+  text-shadow: #a00 0px 1px 0px;
+  border-bottom: 1px solid #a00;
+}
+
+body.pausestream #streaming a {
+  text-shadow: #a00 0px 1px 0px;
 }
 
 body.streaming #streaming {

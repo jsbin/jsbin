@@ -630,6 +630,14 @@ body.pausestream #streaming .resume {
   display: inline;
 }
 
+#streaming .listen {
+  display: none;
+}
+
+#streaming.listen .listen {
+  display: inline;
+}
+
 body.pausestream #streaming {
   background: #c00;
   text-shadow: #a00 0px 1px 0px;

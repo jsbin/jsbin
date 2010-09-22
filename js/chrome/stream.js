@@ -1,6 +1,6 @@
 (function () {
 
-var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</div>').prependTo('body'),
+var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span><span class="listen"> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</span></div>').prependTo('body'),
     streaming = false,
     $body = $('body'),
     key = null,
@@ -58,6 +58,7 @@ forbind.bind('join', function () {
   
   if (msg.data.html) {
     editors.html.setCode(msg.data.html);
+    $(document).trigger('codeChange');
   }
   
   // update preview if required
@@ -83,12 +84,14 @@ window.stream = {
     var join = function () {
       for (type in editors) {
         (function (type) {
-          $(editors[type].win.document).bind('keyup', function () {
-            if (streaming) {
-              clearTimeout(editorTimer[type]);
-              setTimeout(capture, 250);              
-            }
-          });
+          try {
+            $(editors[type].win.document).bind('keyup', function () {
+              if (streaming) {
+                clearTimeout(editorTimer[type]);
+                editorTimer[type] = setTimeout(capture, 250);              
+              }
+            });
+          } catch (e) {}
         })(type);
       }      
     };
@@ -106,12 +109,16 @@ window.stream = {
     });
 
     forbind.create(key);
+    
+    $stream.removeClass('listen');
 
     return key;
   },
   join: function (key) {
     forbind.unbind('create');
     forbind.join(key);
+    
+    $stream.addClass('listen');
     
     $(document).one('keyup', function (event) {
       if (streaming && event.which == 27) {

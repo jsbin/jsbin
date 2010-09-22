@@ -590,3 +590,56 @@ textarea {
 #revert.enable img.enabled {
   display: inline;
 }
+
+body.streaming {
+  background-position: 0 22px;
+}
+
+#streaming {
+  display: block;
+  top: -23px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 20px;
+  padding-left: 15px;
+  text-shadow: #0A0 0px 1px 0px;
+  display: block;
+  background: #0c0;
+  border-bottom: 1px solid #0a0;
+}
+
+#streaming a {
+  text-shadow: #0A0 0px 1px 0px;
+  color: #fff;
+}
+
+body.streaming #streaming {
+  top: 0;
+}
+
+body {
+  -webkit-transition: background-position 100ms ease-out;
+  -o-transition: background-position 100ms ease-out;
+  -moz-transition: background-position 100ms ease-out;
+  transition: background-position 100ms ease-out;
+}
+
+#streaming, #control, #bin {
+  -webkit-transition: top 100ms ease-out;
+  -o-transition: top 100ms ease-out;
+  -moz-transition: top 100ms ease-out;
+  transition: top 100ms ease-out;
+}
+
+body.streaming #control,
+body.streaming #help {
+  top: 22px;
+}
+
+body.streaming #bin {
+  top: 84px;
+}

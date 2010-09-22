@@ -2,6 +2,7 @@
 //= require "events"
 //= require "navigation"
 //= require "save"
+//= require "stream"
 
 var debug = false,
     $bin = $('#bin'),

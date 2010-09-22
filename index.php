@@ -96,6 +96,7 @@ if (@$_POST['inject'] && @$_POST['html']) :
 <?php else : ?>
 <script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>  
 <?php endif ?>
+<script src="http://forbind.net/js/forbind-0.1.js?apikey=jsbin"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

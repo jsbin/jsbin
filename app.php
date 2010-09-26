@@ -128,6 +128,13 @@ if (!$action) {
     if (!$ajax) {
       $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
     }
+    
+    if (stripos($html, '<head>')) {
+      $html = preg_replace('/<head>(.*)/', '<head><script>if (window.top != window.self) window.top.location.replace(window.location.href);</script>$1', $html);
+    } else {
+      // if we can't find a head element, brute force the framebusting in to the HTML
+      $html = '<script>if (window.top != window.self) window.top.location.replace(window.location.href);</script>' . $html;
+    }
 
     if (!$html && !$ajax) {
       $javascript = "/*\n  Created using http://jsbin.com\n  Source can be edit via http://jsbin.com/$code_id/edit\n*/\n\n" . $javascript;

@@ -1,5 +1,5 @@
 (function () {
-
+forbind.debug = true;
 var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span><span class="listen"> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</span></div>').prependTo('body'),
     streaming = false,
     $body = $('body'),
@@ -52,12 +52,12 @@ forbind.bind('join', function () {
   });
   
 }).bind('message', function (msg) {
-  if (msg.data.javascript) {
-    editors.javascript.setCode(msg.data.javascript);
+  if (msg.javascript) {
+    editors.javascript.setCode(msg.javascript);
   }
   
-  if (msg.data.html) {
-    editors.html.setCode(msg.data.html);
+  if (msg.html) {
+    editors.html.setCode(msg.html);
     $(document).trigger('codeChange');
   }
   
@@ -66,9 +66,9 @@ forbind.bind('join', function () {
     $('#preview').append('<iframe class="stretch"></iframe>');
     renderPreview();
   } else {
-    var focused = editors[msg.data.panel];
+    var focused = editors[msg.panel];
     focused.focus();
-    focused.selectLines(focused.nthLine(msg.data.line), msg.data.character);
+    focused.selectLines(focused.nthLine(msg.line), msg.character);
     
   }
 }).bind('error', function (data) {
@@ -102,12 +102,12 @@ window.stream = {
     forbind.unbind('create').bind('create', function () {
       $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #').end().find('.n').html('0 users');
       // -1 because we're excluding counting ourselves
-      forbind.unbind('connection disconnection').bind('connection disconnection', function (data) {
+      forbind.unbind('connection').bind('connection disconnection', function (data) {
         var txt = (data.total - 1) == 1 ? ' user' : ' users';
         $stream.find('.n').html((data.total - 1) + txt);
       });
     });
-
+    
     forbind.create(key);
     
     $stream.removeClass('listen');

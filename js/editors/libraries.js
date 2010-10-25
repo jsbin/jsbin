@@ -57,6 +57,19 @@ Libraries.prototype.init = function () {
         { text: 'jQuery UI 1.7.2', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' }
       ]
     },
+    jquerymobile : {
+      text: 'jQuery Mobile',
+      requires: 'http://code.jquery.com/jquery-1.4.3.min.js',
+      style: 'http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css',
+      scripts: [
+        { text: 'jQuery Mobile 1.01a', url: 'http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js' }
+      ]
+    },
+    underscore: {
+      text: 'underscore',
+      scripts: [
+      { text: 'underscore', url: 'http://documentcloud.github.com/underscore/underscore-min.js'} ]
+    },
     scriptaculous: {
       text: 'script.aculo.us',
       requires: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
@@ -79,9 +92,10 @@ Libraries.prototype.init = function () {
       ]
     }
   },
-  order = 'jquery jqueryui prototype scriptaculous yui mootools dojo ext'.split(' '),
+  // NOTE if a new library is added, you need to add it here
+  order = 'jquery jqueryui jquerymobile prototype scriptaculous yui mootools dojo underscore ext'.split(' '),
   i = 0;
-  
+    
   this.length = 0; // triggers support for length prop
   for (i = 0; i < order.length; i++) {
     push.call(this, libs[order[i]]);

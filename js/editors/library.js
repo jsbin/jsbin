@@ -26,7 +26,7 @@ $('#library').bind('change', function () {
 
   // strip existing libraries out  
   code = code.replace(/<script class="jsbin".*><\/script>\n?/g, '');
-  code = code.replace(/<link class="jsbin".*><\/link>\n?/g, '');
+  code = code.replace(/<link class="jsbin".*\/>\n?/g, '');
   
   if (this.value != 'none') {
     // to restore

@@ -38,41 +38,48 @@ function capture() {
   }
 }
 
-forbind.bind('join', function () {
-  $body.addClass('streaming').removeClass('pausestream');
-  streaming = true;
-}).bind('leave', function () {
-  $body.addClass('pausestream');
-  streaming = false;  
+forbind.on({
+  join: function () {
+    $body.addClass('streaming').removeClass('pausestream');
+    streaming = true;
+  },
+  leave: function (event) {
+    if (event.isme) {
+      $body.addClass('pausestream');
+      streaming = false;  
+
+      $stream.one('click', function () {
+        window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
+          window.stream.join(key);
+        });
+      });
+    }
+  },
+  message: function (msg) {
+    var code = msg.data;
+    if (code.javascript) {
+      editors.javascript.setCode(code.javascript);
+    }
   
-  $stream.one('click', function () {
-    window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-      window.stream.join(key);
-    });
-  });
+    if (code.html) {
+      editors.html.setCode(code.html);
+      $(document).trigger('codeChange');
+    }
   
-}).bind('message', function (msg) {
-  if (msg.javascript) {
-    editors.javascript.setCode(msg.javascript);
-  }
-  
-  if (msg.html) {
-    editors.html.setCode(msg.html);
-    $(document).trigger('codeChange');
-  }
-  
-  // update preview if required
-  if ($body.is('.preview')) {
-    $('#preview').append('<iframe class="stretch"></iframe>');
-    renderPreview();
-  } else {
-    var focused = editors[msg.panel];
-    focused.focus();
-    focused.selectLines(focused.nthLine(msg.line), msg.character);
+    // update preview if required
+    if ($body.is('.preview')) {
+      $('#preview').append('<iframe class="stretch"></iframe>');
+      renderPreview();
+    } else {
+      var focused = editors[code.panel];
+      focused.focus();
+      focused.selectLines(focused.nthLine(code.line), code.character);
     
+    }
+  },
+  error: function (data) {
+    console.log('error in forbind', data);
   }
-}).bind('error', function (data) {
-  console.log('error in forbind', data);
 });
 
 window.stream = {
@@ -81,7 +88,7 @@ window.stream = {
     
     key = (Math.abs(~~(Math.random()*+new Date))).toString(32); // OTT?
     
-    var join = function () {
+    var ready = function (event) {
       for (type in editors) {
         (function (type) {
           try {
@@ -96,16 +103,14 @@ window.stream = {
       }      
     };
     
-    forbind.unbind('join', join).bind('join', join);
+    forbind.bind('ready', ready);
     
     // this code is completely over the top - need to simplify
-    forbind.unbind('create').bind('create', function () {
-      $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #').end().find('.n').html('0 users');
-      // -1 because we're excluding counting ourselves
-      forbind.unbind('connection').bind('connection disconnection', function (data) {
-        var txt = (data.total - 1) == 1 ? ' user' : ' users';
-        $stream.find('.n').html((data.total - 1) + txt);
-      });
+    $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #').end().find('.n').html('0 users');
+    // -1 because we're excluding counting ourselves
+    forbind.bind('join leave', function (data) {
+      var txt = (data.total - 1) == 1 ? ' user' : ' users';
+      $stream.find('.n').html((data.total - 1) + txt);
     });
     
     forbind.create(key);
@@ -115,7 +120,6 @@ window.stream = {
     return key;
   },
   join: function (key) {
-    forbind.unbind('create');
     forbind.join(key);
     
     $stream.addClass('listen');
@@ -131,11 +135,15 @@ window.stream = {
     });
 
     for (var type in editors) {
-      $(editors[type].win.document).one('keyup', function (event) {
-        if (event.which == 27) {
-          window.stream.leave();
-        }
-      });      
+      try {
+        $(editors[type].win.document).one('keyup', function (event) {
+          if (event.which == 27) {
+            window.stream.leave();
+          }
+        });        
+      } catch (e) {
+        // because it sometimes throw an error on reconnecting trying to read win.document
+      }
     }
     
     $stream.find('.msg').html('following live stream...');

@@ -43,24 +43,58 @@ forbind.on({
     $body.addClass('streaming').removeClass('pausestream');
     streaming = true;
     
-    if (event.isme && event.readonlykey) {
+    if (event.isme) {
+      $('#stream').fadeOut('fast').prev().addClass('right');
+    }
+    
+    if (event.isme && event.readonlykey) {            
       owner = true;
       sessionStorage.setItem('streamwritekey', event.readonlykey);
       sessionStorage.setItem('streamkey', key);
+      
+      var type, editorTimer = { javascript: null, html: null };
+
+      // this code is completely over the top - need to simplify
+      $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #');
+
+      $stream.removeClass('listen');
+
+      for (type in editors) {
+        (function (type) {
+          try {
+            $(editors[type].win.document).bind('keyup', function () {
+              if (streaming) {
+                clearTimeout(editorTimer[type]);
+                editorTimer[type] = setTimeout(capture, 250);              
+              }
+            });
+          } catch (e) {}
+        })(type);
+      }
+      
+      $(document).bind('codeChange', capture);
+      
     }
     
     updateCount(event);
   },
   leave: function (event) {
     if (event.isme) {
-      $body.addClass('pausestream');
-      streaming = false;  
+      if (!owner) {
+        $body.addClass('pausestream');
+        streaming = false;  
 
-      $stream.one('click', function () {
-        window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-          window.stream.join(key);
-        });
-      });
+        $stream.one('click', function () {
+          window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
+            window.stream.join(key);
+          });
+        });        
+      } else {
+        $body.removeClass('streaming');
+        owner = false;
+        sessionStorage.removeItem('streamkey');
+        sessionStorage.removeItem('streamwritekey');
+      }
     }
     
     updateCount(event);
@@ -99,34 +133,10 @@ function updateCount(data) {
   }
 }
 
-function ready(event) {
-  var type, editorTimer = { javascript: null, html: null };
-  
-  // this code is completely over the top - need to simplify
-  $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #');
-
-  $stream.removeClass('listen');
-
-  for (type in editors) {
-    (function (type) {
-      try {
-        $(editors[type].win.document).bind('keyup', function () {
-          if (streaming) {
-            clearTimeout(editorTimer[type]);
-            editorTimer[type] = setTimeout(capture, 250);              
-          }
-        });
-      } catch (e) {}
-    })(type);
-  }      
-};
-
-
 window.stream = {
   create: function () {
     key = (Math.abs(~~(Math.random()*+new Date))).toString(32); // OTT?
         
-    forbind.on('ready', ready);
     forbind.create(key);
     
     return key;
@@ -174,7 +184,6 @@ window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
 });
 
 if (sessionStorage.getItem('streamkey')) {
-  forbind.on('ready', ready);
   key = sessionStorage.getItem('streamkey');
   forbind.join(key, sessionStorage.getItem('streamwritekey') || undefined);
 }

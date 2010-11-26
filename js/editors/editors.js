@@ -1,4 +1,5 @@
 //= require <codemirror>
+//= require "mobileCodeMirror"
 //= require "library"
 //= require "unsaved"
 var focusPanel = 'javascript';
@@ -50,7 +51,7 @@ function getFocusedPanel() {
 function setupEditor(panel) {
   var e = editors[panel], 
       focusedPanel = sessionStorage.getItem('panel');
-  
+
   e.ready = true;
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';

@@ -426,6 +426,31 @@ textarea {
   opacity: 0;
   -moz-opacity: 0;
   filter:alpha(opacity=0);
+  margin: 0.4em;
+  border: 0;
+  padding: 0;
+  font-family: Monaco, consolas, monospace;
+  font-size: 10pt;
+  color: black;
+  margin-top: 60px;
+  padding: 6px;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  resize: none;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+#javascript {
+  margin-top: 26px;
+}
+
+div.javascript {
+  border-right: 1px solid #ccc;
 }
 
 /* tab based help pages */
@@ -593,6 +618,10 @@ textarea {
 
 body.streaming {
   background-position: 0 22px;
+}
+
+#stream {
+  display: none;
 }
 
 #streaming {

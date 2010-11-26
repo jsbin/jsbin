@@ -40,6 +40,11 @@ $('#revert').click(function () {
   return false;
 });
 
+var $stream = $('#stream').click(function () {
+  stream.create();
+  return false;
+});
+
 $('#control .tab').click(function (event) {
   event.preventDefault();
   $('body').removeClass('source preview').addClass(this.hash.substr(1));

@@ -23,9 +23,10 @@ if ($code_id) {
     <?php if ($code_id) : ?>
     <a class="button group light left" href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
     <?php else : ?>
-    <a id="save" class="button save group right left" href="/save">Save</a>
+    <a id="save" class="button save group left right gap" href="/save">Save</a>
     <?php endif ?>
-    <?php if ($code_id) : ?><a id="save" class="button light save group right" href="<?=$code_id?>/save">New revision</a><?php endif ?>
+    <?php if ($code_id) : ?><a id="save" class="button gap light save group right" href="<?=$code_id?>/save">Save changes</a><?php endif ?>
+    <a id="stream" class="button left right" href="#stream">Stream</a>
     </div>
   </div>
   <!-- <div class="starting">

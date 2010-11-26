@@ -28,7 +28,7 @@ if (!$action) {
   if ($action == 'js') {
     echo $javascript;
   } else {
-    $url = 'http://jsbin.com/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
     echo 'var template = { url : "' . $url . '", html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
   }
 } else if ($action == 'edit') {

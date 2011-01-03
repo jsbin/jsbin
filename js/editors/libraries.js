@@ -19,31 +19,31 @@ Libraries.prototype.init = function () {
     yui: {
       text: 'YUI',
       scripts: [
-        { text: 'YUI 2.8.0r4', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.0r4/build/yuiloader/yuiloader-min.js'},
+        { text: 'YUI 2.8.2', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.2/build/yuiloader/yuiloader-min.js'},
         { text: 'YUI 2.7.0', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/yuiloader/yuiloader-min.js' }
       ]
     },
     mootools: {
       text: 'MooTools',
       scripts: [
-        { text: 'Mootools 1.2.4', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js' },
-        { text: 'Mootools 1.2.3', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.3/mootools-yui-compressed.js'}
+        { text: 'Mootools 1.3.0', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.3.0/mootools-yui-compressed.js'},
+        { text: 'Mootools 1.2.4', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js' }
       ]
     },
     prototype: {
       text: 'Prototype',
       scripts: [
         { text: 'Prototype latest', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js' },
-        { text: 'Prototype 1.6.1.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' },
-        { text: 'Prototype 1.6.0.3', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.3/prototype.js'}
+        { text: 'Prototype 1.7.0.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'},
+        { text: 'Prototype 1.6.1.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' }
       ]
     },
     jquery: {
       text: 'jQuery',
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
-        { text: 'jQuery 1.4.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' },
-        { text: 'jQuery 1.4.0', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js' },
+        { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
+        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' },
         { text: 'jQuery 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' },
         { text: 'jQuery 1.2.6', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' }
       ]
@@ -59,16 +59,18 @@ Libraries.prototype.init = function () {
     },
     jquerymobile : {
       text: 'jQuery Mobile',
-      requires: 'http://code.jquery.com/jquery-1.4.3.min.js',
-      style: 'http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css',
+      requires: 'http://code.jquery.com/jquery-1.4.4.min.js',
+      style: 'http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css',
       scripts: [
-        { text: 'jQuery Mobile 1.01a', url: 'http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js' }
+        { text: 'jQuery Mobile 1.01a', url: 'http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js' }
       ]
     },
-    underscore: {
-      text: 'underscore',
+    others: {
+      text: 'Others',
       scripts: [
-      { text: 'underscore', url: 'http://documentcloud.github.com/underscore/underscore-min.js'} ]
+        { text: 'underscore', url: 'http://documentcloud.github.com/underscore/underscore-min.js'},
+        { text: 'Rapha&euml;l', url: 'https://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js'} 
+      ]
     },
     scriptaculous: {
       text: 'script.aculo.us',
@@ -83,17 +85,17 @@ Libraries.prototype.init = function () {
         { text: 'Dojo 1.4.1', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.4.1/dojo/dojo.xd.js' },
         { text: 'Dojo 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.3.2/dojo/dojo.xd.js' }
       ]
-    },
-    ext : {
-      text: 'Ext Core',
-      style: 'http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css',
-      scripts: [
-        { text: 'Ext Core 3.1', url: 'http://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js' }
-      ]
     }
+    // ext : {
+    //   text: 'Ext Core',
+    //   style: 'http://extjs.cachefly.net/ext-2.2/resources/css/ext-all.css',
+    //   scripts: [
+    //     { text: 'Ext Core 3.1', url: 'http://ajax.googleapis.com/ajax/libs/ext-core/3.1.0/ext-core.js' }
+    //   ]
+    // }
   },
-  // NOTE if a new library is added, you need to add it here
-  order = 'jquery jqueryui jquerymobile prototype scriptaculous yui mootools dojo underscore ext'.split(' '),
+  // NOTE if a new library category is added, you need to add it here
+  order = 'jquery jqueryui jquerymobile prototype scriptaculous yui mootools dojo others'.split(' '),
   i = 0;
     
   this.length = 0; // triggers support for length prop

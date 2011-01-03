@@ -3,6 +3,7 @@
 //= require "navigation"
 //= require "save"
 //= require "stream"
+//= require "file-drop"
 
 var debug = false,
     $bin = $('#bin'),

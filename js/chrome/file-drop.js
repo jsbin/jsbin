@@ -1,30 +1,29 @@
-function allowDrop(panel) {
-  var holder = editors[panel].win;
+function allowDrop(holder) {
+  holder.ondragover = function () { 
+    return false; 
+  };
 
-  if (typeof window.FileReader !== 'undefined') {
-    holder.ondragover = function () { 
-      return false; 
-    };
+  holder.ondragend = function () { 
+    return false; 
+  };
+  
+  holder.ondrop = function (e) {
+    e.preventDefault();
 
-    holder.ondragend = function () { 
-      return false; 
+    var file = e.dataTransfer.files[0],
+        reader = new FileReader();
+    reader.onload = function (event) {
+      // put JS in the JavaScript panel
+      editors[file.type.indexOf('javascript') > 0 ? 'javascript' : 'html'].setCode(event.target.result);
     };
+    reader.readAsText(file);
     
-    holder.ondrop = function (e) {
-      e.preventDefault();
-
-      var file = e.dataTransfer.files[0],
-          reader = new FileReader();
-      reader.onload = function (event) {
-        // put JS in the JavaScript panel
-        editors[file.type.indexOf('javascript') > 0 ? 'javascript' : 'html'].setCode(event.target.result);
-      };
-      reader.readAsText(file);
-      
-      return false;
-    };
-  }
+    return false;
+  };
 }
 
-allowDrop('html');
-allowDrop('javascript');
+if (typeof window.FileReader !== 'undefined') {
+  allowDrop(editors.html.win);
+  allowDrop(editors.javascript.win);
+  allowDrop(window);
+}

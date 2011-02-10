@@ -62,15 +62,17 @@ function setupEditor(panel) {
   $(e.win.document).focus(focused);
   
   var $label = $('.code.' + panel + ' > .label');
-  $(e.win.document).bind('scroll', function (event) {
-    if (this.body.scrollTop > 10) {
-      $label.stop().animate({ opacity: 0 }, 50, function () {
-        $(this).hide();
-      });
-    } else {
-      $label.show().stop().animate({ opacity: 1 }, 250);
-    }
-  });
+  if (document.body.className.indexOf('ie6') === -1) {
+    $(e.win.document).bind('scroll', function (event) {
+      if (this.body.scrollTop > 10) {
+        $label.stop().animate({ opacity: 0 }, 50, function () {
+          $(this).hide();
+        });
+      } else {
+        $label.show().stop().animate({ opacity: 1 }, 250);
+      }
+    });    
+  }
   
   populateEditor(panel);
   

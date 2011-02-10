@@ -43,9 +43,8 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' },
-        { text: 'jQuery 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' },
-        { text: 'jQuery 1.2.6', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js' }
+        { text: 'jQuery 1.5', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js' },
+        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' },
       ]
     },
     jqueryui : {
@@ -53,16 +52,15 @@ Libraries.prototype.init = function () {
       requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
       style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css',
       scripts: [
-        { text: 'jQuery UI 1.8.0', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js' },
-        { text: 'jQuery UI 1.7.2', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js' }
+        { text: 'jQuery UI 1.8.9', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js' },
       ]
     },
     jquerymobile : {
       text: 'jQuery Mobile',
-      requires: 'http://code.jquery.com/jquery-1.4.4.min.js',
-      style: 'http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css',
+      requires: 'http://code.jquery.com/jquery-1.5.min.js',
+      style: 'http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css',
       scripts: [
-        { text: 'jQuery Mobile 1.01a', url: 'http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js' }
+        { text: 'jQuery Mobile 1.0a3', url: 'http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js' }
       ]
     },
     others: {

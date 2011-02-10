@@ -1,5 +1,5 @@
 // yeah, nasty, but it allows me to switch from a RTF to plain text if we're running a iOS
-if (/WebKit.*Mobile.*/.test(navigator.userAgent)) {
+if (/WebKit.*Mobile.*/.test(navigator.userAgent) || document.body.className.indexOf('ie6') !== -1) {
   Editor = function (id, options) {
     this.textarea = document.getElementById(id);
     this.win = { document : this.textarea };
@@ -11,6 +11,7 @@ if (/WebKit.*Mobile.*/.test(navigator.userAgent)) {
     textareaParent.appendChild(this.wrapping);
     
     this.textarea.style.opacity = 1;
+    this.textarea.style.width = '100%';
     
     $(options.initCallback);
   };
@@ -23,7 +24,7 @@ if (/WebKit.*Mobile.*/.test(navigator.userAgent)) {
       return this.textarea.value;
     },
     focus: function () {
-      this.textarea.focus();
+      // this.textarea.focus(); // not that this would ever work on mobile
     },
     currentLine: function () {
       return 0;

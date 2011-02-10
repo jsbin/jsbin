@@ -44,7 +44,7 @@ Libraries.prototype.init = function () {
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
         { text: 'jQuery 1.5', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js' },
-        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' },
+        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' }
       ]
     },
     jqueryui : {
@@ -52,7 +52,7 @@ Libraries.prototype.init = function () {
       requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
       style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css',
       scripts: [
-        { text: 'jQuery UI 1.8.9', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js' },
+        { text: 'jQuery UI 1.8.9', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js' }
       ]
     },
     jquerymobile : {

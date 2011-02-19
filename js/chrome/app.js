@@ -2,7 +2,6 @@
 //= require "events"
 //= require "navigation"
 //= require "save"
-//= require "stream"
 //= require "file-drop"
 
 var debug = false,
@@ -43,6 +42,9 @@ if (({ '#html':1, '#javascript':1 })[window.location.hash]) {
 if (window.location.hash == '#preview') {
   $('body').removeClass('source').addClass('preview');
   window.scrollTo(0, 0);
+  $(document).bind('jsbinReady', function () {
+    $('#control .preview').click();
+  });
 }
 
 // if a gist has been requested, lazy load the gist library and plug it in
@@ -64,7 +66,7 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
 $('div.label p').click(function () {
   // determine which side was clicked
   var panel = $(this).closest('.code').is('.javascript') ? 'javascript' : 'html',
-      otherpanel = panel == 'javascript' ? 'html' : 'javascript';
+      otherpanel = panel == 'javascript' ? 'html' : 'javascript',
       mustshow = $bin.is('.' + panel + '-only'),
       speed = 150,
       animatePanel = animateOtherPanel = {};

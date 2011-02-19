@@ -4,7 +4,7 @@
  */
 
 function MirrorFrame(place, options) {
-  this.home = document.createElement("DIV");
+  this.home = document.createElement("div");
   if (place.appendChild)
     place.appendChild(this.home);
   else
@@ -12,7 +12,7 @@ function MirrorFrame(place, options) {
 
   var self = this;
   function makeButton(name, action) {
-    var button = document.createElement("INPUT");
+    var button = document.createElement("input");
     button.type = "button";
     button.value = name;
     self.home.appendChild(button);
@@ -36,7 +36,7 @@ MirrorFrame.prototype = {
 
     var first = true;
     do {
-      var cursor = this.mirror.getSearchCursor(text, first, true);
+      var cursor = this.mirror.getSearchCursor(text, first);
       first = false;
       while (cursor.findNext()) {
         cursor.select();

@@ -1,9 +1,5 @@
 /* A few useful utility functions. */
 
-var internetExplorer = document.selection && window.ActiveXObject && /MSIE/.test(navigator.userAgent);
-var webkit = /AppleWebKit/.test(navigator.userAgent);
-var safari = /Apple Computers, Inc/.test(navigator.vendor);
-
 // Capture a method on an object.
 function method(obj, name) {
   return function() {obj[name].apply(obj, arguments);};

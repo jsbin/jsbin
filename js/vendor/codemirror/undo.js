@@ -9,7 +9,7 @@
  * complexity and hackery.
  *
  * In short, the editor 'touches' BR elements as it parses them, and
- * the History stores these. When nothing is touched in commitDelay
+ * the UndoHistory stores these. When nothing is touched in commitDelay
  * milliseconds, the changes are committed: It goes over all touched
  * nodes, throws out the ones that did not change since last commit or
  * are no longer in the document, and assembles the rest into zero or
@@ -26,7 +26,7 @@
 // delay (of no input) after which it commits a set of changes, and,
 // unfortunately, the 'parent' window -- a window that is not in
 // designMode, and on which setTimeout works in every browser.
-function History(container, maxDepth, commitDelay, editor) {
+function UndoHistory(container, maxDepth, commitDelay, editor) {
   this.container = container;
   this.maxDepth = maxDepth; this.commitDelay = commitDelay;
   this.editor = editor; this.parent = editor.parent;
@@ -47,7 +47,7 @@ function History(container, maxDepth, commitDelay, editor) {
   this.history = []; this.redoHistory = []; this.touched = [];
 }
 
-History.prototype = {
+UndoHistory.prototype = {
   // Schedule a commit (if no other touches come in for commitDelay
   // milliseconds).
   scheduleCommit: function() {
@@ -103,7 +103,7 @@ History.prototype = {
   push: function(from, to, lines) {
     var chain = [];
     for (var i = 0; i < lines.length; i++) {
-      var end = (i == lines.length - 1) ? to : this.container.ownerDocument.createElement("BR");
+      var end = (i == lines.length - 1) ? to : document.createElement("br");
       chain.push({from: from, to: end, text: cleanText(lines[i])});
       from = end;
     }
@@ -145,7 +145,7 @@ History.prototype = {
 
   // Commit unless there are pending dirty nodes.
   tryCommit: function() {
-    if (!window.History) return; // Stop when frame has been unloaded
+    if (!window || !window.parent || !window.UndoHistory) return; // Stop when frame has been unloaded
     if (this.editor.highlightDirty()) this.commit(true);
     else this.scheduleCommit();
   },
@@ -192,10 +192,10 @@ History.prototype = {
   },
 
   notifyEnvironment: function() {
+    if (this.onChange) this.onChange();
     // Used by the line-wrapping line-numbering code.
     if (window.frameElement && window.frameElement.CodeMirror.updateNumbers)
       window.frameElement.CodeMirror.updateNumbers();
-    if (this.onChange) this.onChange();
   },
 
   // Link a chain into the DOM nodes (or the first/last links for null
@@ -257,8 +257,8 @@ History.prototype = {
     function buildLine(node) {
       var text = [];
       for (var cur = node ? node.nextSibling : self.container.firstChild;
-           cur && !isBR(cur); cur = cur.nextSibling)
-        if (cur.currentText) text.push(cur.currentText);
+           cur && (!isBR(cur) || cur.hackBR); cur = cur.nextSibling)
+        if (!cur.hackBR && cur.currentText) text.push(cur.currentText);
       return {from: node, to: cur, text: cleanText(text.join(""))};
     }
 
@@ -267,7 +267,7 @@ History.prototype = {
     var lines = [];
     if (self.firstTouched) self.touched.push(null);
     forEach(self.touched, function(node) {
-      if (node && node.parentNode != self.container) return;
+      if (node && (node.parentNode != self.container || node.hackBR)) return;
 
       if (node) node.historyTouched = false;
       else self.firstTouched = false;
@@ -380,7 +380,7 @@ History.prototype = {
         self.container.insertBefore(line.from, end);
 
       // Add the text.
-      var node = makePartSpan(fixSpaces(line.text), this.container.ownerDocument);
+      var node = makePartSpan(fixSpaces(line.text));
       self.container.insertBefore(node, end);
       // See if the cursor was on this line. Put it back, adjusting
       // for changed line length, if it was.
@@ -391,7 +391,7 @@ History.prototype = {
           // Only adjust if the cursor is after the unchanged part of
           // the line.
           for (var match = 0; match < cursor.offset &&
-               line.text.charAt(match) == prev.text.charAt(match); match++);
+               line.text.charAt(match) == prev.text.charAt(match); match++){}
           if (cursor.offset > match)
             cursordiff = line.text.length - prev.text.length;
         }

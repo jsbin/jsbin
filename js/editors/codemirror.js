@@ -1,3 +1,4 @@
+// used to generate the ../vendor/codemirror/basefiles.js
 //= require "../vendor/codemirror/util"
 //= require "../vendor/codemirror/stringstream"
 //= require "../vendor/codemirror/undo"

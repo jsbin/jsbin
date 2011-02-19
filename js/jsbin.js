@@ -1,6 +1,13 @@
-//= require <jquery-1.4.0>
+//= require <jquery>
+
+// required because jQuery 1.4.4 lost ability to search my object property :( (i.e. a[host=foo.com])
+jQuery.expr[':'].host = function(obj, index, meta, stack) {
+  return obj.host == meta[3];
+};
+
 (function () {
 //= require "editors/editors"
 //= require "render/render"
 //= require "chrome/app"
+//= require "chrome/beta"
 })();

@@ -12,11 +12,11 @@ echo "Sprocketizing...\n";
 $filePath = './js/jsbin.js';
 // prepare sprocket
 $sprocket = new Sprocket($filePath, array(    
-	'contentType' => '', // keeps debug quiet
-	'baseUri' => '../js',
+  'contentType' => '', // keeps debug quiet
+  'baseUri' => '../js',
   'baseFolder' => array('./js/vendor', './js/vendor/codemirror'),
   'assetFolder' => '..',
-	'debugMode' => true, // forces to always show
+  'debugMode' => true, // forces to always show
   'autoRender' => false
 ));
 
@@ -30,6 +30,26 @@ $js = $sprocket->render(true);
 // write concat to js dir
 echo "Writing concatenated file...\n";
 file_put_contents(SPROCKETIZED, $js);
+
+// neeed to build the base files for codemirror
+$filePath = './js/editors/codemirror.js';
+// prepare sprocket
+$sprocket = new Sprocket($filePath, array(    
+  'contentType' => '', // keeps debug quiet
+  'baseUri' => '../js',
+  'baseFolder' => array('./js/vendor', './js/vendor/codemirror'),
+  'assetFolder' => '..',
+  'debugMode' => true, // forces to always show
+  'autoRender' => false
+));
+
+echo "Rendering code mirror basefile...\n";
+$js = $sprocket->render(true);
+
+// write concat to js dir
+echo "Writing codemirror basefile...\n";
+file_put_contents('./js/vendor/codemirror/basefiles.js', $js);
+
 
 // google compile in to jsbin.VERSION.js
 echo "Google compiler compressing...\n";

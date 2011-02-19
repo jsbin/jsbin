@@ -1,4 +1,4 @@
-CREATE TABLE `sandbox` (
+CREATE TABLE IF NOT EXISTS `sandbox` (
   `id` int(11) NOT NULL auto_increment,
   `javascript` text,
   `html` text,
@@ -10,9 +10,13 @@ CREATE TABLE `sandbox` (
   `streaming_read_key` char(32) NOT NULL,
   `active_tab` varchar(10) NOT NULL,
   `active_cursor` int(11) NOT NULL,
+
+  `revision` int(11) default 1,
+
   PRIMARY KEY  (`id`),
   KEY `viewed` (`last_viewed`),
   KEY `url` (`url`),
   KEY `streaming_key` (`streaming_key`),
-  KEY `spam` (`created`,`last_viewed`)
+  KEY `spam` (`created`,`last_viewed`),
+  KEY `revision` (`url`, `revision`)
 );

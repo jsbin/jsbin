@@ -2,8 +2,9 @@
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
 }
+$code_id_path = '';
 if ($code_id) {
-  $code_id = '/' . $code_id;
+  $code_id_path = '/' . $code_id;
 }
 ?>
 <!DOCTYPE html>
@@ -22,11 +23,11 @@ if ($code_id) {
       <a class="tab button preview group right gap" accesskey="2" href="#preview">Preview</a>
       <a title="Revert" class="button light group left enable" id="revert" href="#"><img class="enabled" src="/images/revert.png" /><img class="disabled" src="/images/revert-disabled.png" /></a>
     <?php if ($code_id) : ?>
-    <a class="button group light left" href="http://jsbin.com<?=$code_id?>">http://jsbin.com<?=$code_id?></a>
+    <a class="button group light left" href="<?=HOST . $code_id?>"><?=HOST . $code_id?></a>
     <?php else : ?>
     <a id="save" class="button save group left right gap" href="/save">Save</a>
     <?php endif ?>
-    <?php if ($code_id) : ?><a id="save" class="button gap light save group right" href="<?=$code_id?>/save">Save changes</a><?php endif ?>
+    <?php if ($code_id) : ?><a id="save" class="button gap light save group right" href="<?=$code_id_path?>/save">Save changes</a><?php endif ?>
     <a id="stream" class="button left right" href="#stream">Stream</a>
     </div>
   </div>
@@ -45,7 +46,7 @@ if ($code_id) {
 <div id="bin" class="stretch">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
-      <div class="label"><p>JavaScript<span> (<span class="hide">hide</span><span class="show">show</span> HTML)</span></p></div>
+      <div class="label"><p><strong id="jslabel">JavaScript</strong><span> (<span class="hide">hide</span><span class="show">show</span> HTML)</span></p></div>
       <textarea id="javascript"></textarea>
     </div>
     <div class="code stretch html">
@@ -68,7 +69,7 @@ if ($code_id) {
     </div>
   </div>
   <div id="preview" class="binview stretch"></div>
-  <form method="post" action="<?=$code_id?>/save"></form>
+  <form method="post" action="<?=$code_id_path?>/save"></form>
 </div>
 <div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div>
 <?php 
@@ -96,7 +97,7 @@ if (@$_POST['inject'] && @$_POST['html']) :
 ?>
 <script>var template = { html : <?=$html?>, javascript: '' };</script>
 <?php else : ?>
-<script src="<?=$code_id ? $code_id : '' ?>/source/<?=$qs?>"></script>  
+<script src="<?=$code_id_path ?>/source/<?=$qs?>"></script>  
 <?php endif ?>
 <script src="http://forbind.net/js/?apikey=2796bc83070164231a3ab8c90227dbca"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>

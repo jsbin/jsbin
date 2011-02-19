@@ -69,7 +69,7 @@ if (!$action) {
     if (@$_REQUEST['callback']) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = 'http://jsbin.com/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;          
     } else {
@@ -126,7 +126,7 @@ if (!$action) {
 
 
     if (!$ajax) {
-      $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using http://jsbin.com\n  Source can be edited via http://jsbin.com/$code_id/edit\n\n-->\n", $html);            
+      $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using " . HOST . "\n  Source can be edited via " . HOST . "$code_id/edit\n\n-->\n", $html);            
     }
 
     if (false) {
@@ -139,7 +139,7 @@ if (!$action) {
     }
 
     if (!$html && !$ajax) {
-      $javascript = "/*\n  Created using http://jsbin.com\n  Source can be edit via http://jsbin.com/$code_id/edit\n*/\n\n" . $javascript;
+      $javascript = "/*\n  Created using " . HOST . "\n  Source can be edit via " . HOST . "$code_id/edit\n*/\n\n" . $javascript;
     }
 
     if (!$html) {

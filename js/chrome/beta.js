@@ -64,8 +64,7 @@ window.jsbin = {};
     }
   });
   
-  
-  $(document).bind('codeChange', throttle(function () {
+  var checkForErrors = function () {
     var jshint = jsbin.jshint(),
         errors = '';
 
@@ -76,7 +75,10 @@ window.jsbin = {};
       errors = errors == 1 ? '1 error' : errors + ' errors';
       $error.text('(' + errors + ')').show();
     }
-  }, 1000));
+  };
+  
+  $(document).bind('codeChange', throttle(checkForErrors, 1000));
+  $(document).bind('jsbinReady', checkForErrors);
 }).call(jsbin);
 
 function throttle(fn, delay) {

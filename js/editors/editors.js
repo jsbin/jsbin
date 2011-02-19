@@ -33,6 +33,7 @@ var editorsReady = setInterval(function () {
     clearInterval(editorsReady);
     editors.ready = true;
     if (typeof editors.onReady == 'function') editors.onReady();
+    $(document).trigger('jsbinReady');
   }
 }, 100);
 
@@ -52,7 +53,6 @@ function setupEditor(panel) {
   var e = editors[panel], 
       focusedPanel = sessionStorage.getItem('panel');
 
-  e.ready = true;
   e.wrapping.style.position = 'static';
   e.wrapping.style.height = 'auto';
     
@@ -75,6 +75,7 @@ function setupEditor(panel) {
   }
   
   populateEditor(panel);
+  e.ready = true;
   
   if (focusedPanel == panel || focusedPanel == null && panel == 'javascript') {
     e.focus();

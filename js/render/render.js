@@ -1,6 +1,6 @@
 var consoleTest = /(^.|\b)console\./;
 
-var useCustomConsole = (function () {
+var useCustomConsole = !(function () {
   var ok = window.console !== undefined;
   try {
     window.console.log('jsbin init test');
@@ -16,7 +16,7 @@ function renderPreview() {
       source = editors.html.getCode(),
       parts = [],
       js = editors.javascript.getCode();
-   
+
   // redirect JS console logged to our custom log while debugging
   if (consoleTest.test(js)) {
     if (useCustomConsole) {

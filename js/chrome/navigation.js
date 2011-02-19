@@ -63,8 +63,8 @@ $('#control div.help a:last').click(function () {
   return false;
 });
 
-$('#help a[host=' + window.location.host + ']').live('click', function () {
-  $('#help #content').load(this.href);
+$('#help a:host(' + window.location.host + ')').live('click', function () {
+  $('#help #content').load(this.href + '?' + Math.random());
   return false;    
 });
 
@@ -73,7 +73,7 @@ $(window).bind('togglehelp', function () {
   var s = 100, right = helpOpen ? 0 : 300;
 
   if (helpOpen == false) {
-    $('#help #content').load('/help/index.html');    
+    $('#help #content').load('/help/index.html?' + Math.random());    
   }
   $bin.find('> div').animate({ right: right }, { duration: s });
   $('#control').animate({ right: right }, { duration: s });

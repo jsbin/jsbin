@@ -2,7 +2,7 @@
   margin: .4em;
   padding: 0;
   font-family: Monaco, consolas, monospace;
-  font-size: 10pt;
+  font-size: 12pt;
   color: black;
 }
 
@@ -47,14 +47,6 @@ span.xml-error {
 }
 
 span.xml-text {
-  color: black;
-}
-
-.editbox {
-  margin: .4em;
-  padding: 0;
-  font-family: monaco, consolas, monospace;
-  font-size: 12pt;
   color: black;
 }
 
@@ -104,14 +96,6 @@ span.js-comment {
 
 span.js-string {
   color: #AA2222;
-}
-
-.editbox {
-  margin: .4em;
-  padding: 0;
-  font-family: Monaco, consolas, monospace;
-  font-size: 10pt;
-  color: black;
 }
 
 pre.code, .editbox {

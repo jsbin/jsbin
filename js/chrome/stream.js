@@ -1,4 +1,4 @@
-(function () {
+(function (global) {
 var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span><span class="listen"> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</span></div>').prependTo('body'),
     streaming = false,
     $body = $('body'),
@@ -86,7 +86,7 @@ forbind.on({
 
         $stream.one('click', function () {
           window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-            window.stream.join(key);
+            global.stream.join(key);
           });
         });        
       } else {
@@ -133,7 +133,7 @@ function updateCount(data) {
   }
 }
 
-window.stream = {
+global.stream = {
   create: function () {
     key = (Math.abs(~~(Math.random()*+new Date))).toString(32); // OTT?
         
@@ -152,19 +152,19 @@ window.stream = {
     
     $(document).one('keyup', function (event) {
       if (streaming && event.which == 27) {
-        window.stream.leave();
+        global.stream.leave();
       }
     });
 
     $stream.one('click', function () {
-      window.stream.leave();
+      global.stream.leave();
     });
 
     for (var type in editors) {
       try {
         $(editors[type].win.document).one('keyup', function (event) {
           if (event.which == 27) {
-            window.stream.leave();
+            global.stream.leave();
           }
         });        
       } catch (e) {
@@ -180,7 +180,7 @@ window.stream = {
 };
 
 window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-  window.stream.join(key);
+  global.stream.join(key);
 });
 
 if (sessionStorage.getItem('streamkey')) {
@@ -188,4 +188,4 @@ if (sessionStorage.getItem('streamkey')) {
   forbind.join(key, sessionStorage.getItem('streamwritekey') || undefined);
 }
 
-})();
+})(this);

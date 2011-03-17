@@ -12,7 +12,7 @@ if ($code_id) {
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="stylesheet" href="/css/style.css" type="text/css" />
+<link rel="stylesheet" href="/css/style.css?<?=VERSION?>" type="text/css" />
 </head>
 <!--[if lt IE 7 ]><body class="source ie6"><![endif]--> 
 <!--[if !IE]><!--><body class="source"><!--<![endif]-->  

@@ -803,6 +803,8 @@ ie6, li {
   #live { 
     top: 0;
     left: 67%;
+    border-top: 0;
+    border-left: 1px solid #ccc;
   }
   
   #bin.live #source {

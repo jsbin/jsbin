@@ -6,6 +6,8 @@ JS Bin is currently designed to work offline in development mode and online in p
 
 This is controlled through the config.php and the `jsbin.js` file that is pulled in.  When offline, this file is generated on the fly through a php version of Sprockets (tweaked by me to support multiple base paths).  The production version will be pre-built, via Sprockets & Google's closure compiler.
 
+If you want to install JS Bin on your own machine, make sure you check out the [installing JS Bin wiki guide](https://github.com/remy/jsbin/wiki/How-to-install-JS-Bin-in-your-own-environment).
+
 ## Collaborative JavaScript Debugging
 
 * Test live JavaScript with HTML and CSS context

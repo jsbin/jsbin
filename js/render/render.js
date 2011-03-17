@@ -10,12 +10,19 @@ var useCustomConsole = !(function () {
   return ok;
 })();
 
-function renderPreview() {
-  var doc = $('#preview iframe')[0], 
-      win = doc.contentDocument || doc.contentWindow.document,
-      source = editors.html.getCode(),
-      parts = [],
-      js = editors.javascript.getCode();
+function getPreparedCode() {
+  var parts = [],
+      source = '',
+      js = '';
+  
+  try {
+    source = editors.html.getCode();
+  } catch (e) {}
+  
+  try {
+    js = editors.javascript.getCode();
+  } catch (e) {}
+  
 
   // redirect JS console logged to our custom log while debugging
   if (consoleTest.test(js)) {
@@ -43,6 +50,14 @@ function renderPreview() {
   if (/\$\(document\)\.ready/.test(source)) {
     source = source.replace(/\$\(document\)\.ready/, 'window.onload = ');
   } 
+
+  return source;
+}
+
+function renderPreview() {
+  var doc = $('#preview iframe')[0], 
+      win = doc.contentDocument || doc.contentWindow.document,
+      source = getPreparedCode();
   
   win.open();
   

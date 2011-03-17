@@ -5,9 +5,9 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
-(function () {
+(function (window, document, undefined) {
 //= require "editors/editors"
 //= require "render/render"
-//= require "chrome/app"
 //= require "chrome/beta"
-})();
+//= require "chrome/app"
+})(this, document);

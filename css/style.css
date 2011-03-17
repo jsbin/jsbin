@@ -263,7 +263,8 @@ a.right {
   z-index: 11; /* gets over the labels in IE */
 }
 
-#preview iframe {
+#preview iframe,
+#live iframe {
   height: 100%;
   width: 100%;
   border: 0;
@@ -760,4 +761,52 @@ ie6, li {
   padding: 0;
   margin: 10px 0;
   list-style: none
+}
+
+/* attempt to get a live render preview in */
+#live {
+  display: none;
+  top: 60%;
+  border-top: 1px solid #ccc;
+}
+
+#live .close {
+  background: url(/images/close.png) no-repeat center;
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  opacity: 0.1;
+  z-index: 99999;
+  -webkit-transition: opacity ease-in 100ms;
+  -moz-transition: opacity ease-in 100ms;
+  -o-transition: opacity ease-in 100ms;
+  -ms-transition: opacity ease-in 100ms;
+  transition: opacity ease-in 100ms;
+}
+
+#live .close:hover {
+  opacity: 1;
+}
+
+#bin.live #live {
+  display: block;
+}
+
+#bin.live #source {
+	bottom: 40%;
+}
+
+@media screen and (min-width: 1200px) { 
+  #live { 
+    top: 0;
+    left: 67%;
+  }
+  
+  #bin.live #source {
+    bottom: 0;
+    right: 33%;
+  }
 }

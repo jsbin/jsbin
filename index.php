@@ -68,6 +68,7 @@ if ($code_id) {
       <textarea id="html"></textarea>
     </div>
   </div>
+  <div id="live" class="stretch livepreview"><span class="close"></span></div>
   <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?=$code_id_path?>/save"></form>
 </div>

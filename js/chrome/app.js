@@ -7,6 +7,7 @@
 var debug = false,
     $bin = $('#bin'),
     loadGist,
+    $document = $(document),
     unload = function () {
       sessionStorage.setItem('javascript', editors.javascript.getCode());
       sessionStorage.setItem('html', editors.html.getCode());
@@ -42,10 +43,16 @@ if (({ '#html':1, '#javascript':1 })[window.location.hash]) {
 if (window.location.hash == '#preview') {
   $('body').removeClass('source').addClass('preview');
   window.scrollTo(0, 0);
-  $(document).bind('jsbinReady', function () {
+  $document.bind('jsbinReady', function () {
     $('#control .preview').click();
   });
 }
+
+$document.one('jsbinReady', function () {
+  if (localStorage && localStorage.getItem('livepreview') == 'true') { // damn string coersion
+    $('#live').trigger('show');
+  }
+});
 
 // if a gist has been requested, lazy load the gist library and plug it in
 if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {

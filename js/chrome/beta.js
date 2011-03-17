@@ -7,6 +7,10 @@ window.jsbin = {};
   // expose...for now
   window.stream = jsbin.stream;
   
+  //= require "../render/live"
+  jsbin.livePreview = function () {
+    $('#live').trigger('toggle');
+  };
   
   //= require "../vendor/jshint/jshint"
   //= require "../vendor/jquery.tipsy"

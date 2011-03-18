@@ -1,6 +1,6 @@
 var $live = $('#live'),
     $bin = $('#bin'),
-    throttledPreview = throttle(renderLivePreview, 250);
+    throttledPreview = throttle(renderLivePreview, 100);
 
 // could chain - but it's more readable like this
 $live.bind('show', function () {
@@ -24,7 +24,7 @@ function two(s) {
 }
 
 function renderLivePreview() {
-  $live.find('iframe').remove();
+  var oldframe = $live.find('iframe').remove();
   var frame = $live.append('<iframe class="stretch"></iframe>').find('iframe')[0],
       document = frame.contentDocument || frame.contentWindow.document,
       source = getPreparedCode(),
@@ -37,8 +37,9 @@ function renderLivePreview() {
   window.confirm = function () {};
   
   if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
-  document.open();
   
+  document.open();
+
   if (debug) {
     document.write('<pre>' + source.replace(/[<>&]/g, function (m) {
       if (m == '<') return '&lt;';
@@ -48,7 +49,7 @@ function renderLivePreview() {
   } else {
     document.write(source);
   }
-  document.close();  
+  document.close();
 }
 
 $live.find('.close').click(function () {

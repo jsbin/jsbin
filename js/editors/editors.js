@@ -37,6 +37,26 @@ var editorsReady = setInterval(function () {
   }
 }, 100);
 
+var oninputSupported = (function () {
+  var input = document.createElement('input');
+  var support = "oninput" in input && "A";
+  if ( !support ) {
+    input.setAttribute("oninput", "return;");
+    support = typeof input.oninput === "function" && "B";
+  }
+  if ( !support ) {
+    try {
+      var e = document.createEvent("KeyboardEvent");
+      e.initKeyEvent("keypress", true, true, window, false, false, false, false, 0, "e".charCodeAt(0));
+      document.body.appendChild(input);
+      input.addEventListener("input", function(e) { support = "C"; e.preventDefault(); e.stopPropagation(); }, false);
+      input.focus();
+      input.dispatchEvent(e);
+      document.body.removeChild(input);
+    } catch( e ) {}
+  }
+})();
+
 function focused(event) {
   focusPanel = this.id;
   $('#bin').toggleClass('javascript', this.id == 'javascript');
@@ -58,7 +78,7 @@ function setupEditor(panel) {
     
   e.win.document.id = panel;
   $(e.win.document).bind('keydown', keycontrol);
-  $(e.win.document).bind('keyup', changecontrol);
+  $(e.win.document).bind(oninputSupported ? 'input' : 'keyup', changecontrol);
   $(e.win.document).focus(focused);
   
   var $label = $('.code.' + panel + ' > .label');

@@ -768,6 +768,7 @@ ie6, li {
   display: none;
   top: 60%;
   border-top: 1px solid #ccc;
+  z-index: 9999;
 }
 
 #live .close {
@@ -793,6 +794,10 @@ ie6, li {
 
 #bin.live #live {
   display: block;
+}
+
+.preview #bin.live #live {
+  display: none;
 }
 
 #bin.live #source {

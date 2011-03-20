@@ -15,7 +15,9 @@ ConsoleContext.prototype = {
   hijack: function (method, args) {
     var context = this.executable ? this.context() : this.context;
     var re = new RegExp('console\.' + method + '\\((.*?)\\)');
-    if (!/renderLivePreview/.test(arguments.callee.caller.caller.toString()) && context) {
+    
+    // if the log was triggered via a jQuery.Event then it came from /within/ the preview
+    if (!(arguments.callee.caller.caller.arguments[0] instanceof jQuery.Event) && context) {
       context.eval('console.' + method + '(' + arguments.callee.caller.caller.arguments[0].toString().match(re)[1] + ')');
     } else {
       this.original[method].apply(this.original, args);

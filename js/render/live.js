@@ -2,6 +2,11 @@ var $live = $('#live'),
     $bin = $('#bin'),
     throttledPreview = throttle(renderLivePreview, 100);
 
+//= require "consoleContext"
+var hijackedConsole = new ConsoleContext(function () {
+  return $('#live iframe').length ? $('#live iframe')[0].contentWindow : null;
+});
+
 // could chain - but it's more readable like this
 $live.bind('show', function () {
   $bin.addClass('live');
@@ -11,10 +16,12 @@ $live.bind('show', function () {
   // start timer
   $(document).bind('codeChange.live', throttledPreview);
   renderLivePreview();
+  hijackedConsole.activate();
 }).bind('hide', function () {
   $(document).unbind('codeChange.live');
   localStorage && localStorage.removeItem('livepreview');
   $bin.removeClass('live');
+  hijackedConsole.deactivate();
 }).bind('toggle', function () {
   $live.trigger($bin.is('.live') ? 'hide' : 'show');
 });

@@ -8,12 +8,8 @@ define('DB_HOST', 'localhost');  // 99% chance you won't need to change this val
 // change this to suite your offline detection
 define('OFFLINE', is_dir('/Users/'));
 
-define('MAJOR', 2);
-define('MINOR', 0);
-define('TINY', 0);
-
-define('HOST', 'http://offline.jsbin.com:8080/');
+define('HOST', 'http://offline.jsbin.com/');
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
-define('VERSION', OFFLINE ? 'debug' : join(array(MAJOR, MINOR, TINY), '.'));
+define('VERSION', OFFLINE ? 'debug' : trim(file_get_contents('VERSION')));
 ?>

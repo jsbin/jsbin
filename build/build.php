@@ -1,5 +1,6 @@
 <?php
-require('config.php');
+
+define('VERSION', trim(file_get_contents('VERSION')));
 
 define('SPROCKETIZED', './js/tmp.' . VERSION . '.js');
 define('PRODUCTION', './js/jsbin-' . VERSION . '.js');

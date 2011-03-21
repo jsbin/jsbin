@@ -1,4 +1,10 @@
-<?php include('app.php'); 
+<?php 
+
+define('MAJOR', 2);
+define('MINOR', 4);
+define('TINY', 7);
+
+include('app.php'); 
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
 }

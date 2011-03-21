@@ -1,7 +1,7 @@
 .editbox {
   margin: .4em;
   padding: 0;
-  font-family: monaco, consolas, monospace;
+  font-family: Menlo, monaco, consolas, monospace;
   font-size: 12pt;
   color: black;
 }

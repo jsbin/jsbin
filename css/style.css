@@ -430,7 +430,7 @@ textarea {
   margin: 0.4em;
   border: 0;
   padding: 0;
-  font-family: Monaco, consolas, monospace;
+  font-family: Menlo, Monaco, consolas, monospace;
   font-size: 10pt;
   color: black;
   margin-top: 60px;
@@ -768,6 +768,7 @@ ie6, li {
   display: none;
   top: 60%;
   border-top: 1px solid #ccc;
+  background: white url(/images/jsbin-bg.gif) repeat-x 0 -62px;
   z-index: 9999;
 }
 

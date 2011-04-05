@@ -9,7 +9,7 @@ var Libraries = function () {
   this.userSpecified = JSON.parse(localStorage.getItem('libraries') || "[]");
   
   // read from storage
-  for (i = 0; i < this.userSpecified.length; i++) {
+  for (var i = 0; i < this.userSpecified.length; i++) {
     push.call(this, this.userSpecified[i]);
   }
 };

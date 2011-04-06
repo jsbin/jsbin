@@ -1,7 +1,7 @@
 // to allow for download button to be introduced via beta feature
-$(document).delegate('#save, #download', 'click', function (event) {
+$('#save').click(function (event) {
   event.preventDefault();
-  saveCode(this.id);
+  saveCode('save');
   
   return false;
 });

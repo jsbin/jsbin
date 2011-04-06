@@ -15,8 +15,7 @@ $('#startingpoint').click(function () {
   return false;
 }).find('span').after('<span style="display: none;">Saved</span>');
 
-$('#revert').click(function () {
-  var $revert = $(this);
+var $revert = $('#revert').click(function () {
   
   if ($revert.is(':not(.enable)')) {
     return false;

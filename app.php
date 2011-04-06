@@ -46,7 +46,8 @@ if (!$action) {
   $html = @$_POST['html'];
   $method = @$_POST['method'];
   
-  if ($method == 'save') {
+  // we're using stripos instead of == 'save' because the method *can* be "download,save" to support doing both
+  if (stripos($method, 'save') !== false) {
     if (!$code_id) {
       $code_id = generateCodeId();
       $revision = 1;
@@ -57,7 +58,9 @@ if (!$action) {
 
     $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
     mysql_query($sql);    
-  } else if ($method == 'download') {
+  }
+  
+  if (stripos($method, 'download') !== false) {
     // strip escaping (replicated from getCode method):
     $javascript = preg_replace('/\r/', '', $javascript);
     $html = preg_replace('/\r/', '', $html);
@@ -65,7 +68,7 @@ if (!$action) {
     $javascript = get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript;
     
     if (!$code_id) {
-      $code_id = 'jsbin';
+      $code_id = 'untitled';
       $revision = 1;
     }
   }
@@ -85,7 +88,7 @@ if (!$action) {
     if ($_REQUEST['callback']) {
       echo '")';
     }
-  } else if ($method == 'download') {
+  } else if (stripos($method, 'download') !== false) {
     $originalHTML = $html;
     list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
     $ext = $originalHTML ? '.html' : '.js';

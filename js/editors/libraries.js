@@ -19,7 +19,7 @@ Libraries.prototype.init = function () {
     yui: {
       text: 'YUI',
       scripts: [
-        { text: 'YUI 3.3.0', url: 'http://ajax.googleapis.com/ajax/libs/yui/3.3.0/build/yuiloader/yuiloader-min.js' },
+        { text: 'YUI 3.3.0', url: 'https://ajax.googleapis.com/ajax/libs/yui/3.3.0/build/yui/yui-min.js'},
         { text: 'YUI 2.8.2', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.2/build/yuiloader/yuiloader-min.js'}
       ]
     },

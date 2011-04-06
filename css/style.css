@@ -775,6 +775,19 @@ ie6, li {
   list-style: none
 }
 
+/** BETA FEATURES **/
+
+.beta #startingpoint {
+  display: none;
+}
+
+.button.download {
+  padding-left: 24px;
+  background-image: url(/images/arrow_down_12x12.png);
+  background-repeat: no-repeat;
+  background-position: 8px 55%;
+}
+
 /* attempt to get a live render preview in */
 #live {
   display: none;
@@ -805,16 +818,38 @@ ie6, li {
   opacity: 1;
 }
 
-#bin.live #live {
+.live #live {
   display: block;
 }
 
-.preview #bin.live #live {
+.preview #live {
   display: none;
 }
 
-#bin.live #source {
+.live #source {
 	bottom: 40%;
+}
+
+.live #control .live {
+  font-weight: bold;
+  background: #aaa;
+  background: rgba(0, 0, 0, 0.25);
+  text-shadow: none;
+  border: 1px solid #ccc;
+  -moz-box-shadow: #fff 0px 0px 5px;
+  -webkit-box-shadow: #fff 0px 0px 5px;
+  
+  background-image: 
+    -webkit-gradient(
+      radial,
+      center center,
+      0,
+      center center,
+      50,
+      color-stop(0, #BFBFBF),
+      color-stop(1, #949494)
+    );
+  
 }
 
 @media screen and (min-width: 1200px) { 
@@ -826,7 +861,7 @@ ie6, li {
     border-left: 1px solid #ccc;
   }
   
-  #bin.live #source {
+  .live #source {
     bottom: 0;
     right: 33%;
   }

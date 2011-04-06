@@ -1,5 +1,5 @@
 var $live = $('#live'),
-    $bin = $('#bin'),
+    $body = $('body'),
     throttledPreview = throttle(renderLivePreview, 100);
 
 //= require "consoleContext"
@@ -7,11 +7,14 @@ var hijackedConsole = new ConsoleContext(function () {
   return $('#live iframe').length ? $('#live iframe')[0].contentWindow : null;
 });
 
+$body.delegate('#control .button.live', 'click', function () {
+  $live.trigger('toggle');
+});
+
 // could chain - but it's more readable like this
 $live.bind('show', function () {
-  $bin.addClass('live');
+  $body.addClass('live');
   localStorage && localStorage.setItem('livepreview', true);
-  
   
   // start timer
   $(document).bind('codeChange.live', throttledPreview);
@@ -20,11 +23,15 @@ $live.bind('show', function () {
 }).bind('hide', function () {
   $(document).unbind('codeChange.live');
   localStorage && localStorage.removeItem('livepreview');
-  $bin.removeClass('live');
+  $body.removeClass('live');
   hijackedConsole.deactivate();
 }).bind('toggle', function () {
-  $live.trigger($bin.is('.live') ? 'hide' : 'show');
+  $live.trigger($body.is('.live') ? 'hide' : 'show');
 });
+
+function enableLive() {
+  $('#control .buttons .preview').after('<a id="showlive" class="button live group right left light gap" href="#">Live</a>');
+}
 
 function two(s) {
   return (s+'').length < 2 ? '0' + s : s;

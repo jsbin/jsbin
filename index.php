@@ -27,7 +27,7 @@ if ($code_id) {
     <?php if ($code_id) : ?>
     <a class="button group light left" href="<?=HOST . $code_id?>"><?=HOST . $code_id?></a>
     <?php else : ?>
-    <a id="save" class="button save group left right gap" href="/save">Save</a>
+    <a id="save" class="button save group left right" href="/save">Save</a>
     <?php endif ?>
     <?php if ($code_id) : ?><a id="save" class="button gap light save group right" href="<?=$code_id_path?>/save">Save changes</a><?php endif ?>
     <a id="stream" class="button left right" href="#stream">Stream</a>
@@ -72,7 +72,9 @@ if ($code_id) {
   </div>
   <div id="live" class="stretch livepreview"><span class="close"></span></div>
   <div id="preview" class="binview stretch"></div>
-  <form method="post" action="<?=$code_id_path?>/save"></form>
+  <form method="post" action="<?=$code_id_path?>/save">
+    <input type="hidden" name="method" />
+  </form>
 </div>
 <div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div>
 <?php 

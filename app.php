@@ -41,28 +41,34 @@ if (!$action) {
   }
 } else if ($action == 'save') {
   list($code_id, $revision) = getCodeIdParams($request);
-  if (!$code_id) {
-    $code_id = generateCodeId();
-    $revision = 1;
-  } else {
-    $revision = getMaxRevision($code_id);
-    $revision++;
-  }
-  
+
   $javascript = @$_POST['javascript'];
   $html = @$_POST['html'];
+  $method = @$_POST['method'];
   
-  // $sql = 'select url, revision from sandbox where javascript="' . mysql_real_escape_string($javascript) . '" and html="' . mysql_real_escape_string($html) . '"';
-  // $results = mysql_query($sql);
+  if ($method == 'save') {
+    if (!$code_id) {
+      $code_id = generateCodeId();
+      $revision = 1;
+    } else {
+      $revision = getMaxRevision($code_id);
+      $revision++;
+    }
 
-  // if (mysql_num_rows($results)) { // if there's matching code, switch to that. Could this be confusing?
-  //   $row = mysql_fetch_object($results);
-  //   $code_id = $row->url;
-  //   $revision = $row->revision;
-  // } else {
-  $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-  mysql_query($sql);
-  // }
+    $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+    mysql_query($sql);    
+  } else if ($method == 'download') {
+    // strip escaping (replicated from getCode method):
+    $javascript = preg_replace('/\r/', '', $javascript);
+    $html = preg_replace('/\r/', '', $html);
+    $html = get_magic_quotes_gpc() ? stripslashes($html) : $html;
+    $javascript = get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript;
+    
+    if (!$code_id) {
+      $code_id = 'jsbin';
+      $revision = 1;
+    }
+  }
   
   if ($ajax) {
     // supports plugins making use of JS Bin via ajax calls and callbacks
@@ -71,7 +77,7 @@ if (!$action) {
     }
     $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
-      echo $url;          
+      echo $url;
     } else {
       echo '{ "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit" }';
     }
@@ -79,6 +85,13 @@ if (!$action) {
     if ($_REQUEST['callback']) {
       echo '")';
     }
+  } else if ($method == 'download') {
+    $originalHTML = $html;
+    list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
+    $ext = $originalHTML ? '.html' : '.js';
+    header('Content-Disposition: attachment; filename="' . $code_id . ($revision == 1 ? '' : '.' . $revision) . $ext . '"');
+    echo $originalHTML ? $html : $javascript;
+    exit;
   } else {
     // code was saved, so lets do a location redirect to the newly saved code
     $edit_mode = false;
@@ -110,24 +123,13 @@ if (!$action) {
       $code_id = $action;
       $revision = 1;
     }
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
 
-    if (stripos($html, '%code%') === false) {
-      $html = preg_replace('@</body>@', '<script>%code%</script></body>', $html);
-    }
-    
-    // removed the regex completely to try to protect $n variables in JavaScript
-    $htmlParts = explode("%code%", $html);
-    $html = $htmlParts[0] . $javascript . $htmlParts[1];
-    
-    $html = preg_replace("/%code%/", $javascript, $html);
+    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
+    list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
+
     $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
     $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
 
-
-    if (!$ajax) {
-      $html = preg_replace('/<html(.*)/', "<html$1\n\n<!--\n\n  Created using " . HOST . "\n  Source can be edited via " . HOST . "$code_id/edit\n\n-->\n", $html);            
-    }
 
     if (false) {
       if (stripos($html, '<head>')) {
@@ -195,6 +197,28 @@ function getMaxRevision($code_id) {
   $row = mysql_fetch_object($result);
   return $row->rev ? $row->rev : 0;
 }
+
+function formatCompletedCode($html, $javascript, $code_id, $revision) {
+  global $ajax;
+  
+  if (stripos($html, '%code%') === false) {
+    $html = preg_replace('@</body>@', "<script>\n%code%\n</script>\n</body>", $html);
+  }
+  
+  // removed the regex completely to try to protect $n variables in JavaScript
+  $htmlParts = explode("%code%", $html);
+  $html = $htmlParts[0] . $javascript . $htmlParts[1];
+  
+  $html = preg_replace("/%code%/", $javascript, $html);
+
+  if (!$ajax && $code_id != 'jsbin') {
+    $code_id .= $revision == 1 ? '' : '/' . $revision;
+    $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . HOST . "\n  Source can be edited via " . HOST . "$code_id/edit\n\n-->", $html);            
+  }
+
+  return array($html, $javascript);
+}
+
 
 function getCode($code_id, $revision, $testonly = false) {
   $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($code_id), mysql_real_escape_string($revision));

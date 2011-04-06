@@ -2,13 +2,32 @@ window.jsbin = {};
 
 // once these features are live, they come out of the jsbin beta box
 (function () {  
-  //= require "stream"
+  var $body = $('body');
   
+  //= require "download"
+  
+  this.on = function () {
+    localStorage.setItem('beta', 'true');
+    $body.addClass('beta');
+    
+    enableDownload();
+    enableLive();
+  };
+  
+  this.off = function () {
+    localStorage.removeItem('beta');
+    $body.removeClass('beta');
+  };
+
+  this.active = localStorage.getItem('beta') == 'true' || false;
+  if (this.active) this.on();
+  
+  //= require "stream"
   // expose...for now
-  window.stream = jsbin.stream;
+  window.stream = this.stream;
   
   //= require "../render/live"
-  jsbin.livePreview = function () {
+  this.livePreview = function () {
     $('#live').trigger('toggle');
   };
   

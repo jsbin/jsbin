@@ -19,12 +19,12 @@ $live.bind('show', function () {
   // start timer
   $(document).bind('codeChange.live', throttledPreview);
   renderLivePreview();
-  hijackedConsole.activate();
+  //hijackedConsole.activate();
 }).bind('hide', function () {
   $(document).unbind('codeChange.live');
   localStorage && localStorage.removeItem('livepreview');
   $body.removeClass('live');
-  hijackedConsole.deactivate();
+  //hijackedConsole.deactivate();
 }).bind('toggle', function () {
   $live.trigger($body.is('.live') ? 'hide' : 'show');
 });

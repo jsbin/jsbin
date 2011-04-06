@@ -106,6 +106,7 @@ if (@$_POST['inject'] && @$_POST['html']) :
 <?php endif ?>
 <script src="http://forbind.net/js/?apikey=2796bc83070164231a3ab8c90227dbca"></script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
+<script>jsbin.version = "<?=VERSION?>";</script>
 <?php if (!OFFLINE) : ?>
 <script>
 var _gaq = _gaq || [];

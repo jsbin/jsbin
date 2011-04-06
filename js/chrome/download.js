@@ -6,7 +6,7 @@ function enableDownload() {
     event.preventDefault();
 
     // saveCode is via save.js
-    if ($revert.is(':not(.enable)') || $revert.is(':hidden') || url.indexOf('/edit') === -1) {
+    if ($revert.is(':not(.enable)') || $revert.is(':hidden') || window.location.pathname.indexOf('/edit') === -1) {
       // not edited, so don't change the version and save
       saveCode('download');
     } else {

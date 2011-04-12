@@ -6,6 +6,10 @@ $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
 
+if ($ajax) {
+  header('Access-Control-Allow-Origin: *');
+}
+
 // doesn't require a connection when we're landing for the first time
 if ($action) {
   connect();

@@ -6,11 +6,7 @@ $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 
 // if it contains the x-requested-with header, or is a CORS request on GET only
-$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER[' REQUEST_METHOD'] == 'GET');
-
-foreach ($_SERVER as $k => $v) {
-  error_log($k . ' = ' . $v);
-}
+$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['REQUEST_METHOD'] == 'GET');
 
 // respond to preflights
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

@@ -4,7 +4,13 @@ $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_r
 $action = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
-$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET');
+
+// if it contains the x-requested-with header, or is a CORS request on GET only
+$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER[' REQUEST_METHOD'] == 'GET');
+
+foreach ($_SERVER as $k => $v) {
+  error_log($k . ' = ' . $v);
+}
 
 // respond to preflights
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

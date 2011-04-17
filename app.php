@@ -4,7 +4,7 @@ $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_r
 $action = array_pop($request);
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
-$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
+$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET');
 
 // respond to preflights
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {

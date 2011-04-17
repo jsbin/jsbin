@@ -6,7 +6,16 @@ $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']);
 
-if ($ajax) {
+// respond to preflights
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+  // return only the headers and not the content
+  // only allow CORS if we're doing a GET - i.e. no saving for now.
+  if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET') {
+    header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Headers: X-Requested-With');
+  }
+  exit;
+} else if ($ajax) {
   header('Access-Control-Allow-Origin: *');
 }
 
@@ -33,7 +42,11 @@ if (!$action) {
     echo $javascript;
   } else {
     $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
-    echo 'var template = { url : "' . $url . '", html : ' . encode($html) . ', javascript : ' . encode($javascript) . ' };';    
+    if (!$ajax) {
+      echo 'var template = ';
+    }
+    // doubles as JSON
+    echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
   }
 } else if ($action == 'edit') {
   list($code_id, $revision) = getCodeIdParams($request);

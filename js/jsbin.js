@@ -12,7 +12,6 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
-try {
 (function (window, document, undefined) {
   //= require "chrome/storage"
 
@@ -36,7 +35,3 @@ window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show"
 //= require "chrome/beta"
 //= require "chrome/app"
 })(this, document);
-
-} catch (e) {
-  alert(JSON.stringify(e));
-}

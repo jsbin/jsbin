@@ -1196,3 +1196,12 @@ span.CodeMirror-selected {
   opacity: 1;
 /*  filter:alpha(opacity=1);*/
 }
+
+.mobile .html {
+  border-left: 2px solid #ccc;
+}
+
+.mobile .editbox > div {
+  background: #fff;
+}
+

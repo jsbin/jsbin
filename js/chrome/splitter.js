@@ -31,27 +31,23 @@ $.fn.splitter = function () {
       }
     }
 
-    $document.mouseup(function () {
+    $document.bind('mouseup touchend', function () {
       dragging = false;
       $blocker.remove();
       $handle.css('opacity', '0');
-    }).mousemove(function (event) {
+    }).bind('mousemove touchmove', function (event) {
       if (dragging) {
-        moveSplitter(event.pageX);
+        moveSplitter(event.pageX || event.originalEvent.touches[0].pageX);
       }
     });
     
-    $blocker.mousemove(function (event) {
+    $blocker.bind('mousemove touchmove', function (event) {
       if (dragging) {
-        moveSplitter(event.pageX);
+        moveSplitter(event.pageX || event.originalEvent.touches[0].pageX);
       }
     });
     
-    $document.mousemove(function () {
-      if (dragging) return false;
-    });
-
-    $handle.mousedown(function (e) {
+    $handle.bind('mousedown touchstart', function (e) {
       dragging = true;
       $('body').append($blocker);
       
@@ -91,8 +87,6 @@ $.fn.splitter = function () {
     $prev.css('width', 'auto');
     $el.data('splitter', $handle);
     $el.before($handle);
-
-
   });
 };
 

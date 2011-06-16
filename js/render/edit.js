@@ -24,7 +24,7 @@
 
   var el = document.createElement('a'); 
   
-  set(el, { opacity: 0, position: 'fixed', top: 0, right: 0, padding: '5px', background: '#eee', color: '#212121', 'border-bottom-left-radius': '10px', MozBorderRadiusBottomleft: '10px', border: '1px solid #999', borderRight: 0, borderTop: 0, textDecoration: 'none', font: '12px "Helvetica Neue", Arial, Helvetica' });
+  set(el, { opacity: 0, position: 'fixed', top: 0, right: 0, padding: '5px', background: '#eee url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAYAAADtlXTHAAAAM0lEQVQIHWM4c+bMf6Z///4xMP39+5eB6f///wwQLlgMjYsQwykBVoIg0NShcbGZB3IGAKmKWgUE0gb7AAAAAElFTkSuQmCC) repeat-x', color: '#000', 'text-shadow': '0px -1px 0 #ccc', 'border-bottom-left-radius': '10px', MozBorderRadiusBottomleft: '10px', border: '1px solid #999', borderRight: 0, borderTop: 0, textDecoration: 'none', font: '12px "Helvetica Neue", Arial, Helvetica' });
   el.innerHTML = 'Edit using JS Bin';
   el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
   

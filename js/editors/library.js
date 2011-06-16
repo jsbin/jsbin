@@ -16,23 +16,28 @@ $('#library').bind('init', function () {
   $select.html( html.join('') ).val(selected);
 }).trigger('init');
 
+var state = {};
+
 $('#library').bind('change', function () {
   var libIndex = [],
       lib = {},
-      state = {},
       re,
       i,
       code = editors.html.getCode();
 
   // strip existing libraries out  
+  var addAdjust = code.match(/<(script|link) class="jsbin"/g);
+  if (addAdjust == null) addAdjust = [];
+  
   code = code.replace(/<script class="jsbin".*><\/script>\n?/g, '');
   code = code.replace(/<link class="jsbin".*\/>\n?/g, '');
   
   if (this.value != 'none') {
-    // to restore
+    // to restore (note - the adjustment isn't quite 100% right yet)
     state = {
       line: editors.html.currentLine(),
-      character: editors.html.cursorPosition().character
+      character: editors.html.getCursor().ch,
+      add: 1 - addAdjust.length
     };
 
     libIndex = this.value.split('-');
@@ -41,15 +46,21 @@ $('#library').bind('change', function () {
     // all has to happen in reverse order because we're going directly after <head>
     code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script');
     if (lib.requires) {
+      state.add++;
       code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script');
     }
     
     if (lib.style) {
+      state.add++;
       code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" /');
     }
+    
+    state.line += state.add;
+  } else {
+    state.line -= state.add;
   }
 
   editors.html.setCode(code);
   editors.html.focus();
-  editors.html.selectLines(editors.html.nthLine(state.line), state.character);
+  editors.html.setCursor({ line: state.line, ch: state.character });
 });

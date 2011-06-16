@@ -76,7 +76,10 @@ if (!$action) {
     }
 
     $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-    mysql_query($sql);    
+    $ok = mysql_query($sql);   
+    
+    // error_log('saved: ' . $code_id . ' - ' . $revision . ' -- ' . $ok . ' ' . strlen($sql));
+    // error_log(mysql_error());
   }
   
   if (stripos($method, 'download') !== false) {
@@ -190,17 +193,6 @@ function encode($s) {
   return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $s) . '"';
 }
 
-// returns the app loaded with json html + js content
-function edit() {
-  
-}
-
-// saves current state - should I store regardless of content, to start their own
-// milestones? 
-function save() {
-  
-}
-
 function getCodeIdParams($request) {
   $revision = array_pop($request);
   $code_id = array_pop($request);
@@ -271,8 +263,16 @@ function getCode($code_id, $revision, $testonly = false) {
 function defaultCode($not_found = false) {
   $library = '';
   
-  if (@$_GET['html']) {
-    $html = $_GET['html'];
+  $usingRequest = false;
+  
+  if (isset($_REQUEST['html']) || isset($_REQUEST['js'])) {
+    $usingRequest = true;
+  }
+  
+  if (@$_REQUEST['html']) {
+    $html = $_REQUEST['html'];
+  } else if ($usingRequest) {
+    $html = '';
   } else {
     $html = <<<HERE_DOC
 <!DOCTYPE html>
@@ -297,14 +297,16 @@ HERE_DOC;
 
   $javascript = '';
 
-  if (!@$_GET['js']) {
+  if (@$_REQUEST['js']) {
+    $javascript = $_REQUEST['js'];
+  } else if ($usingRequest) {
+    $javascript = '';
+  } else {
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
     } else {
       $javascript = "if (document.getElementById('hello')) {\n  document.getElementById('hello').innerHTML = 'Hello World - this was inserted using JavaScript';\n}\n";
-    }
-  } else {
-    $javascript = $_GET['js'];
+    }    
   }
 
   return array(get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript);

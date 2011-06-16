@@ -1,10 +1,13 @@
-//= require "storage"
-//= require "events"
-//= require "navigation"
-//= require "save"
-//= require "file-drop"
+//= require "errors"
+//= require "download"
+//= require "../render/live"
+//= require "tips"
+this.livePreview = function () {
+  $('#live').trigger('toggle');
+};
 
-var debug = false,
+var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
+    documentTitle = null, // null = JS Bin
     $bin = $('#bin'),
     loadGist,
     $document = $(document),
@@ -13,17 +16,24 @@ var debug = false,
       sessionStorage.setItem('html', editors.html.getCode());
       sessionStorage.setItem('url', template.url);
       
+      localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+      
       var panel = getFocusedPanel();
       sessionStorage.setItem('panel', panel);
       try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-        sessionStorage.setItem('line', editors[panel].currentLine());
-        sessionStorage.setItem('character', editors[panel].cursorPosition().character);        
+        sessionStorage.setItem('line', editors[panel].getCursor().line);
+        sessionStorage.setItem('character', editors[panel].getCursor().ch);
       } catch (e) {
         sessionStorage.setItem('line', 0);
         sessionStorage.setItem('character', 0);
       }
     };
 
+//= require "storage"
+//= require "events"
+//= require "navigation"
+//= require "save"
+//= require "file-drop"
 
 $(window).unload(unload);
 
@@ -49,9 +59,26 @@ if (window.location.hash == '#preview') {
 }
 
 $document.one('jsbinReady', function () {
-  if (localStorage && localStorage.getItem('livepreview') == 'true') { // damn string coersion
-    $('#live').trigger('show');
+  // if (localStorage && localStorage.getItem('livepreview') == 'true') { // damn string coersion
+  //   $('#live').trigger('show');
+  // }
+
+  $('.code.html').splitter();
+  $live.splitter();
+
+  for (panel in jsbin.settings.show) {
+    if (jsbin.settings.show[panel]) {
+      $('#show' + panel).attr('checked', 'checked')[0].checked = true;
+    } else {
+      $('#show' + panel).removeAttr('checked')[0].checked = false;
+    }
   }
+  
+  for (panel in jsbin.settings.show) {
+    updatePanel(panel, jsbin.settings.show[panel]);
+  }
+
+  $bin.removeAttr('style').addClass('ready');
 });
 
 // if a gist has been requested, lazy load the gist library and plug it in
@@ -70,39 +97,10 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
   }
 }
 
-$('div.label p').click(function () {
-  // determine which side was clicked
-  var panel = $(this).closest('.code').is('.javascript') ? 'javascript' : 'html',
-      otherpanel = panel == 'javascript' ? 'html' : 'javascript',
-      mustshow = $bin.is('.' + panel + '-only'),
-      speed = 150,
-      animatePanel = animateOtherPanel = {};
-  
-  if ($bin.is('.' + panel + '-only')) { // showing the panel
-    // only the html tab could have been clicked
-    animatePanel = panel == 'html' ? { left: '50%', width: '50%' } : { left: '0%', width: '50%' };
-    animateOtherPanel = otherpanel == 'javascript' ? { left: '0%' } : { left: '50%' };
-    $bin.find('div.' + panel).animate(animatePanel, speed);
-    $bin.find('div.' + otherpanel).show().animate(animateOtherPanel, speed, function () {
-      $bin.removeClass(panel + '-only');
-      localStorage && localStorage.removeItem('visible-panel');
-    });
-  } else { // hiding other panel
-    animatePanel = panel == 'html' ? { left: '0%', width: '100%' } : { width: '100%' };
-    animateOtherPanel = otherpanel == 'javascript' ? { left: '-50%' } : { left: '100%' };
-    
-    $bin.find('div.' + panel).animate(animatePanel, speed);
-    $bin.find('div.' + otherpanel).animate(animateOtherPanel, speed, function () { 
-      $(this).hide();
-      $bin.addClass(panel + '-only');
-      // makes me sad, but we have to put this in a try/catch because Safari
-      // sometimes throws an error when using localStorage, then jQuery goes
-      // in to an infinite loop if an animation callback throws an exeception!
-      try {
-        // we're not reading 'true', only that it's been set
-        localStorage && localStorage.setItem('visible-panel', panel);        
-      } catch (e) {}
-    });
+$document.keydown(function (event) {
+  if (event.metaKey && event.which == 83) {
+    $('#save').click();
+    event.preventDefault();
   }
 });
 

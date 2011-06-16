@@ -41,15 +41,29 @@ function getPreparedCode() {
   } else if (/%code%/.test(source)) {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];
-  } else {
+  } else if (js) {
     parts = source.split('</body>');
-    source = parts[0] + "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n</body>" + parts[1];
+    source = parts[0];
+    
+    var close = parts.length == 2 ? '</body>' + parts[1] : '';
+    
+    if (useCustomConsole) {
+      source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
+    }
+    source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
   if (/\$\(document\)\.ready/.test(source)) {
     source = source.replace(/\$\(document\)\.ready/, 'window.onload = ');
   } 
+  
+  // read the element out of the source code and plug it in to our document.title
+  var newDocTitle = source.match(/<title>(.*)<\/title>/i);
+  if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
+    documentTitle = newDocTitle[1];
+    updateTitle();
+  }
 
   return source;
 }

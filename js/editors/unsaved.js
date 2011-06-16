@@ -6,9 +6,14 @@ $(document).bind('codeChange', function (event, revert, onload) {
     $revert.removeClass('enable');
   }
   
+  updateTitle(revert, onload);
+});
+
+function updateTitle(revert, onload) {
+  var title = !documentTitle ? 'JS Bin' : documentTitle;
   if (!revert && !/\*$/.test(document.title)) {
     if (/debug/i.test(document.title)) {
-      document.title = 'JS Bin - [unsaved]';
+      document.title = title + ' - [unsaved]';
     }
     document.title += '*';
     
@@ -17,5 +22,7 @@ $(document).bind('codeChange', function (event, revert, onload) {
     }
   } else if (revert && /\*$/.test(document.title)) {
     document.title = document.title.replace(/\*$/, '');
+  } else {
+    document.title = title;
   }
-});
+}

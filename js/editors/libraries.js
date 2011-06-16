@@ -43,8 +43,8 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' },
-        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js' }
+        { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' },
+        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' }
       ]
     },
     jqueryui : {
@@ -66,8 +66,9 @@ Libraries.prototype.init = function () {
     others: {
       text: 'Others',
       scripts: [
-        { text: 'underscore', url: 'http://documentcloud.github.com/underscore/underscore-min.js'},
-        { text: 'Rapha&euml;l', url: 'https://github.com/DmitryBaranovskiy/raphael/raw/master/raphael-min.js'} 
+        { text: 'Modernizr', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.4/modernizr.min.js'},
+        { text: 'underscore', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js'},
+        { text: 'Rapha&euml;l', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js'} 
       ]
     },
     scriptaculous: {

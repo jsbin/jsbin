@@ -5,7 +5,23 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
+// jQuery plugins
+//= require "chrome/splitter"
+
 (function (window, document, undefined) {
+  function throttle(fn, delay) {
+    var timer = null;
+    return function () {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        fn.apply(context, args);
+      }, delay);
+    };
+  }
+//= require "chrome/storage"
+window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show": { "html": true, "javascript": true }, "theme": "default" }');
+//= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"
 //= require "chrome/beta"

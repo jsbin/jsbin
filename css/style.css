@@ -144,7 +144,20 @@ div.code, #live, .resize {
 }
 
 .resize {
+  cursor: ew-resize;
   background: #ccc url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAMCAYAAACnfgdqAAAAMElEQVQIHWP8//8/AxRoMAA5ZkDcAsT/mYCiN4GYBYidGIECUFUMDCAZOEDmUNkAAKKgK80+TE8oAAAAAElFTkSuQmCC) no-repeat left 45%;
+}
+
+.ie .resize {
+  cursor: w-resize;
+}
+
+.block {
+  cursor: ew-resize;
+}
+
+.ie .block {
+  cursor: w-resize;
 }
 
 div.preview {
@@ -953,7 +966,7 @@ ie6, li {
   display: block;
 }
 
-details {
+.details, details {
   position: absolute;
   display: block;
   bottom: 0;
@@ -964,21 +977,22 @@ details {
   color: #bb0000;
 }
 
-summary {
+.summary, summary {
   cursor: pointer;
   padding: 3px 5px;
   display: block;
   font-weight: bold;
   background: #FC9B9F;
+  border: 0;
 }
 
-details ol {
+details ol, .details ol {
   padding-left: 21px;
   max-height: 150px;
   overflow: auto;
 }
 
-details li {
+details li, .details li {
   margin: 5px 0;
   cursor: pointer;
 }
@@ -1013,6 +1027,10 @@ details li {
 
 .html .CodeMirror > div {
   margin-top: 60px;
+}
+
+.ie .html .CodeMirror > div {
+  margin-top: 30px;
 }
 
 .CodeMirror pre {

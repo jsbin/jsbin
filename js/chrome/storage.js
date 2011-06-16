@@ -52,4 +52,6 @@ if ((!requiresCookies && !window.localStorage) || requiresCookies) {
   localStorage = sessionStorage;
 } else if (!requiresCookies) {
   localStorage = window.localStorage;
+} else if (!localStorage) {
+  localStorage = sessionStorage;
 }

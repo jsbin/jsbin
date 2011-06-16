@@ -7,7 +7,7 @@ $.fn.splitter = function () {
         $parent = $el.parent(),
         $prev = $el.prev(),
         $handle = $('<div class="resize"></div>'),
-        $blocker = $('<div class="block" />').css({ cursor: 'pointer', position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 'z-index': 99999, width: '100%', height: '100%' }),
+        $blocker = $('<div class="block" />').css({ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 'z-index': 99999, width: '100%', height: '100%' }),
         dragging = false,
         width = $parent.width(),
         left = $parent.offset().left,
@@ -39,6 +39,10 @@ $.fn.splitter = function () {
         moveSplitter(event.pageX);
       }
     });
+    
+    $document.mousemove(function () {
+      if (dragging) return false;
+    });
 
     $handle.mousedown(function (e) {
       dragging = true;
@@ -63,7 +67,6 @@ $.fn.splitter = function () {
         width: 4,
         opacity: 0,
         position: 'absolute',
-        cursor: 'pointer',
         'border-left': '1px solid rgba(218, 218, 218, 0.5)',
         'z-index': 99999
       });

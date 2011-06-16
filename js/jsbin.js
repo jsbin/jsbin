@@ -1,4 +1,9 @@
 //= require <jquery>
+if (window.console === undefined) (function () {
+  window.console = {
+    log: function () {}
+  };
+})();
 
 // required because jQuery 1.4.4 lost ability to search my object property :( (i.e. a[host=foo.com])
 jQuery.expr[':'].host = function(obj, index, meta, stack) {
@@ -6,6 +11,8 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 };
 
 // jQuery plugins
+//= require "chrome/storage"
+
 //= require "chrome/splitter"
 
 (function (window, document, undefined) {
@@ -19,7 +26,6 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
       }, delay);
     };
   }
-//= require "chrome/storage"
 window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show": { "html": true, "javascript": true }, "theme": "default" }');
 //= require "vendor/json2"
 //= require "editors/editors"

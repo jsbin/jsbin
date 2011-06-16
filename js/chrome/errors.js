@@ -9,10 +9,12 @@ var jshint = function () {
 
 var detailsSupport = 'open' in document.createElement('details');
 
-var $error = $('<details><summary>errors</summary></details>').hide();
-$('#source .javascript').append($error);
+// yeah, this is happening. Fucking IE...sheesh.
+var html = $.browser.msie && $.browser.version < 9 ? '<div class="details"><div class="summary">errors</div>' : '<details><summary class="summary">errors</summary></details>';
 
-$error.find('summary').click(function () {
+var $error = $(html).appendTo('#source .javascript').hide();
+
+$error.find('.summary').click(function () {
   if (!detailsSupport) {
     $(this).nextAll().toggle();
     $error[0].open = !$error[0].open;
@@ -93,7 +95,7 @@ var checkForErrors = function () {
     
     html = html.join('<li>') + '</ol>';
 
-    $error.find('summary').text(jshintErrors.errors.length == 1 ? '1 error' : jshintErrors.errors.length + ' errors');
+    $error.find('.summary').text(jshintErrors.errors.length == 1 ? '1 error' : jshintErrors.errors.length + ' errors');
     $error.find('ol').remove();
 
     if (!detailsSupport && $error[0].open == false) html = $(html).hide();

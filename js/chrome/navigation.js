@@ -100,7 +100,7 @@ $('#control .tab').click(function (event) {
 
   if ($(this).is('.preview')) {
     $('#preview iframe').remove();
-    $('#preview').append('<iframe class="stretch"></iframe>');
+    $('#preview').append('<iframe class="stretch" frameBorder="0"></iframe>');
     renderPreview();
   } else {
     // remove iframe and thus removing any (I *think*) memory resident JS

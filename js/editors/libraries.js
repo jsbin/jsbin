@@ -26,7 +26,7 @@ Libraries.prototype.init = function () {
     mootools: {
       text: 'MooTools',
       scripts: [
-        { text: 'Mootools 1.3.0', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.3.0/mootools-yui-compressed.js'},
+        { text: 'Mootools 1.3.2', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js'},
         { text: 'Mootools 1.2.4', url: 'http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js' }
       ]
     },
@@ -43,8 +43,8 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' },
-        { text: 'jQuery 1.4.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' }
+        { text: 'jQuery 1.6.1', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' },
+        { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' }
       ]
     },
     jqueryui : {
@@ -52,23 +52,24 @@ Libraries.prototype.init = function () {
       requires: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
       style: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css',
       scripts: [
-        { text: 'jQuery UI 1.8.9', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js' }
+        { text: 'jQuery UI 1.8.13', url: 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js' }
       ]
     },
     jquerymobile : {
       text: 'jQuery Mobile',
       requires: 'http://code.jquery.com/jquery-1.5.min.js',
-      style: 'http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css',
+      style: 'http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a3.min.css',
       scripts: [
-        { text: 'jQuery Mobile 1.0a3', url: 'http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js' }
+        { text: 'jQuery Mobile 1.0a4.1', url: 'http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js' }
       ]
     },
     others: {
       text: 'Others',
       scripts: [
-        { text: 'Modernizr', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.4/modernizr.min.js'},
-        { text: 'underscore', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js'},
-        { text: 'Rapha&euml;l', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js'} 
+        { text: 'Modernizr 2.0.4', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.4/modernizr.min.js' },
+        { text: 'Processing 1.2.1', url: 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.1/processing-api.min.js' },
+        { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
+        { text: 'underscore 1.1.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js' }
       ]
     },
     scriptaculous: {

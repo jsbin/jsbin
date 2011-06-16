@@ -50,7 +50,7 @@ function two(s) {
 function renderLivePreview() {
   var source = getPreparedCode(),
       oldframe = $live.find('iframe').remove(),
-      frame = $live.append('<iframe class="stretch"></iframe>').find('iframe')[0],
+      frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe')[0],
       document = frame.contentDocument || frame.contentWindow.document,
       window = document.defaultView || document.parentWindow,
       d = new Date();

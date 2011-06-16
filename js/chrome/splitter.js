@@ -14,13 +14,11 @@ $.fn.splitter = function () {
         width = $parent.width(),
         left = $parent.offset().left,
         settings = splitterSettings[guid] || {};
-
-    
-
+      
     function moveSplitter(posX) {
       var x = posX - left,
           split = 100 / width * x;
-
+console.log(posX);
       if (split > 10 && split < 90) {
         $el.css('left', split + '%');
         $prev.css('right', (100 - split) + '%');
@@ -29,7 +27,7 @@ $.fn.splitter = function () {
         });
         settings.x = posX;
         splitterSettings[guid] = settings;
-        // console.log('set: ', JSON.stringify(splitterSettings));
+        console.log('set:', JSON.stringify(splitterSettings));
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
       }
     }
@@ -71,7 +69,7 @@ $.fn.splitter = function () {
         $handle.css('opacity', '0');
       }
     });
-
+    
     $handle.bind('init', function (event, x) {
       $handle.css({
         top: 0,
@@ -89,7 +87,7 @@ $.fn.splitter = function () {
       } else {
         moveSplitter(x || $el.offset().left);
       }
-    }).trigger('init', settings.x || $el.offset().left);
+    }); //.trigger('init', settings.x || $el.offset().left);
 
     $prev.css('width', 'auto');
     $el.data('splitter', $handle);

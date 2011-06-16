@@ -18,20 +18,20 @@
 var $htmlpanel = $('.code.html'),
     htmlsplitter = null;
     
-function updatePanel(panel, show) {
+function updatePanel(panel, show, noinit) {
   jsbin.settings.show[panel] = show;
-  htmlsplitter = htmlsplitter || $htmlpanel.data().splitter;
+  htmlsplitter = htmlsplitter || $('.code.html').data().splitter;
 
   if (panel == 'live') {
     $('#live').trigger(show ? 'show' : 'hide');
-    htmlsplitter.trigger('init'); // update the position of the html splitter
+    if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // update the position of the html splitter
   } else {
     var $panel = $bin.find('.code.' + panel)[show ? 'show' : 'hide']();
     
     if (!show) {
-      htmlsplitter.hide();
+      htmlsplitter && htmlsplitter.hide();
     } else {
-      htmlsplitter.show();
+      htmlsplitter && htmlsplitter.show();
     }
 
     var $otherpanel = panel == 'html' ? $bin.find('.code.javascript') : $bin.find('.code.html'),
@@ -59,7 +59,7 @@ function updatePanel(panel, show) {
       editors[panel].refresh();
     }
 
-    htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
+    if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
   }
 }
 

@@ -58,12 +58,7 @@ if (window.location.hash == '#preview') {
 }
 
 $document.one('jsbinReady', function () {
-  // if (localStorage && localStorage.getItem('livepreview') == 'true') { // damn string coersion
-  //   $('#live').trigger('show');
-  // }
-
-  $('.code.html').splitter();
-  $live.splitter();
+  var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]');
 
   for (panel in jsbin.settings.show) {
     if (jsbin.settings.show[panel]) {
@@ -72,10 +67,16 @@ $document.one('jsbinReady', function () {
       $('#show' + panel).removeAttr('checked')[0].checked = false;
     }
   }
+
+  var $sp1 = $('.code.html').splitter().data('splitter');
+  var $sp2 = $live.splitter().data('splitter');
   
-  for (panel in jsbin.settings.show) {
-    updatePanel(panel, jsbin.settings.show[panel]);
-  }
+  updatePanel('html', jsbin.settings.show.html);
+  updatePanel('javascript', jsbin.settings.show.javascript);
+  updatePanel('live', jsbin.settings.show.live);
+
+  $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
+  $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
 
   $bin.removeAttr('style').addClass('ready');
 });

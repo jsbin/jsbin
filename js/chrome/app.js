@@ -30,7 +30,6 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
     };
 
 //= require "storage"
-//= require "events"
 //= require "navigation"
 //= require "save"
 //= require "file-drop"

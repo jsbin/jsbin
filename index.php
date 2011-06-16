@@ -8,6 +8,22 @@ $code_id_path = '';
 if ($code_id) {
   $code_id_path = '/' . $code_id;
 }
+
+if (@$_POST['inject'] && @$_POST['html']) {
+  $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
+  $html = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']) . '"';
+} else {
+/* <script src="<?=$code_id_path ?>/source/<?=$qs?>"></script>  */
+  list($code_id, $revision) = getCodeIdParams($request);
+
+  $edit_mode = false;
+
+  if ($code_id) {
+    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
+  } else {
+    list($html, $javascript) = defaultCode();
+  } 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +33,8 @@ if ($code_id) {
 <link rel="stylesheet" href="/css/style.css?<?=VERSION?>" type="text/css" />
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
-<!--[if gte IE 7 ]><body class="source ie"><![endif]--> 
+<!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
+<!--[if gte IE 8 ]><body class="source ie"><![endif]--> 
 <!--[if !IE]><!--><body class="source"><!--<![endif]-->  
 <div id="control">
   <div class="control">
@@ -46,12 +63,12 @@ if ($code_id) {
     </ul>
   </div>
 </div>
-<div id="bin" class="stretch" style="opacity: 0">
+<div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
       <div class="label"><p><strong id="jslabel">JavaScript</strong><!-- <span> (<span class="hide">hide</span><span class="show">show</span> HTML)</span> --></p></div>
       <div class="editbox">
-        <textarea id="javascript"></textarea>        
+        <textarea id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch html">
@@ -75,7 +92,7 @@ if ($code_id) {
       </div>
     </div>
   </div>
-  <div id="live" class="stretch livepreview"><span class="close"></span></div>
+  <div id="live" class="stretch livepreview"><!-- <span class="close"></span> --></div>
   <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?=$code_id_path?>/save">
     <input type="hidden" name="method" />
@@ -105,23 +122,6 @@ if (@$_GET['html']) {
 }
 */
 
-if (@$_POST['inject'] && @$_POST['html']) :
-  $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
-  $html = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']) . '"';
-?>
-var template = { html : <?=$html?>, javascript: '' };
-<?php else :
-/* <script src="<?=$code_id_path ?>/source/<?=$qs?>"></script>  */
-  list($code_id, $revision) = getCodeIdParams($request);
-
-  $edit_mode = false;
-
-  if ($code_id) {
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
-  } else {
-    list($html, $javascript) = defaultCode();
-  }
-
   $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
   if (!$ajax) {
     echo 'var template = ';
@@ -129,7 +129,7 @@ var template = { html : <?=$html?>, javascript: '' };
   // doubles as JSON
   echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
 
-endif ?>
+?>
 </script>
 <script>jsbin = { version: "<?=VERSION?>" };</script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>

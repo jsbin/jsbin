@@ -1,5 +1,8 @@
 $.fn.splitter = function () {
-  var $document = $(document);
+  var $document = $(document),
+      $blocker = $('<div class="block"></div>');
+      // blockiframe = $blocker.find('iframe')[0];
+      
   var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
   return this.each(function () {
     var $el = $(this), 
@@ -7,11 +10,12 @@ $.fn.splitter = function () {
         $parent = $el.parent(),
         $prev = $el.prev(),
         $handle = $('<div class="resize"></div>'),
-        $blocker = $('<div class="block" />').css({ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 'z-index': 99999, width: '100%', height: '100%' }),
         dragging = false,
         width = $parent.width(),
         left = $parent.offset().left,
         settings = splitterSettings[guid] || {};
+
+    
 
     function moveSplitter(posX) {
       var x = posX - left,
@@ -25,7 +29,7 @@ $.fn.splitter = function () {
         });
         settings.x = posX;
         splitterSettings[guid] = settings;
-        console.log('set: ', JSON.stringify(splitterSettings));
+        // console.log('set: ', JSON.stringify(splitterSettings));
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
       }
     }
@@ -40,6 +44,12 @@ $.fn.splitter = function () {
       }
     });
     
+    $blocker.mousemove(function (event) {
+      if (dragging) {
+        moveSplitter(event.pageX);
+      }
+    });
+    
     $document.mousemove(function () {
       if (dragging) return false;
     });
@@ -47,6 +57,9 @@ $.fn.splitter = function () {
     $handle.mousedown(function (e) {
       dragging = true;
       $('body').append($blocker);
+      
+      // blockiframe.contentDocument.write('<title></title><p></p>');
+      
       // TODO layer on div to block iframes from stealing focus
       width = $parent.width();
       left = $parent.offset().left;

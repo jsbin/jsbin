@@ -1,7 +1,9 @@
 //= require <jquery>
 if (window.console === undefined) (function () {
   window.console = {
-    log: function () {}
+    log: function () {
+      // alert([].slice.call(arguments).join('\n'));
+    }
   };
 })();
 

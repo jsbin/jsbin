@@ -95,8 +95,8 @@ function setupEditor(panel) {
   
   var $label = $('.code.' + panel + ' > .label');
   if (document.body.className.indexOf('ie6') === -1) {
-    e.setOption('onScroll', function (event) {
-      if (e.win.scrollTop > 10) {
+    $(e.getWrapperElement()).scroll(function (event) {
+      if (this.scrollTop > 10) {
         $label.stop().animate({ opacity: 0 }, 50, function () {
           $(this).hide();
         });

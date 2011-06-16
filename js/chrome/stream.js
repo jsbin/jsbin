@@ -4,17 +4,18 @@ var context = this;
 
 var script = document.createElement('script');
 script.src = 'http://forbind.net/js/';
-document.body.appendChild(script);
-
-setTimeout(function forbindReady() {
-  if (typeof window.forbind !== 'undefined') {
-    forbind.apikey = '2796bc83070164231a3ab8c90227dbca';
-    console.log('forbind ready');
-    initForbind(context);
-  } else {
-    setTimeout(forbindReady, 20);
-  }
-}, 20);
+if (!($.browser.msie && $.browser.version < 8)) {
+  document.body.appendChild(script);
+  setTimeout(function forbindReady() {
+    if (typeof window.forbind !== 'undefined') {
+      forbind.apikey = '2796bc83070164231a3ab8c90227dbca';
+      typeof window.console !== 'undefined' && console.log('forbind ready');
+      initForbind(context);
+    } else {
+      setTimeout(forbindReady, 20);
+    }
+  }, 20);
+}
 
 function initForbind(global) {
   var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span><span class="listen"> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</span></div>').prependTo('body'),

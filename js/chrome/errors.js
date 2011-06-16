@@ -1,5 +1,7 @@
+// (function () {
+  // return
+
 //= require "../vendor/jshint/jshint"
-//= require "../vendor/jquery.tipsy"
 var jshint = function () {
   var source = editors.javascript.getCode();
   var ok = JSHINT(source);
@@ -107,3 +109,5 @@ var checkForErrors = function () {
 
 $(document).bind('codeChange', throttle(checkForErrors, 1000));
 $(document).bind('jsbinReady', checkForErrors);
+
+// })();

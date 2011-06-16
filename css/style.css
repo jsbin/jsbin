@@ -117,8 +117,9 @@ a:hover {
 #bin {
   top: 52px;
   width: 100%;
-  opacity: 0;
-}
+/*  opacity: 0;
+  filter:alpha(opacity=0);
+*/}
 
 div.html {
   left: 50%;
@@ -153,6 +154,16 @@ div.code, #live, .resize {
 }
 
 .block {
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  width: 100%; 
+  height: 100%;
+  background: transparent;
   cursor: ew-resize;
 }
 
@@ -480,10 +491,10 @@ body.preview #source select {
 }
 
 textarea {
-  opacity: 0;
+/*  opacity: 0;
   -moz-opacity: 0;
   filter:alpha(opacity=0);
-  margin: 0.4em;
+*/  margin: 0.4em;
   border: 0;
   padding: 0;
   font-family: Menlo, Monaco, consolas, monospace;
@@ -1021,21 +1032,14 @@ details li, .details li {
   margin: .6em;
 }
 
-.javascript .CodeMirror > div {
+.javascript .CodeMirror-scroll {
   margin-top: 25px;
 }
 
-.html .CodeMirror > div {
+.html .CodeMirror-scroll {
   margin-top: 60px;
 }
 
-.ie .html .CodeMirror > div {
-  margin-top: 30px;
-}
-
-.CodeMirror pre {
-/*  white-space: pre-wrap !important;*/
-}
 
 .editor .CodeMirror {
   height: 100%;
@@ -1046,12 +1050,18 @@ details li, .details li {
 .CodeMirror {
   overflow: auto;
   height: 300px;
-/*  top: 0;*/
-/*  bottom: 0;*/
-/*  line-height: 1em;*/
   font-size: 12px;
   font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
   _position: relative; /* IE6 hack */
+}
+
+.ie7 .CodeMirror {
+  background: #fff;
+}
+
+.CodeMirror div {
+  position: relative;
+  zoom: 1;
 }
 
 .CodeMirror-gutter {
@@ -1184,4 +1194,5 @@ span.CodeMirror-selected {
 
 #bin.ready {
   opacity: 1;
+/*  filter:alpha(opacity=1);*/
 }

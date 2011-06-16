@@ -14,14 +14,14 @@ editors.html = CodeMirror.fromTextArea(document.getElementById('html'), {
   tabMode: 'shift',
   mode: 'text/html',
   onChange: changecontrol,
-  theme: jsbin.settings.theme
+  theme: jsbin.settings.theme || 'jsbin'
 });
 
 editors.javascript = CodeMirror.fromTextArea(document.getElementById('javascript'), {
   mode: 'javascript',
   tabMode: 'shift',
   onChange: changecontrol,
-  theme: jsbin.settings.theme
+  theme: jsbin.settings.theme || 'jsbin'
 });
 
 setupEditor('javascript');
@@ -95,7 +95,7 @@ function setupEditor(panel) {
   
   var $label = $('.code.' + panel + ' > .label');
   if (document.body.className.indexOf('ie6') === -1) {
-    $(e.getWrapperElement()).scroll(function (event) {
+    $(e.win).scroll(function (event) {
       if (this.scrollTop > 10) {
         $label.stop().animate({ opacity: 0 }, 50, function () {
           $(this).hide();

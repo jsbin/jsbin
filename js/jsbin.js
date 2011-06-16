@@ -12,12 +12,12 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
-// jQuery plugins
-//= require "chrome/storage"
-
-//= require "chrome/splitter"
-
 (function (window, document, undefined) {
+  //= require "chrome/storage"
+
+  // jQuery plugins
+  //= require "chrome/splitter"
+
   function throttle(fn, delay) {
     var timer = null;
     return function () {

@@ -17,7 +17,8 @@ var requiresCookies = (function () {
 
 // Firefox with Cookies disabled triggers a security error when we probe window.sessionStorage
 // currently we're just disabling all the session features if that's the case.
-var sessionStorage = window.sessionStorage, localStorage = window.localStorage;
+var sessionStorage = window.sessionStorage;
+var localStorage = window.localStorage;
 
 if (!requiresCookies && window.sessionStorage) {
   sessionStorage = window.sessionStorage;

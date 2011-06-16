@@ -18,7 +18,7 @@ $.fn.splitter = function () {
     function moveSplitter(posX) {
       var x = posX - left,
           split = 100 / width * x;
-console.log(posX);
+
       if (split > 10 && split < 90) {
         $el.css('left', split + '%');
         $prev.css('right', (100 - split) + '%');
@@ -27,7 +27,6 @@ console.log(posX);
         });
         settings.x = posX;
         splitterSettings[guid] = settings;
-        console.log('set:', JSON.stringify(splitterSettings));
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
       }
     }

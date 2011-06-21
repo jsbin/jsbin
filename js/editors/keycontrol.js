@@ -65,7 +65,7 @@ function keycontrol(panel, event) {
       
       var cur = panel.getCursor(false), 
           token = panel.getTokenAt(cur),
-          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'javascript',
+          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'html',
           line = panel.getLine(cur.line);
 
       if (type == 'style') {
@@ -75,7 +75,7 @@ function keycontrol(panel, event) {
         } else {
           panel.setLine(cur.line, '/* ' + line + ' */');
         }
-      } else if (type == 'javascript') {
+      } else if (type == 'script') {
         // FIXME - could put a JS comment next to a <script> tag
         if (line.match(/\s*\/\//) !== null) {
           // already contains comment - remove
@@ -83,7 +83,7 @@ function keycontrol(panel, event) {
         } else {
           panel.setLine(cur.line, '// ' + line);
         }      
-      } else if (type == 'html') {
+      } else {
         if (line.match(/\s*<!--/) !== null) {
           // already contains comment - remove
           panel.setLine(cur.line, line.replace(/<!--\s?/, '').replace(/\s?-->/, ''));

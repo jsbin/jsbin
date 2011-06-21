@@ -55,12 +55,6 @@ function renderLivePreview() {
       window = document.defaultView || document.parentWindow,
       d = new Date();
       
-  // nullify the blocking functions
-  window.alert = function () {};
-  window.prompt = function () {};
-  window.confirm = function () {};
-  // window.XMLHttpRequest = function () {};
-  
   if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
   
   // strip autofocus from the markup - prevents the focus switching out of the editable area
@@ -75,6 +69,9 @@ function renderLivePreview() {
       if (m == '"') return '&quot;';
     }) + '</pre>');
   } else {
+    // nullify the blocking functions
+    // IE requires that this is done in the script, rather than off the window object outside of the doc.write
+    document.write('<script>window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
     document.write(source);
   }
   document.close();

@@ -29,6 +29,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.history.pushState(null, data.edit, data.edit);
 
           $('#jsbinurl').attr('href', data.url).text(data.url);
+          updateTitle(true)
         } else {
           window.location = data.edit;
         }

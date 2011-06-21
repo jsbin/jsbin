@@ -65,10 +65,10 @@ function keycontrol(panel, event) {
       
       var cur = panel.getCursor(false), 
           token = panel.getTokenAt(cur),
-          type = token && token.state && token.state.token ? token.state.token.name : 'javascript',
+          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'javascript',
           line = panel.getLine(cur.line);
 
-      if (type == 'css') {
+      if (type == 'style') {
         if (line.match(/\s*\/\*/) !== null) {
           // already contains comment - remove
           panel.setLine(cur.line, line.replace(/\/\*\s?/, '').replace(/\s?\*\//, ''));

@@ -65,7 +65,7 @@ function keycontrol(panel, event) {
       
       var cur = panel.getCursor(false), 
           token = panel.getTokenAt(cur),
-          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'html',
+          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'script',
           line = panel.getLine(cur.line);
 
       if (type == 'style') {

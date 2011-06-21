@@ -1,7 +1,15 @@
 <?php
 include('config.php'); // contains DB & important versioning
-$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $_SERVER['REQUEST_URI']))));
+
+// echo $_SERVER['REQUEST_URI'] . "<br>";
+// echo strpos($_SERVER['REQUEST_URI'], ROOT);
+$pos = strpos($_SERVER['REQUEST_URI'], ROOT);
+if ($pos !== false) $pos++;
+
+$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', substr($_SERVER['REQUEST_URI'], $pos) ))));
+
 $action = array_pop($request);
+
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 

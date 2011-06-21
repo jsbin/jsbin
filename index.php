@@ -1,13 +1,6 @@
 <?php 
 
 include('app.php'); 
-if ($revision != 1 && $revision) {
-  $code_id .= '/' . $revision;
-}
-$code_id_path = '';
-if ($code_id) {
-  $code_id_path = '/' . $code_id;
-}
 
 if (@$_POST['inject'] && @$_POST['html']) {
   $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
@@ -18,10 +11,18 @@ if (@$_POST['inject'] && @$_POST['html']) {
   $edit_mode = false;
 
   if ($code_id) {
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
+    list($latest_revision, $html, $javascript) = getCode($code_id, $revision, true);
   } else {
     list($html, $javascript) = defaultCode();
   } 
+}
+
+if ($revision != 1 && $revision) {
+  $code_id .= '/' . $revision;
+}
+$code_id_path = '';
+if ($code_id) {
+  $code_id_path = '/' . $code_id;
 }
 ?>
 <!DOCTYPE html>

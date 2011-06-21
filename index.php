@@ -13,7 +13,6 @@ if (@$_POST['inject'] && @$_POST['html']) {
   $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
   $html = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']) . '"';
 } else {
-/* <script src="<?=$code_id_path ?>/source/<?=$qs?>"></script>  */
   list($code_id, $revision) = getCodeIdParams($request);
 
   $edit_mode = false;
@@ -99,39 +98,62 @@ if (@$_POST['inject'] && @$_POST['html']) {
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
-<!-- <div id="help"><p><a href="/help/index.html">Help Menu</a></p><div id="content"></div></div> -->
+<div id="keyboardHelp">
+  <h2>Keyboard Shortcuts</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Shortcut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ctrl + &rarr;</td>
+        <td>Focus HTML panel</td>
+      </tr>
+      <tr>
+        <td>ctrl + &larr;</td>
+        <td>Focus JavaScript panel</td>
+      </tr>
+      <tr>
+        <td>ctrl + 1</td>
+        <td>Source tab</td>
+      </tr>
+      <tr>
+        <td>ctrl + 2</td>
+        <td>Rendered preview tab</td>
+      </tr>
+      <tr>
+        <td>ctrl + /</td>
+        <td>Toggle comment on single line</td>
+      </tr>
+      <tr>
+        <td>ctrl + alt + .</td>
+        <td>Close current HTML element</td>
+      </tr>
+      <tr>
+        <td>esc</td>
+        <td>Code complete (JavaScript only)</td>
+      </tr>
+      <tr>
+        <td>ctrl + s</td>
+        <td>Save current Bin</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <script>
 <?php
-/* 
-// construct the correct query string, if we're injecting the html or JS
-$qs = '';
-if (isset($_GET['js']) || isset($_GET['html']) || (@$_POST['inject'] && isset($_POST['html'])) ) {
-  $qs .= '?';
-}
-
-if (@$_GET['js']) {
-  $qs .= 'js=' . rawurlencode(stripslashes($_GET['js']));
-  
-  if (@$_GET['html']) {
-    $qs .= '&amp;';
-  }
-}
-
-if (@$_GET['html']) {
-  $qs .= 'html=' . rawurlencode(stripslashes($_GET['html']));
-}
-*/
-
   $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
   if (!$ajax) {
     echo 'var template = ';
   }
   // doubles as JSON
   echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
-
 ?>
 </script>
-<script>jsbin = { version: "<?=VERSION?>" };</script>
+<script>jsbin = { version: "<?=VERSION?>" }; tips = <?=file_get_contents('tips.json')?>;</script>
 <script src="/js/<?=VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

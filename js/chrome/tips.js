@@ -3,13 +3,21 @@ var $html = $(document.documentElement);
 $('#tip a.dismiss').click(function () {
   $html.removeClass('showtip');
   $(window).resize();
-  sessionStorage.setItem('tips', 'false');
   return false;
 });
 
-var showTips = sessionStorage.getItem('tips');
-if (showTips === null) {
-  // $html.addClass('showtip'); 
-}
+window.showTip = function () {
+  if (jsbin.settings.lastTip === undefined) jsbin.settings.lastTip = -1;
+  if (tips) {
+    for (var id = 0; id < tips.length; id++) {
+      if (id > jsbin.settings.lastTip) {
+        $('#tip p').html(tips[id]);
+        jsbin.settings.lastTip = id;
+        $html.addClass('showtip'); 
+        break;
+      }
+    }
+  }
+};
 
-// remove this setting after a few days (or a new set of tips come in)
+showTip();

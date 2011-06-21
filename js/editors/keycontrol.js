@@ -1,32 +1,47 @@
 //= require "autocomplete"
 
+$('body').keydown(function (event) {
+  if (keyboardHelpVisible) {
+    if (event.which == 27 || (event.which == 191 && event.shiftKey && event.metaKey)) {
+      $body.toggleClass('keyboardHelp');
+      keyboardHelpVisible = false;
+    }
+  }
+});
+
+var keyboardHelpVisible = false;
+
 function keycontrol(panel, event) {
   event = normalise(event);
-  var ctrl = event.ctrlKey;
 
-  if (ctrl && event.which == 39 && panel.id == 'javascript') {
+  if (event.metaKey && event.which == 39 && panel.id == 'javascript') {
     // go right
     editors.html.focus();
     event.stop();
-  } else if (ctrl && event.which == 37 && panel.id == 'html') {
+  } else if (event.metaKey && event.which == 37 && panel.id == 'html') {
     // go left
     editors.javascript.focus();
     event.stop();
-  } else if (ctrl && event.which == 49) { // 49 == 1 key
+  } else if (event.metaKey && event.which == 49) { // 49 == 1 key
     $('#control a.source').click();
     event.stop();
   } else if (event.which == 191 && event.shiftKey && event.metaKey) {
     // show help
-    console.log('showing help - TBI');
+    $body.toggleClass('keyboardHelp');
+    keyboardHelpVisible = $body.is('.keyboardHelp');
     event.stop();
-  } else if (ctrl && event.which == 50) {
+  } else if (event.metaKey && event.which == 50) {
     $('#control a.preview').click();
     event.stop();
   } else 
   
   // these should fire when the key goes down
   if (event.type == 'keydown') {
-    if (event.which == 27) {
+    if (event.which == 27 && keyboardHelpVisible) {
+      $body.removeClass('keyboardHelp');
+      keyboardHelpVisible = false;
+      event.stop();
+    } else if (event.which == 27) {
       event.stop();
       return startComplete(panel);
     } else if (event.which == 190 && event.altKey && event.metaKey && panel.id == 'html') {
@@ -113,8 +128,9 @@ function normalise(event) {
 	
 	var oldStop = event.stop;
 	myEvent.stop = function () {
+	  console.log('stopping');
 	  myEvent.stopping = true;
-	  oldStop.call(event);
+	  oldStop && oldStop.call(event);
 	};
 	
 	return myEvent;

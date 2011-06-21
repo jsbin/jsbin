@@ -32,8 +32,6 @@ var editorsReady = setInterval(function () {
     editors.ready = true;
     if (typeof editors.onReady == 'function') editors.onReady();
     
-    console.log(editors.html);
-    
     var scrollers = {
       html: $(editors.html.getScrollerElement()),
       javascript: $(editors.javascript.getScrollerElement())

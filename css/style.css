@@ -969,7 +969,7 @@ ie6, li {
 #tip a.dismiss {
   position: absolute;
   right: 20px;
-  top: 0;
+  top: 2px;
   text-decoration: none;
 }
 
@@ -1006,6 +1006,47 @@ details ol, .details ol {
 details li, .details li {
   margin: 5px 0;
   cursor: pointer;
+}
+
+.keyboardHelp #keyboardHelp {
+  display: block;
+}
+
+#keyboardHelp {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9999;
+
+  background: #000;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  padding-top: 10%;
+  font-size: 20px;
+}
+
+#keyboardHelp table, #keyboardHelp h2 {
+  margin: 20px auto;
+  width: 500px;
+}
+
+#keyboardHelp thead th {
+  text-align: left;
+}
+
+#keyboardHelp tbody tr {
+  height: 30px;
+}
+
+#keyboardHelp tbody td:first-child {
+  font-family: "MenschRegular";
+  padding-right: 20px;
+  color: yellow;
 }
 
 /* codemirror2 styles */

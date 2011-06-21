@@ -1026,8 +1026,12 @@ details li, .details li {
   background: #000;
   background: rgba(0,0,0,0.85);
   color: #fff;
-  padding-top: 10%;
   font-size: 20px;
+  overflow: auto;
+}
+
+#keyboardHelp h2 {
+  padding-top: 10%;
 }
 
 #keyboardHelp table, #keyboardHelp h2 {

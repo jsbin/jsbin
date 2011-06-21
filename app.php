@@ -223,6 +223,8 @@ function getMaxRevision($code_id) {
 function formatCompletedCode($html, $javascript, $code_id, $revision) {
   global $ajax;
   
+  $javascript = preg_replace('@</script@', "<\/script", $javascript);
+  
   if (stripos($html, '%code%') === false) {
     $html = preg_replace('@</body>@', "<script>\n%code%\n</script>\n</body>", $html);
   }

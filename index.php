@@ -140,6 +140,14 @@ if (@$_POST['inject'] && @$_POST['html']) {
         <td>ctrl + s</td>
         <td>Save current Bin</td>
       </tr>
+      <tr>
+        <td>tab</td>
+        <td>Indents selected lines</td>
+      </tr>
+      <tr>
+        <td>shift + tab</td>
+        <td>Unindents selected lines</td>
+      </tr>
     </tbody>
   </table>
 </div>

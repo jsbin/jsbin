@@ -685,7 +685,7 @@ div.javascript {
 }
 
 body.streaming {
-  background-position: 0 22px;
+  background-position: 0 11px;
 }
 
 #stream {
@@ -772,7 +772,7 @@ body.streaming #help {
 }
 
 body.streaming #bin {
-  top: 84px;
+  top: 73px;
 }
 
 /* simplified for that poor old dog: IE6 */

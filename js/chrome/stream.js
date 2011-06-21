@@ -75,9 +75,7 @@ function initForbind(global) {
 
       msg.line = cursor.line;
       msg.ch = cursor.ch;
-    
-      console.log('sending', msg);
-    
+        
       forbind.send(msg);
     }
   }
@@ -171,7 +169,6 @@ function initForbind(global) {
       if (msg.diff) {
         diff = new diff_match_patch();
         code = editors[lang].getCode();
-        console.log(msg.text);
         var patch = diff.patch_fromText(msg.text);
         var result = diff.patch_apply(patch, code);
         editors[lang].setCode(result[0]);

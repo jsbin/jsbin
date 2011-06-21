@@ -62,7 +62,7 @@ function keycontrol(panel, event) {
     } else if (event.which == 191 && event.metaKey) {
       // auto close the element
       if (panel.somethingSelected()) return;
-    
+      
       var cur = panel.getCursor(false), 
           token = panel.getTokenAt(cur),
           type = token && token.state && token.state.token ? token.state.token.name : 'javascript',
@@ -73,7 +73,6 @@ function keycontrol(panel, event) {
           // already contains comment - remove
           panel.setLine(cur.line, line.replace(/\/\*\s?/, '').replace(/\s?\*\//, ''));
         } else {
-          // panel.replaceRange('// ', {line: cur.line, ch: 0}, {line: cur.line, ch: 0});      
           panel.setLine(cur.line, '/* ' + line + ' */');
         }
       } else if (type == 'javascript') {
@@ -82,7 +81,6 @@ function keycontrol(panel, event) {
           // already contains comment - remove
           panel.setLine(cur.line, line.replace(/(\s*)\/\/\s?/, '$1'));
         } else {
-          // panel.replaceRange('// ', {line: cur.line, ch: 0}, {line: cur.line, ch: 0});      
           panel.setLine(cur.line, '// ' + line);
         }      
       } else if (type == 'html') {
@@ -90,7 +88,6 @@ function keycontrol(panel, event) {
           // already contains comment - remove
           panel.setLine(cur.line, line.replace(/<!--\s?/, '').replace(/\s?-->/, ''));
         } else {
-          // panel.replaceRange('// ', {line: cur.line, ch: 0}, {line: cur.line, ch: 0});      
           panel.setLine(cur.line, '<!-- ' + line + ' -->');
         }      
       }
@@ -126,7 +123,6 @@ function normalise(event) {
 	
 	var oldStop = event.stop;
 	myEvent.stop = function () {
-	  console.log('stopping');
 	  myEvent.stopping = true;
 	  oldStop && oldStop.call(event);
 	};

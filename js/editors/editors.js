@@ -1,4 +1,3 @@
-// = require <codemirror>
 //= require "codemirror"
 //= require "mobileCodeMirror"
 //= require "library"

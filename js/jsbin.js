@@ -1,4 +1,5 @@
 //= require <jquery>
+
 if (window.console === undefined) (function () {
   window.console = {
     log: function () {
@@ -28,7 +29,7 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
       }, delay);
     };
   }
-window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show": { "html": true, "javascript": true }, "theme": "default" }');
+window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show": { "html": true, "javascript": true }, "theme": "jsbin" }');
 //= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"

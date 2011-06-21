@@ -11,17 +11,11 @@ $(document).bind('codeChange', function (event, revert, onload) {
 
 function updateTitle(revert, onload) {
   var title = !documentTitle ? 'JS Bin' : documentTitle;
-  if (!revert && !/\[unsaved\]$/.test(document.title)) {
-    // if (/debug/i.test(document.title)) {
-      document.title = title + ' [unsaved]';
-    // }
-    // document.title += '*';
-    
+  if (!revert) {
+    document.title = title + ' [unsaved]';
     if ($revert.addClass('enable').is(':hidden')) {
       $revert[onload ? 'show' : 'fadeIn']().next().removeClass('left');
     }
-  } else if (revert && /\*$/.test(document.title)) {
-    document.title = document.title.replace(/ \[unsaved\]$/, '');
   } else {
     document.title = title;
   }

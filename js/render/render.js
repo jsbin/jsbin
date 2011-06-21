@@ -62,7 +62,7 @@ function getPreparedCode() {
   var newDocTitle = source.match(/<title>(.*)<\/title>/i);
   if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
     documentTitle = newDocTitle[1];
-    updateTitle();
+    updateTitle(!/ \[unsaved\]/.test(document.title));
   }
 
   return source;

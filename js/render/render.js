@@ -32,6 +32,9 @@ function getPreparedCode() {
       js = js.replace(/(^.|\b)console\./g, 'window.top.console.');
     }
   }
+  
+  // escape any script tags in the JS code, because that'll break the mushing together
+  js = js.replace(/<\/script/ig, '<\\/script');
 
   // note that I'm using split and reconcat instead of replace, because if the js var
   // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method

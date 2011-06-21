@@ -14,30 +14,28 @@ var keyboardHelpVisible = false;
 function keycontrol(panel, event) {
   event = normalise(event);
 
-  if (event.metaKey && event.which == 39 && panel.id == 'javascript') {
-    // go right
-    editors.html.focus();
-    event.stop();
-  } else if (event.metaKey && event.which == 37 && panel.id == 'html') {
-    // go left
-    editors.javascript.focus();
-    event.stop();
-  } else if (event.metaKey && event.which == 49) { // 49 == 1 key
-    $('#control a.source').click();
-    event.stop();
-  } else if (event.which == 191 && event.shiftKey && event.metaKey) {
-    // show help
-    $body.toggleClass('keyboardHelp');
-    keyboardHelpVisible = $body.is('.keyboardHelp');
-    event.stop();
-  } else if (event.metaKey && event.which == 50) {
-    $('#control a.preview').click();
-    event.stop();
-  } else 
-  
   // these should fire when the key goes down
   if (event.type == 'keydown') {
-    if (event.which == 27 && keyboardHelpVisible) {
+    if (event.shiftKey == false && event.metaKey && event.which == 39 && panel.id == 'javascript') {
+      // go right
+      editors.html.focus();
+      event.stop();
+    } else if (event.shiftKey == false && event.metaKey && event.which == 37 && panel.id == 'html') {
+      // go left
+      editors.javascript.focus();
+      event.stop();
+    } else if (event.shiftKey == false && event.metaKey && event.which == 49) { // 49 == 1 key
+      $('#control a.source').click();
+      event.stop();
+    } else if (event.metaKey && event.which == 50) { // 50 == 2 key
+      $('#control a.preview').click();
+      event.stop();
+    } else if (event.which == 191 && event.shiftKey && event.metaKey) {
+      // show help
+      $body.toggleClass('keyboardHelp');
+      keyboardHelpVisible = $body.is('.keyboardHelp');
+      event.stop();
+    } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;
       event.stop();

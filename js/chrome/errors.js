@@ -12,7 +12,7 @@ var jshint = function () {
 var detailsSupport = 'open' in document.createElement('details');
 
 // yeah, this is happening. Fucking IE...sheesh.
-var html = $.browser.msie && $.browser.version < 9 ? '<div class="details"><div class="summary">errors</div>' : '<details><summary class="summary">errors</summary></details>';
+var html = $.browser.msie && $.browser.version < 9 ? '<div class="details"><div class="summary">warnings</div>' : '<details><summary class="summary">warnings</summary></details>';
 
 var $error = $(html).appendTo('#source .javascript').hide();
 
@@ -97,7 +97,7 @@ var checkForErrors = function () {
     
     html = html.join('<li>') + '</ol>';
 
-    $error.find('.summary').text(jshintErrors.errors.length == 1 ? '1 error' : jshintErrors.errors.length + ' errors');
+    $error.find('.summary').text(jshintErrors.errors.length == 1 ? '1 warning' : jshintErrors.errors.length + ' warnings');
     $error.find('ol').remove();
 
     if (!detailsSupport && $error[0].open == false) html = $(html).hide();

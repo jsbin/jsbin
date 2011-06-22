@@ -69,6 +69,10 @@ function keycontrol(panel, event) {
           type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'script',
           line = panel.getLine(cur.line);
 
+      if (token && token.state && token.state.htmlState && token.state.htmlState.context == null) {
+        type = 'html';
+      }
+      
       if (type == 'style') {
         if (line.match(/\s*\/\*/) !== null) {
           // already contains comment - remove

@@ -11,6 +11,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
     $bin = $('#bin'),
     loadGist,
     $document = $(document),
+    splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
       sessionStorage.setItem('javascript', editors.javascript.getCode());
       sessionStorage.setItem('html', editors.html.getCode());
@@ -44,10 +45,9 @@ if ($.browser.opera) {
 /* Boot code */
 // if the user linked directly to #html, initially hide the JS panel
 if (({ '#html':1, '#javascript':1 })[window.location.hash]) {
-  document.getElementById('bin').className += ' ' + window.location.hash.substr(1) + '-only';
-} else if (localStorage && localStorage.getItem('visible-panel')) {
-  $bin.addClass(localStorage.getItem('visible-panel') + '-only');
-}
+  jsbin.settings.show.html = window.location.hash === '#html';
+  jsbin.settings.show.javascript = window.location.hash === '#javascript';
+} 
 
 if (window.location.hash == '#preview') {
   $('body').removeClass('source').addClass('preview');
@@ -58,8 +58,6 @@ if (window.location.hash == '#preview') {
 }
 
 $document.one('jsbinReady', function () {
-  var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]');
-
   for (panel in jsbin.settings.show) {
     if (jsbin.settings.show[panel]) {
       $('#show' + panel).attr('checked', 'checked')[0].checked = true;

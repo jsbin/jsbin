@@ -1,6 +1,6 @@
 //= require "autocomplete"
 
-$('body').keydown(function (event) {
+$(document).keydown(function (event) {
   if (keyboardHelpVisible) {
     if (event.which == 27 || (event.which == 191 && event.shiftKey && event.metaKey)) {
       $body.toggleClass('keyboardHelp');
@@ -31,6 +31,7 @@ function keycontrol(panel, event) {
       $('#control a.preview').click();
       event.stop();
     } else if (event.which == 191 && event.shiftKey && event.metaKey) {
+      console.log('show help');
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
@@ -107,25 +108,35 @@ function normalise(event) {
     type: event.type,
     which: event.which,
     metaKey: event.metaKey,
-  	shiftKey: event.shiftKey,
-  	ctrlKey: event.ctrlKey,
-  	altKey: event.altKey
+    shiftKey: event.shiftKey,
+    ctrlKey: event.ctrlKey,
+    altKey: event.altKey,
+    orig: event
   };
   
   if ( event.which == null && (event.charCode != null || event.keyCode != null) ) {
-		myEvent.which = event.charCode != null ? event.charCode : event.keyCode;
-	} 	
+    myEvent.which = event.charCode != null ? event.charCode : event.keyCode;
+  }
+  
+  // this is retarded - I'm having to mess with the event just to get Firefox
+  // to send through the right value. i.e. when you include a shift key modifier
+  // in Firefox, if it's punctuation - event.which is zero :(
+  // Note that I'm only doing this for the ? symbol
+  if (event.which === 47 && event.type == 'keypress') {
+    myEvent.type = 'keydown';
+    myEvent.which = event.which == 47 ? 191 : 0;
+  }
 
-	// Add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-	if ( !event.metaKey && event.ctrlKey ) {
-		myEvent.metaKey = event.ctrlKey;
-	}
-	
-	var oldStop = event.stop;
-	myEvent.stop = function () {
-	  myEvent.stopping = true;
-	  oldStop && oldStop.call(event);
-	};
-	
-	return myEvent;
+  // Add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+  if ( !event.metaKey && event.ctrlKey ) {
+    myEvent.metaKey = event.ctrlKey;
+  }
+  
+  var oldStop = event.stop;
+  myEvent.stop = function () {
+    myEvent.stopping = true;
+    oldStop && oldStop.call(event);
+  };
+  
+  return myEvent;
 }

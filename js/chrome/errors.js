@@ -36,11 +36,13 @@ JSHINT._data = JSHINT.data;
 JSHINT.data = function (onlyErrors) {
   var data = JSHINT._data(),
       errors = [];
-  
+
   if (onlyErrors && data.errors) {
     for (var i = 0; i < data.errors.length; i++) {
       if (data.errors[i] !== null && data.errors[i].evidence) { // ignore JSHINT just quitting
         errors.push(data.errors[i]);
+      } else if (data.errors[i] !== null && data.errors[i].reason.indexOf('Stopping') === 0) {
+        errors.push('Fatal errors, unable to continue');
       }
     }
     return {
@@ -52,26 +54,14 @@ JSHINT.data = function (onlyErrors) {
   }
 };
 
-// $error.tipsy({ 
-//   title: function () { 
-//     var html = ['<ul>'],
-//         errors = JSHINT.data(true).errors;
-//     for (var i = 0; i < errors.length; i++) {
-//       html.push('Line ' + errors[i].line + ': ' + errors[i].evidence + ' --- ' + errors[i].reason);
-//     }
-//     
-//     return html.join('<li>') + '</ul>';
-//   },
-//   gravity: 'nw',
-//   html: true
-// });
-
 $error.delegate('li', 'click', function () {
   var errors = JSHINT.data(true).errors;
   if (errors.length) {
     var i = $error.find('li').index(this);
-    editors.javascript.setSelection({ line: errors[i].line - 1, ch: 0 }, { line: errors[i].line - 1 });
-    editors.javascript.focus();
+    if (errors[i].reason) {
+      editors.javascript.setSelection({ line: errors[i].line - 1, ch: 0 }, { line: errors[i].line - 1 });
+      editors.javascript.focus();      
+    }
     // var line = editors.javascript.nthLine(errors[0].line);
     // editors.javascript.jumpToLine(line);
     // editors.javascript.selectLines(line, 0, editors.javascript.nthLine(errors[0].line + 1), 0);
@@ -92,7 +82,11 @@ var checkForErrors = function () {
     var html = ['<ol>'],
         errors = jshintErrors.errors;
     for (var i = 0; i < errors.length; i++) {
-      html.push('Line ' + errors[i].line + ': ' + errors[i].evidence + ' --- ' + errors[i].reason);
+      if (typeof errors[i] == 'string') {
+        html.push(errors[i]);
+      } else {
+        html.push('Line ' + errors[i].line + ': ' + errors[i].evidence + ' --- ' + errors[i].reason);
+      }
     }
     
     html = html.join('<li>') + '</ol>';

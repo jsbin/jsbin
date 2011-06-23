@@ -43,18 +43,25 @@ if ($code_id) {
       <a class="tab button preview group right gap" accesskey="2" href="#preview" title="Run with alerts, prompts, etc">Render</a>
       <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="/images/revert.png" /><img class="disabled" src="/images/revert-disabled.png" /></a>
     <?php if ($code_id) : ?>
-    <a id="jsbinurl" class="button group light left" href="<?=HOST . $code_id?>"><?=HOST . $code_id?></a>
-    <?php else : ?>
-    <a id="save" class="button save group left" href="/save">Save</a>
-    <?php endif ?>
-    <?php if ($code_id) : ?><a id="save" class="button light save group" href="<?=$code_id_path?>/save">Save</a><?php endif ?>
-    <a id="download" class="button download group right light gap" href="">Download</a>
+      <a id="jsbinurl" class="button group light left" href="http://<?=$_SERVER['HTTP_HOST'] . '/' . $code_id?>">http://<?=$_SERVER['HTTP_HOST'] . '/' . $code_id?></a>
 
-    <span id="panelsvisible" class="gap">View: 
-      <input type="checkbox" data-panel="javascript" id="showjavascript"><label for="showjavascript">JavaScript</label>
-      <input type="checkbox" data-panel="html" id="showhtml"><label for="showhtml">HTML</label>
-      <input type="checkbox" data-panel="live" id="showlive"><label for="showlive">Real-time preview</label>
-    </span>
+      <div class="button group gap right tall">
+        <a href="/save" class="save title">Save</a>
+        <a id="clone" title="Create a new copy" class="button clone group light" href="/clone">Clone</a>
+        <a id="save" title="Save new a new revision" class="button light save group" href="<?=$code_id_path?>/save">Save</a>
+      <?php else : ?>
+        <div class="button group gap right">
+           <a href="/save" class="save title">Save</a>
+          <a id="save" title="Save new bin" class="button save group" href="/save">Save</a>
+      <?php endif ?>
+          <a id="download" title="Save to drive" class="button download group light" href="/download">Download</a>
+      </div>
+
+      <span id="panelsvisible" class="gap">View: 
+        <input type="checkbox" data-panel="javascript" id="showjavascript"><label for="showjavascript">JavaScript</label>
+        <input type="checkbox" data-panel="html" id="showhtml"><label for="showhtml">HTML</label>
+        <input type="checkbox" data-panel="live" id="showlive"><label for="showlive">Real-time preview</label>
+      </span>
     </div>
   </div>
   <div class="help">
@@ -154,7 +161,8 @@ if ($code_id) {
 </div>
 <script>
 <?php
-  $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
+  // assumes http - if that's not okay, this need to be changed
+  $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
   if (!$ajax) {
     echo 'var template = ';
   }

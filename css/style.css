@@ -25,7 +25,8 @@ p {
 }
 
 #control {
-  overflow: hidden;
+  z-index: 199999;
+  min-width: 865px;
   height: 51px;
   position: absolute;
 /*  width: 100%;*/
@@ -51,7 +52,7 @@ p {
 .control {
   padding-right: 0;
 /*  width: 50%;*/
-}
+; position: relative; z-index: 1;}
 
 .starting {
   text-align: center;
@@ -60,8 +61,8 @@ p {
 .help {
   width: 10%;
   text-align: right;
-  float: right;
-}
+  position: absolute;
+right: 0; z-index: 0;}
 
 .help a {
   outline: 0;
@@ -221,6 +222,7 @@ iframe.javascript {
 }
 
 .buttons {
+  min-width: 732px;
   float: left;
   display: block;
   margin-right: 10px;
@@ -298,14 +300,14 @@ body.preview a.preview {
   border-left: 0;
 }
 
-a.group {
+.group {
   -moz-border-radius: 0;
   -webkit-border-radius: 0;
   border-radius: 0;
   border-left: 0;
 }
 
-a.left {
+.left {
   border-left: 1px solid #ccc;
   -moz-border-radius-topleft: 3px;
   -webkit-border-top-left-radius: 3px;
@@ -315,7 +317,7 @@ a.left {
   border-bottom-left-radius: 3px;
 }
 
-a.right {
+.right {
   border-right: 1px solid #ccc;
   -moz-border-radius-topright: 3px;
   -webkit-border-top-right-radius: 3px;
@@ -325,6 +327,65 @@ a.right {
   border-bottom-right-radius: 3px;
 }
 
+div.group {
+  margin-left: -1px;
+  border-left: 1px solid #ccc;
+  float: left;
+  display: block;
+  width: 94px;
+  position: relative; 
+  z-index: 20;
+  padding: 0;
+  height: 24px;
+  overflow: hidden;
+}
+
+div.group:hover {
+  background: #fff;
+  height: 78px;
+  overflow: visible;
+  -moz-border-radius-bottomleft: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  -webkit-box-shadow: 1px 1px 2px #ccc;
+  -moz-box-shadow: 1px 1px 2px #ccc;
+  -o-box-shadow: 1px 1px 2px #ccc;
+  box-shadow: 1px 1px 2px #ccc;
+}
+
+div.tall:hover {
+  height: 102px;
+}
+
+#control div.group .title {
+  display: block;
+  float: none;
+  padding: 6px 10px;
+  text-align: center;
+  height: 18px;
+  line-height: 14px;
+  background: url(/images/down.png) no-repeat 90% center;
+  padding-right: 26px;
+  font-weight: normal;
+  text-decoration: none;
+  padding-bottom: 0;
+  margin-bottom: 6px;
+}
+
+#control div.group:hover .title {
+  background: #eee url(/images/down-hover.png) no-repeat 90% center;
+}
+
+#control div.group .button {
+  padding-left: 24px;
+  border: 0;
+  display: block;
+  width: 60px;
+}
+
+#control .group a {
+  font-weight: bold;
+}
 
 #preview {
   z-index: 11; /* gets over the labels in IE */
@@ -632,35 +693,35 @@ div.javascript {
 
 
 #help dl.shortcuts {
-	margin-bottom: 1em;
-	margin-left: 26px; }
+    margin-bottom: 1em;
+    margin-left: 26px; }
 #help dl.shortcuts * {
-	margin: 0;
-	line-height: 2.25;
-	font-weight: normal; }
+    margin: 0;
+    line-height: 2.25;
+    font-weight: normal; }
 #help .shortcuts dt {
-	float: left;
-	display: block;
-	width: 7em;
-	clear: both; }
+    float: left;
+    display: block;
+    width: 7em;
+    clear: both; }
 #help kbd {
-	/* not sure if this should be more specific ie. ".shortcuts kbd" */
-	background: -webkit-gradient(linear, left top, center bottom, from(#000), to(#222));
-	background-color: #000;
-	color: #fff;
-	font-family: "VAG Rounded", sans-serif;
-	font-size: 90%;
-	padding: 1ex;
-	letter-spacing: 0.2ex;
-	text-shadow: rgba(0,255,255,0.5) 0 0 4px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	-webkit-box-shadow: 1px 1px 0px #000; }
+    /* not sure if this should be more specific ie. ".shortcuts kbd" */
+    background: -webkit-gradient(linear, left top, center bottom, from(#000), to(#222));
+    background-color: #000;
+    color: #fff;
+    font-family: "VAG Rounded", sans-serif;
+    font-size: 90%;
+    padding: 1ex;
+    letter-spacing: 0.2ex;
+    text-shadow: rgba(0,255,255,0.5) 0 0 4px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 1px 1px 0px #000; }
 #help .shortcuts.a dt {
-	width: 7em; }
+    width: 7em; }
 #help .shortcuts.b dt {
-	width: 10em; }
+    width: 10em; }
 
 #revert {
   display: none;
@@ -814,25 +875,6 @@ ie6, li {
   padding-left: 5px;
 }
 
-/* tipsy - for JS error notices */
-.tipsy { padding: 5px; font-size: 10px; position: absolute; z-index: 100000; }
-.tipsy-inner { padding: 5px 8px 4px 8px; background-color: black; color: white; max-width: 200px; text-align: left; }
-.tipsy-inner { border-radius: 3px; -moz-border-radius:3px; -webkit-border-radius:3px; }
-.tipsy-arrow { position: absolute; background: url('../images/tipsy.gif') no-repeat top left; width: 9px; height: 5px; }
-.tipsy-n .tipsy-arrow { top: 0; left: 50%; margin-left: -4px; }
-.tipsy-nw .tipsy-arrow { top: 0; left: 10px; }
-.tipsy-ne .tipsy-arrow { top: 0; right: 10px; }
-.tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -4px; background-position: bottom left; }
-.tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; background-position: bottom left; }
-.tipsy-se .tipsy-arrow { bottom: 0; right: 10px; background-position: bottom left; }
-.tipsy-e .tipsy-arrow { top: 50%; margin-top: -4px; right: 0; width: 5px; height: 9px; background-position: top right; }
-.tipsy-w .tipsy-arrow { top: 50%; margin-top: -4px; left: 0; width: 5px; height: 9px; }
-.tipsy li, .tipsy ul {
-  padding: 0;
-  margin: 10px 0;
-  list-style: none
-}
-
 /** BETA FEATURES **/
 
 .beta #startingpoint {
@@ -862,27 +904,6 @@ ie6, li {
   z-index: 9999;
 }
 
-#live .close {
-  background: url(/images/close.png) no-repeat center;
-  height: 25px;
-  width: 25px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  opacity: 0.1;
-  z-index: 99999;
-  -webkit-transition: opacity ease-in 100ms;
-  -moz-transition: opacity ease-in 100ms;
-  -o-transition: opacity ease-in 100ms;
-  -ms-transition: opacity ease-in 100ms;
-  transition: opacity ease-in 100ms;
-}
-
-#live .close:hover {
-  opacity: 1;
-}
-
 .live #live {
   display: block;
 }
@@ -892,28 +913,7 @@ ie6, li {
 }
 
 .live #source {
-	bottom: 40%;
-}
-
-.live #control .live {
-  font-weight: bold;
-  background: #aaa;
-  background: rgba(0, 0, 0, 0.25);
-  text-shadow: none;
-  border: 1px solid #ccc;
-  -moz-box-shadow: #fff 0px 0px 5px;
-  -webkit-box-shadow: #fff 0px 0px 5px;
-  
-  background-image: 
-    -webkit-gradient(
-      radial,
-      center center,
-      0,
-      center center,
-      50,
-      color-stop(0, #BFBFBF),
-      color-stop(1, #949494)
-    ); 
+    bottom: 40%;
 }
 
 #live { 
@@ -964,6 +964,7 @@ ie6, li {
 
 #tip p {
   margin: 0;
+  padding: 0 65px 0 0;
 }
 
 #tip a.dismiss {
@@ -1054,25 +1055,6 @@ details li, .details li {
 }
 
 /* codemirror2 styles */
-@font-face {
-  font-family: 'MenschRegular';
-  src: url('/font/mensch-webfont.eot');
-  src: url('/font/mensch-webfont.eot?#iefix') format('eot'),
-       url('/font/mensch-webfont.woff') format('woff'),
-       url('/font/mensch-webfont.ttf') format('truetype'),
-       url('/font/mensch-webfont.svg#webfont0UwCC656') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-/*
-.editbox {
-  margin: .4em;
-  padding: 0;
-  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
-  font-size: 14pt;
-  color: black;
-}*/
-
 .CodeMirror-scroll {
   margin: 0;
 }

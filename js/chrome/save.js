@@ -1,10 +1,26 @@
 // to allow for download button to be introduced via beta feature
-$('#save').click(function (event) {
+$('a.save').click(function (event) {
   event.preventDefault();
   saveCode('save', window.location.pathname.indexOf('/edit') !== -1);
   
   return false;
 });
+
+$('a.clone').click(function (event) {
+  event.preventDefault();
+
+  var $form = $('form')
+    .append('<input type="hidden" name="javascript" />')
+    .append('<input type="hidden" name="html" />');
+  
+  $form.find('input[name=javascript]').val(editors.javascript.getCode());
+  $form.find('input[name=html]').val(editors.html.getCode());
+  $form.find('input[name=method]').val('save,new');
+  $form.submit();
+
+  return false;
+});
+
 
 function saveCode(method, ajax, ajaxCallback) {
   // create form and post to it

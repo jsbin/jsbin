@@ -1,14 +1,24 @@
 <?php
 include('config.php'); // contains DB & important versioning
 
-// echo $_SERVER['REQUEST_URI'] . "<br>";
-// echo strpos($_SERVER['REQUEST_URI'], ROOT);
 $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
 if ($pos !== false) $pos++;
 
-$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', substr($_SERVER['REQUEST_URI'], $pos) ))));
+$request_uri = substr($_SERVER['REQUEST_URI'], $pos);
+$home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
+
+// if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
+//   header('Location: ' . HOST . $home . '/');
+//   exit;
+// }
+
+$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
 $action = array_pop($request);
+
+if ($action == $home) {
+  $action = array_pop($request);
+}
 
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
@@ -36,6 +46,12 @@ if ($action) {
 
 if (!$action) {
   // do nothing and serve up the page
+} else if ($action == 'list' || $action == 'show') {
+  echo 'showing list of bins under the ' . $request[0] . ' namespace';
+  
+  // could be listed under a user OR could be listing all the revisions for a particular bin
+  
+  die();
 } else if ($action == 'source' || $action == 'js') {
   header('Content-type: text/javascript');
   list($code_id, $revision) = getCodeIdParams($request);
@@ -66,7 +82,7 @@ if (!$action) {
     $edit_mode = false;
     
   }
-} else if ($action == 'save') {
+} else if ($action == 'save' || $action == 'clone') {
   list($code_id, $revision) = getCodeIdParams($request);
 
   $javascript = @$_POST['javascript'];
@@ -75,6 +91,11 @@ if (!$action) {
   
   // we're using stripos instead of == 'save' because the method *can* be "download,save" to support doing both
   if (stripos($method, 'save') !== false) {
+    
+    if (stripos($method, 'new') !== false) {
+      $code_id = false;
+    }
+    
     if (!$code_id) {
       $code_id = generateCodeId();
       $revision = 1;
@@ -351,7 +372,7 @@ function generateURL() {
   $const = str_split('bcdfghjklmnpqrstvwxyz');
   
   $word = '';
-  for ($i = 0; $i < 5; $i++) {
+  for ($i = 0; $i < 6; $i++) {
     if ($i % 2 == 0) { // even = vowels
       $word .= $vowels[rand(0, 4)]; 
     } else {

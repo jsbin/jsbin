@@ -1,8 +1,10 @@
 <?php
 include('config.php'); // contains DB & important versioning
 
+$host = 'http://' . $_SERVER['HTTP_HOST'];
+
 $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
-if ($pos !== false) $pos++;
+if ($pos !== false) $pos = strlen(ROOT);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
@@ -67,7 +69,7 @@ if (!$action) {
   if ($action == 'js') {
     echo $javascript;
   } else {
-    $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (!$ajax) {
       echo 'var template = ';
     }
@@ -129,7 +131,7 @@ if (!$action) {
     if (@$_REQUEST['callback']) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = HOST . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {
@@ -150,9 +152,9 @@ if (!$action) {
     // code was saved, so lets do a location redirect to the newly saved code
     $edit_mode = false;
     if ($revision == 1) {
-      header('Location: /' . $code_id . '/edit');
+      header('Location: ' . ROOT . $code_id . '/edit');
     } else {
-      header('Location: /' . $code_id . '/' . $revision . '/edit');
+      header('Location: ' . ROOT . $code_id . '/' . $revision . '/edit');
     }
   }
   
@@ -195,7 +197,7 @@ if (!$action) {
     }
 
     if (!$html && !$ajax) {
-      $javascript = "/*\n  Created using " . HOST . "\n  Source can be edit via " . HOST . "$code_id/edit\n*/\n\n" . $javascript;
+      $javascript = "/*\n  Created using " . $host . ROOT . "\n  Source can be edit via " . $host . ROOT . "$code_id/edit\n*/\n\n" . $javascript;
     }
 
     if (!$html) {
@@ -258,7 +260,7 @@ function formatCompletedCode($html, $javascript, $code_id, $revision) {
 
   if (!$ajax && $code_id != 'jsbin') {
     $code_id .= $revision == 1 ? '' : '/' . $revision;
-    $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . HOST . "\n  Source can be edited via " . HOST . "$code_id/edit\n\n-->", $html);            
+    $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . $host . ROOT . "\n  Source can be edited via " . $host . ROOT . "$code_id/edit\n\n-->", $html);            
   }
 
   return array($html, $javascript);

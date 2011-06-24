@@ -20,17 +20,18 @@ if (@$_POST['inject'] && @$_POST['html']) {
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
 }
-$code_id_path = '';
+$code_id_path = ROOT;
 if ($code_id) {
-  $code_id_path = '/' . $code_id;
+  $code_id_path = ROOT . $code_id . '/';
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="stylesheet" href="/css/style.css?<?=VERSION?>" type="text/css" />
+<link rel="stylesheet" href="<?=ROOT?>css/style.css?<?=VERSION?>" type="text/css" />
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
@@ -41,20 +42,20 @@ if ($code_id) {
     <div class="buttons">
       <a class="tab button source group left" accesskey="1" href="#source">Code</a>
       <a class="tab button preview group right gap" accesskey="2" href="#preview" title="Run with alerts, prompts, etc">Render</a>
-      <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="/images/revert.png" /><img class="disabled" src="/images/revert-disabled.png" /></a>
+      <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?=ROOT?>images/revert.png" /><img class="disabled" src="<?=ROOT?>images/revert-disabled.png" /></a>
     <?php if ($code_id) : ?>
-      <a id="jsbinurl" class="button group light left" href="http://<?=$_SERVER['HTTP_HOST'] . '/' . $code_id?>">http://<?=$_SERVER['HTTP_HOST'] . '/' . $code_id?></a>
+      <a id="jsbinurl" class="button group light left" href="http://<?=$_SERVER['HTTP_HOST'] . ROOT . $code_id?>">http://<?=$_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
 
       <div class="button group gap right tall">
-        <a href="/save" class="save title">Save</a>
-        <a id="clone" title="Create a new copy" class="button clone group light" href="/clone">Clone</a>
-        <a id="save" title="Save new a new revision" class="button light save group" href="<?=$code_id_path?>/save">Save</a>
+        <a href="<?=ROOT?>save" class="save title">Save</a>
+        <a id="clone" title="Create a new copy" class="button clone group light" href="<?=ROOT?>clone">Clone</a>
+        <a id="save" title="Save new a new revision" class="button light save group" href="<?=$code_id_path?>save">Save</a>
       <?php else : ?>
         <div class="button group gap left right">
-           <a href="/save" class="save title">Save</a>
-          <a id="save" title="Save new bin" class="button save group" href="/save">Save</a>
+          <a href="<?=ROOT?>save" class="save title">Save</a>
+          <a id="save" title="Save new bin" class="button save group" href="<?=ROOT?>save">Save</a>
       <?php endif ?>
-          <a id="download" title="Save to drive" class="button download group light" href="/download">Download</a>
+          <a id="download" title="Save to drive" class="button download group light" href="<?=ROOT?>download">Download</a>
       </div>
 
       <span id="panelsvisible" class="gap">View: 
@@ -101,7 +102,7 @@ if ($code_id) {
   </div>
   <div id="live" class="stretch livepreview"><!-- <span class="close"></span> --></div>
   <div id="preview" class="binview stretch"></div>
-  <form method="post" action="<?=$code_id_path?>/save">
+  <form method="post" action="<?=$code_id_path?>save">
     <input type="hidden" name="method" />
   </form>
 </div>
@@ -175,7 +176,7 @@ if ($code_id) {
 ?>
 </script>
 <script>jsbin = { version: "<?=VERSION?>" }; tips = <?=file_get_contents('tips.json')?>;</script>
-<script src="/js/<?=VERSION?>/jsbin.js"></script>
+<script src="<?=ROOT?>js/<?=VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>
 var _gaq = _gaq || [];

@@ -3,7 +3,13 @@ require_once('config.php');
 require_once('lib/sprockets/sprocket.php');
  
 // get path from request
-$filePath = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+$pos = strpos($_SERVER['REQUEST_URI'], ROOT);
+if ($pos !== false) $pos = strlen(ROOT);
+
+$request_uri = substr($_SERVER['REQUEST_URI'], $pos);
+
+// strip the ROOT off and add our own
+$filePath = '/' . preg_replace('/\?.*/', '', $request_uri);
  
 // prepare sprocket
 $sprocket = new Sprocket($filePath, array(    
@@ -32,4 +38,5 @@ $sprocket->filePath = '.' . str_replace(VERSION . '/', '', $sprocket->filePath);
 
 // tada!
 $sprocket->render();
+
 ?>

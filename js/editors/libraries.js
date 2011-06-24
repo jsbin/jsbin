@@ -57,9 +57,10 @@ Libraries.prototype.init = function () {
     },
     jquerymobile : {
       text: 'jQuery Mobile',
-      requires: 'http://code.jquery.com/jquery-1.5.min.js',
-      style: 'http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a3.min.css',
+      requires: 'http://code.jquery.com/jquery-1.6.1.min.js',
+      style: 'http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css',
       scripts: [
+        { text: 'jQuery Mobile 1.0b1', url: 'http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js' },
         { text: 'jQuery Mobile 1.0a4.1', url: 'http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js' }
       ]
     },

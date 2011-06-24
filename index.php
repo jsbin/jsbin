@@ -50,7 +50,7 @@ if ($code_id) {
         <a id="clone" title="Create a new copy" class="button clone group light" href="/clone">Clone</a>
         <a id="save" title="Save new a new revision" class="button light save group" href="<?=$code_id_path?>/save">Save</a>
       <?php else : ?>
-        <div class="button group gap right">
+        <div class="button group gap left right">
            <a href="/save" class="save title">Save</a>
           <a id="save" title="Save new bin" class="button save group" href="/save">Save</a>
       <?php endif ?>

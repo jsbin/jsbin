@@ -28,5 +28,48 @@
     }
   };
   
+  this.diff = function (revision) {
+    var url = window.location.pathname;
+    url = url.split('/');
+    
+    var thisRev = url.pop();
+    if (thisRev == 'edit') thisRev = url.pop(); // should always happen
+    
+    if (!revision) {
+      revision = thisRev;
+      revision--;
+    } else {
+      revision *= 1;
+    }
+    
+    if (!isNaN(revision) && revision > 0) {
+      $.ajax({
+        url: url.join('/') + '/' + revision + '/source',
+        dataType: 'json',
+        success: function (data) {
+          var diff = new diff_match_patch(),
+              patch = diff.patch_make(data.javascript, editors.javascript.getCode()),
+              patchText = diff.patch_toText(patch);
+          
+          if (patchText) {
+            console.log('--- javascript diff ---');
+            console.log(decodeURIComponent(patchText));
+          }
+
+          diff = new diff_match_patch();
+          patch = diff.patch_make(data.html, editors.html.getCode());
+          patchText = diff.patch_toText(patch);
+          
+          if (patchText) {
+            console.log('--- html diff ---');
+            console.log(decodeURIComponent(patchText));
+          }
+        }
+      });
+    } else {
+      console.log('requires a revision number to test against');
+    }
+  };
+  
   //= require "stream"  
 }).call(jsbin);

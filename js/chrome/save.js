@@ -58,3 +58,15 @@ function saveCode(method, ajax, ajaxCallback) {
     $form.submit();
   }
 }
+
+$document.keydown(function (event) {
+  if (event.metaKey && event.which == 83) {
+    if (event.shiftKey == false) {
+      $('#save').click();
+      event.preventDefault();
+    } else if (event.shiftKey == true) {
+      $('.clone').click();
+      event.preventDefault();
+    }
+  }
+});

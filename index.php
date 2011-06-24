@@ -149,6 +149,10 @@ if ($code_id) {
         <td>Save current Bin</td>
       </tr>
       <tr>
+        <td>ctrl + shift + s</td>
+        <td>Clone current Bin</td>
+      </tr>
+      <tr>
         <td>tab</td>
         <td>Indents selected lines</td>
       </tr>

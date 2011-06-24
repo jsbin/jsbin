@@ -95,13 +95,6 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
   }
 }
 
-$document.keydown(function (event) {
-  if (event.metaKey && event.which == 83) {
-    $('#save').click();
-    event.preventDefault();
-  }
-});
-
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 
 // $(window).bind('online', function () {

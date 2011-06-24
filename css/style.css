@@ -1022,7 +1022,7 @@ details li, .details li {
   bottom: 0;
   height: 100%;
   width: 100%;
-  z-index: 99999;
+  z-index: 199999; /* gosh that's a stupid number */
 
   background: #000;
   background: rgba(0,0,0,0.85);

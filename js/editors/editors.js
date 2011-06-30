@@ -134,7 +134,7 @@ function populateEditor(panel) {
     // tell the document that it's currently being edited, but check that it doesn't match the saved template
     // because sessionStorage gets set on a reload
     changed = data != saved;
-  } else if (saved !== undefined && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
+  } else if (saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
     editors[panel].setCode(saved);
   } else { // otherwise fall back on the JS Bin default
     editors[panel].setCode(template[panel]);

@@ -56,6 +56,7 @@ if ($code_id) {
           <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
       <?php endif ?>
           <a id="download" title="Save to drive" class="button download group light" href="<?php echo ROOT?>download">Download</a>
+          <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
       </div>
 
       <span id="panelsvisible" class="gap">View: 
@@ -74,14 +75,14 @@ if ($code_id) {
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript">
-      <div class="label"><p><strong id="jslabel">JavaScript</strong><!-- <span> (<span class="hide">hide</span><span class="show">show</span> HTML)</span> --></p></div>
+      <div class="label"><p><strong id="jslabel">JavaScript</strong></p></div>
       <div class="editbox">
         <textarea id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch html">
       <div class="label">
-        <p>HTML<!-- <span>  (<span class="hide">hide</span><span class="show">show</span> JavaScript)</span> --></p>
+        <p>HTML</p>
         <label for="library">Include</label>
         <select id="library">
           <option value="none">None</option>
@@ -100,7 +101,7 @@ if ($code_id) {
       </div>
     </div>
   </div>
-  <div id="live" class="stretch livepreview"><!-- <span class="close"></span> --></div>
+  <div id="live" class="stretch livepreview"><!--<a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a>--></div>
   <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?php echo $code_id_path?>save">
     <input type="hidden" name="method" />

@@ -273,6 +273,31 @@ a.button:active, .button:focus {
   text-shadow: none;
 }
 
+#popout {
+  display: none;
+}
+
+.beta #popout {
+  display: block;
+}
+
+a.popout {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  background: #efefef url(../images/new-light.png) no-repeat 90% center;
+  padding-right: 22px;
+  opacity: 0.5;
+  -webkit-transition: opacity 50ms linear;
+}
+
+a.popout:hover {
+  background: #eee url(../images/new-dark.png) no-repeat 90% center;
+  border: 1px solid #aaa;
+  opacity: 1;
+}
+
 body.source a.source,
 body.preview a.preview {
   background: #aaa;
@@ -332,7 +357,7 @@ div.group {
   border-left: 1px solid #ccc;
   float: left;
   display: block;
-  width: 94px;
+  width: 104px;
   position: relative; 
   z-index: 20;
   padding: 0;
@@ -342,7 +367,7 @@ div.group {
 
 div.group:hover {
   background: #fff;
-  height: 78px;
+  height: 102px;
   overflow: visible;
   -moz-border-radius-bottomleft: 3px;
   -webkit-border-bottom-left-radius: 3px;
@@ -354,33 +379,33 @@ div.group:hover {
 }
 
 div.tall:hover {
-  height: 102px;
+  height: 126px; /* single height 24px */
 }
 
 #control div.group .title {
   display: block;
   float: none;
   padding: 6px 10px;
+  padding-right: 36px;
+  padding-bottom: 0;
   text-align: center;
   height: 18px;
   line-height: 14px;
-  background: url(../images/down.png) no-repeat 90% center;
-  padding-right: 26px;
+  background: url(../images/down.png) no-repeat 75px center;
   font-weight: normal;
   text-decoration: none;
-  padding-bottom: 0;
   margin-bottom: 6px;
 }
 
 #control div.group:hover .title {
-  background: #eee url(../images/down-hover.png) no-repeat 90% center;
+  background: #eee url(../images/down-hover.png) no-repeat 75px center;
 }
 
 #control div.group .button {
   padding-left: 24px;
   border: 0;
   display: block;
-  width: 60px;
+  width: 70px;
 }
 
 #control .group a {
@@ -875,10 +900,10 @@ ie6, li {
   padding-left: 5px;
 }
 
-/** BETA FEATURES **/
-
-.beta #startingpoint {
-  display: none;
+#startingpoint.button.saved {
+  background-image: url(../images/tick.png);
+  background-repeat: no-repeat;
+  background-position: 8px 7px;
 }
 
 .button.download {
@@ -1244,3 +1269,15 @@ span.CodeMirror-selected {
   background: #fff;
 }
 
+.CodeMirror-lines pre {
+/*  white-space: normal;*/
+  /*min-height: 14px;*/ /* 12px font-size + arb padding 2px - this increases depending on the font-size */
+}
+
+.CodeMirror-lines > div {
+/*  width: auto !important;*/
+}
+
+.CodeMirror-lines pre.CodeMirror-cursor {
+/*  white-space: pre;*/
+}

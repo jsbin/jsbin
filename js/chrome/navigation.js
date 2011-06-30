@@ -1,19 +1,14 @@
-// $('#startingpoint').click(function () {
-//   if (localStorage) {
-//     localStorage.setItem('saved-javascript', editors.javascript.getCode());
-//     localStorage.setItem('saved-html', editors.html.getCode());
-//     
-//     // fade text out - then show "saved", then bring it back in again
-//     $(this).find('span:first').fadeOut(200, function () {
-//       $(this).next().fadeIn(200).animate({ foo: 1 }, 1000, function () {
-//         $(this).fadeOut(200, function () {
-//           $(this).prev().fadeIn(150);
-//         });
-//       });
-//     });
-//   }
-//   return false;
-// }).find('span').after('<span style="display: none;">Saved</span>');
+var $startingpoint = $('#startingpoint').click(function (event) {
+  event.preventDefault();
+  if (localStorage) {
+    localStorage.setItem('saved-javascript', editors.javascript.getCode());
+    localStorage.setItem('saved-html', editors.html.getCode());
+    $startingpoint.addClass('saved');
+    $('#tip p').html('Default starting point now changed to current code');
+    $html.addClass('showtip');
+  }
+  return false;
+});
 
 var $htmlpanel = $('.code.html'),
     htmlsplitter = null;

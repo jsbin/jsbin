@@ -43,7 +43,7 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.6.1', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' },
+        { text: 'jQuery 1.6.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' },
         { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' }
       ]
     },

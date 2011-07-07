@@ -43,13 +43,28 @@ if ($.browser.opera) {
 }
 
 /* Boot code */
-// if the user linked directly to #html, initially hide the JS panel
-if (({ '#html':1, '#javascript':1 })[window.location.hash]) {
-  jsbin.settings.show.html = window.location.hash === '#html';
-  jsbin.settings.show.javascript = window.location.hash === '#javascript';
-} 
+// if the user linked to a code or live panel - hide them all by default to reset the current stte
+if (location.hash && location.hash !== '#preview') {
+  jsbin.settings.show.html = false;
+  jsbin.settings.show.javascript = false;
+  jsbin.settings.show.live = false;
+}
 
-if (window.location.hash == '#preview') {
+// then allow them to view specific panels based on comma separated hash fragment
+if (location.hash.indexOf('html') !== -1) {
+  jsbin.settings.show.html = true;
+}
+
+if (location.hash.indexOf('javascript') !== -1) {
+  jsbin.settings.show.javascript = true;
+}
+
+if (location.hash.indexOf('live') !== -1) {
+  jsbin.settings.show.live = true;
+}
+
+// if it's preview - just jump to that
+if (location.hash == '#preview') {
   $('body').removeClass('source').addClass('preview');
   window.scrollTo(0, 0);
   $document.bind('jsbinReady', function () {

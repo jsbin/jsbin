@@ -23,6 +23,9 @@ if (/WebKit.*Mobile.*/.test(navigator.userAgent) || document.body.className.inde
     getWrapperElement: function () {
       return this.wrapping;
     },
+    getScrollerElement: function () {
+      return this.textarea;
+    },
     setOption: function (type, handler) {
       if (type == 'onChange') {
         $(this.textarea).change(handler);

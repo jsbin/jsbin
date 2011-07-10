@@ -13,7 +13,7 @@ if (@$_POST['inject'] && @$_POST['html']) {
   if ($code_id) {
     list($latest_revision, $html, $javascript) = getCode($code_id, $revision, true);
   } else {
-    list($html, $javascript) = defaultCode();
+    list($latest_revision, $html, $javascript) = defaultCode();
   } 
 }
 

@@ -28,6 +28,8 @@ $code_id = '';
 // if it contains the x-requested-with header, or is a CORS request on GET only
 $ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['REQUEST_METHOD'] == 'GET');
 
+$no_code_found = false;
+
 // respond to preflights
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
   // return only the headers and not the content
@@ -182,8 +184,11 @@ if (!$action) {
 
     list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
     list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
-
-    $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
+    
+    if ($no_code_found == false) {
+      $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);      
+    }
+    
     $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
 
 
@@ -295,6 +300,11 @@ function getCode($code_id, $revision, $testonly = false) {
 
 function defaultCode($not_found = false) {
   $library = '';
+  global $no_code_found;
+  
+  if ($not_found) {
+    $no_code_found = true;
+  }
   
   $usingRequest = false;
   
@@ -342,7 +352,7 @@ HERE_DOC;
     }    
   }
 
-  return array(get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript);
+  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript);
 }
 
 // I'd consider using a tinyurl type generator, but I've yet to find one.

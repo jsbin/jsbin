@@ -202,9 +202,9 @@ foreach ($bins as $bin) {
 <tr data-type="spacer"><td colspan=3></td></tr>
     <?php endif ?>
 <tr data-url="<?=$url?>">
-  <td class="url"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</td>
-  <td class="created"><?=getRelativeTime($bin['created'])?></td>
-  <td class="title"><?=$title?></td>
+  <td class="url"><a href="<?=$url?>"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
+  <td class="created"><a href="<?=$url?>"><?=getRelativeTime($bin['created'])?></a></td>
+  <td class="title"><a href="<?=$url?>"><?=$title?></a></td>
 </tr>
 <?php
     $last = $bin['url'];

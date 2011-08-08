@@ -59,10 +59,13 @@ p {
 }
 
 .help {
-  width: 10%;
+/*  width: 10%;*/
+/*  width: 134px;*/
   text-align: right;
   position: absolute;
-right: 0; z-index: 0;}
+  right: 0; 
+  z-index: 0;
+}
 
 .help a {
   outline: 0;
@@ -278,7 +281,7 @@ a.button:active, .button:focus {
 }
 
 .beta #popout {
-  display: block;
+/*  display: block;*/
 }
 
 a.popout {
@@ -1051,18 +1054,39 @@ details li, .details li {
 
   background: #000;
   background: rgba(0,0,0,0.85);
+  background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+  
   color: #fff;
   font-size: 20px;
   overflow: auto;
 }
 
-#keyboardHelp h2 {
-  padding-top: 10%;
-}
-
 #keyboardHelp table, #keyboardHelp h2 {
   margin: 20px auto;
+  padding: 20px;
   width: 520px;
+  background: #000;
+  border-radius: 5px;
+/*  background: #fff;*/
+  -webkit-box-shadow: 0px 5px 80px #505050;
+  -moz-box-shadow: 0px 5px 80px #505050;
+  -o-box-shadow: 0px 5px 80px #505050;
+  -ms-box-shadow: 0px 5px 80px #505050;
+  
+}
+
+#keyboardHelp h2 {
+  margin-top: 10%;
+  margin-bottom: 0; 
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0; 
+}
+
+#keyboardHelp table {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0; 
+  margin-top: 0;
+  width: 560px;
 }
 
 #keyboardHelp thead th {
@@ -1104,20 +1128,9 @@ details li, .details li {
 }
 
 .CodeMirror {
-/*  overflow: auto;
-  height: 300px;
-*/  font-size: 12px;
+  line-height: 1.2em;
   font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
-  _position: relative; /* IE6 hack */
-}
-
-.ie7 .CodeMirror {
-  background: #fff;
-}
-
-.CodeMirror div {
-  position: relative;
-  zoom: 1;
+  font-size: 12px;
 }
 
 .CodeMirror-scroll {
@@ -1151,6 +1164,15 @@ details li, .details li {
   border-radius: 0;
   border-width: 0; margin: 0; padding: 0; background: transparent;
   font-family: inherit;
+  font-size: inherit;
+  padding: 0; margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+}
+
+.CodeMirror textarea {
+  font-family: inherit !important;
+  font-size: inherit !important;
 }
 
 .CodeMirror-cursor {
@@ -1173,6 +1195,9 @@ span.CodeMirror-selected {
 
 .CodeMirror-matchingbracket {color: #0f0 !important;}
 .CodeMirror-nonmatchingbracket {color: #f22 !important;}
+
+
+
 
 /* CM2 default */
 .cm-s-default span.cm-keyword {color: #708;}
@@ -1280,4 +1305,42 @@ span.CodeMirror-selected {
 
 .CodeMirror-lines pre.CodeMirror-cursor {
 /*  white-space: pre;*/
+}
+
+.beta .prefsButton {
+  display: none;
+}
+
+.prefsButton img {
+  vertical-align: text-top;
+}
+
+.prefsOverlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+  background: #000;
+  background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+/*  background: -moz-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+  background: -o-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+  background: -ms-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
+  background: radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));*/
+}
+
+.prefsOpen .prefsOverlay {
+  display: block;
+}
+
+.prefsOverlay > div {
+  background: #fff;
+  -webkit-box-shadow: 0px 5px 80px #505050;
+  -moz-box-shadow: 0px 5px 80px #505050;
+  -o-box-shadow: 0px 5px 80px #505050;
+  -ms-box-shadow: 0px 5px 80px #505050;
 }

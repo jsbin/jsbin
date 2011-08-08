@@ -44,7 +44,7 @@ if ($code_id) {
       <a class="tab button preview group right gap" accesskey="2" href="#preview" title="Run with alerts, prompts, etc">Render</a>
       <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
     <?php if ($code_id) : ?>
-      <a id="jsbinurl" class="button group light left" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>">http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
+      <a id="jsbinurl" class="button group light left" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
 
       <div class="button group gap right tall">
         <a href="<?php echo ROOT?>save" class="save title">Save</a>
@@ -69,6 +69,7 @@ if ($code_id) {
   <div class="help">
     <ul class="flat">
       <li><a target="_blank" href="http://jsbin.tumblr.com">Help &amp; tutorials</a></li>
+      <li class="prefsButton"><a href="#"><img src="/images/gear.png"></a></li>
     </ul>
   </div>
 </div>
@@ -101,7 +102,7 @@ if ($code_id) {
       </div>
     </div>
   </div>
-  <div id="live" class="stretch livepreview"><!--<a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a>--></div>
+  <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div>
   <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?php echo $code_id_path?>save">
     <input type="hidden" name="method" />
@@ -109,62 +110,65 @@ if ($code_id) {
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
 <div id="keyboardHelp">
-  <h2>Keyboard Shortcuts</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Shortcut</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>ctrl + &rarr;</td>
-        <td>Focus HTML panel</td>
-      </tr>
-      <tr>
-        <td>ctrl + &larr;</td>
-        <td>Focus JavaScript panel</td>
-      </tr>
-      <tr>
-        <td>ctrl + 1</td>
-        <td>Source tab</td>
-      </tr>
-      <tr>
-        <td>ctrl + 2</td>
-        <td>Rendered preview tab</td>
-      </tr>
-      <tr>
-        <td>ctrl + /</td>
-        <td>Toggle comment on single line</td>
-      </tr>
-      <tr>
-        <td>ctrl + alt + .</td>
-        <td>Close current HTML element</td>
-      </tr>
-      <tr>
-        <td>esc</td>
-        <td>Code complete (JavaScript only)</td>
-      </tr>
-      <tr>
-        <td>ctrl + s</td>
-        <td>Save current Bin</td>
-      </tr>
-      <tr>
-        <td>ctrl + shift + s</td>
-        <td>Clone current Bin</td>
-      </tr>
-      <tr>
-        <td>tab</td>
-        <td>Indents selected lines</td>
-      </tr>
-      <tr>
-        <td>shift + tab</td>
-        <td>Unindents selected lines</td>
-      </tr>
-    </tbody>
-  </table>
+  <div>
+    <h2>Keyboard Shortcuts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Shortcut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ctrl + &rarr;</td>
+          <td>Focus HTML panel</td>
+        </tr>
+        <tr>
+          <td>ctrl + &larr;</td>
+          <td>Focus JavaScript panel</td>
+        </tr>
+        <tr>
+          <td>ctrl + 1</td>
+          <td>Source tab</td>
+        </tr>
+        <tr>
+          <td>ctrl + 2</td>
+          <td>Rendered preview tab</td>
+        </tr>
+        <tr>
+          <td>ctrl + /</td>
+          <td>Toggle comment on single line</td>
+        </tr>
+        <tr>
+          <td>ctrl + alt + .</td>
+          <td>Close current HTML element</td>
+        </tr>
+        <tr>
+          <td>esc</td>
+          <td>Code complete (JavaScript only)</td>
+        </tr>
+        <tr>
+          <td>ctrl + s</td>
+          <td>Save current Bin</td>
+        </tr>
+        <tr>
+          <td>ctrl + shift + s</td>
+          <td>Clone current Bin</td>
+        </tr>
+        <tr>
+          <td>tab</td>
+          <td>Indents selected lines</td>
+        </tr>
+        <tr>
+          <td>shift + tab</td>
+          <td>Unindents selected lines</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+<div class="prefsOverlay"></div>
 <script>
 <?php
   // assumes http - if that's not okay, this need to be changed

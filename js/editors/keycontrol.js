@@ -1,13 +1,5 @@
 //= require "autocomplete"
-
-$(document).keydown(function (event) {
-  if (keyboardHelpVisible) {
-    if (event.which == 27 || (event.which == 191 && event.shiftKey && event.metaKey)) {
-      $body.toggleClass('keyboardHelp');
-      keyboardHelpVisible = false;
-    }
-  }
-});
+//= require "../chrome/esc"
 
 var keyboardHelpVisible = false;
 

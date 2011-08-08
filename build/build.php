@@ -21,9 +21,6 @@ $sprocket = new Sprocket($filePath, array(
   'autoRender' => false
 ));
 
-// having to hack the source path to get it work properly.
-// $sprocket->filePath = '.' . $sprocket->filePath);
-
 // concat complete
 echo "Rendering...\n";
 $js = $sprocket->render(true);

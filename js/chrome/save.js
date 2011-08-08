@@ -44,7 +44,7 @@ function saveCode(method, ajax, ajaxCallback) {
         if (window.history && window.history.pushState) {
           window.history.pushState(null, data.edit, data.edit);
 
-          $('#jsbinurl').attr('href', data.url).text(data.url);
+          $('#jsbinurl').attr('href', data.url).text(data.url.replace(/http:\/\//, ''));
           updateTitle(true)
         } else {
           window.location = data.edit;

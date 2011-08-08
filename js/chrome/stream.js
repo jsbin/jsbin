@@ -10,21 +10,24 @@ if (!($.browser.msie && $.browser.version < 8)) {
     if (typeof window.forbind !== 'undefined') {
       forbind.apikey = '2796bc83070164231a3ab8c90227dbca';
       typeof window.console !== 'undefined' && console.log('forbind ready');
-      initForbind(context);
+      forbindDFD.resolve(context);
     } else {
       setTimeout(forbindReady, 20);
     }
   }, 20);
 }
 
-function initForbind(global) {
+forbindPromise.done(function (global) {
   var $stream = $('<div id="streaming"><span class="msg"></span><span class="n"></span><span class="listen"> (click here to <span class="resume">resume</span><span class="pause">pause</span>)</span></div>').prependTo('body'),
       streaming = false,
       $body = $('body'),
       key = null,
       captureTimer = null,
       last = {},
-      owner = false;
+      owner = false,
+      codeCastReady = false;
+
+  $document.trigger('forbindReady');
 
   function changes(lang, code) {
     var msg = {},
@@ -80,87 +83,73 @@ function initForbind(global) {
     }
   }
 
-  if (typeof window.forbind !== 'undefined') forbind.on({
-    join: function (event) {
-      $body.addClass('streaming').removeClass('pausestream');
-      streaming = true;
-    
-      if (event.isme) {
-        $('#stream').fadeOut('fast').prev().addClass('right');
-      }
-    
-      if (event.isme && event.readonlykey) {            
-        owner = true;
-        sessionStorage.setItem('streamwritekey', event.readonlykey);
-        sessionStorage.setItem('streamkey', key);
-      
-        var type, editorTimer = { javascript: null, html: null };
+  function initForbindForCodeCasting() {
+    if (typeof window.forbind !== 'undefined' && codeCastReady == false) {
+      forbind.on({
+        join: function (event) {
+          $body.addClass('streaming').removeClass('pausestream');
+          streaming = true;
 
-        // this code is completely over the top - need to simplify
-        $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #');
+          if (event.isme && event.readonlykey) {            
+            owner = true;
+            sessionStorage.setItem('streamwritekey', event.readonlykey);
+            sessionStorage.setItem('streamkey', key);
 
-        $stream.removeClass('listen');
+            // this code is completely over the top - need to simplify
+            $stream.find('.msg').html('streaming on <a href="/?stream=' + key + '">http://jsbin.com/?stream=' + key + '</a> to #');
 
-        // for (type in editors) {
-        //   (function (type) {
-        //     try {
-        //       $(editors[type].win.document).bind('keyup', throttle(function () {
-        //         if (streaming) {
-        //           console.log('capture?');
-        //           capture();
-        //         }
-        //       }, 250));
-        //     } catch (e) {}
-        //   })(type);
-        // }
-      
-        $(document).bind('codeChange', throttle(capture, 250));
-      
-      }
-    
-      updateCount(event);
-    },
-    leave: function (event) {
-      if (event.isme) {
-        if (!owner) {
-          $body.addClass('pausestream');
-          streaming = false;  
+            $stream.removeClass('listen');
 
-          $stream.one('click', function () {
-            window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
-              global.stream.join(key);
-            });
-          });        
-        } else {
-          $body.removeClass('streaming');
-          owner = false;
-          sessionStorage.removeItem('streamkey');
-          sessionStorage.removeItem('streamwritekey');
+            $(document).bind('codeChange', throttle(capture, 250));
+
+          }
+
+          updateCount(event);
+        },
+        leave: function (event) {
+          if (event.isme) {
+            if (!owner) {
+              $body.addClass('pausestream');
+              streaming = false;  
+
+              $stream.one('click', function () {
+                window.location.search.replace(/stream=(.+?)\b/, function (n, key) {
+                  global.stream.join(key);
+                });
+              });        
+            } else {
+              $body.removeClass('streaming');
+              owner = false;
+              sessionStorage.removeItem('streamkey');
+              sessionStorage.removeItem('streamwritekey');
+            }
+          }
+
+          updateCount(event);
+        },
+        message: function (event) {
+          var msg = event.data;
+          updateCode(msg.javascript, 'javascript');
+          updateCode(msg.html, 'html');
+
+          // update preview if required
+          if ($body.is('.preview')) {
+            $('#preview').remove('iframe').append('<iframe class="stretch"></iframe>');
+            renderPreview();
+          } else {
+            var focused = editors[msg.panel];
+            focused.focus();
+            focused.setSelection({ line: msg.line, ch: msg.ch });
+            $(document).trigger('codeChange'); // does this bubble to our send function?
+          }
+        },
+        error: function (data) {
+          console.log('error in forbind', data);
         }
-      }
-    
-      updateCount(event);
-    },
-    message: function (event) {
-      var msg = event.data;
-      updateCode(msg.javascript, 'javascript');
-      updateCode(msg.html, 'html');
-  
-      // update preview if required
-      if ($body.is('.preview')) {
-        $('#preview').remove('iframe').append('<iframe class="stretch"></iframe>');
-        renderPreview();
-      } else {
-        var focused = editors[msg.panel];
-        focused.focus();
-        focused.setSelection({ line: msg.line, ch: msg.ch });
-        $(document).trigger('codeChange'); // does this bubble to our send function?
-      }
-    },
-    error: function (data) {
-      console.log('error in forbind', data);
+      });
+      codeCastReady = true;
     }
-  });
+  }
 
   function updateCode(msg, lang) {
     var diff, patch, result, code;
@@ -187,6 +176,7 @@ function initForbind(global) {
 
   window.stream = global.stream = {
     create: function () {
+      initForbindForCodeCasting();
       key = (Math.abs(~~(Math.random()*+new Date))).toString(32); // OTT?
         
       forbind.create(key);
@@ -194,6 +184,7 @@ function initForbind(global) {
       return key;
     },
     join: function (key) {
+      initForbindForCodeCasting();
       forbind.join(key);
     
       owner = false;
@@ -240,4 +231,4 @@ function initForbind(global) {
     forbind.join(key, sessionStorage.getItem('streamwritekey') || undefined);
   }
 
-}
+});

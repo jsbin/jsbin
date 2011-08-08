@@ -44,7 +44,7 @@ if ($.browser.opera) {
 
 /* Boot code */
 // if the user linked to a code or live panel - hide them all by default to reset the current stte
-if (location.hash && location.hash !== '#preview') {
+if (location.hash && location.hash !== '#preview' && location.hash !== '#source') {
   jsbin.settings.show.html = false;
   jsbin.settings.show.javascript = false;
   jsbin.settings.show.live = false;
@@ -80,7 +80,7 @@ $document.one('jsbinReady', function () {
       $('#show' + panel).removeAttr('checked')[0].checked = false;
     }
   }
-
+  
   var $sp1 = $('.code.html').splitter().data('splitter');
   var $sp2 = $live.splitter().data('splitter');
   

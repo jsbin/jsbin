@@ -56,6 +56,17 @@ function updatePanel(panel, show, noinit) {
 
     if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
   }
+  
+  var hash = $panelsvisible.filter(':checked').map(function () {
+    return this.getAttribute('data-panel');
+  }).get().join(',');
+  
+  // TODO use history API properly - listen for popstate to update columns, and preview
+  if (history.replaceState) {
+    history.replaceState(null, null, '#' + hash);
+  } else {
+    location.hash = '#' + hash;
+  }
 }
 
 var $panelsvisible = $('#panelsvisible input').click(function () {
@@ -102,6 +113,16 @@ $('#control .tab').click(function (event) {
     $('#preview iframe').remove();
     editors[getFocusedPanel()].focus();
   }
+});
+
+//= require "../chrome/esc"
+
+var prefsOpen = false;
+
+$('.prefsButton a').click(function (e) {
+  prefsOpen = true;
+  e.preventDefault();
+  $body.toggleClass('prefsOpen');
 });
 
 // $('#control div.help a:last').click(function () {

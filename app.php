@@ -9,16 +9,23 @@ if ($pos !== false) $pos = strlen(ROOT);
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
 
-// if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
-//   header('Location: ' . HOST . $home . '/');
-//   exit;
-// }
+if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
+  header('Location: ' . HOST . $home . '/');
+  exit;
+}
 
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
 $action = array_pop($request);
 
+// remove the home path section from the request so we can correctly read the next action
 if ($action == $home) {
+  $action = array_pop($request);
+}
+
+$quiet = false;
+if ($action == 'quiet') {
+  $quiet = true;
   $action = array_pop($request);
 }
 
@@ -51,11 +58,10 @@ if ($action) {
 if (!$action) {
   // do nothing and serve up the page
 } else if ($action == 'list' || $action == 'show') {
-  echo 'showing list of bins under the ' . $request[0] . ' namespace';
-  
+  showSaved($request[0] ? $request[0] : $home);
   // could be listed under a user OR could be listing all the revisions for a particular bin
   
-  die();
+  exit();
 } else if ($action == 'source' || $action == 'js') {
   header('Content-type: text/javascript');
   list($code_id, $revision) = getCodeIdParams($request);
@@ -109,7 +115,14 @@ if (!$action) {
     }
 
     $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-    $ok = mysql_query($sql);   
+    $ok = mysql_query($sql);
+    
+    if ($home) {
+      $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+      $ok = mysql_query($sql);
+      
+      $code_id = $home . '/' . $code_id;
+    }
     
     // error_log('saved: ' . $code_id . ' - ' . $revision . ' -- ' . $ok . ' ' . strlen($sql));
     // error_log(mysql_error());
@@ -163,7 +176,7 @@ if (!$action) {
   
 } else if ($action) { // this should be an id
   $subaction = array_pop($request);
-  
+
   if ($action == 'latest') {
     // find the latest revision and redirect to that.
     $code_id = $subaction;
@@ -171,25 +184,26 @@ if (!$action) {
     header('Location: /' . $code_id . '/' . $latest_revision);
     $edit_mode = false;
   }
-  
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
   else if ($subaction != 'gist') {
-    if ($subaction) {
+    if ($subaction && is_numeric($action)) {
       $code_id = $subaction;
       $revision = $action;
     } else {
       $code_id = $action;
       $revision = 1;
     }
-
+    
     list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
     list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
     
     if ($no_code_found == false) {
-      $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);      
+      $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
     }
     
-    $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+    global $quiet;
+
+    if (!$quiet) $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
 
 
     if (false) {
@@ -249,19 +263,27 @@ function getMaxRevision($code_id) {
 }
 
 function formatCompletedCode($html, $javascript, $code_id, $revision) {
-  global $ajax;
+  global $ajax, $quiet;
   
   $javascript = preg_replace('@</script@', "<\/script", $javascript);
   
-  if (stripos($html, '%code%') === false) {
-    $html = preg_replace('@</body>@', "<script>\n%code%\n</script>\n</body>", $html);
-  }
+  if ($quiet && $html) {
+    $html = '<script>window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
+  } 
   
-  // removed the regex completely to try to protect $n variables in JavaScript
-  $htmlParts = explode("%code%", $html);
-  $html = $htmlParts[0] . $javascript . $htmlParts[1];
-  
-  $html = preg_replace("/%code%/", $javascript, $html);
+  if ($html && stripos($html, '%code%') === false) {
+    $parts = explode("</body>", $html);
+    $html = $parts[0];
+    $close = count($parts) == 2 ? '</body>' . $parts[1] : '';
+    
+    $html .= "<script>\n" . $javascript . "\n</script>\n" . $close;
+  } else {
+    // removed the regex completely to try to protect $n variables in JavaScript
+    $htmlParts = explode("%code%", $html);
+    $html = $htmlParts[0] . $javascript . $htmlParts[1];
+
+    $html = preg_replace("/%code%/", $javascript, $html);
+  }  
 
   if (!$ajax && $code_id != 'jsbin') {
     $code_id .= $revision == 1 ? '' : '/' . $revision;
@@ -373,7 +395,7 @@ function generateCodeId($tries = 0) {
   } else if ($tries > 10) {
     echo('Too many tries to find a new code_id - please contact using <a href="/about">about</a>');
     exit;
-  } 
+  }
   
   return $code_id;
 }
@@ -408,5 +430,28 @@ pageTracker._trackPageview();
 HERE_DOC;
 }
 
+function showSaved($name) {
+  $sql = sprintf('select o.*, s.created, s.html, s.javascript from sandbox s, owners o where o.name="%s" and o.url=s.url and o.revision=s.revision order by s.url, s.created desc, s.revision desc', mysql_real_escape_string($name));
+
+  $result = mysql_query($sql);
+
+  if (mysql_num_rows($result)) {
+    include_once('list-home-code.php');
+  } else {
+    echo 'nothing found :(';
+  } 
+  
+}
+
+function formatURL($code_id, $revision) {
+  if ($revision != 1 && $revision) {
+    $code_id .= '/' . $revision;
+  }
+  $code_id_path = ROOT;
+  if ($code_id) {
+    $code_id_path = ROOT . $code_id . '/';
+  }
+  return $code_id_path;
+}
 
 ?>

@@ -118,7 +118,7 @@ td {
   padding: 3px 0;
 }
 
-.url {
+.url a {
   padding-left: 20px;
   text-align: right;
   padding-right: 20px;
@@ -126,7 +126,7 @@ td {
   width: 25%;
 }
 
-.url span {
+.url a span {
   color: #000;
   visibility: hidden;
 }
@@ -135,12 +135,12 @@ td {
   visibility: visible;
 }
 
-.created {
+.created a {
   color: #ccc;
   width: 25%;
 }
 
-.title {
+.title a {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -270,7 +270,7 @@ bins.onmouseover = function (event) {
     removeHighlight();
     if (target.getAttribute('data-type') !== 'spacer') {
       target.className = 'hover';
-      target.onclick = visit;
+      // target.onclick = visit;
       url = target.getAttribute('data-url');
       if (current !== url) {
         hoverTimer = setTimeout(function () {

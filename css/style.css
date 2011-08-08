@@ -1308,7 +1308,7 @@ span.CodeMirror-selected {
 }
 
 .prefsButton {
-  display: none;
+  display: none !important;
 }
 
 .beta .prefsButton {

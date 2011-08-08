@@ -118,6 +118,11 @@ td {
   padding: 3px 0;
 }
 
+a {
+  text-decoration: none;
+  color: #000;
+}
+
 .url a {
   padding-left: 20px;
   text-align: right;

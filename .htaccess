@@ -19,6 +19,8 @@ RewriteRule js/debug/.*\.js$ sprocketize.php [QSA]
 # RewriteRule \.js$ sprocketize.php [QSA]
 # RewriteRule \.css$ lib/sprocketize.php [QSA]
 
+RewriteRule js/render/remote.js$ sprocketize.php [QSA]
+
 # if the file or directory exists
 RewriteCond %{REQUEST_FILENAME} -d [OR]
 RewriteCond %{REQUEST_FILENAME} -f

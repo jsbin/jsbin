@@ -56,6 +56,38 @@ var editorsReady = setInterval(function () {
   }
 }, 100);
 
+// $('#javascript').replaceWith('<div id="javascript"></div>');
+// $('#javascript').css({ height: '100%', width: '100%' });
+// $('#html').replaceWith('<div id="html"></div>');
+// $('#html').css({ height: '100%', width: '100%' });
+// 
+// editors.javascript = ace.edit("javascript");
+// editors.html = ace.edit("html");
+// 
+// var JavaScriptMode = require("ace/mode/javascript").Mode,
+//     HTMLMode = require("ace/mode/html").Mode;
+//     
+// setupAce(editors, 'javascript');
+// setupAce(editors, 'html');
+// 
+// function setupAce(editor, type) {
+//   var session = editors[type].getSession(),
+//       renderer = editors[type].renderer;
+//   if (type == 'javascript') {
+//     session.setMode(new JavaScriptMode());    
+//   } else {
+//     session.setMode(new HTMLMode());
+//   }
+// 
+//   editors[type].setHighlightActiveLine(false);
+//   session.setUseWrapMode(true);
+//   session.setUseSoftTabs(true);
+//   session.setWrapLimitRange(null, null);
+//   
+//   renderer.setShowPrintMargin(false);
+//   renderer.setShowGutter(false);
+//   renderer.setHScrollBarAlwaysVisible(false);
+// }
 
 function focused(editor, event) {
   focusPanel = editor.id;

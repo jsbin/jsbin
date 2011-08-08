@@ -178,8 +178,7 @@ iframe {
 <tbody>
 <?php 
 $last = null;
-$bins = array();
-while ($bin = mysql_fetch_array($result)) {
+foreach ($bins as $bin) {
     $url = $name . formatURL($bin['url'], $bin['revision']);
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
     preg_match('/<body>(.*)/s', $bin['html'], $body);

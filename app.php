@@ -431,11 +431,19 @@ HERE_DOC;
 }
 
 function showSaved($name) {
-  $sql = sprintf('select o.*, s.created, s.html, s.javascript from sandbox s, owners o where o.name="%s" and o.url=s.url and o.revision=s.revision order by s.url, s.created desc, s.revision desc', mysql_real_escape_string($name));
-
+  $sql = sprintf('select * from owners where name="%s"', mysql_real_escape_string($name));
   $result = mysql_query($sql);
 
-  if (mysql_num_rows($result)) {
+  $bins = array();
+
+  while ($saved = mysql_fetch_object($result)) {
+    $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($saved->url), mysql_real_escape_string($saved->revision));
+    $bin = mysql_query($sql);
+
+    $bins[] = mysql_fetch_array($bin);
+  }
+
+  if (count($bins)) {
     include_once('list-home-code.php');
   } else {
     echo 'nothing found :(';

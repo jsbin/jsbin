@@ -1307,8 +1307,12 @@ span.CodeMirror-selected {
 /*  white-space: pre;*/
 }
 
-.beta .prefsButton {
+.prefsButton {
   display: none;
+}
+
+.beta .prefsButton {
+/*  display: block;*/
 }
 
 .prefsButton img {

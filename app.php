@@ -431,7 +431,7 @@ HERE_DOC;
 }
 
 function showSaved($name) {
-  $sql = sprintf('select * from owners where name="%s"', mysql_real_escape_string($name));
+  $sql = sprintf('select * from owners where name="%s" order by url, revision', mysql_real_escape_string($name));
   $result = mysql_query($sql);
 
   $bins = array();

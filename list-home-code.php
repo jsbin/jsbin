@@ -198,7 +198,7 @@ foreach ($bins as $bin) {
       if (get_magic_quotes_gpc() && $body[1]) {
         $title = stripslashes($body[1]);
       }
-      $title = trim(strip_tags($title));
+      $title = trim(preg_replace('/\s+/', ' ', strip_tags($title)));
     }
     if (!$title && $bin['javascript']) {
       $title = preg_replace('/\s+/', ' ', $bin['javascript']);

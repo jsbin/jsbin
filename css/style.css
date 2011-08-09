@@ -51,8 +51,10 @@ p {
 
 .control {
   padding-right: 0;
-/*  width: 50%;*/
-; position: relative; z-index: 1;}
+  width: 100%;
+  position: relative; 
+  z-index: 1;
+}
 
 .starting {
   text-align: center;
@@ -226,6 +228,7 @@ iframe.javascript {
 
 .buttons {
   min-width: 732px;
+  min-width: 100%;
   float: left;
   display: block;
   margin-right: 10px;

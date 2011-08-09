@@ -196,6 +196,7 @@ foreach ($bins as $bin) {
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
     preg_match('/<body>(.*)/s', $bin['html'], $body);
     if (count($body)) {
+      $title = $body[1];
       if (get_magic_quotes_gpc() && $body[1]) {
         $title = stripslashes($body[1]);
       }

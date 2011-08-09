@@ -216,7 +216,7 @@ foreach ($bins as $bin) {
 <tr data-url="<?=$url?>">
   <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
   <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
-  <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 50)?></a></td>
+  <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 200)?></a></td>
 </tr>
 <?php
     $last = $bin['url'];

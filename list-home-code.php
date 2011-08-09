@@ -216,17 +216,10 @@ foreach ($bins as $bin) {
 <tr data-url="<?=$url?>">
   <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
   <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
-  <td class="title"><a href="<?=$url?>edit"><?=$title?></a></td>
+  <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 50)?></a></td>
 </tr>
 <?php
     $last = $bin['url'];
-/*<a href="/<?php echo $url ?>"><?php echo $title ?></a> [<a href="<?php echo HOST . $url . 'edit' ?>">edit</a>]<br>
-    URL: <?php echo HOST . $url ?><br>
-    Saved: <time title="<?php echo $bin['created']?>" datetime="<?php echo $bin['created'] ?>"><?php echo getRelativeTime($bin['created']) ?></time><br>
-    JavaScript: <?php echo strlen($bin['javascript']) ? 'yes' : 'no' ?><br>
-    HTML: <?php echo strlen($bin['html']) ? 'yes' : 'no' ?>
-    <div class="thumb"><iframe src="<?php echo $url ?>quiet" frameborder="0"></iframe></div></li>
-*/ ?>
 <?php } ?>
 </tbody>
 </table>

@@ -158,7 +158,9 @@ a {
 }
 
 tr:hover *,
-tr.hover * {
+tr.hover *,
+tr:hover span,
+tr.hover span {
   background: #0097fe;
   color: #fff;
   cursor: pointer;
@@ -213,7 +215,7 @@ foreach ($bins as $bin) {
 <tr data-type="spacer"><td colspan=3></td></tr>
     <?php endif ?>
 <tr data-url="<?=$url?>">
-  <td class="url"><a href="<?=$url?>"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
+  <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
   <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>"><?=getRelativeTime($bin['created'])?></a></td>
   <td class="title"><a href="<?=$url?>"><?=$title?></a></td>
 </tr>

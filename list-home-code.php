@@ -220,7 +220,7 @@ foreach ($bins as $bin) {
 </tr>
 <?php
     $last = $bin['url'];
-<?php } ?>
+} ?>
 </tbody>
 </table>
 </div>

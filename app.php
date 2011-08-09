@@ -149,7 +149,7 @@ if (!$action) {
   
   if ($ajax) {
     // supports plugins making use of JS Bin via ajax calls and callbacks
-    if (@$_REQUEST['callback']) {
+    if (array_key_exists('callback', $_REQUEST)) {
       echo $_REQUEST['callback'] . '("';
     }
     $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
@@ -159,7 +159,7 @@ if (!$action) {
       echo '{ "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit" }';
     }
     
-    if ($_REQUEST['callback']) {
+    if (array_key_exists('callback', $_REQUEST)) {
       echo '")';
     }
   } else if (stripos($method, 'download') !== false) {
@@ -265,7 +265,7 @@ function getCodeIdParams($request) {
 }
 
 function getMaxRevision($code_id) {
-  $sql = sprintf('select max(revision) as rev from sandbox where url="%s"', mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+  $sql = sprintf('select max(revision) as rev from sandbox where url="%s"', mysql_real_escape_string($code_id));
   $result = mysql_query($sql);
   $row = mysql_fetch_object($result);
   return $row->rev ? $row->rev : 0;

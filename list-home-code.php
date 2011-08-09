@@ -143,9 +143,12 @@ a {
   visibility: visible;
 }
 
+.created {
+  width: 25%;
+}
+
 .created a {
   color: #ccc;
-  width: 25%;
 }
 
 .title {

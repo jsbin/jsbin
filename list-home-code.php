@@ -214,7 +214,7 @@ foreach ($bins as $bin) {
     <?php endif ?>
 <tr data-url="<?=$url?>">
   <td class="url"><a href="<?=$url?>"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
-  <td class="created"><a href="<?=$url?>"><?=getRelativeTime($bin['created'])?></a></td>
+  <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>"><?=getRelativeTime($bin['created'])?></a></td>
   <td class="title"><a href="<?=$url?>"><?=$title?></a></td>
 </tr>
 <?php

@@ -115,13 +115,19 @@ if (!$action) {
     }
 
     $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-    $ok = mysql_query($sql);
-    
-    if ($home) {
-      $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+
+    // a few simple tests to pass before we save
+    if (($html == '' && $html == $javascript)) {
+      // entirely blank isn't going to be saved.
+    } else {
       $ok = mysql_query($sql);
       
-      $code_id = $home . '/' . $code_id;
+      if ($home) {
+        $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+        $ok = mysql_query($sql);
+        
+        $code_id = $home . '/' . $code_id;
+      }
     }
     
     // error_log('saved: ' . $code_id . ' - ' . $revision . ' -- ' . $ok . ' ' . strlen($sql));
@@ -244,10 +250,13 @@ function encode($s) {
 }
 
 function getCodeIdParams($request) {
+  global $home;
+
   $revision = array_pop($request);
   $code_id = array_pop($request);
+
   
-  if ($code_id == null) {
+  if ($code_id == null || ($home && $home == $code_id)) {
     $code_id = $revision;
     $revision = 1;
   }

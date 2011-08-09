@@ -163,7 +163,7 @@ tr:hover span,
 tr.hover span {
   background: #0097fe;
   color: #fff;
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
 
 tr[data-type=spacer]:hover * {
@@ -192,19 +192,19 @@ iframe {
 <?php 
 $last = null;
 foreach ($bins as $bin) {
-    $url = $name . formatURL($bin['url'], $bin['revision']);
+    $url = ROOT . $name . formatURL($bin['url'], $bin['revision']);
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
     preg_match('/<body>(.*)/s', $bin['html'], $body);
     if (count($body)) {
-      $title = strip_tags($body[1]);
+      if (get_magic_quotes_gpc() && $body[1]) {
+        $title = stripslashes($body[1]);
+      }
+      $title = trim(strip_tags($title));
     }
-    if ($bin['javascript']) {
+    if (!$title && $bin['javascript']) {
       $title = preg_replace('/\s+/', ' ', $bin['javascript']);
     }
 
-    if (get_magic_quotes_gpc() && $title) {
-      $title = stripslashes($title);
-    }
     if (!$title && count($match)) {
       $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
     }
@@ -216,8 +216,8 @@ foreach ($bins as $bin) {
     <?php endif ?>
 <tr data-url="<?=$url?>">
   <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
-  <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>"><?=getRelativeTime($bin['created'])?></a></td>
-  <td class="title"><a href="<?=$url?>"><?=$title?></a></td>
+  <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
+  <td class="title"><a href="<?=$url?>edit"><?=$title?></a></td>
 </tr>
 <?php
     $last = $bin['url'];
@@ -241,7 +241,7 @@ foreach ($bins as $bin) {
 function render(url) {
   iframe.src = url + 'quiet';
   iframe.removeAttribute('hidden');
-  viewing.innerHTML = 'http://jsbin.com/' + url;
+  viewing.innerHTML = '<?=$_SERVER['HTTP_HOST']?>' + url;
 }
 
 function matchNode(el, nodeName) {

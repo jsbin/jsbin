@@ -123,12 +123,15 @@ a {
   color: #000;
 }
 
-.url a {
-  padding-left: 20px;
+.url {
   text-align: right;
-  padding-right: 20px;
-  color: #0097fe;
   width: 25%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.url a {
+  color: #0097fe;
 }
 
 .url a span {
@@ -145,7 +148,7 @@ a {
   width: 25%;
 }
 
-.title a {
+.title {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

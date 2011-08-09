@@ -277,7 +277,7 @@ function formatCompletedCode($html, $javascript, $code_id, $revision) {
   $javascript = preg_replace('@</script@', "<\/script", $javascript);
   
   if ($quiet && $html) {
-    $html = '<script>window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
+    $html = '<script>window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
   } 
   
   if ($html && stripos($html, '%code%') === false) {

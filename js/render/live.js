@@ -71,7 +71,7 @@ function renderLivePreview() {
   } else {
     // nullify the blocking functions
     // IE requires that this is done in the script, rather than off the window object outside of the doc.write
-    document.write('<script>window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+    document.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
     document.write(source);
   }
   document.close();

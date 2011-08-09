@@ -1,6 +1,4 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
-date_default_timezone_set('Europe/London');
-
 function plural($num) {
 	if ($num != 1)
 		return "s";

@@ -74,6 +74,7 @@ p {
 }
 
 .starting, .help {
+  z-index: 1;
   line-height: 25px;
 }
 

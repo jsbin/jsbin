@@ -444,12 +444,29 @@ function showSaved($name) {
   $result = mysql_query($sql);
 
   $bins = array();
+  $order = array();
 
+  // this is lame, but the optimisation was aweful on the joined version - 3-4 second query
+  // with a full table scan - not good. I'm worried this doesn't scale properly, but I guess
+  // I could mitigate this with paging on the UI - just a little...?
   while ($saved = mysql_fetch_object($result)) {
     $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($saved->url), mysql_real_escape_string($saved->revision));
-    $bin = mysql_query($sql);
+    $binresult = mysql_query($sql);
+    $bin = mysql_fetch_array($binresult);
 
-    $bins[] = mysql_fetch_array($bin);
+    if (!isset($bins[$saved->url])) {
+      $bins[$saved->url] = array();
+    }
+
+    $bins[$saved->url][] = $bin;
+
+    if (isset($order[$saved->url])) {
+      if (@strtotime($order[$saved->url]) < @strtotime($bin['created'])) {
+        $order[$saved->url] = $bin['created'];
+      }
+    } else {
+      $order[$saved->url] = $bin['created'];
+    }
   }
 
   if (count($bins)) {

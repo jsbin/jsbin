@@ -189,7 +189,9 @@ iframe {
 <tbody>
 <?php 
 $last = null;
-foreach ($bins as $bin) {
+arsort($order);
+foreach ($order as $key => $value) {
+  foreach ($bins[$key] as $bin) {
     $url = ROOT . $name . formatURL($bin['url'], $bin['revision']);
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
     preg_match('/<body>(.*)/s', $bin['html'], $body);
@@ -211,15 +213,16 @@ foreach ($bins as $bin) {
     $firstTime = $bin['url'] != $last;
 
     if ($firstTime && $last !== null) : ?>
-<tr data-type="spacer"><td colspan=3></td></tr>
+  <tr data-type="spacer"><td colspan=3></td></tr>
     <?php endif ?>
-<tr data-url="<?=$url?>">
-  <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
-  <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
-  <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 200)?></a></td>
-</tr>
+  <tr data-url="<?=$url?>">
+    <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
+    <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
+    <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 200)?></a></td>
+  </tr>
 <?php
     $last = $bin['url'];
+  } 
 } ?>
 </tbody>
 </table>

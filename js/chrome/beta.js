@@ -24,6 +24,10 @@
   this.nojumpkeys = function () {
     
   };
+
+  this.enableAPI = function () {
+    navigator.registerProtocolHandler('web+jsbin', jsbin.root + '?api=%s', 'JS Bin API');
+  };
   
   // popout live remoting
   this.popout = function () {

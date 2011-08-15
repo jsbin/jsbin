@@ -192,7 +192,7 @@ $last = null;
 arsort($order);
 foreach ($order as $key => $value) {
   foreach ($bins[$key] as $bin) {
-    $url = ROOT . $name . formatURL($bin['url'], $bin['revision']);
+    $url = formatURL($bin['url'], $bin['revision']);
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
     preg_match('/<body>(.*)/s', $bin['html'], $body);
     if (count($body)) {

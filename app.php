@@ -9,10 +9,10 @@ if ($pos !== false) $pos = strlen(ROOT);
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
 
-if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
-  header('Location: ' . HOST . $home . '/');
-  exit;
-}
+// if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
+//   header('Location: ' . HOST . $home . '/');
+//   exit;
+// }
 
 $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
@@ -126,7 +126,7 @@ if (!$action) {
         $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
         $ok = mysql_query($sql);
         
-        $code_id = $home . '/' . $code_id;
+        // $code_id = $home . '/' . $code_id;
       }
     }
     

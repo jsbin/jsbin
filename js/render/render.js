@@ -47,9 +47,7 @@ function getPreparedCode() {
   } else if (js) {
     parts.push(source.substring(0, source.lastIndexOf('</body>')))
     parts.push(source.substring(source.lastIndexOf('</body>')));
-    // parts = source.split('</body>');
-    //
-    console.log(parts);
+
     source = parts[0];
     
     var close = parts.length == 2 && parts[1] ? parts[1] : '';

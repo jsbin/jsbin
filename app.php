@@ -373,6 +373,8 @@ HERE_DOC;
 
   if (@$_REQUEST['js']) {
     $javascript = $_REQUEST['js'];
+  } else if (@$_REQUEST['javascript']) {
+    $javascript = $_REQUEST['javascript']; // it's beyond me why I ever used js?
   } else if ($usingRequest) {
     $javascript = '';
   } else {

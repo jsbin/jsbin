@@ -5,12 +5,12 @@ include('app.php');
 if (@$_POST['html'] || @$_POST['javascript']) {
   $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
   if (@$_POST['html']) {
-    $html = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']) . '"';
+    $html = str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']);
   } else {
     $html = '';
   }
   if (@$_POST['javascript']) {
-    $javascript = '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['javascript']) . '"';
+    $javascript = str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['javascript']);
   } else {
     $javascript = '';
   }

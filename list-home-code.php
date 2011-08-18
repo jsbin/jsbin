@@ -194,7 +194,8 @@ foreach ($order as $key => $value) {
   foreach ($bins[$key] as $bin) {
     $url = formatURL($bin['url'], $bin['revision']);
     preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
-    preg_match('/<body>(.*)/s', $bin['html'], $body);
+    preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
+    $title = '';
     if (count($body)) {
       $title = $body[1];
       if (get_magic_quotes_gpc() && $body[1]) {

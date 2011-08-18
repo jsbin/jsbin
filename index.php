@@ -94,7 +94,7 @@ if ($code_id) {
     <div class="code stretch javascript">
       <div class="label"><p><strong id="jslabel">JavaScript</strong></p></div>
       <div class="editbox">
-        <textarea id="javascript"></textarea>
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch html">
@@ -114,7 +114,7 @@ if ($code_id) {
         </select>
       </div>
       <div class="editbox">
-        <textarea id="html"></textarea>        
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
       </div>
     </div>
   </div>

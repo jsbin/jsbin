@@ -30,3 +30,11 @@ CREATE TABLE IF NOT EXISTS `owners` (
   PRIMARY KEY  (`id`),
   KEY `name_url` (`name`, `url`, `revision`)
 );
+
+CREATE TABLE IF NOT EXISTS `ownership` (
+  `name` char(255) NOT NULL,
+  `key` char(255) NOT NULL,
+
+  PRIMARY KEY (`name`),
+  KEY `name_key` (`name`, `key`)
+);

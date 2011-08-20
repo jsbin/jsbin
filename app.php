@@ -57,6 +57,43 @@ if ($action) {
 
 if (!$action) {
   // do nothing and serve up the page
+} else if ($action == 'sethome') {
+  if ($ajax) {
+    // 1. encode the key
+    // 2. lookup the name
+    // 3.1. if no name - it's available - store
+    // 3.2. if name - check key against encoded key
+    // 3.2.1. if match, return ok
+    //        else return fail
+    
+    $key = sha1($_POST['key']);
+    $name = $_POST['name'];
+    $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
+    $result = mysql_query($sql);
+
+    header('content-type: application/json');
+  
+    if (!mysql_num_rows($result)) {
+      // store and okay (note "key" is a reserved word - typical!)
+      $sql = sprintf('insert into ownership (name, `key`) values ("%s", "%s")', mysql_real_escape_string($name), mysql_real_escape_string($key));
+      $ok = mysql_query($sql);
+      if ($ok) {
+        echo json_encode(array('ok' => true, 'key' => $key, 'created' => true));
+      } else {
+        echo json_encode(array('ok' => false, 'error' => mysql_error()));
+      }
+    } else {
+      // check key
+      $row = mysql_fetch_object($result);
+      if ($row->key == $key) {
+        echo json_encode(array('ok' => true, 'key' => $key, 'created' => false));
+      } else {
+        echo json_encode(array('ok' => false));
+      }
+    }
+
+    exit;
+  }
 } else if ($action == 'list' || $action == 'show') {
   showSaved($request[0] ? $request[0] : $home);
   // could be listed under a user OR could be listing all the revisions for a particular bin
@@ -123,9 +160,13 @@ if (!$action) {
       $ok = mysql_query($sql);
       
       if ($home) {
-        $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-        $ok = mysql_query($sql);
-        
+        // first check they have write permission for this home
+        $sql = sprintf('select * from ownership where name="%s" and `key`="%s"', mysql_real_escape_string($home), mysql_real_escape_string($_COOKIE['key']));
+        $result = mysql_query($sql);
+        if (mysql_num_rows($result) == 1) {
+          $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+          $ok = mysql_query($sql);
+        }
         // $code_id = $home . '/' . $code_id;
       }
     }

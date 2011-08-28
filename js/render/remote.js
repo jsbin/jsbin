@@ -174,7 +174,9 @@ function initForbind() {
   
   forbind.on({
     join: function (event) {
-      document.body.removeChild(document.getElementById('debug'));
+      try {
+        document.body.removeChild(document.getElementById('debug'));
+      } catch (e) {}
       if (event.isme) notice('Successfully joined');
     },
     leave: function (event) {

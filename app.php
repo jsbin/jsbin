@@ -321,13 +321,13 @@ function formatCompletedCode($html, $javascript, $code_id, $revision) {
     $html = '<script>window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
   } 
   
-  if ($html && stripos($html, '%code%') === false) {
+  if ($html && stripos($html, '%code%') === false && strlen($javascript)) {
     $parts = explode("</body>", $html);
     $html = $parts[0];
     $close = count($parts) == 2 ? '</body>' . $parts[1] : '';
     
     $html .= "<script>\n" . $javascript . "\n</script>\n" . $close;
-  } else {
+  } else if ($javascript) {
     // removed the regex completely to try to protect $n variables in JavaScript
     $htmlParts = explode("%code%", $html);
     $html = $htmlParts[0] . $javascript . $htmlParts[1];

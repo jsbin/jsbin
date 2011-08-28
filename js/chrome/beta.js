@@ -52,7 +52,8 @@
     var last = {};
     
     forbindPromise.done(function () {
-      var key = (Math.abs(~~(Math.random()*+new Date))).toString(32);
+      var key = sessionStorage.remotekey || (Math.abs(~~(Math.random()*+new Date))).toString(32);
+      sessionStorage.remotekey = key;
 
       function changes(lang, code) {
         var msg = {},
@@ -123,7 +124,7 @@
                   console.log('forbind ready');
                   capture();
                 } else {
-                  console.log('user agent connected');
+                  console.log('New remote view: ', event.user);
                 }
                 
                 $document.bind('codeChange', throttle(capture, 250));

@@ -152,6 +152,7 @@ function initForbind() {
   
   forbind.on({
     join: function (event) {
+      document.body.removeChild(document.getElementById('debug'));
       if (event.isme) notice('Successfully joined');
     },
     leave: function (event) {
@@ -167,6 +168,7 @@ function initForbind() {
   
   // now attempt to join
   forbind.debug = debug;
+  forbind.user(navigator.userAgent);
   forbind.join(key);
 }
 

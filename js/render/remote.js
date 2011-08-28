@@ -141,7 +141,7 @@ function initForbind() {
       if (source.indexOf('<meta') !== -1) {
         // apply the meta rule to this page
         var meta = source.match(/<meta.*viewport.*?>/g);
-        if (meta.length && document.querySelector) {
+        if (meta !== null && document.querySelector) {
           // this is nasty, but it work as a quick way to hoist in the meta elements
           var d = document.createElement('div');
           d.innerHTML = meta.join('');

@@ -1,8 +1,13 @@
+var pagePosition = {
+      scrollTop: 10,
+      scrollLeft: 10
+    };
+
 (function () {
 
 var debug = false,
     iframe = null,
-    key = window.location.search.replace(/\?stream=/, ''),
+    key = window.location.search.substring(1),
     console = typeof window.console !== 'undefined' ? window.console : { log: function () {} },
     $ = { trim: function (s) { return s.trim(); } },
     documentTitle = 'JS Bin: real-time remote',
@@ -29,6 +34,33 @@ if (window.top.console) window.top.console.error = notice;
 function notice(msg) {
   // show the message
   console.log(msg);
+}
+
+function monitorPagePosition() {
+  var addEvent = (function () {
+    if (window.addEventListener) {
+      return function (el, type, fn) {
+        el.addEventListener(type, fn, false);
+      };
+    } else {
+      return function (el, type, fn) {
+        el.attachEvent('on' + type, fn);
+      };
+    }
+  })();
+
+  addEvent(this, 'scroll', function (event) {
+    event = event || this.event;
+    this.top.pagePosition = {
+      scrollTop: this.document.body.scrollTop,
+      scrollLeft: this.document.body.scrollLeft
+    };
+  });
+
+  // TODO add montior for gesture - for zoom
+
+  if (this.top.pagePosition.scrollLeft) this.document.body.scrollLeft = this.top.pagePosition.scrollLeft;
+  if (this.top.pagePosition.scrollTop) this.document.body.scrollTop = this.top.pagePosition.scrollTop;
 }
 
 function updateTitle() {
@@ -100,7 +132,10 @@ function initForbind() {
     doc.open();
     doc.write(source);
     doc.close();
-    
+
+    // monitor the page position
+    monitorPagePosition.call(newiframe.contentWindow);
+
     if (iframe !== null) {
       document.body.removeChild(iframe);
     }

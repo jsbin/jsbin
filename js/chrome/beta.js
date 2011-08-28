@@ -113,6 +113,9 @@
       if (typeof window.forbind !== 'undefined') {
         $('a.popout').click(function () {
           if (!this.search) {
+            // hide the real-time view now that we've popped out
+            $('#showlive').removeAttr('checked')[0].checked = false;
+            updatePanel('live', false);
 
             forbind.on({
               join: function (event) {
@@ -127,8 +130,8 @@
               }
             });
 
-            this.search = '?stream=' + key;
-            forbind.debug = true;
+            this.search = '?' + key;
+            forbind.debug = false;
             forbind.create(key);
           }
         });

@@ -285,7 +285,7 @@ a.button:active, .button:focus {
 }
 
 .beta #popout {
-/*  display: block;*/
+ display: block;
 }
 
 a.popout {

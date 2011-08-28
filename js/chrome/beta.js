@@ -53,7 +53,7 @@
     
     forbindPromise.done(function () {
       var key = sessionStorage.remotekey || (Math.abs(~~(Math.random()*+new Date))).toString(32);
-      sessionStorage.remotekey = key;
+      // sessionStorage.remotekey = key;
 
       function changes(lang, code) {
         var msg = {},

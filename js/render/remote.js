@@ -24,7 +24,9 @@ var debug = false,
         };
       };
     },
-    editors = { javascript: editorTemplate()(), html: editorTemplate()() };
+    editors = { javascript: editorTemplate()(), html: editorTemplate()() },
+    lastSource = null,
+    updateDelay = null;
 
 //= require "render"
 //= require "../vendor/diff_match_patch_uncompressed"
@@ -111,7 +113,7 @@ function initForbind() {
     updateCode(msg.html, 'html');
     
     var source = getPreparedCode();
-    
+
     if (debug) {
       source = '<pre>' + source.replace(/[<>&]/g, function (m) {
         if (m == '<') return '&lt;';
@@ -119,35 +121,55 @@ function initForbind() {
         if (m == '"') return '&quot;';
       }) + '</pre>';
     }
-    
-    var newiframe = document.createElement('iframe');
-    newiframe.border = 0;
-    newiframe.frameBorder = 0;
-    newiframe.style.height = '100%';
-    newiframe.style.width = '100%';
-    newiframe.style.position = 'absolute';
-    if (iframe) document.body.insertBefore(newiframe, iframe);
-    else document.body.appendChild(newiframe);
-    var doc = newiframe.contentWindow.document;
-    doc.open();
-    doc.write(source);
-    doc.close();
 
-    // monitor the page position
-    monitorPagePosition.call(newiframe.contentWindow);
+    // if a whole bunch of messages come in, this will throttle the update rate
+    clearTimeout(updateDelay);
+    updateDelay = setTimeout(function () {
+      var newiframe = document.createElement('iframe');
+      newiframe.border = 0;
+      newiframe.frameBorder = 0;
+      newiframe.style.height = '100%';
+      newiframe.style.width = '100%';
+      newiframe.style.position = 'absolute';
+      if (iframe) document.body.insertBefore(newiframe, iframe);
+      else document.body.appendChild(newiframe);
+      var doc = newiframe.contentWindow.document;
+      doc.open();
+      doc.write(source);
+      doc.close();
 
-    if (iframe !== null) {
-      document.body.removeChild(iframe);
-    }
-    
-    iframe = newiframe;
-    
-    // document.documentElement.innerHTML = source;
-    // document.open();
-    //     document.write(source);
-    //     document.close();
-    
-    notice('Updated render');
+      if (source.indexOf('<meta') !== -1) {
+        // apply the meta rule to this page
+        var meta = source.match(/<meta.*viewport.*?>/g);
+        if (meta.length && document.querySelector) {
+          // this is nasty, but it work as a quick way to hoist in the meta elements
+          var d = document.createElement('div');
+          d.innerHTML = meta.join('');
+          var old = document.querySelector('meta[name="viewport"]');
+          if (old) {
+            old.content = d.firstChild.content;
+          } else {
+            doc.body.appendChild(d);
+          }
+        }
+      }
+
+      // monitor the page position
+      monitorPagePosition.call(newiframe.contentWindow);
+
+      if (iframe !== null) {
+        document.body.removeChild(iframe);
+      }
+      
+      iframe = newiframe;
+      
+      // document.documentElement.innerHTML = source;
+      // document.open();
+      //     document.write(source);
+      //     document.close();
+      
+      notice('Updated render');
+    }, 250);
   }
   
   forbind.on({

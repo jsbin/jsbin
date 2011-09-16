@@ -75,7 +75,8 @@ Libraries.prototype.init = function () {
         { text: 'Processing 1.2.1', url: 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.1/processing-api.min.js' },
         { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
         { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
-        { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' }
+        { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' },
+        { text: 'Zepto 0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.6/zepto.min.js' }
       ]
     },
     scriptaculous: {

@@ -72,6 +72,8 @@ if (location.hash == '#preview') {
   });
 }
 
+$('#library').chosen();
+
 $document.one('jsbinReady', function () {
   for (panel in jsbin.settings.show) {
     if (jsbin.settings.show[panel]) {

@@ -43,7 +43,7 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.6.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js' },
+        { text: 'jQuery 1.6.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' },
         { text: 'jQuery 1.5.2', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js' }
       ]
     },
@@ -67,10 +67,15 @@ Libraries.prototype.init = function () {
     others: {
       text: 'Others',
       scripts: [
-        { text: 'Modernizr 2.0.4', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.4/modernizr.min.js' },
+        { text: 'Backbone 0.5.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js' },
+        { text: 'CoffeeScript', url: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js' },
+        { text: 'ES5 shim 1.2.4', url: 'http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js' },
+        { text: 'Less 1.1.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js' },
+        { text: 'Modernizr 2.0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js' },
         { text: 'Processing 1.2.1', url: 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.1/processing-api.min.js' },
         { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
-        { text: 'underscore 1.1.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.6/underscore-min.js' }
+        { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
+        { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' }
       ]
     },
     scriptaculous: {

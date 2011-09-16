@@ -55,7 +55,8 @@ function getPreparedCode() {
     if (useCustomConsole) {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }
-    source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
+    // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
+    source += "<script>\n" + js + "\n</script>\n" + close;
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)

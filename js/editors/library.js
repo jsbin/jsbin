@@ -21,6 +21,7 @@ var state = {};
 $('#library').bind('change', function () {
   var libIndex = [],
       lib = {},
+      thislib = {},
       re,
       i,
       code = editors.html.getCode();
@@ -42,6 +43,10 @@ $('#library').bind('change', function () {
 
     libIndex = this.value.split('-');
     lib = libraries[libIndex[0]];
+    thislib = lib.scripts[libIndex[1]];
+
+    if (thislib.requires) lib.requires = thislib.requires;
+    if (thislib.style) lib.style = thislib.style;
 
     // all has to happen in reverse order because we're going directly after <head>
     code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script');

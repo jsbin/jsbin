@@ -35,7 +35,8 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'Prototype latest', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js' },
         { text: 'Prototype 1.7.0.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'},
-        { text: 'Prototype 1.6.1.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' }
+        { text: 'Prototype 1.6.1.0', url: 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js' },
+        { text: 'script.aculo.us 1.8.3', url: 'http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js', requires: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js' }
       ]
     },
     jquery: {
@@ -70,21 +71,15 @@ Libraries.prototype.init = function () {
         { text: 'Backbone 0.5.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.5.3/backbone-min.js' },
         { text: 'CoffeeScript', url: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js' },
         { text: 'ES5 shim 1.2.4', url: 'http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js' },
-        { text: 'ext-core 3.1.0', url: 'http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.js' },
+        { text: 'ext-core 3.1.0', url: 'http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.js', style: 'http://extjs.cachefly.net/ext-3.1.0/resources/css/ext-all.css' },
         { text: 'Less 1.1.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js' },
         { text: 'Modernizr 2.0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js' },
         { text: 'Processing 1.2.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.3/processing-api.min.js' },
         { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
         { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
+        { text: 'Sencha Touch', url: 'http://cdn.sencha.io/touch/1.1.0/sencha-touch.js', style: 'http://cdn.sencha.io/touch/1.1.0/resources/css/sencha-touch.css' },
         { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' },
         { text: 'Zepto 0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.6/zepto.min.js' }
-      ]
-    },
-    scriptaculous: {
-      text: 'script.aculo.us',
-      requires: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-      scripts: [
-        { text: 'script.aculo.us 1.8.3', url: 'http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js' }
       ]
     },
     dojo : {
@@ -103,7 +98,7 @@ Libraries.prototype.init = function () {
     // }
   },
   // NOTE if a new library category is added, you need to add it here
-  order = 'jquery jqueryui jquerymobile prototype scriptaculous yui mootools dojo others'.split(' '),
+  order = 'jquery jqueryui jquerymobile prototype yui mootools dojo others'.split(' '),
   i = 0;
     
   this.length = 0; // triggers support for length prop

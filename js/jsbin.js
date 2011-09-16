@@ -1,4 +1,5 @@
 //= require <jquery>
+//= require "vendor/jquery.chosen"
 
 if (window.console === undefined) (function () {
   window.console = {

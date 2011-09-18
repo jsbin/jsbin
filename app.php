@@ -135,6 +135,21 @@ if (!$action) {
   $javascript = @$_POST['javascript'];
   $html = @$_POST['html'];
   $method = @$_POST['method'];
+  $stream = isset($_POST['stream']) ? true : false;
+  $streaming_key = '';
+
+  if ($stream && isset($_COOKIE['streaming_key'])) {
+    $streaming_key = $_COOKIE['streaming_key'];
+
+    // validate streaming key
+    // requires:
+    // 1. code_id
+    // 2. revision || 1
+    // 3. If all this info is valid, to an update instead of an
+    //    insert, and update the created timestamp which should
+    //    trigger any long polling to fire and update any live
+    //    views
+  }
   
   // we're using stripos instead of == 'save' because the method *can* be "download,save" to support doing both
   if (stripos($method, 'save') !== false) {
@@ -174,7 +189,13 @@ if (!$action) {
     // error_log('saved: ' . $code_id . ' - ' . $revision . ' -- ' . $ok . ' ' . strlen($sql));
     // error_log(mysql_error());
   }
-  
+
+  /** 
+   * Download
+   *
+   * Now allow the user to download the individual bin.
+   * TODO allow users to download *all* their bins.
+   **/
   if (stripos($method, 'download') !== false) {
     // strip escaping (replicated from getCode method):
     $javascript = preg_replace('/\r/', '', $javascript);
@@ -187,7 +208,8 @@ if (!$action) {
       $revision = 1;
     }
   }
-  
+
+  // If they're saving via an XHR request, then second back JSON or JSONP response
   if ($ajax) {
     // supports plugins making use of JS Bin via ajax calls and callbacks
     if (array_key_exists('callback', $_REQUEST)) {
@@ -204,6 +226,7 @@ if (!$action) {
       echo '")';
     }
   } else if (stripos($method, 'download') !== false) {
+    // actually go ahead and send a file to prompt the browser to download
     $originalHTML = $html;
     list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
     $ext = $originalHTML ? '.html' : '.js';
@@ -244,14 +267,18 @@ if (!$action) {
     list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
     list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
     
-    if ($no_code_found == false) {
-      $html = preg_replace('/<\/body>/', googleAnalytics() . '</body>', $html);
-    }
-    
     global $quiet;
 
-    if (!$quiet) $html = preg_replace('/<\/body>/', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+    // using new str_lreplace to ensure only the *last* </body> is replaced.
+    // FIXME there's still a bug here if </body> appears in the script and not in the
+    // markup - but I'll fix that later
+    if (!$quiet) {
+      $html = str_lreplace('</body>', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+    }
 
+    if ($no_code_found == false) {
+      $html = str_lreplace('</body>', googleAnalytics() . '</body>', $html);
+    }
 
     if (false) {
       if (stripos($html, '<head>')) {
@@ -290,6 +317,17 @@ function encode($s) {
   return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $s) . '"';
 }
 
+function str_lreplace($search, $replace, $subject) {
+  $pos = strrpos($subject, $search);
+
+  if ($pos === false) {
+    return $subject;
+  } else {
+    return substr_replace($subject, $replace, $pos, strlen($search));
+  }
+}
+
+
 function getCodeIdParams($request) {
   global $home;
 
@@ -325,7 +363,6 @@ function formatCompletedCode($html, $javascript, $code_id, $revision) {
     $parts = explode("</body>", $html);
     $html = $parts[0];
     $close = count($parts) == 2 ? '</body>' . $parts[1] : '';
-    
     $html .= "<script>\n" . $javascript . "\n</script>\n" . $close;
   } else if ($javascript) {
     // removed the regex completely to try to protect $n variables in JavaScript
@@ -471,14 +508,7 @@ function generateURL() {
 
 function googleAnalytics() {
   return <<<HERE_DOC
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-1656750-13");
-pageTracker._trackPageview();
-</script>
+<script>var _gaq=[['_setAccount','UA-1656750-13'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)})(document,'script')</script>
 HERE_DOC;
 }
 

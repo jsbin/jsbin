@@ -78,6 +78,7 @@ Libraries.prototype.init = function () {
         { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
         { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
         { text: 'Sencha Touch', url: 'http://cdn.sencha.io/touch/1.1.0/sencha-touch.js', style: 'http://cdn.sencha.io/touch/1.1.0/resources/css/sencha-touch.css' },
+        { text: 'TwitterLib', url: 'http://remy.github.com/twitterlib/twitterlib.min.js' },
         { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' },
         { text: 'Zepto 0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.6/zepto.min.js' }
       ]

@@ -44,7 +44,7 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.7.0', url: 'http://code.jquery.com/jquery-1.7.min.js' },
+        { text: 'jQuery 1.7.1', url: 'http://code.jquery.com/jquery-1.7.1.min.js' },
         { text: 'jQuery 1.6.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' }
       ]
     },
@@ -59,10 +59,10 @@ Libraries.prototype.init = function () {
     jquerymobile : {
       text: 'jQuery Mobile',
       requires: 'http://code.jquery.com/jquery-1.6.4.min.js',
-      style: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.css',
+      style: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0.min.css',
       scripts: [
-        { text: 'jQuery Mobile 1.0b3', url: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.js' },
-        { text: 'jQuery Mobile 1.0a4.1', url: 'http://code.jquery.com/mobile/1.0a4.1/jquery.mobile-1.0a4.1.min.js' }
+        { text: 'jQuery Mobile 1.0', url: 'http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js' },
+        { text: 'jQuery Mobile 1.0b3', url: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.js' }
       ]
     },
     others: {
@@ -75,12 +75,12 @@ Libraries.prototype.init = function () {
         { text: 'Less 1.1.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js' },
         { text: 'Modernizr 2.0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.0.6/modernizr.min.js' },
         { text: 'Processing 1.2.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.3/processing-api.min.js' },
-        { text: 'Rapha&euml;l 1.5.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js' },
+        { text: 'Rapha&euml;l 2.0.0', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.0.0/raphael-min.js' },
         { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
         { text: 'Sencha Touch', url: 'http://cdn.sencha.io/touch/1.1.0/sencha-touch.js', style: 'http://cdn.sencha.io/touch/1.1.0/resources/css/sencha-touch.css' },
         { text: 'TwitterLib', url: 'http://remy.github.com/twitterlib/twitterlib.min.js' },
-        { text: 'underscore 1.1.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.1.7/underscore-min.js' },
-        { text: 'Zepto 0.6', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.6/zepto.min.js' }
+        { text: 'underscore 1.2.2', url: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.2.2/underscore-min.js' },
+        { text: 'Zepto 0.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.7/zepto.min.js' }
       ]
     },
     dojo : {

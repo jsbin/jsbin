@@ -28,6 +28,8 @@ $.fn.splitter = function () {
         settings.x = posX;
         splitterSettings[guid] = settings;
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
+        // editors.javascript.refresh();
+        // editors.html.refresh();
       }
     }
 

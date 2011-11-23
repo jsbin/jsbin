@@ -1125,16 +1125,20 @@ details li, .details li {
 }
 
 
-.editor .CodeMirror {
+.editbox .CodeMirror {
   height: 100%;
   top: 0;
   bottom: 0;
-}
-
-.CodeMirror {
   line-height: 1.2em;
   font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
   font-size: 12px;
+}
+
+
+/* begin CodeMirror's own CSS */
+.CodeMirror {
+  line-height: 1em;
+  font-family: monospace;
 }
 
 .CodeMirror-scroll {
@@ -1147,6 +1151,7 @@ details li, .details li {
 
 .CodeMirror-gutter {
   position: absolute; left: 0; top: 0;
+  z-index: 10;
   background-color: #f7f7f7;
   border-right: 1px solid #eee;
   min-width: 2em;
@@ -1156,6 +1161,7 @@ details li, .details li {
   color: #aaa;
   text-align: right;
   padding: .4em .2em .4em .4em;
+  white-space: pre !important;
 }
 .CodeMirror-lines {
   padding: .4em;
@@ -1172,6 +1178,14 @@ details li, .details li {
   padding: 0; margin: 0;
   white-space: pre;
   word-wrap: normal;
+}
+
+.CodeMirror-wrap pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+.CodeMirror-wrap .CodeMirror-scroll {
+  overflow-x: hidden;
 }
 
 .CodeMirror textarea {
@@ -1199,29 +1213,6 @@ span.CodeMirror-selected {
 
 .CodeMirror-matchingbracket {color: #0f0 !important;}
 .CodeMirror-nonmatchingbracket {color: #f22 !important;}
-
-
-
-
-/* CM2 default */
-.cm-s-default span.cm-keyword {color: #708;}
-.cm-s-default span.cm-atom {color: #219;}
-.cm-s-default span.cm-number {color: #164;}
-.cm-s-default span.cm-def {color: #00f;}
-.cm-s-default span.cm-variable {color: black;}
-.cm-s-default span.cm-variable-2 {color: #05a;}
-.cm-s-default span.cm-variable-3 {color: #0a5;}
-.cm-s-default span.cm-property {color: black;}
-.cm-s-default span.cm-operator {color: black;}
-.cm-s-default span.cm-comment {color: #a50;}
-.cm-s-default span.cm-string {color: #a11;}
-.cm-s-default span.cm-meta {color: #555;}
-.cm-s-default span.cm-error {color: #f00;}
-.cm-s-default span.cm-qualifier {color: #555;}
-.cm-s-default span.cm-builtin {color: #30a;}
-.cm-s-default span.cm-bracket {color: #cc7;}
-.cm-s-default span.cm-tag {color: #170;}
-.cm-s-default span.cm-attribute {color: #00c;}
 
 /* jsbin - based on web inspector */
 .cm-s-jsbin span.cm-keyword {color: #AA0D91;}

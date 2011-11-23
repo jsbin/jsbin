@@ -12,6 +12,7 @@ editors.html = CodeMirror.fromTextArea(document.getElementById('html'), {
   tabMode: 'shift',
   mode: 'text/html',
   onChange: changecontrol,
+  lineWrapping: true,
   theme: jsbin.settings.theme || 'jsbin'
 });
 
@@ -19,6 +20,7 @@ editors.javascript = CodeMirror.fromTextArea(document.getElementById('javascript
   mode: 'javascript',
   tabMode: 'shift',
   onChange: changecontrol,
+  lineWrapping: true,
   theme: jsbin.settings.theme || 'jsbin'
 });
 

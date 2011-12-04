@@ -45,13 +45,16 @@ function getPreparedCode() {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];
   } else if (js) {
-    parts.push(source.substring(0, source.lastIndexOf('</body>')))
-    parts.push(source.substring(source.lastIndexOf('</body>')));
+    var close = '';
+    if (source.indexOf('</body>') !== -1) {
+      parts.push(source.substring(0, source.lastIndexOf('</body>')))
+      parts.push(source.substring(source.lastIndexOf('</body>')));
 
-    source = parts[0];
-    
-    var close = parts.length == 2 && parts[1] ? parts[1] : '';
-    
+      source = parts[0];
+      
+      close = parts.length == 2 && parts[1] ? parts[1] : '';
+      
+    }
     if (useCustomConsole) {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }

@@ -49,17 +49,30 @@ $('#library').bind('change', function () {
     if (thislib.style) lib.style = thislib.style;
 
     // all has to happen in reverse order because we're going directly after <head>
-    code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script');
-    if (lib.requires) {
-      state.add++;
-      code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script');
+    if (code.indexOf('<head') !== -1) {
+      code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script');
+      if (lib.requires) {
+        state.add++;
+        code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script');
+      }
+      
+      if (lib.style) {
+        state.add++;
+        code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" /');
+      }
+    } else { // add to the start of the doc
+      code = "<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script>\n' + code;
+      if (lib.requires) {
+        state.add++;
+        code = "<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script>\n' + code;
+      }
+      
+      if (lib.style) {
+        state.add++;
+        code = '<' + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" />\n' + code;
+      }
     }
-    
-    if (lib.style) {
-      state.add++;
-      code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" /');
-    }
-    
+
     state.line += state.add;
   } else {
     state.line -= state.add;

@@ -85,7 +85,7 @@ if ($code_id) {
   <div class="help">
     <ul class="flat">
       <li><a target="_blank" href="http://jsbin.tumblr.com">Help &amp; tutorials</a></li>
-      <li class="prefsButton"><a href="#"><img src="/images/gear.png"></a></li>
+      <li class="prefsButton"><a href="#"><img src="<?php echo ROOT?>images/gear.png"></a></li>
     </ul>
   </div>
 </div>

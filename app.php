@@ -126,7 +126,7 @@ if (!$action) {
   list($code_id, $revision) = getCodeIdParams($request);
   if ($revision == 'latest') {
     $latest_revision = getMaxRevision($code_id);
-    //header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
+    header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
     $edit_mode = false;
     
   }

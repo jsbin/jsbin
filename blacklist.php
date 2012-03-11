@@ -1,5 +1,13 @@
 <?php
 function noinsert($html, $javascript) {
-  return (stripos($html, 'processform.cgi') !== false);
+  if (stripos($html, 'processform.cgi') !== false) {
+    return true;
+  }
+
+  if (stripos($html, 'habbo.com') !== false) {
+    return true;
+  }
+
+  return false;
 }
 ?>

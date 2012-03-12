@@ -10,6 +10,16 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
+var $panelsvisible = $('#panelsvisible a').click(function () {
+  var self = $(this);
+  self.toggleClass('selected');
+
+  var selected = self.hasClass('selected'),
+      panel = self.data('panel');
+
+  updatePanel(panel, selected);
+});
+
 var $htmlpanel = $('.code.html'),
     htmlsplitter = null;
     
@@ -30,7 +40,7 @@ function updatePanel(panel, show, noinit) {
     }
 
     var $otherpanel = panel == 'html' ? $bin.find('.code.javascript') : $bin.find('.code.html'),
-        visible = $panelsvisible.filter(':not([data-panel="live"]):checked').length,
+        visible = $panelsvisible.filter(':not([data-panel="live"]).selected').length,
         $othercheckbox = $panelsvisible.filter('[data-panel=' + (panel == 'html' ? 'javascript' : 'html') + ']');
 
     // logic was only revealed by going through every possible combination. Hey, it was late :(
@@ -57,7 +67,7 @@ function updatePanel(panel, show, noinit) {
     if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
   }
   
-  var hash = $panelsvisible.filter(':checked').map(function () {
+  var hash = $panelsvisible.filter('.selected').map(function () {
     return this.getAttribute('data-panel');
   }).get().join(',');
   
@@ -69,12 +79,12 @@ function updatePanel(panel, show, noinit) {
   }
 }
 
-var $panelsvisible = $('#panelsvisible input').click(function () {
-  var checked = this.checked,
-      panel = $(this).data('panel');
+// var $panelsvisible = $('#panelsvisible input').click(function () {
+//   var checked = this.checked,
+//       panel = $(this).data('panel');
       
-  updatePanel(panel, checked);
-});
+//   updatePanel(panel, checked);
+// });
 
 var $revert = $('#revert').click(function () {
   if ($revert.is(':not(.enable)')) {

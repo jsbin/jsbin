@@ -17,7 +17,7 @@ body {
   font-size: 13px;
   min-width: 976px;
   overflow: hidden;
-  background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;
+  /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
 }
 
 p {
@@ -32,6 +32,8 @@ p {
 /*  width: 100%;*/
   left: 0;
   right: 0;
+  border-bottom: 1px solid #ccc;
+  background: #fff -webkit-gradient(linear, 0% 0%, 0% 50%, from(transparent), to(rgba(0, 0, 0, 0.15)))
 }
 
 #control, .label {
@@ -251,14 +253,14 @@ iframe.javascript {
   background: rgba(255, 255, 255, 0.3);
 }
 
-#control span {
+/*#control span {
   display: block;
   float: left;
   height: 10px;
   padding-top: 4px;
   padding-bottom: 10px;
   line-height: 20px;
-}
+}*/
 
 .gap {
   margin-right: 10px;
@@ -269,6 +271,7 @@ a.button:hover {
   -webkit-box-shadow: #fff 0px 0px 5px;
   box-shadow: #fff 0px 0px 5px;
   background: rgba(0, 0, 0, 0.05);
+  z-index: 1;
 }
 
 a.button:active, .button:focus {
@@ -328,6 +331,28 @@ body.preview a.preview {
   
 }
 
+.control a.selected {
+  background: #aaa;
+  background: rgba(0, 0, 0, 0.25);
+  text-shadow: none;
+  border: 1px solid #ccc;
+/*  -moz-box-shadow: #fff 0px 0px 5px;
+  -webkit-box-shadow: #fff 0px 0px 5px;
+  box-shadow: #fff 0px 0px 5px;
+*/}
+
+.group a.selected {
+  background: #fff;
+  border: 0;
+  background-image: url(../images/check.png);
+  background-repeat: no-repeat;
+  background-position: 6px 9px;
+}
+
+.group a.selected:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 body.preview a.preview {
   border-left: 0;
 }
@@ -372,9 +397,11 @@ div.group {
   overflow: hidden;
 }
 
-div.group:hover {
+div.group:hover,
+div.group.hover {
   background: #fff;
-  height: 102px;
+  /*height: 102px;*/
+  height: auto;
   overflow: visible;
   -moz-border-radius-bottomleft: 3px;
   -webkit-border-bottom-left-radius: 3px;
@@ -383,10 +410,6 @@ div.group:hover {
   -moz-box-shadow: 1px 1px 2px #ccc;
   -o-box-shadow: 1px 1px 2px #ccc;
   box-shadow: 1px 1px 2px #ccc;
-}
-
-div.tall:hover {
-  height: 126px; /* single height 24px */
 }
 
 #control div.group .title {
@@ -409,10 +432,10 @@ div.tall:hover {
 }
 
 #control div.group .button {
-  padding-left: 24px;
+  padding-left: 20px;
   border: 0;
   display: block;
-  width: 70px;
+  width: 74px;
 }
 
 #control .group a {
@@ -918,14 +941,22 @@ ie6, li {
 /*  background-image: url(/images/arrow_down_12x12.png);*/
   background-image: url(../images/download.png);
   background-repeat: no-repeat;
-  background-position: 8px -33px;
+  background-position: 4px -33px;
 }
 
 .button.download:hover {
   background-image: url(../images/download.png);
   background-repeat: no-repeat;
-  background-position: 8px 7px;
+  background-position: 4px 7px;
 }
+
+#panelsvisible a {
+  padding-right: 20px;
+  background-image: url(../images/x_7x7.png);
+  background-repeat: no-repeat;
+  background-position: 91% 10px;
+}
+
 
 /* attempt to get a live render preview in */
 #live {
@@ -949,7 +980,8 @@ ie6, li {
 }
 
 #live { 
-  background: white url(../images/jsbin-bg.gif) repeat-x 0 -62px;
+  /*background: white url(../images/jsbin-bg.gif) repeat-x 0 -62px;*/
+  background: white;
   top: 0;
   left: 67%;
   border-top: 0;
@@ -1211,6 +1243,10 @@ span.CodeMirror-selected {
   background: Highlight !important;
 }
 
+div.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused div.CodeMirror-selected { background: #d7d4f0; }
+
+
 .CodeMirror-matchingbracket {color: #0f0 !important;}
 .CodeMirror-nonmatchingbracket {color: #f22 !important;}
 
@@ -1303,7 +1339,7 @@ span.CodeMirror-selected {
 }
 
 .prefsButton {
-  display: none !important;
+  /*display: none !important;*/
 }
 
 .beta .prefsButton {

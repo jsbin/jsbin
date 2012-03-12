@@ -52,40 +52,50 @@ if ($code_id) {
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
 <!--[if gte IE 8 ]><body class="source ie"><![endif]--> 
-<!--[if !IE]><!--><body class="source"><!--<![endif]-->  
+<!--[if !IE]><!--><body class="source"><!--<![endif]-->
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <a class="tab button source group left" accesskey="1" href="#source">Code</a>
-      <a class="tab button preview group right gap" accesskey="2" href="#preview" title="Run with alerts, prompts, etc">Render</a>
-      <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
-    <?php if ($code_id) : ?>
-      <a id="jsbinurl" class="button group light left" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
-
+<?php if ($code_id) : ?>
       <div class="button group gap right tall">
         <a href="<?php echo ROOT?>save" class="save title">Save</a>
         <a id="clone" title="Create a new copy" class="button clone group light" href="<?php echo ROOT?>clone">Clone</a>
         <a id="save" title="Save new a new revision" class="button light save group" href="<?php echo $code_id_path?>save">Save</a>
-      <?php else : ?>
-        <div class="button group gap left right">
-          <a href="<?php echo ROOT?>save" class="save title">Save</a>
-          <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
-      <?php endif ?>
+<?php else : ?>
+      <div class="button group gap left right">
+        <a href="<?php echo ROOT?>save" class="save title">Save</a>
+        <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
+<?php endif ?>
           <a id="download" title="Save to drive" class="button download group light" href="<?php echo ROOT?>download">Download</a>
           <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
       </div>
 
-      <span id="panelsvisible" class="gap">View: 
-        <input type="checkbox" data-panel="javascript" id="showjavascript"><label for="showjavascript">JavaScript</label>
-        <input type="checkbox" data-panel="html" id="showhtml"><label for="showhtml">HTML</label>
-        <input type="checkbox" data-panel="live" id="showlive"><label for="showlive">Real-time preview</label>
+      <div class="button group tall left ">
+        <a href="#" class="title">Panels</a>
+        <a id="js-panel" class="selected button clone group light" href="#">JavaScript</a>
+        <a id="js-panel" class="button clone group light" href="#">CoffeeScript</a>
+        <a id="js-panel" class="button clone group light" href="#">CSS</a>
+        <a id="js-panel" class="button clone group light" href="#">HTML</a>
+        <a id="js-panel" class="selected button clone group light" href="#">Preview</a>
+      </div>
+
+      <span id="panelsvisible" class=""> 
+        <a href="#" data-value="on" data-panel="javascript" id="showjavascript" class="group button">JavaScript</a>
+        <!-- <a href="#" data-value="on" data-panel="html" id="showhtml" class="group button">HTML</a> -->
+        <a href="#" data-value="on" data-panel="live" id="showlive" class="group button right">Preview</a>
       </span>
     </div>
   </div>
   <div class="help">
+    <?php if ($code_id) : ?>
+    <span class="meta">
+      <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
+      <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
+    </span>
+    <?php endif ?>
     <ul class="flat">
-      <li><a target="_blank" href="http://jsbin.tumblr.com">Help &amp; tutorials</a></li>
-      <li class="prefsButton"><a href="#"><img src="/images/gear.png"></a></li>
+      <li><a target="_blank" href="http://jsbin.tumblr.com">Tips</a></li>
+      <li class="prefsButton"><a href="#"><img width="18" height="19" src="/images/gear.png"></a></li>
     </ul>
   </div>
 </div>

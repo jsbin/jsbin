@@ -77,9 +77,9 @@ $('#library').chosen();
 $document.one('jsbinReady', function () {
   for (panel in jsbin.settings.show) {
     if (jsbin.settings.show[panel]) {
-      $('#show' + panel).attr('checked', 'checked')[0].checked = true;
+      $('#show' + panel).addClass('selected');
     } else {
-      $('#show' + panel).removeAttr('checked')[0].checked = false;
+      // $('#show' + panel);
     }
   }
   

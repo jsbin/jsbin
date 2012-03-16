@@ -77,7 +77,8 @@ $('#library').chosen();
 $document.one('jsbinReady', function () {
   for (panel in jsbin.settings.show) {
     if (jsbin.settings.show[panel]) {
-      $('#show' + panel).addClass('selected');
+      $('#panelsvisible').find('value=[' + panel + ']').attr('selected', 'selected').trigger("liszt:updated")
+      // $('#show' + panel).addClass('selected');
     } else {
       // $('#show' + panel);
     }

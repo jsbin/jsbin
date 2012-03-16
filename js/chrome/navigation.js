@@ -10,14 +10,43 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
-var $panelsvisible = $('#panelsvisible a').click(function () {
-  var self = $(this);
-  self.toggleClass('selected');
+// var $panelsvisible = $('#panelsvisible a').click(function () {
+//   var self = $(this);
+//   self.toggleClass('selected');
 
-  var selected = self.hasClass('selected'),
-      panel = self.data('panel');
+//   var selected = self.hasClass('selected'),
+//       panel = self.data('panel');
 
-  updatePanel(panel, selected);
+//   updatePanel(panel, selected);
+// });
+
+var $panelsvisible = $('#panelsvisible'),
+    currentPanels = $panelsvisible.val();
+
+$panelsvisible.chosen().change(function () {
+  var panels = ($panelsvisible.val() || []).sort(),
+      current = ([].slice.apply(currentPanels)).sort(),
+      selected = null,
+      show = true;
+
+  for (var i = 0; i < current.length; i++) {
+    if (panels.indexOf(current[i]) !== -1) {
+      panels.splice(panels.indexOf(current[i]), 1);
+    } else {
+      selected = current[i];
+      show = false;
+      break;
+    }
+  }
+
+  if (!selected) {
+    selected = panels.pop();
+    show = true;
+  }
+
+  currentPanels = $panelsvisible.val() || [];
+
+  updatePanel(selected, show);
 });
 
 var $htmlpanel = $('.code.html'),
@@ -40,7 +69,7 @@ function updatePanel(panel, show, noinit) {
     }
 
     var $otherpanel = panel == 'html' ? $bin.find('.code.javascript') : $bin.find('.code.html'),
-        visible = $panelsvisible.filter(':not([data-panel="live"]).selected').length,
+        visible = currentPanels.length,
         $othercheckbox = $panelsvisible.filter('[data-panel=' + (panel == 'html' ? 'javascript' : 'html') + ']');
 
     // logic was only revealed by going through every possible combination. Hey, it was late :(
@@ -60,7 +89,7 @@ function updatePanel(panel, show, noinit) {
       $otherpanel.attr('style', $otherpanel.data('style'));
     }
 
-    if (show) {
+    if (show && editors[panel]) {
       editors[panel].refresh();
     }
 

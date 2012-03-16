@@ -57,7 +57,7 @@ if ($code_id) {
   <div class="control">
     <div class="buttons">
 <?php if ($code_id) : ?>
-      <div class="button group gap right tall">
+      <div class="button group gap left right tall">
         <a href="<?php echo ROOT?>save" class="save title">Save</a>
         <a id="clone" title="Create a new copy" class="button clone group light" href="<?php echo ROOT?>clone">Clone</a>
         <a id="save" title="Save new a new revision" class="button light save group" href="<?php echo $code_id_path?>save">Save</a>
@@ -70,7 +70,16 @@ if ($code_id) {
           <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
       </div>
 
-      <div class="button group tall left ">
+      <select id="panelsvisible" class="chosen" multiple style="width: 240px" data-placeholder="Select panels...">
+        <option selected value="javascript">JavaScript</option>
+        <option value="coffeescript">CoffeeScript</option>
+        <option value="css">CSS</option>
+        <option value="html">HTML</option>
+        <option value="console">Console</option>
+        <option selected value="live">Preview</option>
+      </select>
+
+      <!-- <div class="button group tall left ">
         <a href="#" class="title">Panels</a>
         <a id="js-panel" class="selected button clone group light" href="#">JavaScript</a>
         <a id="js-panel" class="button clone group light" href="#">CoffeeScript</a>
@@ -81,9 +90,9 @@ if ($code_id) {
 
       <span id="panelsvisible" class=""> 
         <a href="#" data-value="on" data-panel="javascript" id="showjavascript" class="group button">JavaScript</a>
-        <!-- <a href="#" data-value="on" data-panel="html" id="showhtml" class="group button">HTML</a> -->
+        <a href="#" data-value="on" data-panel="html" id="showhtml" class="group button">HTML</a>
         <a href="#" data-value="on" data-panel="live" id="showlive" class="group button right">Preview</a>
-      </span>
+      </span> -->
     </div>
   </div>
   <div class="help">
@@ -95,7 +104,7 @@ if ($code_id) {
     <?php endif ?>
     <ul class="flat">
       <li><a target="_blank" href="http://jsbin.tumblr.com">Tips</a></li>
-      <li class="prefsButton"><a href="#"><img width="18" height="19" src="/images/gear.png"></a></li>
+      <li class="prefsButton"><a href="#"><img width="18" height="19" src="<?php echo ROOT?>images/gear.png"></a></li>
     </ul>
   </div>
 </div>
@@ -111,7 +120,7 @@ if ($code_id) {
       <div class="label">
         <p>HTML</p>
         <label for="library">Include</label>
-        <select id="library">
+        <select id="library" class="chosen">
           <option value="none">None</option>
           <option value="jquery">jQuery</option>
           <option value="jquery+jqueryui">jQuery UI</option>
@@ -127,9 +136,19 @@ if ($code_id) {
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
       </div>
     </div>
+<!--     <div class="code stretch css">
+      <div class="label"><p><strong id="csslabel">CSS</strong></p></div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
+      </div>
+    </div>
+    <div class="stretch console">
+      <div id="console"></div>
+    </div>
+ -->    <div id="live" class="stretch livepreview"></div>
   </div>
-  <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div>
-  <div id="preview" class="binview stretch"></div>
+  <!-- <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div> -->
+  <!-- <div id="preview" class="binview stretch"></div> -->
   <form method="post" action="<?php echo $code_id_path?>save">
     <input type="hidden" name="method" />
   </form>

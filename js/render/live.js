@@ -3,7 +3,7 @@ var $live = $('#live'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200);
 
-///= require "consoleContext"
+/*= require "consoleContext"*/
 // var hijackedConsole = new ConsoleContext(function () {
 //   return $('#live iframe').length ? $('#live iframe')[0].contentWindow : null;
 // });
@@ -12,7 +12,7 @@ var $live = $('#live'),
 $live.bind('show', function () {
   // hijackedConsole.activate();
   $body.addClass('live');
-  showlive.checked = true;
+  // showlive.checked = true;
   localStorage && localStorage.setItem('livepreview', true);
   
   var data = $live.data();
@@ -27,7 +27,7 @@ $live.bind('show', function () {
   $(document).unbind('codeChange.live');
   localStorage && localStorage.removeItem('livepreview');
   $body.removeClass('live');
-  showlive.checked = false;
+  // showlive.checked = false;
 
   $('#source').css('right', 0);
 

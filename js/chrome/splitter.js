@@ -13,6 +13,7 @@ $.fn.splitter = function () {
         dragging = false,
         width = $parent.width(),
         left = $parent.offset().left,
+        refreshTimer = null,
         settings = splitterSettings[guid] || {};
       
     function moveSplitter(posX) {
@@ -28,8 +29,12 @@ $.fn.splitter = function () {
         settings.x = posX;
         splitterSettings[guid] = settings;
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
-        // editors.javascript.refresh();
-        // editors.html.refresh();
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(function () {
+          // refresh the editors left and right
+          editors.javascript.refresh();
+          editors.html.refresh();
+        }, 100);
       }
     }
 

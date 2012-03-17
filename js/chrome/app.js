@@ -11,23 +11,23 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
     $bin = $('#bin'),
     loadGist,
     $document = $(document),
-    splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
+    // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
-      sessionStorage.setItem('javascript', editors.javascript.getCode());
-      sessionStorage.setItem('html', editors.html.getCode());
+      // sessionStorage.setItem('javascript', editors.javascript.getCode());
+      // sessionStorage.setItem('html', editors.html.getCode());
       sessionStorage.setItem('url', template.url);
       
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
       
-      var panel = getFocusedPanel();
-      sessionStorage.setItem('panel', panel);
-      try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-        sessionStorage.setItem('line', editors[panel].getCursor().line);
-        sessionStorage.setItem('character', editors[panel].getCursor().ch);
-      } catch (e) {
-        sessionStorage.setItem('line', 0);
-        sessionStorage.setItem('character', 0);
-      }
+      // var panel = getFocusedPanel();
+      // sessionStorage.setItem('panel', panel);
+      // try { // this causes errors in IE9 - so we'll use a try/catch to get through it
+      //   sessionStorage.setItem('line', editors[panel].getCursor().line);
+      //   sessionStorage.setItem('character', editors[panel].getCursor().ch);
+      // } catch (e) {
+      //   sessionStorage.setItem('line', 0);
+      //   sessionStorage.setItem('character', 0);
+      // }
     };
 
 //= require "storage"
@@ -75,25 +75,25 @@ if (location.hash == '#preview') {
 $('#library').chosen();
 
 $document.one('jsbinReady', function () {
-  for (panel in jsbin.settings.show) {
-    if (jsbin.settings.show[panel]) {
-      $('#panelsvisible').find('value=[' + panel + ']').attr('selected', 'selected').trigger("liszt:updated")
-      // $('#show' + panel).addClass('selected');
-    } else {
-      // $('#show' + panel);
-    }
-  }
+  // for (panel in jsbin.settings.show) {
+  //   if (jsbin.settings.show[panel]) {
+  //     $('#panelsvisible').find('value=[' + panel + ']').attr('selected', 'selected').trigger("liszt:updated")
+  //     // $('#show' + panel).addClass('selected');
+  //   } else {
+  //     // $('#show' + panel);
+  //   }
+  // }
   
-  var $sp1 = $('.code.html').splitter().data('splitter');
-  var $sp2 = $live.splitter().data('splitter');
+  // var $sp1 = $('.code.html').splitter().data('splitter');
+  // var $sp2 = $live.splitter().data('splitter');
   
-  updatePanel('html', jsbin.settings.show.html);
-  updatePanel('javascript', jsbin.settings.show.javascript);
-  updatePanel('live', jsbin.settings.show.live);
+  // updatePanel('html', jsbin.settings.show.html);
+  // updatePanel('javascript', jsbin.settings.show.javascript);
+  // updatePanel('live', jsbin.settings.show.live);
 
-  $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
-  $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
-
+  // $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
+  // $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
+  console.log('>>>>>>>> ready');
   $bin.removeAttr('style').addClass('ready');
 });
 

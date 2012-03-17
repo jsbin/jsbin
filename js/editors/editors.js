@@ -2,6 +2,38 @@
 //= require "mobileCodeMirror"
 //= require "library"
 //= require "unsaved"
+//= require "panel"
+
+var editors = jsbin.panels = {
+  html: new Panel('html', { editor: true }),
+  javascript: new Panel('javascript', { editor: true })
+  // css: new Panel('css', { editor: true })
+};
+
+var editorsReady = setInterval(function () {
+  var ready = true;
+  for (var panel in jsbin.panels) {
+    if (!jsbin.panels[panel].ready) ready = false;
+  }
+
+  if (ready) {
+    clearInterval(editorsReady);
+    // jsbin.panels.ready = true;
+    // if (typeof editors.onReady == 'function') editors.onReady();
+
+    $(window).resize(function () {
+      setTimeout(function () {
+        $document.trigger('sizeeditors');
+      }, 100);
+    });
+
+    $document.trigger('sizeeditors');
+    $document.trigger('jsbinReady');
+  }
+}, 100);
+
+/** disabled - moving to reusable panels */
+false && (function () {
 var focusPanel = 'javascript';
 var editors = {};
 
@@ -167,5 +199,6 @@ function changecontrol(event) {
   
   return true;
 }
+}())
 
 //= require "keycontrol"

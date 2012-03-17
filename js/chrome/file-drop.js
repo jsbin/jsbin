@@ -22,10 +22,10 @@ function allowDrop(holder) {
   };
 }
 
-$document.one('jsbinReady', function () {
-  if (typeof window.FileReader !== 'undefined') {
-    allowDrop(editors.html.win);
-    allowDrop(editors.javascript.win);
-    allowDrop(window);
-  }
-});
+// $document.one('jsbinReady', function () {
+//   if (typeof window.FileReader !== 'undefined') {
+//     allowDrop(editors.html.win);
+//     allowDrop(editors.javascript.win);
+//     allowDrop(window);
+//   }
+// });

@@ -4,6 +4,7 @@ $.fn.splitter = function () {
 
   // fixed by @firejune
   return this.each(function () {
+    console.log('splitter');
     var $el = $(this)
         guid = $.fn.splitter.guid++,
         $parent = $el.parent(),
@@ -61,11 +62,18 @@ $.fn.splitter = function () {
 
     $handle.bind('init', function (event, x) {
       $handle.css({
+        top: 0,
         // left: (100 / width * $el.offset().left) + '%',
-        opacity: 0
+        bottom: 0,
+        width: 4,
+        opacity: 0,
+        position: 'absolute',
+        'border-left': '1px solid rgba(218, 218, 218, 0.5)',
+        'z-index': 99999
       });
 
       if ($el.is(':hidden')) {
+        console.log('hidden', $el)
         $handle.hide();
       } else {
         moveSplitter(x || $el.offset().left, true);

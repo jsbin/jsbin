@@ -3,7 +3,7 @@
 
 //= require "../vendor/jshint/jshint"
 var jshint = function () {
-  var source = editors.javascript.getCode();
+  var source = editors.javascript.editor.getCode();
   var ok = JSHINT(source);
   
   return ok ? true : JSHINT.data();
@@ -59,8 +59,8 @@ $error.delegate('li', 'click', function () {
   if (errors.length) {
     var i = $error.find('li').index(this);
     if (errors[i].reason) {
-      editors.javascript.setSelection({ line: errors[i].line - 1, ch: 0 }, { line: errors[i].line - 1 });
-      editors.javascript.focus();      
+      editors.javascript.editor.setSelection({ line: errors[i].line - 1, ch: 0 }, { line: errors[i].line - 1 });
+      editors.javascript.editor.focus();      
     }
     // var line = editors.javascript.nthLine(errors[0].line);
     // editors.javascript.jumpToLine(line);

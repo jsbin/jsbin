@@ -145,7 +145,7 @@ if ($code_id) {
     <div class="stretch console">
       <div id="console"></div>
     </div>
- -->    <div id="live" class="stretch livepreview"></div>
+ -->    <div id="live" class="stretch live"></div>
   </div>
   <!-- <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div> -->
   <!-- <div id="preview" class="binview stretch"></div> -->

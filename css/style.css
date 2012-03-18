@@ -160,7 +160,7 @@ div.code, #live, .resize {
   background: #ccc url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAMCAYAAACnfgdqAAAAMElEQVQIHWP8//8/AxRoMAA5ZkDcAsT/mYCiN4GYBYidGIECUFUMDCAZOEDmUNkAAKKgK80+TE8oAAAAAElFTkSuQmCC) no-repeat left 45%;
 }
 
-.resize { 
+/*.resize { 
   position: absolute; 
   z-index: 99; 
   cursor: ew-resize; 
@@ -175,7 +175,7 @@ div.code, #live, .resize {
   width: 12px; 
   border-left: 1px solid rgba(218, 218, 218, 0.5); 
   z-index: 20; 
-} 
+}*/ 
 
 .handle { bottom: 4px; margin-left: -16px; text-shadow: 1px 1px 1px #fff; color: #666; }
 

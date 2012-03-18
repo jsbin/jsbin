@@ -8,7 +8,7 @@ var editorModes = {
 
 var Panel = function (name, settings) {
   var panel = this;
-  panel.settings = settings;
+  panel.settings = settings = settings || {};
   panel.name = name;
   panel.$el = $('.stretch.' + name);
   panel.el = document.getElementById(name);
@@ -27,15 +27,15 @@ var Panel = function (name, settings) {
 
     panel._setupEditor(panel.editor, name);
 
-    splitterSettings = {
-      resize: function () {
-        // fixes cursor position when the panel has been resized
-        panel.editor.refresh();
-      }
-    };
-  }
+    // splitterSettings = {
+    //   resize: function () {
+    //     // fixes cursor position when the panel has been resized
+    //     panel.editor.refresh();
+    //   }
+    // };
+  } 
 
-  panel.splitter = panel.$el.splitter().data('splitter');
+  panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
 
   $document.bind('jsbinReady', function () {
     panel.splitter.trigger('init');
@@ -44,13 +44,30 @@ var Panel = function (name, settings) {
   if (settings.beforeRender) {
     $document.bind('render', $.proxy(settings.beforeRender, panel));
   }
+
+  if (!settings.editor) {
+    panel.ready = true;
+  }
 }
 
 Panel.prototype = {
   visible: false,
   show: function () {
+    // check to see if there's a panel to the left.
+    // if there is, take it's size/2 and make this our
+    // width
+    var prev = this.$el.prev().prev(),
+        x,
+        width;
+    if (prev.length) {
+      width = prev.width() / 2;
+      x = prev.offset().left + width;
+      this.$el.css('left', prev.offset().left + width);
+    }
     this.$el.show();
+    if (width) this.$el.width(width);
     this.splitter.show();
+    this.splitter.trigger('init', x);
     this.visible = true;
 
     // update all splitter positions

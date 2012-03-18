@@ -4,9 +4,10 @@
 //= require "unsaved"
 //= require "panel"
 
-var editors = jsbin.panels = {
+var editors = window.editors = jsbin.panels = {
   html: new Panel('html', { editor: true }),
-  javascript: new Panel('javascript', { editor: true })
+  javascript: new Panel('javascript', { editor: true }),
+  live: new Panel('live')
   // css: new Panel('css', { editor: true })
 };
 

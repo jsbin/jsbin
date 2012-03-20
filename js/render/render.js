@@ -102,5 +102,5 @@ function renderPreview() {
       win.write(source);
     }
     win.close();
-  }
+  }, 10);
 }

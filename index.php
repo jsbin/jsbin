@@ -47,6 +47,7 @@ if ($code_id) {
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
+<link rel="stylesheet" href="<?php echo ROOT?>css/pictos.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" href="<?php echo ROOT?>css/style.css?<?php echo VERSION?>" type="text/css" />
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
@@ -56,43 +57,19 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
+      <div class="button group menu">
+        <a href="<?php echo ROOT?>save" class="save title button icon icon-chevron-down">Save</a>
 <?php if ($code_id) : ?>
-      <div class="button group gap left right tall">
-        <a href="<?php echo ROOT?>save" class="save title">Save</a>
         <a id="clone" title="Create a new copy" class="button clone group light" href="<?php echo ROOT?>clone">Clone</a>
         <a id="save" title="Save new a new revision" class="button light save group" href="<?php echo $code_id_path?>save">Save</a>
 <?php else : ?>
-      <div class="button group gap left right">
-        <a href="<?php echo ROOT?>save" class="save title">Save</a>
         <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
 <?php endif ?>
-          <a id="download" title="Save to drive" class="button download group light" href="<?php echo ROOT?>download">Download</a>
-          <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
+        <a id="download" title="Save to drive" class="button download group light icon icon-download-alt" href="<?php echo ROOT?>download">Download</a>
+        <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
       </div>
 
-      <select id="panelsvisible" class="chosen" multiple style="width: 240px" data-placeholder="Select panels...">
-        <option selected value="javascript">JavaScript</option>
-        <option value="coffeescript">CoffeeScript</option>
-        <option value="css">CSS</option>
-        <option value="html">HTML</option>
-        <option value="console">Console</option>
-        <option selected value="live">Preview</option>
-      </select>
-
-      <!-- <div class="button group tall left ">
-        <a href="#" class="title">Panels</a>
-        <a id="js-panel" class="selected button clone group light" href="#">JavaScript</a>
-        <a id="js-panel" class="button clone group light" href="#">CoffeeScript</a>
-        <a id="js-panel" class="button clone group light" href="#">CSS</a>
-        <a id="js-panel" class="button clone group light" href="#">HTML</a>
-        <a id="js-panel" class="selected button clone group light" href="#">Preview</a>
-      </div>
-
-      <span id="panelsvisible" class=""> 
-        <a href="#" data-value="on" data-panel="javascript" id="showjavascript" class="group button">JavaScript</a>
-        <a href="#" data-value="on" data-panel="html" id="showhtml" class="group button">HTML</a>
-        <a href="#" data-value="on" data-panel="live" id="showlive" class="group button right">Preview</a>
-      </span> -->
+      <div id="panels"></div>
     </div>
   </div>
   <div class="help">
@@ -110,13 +87,13 @@ if ($code_id) {
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
   <div id="source" class="binview stretch">
-    <div class="code stretch javascript">
-      <div class="label"><p><strong id="jslabel">JavaScript</strong></p></div>
+    <div class="code stretch javascript panel">
+      <div class="label"><p>JavaScript</p></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
-    <div class="code stretch html">
+    <div class="code stretch html panel">
       <div class="label">
         <p>HTML</p>
         <label for="library">Include</label>
@@ -136,16 +113,19 @@ if ($code_id) {
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
       </div>
     </div>
-<!--     <div class="code stretch css">
+     <div class="code stretch css panel">
       <div class="label"><p><strong id="csslabel">CSS</strong></p></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
-    <div class="stretch console">
+    <div class="stretch console panel">
+      <div class="label"><p>Console</p></div>
       <div id="console"></div>
     </div>
- -->    <div id="live" class="stretch live"></div>
+    <div id="live" class="stretch live panel">
+      <div class="label"><p>Live Preview</p></div>
+    </div>
   </div>
   <!-- <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div> -->
   <!-- <div id="preview" class="binview stretch"></div> -->

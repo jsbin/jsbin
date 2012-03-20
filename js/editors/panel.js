@@ -10,7 +10,7 @@ var Panel = function (name, settings) {
   var panel = this;
   panel.settings = settings = settings || {};
   panel.name = name;
-  panel.$el = $('.stretch.' + name);
+  panel.$el = $('.panel.' + name);
   panel.el = document.getElementById(name);
 
   var splitterSettings = {};
@@ -35,7 +35,12 @@ var Panel = function (name, settings) {
     // };
   } 
 
-  panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
+  if (!settings.nosplitter) {
+    panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
+  } else {
+    // create a fake splitter to let the rest of the code work
+    panel.splitter = $();
+  }
 
   $document.bind('jsbinReady', function () {
     panel.splitter.trigger('init');
@@ -48,6 +53,20 @@ var Panel = function (name, settings) {
   if (!settings.editor) {
     panel.ready = true;
   }
+
+  // append panel to controls
+
+  this.controlButton = $('<a class="button group" href="#' + name + '">' + name + '</a>');
+  this.controlButton.click(function () {
+    panel.toggle();
+  });
+  this.controlButton.appendTo('#panels');
+
+  this.$el.find('.label p').click(function () {
+    panel.hide();
+  });
+
+  panel.hide();
 }
 
 Panel.prototype = {
@@ -56,19 +75,25 @@ Panel.prototype = {
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our
     // width
-    var prev = this.$el.prev().prev(),
+    var panel = this;
+    var prev = panel.$el.prev(':visible').prev(':visible'),
         x,
         width;
     if (prev.length) {
       width = prev.width() / 2;
       x = prev.offset().left + width;
-      this.$el.css('left', prev.offset().left + width);
+      panel.$el.css('left', prev.offset().left + width);
+      if (width) panel.$el.width(width);
+    } else {
+      panel.$el.css({ width: '100%', left: 0 });
+      x = 0;
     }
-    this.$el.show();
-    if (width) this.$el.width(width);
-    this.splitter.show();
-    this.splitter.trigger('init', x);
-    this.visible = true;
+    panel.$el.show();
+    panel.splitter.show();
+    panel.splitter.trigger('init', x);
+    panel.visible = true;
+
+    panel.controlButton.hide();
 
     // update all splitter positions
 
@@ -80,6 +105,7 @@ Panel.prototype = {
 
     // update all splitter positions
     this.splitter.hide();
+    this.controlButton.show();
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();
@@ -148,7 +174,7 @@ Panel.prototype = {
 
     $document.bind('sizeeditors', function () {
       var top = 0,
-          height = panel.$el.closest('.stretch').height();
+          height = panel.$el.closest('.panel').height();
       editor.scroller.height(height - top);
       editor.refresh();
     });

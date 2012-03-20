@@ -5,10 +5,15 @@
 //= require "panel"
 
 var editors = window.editors = jsbin.panels = {
+  javascript: new Panel('javascript', { editor: true, nosplitter: true }),
+  css: new Panel('css', { editor: true }),
   html: new Panel('html', { editor: true }),
-  javascript: new Panel('javascript', { editor: true }),
+  console: new Panel('console'),
   live: new Panel('live')
-  // css: new Panel('css', { editor: true })
+};
+
+editors.distribute = function () {
+  
 };
 
 var editorsReady = setInterval(function () {

@@ -81,10 +81,9 @@ $.fn.splitter = function () {
       });
       
       if ($el.is(':hidden')) {
-        console.log('hidden')
         $handle.hide();
       } else {
-        moveSplitter(x || $el.offset().left);
+        moveSplitter(x !== undefined ? x : $el.offset().left);
       }
     }); //.trigger('init', settings.x || $el.offset().left);
 

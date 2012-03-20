@@ -10,14 +10,6 @@
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'FontAwesome';
-  src: url('../font/fontawesome-webfont.eot');
-  src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../font/fontawesome-webfont.woff') format('woff'), url('../font/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
 body { 
   margin: 0; 
   padding: 0;
@@ -132,7 +124,7 @@ a:hover {
 }
 
 #bin {
-  top: 37px;
+  top: 46px;
   width: 100%;
 /*  opacity: 0;
   filter:alpha(opacity=0);
@@ -446,29 +438,17 @@ div.group.hover {
   padding: 6px 10px;
   padding-right: 64px;
   text-align: center;
-  /*background: url(../images/down.png) repeat-y 75px center;*/
+  background: url(../images/down.png) repeat-y 75px center;
   font-weight: normal;
   text-decoration: none;
-  position: relative;
 }
 
 #control div.group:hover .title {
-  background: #eee;
-}
-
-#control div.group .title:after {
-  position: absolute;
-  right: 10px;
-  border-left: 1px solid #bbb;
-  padding-left: 10px;
-}
-
-#control div.group:hover .title {
-  /*background: #eee url(../images/down-hover.png) no-repeat 75px center;*/
+  background: #eee url(../images/down-hover.png) no-repeat 75px center;
 }
 
 #control div.group .button {
-  padding-left: 12px;
+  padding-left: 20px;
   border: 0;
   display: block;
   /*width: 74px;*/
@@ -976,15 +956,15 @@ ie6, li {
 .button.download {
   padding-left: 24px;
 /*  background-image: url(/images/arrow_down_12x12.png);*/
-  /*background-image: url(../images/download.png);*/
-  /*background-repeat: no-repeat;*/
-  /*background-position: 4px -33px;*/
+  background-image: url(../images/download.png);
+  background-repeat: no-repeat;
+  background-position: 4px -33px;
 }
 
 .button.download:hover {
-  /*background-image: url(../images/download.png);*/
-  /*background-repeat: no-repeat;*/
-  /*background-position: 4px 7px;*/
+  background-image: url(../images/download.png);
+  background-repeat: no-repeat;
+  background-position: 4px 7px;
 }
 
 #panelsvisible a {
@@ -1186,11 +1166,11 @@ details li, .details li {
 }
 
 .javascript .CodeMirror-scroll > div {
-  /*margin-top: 25px;*/
+  margin-top: 25px;
 }
 
 .html .CodeMirror-scroll > div {
-  /*margin-top: 60px;*/
+  margin-top: 60px;
 }
 
 
@@ -1800,12 +1780,6 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 .panel {
   background: #fff;
-  background: hsl(0, 0%, 98%);
-}
-
-.panel .label {
-  display: block;
-  position: relative;
 }
 
 .panel .label p {
@@ -1813,12 +1787,11 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 .panel .label p:before {
+  font-family: 'Pictos', sans-serif;
+  content: 'D';
   font-size: 14px;
   color: #ccc;
   margin-right: 5px;
-  font-weight: normal;
-  font-family: 'FontAwesome', sans-serif;
-  content: "\f057";
 }
 
 .panel .label p:hover:before {
@@ -1834,21 +1807,4 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 }
 
-.icon.icon-download-alt:before {
-  padding-right: 10px;
-}
 
-.icon { font-family: 'FontAwesome', sans-serif; }
-.icon-download::before           { content: "\f01a"; }
-.icon-download-alt::before       { content: "\f019"; }
-.icon-remove-sign::before        { content: "\f057"; }
-.icon-chevron-down:after       { content: "\f078"; }
-.icon-retweet:after            { content: "\f079"; }
-.icon-twitter-sign:after       { content: "\f081"; }
-.icon-github-sign:after        { content: "\f092"; }
-
-.editbox {
-  background: white;
-  border-top: 1px solid hsl(0, 0%, 93%);
-  padding-top: 5px;
-}

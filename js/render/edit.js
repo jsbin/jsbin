@@ -4,7 +4,7 @@
   var ie = (!+"\v1");
   
   function set(el, props, hover) {
-    for (prop in props) {
+    for (var prop in props) {
       el.style[prop] = props[prop];
     }
   }

@@ -13,6 +13,7 @@ $.fn.splitter = function () {
         dragging = false,
         width = $parent.width(),
         left = $parent.offset().left,
+        refreshTimer = null,
         settings = splitterSettings[guid] || {};
       
     function moveSplitter(posX) {

@@ -958,7 +958,7 @@ ie6, li {
 
 .live #source {
   bottom: 0;
-  right: 33%;
+  /*right: 33%;*/
 }
 
 .autocomplete {

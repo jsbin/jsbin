@@ -54,27 +54,32 @@ function renderLivePreview() {
       document = frame.contentDocument || frame.contentWindow.document,
       window = document.defaultView || document.parentWindow,
       d = new Date();
-      
+ 
   if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
-  
+
   // strip autofocus from the markup - prevents the focus switching out of the editable area
   source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
-  
-  document.open();
 
-  if (debug) {
-    document.write('<pre>' + source.replace(/[<>&]/g, function (m) {
-      if (m == '<') return '&lt;';
-      if (m == '>') return '&gt;';
-      if (m == '"') return '&quot;';
-    }) + '</pre>');
-  } else {
-    // nullify the blocking functions
-    // IE requires that this is done in the script, rather than off the window object outside of the doc.write
-    document.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-    document.write(source);
-  }
-  document.close();
+  // this setTimeout allows the iframe to be rendered before our code
+  // runs - thus allowing us access to the innerWidth, et al
+  setTimeout(function () {
+    document.open();
+
+    if (debug) {
+      document.write('<pre>' + source.replace(/[<>&]/g, function (m) {
+        if (m == '<') return '&lt;';
+        if (m == '>') return '&gt;';
+        if (m == '"') return '&quot;';
+      }) + '</pre>');
+    } else {
+      // nullify the blocking functions
+      // IE requires that this is done in the script, rather than off the window object outside of the doc.write
+      document.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+      document.write(source);
+    }
+    document.close();
+
+  }, 10);
 }
 
 $live.find('.close').click(function () {

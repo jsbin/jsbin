@@ -23,6 +23,7 @@ $.fn.splitter = function () {
       if (split > 10 && split < 90) {
         $el.css('left', split + '%');
         $prev.css('right', (100 - split) + '%');
+        // console.log($prev, ('right', (100 - split) + '%'));
         $handle.css({
           left: split + '%'
         });
@@ -60,6 +61,7 @@ $.fn.splitter = function () {
       // TODO layer on div to block iframes from stealing focus
       width = $parent.width();
       left = $parent.offset().left;
+      $prev = $handle.prevAll(':visible:first');
       e.preventDefault();
     }).hover(function () {
       $handle.css('opacity', '1');

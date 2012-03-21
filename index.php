@@ -93,6 +93,12 @@ if ($code_id) {
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
+    <div class="code stretch css panel">
+      <div class="label"><p><strong id="csslabel">CSS</strong></p></div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
+      </div>
+    </div>
     <div class="code stretch html panel">
       <div class="label">
         <p>HTML</p>
@@ -111,12 +117,6 @@ if ($code_id) {
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
-      </div>
-    </div>
-     <div class="code stretch css panel">
-      <div class="label"><p><strong id="csslabel">CSS</strong></p></div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">

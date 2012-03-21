@@ -12,6 +12,7 @@ var Panel = function (name, settings) {
   panel.name = name;
   panel.$el = $('.panel.' + name);
   panel.el = document.getElementById(name);
+  panel.order = Panel.order++;
 
   var splitterSettings = {};
 
@@ -59,6 +60,7 @@ var Panel = function (name, settings) {
   this.controlButton = $('<a class="button group" href="#' + name + '">' + name + '</a>');
   this.controlButton.click(function () {
     panel.toggle();
+    return false;
   });
   this.controlButton.appendTo('#panels');
 
@@ -68,6 +70,8 @@ var Panel = function (name, settings) {
 
   panel.hide();
 }
+
+Panel.order = 0;
 
 Panel.prototype = {
   visible: false,
@@ -93,7 +97,7 @@ Panel.prototype = {
     // panel.splitter.trigger('init', x);
     panel.visible = true;
 
-    this.settings.distribute();
+    this.distribute();
 
     panel.controlButton.hide();
 
@@ -107,7 +111,7 @@ Panel.prototype = {
 
     // update all splitter positions
     this.splitter.hide();
-    this.settings.distribute();
+    this.distribute();
     this.controlButton.show();
   },
   toggle: function () {

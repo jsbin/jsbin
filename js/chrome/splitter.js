@@ -18,9 +18,18 @@ $.fn.splitter = function () {
       
     function moveSplitter(posX) {
       var x = posX - left,
-          split = 100 / width * x;
+          split = 100 / width * x,
+          delta = posX - settings.x,
+          prevWidth = $prev.width(),
+          elWidth = $el.width();
 
-      if (split > 10 && split < 90) {
+      // if prev panel is too small and delta is negative, block
+      if (prevWidth < 100 && delta < 0) {
+        // ignore
+      } else if (elWidth < 100 && delta > 0) {
+        // ignore
+      } else {
+        // allow sizing to happen
         $el.css('left', split + '%');
         $prev.css('right', (100 - split) + '%');
         // console.log($prev, ('right', (100 - split) + '%'));

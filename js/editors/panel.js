@@ -1,7 +1,7 @@
 var $document = $(document);
 
 var editorModes = {
-  html: 'text/html',
+  html: 'htmlmixed',
   javascript: 'javascript',
   css: 'css'
 };

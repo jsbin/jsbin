@@ -10,31 +10,43 @@ var useCustomConsole = !(function () {
   return ok;
 })();
 
-var re = {
-  docReady: /\$\(document\)\.ready/,
-  console: /(^.|\b)console\./g,
-  script: /<\/script/ig,
-  code: /%code%/,
-  title: /<title>(.*)<\/title>/i,
-  winLoad: /window\.onload\s*=/
-}
+var re = null;
 
 function getPreparedCode() {
+  // init the regular expression cache because this function 
+  // is called much earlier than the above code is actually encountered
+  // yay for massive .js app!
+  if (!re) {
+    re = {
+      docReady: /\$\(document\)\.ready/,
+      console: /(^.|\b)console\./g,
+      script: /<\/script/ig,
+      code: /%code%/,
+      title: /<title>(.*)<\/title>/i,
+      winLoad: /window\.onload\s*=/
+    };
+  }
+
   var parts = [],
       source = '',
-      js = '';
-  
-  console.log('preparing code')
+      js = '',
+      css = '',
+      close = '';
+
   try {
     source = editors.html.getCode();
   } catch (e) {}
-  
+
   try {
     js = editors.javascript.getCode();
   } catch (e) {}
 
+  try {
+    css = editors.css.getCode();
+  } catch (e) {}
+
   // redirect JS console logged to our custom log while debugging
-  if (consoleTest.test(js)) {
+  if (re.console.test(js)) {
     if (useCustomConsole) {
       js = js.replace(re.console, '_console.');
     } else {
@@ -54,7 +66,7 @@ function getPreparedCode() {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];
   } else if (js) {
-    var close = '';
+    close = '';
     if (source.indexOf('</body>') !== -1) {
       parts.push(source.substring(0, source.lastIndexOf('</body>')))
       parts.push(source.substring(source.lastIndexOf('</body>')));
@@ -67,6 +79,19 @@ function getPreparedCode() {
     }
     // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
     source += "<script>\n" + js + "\n</script>\n" + close;
+  }
+
+  if (css) {
+    parts = [];
+    close = '';
+    if (source.indexOf('</head>') !== -1) {
+      parts.push(source.substring(0, source.lastIndexOf('</head>')))
+      parts.push(source.substring(source.lastIndexOf('</head>')));
+
+      source = parts[0];
+      close = parts.length == 2 && parts[1] ? parts[1] : '';
+    }
+    source += '<style>\n' + css + '\n</style>\n' + close;
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)

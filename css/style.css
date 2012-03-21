@@ -212,7 +212,7 @@ div.preview {
   width: 100%;
 }
 
-.code .label {
+.label {
   padding: 10px;
   margin: 0; 
   padding-right: 0;
@@ -488,6 +488,10 @@ div.group.hover {
   height: 100%;
   width: 100%;
   border: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: 35px;
 }
 
 body.source #preview {

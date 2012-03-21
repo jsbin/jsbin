@@ -38,6 +38,7 @@ panels.restore = function () {
       toopen = (location.search.substring(1) ? location.search.substring(1) : location.hash.substring(1)).split(','),
       state = {};
       name = '',
+      panel = null,
       innerWidth = window.innerWidth;
 
   // otherwise restore the user's regular settings
@@ -70,6 +71,26 @@ panels.restore = function () {
     for (name in state) {
       panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
     }
+  }
+
+  // now restore any data from sessionStorage
+  // TODO add default templates somewhere
+  var template = {};
+  for (name in this.panels) {
+    panel = this.panels[name];
+    if (panel.editor) {
+      panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
+    }
+  }
+
+};
+
+panels.savecontent = function () {
+  // loop through each panel saving it's content to sessionStorage
+  var name, panel;
+  for (name in this.panels) {
+    panel = this.panels[name];
+    if (panel.editor) sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
   }
 
 };
@@ -112,6 +133,7 @@ var editors = panels.panels = {
   live: new Panel('live', { show: function () {
     // contained in live.js
     $(document).bind('codeChange.live', throttledPreview);
+    renderLivePreview();
   }})
 };
 

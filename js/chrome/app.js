@@ -15,6 +15,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       if (jsbin.panels.saveOnExit) jsbin.panels.save();
+      jsbin.panels.savecontent();
 
       var panel = getFocusedPanel();
       sessionStorage.setItem('panel', panel);

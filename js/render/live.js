@@ -49,8 +49,8 @@ function two(s) {
 
 function renderLivePreview() {
   var source = getPreparedCode(),
-      oldframe = $live.find('iframe').remove(),
-      frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe')[0],
+      remove = $live.find('iframe').length > 0,
+      frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first')[0],
       document = frame.contentDocument || frame.contentWindow.document,
       window = document.defaultView || document.parentWindow,
       d = new Date();
@@ -79,6 +79,9 @@ function renderLivePreview() {
     }
     document.close();
 
+    // by removing the previous iframe /after/ the newly created live iframe
+    // has run, it doesn't flicker - which fakes a smooth live update.
+    if (remove) $live.find('iframe:last').remove();
   }, 10);
 }
 

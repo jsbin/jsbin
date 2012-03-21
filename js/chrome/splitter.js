@@ -1,6 +1,7 @@
 $.fn.splitter = function () {
   var $document = $(document),
-      $blocker = $('<div class="block"></div>');
+      $blocker = $('<div class="block"></div>'),
+      $body = $('body');
       // blockiframe = $blocker.find('iframe')[0];
       
   var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
@@ -49,24 +50,25 @@ $.fn.splitter = function () {
       dragging = false;
       $blocker.remove();
       $handle.css('opacity', '0');
+      $body.removeClass('dragging');
     }).bind('mousemove touchmove', function (event) {
       if (dragging) {
         moveSplitter(event.pageX || event.originalEvent.touches[0].pageX);
       }
     });
-    
+
     $blocker.bind('mousemove touchmove', function (event) {
       if (dragging) {
         moveSplitter(event.pageX || event.originalEvent.touches[0].pageX);
       }
     });
-    
+
     $handle.bind('mousedown touchstart', function (e) {
       dragging = true;
-      $('body').append($blocker);
-      
+      $body.append($blocker).addClass('dragging');
+
       // blockiframe.contentDocument.write('<title></title><p></p>');
-      
+
       // TODO layer on div to block iframes from stealing focus
       width = $parent.width();
       left = $parent.offset().left;

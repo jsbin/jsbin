@@ -1795,6 +1795,18 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 .panel {
   border-left: 1px solid #ccc;
+  -webkit-transition: left ease-out 100ms, right ease-out 100ms;
+  -moz-transition: left ease-out 100ms, right ease-out 100ms;
+  -o-transition: left ease-out 100ms, right ease-out 100ms;
+  transition: left ease-out 100ms, right ease-out 100ms;
+}
+
+/* cancel effects when dragging - otherwise it looks lame and sluggish */
+.dragging .panel {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
 }
 
 .panel:first-child {

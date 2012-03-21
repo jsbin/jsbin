@@ -18,6 +18,8 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
       sessionStorage.setItem('url', template.url);
       
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+      // debugger;
+      jsbin.panels.save();
       
       // var panel = getFocusedPanel();
       // sessionStorage.setItem('panel', panel);

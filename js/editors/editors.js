@@ -6,16 +6,45 @@
 
 var panels = {};
 
+
+panels.getVisible = function () {
+  var panels = this.panels,
+      visible = [];
+  for (var panel in panels) {
+    if (panels[panel].visible) visible.push(panels[panel]);
+  }
+  return visible;
+};
+
+panels.save = function () {
+  var visible = this.getVisible(),
+      state = {},
+      panel;
+
+  for (var i = 0; i < visible.length; i++) {
+    panel = visible[i];
+    state[panel.name] = panel.$el.css('left');
+  }
+
+  localStorage.setItem('jsbin.panels', JSON.stringify(state));
+}
+
+panels.restore = function () {
+  var state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}'),
+      name = '',
+      innerWidth = window.innerWidth;
+  for (name in state) {
+    panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+  }
+};
+
 // evenly distribute the width of all the visible panels
 Panel.prototype.distribute = function () {
-  var visible = [],
+  var visible = panels.getVisible(),
       width = 100,
       innerWidth = window.innerWidth,
       left = 0,
       right = 0;
-  for (var panel in panels.panels) {
-    if (panels.panels[panel].visible) visible.push(panels.panels[panel]);
-  }
 
   if (visible.length) {
     visible = visible.sort(function (a, b) {
@@ -26,7 +55,6 @@ Panel.prototype.distribute = function () {
 
     width = 100 / visible.length;
     for (var i = 0; i < visible.length; i++) {
-
       right = 100 - (width * (i+1));
       visible[i].$el.css({ left: left + '%', right: right + '%' });
       visible[i].splitter.trigger('init', innerWidth * left/100);
@@ -36,13 +64,17 @@ Panel.prototype.distribute = function () {
   }
 };
 
-var editors = jsbin.panels = panels.panels = {
+jsbin.panels = panels;
+
+var editors = panels.panels = {
   javascript: new Panel('javascript', { editor: true, nosplitter: true }),
   css: new Panel('css', { editor: true }),
   html: new Panel('html', { editor: true }),
   console: new Panel('console'),
   live: new Panel('live')
 };
+
+panels.restore();
 
 var editorsReady = setInterval(function () {
   var ready = true;
@@ -52,7 +84,7 @@ var editorsReady = setInterval(function () {
 
   if (ready) {
     clearInterval(editorsReady);
-    // jsbin.panels.ready = true;
+    // panels.ready = true;
     // if (typeof editors.onReady == 'function') editors.onReady();
 
     $(window).resize(function () {

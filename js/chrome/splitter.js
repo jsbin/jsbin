@@ -15,7 +15,7 @@ $.fn.splitter = function () {
         left = $parent.offset().left,
         refreshTimer = null,
         settings = splitterSettings[guid] || {};
-      
+
     function moveSplitter(posX) {
       var x = posX - left,
           split = 100 / width * x,

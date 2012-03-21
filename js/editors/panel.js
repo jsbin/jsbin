@@ -75,7 +75,7 @@ Panel.order = 0;
 
 Panel.prototype = {
   visible: false,
-  show: function () {
+  show: function (x) {
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our
     // width
@@ -94,10 +94,13 @@ Panel.prototype = {
     // }
     panel.$el.show();
     panel.splitter.show();
-    // panel.splitter.trigger('init', x);
     panel.visible = true;
 
-    this.distribute();
+    if (x !== undefined) {
+      panel.splitter.trigger('init', x);
+    } else {
+      this.distribute();
+    }
 
     panel.controlButton.hide();
 

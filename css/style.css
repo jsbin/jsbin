@@ -214,7 +214,7 @@ div.preview {
 
 .code .label {
   padding: 10px;
-  margin: 0 10px;
+  margin: 0; 
   padding-right: 0;
   margin-left: 1px;
   position: absolute;
@@ -1803,8 +1803,10 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 .panel .label {
+  margin-right: 1px;
   display: block;
   position: relative;
+  background: #FAFAFA;
 }
 
 .panel .label p {

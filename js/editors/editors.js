@@ -4,22 +4,47 @@
 //= require "unsaved"
 //= require "panel"
 
-var editors = window.editors = jsbin.panels = {
-  javascript: new Panel('javascript', { editor: true, nosplitter: true }),
-  css: new Panel('css', { editor: true }),
-  html: new Panel('html', { editor: true }),
-  console: new Panel('console'),
-  live: new Panel('live')
+var panelDefault = { editor: true, distribute: function () { 
+  panels.distribute() 
+} };
+
+var panels = {};
+
+// evenly distribute the width of all the visible panels
+panels.distribute = function () {
+  var visible = [],
+      width = 100,
+      x = 0,
+      pos = '';
+  for (var panel in this.panels) {
+    if (this.panels[panel].visible) visible.push(this.panels[panel]);
+  }
+
+  if (visible.length) {
+    x = 0;
+    width = 100 / visible.length;
+    for (var i = 0; i < visible.length; i++) {
+      pos = window.innerWidth * (width/100);
+      visible[i].$el.css({'width': width + '%', left: x});
+      visible[i].splitter.trigger('init', window.innerWidth * (x/100));
+      console.log(visible[i].name, window.innerWidth, width, x, pos)
+      x += width;
+    }
+  }
 };
 
-editors.distribute = function () {
-  
+var editors = jsbin.panels = panels.panels = {
+  javascript: new Panel('javascript', $.extend({}, { nosplitter: true }, panelDefault)),
+  css: new Panel('css', panelDefault),
+  html: new Panel('html', panelDefault),
+  console: new Panel('console', { distribute: panelDefault.distribute }),
+  live: new Panel('live', { distribute: panelDefault.distribute })
 };
 
 var editorsReady = setInterval(function () {
   var ready = true;
-  for (var panel in jsbin.panels) {
-    if (!jsbin.panels[panel].ready) ready = false;
+  for (var panel in panels.panels) {
+    if (!panels.panels[panel].ready) ready = false;
   }
 
   if (ready) {

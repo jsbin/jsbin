@@ -76,22 +76,24 @@ Panel.prototype = {
     // if there is, take it's size/2 and make this our
     // width
     var panel = this;
-    var prev = panel.$el.prev(':visible').prev(':visible'),
-        x,
-        width;
-    if (prev.length) {
-      width = prev.width() / 2;
-      x = prev.offset().left + width;
-      panel.$el.css('left', prev.offset().left + width);
-      if (width) panel.$el.width(width);
-    } else {
-      panel.$el.css({ width: '100%', left: 0 });
-      x = 0;
-    }
+    // var prev = panel.$el.prev(':visible').prev(':visible'),
+    //     x,
+    //     width;
+    // if (prev.length) {
+    //   width = prev.width() / 2;
+    //   x = prev.offset().left + width;
+    //   panel.$el.css('left', prev.offset().left + width);
+    //   if (width) panel.$el.width(width);
+    // } else {
+    //   panel.$el.css({ width: '100%', left: 0 });
+    //   x = 0;
+    // }
     panel.$el.show();
     panel.splitter.show();
-    panel.splitter.trigger('init', x);
+    // panel.splitter.trigger('init', x);
     panel.visible = true;
+
+    this.settings.distribute();
 
     panel.controlButton.hide();
 
@@ -105,6 +107,7 @@ Panel.prototype = {
 
     // update all splitter positions
     this.splitter.hide();
+    this.settings.distribute();
     this.controlButton.show();
   },
   toggle: function () {

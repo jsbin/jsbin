@@ -139,7 +139,7 @@ a:hover {
 */}
 
 div.html {
-  left: 50%;
+  /*left: 50%;*/
 }
 
 /*.mozilla #bin div.html {
@@ -249,7 +249,7 @@ div.preview {
 }
 
 .javascript {
-  right: 50%;
+  /*right: 50%;*/
 }
 
 iframe.javascript {

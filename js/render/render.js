@@ -24,6 +24,7 @@ function getPreparedCode() {
       source = '',
       js = '';
   
+  console.log('preparing code')
   try {
     source = editors.html.getCode();
   } catch (e) {}

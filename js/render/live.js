@@ -48,6 +48,7 @@ function two(s) {
 }
 
 function renderLivePreview() {
+  console.log('renderLivePreview')
   var source = getPreparedCode(),
       oldframe = $live.find('iframe').remove(),
       frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe')[0],

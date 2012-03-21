@@ -104,6 +104,10 @@ Panel.prototype = {
 
     panel.controlButton.hide();
 
+    if (this.settings.show) {
+      this.settings.show.call(this, true);
+    }
+
     // update all splitter positions
 
     // TODO save which panels are visible in their profile - but check whether it's their code
@@ -120,12 +124,12 @@ Panel.prototype = {
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();
   },
-  get: function () {
+  getCode: function () {
     if (this.editor) {
       return this.editor.getCode();
     }
   },
-  set: function (content) {
+  setCode: function (content) {
     if (this.editor) {
       this.editor.setCode(content);
     }

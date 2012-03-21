@@ -95,17 +95,6 @@ function updatePanel(panel, show, noinit) {
 
     if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
   }
-  
-  var hash = $panelsvisible.filter('.selected').map(function () {
-    return this.getAttribute('data-panel');
-  }).get().join(',');
-  
-  // TODO use history API properly - listen for popstate to update columns, and preview
-  if (history.replaceState) {
-    history.replaceState(null, null, '#' + hash);
-  } else {
-    location.hash = '#' + hash;
-  }
 }
 
 // var $panelsvisible = $('#panelsvisible input').click(function () {

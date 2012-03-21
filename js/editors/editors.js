@@ -3,6 +3,7 @@
 //= require "library"
 //= require "unsaved"
 //= require "panel"
+//= require "../render/live"
 
 var panels = {};
 
@@ -30,16 +31,51 @@ panels.save = function () {
 }
 
 panels.restore = function () {
-  var state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}'),
+  // if there are panel names on the hash (v2 of jsbin) or in the jquery (v3)
+  // then restore those specific panels and evenly distribute them.
+  var open = [],
+      location = window.location,
+      toopen = (location.search.substring(1) ? location.search.substring(1) : location.hash.substring(1)).split(','),
+      state = {};
       name = '',
       innerWidth = window.innerWidth;
-  for (name in state) {
-    panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+
+  // otherwise restore the user's regular settings
+
+  // also set a flag indicating whether or not we should save the panel settings
+  // this is based on whether they're on jsbin.com or if they're on an existing
+  // bin. Also, if they hit save - *always* save their layout.
+  if (location.pathname && location.pathname !== '/') {
+    panels.saveOnExit = false;
+  } else {
+    panels.saveOnExit = true;
   }
+  // TODO decide whether the above code I'm trying too hard.
+
+  /* Boot code */
+  // then allow them to view specific panels based on comma separated hash fragment
+  if (toopen.length) {
+    for (var i = 0; i < toopen.length; i++) {
+      if (panels.panels[toopen[i]]) panels.panels[toopen[i]].show();
+    }
+
+    // support the old jsbin v1 links directly to the preview
+    if (toopen.length === 1 && toopen[0] === 'preview') {
+      panels.panels.live.show();
+    }
+
+    this.distribute();
+  } else {
+    state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}');
+    for (name in state) {
+      panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+    }
+  }
+
 };
 
 // evenly distribute the width of all the visible panels
-Panel.prototype.distribute = function () {
+panels.distribute = function () {
   var visible = panels.getVisible(),
       width = 100,
       innerWidth = window.innerWidth,
@@ -51,17 +87,19 @@ Panel.prototype.distribute = function () {
       return a.order < b.order ? -1 : 1;
     });
 
-    console.log(visible);
-
     width = 100 / visible.length;
     for (var i = 0; i < visible.length; i++) {
       right = 100 - (width * (i+1));
       visible[i].$el.css({ left: left + '%', right: right + '%' });
       visible[i].splitter.trigger('init', innerWidth * left/100);
-      console.log(visible[i].name, width, left, innerWidth * left/100)
       left += width;
     }
   }
+};
+
+// dirty, but simple
+Panel.prototype.distribute = function () {
+  panels.distribute();
 };
 
 jsbin.panels = panels;
@@ -71,8 +109,45 @@ var editors = panels.panels = {
   css: new Panel('css', { editor: true }),
   html: new Panel('html', { editor: true }),
   console: new Panel('console'),
-  live: new Panel('live')
+  live: new Panel('live', { show: function () {
+    // contained in live.js
+    $(document).bind('codeChange.live', throttledPreview);
+  }})
 };
+
+// IMPORTANT this is nasty, but the sequence is important, because the
+// show/hide method is being called as the panels are being called as
+// the panel is setup - so we hook these handlers on *afterwards*.
+panels.updateURL = function () {
+  var visiblePanels = panels.getVisible(),
+      visible = [],
+      i = 0;
+  for (i = 0; i < visiblePanels.length; i++) {
+    visible.push(visiblePanels[i].name);
+  }
+
+  if (history.replaceState) {
+    history.replaceState(null, null, '?' + visible.join(','));
+  } else {
+    // :( this will break jquery mobile - but we're talking IE only at this point, right?
+    location.hash = '#' + visible.join(',');
+  }
+}
+
+
+Panel.prototype._show = Panel.prototype.show;
+Panel.prototype.show = function () { 
+  this._show.apply(this, arguments);
+  panels.updateURL();
+}
+
+Panel.prototype._hide = Panel.prototype.hide;
+Panel.prototype.hide = function () { 
+  this._hide.apply(this, arguments);
+  panels.updateURL();
+}
+
+
 
 panels.restore();
 

@@ -1,18 +1,24 @@
 // to allow for download button to be introduced via beta feature
 $('a.save').click(function (event) {
   event.preventDefault();
+
+  // save our panel layout - assumes our user is happy with this layout
+  jsbin.panels.save();
   saveCode('save', window.location.pathname.indexOf('/edit') !== -1);
-  
+
   return false;
 });
 
 $('a.clone').click(function (event) {
   event.preventDefault();
 
+  // save our panel layout - assumes our user is happy with this layout
+  jsbin.panels.save();
+
   var $form = $('form')
     .append('<input type="hidden" name="javascript" />')
     .append('<input type="hidden" name="html" />');
-  
+
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val('save,new');
@@ -27,7 +33,10 @@ function saveCode(method, ajax, ajaxCallback) {
   var $form = $('form')
     .append('<input type="hidden" name="javascript" />')
     .append('<input type="hidden" name="html" />');
-  
+  // save our panel layout - assumes our user is happy with this layout
+  jsbin.panels.save();
+  jsbin.panels.saveOnExit = true;
+
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);

@@ -278,7 +278,7 @@ iframe.javascript {
   margin: 0px 0px;
   background: #fff;
   background: rgba(255, 255, 255, 0.3);
-  font-size: 16px;
+  font-size: 14px;
   border-top: 0;
   border-bottom: 0;
 }
@@ -1868,4 +1868,12 @@ div.CodeMirror-selected { background: #d9d9d9; }
   background: white;
   border-top: 1px solid hsl(0, 0%, 93%);
   padding-top: 5px;
+}
+
+.button.active {
+  background-color: #ccc;
+  text-shadow: 0 1px 0 #fff;
+  border-top: 1px solid #AAA;
+  border-left: 1px solid #AAA;
+  border-right: 1px solid #EEE;
 }

@@ -57,7 +57,7 @@ var Panel = function (name, settings) {
 
   // append panel to controls
 
-  this.controlButton = $('<a class="button group" href="#' + name + '">' + name + '</a>');
+  this.controlButton = $('<a class="button group" href="#' + name + '">' + (settings.label || name) + '</a>');
   this.controlButton.click(function () {
     panel.toggle();
     return false;
@@ -80,21 +80,12 @@ Panel.prototype = {
     // if there is, take it's size/2 and make this our
     // width
     var panel = this;
-    // var prev = panel.$el.prev(':visible').prev(':visible'),
-    //     x,
-    //     width;
-    // if (prev.length) {
-    //   width = prev.width() / 2;
-    //   x = prev.offset().left + width;
-    //   panel.$el.css('left', prev.offset().left + width);
-    //   if (width) panel.$el.width(width);
-    // } else {
-    //   panel.$el.css({ width: '100%', left: 0 });
-    //   x = 0;
-    // }
+
     panel.$el.show();
     panel.splitter.show();
     panel.visible = true;
+
+    panel.controlButton.addClass('active');
 
     if (x !== undefined) {
       panel.splitter.trigger('init', x);
@@ -102,13 +93,14 @@ Panel.prototype = {
       this.distribute();
     }
 
-    panel.controlButton.hide();
+    // panel.controlButton.hide();
 
     if (this.settings.show) {
       this.settings.show.call(this, true);
     }
 
     // update all splitter positions
+    $document.trigger('sizeeditors');
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
@@ -118,8 +110,10 @@ Panel.prototype = {
 
     // update all splitter positions
     this.splitter.hide();
+    this.controlButton.removeClass('active');
     this.distribute();
-    this.controlButton.show();
+    // this.controlButton.show();
+    $document.trigger('sizeeditors');
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();

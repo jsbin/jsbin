@@ -79,10 +79,8 @@ if ($code_id) {
       <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
     </span>
     <?php endif ?>
-    <ul class="flat">
-      <li><a target="_blank" href="http://jsbin.tumblr.com">Tips</a></li>
-      <li class="prefsButton"><a href="#"><img width="18" height="19" src="<?php echo ROOT?>images/gear.png"></a></li>
-    </ul>
+    <a href="#" class="button">History</a>
+    <a href="http://jsbin.tumblr.com" class="button group">Tips</a>
   </div>
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">

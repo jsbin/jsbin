@@ -3,32 +3,6 @@ var $live = $('#live'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200);
 
-var iframedelay = (function () {
-  var iframedelay = { active : false },
-      iframe = document.createElement('iframe'),
-      doc,
-      callbackName = '__callback' + (+new Date);
-
-  iframe.style.height = iframe.style.width = '1px';
-  iframe.style.visibility = 'hidden';
-  document.body.appendChild(iframe);
-  doc = iframe.contentDocument || iframe.contentWindow.document;
-
-  window[callbackName] = function (width) {
-    iframedelay.active = width === 0;
-    try {
-      iframe.parentNode.removeChild(iframe);
-      delete window[callbackName];
-    } catch (e){};
-  };
-
-  doc.open();
-  doc.write('<script>window.parent.' + callbackName + '(window.innerWidth)</script>');
-  doc.close();
-
-  return iframedelay;
-}());
-
 ///= require "consoleContext"
 // var hijackedConsole = new ConsoleContext(function () {
 //   return $('#live iframe').length ? $('#live iframe')[0].contentWindow : null;

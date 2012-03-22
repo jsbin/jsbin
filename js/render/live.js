@@ -3,10 +3,31 @@ var $live = $('#live'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200);
 
-/*= require "consoleContext"*/
-// var hijackedConsole = new ConsoleContext(function () {
-//   return $('#live iframe').length ? $('#live iframe')[0].contentWindow : null;
-// });
+var iframedelay = (function () {
+  var iframedelay = { active : false },
+      iframe = document.createElement('iframe'),
+      doc,
+      callbackName = '__callback' + (+new Date);
+
+  iframe.style.height = iframe.style.width = '1px';
+  iframe.style.visibility = 'hidden';
+  document.body.appendChild(iframe);
+  doc = iframe.contentDocument || iframe.contentWindow.document;
+
+  window[callbackName] = function (width) {
+    iframedelay.active = width === 0;
+    try {
+      iframe.parentNode.removeChild(iframe);
+      delete window[callbackName];
+    } catch (e){};
+  };
+
+  doc.open();
+  doc.write('<script>window.parent.' + callbackName + '(window.innerWidth)</script>');
+  doc.close();
+
+  return iframedelay;
+}());
 
 // could chain - but it's more readable like this
 $live.bind('show', function () {
@@ -60,9 +81,7 @@ function renderLivePreview() {
   // strip autofocus from the markup - prevents the focus switching out of the editable area
   source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
 
-  // this setTimeout allows the iframe to be rendered before our code
-  // runs - thus allowing us access to the innerWidth, et al
-  setTimeout(function () {
+  var run = function () {
     document.open();
 
     if (debug) {
@@ -82,7 +101,17 @@ function renderLivePreview() {
     // by removing the previous iframe /after/ the newly created live iframe
     // has run, it doesn't flicker - which fakes a smooth live update.
     if (remove) $live.find('iframe:last').remove();
-  }, 10);
+  }
+
+  // WebKit requires a wait time before actually writing to the iframe
+  // annoyingly it's not consistent (I suspect WebKit is the buggy one)
+  if (iframedelay.active) {
+    // this setTimeout allows the iframe to be rendered before our code
+    // runs - thus allowing us access to the innerWidth, et al
+    setTimeout(run, 10);
+  } else {
+    run();
+  }
 }
 
 $live.find('.close').click(function () {

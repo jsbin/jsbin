@@ -86,20 +86,20 @@ if ($code_id) {
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
   <div id="source" class="binview stretch">
     <div class="code stretch javascript panel">
-      <div class="label"><p>JavaScript</p></div>
+      <div class="label"><strong>JavaScript</strong></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label"><p><strong id="csslabel">CSS</strong></p></div>
+      <div class="label"><strong id="csslabel">CSS</strong></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="code stretch html panel">
       <div class="label">
-        <p>HTML</p>
+        <strong>HTML</strong>
         <label for="library">Include</label>
         <select id="library" class="chosen">
           <option value="none">None</option>
@@ -118,11 +118,11 @@ if ($code_id) {
       </div>
     </div>
     <div class="stretch console panel">
-      <div class="label"><p>Console</p></div>
+      <div class="label"><strong>Console</strong></div>
       <div id="console"></div>
     </div>
     <div id="live" class="stretch live panel">
-      <div class="label"><p>Live Preview</p></div>
+      <div class="label"><strong>Live Preview</strong></div>
     </div>
   </div>
   <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div>

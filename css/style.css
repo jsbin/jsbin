@@ -1803,21 +1803,26 @@ div.CodeMirror-selected { background: #d9d9d9; }
   cursor: pointer;
 }
 
-.panel .label p:before {
+.panel .label .close:before {
   font-size: 14px;
   color: #ccc;
-  margin-right: 5px;
   font-weight: normal;
   font-family: 'FontAwesome', sans-serif;
   content: "\f057";
 }
 
-.panel .label p:hover:before {
+.panel .label .close {
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.panel .label .close:hover:before {
   color: #000;
 }
 
 .label {
-  padding: 10px;
+  padding: 0;
   margin: 0; 
   padding-right: 0;
   position: absolute;

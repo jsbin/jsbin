@@ -66,7 +66,7 @@ var Panel = function (name, settings) {
   });
   this.controlButton.appendTo('#panels');
 
-  this.$el.find('.label p').click(function () {
+  this.$el.find('.label').prepend('<a href="#close" class="close"></a>').find('.close').click(function () {
     panel.hide();
   });
 

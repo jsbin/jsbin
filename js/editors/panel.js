@@ -26,6 +26,8 @@ var Panel = function (name, settings) {
       theme: jsbin.settings.theme || 'jsbin'
     });
 
+    panel.processor = settings.processor || function (str) { return str; };
+
     panel._setupEditor(panel.editor, name);
 
     // splitterSettings = {
@@ -129,7 +131,10 @@ Panel.prototype = {
     }
   },
   render: function () {
-    $document.trigger('render');
+    var panel = this;
+    if (panel.editor) {
+      return panel.processor(panel.getCode());
+    } 
   },
   _setupEditor: function () {
     var focusedPanel = sessionStorage.getItem('panel'),

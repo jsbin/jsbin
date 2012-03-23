@@ -25,15 +25,16 @@ $.fn.splitter = function () {
             init: {
               top: 0,
               bottom: 0,
-              width: 4,
+              width: 10,
+              'margin-left': '-5px',
               height: '100%',
               left: 'auto',
               right: 'auto',
               opacity: 0,
               position: 'absolute',
               cursor: 'ew-resize',
-              border: 0,
-              'border-left': '1px solid rgba(218, 218, 218, 0.5)',
+              // border: 0,
+              // 'border-left': '1px solid rgba(218, 218, 218, 0.5)',
               'z-index': 99999
             }
           },
@@ -162,18 +163,7 @@ $.fn.splitter = function () {
         // $el.css('border-right', '1px solid #ccc');
         $prev.css('border-right', '1px solid #ccc');
       }
-
-      // $handle.css({
-      //   top: 0,
-      //   // left: (100 / width * $el.offset().left) + '%',
-      //   bottom: 0,
-      //   width: 4,
-      //   opacity: 0,
-      //   position: 'absolute',
-      //   'border-left': '1px solid rgba(218, 218, 218, 0.5)',
-      //   'z-index': 99999
-      // });
-      
+ 
       if ($el.is(':hidden')) {
         $handle.hide();
       } else {

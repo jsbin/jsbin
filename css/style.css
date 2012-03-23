@@ -163,7 +163,12 @@ div.code, #live, .resize {
 
 .resize {
   cursor: ew-resize;
-  background: #ccc url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAMCAYAAACnfgdqAAAAMElEQVQIHWP8//8/AxRoMAA5ZkDcAsT/mYCiN4GYBYidGIECUFUMDCAZOEDmUNkAAKKgK80+TE8oAAAAAElFTkSuQmCC) no-repeat left 45%;
+  background: #ccc url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAMCAYAAACnfgdqAAAAMElEQVQIHWP8//8/AxRoMAA5ZkDcAsT/mYCiN4GYBYidGIECUFUMDCAZOEDmUNkAAKKgK80+TE8oAAAAAElFTkSuQmCC) no-repeat 25% 45%;
+  -webkit-transition: opacity ease-in 50ms;
+  -moz-transition: opacity ease-in 50ms;
+  -ms-transition: opacity ease-in 50ms;
+  -o-transition: opacity ease-in 50ms;
+  transition: opacity ease-in 50ms;
 }
 
 /*.resize { 
@@ -210,37 +215,6 @@ div.code, #live, .resize {
 div.preview {
   display: none;
   width: 100%;
-}
-
-.label {
-  padding: 10px;
-  margin: 0; 
-  padding-right: 0;
-  margin-left: 1px;
-  position: absolute;
-  z-index: 10;
-}
-
-.label p {
-/*  display: inline;*/
-  font-weight: bold;
-/*  cursor: pointer;*/
-}
-
-.label label {
-  margin-top: 10px;
-}
-
-.code .label p > span {
-  opacity: 0;
-  filter:alpha(opacity=0);
-  -webkit-transition: opacity 250ms linear;
-  -moz-transition: opacity 250ms linear;
-}
-
-.code .label p:hover span {
-  opacity: 1;
-  filter:alpha(opacity=1);
 }
 
 #library {
@@ -1819,10 +1793,10 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 .panel .label {
-  margin-right: 1px;
   display: block;
   position: relative;
   background: #FAFAFA;
+  border-bottom: 1px solid #ededed;
 }
 
 .panel .label p {
@@ -1841,6 +1815,38 @@ div.CodeMirror-selected { background: #d9d9d9; }
 .panel .label p:hover:before {
   color: #000;
 }
+
+.label {
+  padding: 10px;
+  margin: 0; 
+  padding-right: 0;
+  position: absolute;
+  z-index: 10;
+}
+
+.label p {
+/*  display: inline;*/
+  font-weight: bold;
+/*  cursor: pointer;*/
+}
+
+.label label {
+  margin-top: 10px;
+}
+
+.code .label p > span {
+  opacity: 0;
+  filter:alpha(opacity=0);
+  -webkit-transition: opacity 250ms linear;
+  -moz-transition: opacity 250ms linear;
+}
+
+.code .label p:hover span {
+  opacity: 1;
+  filter:alpha(opacity=1);
+}
+
+
 
 #bin {
   background: #fff url(../images/ll-logo.gif) no-repeat center;
@@ -1866,7 +1872,6 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 .editbox {
   background: white;
-  border-top: 1px solid hsl(0, 0%, 93%);
   padding-top: 5px;
 }
 

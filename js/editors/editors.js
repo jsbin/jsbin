@@ -113,6 +113,7 @@ panels.distribute = function () {
       right = 100 - (width * (i+1));
       visible[i].$el.css({ top: 0, bottom: 0, left: left + '%', right: right + '%' });
       visible[i].splitter.trigger('init', innerWidth * left/100);
+      visible[i].splitter[i == 0 ? 'hide' : 'show']();
       left += width;
     }
   }
@@ -126,7 +127,7 @@ Panel.prototype.distribute = function () {
 jsbin.panels = panels;
 
 var editors = panels.panels = {
-  javascript: new Panel('javascript', { editor: true, label: 'JS', nosplitter: true }),
+  javascript: new Panel('javascript', { editor: true, label: 'JavaScript', nosplitter: true }),
   css: new Panel('css', { editor: true, label: 'CSS' }),
   html: new Panel('html', { editor: true, label: 'HTML' }),
   console: new Panel('console', { label: 'Console' }),
@@ -140,7 +141,7 @@ var editors = panels.panels = {
 // IMPORTANT this is nasty, but the sequence is important, because the
 // show/hide method is being called as the panels are being called as
 // the panel is setup - so we hook these handlers on *afterwards*.
-panels.updateURL = function () {
+panels.update = function () {
   var visiblePanels = panels.getVisible(),
       visible = [],
       i = 0;
@@ -160,13 +161,13 @@ panels.updateURL = function () {
 Panel.prototype._show = Panel.prototype.show;
 Panel.prototype.show = function () { 
   this._show.apply(this, arguments);
-  panels.updateURL();
+  panels.update();
 }
 
 Panel.prototype._hide = Panel.prototype.hide;
 Panel.prototype.hide = function () { 
   this._hide.apply(this, arguments);
-  panels.updateURL();
+  panels.update();
 }
 
 

@@ -9,26 +9,13 @@ function keycontrol(panel, event) {
   // these should fire when the key goes down
   if (event.type == 'keydown') {
     if (panel.id == 'javascript') {
-      if (event.metaKey && event.which == 13) {
+      if (event.metaKey && event.which == 13 && editors.console.visible) {
         editors.console.render();
+        event.stop();
       }
     }
 
-    if (event.shiftKey == false && event.ctrlKey && event.which == 39 && panel.id == 'javascript') {
-      // go right
-      editors.html.focus();
-      event.stop();
-    } else if (event.shiftKey == false && event.ctrlKey && event.which == 37 && panel.id == 'html') {
-      // go left
-      editors.javascript.focus();
-      event.stop();
-    } else if (event.shiftKey == false && event.metaKey && event.which == 49) { // 49 == 1 key
-      $('#control a.source').click();
-      event.stop();
-    } else if (event.metaKey && event.which == 50) { // 50 == 2 key
-      $('#control a.preview').click();
-      event.stop();
-    } else if (event.which == 191 && event.shiftKey && event.metaKey) {
+    if (event.which == 191 && event.shiftKey && event.metaKey) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');

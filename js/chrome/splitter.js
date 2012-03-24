@@ -3,7 +3,7 @@ $.fn.splitter = function () {
       $blocker = $('<div class="block"></div>'),
       $body = $('body');
       // blockiframe = $blocker.find('iframe')[0];
-      
+ 
   var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
   return this.each(function () {
     var $el = $(this), 
@@ -41,8 +41,8 @@ $.fn.splitter = function () {
           y: {
             currentPos: $parent.offset().top,
             size: $parent.height(),
-            cssProp: 'top',
-            otherCssProp: 'bottom',
+            cssProp: 'bottom',
+            otherCssProp: 'top',
             size: $parent.height(),
             sizeProp: 'height',
             moveProp: 'pageY',

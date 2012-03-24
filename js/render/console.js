@@ -92,7 +92,6 @@ function cleanse(s) {
 }
 
 function run(cmd) {
-  debugger;
   var rawoutput = null, 
       className = 'response',
       internalCmd = internalCommand(cmd);
@@ -112,6 +111,12 @@ function run(cmd) {
 
 function post(cmd, blind, response /* passed in when echoing from remote console */) {
   cmd = trim(cmd);
+
+  if ((cmd.match(commandPresent) || []).length > 1) {
+    // split the command up in to blocks and internal commands and run sequentially
+  } else {
+
+  }
 
   echo(cmd);
 
@@ -175,7 +180,7 @@ function echo(cmd) {
       }
     }
   }
-  
+
   // logAfter = output.querySelector('li.echo') || null;
   appendLog(li, true);
 }
@@ -237,7 +242,7 @@ function load(url) {
       return loadScript.apply(this, arguments);
     } else {
       return loadDOM(url);
-    }    
+    }
   } else {
     return "You need to be online to use :load";
   }
@@ -340,10 +345,16 @@ var output = null,
     body = document.getElementsByTagName('body')[0],
     logAfter = null,
     lastCmd = null,
+    wait = false,
+    commandPresent = /:((?:help|about|load|clear|reset|wait)(?:.*))\n/gi,
     commands = { 
       help: showhelp, 
       about: about,
       load: load,
+      wait: function () {
+        wait = true;
+        return '';
+      },
       clear: function () {
         setTimeout(function () { output.innerHTML = ''; }, 10);
         return 'clearing...';
@@ -351,7 +362,7 @@ var output = null,
       reset: function () {
         output.innerHTML = '';
         jsconsole.init(output);
-        return '';
+        return 'Context reset';
       }
     };
 
@@ -380,7 +391,6 @@ var jsconsole = {
     sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
 
     sandbox.close();
-    output.parentNode.tabIndex = 0;
 
     if (nohelp === undefined) post(':help', true);
   }

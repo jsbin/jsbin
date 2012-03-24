@@ -144,20 +144,16 @@ if ($code_id) {
       </thead>
       <tbody>
         <tr>
-          <td>ctrl + &rarr;</td>
-          <td>Focus HTML panel</td>
+          <td>ctrl + shift + &rarr;</td>
+          <td>Focus panel right</td>
         </tr>
         <tr>
-          <td>ctrl + &larr;</td>
-          <td>Focus JavaScript panel</td>
+          <td>ctrl + shift + &larr;</td>
+          <td>Focus panel left</td>
         </tr>
         <tr>
-          <td>ctrl + 1</td>
-          <td>Source tab</td>
-        </tr>
-        <tr>
-          <td>ctrl + 2</td>
-          <td>Rendered preview tab</td>
+          <td>ctrl + enter</td>
+          <td>Run JavaScript in console (if open)</td>
         </tr>
         <tr>
           <td>ctrl + /</td>

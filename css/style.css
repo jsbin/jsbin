@@ -458,7 +458,8 @@ div.group.hover {
 }
 
 #preview iframe,
-#live iframe {
+#live iframe,
+#console {
   height: 100%;
   width: 100%;
   border: 0;
@@ -1887,3 +1888,62 @@ div.CodeMirror-selected { background: #d9d9d9; }
   border-left: 1px solid #AAA;
   border-right: 1px solid #EEE;
 }
+
+.console {
+  background: #fff;
+}
+
+#console { bottom: 35px; left: 0; right: 0; width: 100%; margin-bottom: 35px; overflow: auto; /*border-bottom: 1px solid #5B5C5B;*/ }
+
+#output { list-style: none; margin: 0; padding: 0; }
+#output li { margin: 5px 0; padding: 5px; border-top: 1px solid #EEEFEE; white-space: pre-wrap; padding-bottom: 0; }
+#output li:last-child { border-bottom: 0;}
+#output > li > div { margin-left: 20px; line-height: 20px; }
+#console span.gutter { float: left; display: block; width: 5px; }
+
+#output li div { position: relative; }
+#output .echo .permalink { position: absolute; right: 0; overflow: hidden; display: block; background: url(link.png) no-repeat center; height: 20px; width: 30px; text-indent: -200px; top: 0; opacity: 0.5; }
+
+#output .echo .permalink:hover { opacity: 1; }
+
+/* log types */
+/*#output span.gutter:before { position: absolute; }*/
+#output span.gutter { font-family: 'FontAwesome', monospace; font-size: 13px; line-height: 20px; }
+#output .echo span.gutter:before { content: '\f054 '; color: #3583FC; }
+#output .info span.gutter:before { content: '\f06a '; color: #27A700; }
+#output .error span.gutter:before { content: '\f00d '; color: #E81D20; margin-right: -10px; }
+#output .response span.gutter:before { content: '\f053 '; color: #BDC3CD; margin-right: -10px; }
+
+/* if response is directly next to echo, don't give it a line - only consoles get lines */
+#output li.echo + li.response { border-width: 0px; }
+
+/* hard line on new echo */
+#output li.response + li.echo { border-width: 2px; border-color: #DFDFDF; }
+#output li.error + li.echo { border-width: 2px; border-color: #DFDFDF; }
+#output li.log + li.echo { border-width: 2px; border-color: #DFDFDF; }
+#output li.info + li.echo { border-width: 2px; border-color: #DFDFDF; }
+/*#output li.info .response span { line-height: 30px; }*/
+
+#output li.echo:first-child { border-width: 0;}
+#output li:first-child { border-width: 0; padding-top: 0; }
+
+#jsconsole-sandbox { display: none;}
+
+/* font size control */
+/*#console { top: 35px; bottom: 35px; }*/
+#output li, #exec, .fakeInput { min-height: 20px; font-size: 13px; font-family: MenschRegular, "Menlo", consolas, monospace; }
+
+/** Pretty printing styles. Used with prettify.js. */
+
+#output .str { color: #080; }
+#output .kwd { color: #008; }
+#output .com { color: #800; }
+#output .typ { color: #606; }
+#output .lit { color: #066; }
+#output .pun { color: #660; }
+#output .pln { color: #000; }
+#output .tag { color: #008; }
+#output .atn { color: #606; }
+#output .atv { color: #080; }
+#output .dec { color: #606; }
+#output .error span { color: #E81D20;}

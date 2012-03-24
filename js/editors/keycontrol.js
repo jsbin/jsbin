@@ -8,6 +8,12 @@ function keycontrol(panel, event) {
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {
+    if (panel.id == 'javascript') {
+      if (event.metaKey && event.which == 13) {
+        editors.console.render();
+      }
+    }
+
     if (event.shiftKey == false && event.ctrlKey && event.which == 39 && panel.id == 'javascript') {
       // go right
       editors.html.focus();

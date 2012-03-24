@@ -119,7 +119,7 @@ if ($code_id) {
     </div>
     <div class="stretch console panel">
       <div class="label"><strong>Console</strong></div>
-      <div id="console"></div>
+      <div id="console" class="stretch"><ul id="output"></ul></div>
     </div>
     <div id="live" class="stretch live panel">
       <div class="label"><strong>Live Preview</strong></div>

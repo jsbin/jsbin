@@ -1,86 +1,401 @@
-var _console = (function () {
-  var body = document.getElementsByTagName('body')[0],
-      holding = null;
-      
-  function createHolding() {
-    if (!holding) {
-      var el = document.createElement('div');
-      el.style.backgroundColor = '#ccc';
-      el.style.border = '1px solid #ccc';
-      el.style.borderBottom = 'none';
-      el.style.fontSize = '13px';
-      el.style.fontFamily = 'helvetica, arial';
-      el.style.position = 'fixed';
-      el.style.bottom = '0';
-      el.style.left = '0';
-      el.style.width = '100%';
-      el.style.maxHeight = '150px';
-      el.style.overflowY = 'auto';
+//= require "../vendor/prettyprint"
 
-      body.appendChild(el);      
-      holding = el;
-      var con = p('<strong>Console</strong>');
-      con.style.backgroundColor = '#ccc';
-      con.style.padding = '5px 10px';
+var jsconsole = (function (window) {
+
+function sortci(a, b) {
+  return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
+}
+
+// custom because I want to be able to introspect native browser objects *and* functions
+function stringify(o, simple, visited) {
+  var json = '', i, vi, type = '', parts = [], names = [], circular = false;
+  visited = visited || [];
+  
+  try {
+    type = ({}).toString.call(o);
+  } catch (e) { // only happens when typeof is protected (...randomly)
+    type = '[object Object]';
+  }
+
+  // check for circular references
+  for (vi = 0; vi < visited.length; vi++) {
+    if (o === visited[vi]) {
+      circular = true; 
+      break;
+    }
+  }
+
+  if (circular) {
+    json = '[circular]';
+  } else if (type == '[object String]') {
+    json = '"' + o.replace(/"/g, '\\"') + '"';
+  } else if (type == '[object Array]') {
+    visited.push(o);
+
+    json = '[';
+    for (i = 0; i < o.length; i++) {
+      parts.push(stringify(o[i], simple, visited));
+    }
+    json += parts.join(', ') + ']';
+    json;
+  } else if (type == '[object Object]') {
+    visited.push(o);
+
+    json = '{';
+    for (i in o) {
+      names.push(i);
+    }
+    names.sort(sortci);
+    for (i = 0; i < names.length; i++) {
+      parts.push( stringify(names[i], undefined, visited) + ': ' + stringify(o[ names[i] ], simple, visited) );
+    }
+    json += parts.join(', ') + '}';
+  } else if (type == '[object Number]') {
+    json = o+'';
+  } else if (type == '[object Boolean]') {
+    json = o ? 'true' : 'false';
+  } else if (type == '[object Function]') {
+    json = o.toString();
+  } else if (o === null) {
+    json = 'null';
+  } else if (o === undefined) {
+    json = 'undefined';
+  } else if (simple == undefined) {
+    visited.push(o);
+
+    json = type + '{\n';
+    for (i in o) {
+      names.push(i);
+    }
+    names.sort(sortci);
+    for (i = 0; i < names.length; i++) {
+      try {
+        parts.push(names[i] + ': ' + stringify(o[names[i]], true, visited)); // safety from max stack
+      } catch (e) {
+        if (e.name == 'NS_ERROR_NOT_IMPLEMENTED') {
+          // do nothing - not sure it's useful to show this error when the variable is protected
+          // parts.push(names[i] + ': NS_ERROR_NOT_IMPLEMENTED');
+        }
+      }
+    }
+    json += parts.join(',\n') + '\n}';
+  } else {
+    try {
+      json = o+''; // should look like an object      
+    } catch (e) {}
+  }
+  return json;
+}
+
+function cleanse(s) {
+  return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
+}
+
+function run(cmd) {
+  debugger;
+  var rawoutput = null, 
+      className = 'response',
+      internalCmd = internalCommand(cmd);
+  if (internalCmd) {
+    return ['info', internalCmd];
+  } else {
+    try {
+      if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
+      rawoutput = sandboxframe.contentWindow.eval(cmd);
+    } catch (e) {
+      rawoutput = e.message;
+      className = 'error';
+    }
+    return [className, cleanse(stringify(rawoutput))];
+  } 
+}
+
+function post(cmd, blind, response /* passed in when echoing from remote console */) {
+  cmd = trim(cmd);
+
+  echo(cmd);
+
+  // order so it appears at the top
+  var el = document.createElement('div'),
+      li = document.createElement('li'),
+      span = document.createElement('span'),
+      parent = output.parentNode;
+
+  response = response || run(cmd);
+
+  if (response !== undefined) {
+    el.className = 'response';
+    span.innerHTML = response[1];
+
+    if (response[0] != 'info') prettyPrint([span]);
+    el.appendChild(span);
+
+    li.className = response[0];
+    li.innerHTML = '<span class="gutter"></span>';
+    li.appendChild(el);
+
+    appendLog(li);
+
+    output.parentNode.scrollTop = 0;
+  }
+  pos = history.length;
+}
+
+function log(msg, className) {
+  var li = document.createElement('li'),
+      div = document.createElement('div');
+
+  div.innerHTML = msg;
+  prettyPrint([div]);
+  li.className = className || 'log';
+  li.innerHTML = '<span class="gutter"></span>';
+  li.appendChild(div);
+
+  appendLog(li);
+}
+
+function echo(cmd) {
+  var li = document.createElement('li');
+
+  li.className = 'echo';
+  li.innerHTML = '<span class="gutter"></span><div>' + cleanse(cmd) + '<a href="/?' + encodeURIComponent(cmd) + '" class="permalink" title="permalink">link</a></div>';
+
+  logAfter = null;
+
+  if (output.querySelector) {
+    logAfter = output.querySelector('li.echo') || null;
+  } else {
+    var lis = document.getElementsByTagName('li'),
+        len = lis.length,
+        i;
+    for (i = 0; i < len; i++) {
+      if (lis[i].className.indexOf('echo') !== -1) {
+        logAfter = lis[i];
+        break;
+      }
     }
   }
   
-  function p(html, color) {
-    var el = document.createElement('p');
-    el.style.padding = '10px';
-    el.style.margin = '1px 0';
-    el.style.backgroundColor = '#FFFFD5';
-    el.style.color = color || '#000';
-    el.innerHTML = html;
-    
-    holding.appendChild(el);
-    return el;
+  // logAfter = output.querySelector('li.echo') || null;
+  appendLog(li, true);
+}
+
+window.info = function(cmd) {
+  var li = document.createElement('li');
+
+  li.className = 'info';
+  li.innerHTML = '<span class="gutter"></span><div>' + cleanse(cmd) + '</div>';
+
+  // logAfter = output.querySelector('li.echo') || null;
+  // appendLog(li, true);
+  appendLog(li);
+}
+
+function appendLog(el, echo) {
+  if (echo) {
+    if (!output.firstChild) {
+      output.appendChild(el);
+    } else {
+      output.insertBefore(el, output.firstChild);
+    }
+  } else {
+    if (!output.lastChild) {
+      output.appendChild(el);
+    } else {
+      // console.log(output.lastChild.nextSibling);
+      output.insertBefore(el, logAfter ? logAfter : output.lastChild.nextSibling); //  ? output.lastChild.nextSibling : output.firstChild
+    }
   }
-  
-  return {
-    error: function (e) {
-      var sourceEl = null;
-      var line = null;
-      var ua = navigator.userAgent.toLowerCase();
-    
-      createHolding();
-      var el = p('<strong>Exception thrown:</strong> ' + e.message, '#f00');
-    
-      if (e.lineNumber) {
-        line = e.lineNumber;
-      } else if (e['opera#sourceloc']) {
-        line = e['opera#sourceloc'];
-      } else {
-        line = e.line;
+}
+
+function internalCommand(cmd) {
+  var parts = [], c;
+  if (cmd.substr(0, 1) == ':') {
+    parts = cmd.substr(1).split(' ');
+    c = parts.shift();
+    return (commands[c] || noop).apply(this, parts);
+  }
+}
+
+function noop() {}
+
+function showhelp() {
+  var commands = [
+    ':reset - destroy state and start afresh',
+    ':load &lt;url&gt; - to inject new DOM',
+    ':load &lt;script_url&gt; - to inject external library',
+    '      load also supports following shortcuts: <br />      jquery, underscore, prototype, mootools, dojo, rightjs, coffeescript, yui.<br />      eg. :load jquery',
+    ':clear - to clear contents of the console',
+    ':about'
+  ]; 
+  return commands.join('\n');
+}
+
+function load(url) {
+  if (navigator.onLine) {
+    if (arguments.length > 1 || libraries[url] || url.indexOf('.js') !== -1) {
+      return loadScript.apply(this, arguments);
+    } else {
+      return loadDOM(url);
+    }    
+  } else {
+    return "You need to be online to use :load";
+  }
+}
+
+function loadScript() {
+  var doc = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
+  for (var i = 0; i < arguments.length; i++) {
+    (function (url) {
+      var script = document.createElement('script');
+      script.src = url
+      script.onload = function () {
+        window.top.info('Loaded ' + url, 'http://' + window.location.hostname);
+        if (url == libraries.coffeescript) window.top.info('Now you can type CoffeeScript instead of plain old JS!');
+      };
+      script.onerror = function () {
+        log('Failed to load ' + url, 'error');
       }
+      doc.body.appendChild(script);
+    })(libraries[arguments[i]] || arguments[i]);
+  }
+  return "Loading script...";
+}
+
+function loadDOM(url) {
+  var doc = sandboxframe.contentWindow.document,
+      script = document.createElement('script'),
+      cb = 'loadDOM' + +new Date;
       
-      var oline = line;
-    
-      // Firefox counts 1 less
-      // Safari counts 3 less
-      // Opera counts from inside the body element
-      if (/opera/.test(ua)) {
-        sourceEl = body;
-        line++;
-      } else if (/webkit/.test(ua)) {
-        // if the error is on the last line it confuses the debugger... :(
-        sourceEl = document.getElementsByTagName('html')[0];
-        line -= 4;
-      } else {
-        sourceEl = document.getElementsByTagName('html')[0];
-        line -= 2;      
-      }
-    
-      if (line) {
-        el.innerHTML += '<br />Caused by line (' + oline + '/' + line + '): <code>' + sourceEl.innerHTML.split(/\n/)[line] + '</code>';
-      }
-    
-      // body.appendChild(el);
-    },
-    log: function () {
-      // window.top.console.log.apply(window.top, arguments);
-      createHolding();
-      p(Array.prototype.join.call(arguments, ', '), '#000');
+  script.src = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22' + encodeURIComponent(url) + '%22&format=xml&callback=' + cb;
+  
+  window[cb] = function (yql) {
+    if (yql.results.length) {
+      var html = yql.results[0].replace(/type="text\/javascript"/ig,'type="x"').replace(/<body.*?>/, '').replace(/<\/body>/, '');
+
+      doc.body.innerHTML = html;
+      window.top.info('DOM load complete');
+    } else {
+      log('Failed to load DOM', 'error');
     }
+    try {
+      window[cb] = null;
+      delete window[cb];
+    } catch (e) {}      
+    
   };
-})();
+  
+  document.body.appendChild(script);
+  
+  return "Loading url into DOM...";
+}
+
+function trim(s) {
+  return (s||"").replace(/^\s+|\s+$/g,"");
+}
+
+var ccCache = {};
+var ccPosition = false;
+
+window._console = {
+  log: function () {
+    var l = arguments.length, i = 0;
+    for (; i < l; i++) {
+      log(stringify(arguments[i], true));
+    }
+  },
+  dir: function () {
+    var l = arguments.length, i = 0;
+    for (; i < l; i++) {
+      log(stringify(arguments[i]));
+    }
+  },
+  props: function (obj) {
+    var props = [], realObj;
+    try {
+      for (var p in obj) props.push(p);
+    } catch (e) {}
+    return props;
+  }
+};
+
+function about() {
+  return 'Built by <a target="_new" href="http://twitter.com/rem">@rem</a>';
+}
+
+var output = null,
+    sandboxframe = null,
+    sandbox = null,
+    fakeConsole = 'window.top._console',
+    libraries = {
+        jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
+        prototype: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
+        dojo: 'http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.xd.js',
+        mootools: 'http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js',
+        underscore: 'http://documentcloud.github.com/underscore/underscore-min.js',
+        rightjs: 'http://rightjs.org/hotlink/right.js',
+        coffeescript: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js',
+        yui: 'http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js'
+    },
+    body = document.getElementsByTagName('body')[0],
+    logAfter = null,
+    lastCmd = null,
+    commands = { 
+      help: showhelp, 
+      about: about,
+      load: load,
+      clear: function () {
+        setTimeout(function () { output.innerHTML = ''; }, 10);
+        return 'clearing...';
+      },
+      reset: function () {
+        output.innerHTML = '';
+        jsconsole.init(output);
+        return '';
+      }
+    };
+
+
+var jsconsole = {
+  run: post,
+  reset: function () {
+    this.run(':reset');
+  },
+  init: function (outputElement, nohelp) {
+    output = outputElement;
+
+    sandboxframe = document.createElement('iframe');
+
+    var oldsandbox = document.getElementById('jsconsole-sandbox');
+    if (oldsandbox) {
+      body.removeChild(oldsandbox);
+    }
+
+    body.appendChild(sandboxframe);
+    sandboxframe.setAttribute('id', 'jsconsole-sandbox');
+    sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
+    sandbox.open();
+    // stupid jumping through hoops if Firebug is open, since overwriting console throws error
+    sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
+    sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+
+    sandbox.close();
+    output.parentNode.tabIndex = 0;
+
+    if (nohelp === undefined) post(':help', true);
+  }
+};
+
+return jsconsole;
+
+})(this);
+
+
+jsconsole.init(document.getElementById('output'));
+$document.bind('jsbinReady', function () {
+  editors.console.render = function () {
+    // TODO decide whether we should also grab all the JS in the HTML panel
+    // jsconsole.reset();
+    jsconsole.run(editors.javascript.render());
+  };
+});

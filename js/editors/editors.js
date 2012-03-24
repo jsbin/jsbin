@@ -4,6 +4,7 @@
 //= require "unsaved"
 //= require "panel"
 //= require "../render/live"
+//= require "../render/console"
 
 var panels = {};
 

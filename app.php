@@ -34,7 +34,7 @@ $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 
 // if it contains the x-requested-with header, or is a CORS request on GET only
-$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (isset($_SERVER['HTTP_ORIGIN']) && $_SERVER['REQUEST_METHOD'] == 'GET');
+$ajax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) || (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false && $_SERVER['REQUEST_METHOD'] == 'GET');
 
 $no_code_found = false;
 

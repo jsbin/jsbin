@@ -172,18 +172,18 @@ Panel.prototype = {
       editor.focus();
     });
 
-    var $label = $('.code.' + panel.name + ' > .label');
-    if (document.body.className.indexOf('ie6') === -1 && $label.length) {
-      editor.scroller.scroll(function (event) {
-        if (this.scrollTop > 10) {
-          $label.stop().animate({ opacity: 0 }, 50, function () {
-            $(this).hide();
-          });
-        } else {
-          $label.show().stop().animate({ opacity: 1 }, 250);
-        }
-      });
-    }
+    // var $label = $('.code.' + panel.name + ' > .label');
+    // if (document.body.className.indexOf('ie6') === -1 && $label.length) {
+    //   editor.scroller.scroll(function (event) {
+    //     if (this.scrollTop > 10) {
+    //       $label.stop().animate({ opacity: 0 }, 50, function () {
+    //         $(this).hide();
+    //       });
+    //     } else {
+    //       $label.show().stop().animate({ opacity: 1 }, 250);
+    //     }
+    //   });
+    // }
 
     $document.bind('sizeeditors', function () {
       var top = 0,

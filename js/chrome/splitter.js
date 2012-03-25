@@ -17,6 +17,7 @@ $.fn.splitter = function () {
         props = {
           x: {
             currentPos: $parent.offset().left,
+            multiplier: 1,
             cssProp: 'left',
             otherCssProp: 'right',
             size: $parent.width(),
@@ -25,7 +26,7 @@ $.fn.splitter = function () {
             init: {
               top: 0,
               bottom: 0,
-              width: 10,
+              width: 8,
               'margin-left': '-5px',
               height: '100%',
               left: 'auto',
@@ -40,6 +41,7 @@ $.fn.splitter = function () {
           },
           y: {
             currentPos: $parent.offset().top,
+            multiplier: -1,
             size: $parent.height(),
             cssProp: 'bottom',
             otherCssProp: 'top',
@@ -50,7 +52,7 @@ $.fn.splitter = function () {
               top: 'auto',
               cursor: 'ns-resize',
               bottom: 'auto',
-              height: 4,
+              height: 8,
               width: '100%',
               left: 0,
               right: 0,
@@ -75,7 +77,7 @@ $.fn.splitter = function () {
       tracker.down.x = event.pageX;
       tracker.down.y = event.pageY;
       tracker.delta = { x: null, y: null };
-      tracker.target = $handle[type == 'x' ? 'height' : 'width']() * 0.3;
+      tracker.target = $handle[type == 'x' ? 'height' : 'width']() * 0.2;
     });
 
     $document.bind('mousemove', function (event) {
@@ -91,17 +93,24 @@ $.fn.splitter = function () {
 
     function moveSplitter(pos) {
       var v = pos - props[type].currentPos,
-          split = 100 / props[type].size * v;
-          delta = pos - settings[type],
+          split = 100 / props[type].size * v,
+          delta = (pos - settings[type]) * props[type].multiplier,
           prevSize = $prev[props[type].sizeProp](),
           elSize = $el[props[type].sizeProp]();
+
+      if (type === 'y') {
+        split = 100 - split;
+      }
 
       // if prev panel is too small and delta is negative, block
       if (prevSize < 100 && delta < 0) {
         // ignore
+        console.log('ignore 1');
       } else if (elSize < 100 && delta > 0) {
         // ignore
+        console.log('ignore 2');
       } else {
+        console.log('sizing to ', props[type].cssProp, split + '%')
         // allow sizing to happen
         $el.css(props[type].cssProp, split + '%');
         $prev.css(props[type].otherCssProp, (100 - split) + '%');
@@ -135,14 +144,10 @@ $.fn.splitter = function () {
     $handle.bind('mousedown touchstart', function (e) {
       dragging = true;
       $body.append($blocker).addClass('dragging');
-
-      // blockiframe.contentDocument.write('<title></title><p></p>');
       props[type].size = $parent[props[type].sizeProp]();
-      props[type].currentPos = $parent.offset()[props[type].cssProp];
-      // TODO layer on div to block iframes from stealing focus
-      // width = $parent.width();
-      // left = $parent.offset().left;
-      $prev = $handle.prevAll(':visible:first');
+      props[type].currentPos = 0; // is this really required then?
+
+      $prev = type === 'x' ? $handle.prevAll(':visible:first') : $handle.nextAll(':visible:first');;
       e.preventDefault();
     }).hover(function () {
       $handle.css('opacity', '1');
@@ -151,7 +156,7 @@ $.fn.splitter = function () {
         $handle.css('opacity', '0');
       }
     });
-    
+
     $handle.bind('init', function (event, x) {
       $handle.css(props[type].init);
       $blocker.css('cursor', type == 'x' ? 'ew-resize' : 'ns-resize');
@@ -159,6 +164,7 @@ $.fn.splitter = function () {
       if (type == 'y') {
         $el.css('border-right', 0);
         $prev.css('border-right', 0);
+        $prev.css('border-top', '1px solid #ccc');
       } else {
         // $el.css('border-right', '1px solid #ccc');
         $prev.css('border-right', '1px solid #ccc');

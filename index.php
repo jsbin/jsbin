@@ -125,8 +125,6 @@ if ($code_id) {
       <div class="label"><strong>Live Preview</strong></div>
     </div>
   </div>
-  <div id="live" class="stretch livepreview"><a href="<?php echo ROOT ?>live" target="_new" id="popout" class="popout button light left right">Pop out</a></div>
-  <div id="preview" class="binview stretch"></div>
   <form method="post" action="<?php echo $code_id_path?>save">
     <input type="hidden" name="method" />
   </form>

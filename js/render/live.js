@@ -73,7 +73,7 @@ function renderLivePreview(withalerts) {
       remove = $live.find('iframe').length > 0,
       frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first')[0],
       doc = frame.contentDocument || frame.contentWindow.document,
-      window = document.defaultView || document.parentWindow,
+      win = doc.defaultView || doc.parentWindow,
       d = new Date();
  
   if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
@@ -102,8 +102,17 @@ function renderLivePreview(withalerts) {
       } else {
         doc.write('<script>delete window.print;delete window.alert;delete window.prompt;delete window.confirm;</script>');
       }
+
+      // almost jQuery Mobile specific - when the page renders
+      // it moves the focus over to the live preview - since 
+      // we no longer have a "render" panel, our code loses 
+      // focus which is damn annoying. So, I cancel the iframe
+      // focus event...because I can :)
+      win.onfocus = function () {
+        return false;
+      };
+
       doc.write(source);
-      console.log(source);
     }
     doc.close();
 

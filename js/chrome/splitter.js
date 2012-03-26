@@ -167,6 +167,7 @@ $.fn.splitter = function () {
         $prev.css('border-top', '1px solid #ccc');
       } else {
         // $el.css('border-right', '1px solid #ccc');
+        $el.css('border-top', 0);
         $prev.css('border-right', '1px solid #ccc');
       }
  

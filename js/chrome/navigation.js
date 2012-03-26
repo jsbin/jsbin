@@ -153,6 +153,29 @@ $('.prefsButton a').click(function (e) {
   $body.toggleClass('prefsOpen');
 });
 
+var dropdownOpen = false;
+$('.button-dropdown').click(function (e) {
+  if (!dropdownOpen) {
+    $(this).closest('.menu').addClass('open');
+    dropdownOpen = true;
+  } else {
+    $(this).closest('.menu').removeClass('open');
+    dropdownOpen = false;
+  }
+  e.preventDefault();
+});
+
+$body.click(function (event) {
+  if (dropdownOpen) {
+    if (!$(event.target).closest('.menu').length) {
+      $('.menu.open').removeClass('open');
+      dropdownOpen = false;
+      return false;
+    }
+  }
+});
+
+
 // $('#control div.help a:last').click(function () {
 //   $(window).trigger('togglehelp');
 //   return false;

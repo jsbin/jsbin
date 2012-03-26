@@ -6,6 +6,9 @@ $(document).keydown(function (event) {
     } else if (prefsOpen) {
       $body.toggleClass('prefsOpen');
       prefsOpen = false;
+    } else if (dropdownOpen) {
+      $('.menu.open').removeClass('open');
+      dropdownOpen = false;
     }
   }
 });

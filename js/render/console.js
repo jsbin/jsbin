@@ -403,7 +403,7 @@ return jsconsole;
 
 jsconsole.init(document.getElementById('output'));
 $document.bind('jsbinReady', function () {
-  editors.console.render = function () {
+  editors.console.settings.render = function () {
     // TODO decide whether we should also grab all the JS in the HTML panel
     // jsconsole.reset();
     jsconsole.run(editors.javascript.render());

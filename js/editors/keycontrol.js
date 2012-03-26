@@ -20,6 +20,9 @@ function keycontrol(panel, event) {
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
       event.stop();
+    } else if (event.which == 76 && event.shiftKey && event.metaKey) {
+      $('#runwithalerts').click();
+      event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;

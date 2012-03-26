@@ -134,6 +134,8 @@ Panel.prototype = {
     var panel = this;
     if (panel.editor) {
       return panel.processor(panel.getCode());
+    } else if (this.visible && this.settings.render) {
+      this.settings.render.call(this);
     } 
   },
   _setupEditor: function () {

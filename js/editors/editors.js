@@ -139,6 +139,11 @@ var editors = panels.panels = {
   }})
 };
 
+editors.live.settings.render = function () {
+  editors.console.render();
+  renderLivePreview();
+};
+
 // IMPORTANT this is nasty, but the sequence is important, because the
 // show/hide method is being called as the panels are being called as
 // the panel is setup - so we hook these handlers on *afterwards*.

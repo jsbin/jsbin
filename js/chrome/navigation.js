@@ -175,34 +175,13 @@ $body.click(function (event) {
   }
 });
 
+$('#runwithalerts').click(function () {
+  renderLivePreview(true);
+});
 
-// $('#control div.help a:last').click(function () {
-//   $(window).trigger('togglehelp');
-//   return false;
-// });
-
-// $('#help a:host(' + window.location.host + ')').live('click', function () {
-//   $('#help #content').load(this.href + '?' + Math.random());
-//   return false;    
-// });
-
-// var helpOpen = false;
-// $(window).bind('togglehelp', function () {
-//   var s = 100, right = helpOpen ? 0 : 300;
-// 
-//   if (helpOpen == false) {
-//     $('#help #content').load('/help/index.html?' + Math.random());    
-//   }
-//   $bin.find('> div').animate({ right: right }, { duration: s });
-//   $('#control').animate({ right: right }, { duration: s });
-//   
-//   $('#help').animate({ right: helpOpen ? -300 : 0 }, { duration: s});
-//   
-//   helpOpen = helpOpen ? false : true;
-// });
-// 
-// $(document).keyup(function (event) {
-//   if (helpOpen && event.keyCode == 27) {
-//     $(window).trigger('togglehelp');
-//   }
-// });
+// TODO memorise
+editors.live.disablejs = jsbin.settings.disablejs;
+$('#disablejs').change(function () {
+  jsbin.settings.disablejs = editors.live.disablejs = this.checked;
+  editors.live.render();
+}).attr('checked', jsbin.settings.disablejs ? true : false);

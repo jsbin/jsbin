@@ -68,24 +68,28 @@ function two(s) {
   return (s+'').length < 2 ? '0' + s : s;
 }
 
-function renderLivePreview() {
+function renderLivePreview(withalerts) {
   var source = getPreparedCode(),
       remove = $live.find('iframe').length > 0,
       frame = $live.append('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first')[0],
-      document = frame.contentDocument || frame.contentWindow.document,
+      doc = frame.contentDocument || frame.contentWindow.document,
       window = document.defaultView || document.parentWindow,
       d = new Date();
  
   if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
 
+  if (withalerts !== true && (editors.live.disablejs === undefined || editors.live.disablejs === true)) {
+    source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  }
+
   // strip autofocus from the markup - prevents the focus switching out of the editable area
   source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
 
   var run = function () {
-    document.open();
+    doc.open();
 
     if (debug) {
-      document.write('<pre>' + source.replace(/[<>&]/g, function (m) {
+      doc.write('<pre>' + source.replace(/[<>&]/g, function (m) {
         if (m == '<') return '&lt;';
         if (m == '>') return '&gt;';
         if (m == '"') return '&quot;';
@@ -93,10 +97,15 @@ function renderLivePreview() {
     } else {
       // nullify the blocking functions
       // IE requires that this is done in the script, rather than off the window object outside of the doc.write
-      document.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-      document.write(source);
+      if (withalerts !== true) {
+        doc.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+      } else {
+        doc.write('<script>delete window.print;delete window.alert;delete window.prompt;delete window.confirm;</script>');
+      }
+      doc.write(source);
+      console.log(source);
     }
-    document.close();
+    doc.close();
 
     // by removing the previous iframe /after/ the newly created live iframe
     // has run, it doesn't flicker - which fakes a smooth live update.

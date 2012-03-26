@@ -126,7 +126,13 @@ if ($code_id) {
       <div id="console" class="stretch"><ul id="output"></ul></div>
     </div>
     <div id="live" class="stretch live panel">
-      <div class="label"><strong>Live Preview</strong></div>
+      <div class="label">
+        <strong>Live Preview</strong>
+        <span class="options">
+          <button id="runwithalerts">Run with alerts</button>
+          <label>Disable JS<input type="checkbox" id="disablejs" checked></label>
+        </span>
+      </div>
     </div>
   </div>
   <form method="post" action="<?php echo $code_id_path?>save">
@@ -156,6 +162,10 @@ if ($code_id) {
         <tr>
           <td>ctrl + enter</td>
           <td>Run JavaScript in console (if open)</td>
+        </tr>
+        <tr>
+          <td>ctrl + shift + L</td>
+          <td>Render with alerts, prompts &amp; confirms</td>
         </tr>
         <tr>
           <td>ctrl + /</td>

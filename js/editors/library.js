@@ -24,7 +24,7 @@ $('#library').bind('change', function () {
       thislib = {},
       re,
       i,
-      code = editors.html.getCode();
+      code = editors.html.editor.getCode();
 
   // strip existing libraries out  
   var addAdjust = code.match(/<(script|link) class="jsbin"/g);
@@ -36,8 +36,8 @@ $('#library').bind('change', function () {
   if (this.value != 'none') {
     // to restore (note - the adjustment isn't quite 100% right yet)
     state = {
-      line: editors.html.currentLine(),
-      character: editors.html.getCursor().ch,
+      line: editors.html.editor.currentLine(),
+      character: editors.html.editor.getCursor().ch,
       add: 1 - addAdjust.length
     };
 
@@ -80,5 +80,5 @@ $('#library').bind('change', function () {
 
   editors.html.setCode(code);
   editors.html.focus();
-  editors.html.setCursor({ line: state.line, ch: state.character });
+  editors.html.editor.setCursor({ line: state.line, ch: state.character });
 });

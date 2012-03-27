@@ -61,7 +61,6 @@ $document.one('jsbinReady', function () {
 
   // $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
   // $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
-  console.log('>>>>>>>> ready');
   $bin.removeAttr('style').addClass('ready');
 });
 

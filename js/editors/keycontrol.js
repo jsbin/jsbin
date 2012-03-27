@@ -3,8 +3,20 @@
 
 var keyboardHelpVisible = false;
 
-function keycontrol(panel, event) {
+$body.keydown(keycontrol);
+
+var panelShortcuts = {
+  49: 'javascript',
+  50: 'css',
+  51: 'html',
+  52: 'console',
+  53: 'live'
+};
+
+function keycontrol(event) {
   event = normalise(event);
+
+  var panel = jsbin.panels.focused ? jsbin.panels.focused.editor : {};
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {
@@ -12,6 +24,21 @@ function keycontrol(panel, event) {
       if (event.metaKey && event.which == 13 && editors.console.visible) {
         editors.console.render();
         event.stop();
+      }
+    }
+
+    // shortcut for showing a panel
+    if (panelShortcuts[event.which] !== undefined && event.altKey && event.metaKey) {
+      jsbin.panels.show(panelShortcuts[event.which]);
+      event.stop();
+    } else if (event.which === 27 && event.altKey) {
+      jsbin.panels.focused.hide();
+      var visible = jsbin.panels.getVisible();
+      if (visible.length) {
+        jsbin.panels.focused = visible[0];
+        if (visible[0].editor) {
+          visible[0].editor.focus();
+        }
       }
     }
 

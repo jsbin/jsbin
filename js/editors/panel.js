@@ -9,7 +9,7 @@ var editorModes = {
 var Panel = function (name, settings) {
   var panel = this;
   panel.settings = settings = settings || {};
-  panel.name = name;
+  panel.id = panel.name = name;
   panel.$el = $('.panel.' + name);
   panel.el = document.getElementById(name);
   panel.order = Panel.order++;
@@ -66,9 +66,9 @@ var Panel = function (name, settings) {
   });
   this.controlButton.appendTo('#panels');
 
-  this.$el.find('.label').prepend('<a href="#close" class="close"></a>').find('.close').click(function () {
-    panel.hide();
-  });
+  // this.$el.find('.label').prepend('<a href="#close" class="close"></a>').find('.close').click(function () {
+  //   panel.hide();
+  // });
 
   panel.hide();
 }
@@ -162,8 +162,10 @@ Panel.prototype = {
       return pos.line;
     };
 
-    editor.setOption('onKeyEvent', keycontrol);
-    this.settings.focus && editor.setOption('onFocus', $.proxy(this.settings.focus, this));
+    // editor.setOption('onKeyEvent', keycontrol);
+    editor.setOption('onFocus', function () {
+      jsbin.panels.focused = panel;
+    });
 
     editor.id = panel.name;
 

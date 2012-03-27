@@ -120,6 +120,15 @@ panels.distribute = function () {
   }
 };
 
+panels.show = function (panelId) {
+  this.panels[panelId].show();
+  if (this.panels[panelId].editor) {
+    this.panels[panelId].editor.focus();
+  }
+}
+
+panels.focused = null;
+
 // dirty, but simple
 Panel.prototype.distribute = function () {
   panels.distribute();

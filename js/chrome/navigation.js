@@ -181,7 +181,7 @@ $('#runwithalerts').click(function () {
 
 // TODO memorise
 editors.live.disablejs = jsbin.settings.disablejs;
-$('#disablejs').change(function () {
-  jsbin.settings.disablejs = editors.live.disablejs = this.checked;
+$('#enablejs').change(function () {
+  jsbin.settings.disablejs = editors.live.disablejs = !this.checked;
   editors.live.render();
-}).attr('checked', jsbin.settings.disablejs ? true : false);
+}).attr('checked', jsbin.settings.disablejs ? false : true);

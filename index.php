@@ -129,8 +129,8 @@ if ($code_id) {
       <div class="label">
         <strong>Live Preview</strong>
         <span class="options">
-          <button id="runwithalerts">Run with alerts</button>
-          <label>Disable JS<input type="checkbox" id="disablejs" checked></label>
+          <button id="runwithalerts">Run JS with alerts</button>
+          <label>Include JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>

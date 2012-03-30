@@ -154,11 +154,11 @@ if ($code_id) {
       </thead>
       <tbody>
         <tr>
-          <td>ctrl + shift + &rarr;</td>
-          <td>Focus panel right</td>
+          <td>ctrl + [panel num]</td>
+          <td>Focus nth panel</td>
         </tr>
         <tr>
-          <td>ctrl + shift + &larr;</td>
+          <td>ctrl + § or ctrl + `</td>
           <td>Focus panel left</td>
         </tr>
         <tr>
@@ -197,6 +197,7 @@ if ($code_id) {
           <td>shift + tab</td>
           <td>Unindents selected lines</td>
         </tr>
+        <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>
       </tbody>
     </table>
   </div>

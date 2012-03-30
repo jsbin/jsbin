@@ -36,10 +36,11 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-    if (panelShortcuts[event.which] !== undefined && event.altKey && event.metaKey) {
+
+    if (panelShortcuts[event.which] !== undefined && event.metaKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
-    } else if (event.which === 27 && event.altKey) {
+    } else if (event.which === 192 && event.metaKey) {
       jsbin.panels.focused.hide();
       var visible = jsbin.panels.getVisible();
       if (visible.length) {

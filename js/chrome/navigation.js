@@ -51,8 +51,12 @@ $panelsvisible.chosen().change(function () {
 
 var $htmlpanel = $('.code.html'),
     htmlsplitter = null;
-    
+
+
+// TODO remove
 function updatePanel(panel, show, noinit) {
+  return;
+
   jsbin.settings.show[panel] = show;
   htmlsplitter = htmlsplitter || $('.code.html').data().splitter;
 
@@ -96,13 +100,6 @@ function updatePanel(panel, show, noinit) {
     if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
   }
 }
-
-// var $panelsvisible = $('#panelsvisible input').click(function () {
-//   var checked = this.checked,
-//       panel = $(this).data('panel');
-      
-//   updatePanel(panel, checked);
-// });
 
 var $revert = $('#revert').click(function () {
   if ($revert.is(':not(.enable)')) {

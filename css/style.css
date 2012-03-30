@@ -248,7 +248,7 @@ iframe.javascript {
   /*-webkit-border-radius: 3px;*/
   /*-moz-border-radius: 3px;*/
   /*border-radius: 3px;*/
-  height: 24px;
+  height: 23px;
   line-height: 24px;
   padding: 6px 10px;
   display: block;
@@ -1773,6 +1773,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 .panel {
+  display: none;
   border-left: 1px solid #ccc;
   -webkit-transition: left ease-out 100ms, right ease-out 100ms;
   -moz-transition: left ease-out 100ms, right ease-out 100ms;
@@ -1954,20 +1955,26 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 .dropdown {
   display: none;
-  background: white;
-  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);
   height: auto;
-  margin: 3px;
-  border: 1px solid #CCC;
   /*border-bottom-right-radius: 5px;*/
   position: absolute;
+  padding: 3px 20px 10px 3px;
+}
+
+.dropdownmenu {
+  margin: 3px;
+  background: white;
+  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);;
+  border: 1px solid #CCC;
+  height: auto;
+  border-radius: 5px;
 }
 
 .open .dropdown {
   display: block;
 }
 
-.dropdown > * {
+.dropdownmenu > * {
   display: block;
   float: none;
   border-right: 0;
@@ -2034,3 +2041,28 @@ div.CodeMirror-selected { background: #d9d9d9; }
 .label .options label input {
   margin-left: 10px;
 }
+
+@media all and (max-height:800px) {
+  #control {
+    top: -36px;
+    border-bottom: 10px solid #aaa;
+    -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+    -webkit-transition-delay: 1s;
+  }
+
+  #bin {
+    top: 10px;
+  }
+
+  #control:hover {
+    top: 0;
+    -webkit-transition: top ease-out 10ms;
+  }
+}
+
+
+
+
+
+
+

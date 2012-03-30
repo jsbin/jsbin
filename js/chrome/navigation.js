@@ -153,23 +153,47 @@ $('.prefsButton a').click(function (e) {
   $body.toggleClass('prefsOpen');
 });
 
-var dropdownOpen = false;
-$('.button-dropdown').click(function (e) {
+var dropdownOpen = false,
+    onhover = false;
+
+function opendropdown(el) {
   if (!dropdownOpen) {
-    $(this).closest('.menu').addClass('open');
+    $(el).closest('.menu').addClass('open');
     dropdownOpen = true;
-  } else {
-    $(this).closest('.menu').removeClass('open');
+  }
+}
+
+function closedropdown() {
+  if (dropdownOpen) {
+    dropdownButtons.closest('.menu').removeClass('open');
     dropdownOpen = false;
+    onhover = false;
+  }
+}
+
+var dropdownButtons = $('.button-dropdown').click(function (e) {
+  if (!dropdownOpen) {
+    opendropdown(this);
+  } else {
+    closedropdown();
   }
   e.preventDefault();
+})
+
+$('.menu').has('.dropdown').hover(function () {
+  opendropdown(this);
+  onhover = true;
+}, function (event) {
+  console.log('hover out');
+  if ($(event.currentTarget).closest('.menu').length && onhover && dropdownOpen) {
+    closedropdown();
+  }
 });
 
 $body.click(function (event) {
   if (dropdownOpen) {
     if (!$(event.target).closest('.menu').length) {
-      $('.menu.open').removeClass('open');
-      dropdownOpen = false;
+      closedropdown();
       return false;
     }
   }

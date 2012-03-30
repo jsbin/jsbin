@@ -66,11 +66,15 @@ var Panel = function (name, settings) {
   });
   this.controlButton.appendTo('#panels');
 
+  this.$el.focus(function () {
+    jsbin.panels.focused = panel;
+  });
+  this.$el.click(function () {
+    panel.$el.trigger('focus');
+  });
   // this.$el.find('.label').prepend('<a href="#close" class="close"></a>').find('.close').click(function () {
   //   panel.hide();
   // });
-
-  panel.hide();
 }
 
 Panel.order = 0;
@@ -114,6 +118,11 @@ Panel.prototype = {
     this.splitter.hide();
     this.controlButton.removeClass('active');
     this.distribute();
+
+    if (this.settings.hide) {
+      this.settings.hide.call(this, true);
+    }
+
     // this.controlButton.show();
     $document.trigger('sizeeditors');
   },
@@ -164,7 +173,7 @@ Panel.prototype = {
 
     // editor.setOption('onKeyEvent', keycontrol);
     editor.setOption('onFocus', function () {
-      jsbin.panels.focused = panel;
+      panel.$el.trigger('focus');
     });
 
     editor.id = panel.name;

@@ -29,41 +29,6 @@ var iframedelay = (function () {
   return iframedelay;
 }());
 
-// could chain - but it's more readable like this
-$live.bind('show', function () {
-  // hijackedConsole.activate();
-  $body.addClass('live');
-  // showlive.checked = true;
-  localStorage && localStorage.setItem('livepreview', true);
-  
-  var data = $live.data();
-  if (data.splitter) {
-    data.splitter.show().trigger('init');
-  }
-  // start timer
-  $(document).bind('codeChange.live', throttledPreview);
-  renderLivePreview();
-}).bind('hide', function () {
-  // hijackedConsole.deactivate();
-  $(document).unbind('codeChange.live');
-  localStorage && localStorage.removeItem('livepreview');
-  $body.removeClass('live');
-  // showlive.checked = false;
-
-  $('#source').css('right', 0);
-
-  var data = $live.data();
-  if (data.splitter) {
-    data.splitter.hide();
-  }
-}).bind('toggle', function () {
-  $live.trigger($body.is('.live') ? 'hide' : 'show');
-});
-
-function enableLive() {
-  // $('#control .buttons .preview').after('<a id="showlive" class="button live group right left light gap" href="#">Live</a>');
-}
-
 function two(s) {
   return (s+'').length < 2 ? '0' + s : s;
 }
@@ -76,7 +41,7 @@ function renderLivePreview(withalerts) {
       win = doc.defaultView || doc.parentWindow,
       d = new Date();
  
-  if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
+  // if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
 
   if (withalerts !== true && (editors.live.disablejs === undefined || editors.live.disablejs === true)) {
     source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
@@ -86,6 +51,8 @@ function renderLivePreview(withalerts) {
   source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
 
   var run = function () {
+    var jsbinConsole = jsbin.panels.panels.console.visible ? 'window.top._console' : false;
+
     doc.open();
 
     if (debug) {
@@ -103,6 +70,12 @@ function renderLivePreview(withalerts) {
         doc.write('<script>delete window.print;delete window.alert;delete window.prompt;delete window.confirm;</script>');
       }
 
+      if (jsbinConsole) {
+        doc.write('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.top._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
+
+        // doc.write('<script>(function () { var fakeConsole = ' + jsbinConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })(); window.onerror = function () { console.error.apply(console, arguments); }</script>');
+      }
+
       // almost jQuery Mobile specific - when the page renders
       // it moves the focus over to the live preview - since 
       // we no longer have a "render" panel, our code loses 
@@ -115,6 +88,8 @@ function renderLivePreview(withalerts) {
       doc.write(source);
     }
     doc.close();
+    delete jsbin.panels.panels.live.doc;
+    jsbin.panels.panels.live.doc = doc;
 
     // by removing the previous iframe /after/ the newly created live iframe
     // has run, it doesn't flicker - which fakes a smooth live update.

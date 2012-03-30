@@ -75,13 +75,13 @@ function getPreparedCode() {
 
   // redirect JS console logged to our custom log while debugging
   if (re.console.test(js)) {
-    if (useCustomConsole) {
-      js = js.replace(re.console, '_console.');
+    if (jsbin.panels.panels.console.visible) {
+      js = js.replace(re.console, 'window.top._console.');
     } else {
       js = js.replace(re.console, 'window.top.console.');
     }
   }
-  
+
   // escape any script tags in the JS code, because that'll break the mushing together
   js = js.replace(re.script, '<\\/script');
 
@@ -106,7 +106,7 @@ function getPreparedCode() {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }
     // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
-    source += "<script>\n" + js + "\n</script>\n" + close;
+    source += "<script>\n(function(){" + js + "}())\n</script>\n" + close;
   }
 
   if (css) {

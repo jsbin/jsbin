@@ -1,4 +1,5 @@
 //= require "../vendor/prettyprint"
+//= require "../vendor/stacktrace"
 
 var jsconsole = (function (window) {
 
@@ -393,19 +394,129 @@ var jsconsole = {
     sandbox.close();
 
     if (nohelp === undefined) post(':help', true);
-  }
+  },
+  rawMessage: function (data) {
+    console.log(data);
+    if (data.type && data.type == 'error') {
+      post(data.cmd, true, ['error', data.response]);
+    } else if (data.type && data.type == 'info') {
+      window.top.info(data.response);
+    } else {
+      if (data.cmd.indexOf('console.log') === -1) data.response = data.response.substr(1, data.response.length - 2); // fiddle to remove the [] around the repsonse
+      echo(data.cmd);
+      log(data.response, 'response');
+    }
+  },
+  stringify: stringify
 };
 
 return jsconsole;
 
 })(this);
 
+var msgType = '';
 
 jsconsole.init(document.getElementById('output'));
+jsconsole.queue = [];
+jsconsole.remote = {
+  log: function () {
+    var cmd = 'console.log';
+    try {
+      throw new Error();
+    } catch (e) {
+      var trace = printStackTrace({ error: e }),
+          code = jsbin.panels.panels.javascript.getCode().split('\n'),
+          parts = [],
+          line;
+
+      console.warn('tracing');
+      for (var i = 0; i < trace.length; i++) {
+        if (trace[i].indexOf(window.location.toString()) !== -1) {
+          parts = trace[i].split(':');
+          parts.pop();
+          line = parts.pop() - 2;
+          if (code[line].indexOf('console.') !== -1) {
+            cmd = $.trim(code[line]);
+            console.log(cmd);
+            break;
+          }
+        }
+      }
+    }
+
+    var argsObj = jsconsole.stringify(arguments.length == 1 ? arguments[0] : [].slice.call(arguments, 0));
+    var response = [];
+    [].forEach.call(arguments, function (args) {
+      response.push(jsconsole.stringify(args, true));
+    });
+
+    var msg = { response: response, cmd: cmd, type: msgType };
+
+    if (jsconsole.ready) {
+      jsconsole.rawMessage(msg);
+    } else {
+      jsconsole.queue.push(msg);
+    }
+
+    msgType = '';
+  },
+  info: function () {
+    msgType = 'info';
+    remote.log.apply(this, arguments);
+  },
+  echo: function () {
+    var args = [].slice.call(arguments, 0),
+        plain = args.pop(),
+        cmd = args.pop(),
+        response = args;
+
+    var argsObj = jsconsole.stringify(response, plain),
+        msg = { response: argsObj, cmd: cmd };
+    if (jsconsole.ready) {
+      jsconsole.rawMessage(msg);
+    } else {
+      jsconsole.queue.push(msg);
+    }
+  },
+  error: function (error, cmd) {
+    var msg = { response: error.message, cmd: cmd, type: 'error' };
+    if (jsconsole.ready) {
+      jsconsole.rawMessage(msg);
+    } else {
+      jsconsole.queue.push(msg);
+    }
+  },
+  flush: function () {
+    console.log('queue', jsconsole.queue);
+    for (var i = 0; i < jsconsole.queue.length; i++) {
+      jsconsole.rawMessage(jsconsole.queue[i]);
+    }
+  }
+};
+
+// just for extra support
+jsconsole.remote.debug = jsconsole.remote.dir = jsconsole.remote.log;
+jsconsole.remote.warn = jsconsole.remote.info;
+
+window.top._console = jsconsole.remote;
+
 $document.bind('jsbinReady', function () {
   editors.console.settings.render = function () {
     // TODO decide whether we should also grab all the JS in the HTML panel
     // jsconsole.reset();
     jsconsole.run(editors.javascript.render());
   };
+  editors.console.settings.show = function () {
+    if (editors.live.visible) {
+      renderLivePreview();
+    }
+  };
+  editors.console.settings.hide = function () {
+    if (editors.live.visible) {
+      renderLivePreview();
+    }
+  };
+  jsconsole.ready = true;
+  jsconsole.remote.flush();
+  // editors.console.fakeConsole = window._console
 });

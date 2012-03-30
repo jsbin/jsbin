@@ -16,7 +16,15 @@ var panelShortcuts = {
 function keycontrol(event) {
   event = normalise(event);
 
-  var panel = jsbin.panels.focused ? jsbin.panels.focused.editor : {};
+  var panel = {};
+
+  if (jsbin.panels.focused && jsbin.panels.focused.editor) {
+    panel = jsbin.panels.focused.editor;
+  } else if (jsbin.panels.focused) {
+    panel = jsbin.panels.focused;
+  }
+
+  var codePanel = { css: 1, javascript: 1, html: 1}[panel.id];
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {
@@ -48,6 +56,9 @@ function keycontrol(event) {
       keyboardHelpVisible = $body.is('.keyboardHelp');
       event.stop();
     } else if (event.which == 76 && event.shiftKey && event.metaKey) {
+      if (!editors.live.visible) {
+        editors.live.show();
+      }
       $('#runwithalerts').click();
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
@@ -70,11 +81,11 @@ function keycontrol(event) {
     
       panel.replaceRange('</' + token.state.htmlState.context.tagName + '>', {line: cur.line, ch: token.end}, {line: cur.line, ch: token.end});
       event.stop();
-    } else if (event.which == 188 && event.ctrlKey && event.shiftKey) {
+    } else if (event.which == 188 && event.ctrlKey && event.shiftKey && codePanel) {
       // start a new tag
       event.stop();
       return startTagComplete(panel);
-    } else if (event.which == 191 && event.metaKey) {
+    } else if (event.which == 191 && event.metaKey && codePanel) {
       // auto close the element
       if (panel.somethingSelected()) return;
       

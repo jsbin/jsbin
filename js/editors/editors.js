@@ -93,8 +93,15 @@ panels.savecontent = function () {
     panel = this.panels[name];
     if (panel.editor) sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
   }
-
 };
+
+panels.focus = function (panel) {
+  this.focused = panel;
+  if (panel) {
+    $('.panel > .label').removeClass('focus');
+    panel.$el.find('.label').addClass('focus');
+  }
+}
 
 // evenly distribute the width of all the visible panels
 panels.distribute = function () {
@@ -126,8 +133,6 @@ panels.show = function (panelId) {
     this.panels[panelId].editor.focus();
   }
 }
-
-panels.focused = null;
 
 // dirty, but simple
 Panel.prototype.distribute = function () {
@@ -188,6 +193,8 @@ Panel.prototype.hide = function () {
 
 
 panels.restore();
+panels.focus(panels.getVisible()[0] || null);
+
 
 var editorsReady = setInterval(function () {
   var ready = true;

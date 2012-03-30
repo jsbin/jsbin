@@ -1805,6 +1805,10 @@ div.CodeMirror-selected { background: #d9d9d9; }
   border-bottom: 1px solid #ededed;
 }
 
+.panel .focus {
+  background-color: #dbe4f5;
+}
+
 .panel .label p {
   cursor: pointer;
 }

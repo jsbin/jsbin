@@ -67,7 +67,7 @@ var Panel = function (name, settings) {
   this.controlButton.appendTo('#panels');
 
   this.$el.focus(function () {
-    jsbin.panels.focused = panel;
+    jsbin.panels.focus(panel);
   });
   this.$el.click(function () {
     panel.$el.trigger('focus');

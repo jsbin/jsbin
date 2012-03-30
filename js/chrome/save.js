@@ -15,31 +15,31 @@ $('a.clone').click(function (event) {
   // save our panel layout - assumes our user is happy with this layout
   jsbin.panels.save();
 
-  var $form = $('form')
-    .append('<input type="hidden" name="javascript" />')
-    .append('<input type="hidden" name="html" />');
-
-  $form.find('input[name=javascript]').val(editors.javascript.getCode());
-  $form.find('input[name=html]').val(editors.html.getCode());
-  $form.find('input[name=method]').val('save,new');
+  var $form = setupform('save,new');
   $form.submit();
 
   return false;
 });
 
+function setupform(method) {
+var $form = $('form')
+    .append('<input type="hidden" name="javascript" />')
+    .append('<input type="hidden" name="html" />');
+
+  $form.find('input[name=javascript]').val(editors.javascript.getCode());
+  $form.find('input[name=css]').val(editors.css.getCode());
+  $form.find('input[name=html]').val(editors.html.getCode());
+  $form.find('input[name=method]').val(method);
+  return $form;
+}
 
 function saveCode(method, ajax, ajaxCallback) {
   // create form and post to it
-  var $form = $('form')
-    .append('<input type="hidden" name="javascript" />')
-    .append('<input type="hidden" name="html" />');
+  var $form = setupform(method);
   // save our panel layout - assumes our user is happy with this layout
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
-  $form.find('input[name=javascript]').val(editors.javascript.getCode());
-  $form.find('input[name=html]').val(editors.html.getCode());
-  $form.find('input[name=method]').val(method);
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),

@@ -80,16 +80,17 @@ $.fn.splitter = function () {
       tracker.target = $handle[type == 'x' ? 'height' : 'width']() * 0.2;
     });
 
-    $document.bind('mousemove', function (event) {
-      if (dragging) {
-        tracker.delta.x = tracker.down.x - event.pageX;
-        tracker.delta.y = tracker.down.y - event.pageY;
-        var targetType = type == 'x' ? 'y' : 'x';
-        if (Math.abs(tracker.delta[targetType]) > tracker.target) {
-          $handle.trigger('change', targetType, event[props[targetType].moveProp]);
-        }
-      }
-    });
+    /* Disable dynamic splitters for now - RS March 28, 2012 */
+    // $document.bind('mousemove', function (event) {
+    //   if (dragging) {
+    //     tracker.delta.x = tracker.down.x - event.pageX;
+    //     tracker.delta.y = tracker.down.y - event.pageY;
+    //     var targetType = type == 'x' ? 'y' : 'x';
+    //     if (Math.abs(tracker.delta[targetType]) > tracker.target) {
+    //       $handle.trigger('change', targetType, event[props[targetType].moveProp]);
+    //     }
+    //   }
+    // });
 
     function moveSplitter(pos) {
       var v = pos - props[type].currentPos,
@@ -105,12 +106,9 @@ $.fn.splitter = function () {
       // if prev panel is too small and delta is negative, block
       if (prevSize < 100 && delta < 0) {
         // ignore
-        console.log('ignore 1');
       } else if (elSize < 100 && delta > 0) {
         // ignore
-        console.log('ignore 2');
       } else {
-        console.log('sizing to ', props[type].cssProp, split + '%')
         // allow sizing to happen
         $el.css(props[type].cssProp, split + '%');
         $prev.css(props[type].otherCssProp, (100 - split) + '%');

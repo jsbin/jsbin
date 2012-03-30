@@ -62,15 +62,17 @@ if ($code_id) {
           <a href="<?php echo ROOT?>save" class="save title button">Save</a><a href="#savemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
         </div>
         <div class="dropdown" id="savemenu">
+          <div class="dropdownmenu">
 <?php if ($code_id) : ?>
-          <a id="clone" title="Create a new copy" class="button clone group" href="<?php echo ROOT?>clone">Clone</a>
-          <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a>
+            <a id="clone" title="Create a new copy" class="button clone group" href="<?php echo ROOT?>clone">Clone</a>
+            <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a>
 <?php else : ?>
-          <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
+            <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
 <?php endif ?>
-          <a id="download" title="Save to drive" class="button download group icon icon-download-alt" href="<?php echo ROOT?>download">Download</a>
-          <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
-         </div>
+            <a id="download" title="Save to drive" class="button download group icon icon-download-alt" href="<?php echo ROOT?>download">Download</a>
+            <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
+          </div>
+        </div>
       </div>
 
       <div id="panels"></div>

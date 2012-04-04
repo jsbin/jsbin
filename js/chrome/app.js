@@ -61,7 +61,8 @@ $document.one('jsbinReady', function () {
 
   // $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
   // $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
-  $bin.removeAttr('style').addClass('ready');
+  $bin.removeAttr('style');
+  $body.addClass('ready');
 });
 
 // if a gist has been requested, lazy load the gist library and plug it in

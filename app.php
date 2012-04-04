@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('UTC');
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
@@ -107,9 +108,9 @@ if (!$action) {
   $edit_mode = false;
   
   if ($code_id) {
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
+    list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision);
   } else {
-    list($latest_revision, $html, $javascript) = defaultCode();
+    list($latest_revision, $html, $javascript, $css) = defaultCode();
   }
   
   if ($action == 'js') {
@@ -120,7 +121,7 @@ if (!$action) {
       echo 'var template = ';
     }
     // doubles as JSON
-    echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
+    echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
   }
 } else if ($action == 'edit') {
   list($code_id, $revision) = getCodeIdParams($request);
@@ -135,6 +136,7 @@ if (!$action) {
 
   $javascript = @$_POST['javascript'];
   $html = @$_POST['html'];
+  $css = @$_POST['css'];
   $method = @$_POST['method'];
   $stream = isset($_POST['stream']) ? true : false;
   $streaming_key = '';
@@ -167,15 +169,15 @@ if (!$action) {
       $revision++;
     }
 
-    $sql = sprintf('insert into sandbox (javascript, html, created, last_viewed, url, revision) values ("%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+    $sql = sprintf('insert into sandbox (javascript, css, html, created, last_viewed, url, revision) values ("%s", "%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($css), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
 
     // a few simple tests to pass before we save
-    if (($html == '' && $html == $javascript)) {
+    if (($html == '' && $html == $javascript && $css == '')) {
       // entirely blank isn't going to be saved.
     } else {
       if (!noinsert($html, $javascript)) {
         $ok = mysql_query($sql);
-        if ($home) {
+        if ($home && $ok) {
           // first check they have write permission for this home
           $sql = sprintf('select * from ownership where name="%s" and `key`="%s"', mysql_real_escape_string($home), mysql_real_escape_string($_COOKIE['key']));
           $result = mysql_query($sql);
@@ -202,8 +204,10 @@ if (!$action) {
     // strip escaping (replicated from getCode method):
     $javascript = preg_replace('/\r/', '', $javascript);
     $html = preg_replace('/\r/', '', $html);
+    $css = preg_replace('/\r/', '', $css);
     $html = get_magic_quotes_gpc() ? stripslashes($html) : $html;
     $javascript = get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript;
+    $css = get_magic_quotes_gpc() ? stripslashes($css) : $css;
     
     if (!$code_id) {
       $code_id = 'untitled';
@@ -221,6 +225,7 @@ if (!$action) {
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {
+      // FIXME - why *am* I sending "js" and "html" with the url to the bin?
       echo '{ "code": "' . $code_id . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit" }';
     }
     
@@ -230,7 +235,7 @@ if (!$action) {
   } else if (stripos($method, 'download') !== false) {
     // actually go ahead and send a file to prompt the browser to download
     $originalHTML = $html;
-    list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
+    list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
     $ext = $originalHTML ? '.html' : '.js';
     header('Content-Disposition: attachment; filename="' . $code_id . ($revision == 1 ? '' : '.' . $revision) . $ext . '"');
     echo $originalHTML ? $html : $javascript;
@@ -266,8 +271,8 @@ if (!$action) {
       $revision = 1;
     }
     
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision);
-    list($html, $javascript) = formatCompletedCode($html, $javascript, $code_id, $revision);
+    list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision);
+    list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
     
     global $quiet;
 
@@ -352,7 +357,7 @@ function getMaxRevision($code_id) {
   return $row->rev ? $row->rev : 0;
 }
 
-function formatCompletedCode($html, $javascript, $code_id, $revision) {
+function formatCompletedCode($html, $javascript, $css, $code_id, $revision) {
   global $ajax, $quiet;
   
   $javascript = preg_replace('@</script@', "<\/script", $javascript);
@@ -375,14 +380,32 @@ function formatCompletedCode($html, $javascript, $code_id, $revision) {
     $html = $htmlParts[0] . $javascript . $htmlParts[1];
 
     $html = preg_replace("/%code%/", $javascript, $html);
-  }  
+  }
+
+  // repeat for CSS
+  if ($html && stripos($html, '%css%') === false && strlen($css)) {
+    $close = '';
+    if (stripos($html, '</head>') !== false) {
+      $parts = explode("</head>", $html);
+      $html = $parts[0];
+      $close = count($parts) == 2 ? '</head>' . $parts[1] : '';
+    }
+    $html .= "<style>\n" . $css . "\n</style>\n" . $close;
+  } else if ($css) {
+    // TODO decide whether this is required for the JS
+    // removed the regex completely to try to protect $n variables in JavaScript
+    $htmlParts = explode("%css%", $html);
+    $html = $htmlParts[0] . $css . $htmlParts[1];
+
+    $html = preg_replace("/%css%/", $css, $html);
+  }
 
   if (!$ajax && $code_id != 'jsbin') {
     $code_id .= $revision == 1 ? '' : '/' . $revision;
     $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . $host . ROOT . "\n  Source can be edited via " . $host . ROOT . "$code_id/edit\n\n-->", $html);            
   }
 
-  return array($html, $javascript);
+  return array($html, $javascript, $css);
 }
 
 
@@ -404,11 +427,12 @@ function getCode($code_id, $revision, $testonly = false) {
     
     $javascript = preg_replace('/\r/', '', $row->javascript);
     $html = preg_replace('/\r/', '', $row->html);
-    
+    $css = preg_replace('/\r/', '', $row->css);
+
     $revision = $row->revision;
-    
+
     // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
-    return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, $row->streaming, $row->active_tab, $row->active_cursor);
+    return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
   }
 }
 
@@ -437,16 +461,9 @@ function defaultCode($not_found = false) {
 <head>
 <meta charset=utf-8 />
 <title>JS Bin</title>
-<!--[if IE]>
-  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-<style>
-  article, aside, figure, footer, header, hgroup, 
-  menu, nav, section { display: block; }
-</style>
 </head>
 <body>
-  <p id="hello">Hello World</p>
+  
 </body>
 </html>
 HERE_DOC;
@@ -464,11 +481,11 @@ HERE_DOC;
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
     } else {
-      $javascript = "if (document.getElementById('hello')) {\n  document.getElementById('hello').innerHTML = 'Hello World - this was inserted using JavaScript';\n}\n";
+      $javascript = "// your JavaScript here - remember you can override this default template using 'Save'->'As Template'";
     }    
   }
 
-  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript);
+  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, '');
 }
 
 // I'd consider using a tinyurl type generator, but I've yet to find one.

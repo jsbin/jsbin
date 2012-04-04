@@ -2,36 +2,15 @@
 
 include('app.php'); 
 
-if (false && (@$_POST['html'] || @$_POST['javascript'])) {
-  $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
-  if (@$_POST['html']) {
-    $html = str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['html']);
-  } else {
-    $html = '';
-  }
-  if (@$_POST['javascript']) {
-    $javascript = str_replace($jsonReplaces[0], $jsonReplaces[1], $_POST['javascript']);
-  } else {
-    $javascript = '';
-  }
+list($code_id, $revision) = getCodeIdParams($request);
 
-  if ($html == '') {
-    // if there's no HTML, let's pop some simple HTML in place to give the JavaScript
-    // some context to run inside of
-    list($latest_revision, $defhtml, $defjavascript) = getCode($code_id, $revision, true);
-    $html = $defhtml;
-  }
+$edit_mode = false;
+
+if ($code_id) {
+  list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision, true);
 } else {
-  list($code_id, $revision) = getCodeIdParams($request);
-
-  $edit_mode = false;
-
-  if ($code_id) {
-    list($latest_revision, $html, $javascript) = getCode($code_id, $revision, true);
-  } else {
-    list($latest_revision, $html, $javascript) = defaultCode();
-  } 
-}
+  list($latest_revision, $html, $javascript, $css) = defaultCode();
+} 
 
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
@@ -47,7 +26,6 @@ if ($code_id) {
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="stylesheet" href="<?php echo ROOT?>css/pictos.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" href="<?php echo ROOT?>css/style.css?<?php echo VERSION?>" type="text/css" />
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
@@ -141,7 +119,7 @@ if ($code_id) {
       </div>
     </div>
   </div>
-  <form method="post" action="<?php echo $code_id_path?>save">
+  <form id="saveform" method="post" action="<?php echo $code_id_path?>save">
     <input type="hidden" name="method" />
   </form>
 </div>
@@ -226,7 +204,6 @@ if ($code_id) {
     </table>
   </div>
 </div>
-<div class="prefsOverlay"></div>
 <script>
 <?php
   // assumes http - if that's not okay, this need to be changed
@@ -235,7 +212,7 @@ if ($code_id) {
     echo 'var template = ';
   }
   // doubles as JSON
-  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
+  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
 ?>
 </script>
 <script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>

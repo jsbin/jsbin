@@ -22,9 +22,10 @@ $('a.clone').click(function (event) {
 });
 
 function setupform(method) {
-var $form = $('form')
+var $form = $('form#saveform')
     .append('<input type="hidden" name="javascript" />')
-    .append('<input type="hidden" name="html" />');
+    .append('<input type="hidden" name="html" />')
+    .append('<input type="hidden" name="css" />');
 
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=css]').val(editors.css.getCode());

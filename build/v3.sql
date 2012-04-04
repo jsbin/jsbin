@@ -1,0 +1,1 @@
+alter table sandbox add column css text, add column settings text;

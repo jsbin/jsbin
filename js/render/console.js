@@ -500,7 +500,7 @@ jsconsole.remote.warn = jsconsole.remote.info;
 
 window.top._console = jsconsole.remote;
 
-$document.bind('jsbinReady', function () {
+jsconsole.init = function () {
   editors.console.settings.render = function () {
     // TODO decide whether we should also grab all the JS in the HTML panel
     // jsconsole.reset();
@@ -519,4 +519,4 @@ $document.bind('jsbinReady', function () {
   jsconsole.ready = true;
   jsconsole.remote.flush();
   // editors.console.fakeConsole = window._console
-});
+}

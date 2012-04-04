@@ -10,97 +10,6 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
-// var $panelsvisible = $('#panelsvisible a').click(function () {
-//   var self = $(this);
-//   self.toggleClass('selected');
-
-//   var selected = self.hasClass('selected'),
-//       panel = self.data('panel');
-
-//   updatePanel(panel, selected);
-// });
-
-var $panelsvisible = $('#panelsvisible'),
-    currentPanels = $panelsvisible.val();
-
-$panelsvisible.chosen().change(function () {
-  var panels = ($panelsvisible.val() || []).sort(),
-      current = ([].slice.apply(currentPanels)).sort(),
-      selected = null,
-      show = true;
-
-  for (var i = 0; i < current.length; i++) {
-    if (panels.indexOf(current[i]) !== -1) {
-      panels.splice(panels.indexOf(current[i]), 1);
-    } else {
-      selected = current[i];
-      show = false;
-      break;
-    }
-  }
-
-  if (!selected) {
-    selected = panels.pop();
-    show = true;
-  }
-
-  currentPanels = $panelsvisible.val() || [];
-
-  updatePanel(selected, show);
-});
-
-var $htmlpanel = $('.code.html'),
-    htmlsplitter = null;
-
-
-// TODO remove
-function updatePanel(panel, show, noinit) {
-  return;
-
-  jsbin.settings.show[panel] = show;
-  htmlsplitter = htmlsplitter || $('.code.html').data().splitter;
-
-  if (panel == 'live') {
-    $('#live').trigger(show ? 'show' : 'hide');
-    if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // update the position of the html splitter
-  } else {
-    var $panel = $bin.find('.code.' + panel)[show ? 'show' : 'hide']();
-    
-    if (!show) {
-      htmlsplitter && htmlsplitter.hide();
-    } else {
-      htmlsplitter && htmlsplitter.show();
-    }
-
-    var $otherpanel = panel == 'html' ? $bin.find('.code.javascript') : $bin.find('.code.html'),
-        visible = currentPanels.length,
-        $othercheckbox = $panelsvisible.filter('[data-panel=' + (panel == 'html' ? 'javascript' : 'html') + ']');
-
-    // logic was only revealed by going through every possible combination. Hey, it was late :(
-    if (visible === 1 && show == false) {
-      // stretch
-      $othercheckbox.attr('disabled', 'disabled');
-      if (panel == 'html') { // only JavaScript remains
-        $otherpanel.data('style', { 'right': $otherpanel.css('right') });
-        $otherpanel.css('right', '0');
-      } else if (panel == 'javascript') { // only HTML remains
-        $otherpanel.data('style', {'left' : $otherpanel.css('left') });
-        $otherpanel.css('left', '0');
-      }
-    } else {
-      $othercheckbox.removeAttr('disabled');
-      // restore CSS positions
-      $otherpanel.attr('style', $otherpanel.data('style'));
-    }
-
-    if (show && editors[panel]) {
-      editors[panel].refresh();
-    }
-
-    if (!noinit) htmlsplitter && htmlsplitter.trigger('init'); // on show or hide - recalc the splitter position    
-  }
-}
-
 var $revert = $('#revert').click(function () {
   if ($revert.is(':not(.enable)')) {
     return false;
@@ -119,25 +28,19 @@ var $revert = $('#revert').click(function () {
     gist.setCode();
   }
 
-  $(document).trigger('codeChange', [ true ]);
+  $document.trigger('codeChange', [ true ]);
 
   return false;
 });
 
+$('#loginbtn').click(function () {
+  $('#login').show();
+  loginVisible = true;
+  $username.focus();
+});
 
-$('#control .tab').click(function (event) {
-  // event.preventDefault();
-  $('body').removeClass('source preview').addClass(this.hash.substr(1));
-
-  if ($(this).is('.preview')) {
-    $('#preview iframe').remove();
-    $('#preview').append('<iframe class="stretch" frameBorder="0"></iframe>');
-    renderPreview();
-  } else {
-    // remove iframe and thus removing any (I *think*) memory resident JS
-    $('#preview iframe').remove();
-    editors[getFocusedPanel()].focus();
-  }
+$('#homebtn').click(function () {
+  jsbin.panels.hideAll();
 });
 
 //= require "../chrome/esc"
@@ -200,9 +103,9 @@ $('#runwithalerts').click(function () {
   renderLivePreview(true);
 });
 
-// TODO memorise
-editors.live.disablejs = jsbin.settings.disablejs;
+editors.live.disablejs = jsbin.settings.disablejs || true;
 $('#enablejs').change(function () {
   jsbin.settings.disablejs = editors.live.disablejs = !this.checked;
   editors.live.render();
-}).attr('checked', jsbin.settings.disablejs ? false : true);
+}).attr('checked', editors.live.disablejs ? false : true);
+

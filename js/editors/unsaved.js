@@ -12,7 +12,7 @@ $(document).bind('codeChange', function (event, revert, onload) {
 function updateTitle(revert, onload) {
   var title = !documentTitle ? 'JS Bin' : documentTitle;
   if (jsbin.settings.home) title = jsbin.settings.home + '@' + title;
-  if (editors.html.ready && editors.javascript.ready) {
+  if (jsbin.panels.ready) {
     if (!revert) {
       document.title = title + ' [unsaved]';
       if ($revert.addClass('enable').is(':hidden')) {

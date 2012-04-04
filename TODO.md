@@ -27,6 +27,8 @@
 - History should read user login ---- TODO create branch for this
 - Add gist support back in (but do it server side) - support Lea's dabblet format (but files named jsbin.html, etc)
 - Fork (as well as clone) and folk allows me to trace this heirachy of bins saved to get to this point
+- Add live times to the "ago" column
+- Push any new saves on to the list
 
 # Misc
 

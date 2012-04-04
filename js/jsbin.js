@@ -30,7 +30,14 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
       }, delay);
     };
   }
-window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{ "show": { "html": true, "javascript": true }, "theme": "jsbin" }');
+
+  window.jsbin || (window.jsbin = {});
+  window.jsbin.settings = JSON.parse(localStorage.getItem('settings') || '{}');
+
+  if (!jsbin.settings.codemirror) {
+    // backward compat with jsbin-v2
+    jsbin.settings.codemirror = {};
+  }
 //= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"

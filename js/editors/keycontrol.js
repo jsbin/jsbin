@@ -24,14 +24,25 @@ function keycontrol(event) {
     panel = jsbin.panels.focused;
   }
 
-  var codePanel = { css: 1, javascript: 1, html: 1}[panel.id];
+  var codePanel = { css: 1, javascript: 1, html: 1}[panel.id],
+      hasRun = false;
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {
     if (panel.id == 'javascript') {
-      if (event.metaKey && event.which == 13 && editors.console.visible) {
-        editors.console.render();
-        event.stop();
+      if (event.metaKey && event.which == 13) {
+        if (editors.console.visible) {
+          hasRun = true;
+          editors.console.render();
+        }
+        if (editors.live.visible) {
+          renderLivePreview(true);
+          hasRun = true;
+        }
+
+        if (hasRun) {
+          event.stop();
+        }
       }
     }
 
@@ -40,13 +51,15 @@ function keycontrol(event) {
     if (panelShortcuts[event.which] !== undefined && event.metaKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
-    } else if (event.which === 192 && event.metaKey) {
+    } else if (event.which === 192 && event.metaKey && jsbin.panels.focused) {
       jsbin.panels.focused.hide();
       var visible = jsbin.panels.getVisible();
       if (visible.length) {
         jsbin.panels.focused = visible[0];
         if (visible[0].editor) {
           visible[0].editor.focus();
+        } else {
+          visible[0].$el.focus();
         }
       }
     }

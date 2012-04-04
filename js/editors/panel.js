@@ -23,7 +23,7 @@ var Panel = function (name, settings) {
       mode: editorModes[name],
       onChange: function () { $document.trigger('codeChange'); return true; },
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      theme: jsbin.settings.codemirror.theme || 'jsbin'
     });
 
     panel.processor = settings.processor || function (str) { return str; };
@@ -105,6 +105,8 @@ Panel.prototype = {
       this.settings.show.call(this, true);
     }
 
+    jsbin.panels.focus(this);
+
     // update all splitter positions
     $document.trigger('sizeeditors');
 
@@ -146,6 +148,9 @@ Panel.prototype = {
     } else if (this.visible && this.settings.render) {
       this.settings.render.call(this);
     } 
+  },
+  init: function () {
+    this.settings.init && this.settings.init.call(this);
   },
   _setupEditor: function () {
     var focusedPanel = sessionStorage.getItem('panel'),
@@ -205,7 +210,7 @@ Panel.prototype = {
       editor.refresh();
     });
 
-    populateEditor(editor, panel.name);
+    populateEditor(panel, panel.name);
     panel.ready = true;
 
     if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {
@@ -217,7 +222,7 @@ Panel.prototype = {
 
 function populateEditor(editor, panel) {
   // populate - should eventually use: session, saved data, local storage
-  var data = sessionStorage.getItem(panel), // session code
+  var data = sessionStorage.getItem('jsbin.content.' + panel), // session code
       saved = localStorage.getItem('saved-' + panel), // user template
       sessionURL = sessionStorage.getItem('url'),
       changed = false;

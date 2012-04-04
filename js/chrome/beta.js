@@ -109,34 +109,6 @@
           forbind.send(msg);
         } 
       }
-
-
-      if (typeof window.forbind !== 'undefined') {
-        $('a.popout').click(function () {
-          if (!this.search) {
-            // hide the real-time view now that we've popped out
-            $('#showlive').removeAttr('checked')[0].checked = false;
-            updatePanel('live', false);
-
-            forbind.on({
-              join: function (event) {
-                if (event.isme) {
-                  console.log('forbind ready');
-                  capture();
-                } else {
-                  console.log('New remote view: ', event.user);
-                }
-                
-                $document.bind('codeChange', throttle(capture, 250));
-              }
-            });
-
-            this.search = '?' + key;
-            forbind.debug = false;
-            forbind.create(key);
-          }
-        });
-      } 
     }).fail(function () {
       console.log('Förbind is not available, therefore we can\'t start the popout. Sorry :(');
     });

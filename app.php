@@ -512,9 +512,14 @@ function generateURL() {
 }
 
 function googleAnalytics() {
-  return <<<HERE_DOC
+  global $quiet;
+  if (!$quiet) {
+    return <<<HERE_DOC
 <script>var _gaq=[['_setAccount','UA-1656750-13'],['_trackPageview']];(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src='//www.google-analytics.com/ga.js';s.parentNode.insertBefore(g,s)})(document,'script')</script>
 HERE_DOC;
+  } else {
+    return '';
+  }
 }
 
 function showSaved($name) {
@@ -527,30 +532,32 @@ function showSaved($name) {
   // this is lame, but the optimisation was aweful on the joined version - 3-4 second query
   // with a full table scan - not good. I'm worried this doesn't scale properly, but I guess
   // I could mitigate this with paging on the UI - just a little...?
-  while ($saved = mysql_fetch_object($result)) {
-    $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($saved->url), mysql_real_escape_string($saved->revision));
-    $binresult = mysql_query($sql);
-    $bin = mysql_fetch_array($binresult);
+  if ($result) {
+    while ($saved = mysql_fetch_object($result)) {
+      $sql = sprintf('select * from sandbox where url="%s" and revision="%s"', mysql_real_escape_string($saved->url), mysql_real_escape_string($saved->revision));
+      $binresult = mysql_query($sql);
+      $bin = mysql_fetch_array($binresult);
 
-    if (!isset($bins[$saved->url])) {
-      $bins[$saved->url] = array();
-    }
+      if (!isset($bins[$saved->url])) {
+        $bins[$saved->url] = array();
+      }
 
-    $bins[$saved->url][] = $bin;
+      $bins[$saved->url][] = $bin;
 
-    if (isset($order[$saved->url])) {
-      if (@strtotime($order[$saved->url]) < @strtotime($bin['created'])) {
+      if (isset($order[$saved->url])) {
+        if (@strtotime($order[$saved->url]) < @strtotime($bin['created'])) {
+          $order[$saved->url] = $bin['created'];
+        }
+      } else {
         $order[$saved->url] = $bin['created'];
       }
-    } else {
-      $order[$saved->url] = $bin['created'];
     }
   }
 
   if (count($bins)) {
-    include_once('list-home-code.php');
+    include_once('list-history.php');
   } else {
-    echo 'nothing found :(';
+    // echo 'nothing found :(';
   } 
   
 }

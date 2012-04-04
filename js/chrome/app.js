@@ -1,5 +1,6 @@
 //= require "errors"
 //= require "download"
+//= require "login"
 //= require "tips"
 
 var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
@@ -17,7 +18,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
       if (jsbin.panels.saveOnExit) jsbin.panels.save();
       jsbin.panels.savecontent();
 
-      var panel = getFocusedPanel();
+      var panel = jsbin.panels.focused;
       sessionStorage.setItem('panel', panel);
       try { // this causes errors in IE9 - so we'll use a try/catch to get through it
         sessionStorage.setItem('line', editors[panel].getCursor().line);
@@ -32,6 +33,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
 //= require "navigation"
 //= require "save"
 //= require "file-drop"
+//= require "../render/saved-history-preview"
 
 $(window).unload(unload);
 
@@ -43,24 +45,6 @@ if ($.browser.opera) {
 $('#library').chosen();
 
 $document.one('jsbinReady', function () {
-  // for (panel in jsbin.settings.show) {
-  //   if (jsbin.settings.show[panel]) {
-  //     $('#panelsvisible').find('value=[' + panel + ']').attr('selected', 'selected').trigger("liszt:updated")
-  //     // $('#show' + panel).addClass('selected');
-  //   } else {
-  //     // $('#show' + panel);
-  //   }
-  // }
-  
-  // var $sp1 = $('.code.html').splitter().data('splitter');
-  // var $sp2 = $live.splitter().data('splitter');
-  
-  // updatePanel('html', jsbin.settings.show.html);
-  // updatePanel('javascript', jsbin.settings.show.javascript);
-  // updatePanel('live', jsbin.settings.show.live);
-
-  // $sp1.filter(':visible').trigger('init', (splitterSettings[0] || {x:null}).x);
-  // $sp2.filter(':visible').trigger('init', (splitterSettings[1] || {x:null}).x);
   $bin.removeAttr('style');
   $body.addClass('ready');
 });

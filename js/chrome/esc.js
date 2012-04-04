@@ -9,6 +9,9 @@ $(document).keydown(function (event) {
     } else if (dropdownOpen) {
       $('.menu.open').removeClass('open');
       dropdownOpen = false;
+    } else if (loginVisible) {
+      $('#login').hide();
+      loginVisible = false;
     }
   }
 });

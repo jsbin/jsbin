@@ -39,7 +39,9 @@ panels.restore = function () {
       toopen = (location.search.substring(1) ? location.search.substring(1) : location.hash.substring(1)).split(','),
       state = {};
       name = '',
+      i = 0,
       panel = null,
+      init = [],
       innerWidth = window.innerWidth;
 
   // otherwise restore the user's regular settings
@@ -57,8 +59,11 @@ panels.restore = function () {
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment
   if (toopen.length) {
-    for (var i = 0; i < toopen.length; i++) {
-      if (panels.panels[toopen[i]]) panels.panels[toopen[i]].show();
+    for (i = 0; i < toopen.length; i++) {
+      if (panels.panels[toopen[i]]) {
+        panels.panels[toopen[i]].show();
+        init.push(panels.panels[toopen[i]]);
+      }
     }
 
     // support the old jsbin v1 links directly to the preview
@@ -80,8 +85,12 @@ panels.restore = function () {
   for (name in this.panels) {
     panel = this.panels[name];
     if (panel.editor) {
-      panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
+      // panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
     }
+  }
+
+  for (i = 0; i < init.length; i++) {
+    init[i].init();
   }
 
 };
@@ -112,6 +121,7 @@ panels.distribute = function () {
       right = 0;
 
   if (visible.length) {
+    $body.addClass('panelsVisible');
     visible = visible.sort(function (a, b) {
       return a.order < b.order ? -1 : 1;
     });
@@ -124,6 +134,11 @@ panels.distribute = function () {
       visible[i].splitter[i == 0 ? 'hide' : 'show']();
       left += width;
     }
+  } else {
+    $('#history').show();
+    setTimeout(function () {
+      $body.removeClass('panelsVisible');
+    }, 100);
   }
 };
 
@@ -131,6 +146,14 @@ panels.show = function (panelId) {
   this.panels[panelId].show();
   if (this.panels[panelId].editor) {
     this.panels[panelId].editor.focus();
+  }
+}
+
+panels.hideAll = function () {
+  var visible = panels.getVisible(),
+      i = visible.length;
+  while (i--) {
+    visible[i].hide();
   }
 }
 
@@ -145,7 +168,7 @@ var editors = panels.panels = {
   javascript: new Panel('javascript', { editor: true, label: 'JavaScript', nosplitter: true }),
   css: new Panel('css', { editor: true, label: 'CSS' }),
   html: new Panel('html', { editor: true, label: 'HTML' }),
-  console: new Panel('console', { label: 'Console' }),
+  console: new Panel('console', { label: 'Console', init: function () { this.render(); } }),
   live: new Panel('live', { label: 'Live Preview', show: function () {
     // contained in live.js
     $(document).bind('codeChange.live', throttledPreview);
@@ -153,6 +176,8 @@ var editors = panels.panels = {
   }})
 };
 
+
+jsconsole.init(); // sets up render functions etc.
 editors.live.settings.render = function () {
   editors.console.render();
   renderLivePreview();
@@ -201,6 +226,8 @@ var editorsReady = setInterval(function () {
   for (var panel in panels.panels) {
     if (!panels.panels[panel].ready) ready = false;
   }
+
+  panels.ready = ready;
 
   if (ready) {
     clearInterval(editorsReady);

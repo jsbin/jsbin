@@ -106,7 +106,3 @@ function renderLivePreview(withalerts) {
     run();
   }
 }
-
-$live.find('.close').click(function () {
-  updatePanel('live', false);
-});

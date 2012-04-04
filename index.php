@@ -85,7 +85,11 @@ if ($code_id) {
       <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
     </span>
     <?php endif ?>
-    <a href="#" class="button">History</a>
+    <?php if ($home) : ?>
+    <a href="#" class="button" id="homebtn"><?php echo $home ?></a>
+    <?php else : ?>
+    <a href="#" class="button" id="loginbtn">Log in</a>
+    <?php endif ?>
     <a href="http://jsbin.tumblr.com" class="button group">Tips</a>
   </div>
 </div>
@@ -142,32 +146,52 @@ if ($code_id) {
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
-<div id="keyboardHelp">
+<?php
+  showSaved($home);
+?>
+<div id="login" class="modal">
+  <div>
+    <h2>Log in / Register</h2>
+    <p id="loginFeedback"></p>
+    <p>Logging in will associate your account with all bins you create, and allow you to access that complete history.</p>
+    <form action="/login" method="post">
+      <div>
+        <label for="username">Username</label><input id="username" type="text" name="username">
+      </div>
+      <div>
+        <label for="password">Password</label><input id="password" type="password" name="password">
+      </div>
+      <div>
+        <label for="email">Email *</label><input id="email" type="email" name="email">
+        <p>Email is not required. It can be used reset your password.</p>
+      </div>
+      <div>
+        <input type="submit" value="Log in">
+      </div>
+    </form>
+</div>
+<div id="keyboardHelp" class="modal">
   <div>
     <h2>Keyboard Shortcuts</h2>
     <table>
       <thead>
         <tr>
-          <th>Shortcut</th>
+          <th class="shortcut">Shortcut</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>ctrl + [panel num]</td>
-          <td>Focus nth panel</td>
+          <td>Show nth panel</td>
         </tr>
         <tr>
           <td>ctrl + § or ctrl + `</td>
-          <td>Focus panel left</td>
+          <td>Hide focused panel</td>
         </tr>
         <tr>
           <td>ctrl + enter</td>
-          <td>Run JavaScript in console (if open)</td>
-        </tr>
-        <tr>
-          <td>ctrl + shift + L</td>
-          <td>Render with alerts, prompts &amp; confirms</td>
+          <td>If console visible: run JS in console<br>If live visible: render with alerts, prompts &amp; confirms</td>
         </tr>
         <tr>
           <td>ctrl + /</td>

@@ -18,6 +18,10 @@
   font-style: normal;
 }
 
+html {
+  height: 100%;
+}
+
 body { 
   margin: 0; 
   padding: 0;
@@ -26,6 +30,8 @@ body {
   min-width: 976px;
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
+  background: #fff url(../images/ll-logo.gif) no-repeat center;
+  height: 100%;
 }
 
 p {
@@ -139,9 +145,13 @@ a:hover {
 #bin {
   top: 37px;
   width: 100%;
-/*  opacity: 0;
-  filter:alpha(opacity=0);
-*/}
+  z-index: 2;
+  display: none;
+}
+
+.panelsVisible #bin {
+  display: block;
+}
 
 div.html {
   /*left: 50%;*/
@@ -217,11 +227,11 @@ div.code, #live, .resize {
   cursor: w-resize;
 }
 
-div.preview {
+/*div.preview {
   display: none;
   width: 100%;
 }
-
+*/
 #library {
   padding: 2px;
   width: 200px;
@@ -792,7 +802,7 @@ textarea {
 }
 
 #revert img {
-  margin-top: -2px;
+  margin-top: 3px;
   margin-right: -1px;
   border: 0;
 }
@@ -1097,7 +1107,7 @@ details li, .details li {
   display: block;
 }
 
-#keyboardHelp {
+.modal {
   display: none;
   position: absolute;
   top: 0;
@@ -1132,7 +1142,7 @@ details li, .details li {
 }
 
 #keyboardHelp h2 {
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 0; 
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0; 
@@ -1159,6 +1169,67 @@ details li, .details li {
   color: yellow;
 }
 
+#keyboardHelp .shortcut {
+  width: 220px;
+}
+
+#login > div {
+  margin: 20px auto;
+  margin-top: 5%;
+  padding: 20px;
+  width: 380px;
+  background: #000;
+  border-radius: 5px;
+/*  background: #fff;*/
+  -webkit-box-shadow: 0px 5px 80px #505050;
+  -moz-box-shadow: 0px 5px 80px #505050;
+  -o-box-shadow: 0px 5px 80px #505050;
+  -ms-box-shadow: 0px 5px 80px #505050;
+}
+
+#login h2 {
+  margin-top: 0;
+}
+
+#login form div {
+  margin: 10px;
+}
+
+#login form div label {
+  float: left;
+  display: block;
+  width: 100px;
+  line-height: 28px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+#login form input {
+  font-family: sans-serif;
+  padding: 2px;
+  font-size: 14px;
+}
+
+#login form input[type=submit] {
+  font-size: 18px;
+}
+
+#login p {
+  font-size: 13px;
+}
+
+#loginFeedback {
+  display: none;
+  padding: 3px;
+  background: rgba(255, 0, 0, 0.3);
+  border: 1px solid red;
+  margin: 10px 0;
+}
+
+/*#loginFeedback:empty {
+  display: none;
+}
+*/
 /* codemirror2 styles */
 .CodeMirror-scroll {
   margin: 0;
@@ -1861,12 +1932,6 @@ div.CodeMirror-selected { background: #d9d9d9; }
   filter:alpha(opacity=1);
 }
 
-
-
-#bin {
-  background: #fff url(../images/ll-logo.gif) no-repeat center;
-}
-
 .group.menu .button {
   float: none;
 
@@ -2046,6 +2111,165 @@ div.CodeMirror-selected { background: #d9d9d9; }
   margin-left: 10px;
 }
 
+/* history listings */
+#history .thumb {
+  border: 1px solid #ccc;
+  overflow: hidden;
+  height: 145px;
+  width: 193px;
+  margin: 10px 0;
+}
+
+#history iframe {
+  -moz-transform:    scale(0.8);
+  -o-transform:      scale(0.8);
+  -webkit-transform: scale(0.8);
+  transform:         scale(0.8);
+  /* IE8+ - must be on one line, unfortunately */ 
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.8, M12=0, M21=0, M22=0.8, SizingMethod='auto expand')";
+
+  /* IE6 and 7 */ 
+  filter: progid:DXImageTransform.Microsoft.Matrix(
+           M11=0.8,
+           M12=0,
+           M21=0,
+           M22=0.8,
+           SizingMethod='auto expand');
+
+  -webkit-transform-origin: 0 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.panelsVisible #history {
+  display: none;
+  top: 2000px; /* :( can't do 100% */
+}
+
+#history {
+  z-index: 0;
+  position: absolute;
+  top: 37px;
+  -webkit-transition: top ease-out 100ms;
+  /*-webkit-transition-delay: 100ms;*/
+}
+
+#history #bins {
+  width: 70%;
+  font-size: 13px;
+  padding: 10px 0;
+  position: relative;
+}
+
+#history .preview {
+  border-left: 1px solid #ccc;
+  position: fixed;
+  top: 37px;
+  width: 30%;
+  right: 0;
+  height: 100%;
+  padding-top: 10px;
+  background: #fff;
+}
+
+#history h2 {
+  margin: 0;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  padding: 20px;
+}
+
+#history #bins h2 {
+  margin-bottom: 10px;
+}
+
+#history table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  position: relative;
+}
+
+#history tr {
+  cursor: pointer;
+}
+
+#history td {
+  margin: 0;
+  padding: 3px 0;
+}
+
+#history a {
+  font-weight: normal;
+  text-decoration: none;
+  color: #000;
+  text-shadow: none;
+}
+
+#history .url {
+  text-align: right;
+  width: 25%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#history .url a {
+  color: #0097fe;
+}
+
+#history .url a span {
+  color: #000;
+  visibility: hidden;
+}
+
+#history .url span.first {
+  visibility: visible;
+}
+
+#history .created {
+  width: 25%;
+}
+
+#history .created a {
+  color: #ccc;
+}
+
+#history .title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#history tr:hover *,
+#history tr.hover *,
+#history tr:hover span,
+#history tr.hover span {
+  background: #0097fe;
+  color: #fff;
+  /*cursor: pointer;*/
+}
+
+#history tr[data-type=spacer]:hover * {
+  background: #fff;
+  cursor: default;
+}
+
+#history iframe {
+  border: 0;
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#history #viewing {
+  font-size: 10px;
+  margin-left: 20px;
+}
+
+
+
 @media (max-height:800px) {
   .ready #control {
     top: -36px;
@@ -2054,7 +2278,9 @@ div.CodeMirror-selected { background: #d9d9d9; }
     -webkit-transition-delay: 1s;
   }
 
-  .ready #bin {
+  .ready #bin, 
+  #history, 
+  #history .preview {
     top: 10px;
   }
 

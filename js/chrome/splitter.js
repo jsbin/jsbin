@@ -81,16 +81,16 @@ $.fn.splitter = function () {
     });
 
     /* Disable dynamic splitters for now - RS March 28, 2012 */
-    // $document.bind('mousemove', function (event) {
-    //   if (dragging) {
-    //     tracker.delta.x = tracker.down.x - event.pageX;
-    //     tracker.delta.y = tracker.down.y - event.pageY;
-    //     var targetType = type == 'x' ? 'y' : 'x';
-    //     if (Math.abs(tracker.delta[targetType]) > tracker.target) {
-    //       $handle.trigger('change', targetType, event[props[targetType].moveProp]);
-    //     }
-    //   }
-    // });
+    $document.bind('mousemove', function (event) {
+      if (dragging) {
+        tracker.delta.x = tracker.down.x - event.pageX;
+        tracker.delta.y = tracker.down.y - event.pageY;
+        var targetType = type == 'x' ? 'y' : 'x';
+        if (Math.abs(tracker.delta[targetType]) > tracker.target) {
+          $handle.trigger('change', targetType, event[props[targetType].moveProp]);
+        }
+      }
+    });
 
     function moveSplitter(pos) {
       var v = pos - props[type].currentPos,

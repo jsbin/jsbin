@@ -31,3 +31,4 @@
 # Misc
 
 - Include analytics for dynamic nature of JS Bin
+- Libs need to support styles, etc specific to the version

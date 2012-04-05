@@ -39,6 +39,19 @@ $('#loginbtn').click(function () {
   $username.focus();
 });
 
+$('#logout').click(function (event) {
+  delete jsbin.settings.home;
+  // delete cookie
+  var date = new Date();
+  date.setYear(1978);
+  date.setTime(date.getTime()+(365*24*60*60*1000)); // set for a year
+  document.cookie = 'key=""; expires=' + date.toGMTString() + '; path=/';
+  document.cookie = 'home=""; expires=' + date.toGMTString() + '; path=/';
+
+  window.location.reload();
+  return false;
+});
+
 $('#homebtn').click(function () {
   jsbin.panels.hideAll();
 });

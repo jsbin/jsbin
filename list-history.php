@@ -1,4 +1,3 @@
-<div id="history" class="stretch">
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
 function plural($num) {
   if ($num != 1)
@@ -74,5 +73,4 @@ foreach ($order as $key => $value) {
   <h2>Preview</h2>
   <p id="viewing"></p>
   <iframe id="iframe" hidden></iframe>
-</div>
 </div>

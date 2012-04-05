@@ -64,7 +64,16 @@ if ($code_id) {
     </span>
     <?php endif ?>
     <?php if ($home) : ?>
-    <a href="#" class="button" id="homebtn"><?php echo $home ?></a>
+    <div class="menu">
+      <div class="group">
+        <a href="#" class="button" id="homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
+      </div>
+      <div class="dropdown" id="homemenu">
+        <div class="dropdownmenu">
+          <a id="logout" class="button group" href="<?php echo ROOT . $code_id?>logout">Logout</a>
+        </div>
+      </div>
+    </div>
     <?php else : ?>
     <a href="#" class="button" id="loginbtn">Log in</a>
     <?php endif ?>
@@ -124,9 +133,11 @@ if ($code_id) {
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
+<div id="history">
 <?php
   showSaved($home);
 ?>
+</div>
 <div id="login" class="modal">
   <div>
     <h2>Log in / Register</h2>

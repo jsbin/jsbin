@@ -448,7 +448,7 @@ div.group.hover {
 }
 
 #control div.group .button-dropdown  {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #ddd;
   border-right: 1px solid #ccc;
 }
 
@@ -2147,22 +2147,28 @@ div.CodeMirror-selected { background: #d9d9d9; }
   top: 2000px; /* :( can't do 100% */
 }
 
-#history {
-  z-index: 0;
-  position: absolute;
-  top: 37px;
-  -webkit-transition: top ease-out 100ms;
-  /*-webkit-transition-delay: 100ms;*/
+.panelsVisible #history .preview {
+  right: -1000px;
 }
 
-#history #bins {
-  width: 70%;
+#history {
+  z-index: 0;
+  /*position: absolute;*/
+  top: 37px;
+  -webkit-transition: top ease-out 200ms;
+  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
+  text-shadow: none;
+  /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;
   padding: 10px 0;
   position: relative;
+  height: 100%;
+  overflow: auto;
 }
 
 #history .preview {
+  -webkit-transition: right ease-out 200ms;
+
   border-left: 1px solid #ccc;
   position: fixed;
   top: 37px;
@@ -2188,12 +2194,13 @@ div.CodeMirror-selected { background: #d9d9d9; }
 #history table {
   border-collapse: collapse;
   table-layout: fixed;
-  width: 100%;
+  width: 70%;
   position: relative;
 }
 
 #history tr {
   cursor: pointer;
+  background: #fff;
 }
 
 #history td {
@@ -2268,9 +2275,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
   margin-left: 20px;
 }
 
-
-
-@media (max-height:800px) {
+@emedia (max-height:800px) {
   .ready #control {
     top: -36px;
     border-bottom: 10px solid #aaa;

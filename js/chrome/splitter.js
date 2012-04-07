@@ -118,7 +118,11 @@ $.fn.splitter = function () {
         settings[type] = pos;
         splitterSettings[guid] = settings;
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
-        $document.trigger('sizeeditors');
+
+        // todo: wait until animations have completed!
+        setTimeout(function () {
+          $document.trigger('sizeeditors');
+        }, 120);
       }
     }
 

@@ -1,8 +1,9 @@
+// inside a ready call because history DOM is rendered *after* our JS to improve load times.
+$(function ()  {
+
 if ($('#history').length) (function () {
   function render(url) {
-    doc.open();
-    doc.write('<iframe src="' + url + 'quiet"></iframe>');
-    doc.close();
+    iframe.src = url + 'quiet';
     iframe.removeAttribute('hidden');
     viewing.innerHTML = window.location.hostname + url;
   }
@@ -30,8 +31,6 @@ if ($('#history').length) (function () {
 
   var preview = $('#history .preview'),
       iframe = $('#history iframe')[0];
-      doc = iframe.contentDocument || iframe.contentWindow.document,
-      win = doc.defaultView || doc.parentWindow,
       bins = $('#history'),
       trs = $('#history tr'),
       current = null,
@@ -39,16 +38,6 @@ if ($('#history').length) (function () {
       hoverTimer = null;
 
   // stop iframe load removing focus from our main window
-  win.onfocus = function () {
-    console.log('focus killed');
-    return false;
-  };
-
-  win.onload = function () {
-    console.log('load killed');
-    return false;
-  }
-
   trs.click(visit);
   // this is some nasty code - just because I couldn't be
   // bothered to bring jQuery to the party.
@@ -72,3 +61,5 @@ if ($('#history').length) (function () {
     }
   });
 })();
+
+});

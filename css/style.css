@@ -2184,7 +2184,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
   font-size: 14px;
   font-family: "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 #history #bins h2 {

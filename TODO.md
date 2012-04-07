@@ -23,12 +23,15 @@
 
 # Save
 
-- Allow users to get full history of their bins: http://jsbin.tumblr.com/post/9252788402/saving-your-history-beta-one-of-the-beta
-- History should read user login ---- TODO create branch for this
 - Add gist support back in (but do it server side) - support Lea's dabblet format (but files named jsbin.html, etc)
 - Fork (as well as clone) and folk allows me to trace this heirachy of bins saved to get to this point
+- Remove sha1 and move to better security
 
 # Misc
 
 - Include analytics for dynamic nature of JS Bin
 - Libs need to support styles, etc specific to the version
+- Expose API for specific tasks:
+  - prefilters for panels
+  - codemirror config
+  - jsbin settings (key mappings?)

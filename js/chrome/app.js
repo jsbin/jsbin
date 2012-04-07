@@ -15,18 +15,19 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
       sessionStorage.setItem('url', template.url);
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
-      if (jsbin.panels.saveOnExit) jsbin.panels.save();
+      // if (jsbin.panels.saveOnExit) ;
+      jsbin.panels.save();
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
-      sessionStorage.setItem('panel', panel);
-      try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-        sessionStorage.setItem('line', editors[panel].getCursor().line);
-        sessionStorage.setItem('character', editors[panel].getCursor().ch);
-      } catch (e) {
-        sessionStorage.setItem('line', 0);
-        sessionStorage.setItem('character', 0);
-      }
+      sessionStorage.setItem('panel', panel.id);
+      // try { // this causes errors in IE9 - so we'll use a try/catch to get through it
+      //   sessionStorage.setItem('line', editors[panel].getCursor().line);
+      //   sessionStorage.setItem('character', editors[panel].getCursor().ch);
+      // } catch (e) {
+      //   sessionStorage.setItem('line', 0);
+      //   sessionStorage.setItem('character', 0);
+      // }
     };
 
 //= require "storage"
@@ -66,10 +67,3 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
 }
 
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
-
-// $(window).bind('online', function () {
-//   console.log("we're online");
-// }).bind('offline', function () {
-//   console.log("we're offline");
-// });
-

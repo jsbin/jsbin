@@ -33,6 +33,7 @@ function getRelativeTime($date) {
 <?php 
 $last = null;
 arsort($order);
+list($dummy, $defhtml, $defjs, $defcss) = defaultCode();
 foreach ($order as $key => $value) {
   foreach ($bins[$key] as $bin) {
     $url = formatURL($bin['url'], $bin['revision']);
@@ -56,13 +57,29 @@ foreach ($order as $key => $value) {
 
     $firstTime = $bin['url'] != $last;
 
+    // attempt to get the modified panels - note that this won't detect
+    // if they're using their own template
+    $args = array('?live');
+    $js = trim($bin['javascript']);
+    $html = trim($bin['html']);
+    $css = trim($bin['css']);
+    if ($js && $js !== $defjs) {
+      $args[] = 'javascript';
+    }
+    if ($html && $html !== $defhtml) {
+      $args[] = 'html';
+    }
+    if ($css && $css !== $defcss) {
+      $args[] = 'css';
+    }
+
     if ($firstTime && $last !== null) : ?>
   <tr data-type="spacer"><td colspan=3></td></tr>
     <?php endif ?>
   <tr data-url="<?=$url?>">
-    <td class="url"><a href="<?=$url?>edit?live"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
+    <td class="url"><a href="<?=$url?>edit<?=implode(',', $args)?>"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
     <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
-    <td class="title"><a href="<?=$url?>edit?live"><?=substr($title, 0, 200)?></a></td>
+    <td class="title"><a href="<?=$url?>edit<?=implode(',', $args)?>"><?=substr($title, 0, 200)?></a></td>
   </tr>
 <?php
     $last = $bin['url'];

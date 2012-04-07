@@ -36,7 +36,9 @@ panels.restore = function () {
   // then restore those specific panels and evenly distribute them.
   var open = [],
       location = window.location,
-      toopen = (location.search.substring(1) ? location.search.substring(1) : location.hash.substring(1)).split(','),
+      search = location.search.substring(1),
+      hash = location.hash.substring(1),
+      toopen = search || hash ? (search || hash).split(',') : []
       state = {};
       name = '',
       i = 0,
@@ -233,6 +235,7 @@ var editorsReady = setInterval(function () {
     clearInterval(editorsReady);
     // panels.ready = true;
     // if (typeof editors.onReady == 'function') editors.onReady();
+    panels.distribute();
 
     $(window).resize(function () {
       setTimeout(function () {

@@ -2272,10 +2272,10 @@ div.CodeMirror-selected { background: #d9d9d9; }
 
 #history #viewing {
   font-size: 10px;
-  margin-left: 20px;
+  margin: 0px 10px 10px 20px;
 }
 
-@emedia (max-height:800px) {
+@media (max-height:800px) {
   .ready #control {
     top: -36px;
     border-bottom: 10px solid #aaa;

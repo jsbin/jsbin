@@ -133,11 +133,35 @@ if ($code_id) {
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
-<div id="history">
+<script>
+<?php
+  // assumes http - if that's not okay, this need to be changed
+  $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
+  if (!$ajax) {
+    echo 'var template = ';
+  }
+  // doubles as JSON
+  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
+?>
+</script>
+<script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
+<script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
+<?php if (!OFFLINE) : ?>
+<script>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-1656750-13']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+})();
+</script>
+<?php endif ?>
 <?php
   showSaved($home);
 ?>
-</div>
 <div id="login" class="modal">
   <div>
     <h2>Log in / Register</h2>
@@ -215,31 +239,5 @@ if ($code_id) {
     </table>
   </div>
 </div>
-<script>
-<?php
-  // assumes http - if that's not okay, this need to be changed
-  $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
-  if (!$ajax) {
-    echo 'var template = ';
-  }
-  // doubles as JSON
-  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
-?>
-</script>
-<script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
-<script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
-<?php if (!OFFLINE) : ?>
-<script>
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-1656750-13']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-})();
-</script>
-<?php endif ?>
 </body>
 </html>

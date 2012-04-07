@@ -53,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 // doesn't require a connection when we're landing for the first time
-if ($action) {
+// if ($action) {
   connect();
-}
+// }
 
 if (!$action) {
   // do nothing and serve up the page
@@ -363,7 +363,7 @@ function formatCompletedCode($html, $javascript, $css, $code_id, $revision) {
   $javascript = preg_replace('@</script@', "<\/script", $javascript);
   
   if ($quiet && $html) {
-    $html = '<script>window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
+    $html = '<script>window.onfocus=function(){return false;};window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
   } 
   
   if ($html && stripos($html, '%code%') === false && strlen($javascript)) {
@@ -575,6 +575,7 @@ function showSaved($name) {
     include_once('list-history.php');
   } else {
     // echo 'nothing found :(';
+    // echo 'nothing found';
   } 
   
 }

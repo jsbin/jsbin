@@ -26,6 +26,7 @@ function getRelativeTime($date) {
   return date("j-M", $time);
 }
 ?>
+<div id="history">
 <h2>Open previously saved:</h2>
 <table>
 <tbody>
@@ -73,4 +74,5 @@ foreach ($order as $key => $value) {
   <h2>Preview</h2>
   <p id="viewing"></p>
   <iframe id="iframe" hidden></iframe>
+</div>
 </div>

@@ -1,6 +1,8 @@
 if ($('#history').length) (function () {
   function render(url) {
-    iframe.src = url + 'quiet';
+    doc.open();
+    doc.write('<iframe src="' + url + 'quiet"></iframe>');
+    doc.close();
     iframe.removeAttribute('hidden');
     viewing.innerHTML = window.location.hostname + url;
   }
@@ -28,11 +30,24 @@ if ($('#history').length) (function () {
 
   var preview = $('#history .preview'),
       iframe = $('#history iframe')[0];
+      doc = iframe.contentDocument || iframe.contentWindow.document,
+      win = doc.defaultView || doc.parentWindow,
       bins = $('#history'),
       trs = $('#history tr'),
       current = null,
-      viewing = $('#history #viewing'),
+      viewing = $('#history #viewing')[0],
       hoverTimer = null;
+
+  // stop iframe load removing focus from our main window
+  win.onfocus = function () {
+    console.log('focus killed');
+    return false;
+  };
+
+  win.onload = function () {
+    console.log('load killed');
+    return false;
+  }
 
   trs.click(visit);
   // this is some nasty code - just because I couldn't be

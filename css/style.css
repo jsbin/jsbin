@@ -918,6 +918,7 @@ ie6, li {
 }
 
 #tip {
+  z-index: 10;
   display: none;
   border-top: 1px solid #ccc;
   position: absolute;

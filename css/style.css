@@ -255,9 +255,6 @@ iframe.javascript {
 
 .button {
   border: 1px solid #CCC;
-  /*-webkit-border-radius: 3px;*/
-  /*-moz-border-radius: 3px;*/
-  /*border-radius: 3px;*/
   height: 23px;
   line-height: 24px;
   padding: 6px 10px;
@@ -300,32 +297,7 @@ a.button:active, .button:focus {
   text-shadow: none;
 }
 
-#popout {
-  display: none;
-}
-
-.beta #popout {
- display: block;
-}
-
-a.popout {
-  position: absolute;
-  z-index: 2;
-  top: 10px;
-  right: 10px;
-  background: #efefef url(../images/new-light.png) no-repeat 90% center;
-  padding-right: 22px;
-  opacity: 0.5;
-  -webkit-transition: opacity 50ms linear;
-}
-
-a.popout:hover {
-  background: #eee url(../images/new-dark.png) no-repeat 90% center;
-  border: 1px solid #aaa;
-  opacity: 1;
-}
-
-body.source a.source,
+/*body.source a.source,
 body.preview a.preview {
   background: #aaa;
   background: rgba(0, 0, 0, 0.25);
@@ -346,17 +318,14 @@ body.preview a.preview {
       color-stop(1, #949494)
     );
   
-}
+}*/
 
 .control a.selected {
   background: #aaa;
   background: rgba(0, 0, 0, 0.25);
   text-shadow: none;
   border: 1px solid #ccc;
-/*  -moz-box-shadow: #fff 0px 0px 5px;
-  -webkit-box-shadow: #fff 0px 0px 5px;
-  box-shadow: #fff 0px 0px 5px;
-*/}
+}
 
 .group a.selected {
   background: #fff;
@@ -375,30 +344,15 @@ body.preview a.preview {
 }
 
 .group {
-  /*-moz-border-radius: 0;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-*/  border-left: 0;
+  border-left: 0;
 }
 
 .left {
   border-left: 1px solid #ccc;
-  /*-moz-border-radius-topleft: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-top-left-radius: 3px;
-  -moz-border-radius-bottomleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  border-bottom-left-radius: 3px;*/
 }
 
 .right {
   border-right: 1px solid #ccc;
-  /*-moz-border-radius-topright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;*/
 }
 
 div.menu {
@@ -414,20 +368,6 @@ div.menu {
   /*overflow: hidden;*/
 }
 
-/*div.group:hover,
-div.group.hover {
-  background: #fff;
-  height: auto;
-  overflow: visible;
-  -moz-border-radius-bottomleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  -webkit-box-shadow: 1px 1px 2px #ccc;
-  -moz-box-shadow: 1px 1px 2px #ccc;
-  -o-box-shadow: 1px 1px 2px #ccc;
-  box-shadow: 1px 1px 2px #ccc;
-}
-*/
 #control div.group > * {
   display: inline-block;
   float: none;
@@ -626,10 +566,7 @@ body.preview #source select {
 }
 
 textarea {
-/*  opacity: 0;
-  -moz-opacity: 0;
-  filter:alpha(opacity=0);
-*/  margin: 0.4em;
+  margin: 0.4em;
   border: 0;
   padding: 0;
   font-family: Menlo, Monaco, consolas, monospace;
@@ -733,69 +670,6 @@ textarea {
   text-shadow: #000 1px 1px 1px;
   background: #454645;
 }
-
-#help pre {
-  padding: 10px;
-  background: #eee;
-  overflow-x: auto;
-}
-
-#help {
-  position: absolute;
-  right: -300px;
-  width: 279px;
-  top: 0;
-  bottom: 0;
-  border-left: 1px solid #ccc;
-  background: #F7F4EB;
-  padding: 10px;
-  overflow: auto;
-/*  text-shadow: #fff 1px 1px 1px;*/
-}
-
-#help p {
-  margin: 14px 0;
-}
-
-#help ol, #help ul {
-  padding-left: 20px;
-}
-
-#help li {
-  margin: 10px 0;  
-}
-
-
-#help dl.shortcuts {
-    margin-bottom: 1em;
-    margin-left: 26px; }
-#help dl.shortcuts * {
-    margin: 0;
-    line-height: 2.25;
-    font-weight: normal; }
-#help .shortcuts dt {
-    float: left;
-    display: block;
-    width: 7em;
-    clear: both; }
-#help kbd {
-    /* not sure if this should be more specific ie. ".shortcuts kbd" */
-    background: -webkit-gradient(linear, left top, center bottom, from(#000), to(#222));
-    background-color: #000;
-    color: #fff;
-    font-family: "VAG Rounded", sans-serif;
-    font-size: 90%;
-    padding: 1ex;
-    letter-spacing: 0.2ex;
-    text-shadow: rgba(0,255,255,0.5) 0 0 4px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    -webkit-box-shadow: 1px 1px 0px #000; }
-#help .shortcuts.a dt {
-    width: 7em; }
-#help .shortcuts.b dt {
-    width: 10em; }
 
 #revert {
   display: none;
@@ -1118,10 +992,18 @@ details li, .details li {
   width: 100%;
   z-index: 199999; /* gosh that's a stupid number */
 
-  background: #000;
+  /*background: #000;*/
+  /*background: rgba(0,0,0,0.85);*/
+  /*background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));*/
+ 
+  background-color: #000;
   background: rgba(0,0,0,0.85);
-  background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));
-  
+  background: -moz-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+  background: -webkit-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%,rgba(0, 0, 0, 0.7) 100%);
+  background: -o-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+  background: -ms-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+  background: radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+
   color: #fff;
   font-size: 16px;
   overflow: auto;
@@ -2124,6 +2006,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
   -moz-transform:    scale(0.8);
   -o-transform:      scale(0.8);
   -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
   transform:         scale(0.8);
   /* IE8+ - must be on one line, unfortunately */ 
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.8, M12=0, M21=0, M22=0.8, SizingMethod='auto expand')";
@@ -2137,6 +2020,11 @@ div.CodeMirror-selected { background: #d9d9d9; }
            SizingMethod='auto expand');
 
   -webkit-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
 
   width: 100%;
   height: 100%;
@@ -2275,12 +2163,20 @@ div.CodeMirror-selected { background: #d9d9d9; }
   margin: 0px 10px 10px 20px;
 }
 
-@media (max-height:800px) {
+@media (max-height:770px) {
   .ready #control {
     top: -36px;
     border-bottom: 10px solid #aaa;
     -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;
     -webkit-transition-delay: 1s;
+    -moz-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+    -moz-transition-delay: 1s;
+    -o-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+    -o-transition-delay: 1s;
+    -ms-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+    -ms-transition-delay: 1s;
+    transition: top ease-out 200ms, border-bottom ease-out 200ms;
+    transition-delay: 1s;
   }
 
   .ready #bin, 
@@ -2292,6 +2188,10 @@ div.CodeMirror-selected { background: #d9d9d9; }
   #control:hover {
     top: 0;
     -webkit-transition: top ease-out 10ms;
+    -moz-transition: top ease-out 10ms;
+    -o-transition: top ease-out 10ms;
+    -ms-transition: top ease-out 10ms;
+    transition: top ease-out 10ms;
   }
 }
 

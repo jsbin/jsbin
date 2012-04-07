@@ -75,6 +75,16 @@ function renderLivePreview() {
       document.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
       document.write(source);
     }
+
+    // almost jQuery Mobile specific - when the page renders
+    // it moves the focus over to the live preview - since 
+    // we no longer have a "render" panel, our code loses 
+    // focus which is damn annoying. So, I cancel the iframe
+    // focus event...because I can :)
+    window.onfocus = function () {
+      return false;
+    };
+
     document.close();
   }
 

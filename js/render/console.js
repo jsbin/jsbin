@@ -487,7 +487,6 @@ jsconsole.remote = {
     }
   },
   flush: function () {
-    console.log('queue', jsconsole.queue);
     for (var i = 0; i < jsconsole.queue.length; i++) {
       jsconsole.rawMessage(jsconsole.queue[i]);
     }

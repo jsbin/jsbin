@@ -116,6 +116,20 @@ $('#runwithalerts').click(function () {
   renderLivePreview(true);
 });
 
+$('#createnew').click(function () {
+  var i, key;
+  // FIXME this is out and out [cr]lazy....
+  jsbin.panels.savecontent = function(){};
+  for (i = 0; i < sessionStorage.length; i++) {
+    key = sessionStorage.key(i);
+    if (key.indexOf('jsbin.content.') === 0) {
+      sessionStorage.removeItem(key);
+    }
+  }
+ 
+  jsbin.panels.saveOnExit = true;
+});
+
 editors.live.disablejs = jsbin.settings.disablejs || true;
 $('#enablejs').change(function () {
   jsbin.settings.disablejs = editors.live.disablejs = !this.checked;

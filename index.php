@@ -52,7 +52,7 @@ if ($code_id) {
           </div>
         </div>
       </div>
-
+      <a id="createnew" class="button group" href="<?=ROOT?>">New</a>
       <div id="panels"></div>
     </div>
   </div>
@@ -122,8 +122,8 @@ if ($code_id) {
       <div class="label">
         <strong>Live Preview</strong>
         <span class="options">
-          <button id="runwithalerts">Run JS with alerts</button>
-          <label>Include JS<input type="checkbox" id="enablejs"></label>
+          <button id="runwithalerts" title="And include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
+          <label>Always include JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>

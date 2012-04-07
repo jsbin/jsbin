@@ -396,7 +396,6 @@ var jsconsole = {
     if (nohelp === undefined) post(':help', true);
   },
   rawMessage: function (data) {
-    console.log(data);
     if (data.type && data.type == 'error') {
       post(data.cmd, true, ['error', data.response]);
     } else if (data.type && data.type == 'info') {
@@ -426,16 +425,20 @@ jsconsole.remote = {
     } catch (e) {
       var trace = printStackTrace({ error: e }),
           code = jsbin.panels.panels.javascript.getCode().split('\n'),
+          allcode = getPreparedCode().split('\n'),
           parts = [],
-          line;
+          line,
+          n;
 
-      console.warn('tracing');
       for (var i = 0; i < trace.length; i++) {
         if (trace[i].indexOf(window.location.toString()) !== -1) {
           parts = trace[i].split(':');
-          parts.pop();
-          line = parts.pop() - 2;
-          if (code[line].indexOf('console.') !== -1) {
+          n = parts.pop();
+          if (parseInt(n) === NaN) {
+            n = parts.pop();
+          }
+          line = n - 2;
+          if (code[line] && code[line].indexOf('console.') !== -1) {
             cmd = $.trim(code[line]);
             console.log(cmd);
             break;

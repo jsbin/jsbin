@@ -1,4 +1,7 @@
-$(document).keydown(function (event) {
+var loginVisible = false,
+    dropdownOpen = false,
+    keyboardHelpVisible = false;
+$document.keydown(function (event) {
   if (event.which == 27 || (keyboardHelpVisible && event.which == 191 && event.shiftKey && event.metaKey)) {
     if (keyboardHelpVisible) {
       $body.toggleClass('keyboardHelp');
@@ -12,6 +15,8 @@ $(document).keydown(function (event) {
     } else if (loginVisible) {
       $('#login').hide();
       loginVisible = false;
+    } else if ($('#history').length && !$body.hasClass('panelsVisible')) {
+      $('#history').toggle(100);
     }
   }
 });

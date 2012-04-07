@@ -58,6 +58,11 @@ foreach ($order as $key => $value) {
       $args[] = 'css';
     }
 
+    // show the console instead of the live render if there's no HTML
+    if ($js && !$html) {
+      $args[0] = '?console';
+    }
+
     // TODO decide whether I need the root here...
     $editurl = $url . 'edit' . implode(',', $args);
 

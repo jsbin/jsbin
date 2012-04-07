@@ -1,6 +1,8 @@
 // inside a ready call because history DOM is rendered *after* our JS to improve load times.
 $(function ()  {
 
+//= require "../vendor/pretty-date"
+
 if ($('#history').length) (function () {
   function render(url) {
     iframe.src = url + 'quiet';
@@ -18,15 +20,8 @@ if ($('#history').length) (function () {
     }
   }
 
-  function removeHighlight() {
-    var i = trs.length;
-    while (i--) {
-      trs[i].className = '';
-    }
-  }
-
   function visit() {
-    window.location = this.getAttribute('data-url') + 'edit?live';
+    window.location = this.getAttribute('data-edit-url');
   }
 
   var preview = $('#history .preview'),
@@ -38,7 +33,7 @@ if ($('#history').length) (function () {
       hoverTimer = null;
 
   // stop iframe load removing focus from our main window
-  trs.click(visit);
+  bins.delegate('tr', 'click', visit);
   // this is some nasty code - just because I couldn't be
   // bothered to bring jQuery to the party.
   bins.mouseover(function (event) {
@@ -46,7 +41,7 @@ if ($('#history').length) (function () {
     event = event || window.event;
     var url, target = event.target || event.srcElement;
     if (target = matchNode(event.target, 'TR')) {
-      removeHighlight();
+      bins.find('tr').removeClass('hover');
       if (target.getAttribute('data-type') !== 'spacer') {
         target.className = 'hover';
         // target.onclick = visit;
@@ -60,6 +55,10 @@ if ($('#history').length) (function () {
       }
     }
   });
+
+  $('#history a').prettyDate();
+  setInterval(function(){ $('#history td.created a').prettyDate(); }, 5000);
+
 })();
 
 });

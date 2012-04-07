@@ -1,5 +1,8 @@
 <?php
-date_default_timezone_set('UTC');
+// date_default_timezone_set('UTC');
+
+date_default_timezone_set('Europe/London');
+
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
@@ -226,7 +229,19 @@ if (!$action) {
       echo $url;
     } else {
       // FIXME - why *am* I sending "js" and "html" with the url to the bin?
-      echo '{ "code": "' . $code_id . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit" }';
+      $data = array(
+        code => $code_id,
+        root => ROOT,
+        created => date('c', time()),
+        revision => $revision,
+        url => $url,
+        edit => $url . '/edit',
+        html => $url . '/edit',
+        js => $url . '/edit',
+        title => getTitleFromCode(array(html => $html, javascript => $javascript))
+      );
+      echo json_encode($data);
+      // echo '{ "code": "' . $code_id . '", "root": "' . ROOT . '", "created": "' . date('c', time()) . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit", "title": "' .  .'" }';
     }
     
     if (array_key_exists('callback', $_REQUEST)) {
@@ -537,6 +552,28 @@ HERE_DOC;
   } else {
     return '';
   }
+}
+
+function getTitleFromCode($bin) {
+  preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
+  preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
+  $title = '';
+  if (count($body)) {
+    $title = $body[1];
+    if (get_magic_quotes_gpc() && $body[1]) {
+      $title = stripslashes($body[1]);
+    }
+    $title = trim(preg_replace('/\s+/', ' ', strip_tags($title)));
+  }
+  if (!$title && $bin['javascript']) {
+    $title = preg_replace('/\s+/', ' ', $bin['javascript']);
+  }
+
+  if (!$title && count($match)) {
+    $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
+  }
+
+  return $title;
 }
 
 function showSaved($name) {

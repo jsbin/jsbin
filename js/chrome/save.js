@@ -34,6 +34,19 @@ var $form = $('form#saveform')
   return $form;
 }
 
+function pad(n){
+  return n<10 ? '0'+n : n
+}
+
+function ISODateString(d){
+  return d.getFullYear()+'-'
+    + pad(d.getMonth()+1)+'-'
+    + pad(d.getDate())+'T'
+    + pad(d.getHours())+':'
+    + pad(d.getMinutes())+':'
+    + pad(d.getSeconds())+'Z'
+}
+
 function saveCode(method, ajax, ajaxCallback) {
   // create form and post to it
   var $form = setupform(method);
@@ -52,7 +65,14 @@ function saveCode(method, ajax, ajaxCallback) {
         ajaxCallback && ajaxCallback();
 
         if (window.history && window.history.pushState) {
-          window.history.pushState(null, data.edit, data.edit);
+          var $binGroup = $('#history tr[data-url="' + window.location.pathname.replace(/edit.*$/, '') + '"]'),
+              edit = data.edit.replace(location.protocol + '//' + window.location.hostname, '') + window.location.search,
+              title = $('#live iframe')[0].contentWindow.document.documentElement.innerText;
+
+          $binGroup.find('td.url a span.first').removeClass('first');
+          $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
+
+          window.history.pushState(null, edit, edit);
 
           $('#jsbinurl').attr('href', data.url).text(data.url.replace(/http:\/\//, ''));
           updateTitle(true)

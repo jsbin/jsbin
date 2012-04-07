@@ -29,7 +29,7 @@ function keycontrol(event) {
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {
-    if (panel.id == 'javascript') {
+    if (codePanel) {
       if (event.metaKey && event.which == 13) {
         if (editors.console.visible) {
           hasRun = true;

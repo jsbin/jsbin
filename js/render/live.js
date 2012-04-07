@@ -81,7 +81,18 @@ function renderLivePreview(withalerts) {
       // we no longer have a "render" panel, our code loses 
       // focus which is damn annoying. So, I cancel the iframe
       // focus event...because I can :)
-      win.onfocus = function () {
+      var click = false;
+      win.onmousedown = function () {
+        click = true;
+        setTimeout(function () {
+          click = false;
+        }, 10);
+      };
+      win.onfocus = function (event) {
+        // allow the iframe to be clicked to create a fake focus
+        if (click) {
+          $('#live').focus();
+        }
         return false;
       };
 

@@ -104,12 +104,13 @@ Panel.prototype = {
       } else {
         panel.distribute();
       }
-    }, 0);
-
-    jsbin.panels.focus(this);
-
-    // update all splitter positions
-    $document.trigger('sizeeditors');
+      // update all splitter positions
+      $document.trigger('sizeeditors');
+      if (panel.editor) {
+        panel.editor.focus();
+      }
+      jsbin.panels.focus(panel);
+  }, 0); 
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },

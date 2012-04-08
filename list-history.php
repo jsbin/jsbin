@@ -28,7 +28,7 @@ function getRelativeTime($date) {
 }
 ?>
 <div id="history">
-<h2>Open previously saved:</h2>
+<h2>Open previously saved <em>bins</em>:</h2>
 <table>
 <tbody>
 <?php 

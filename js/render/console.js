@@ -164,7 +164,7 @@ function echo(cmd) {
   var li = document.createElement('li');
 
   li.className = 'echo';
-  li.innerHTML = '<span class="gutter"></span><div>' + cleanse(cmd) + '<a href="/?' + encodeURIComponent(cmd) + '" class="permalink" title="permalink">link</a></div>';
+  li.innerHTML = '<span class="gutter"></span><div>' + cleanse(cmd) + '</div>';
 
   logAfter = null;
 

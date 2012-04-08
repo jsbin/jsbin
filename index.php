@@ -77,7 +77,7 @@ if ($code_id) {
     <?php else : ?>
     <a href="#" class="button" id="loginbtn">Log in</a>
     <?php endif ?>
-    <a href="http://jsbin.tumblr.com" class="button group">Tips</a>
+    <a href="http://jsbin.tumblr.com" class="button group">Help</a>
   </div>
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">

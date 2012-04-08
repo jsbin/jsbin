@@ -42,6 +42,6 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 //= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"
-//= require "chrome/beta"
+// require "chrome/beta"
 //= require "chrome/app"
 })(this, document);

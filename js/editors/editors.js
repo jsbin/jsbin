@@ -39,15 +39,15 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = search || hash ? (search || hash).split(',') : []
-      state = {};
+      state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}'),
       name = '',
       i = 0,
       panel = null,
       init = [],
+      openWithSameDimensions = false,
       innerWidth = window.innerWidth;
 
   // otherwise restore the user's regular settings
-
   // also set a flag indicating whether or not we should save the panel settings
   // this is based on whether they're on jsbin.com or if they're on an existing
   // bin. Also, if they hit save - *always* save their layout.
@@ -56,15 +56,31 @@ panels.restore = function () {
   } else {
     panels.saveOnExit = true;
   }
+
   // TODO decide whether the above code I'm trying too hard.
 
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment
   if (toopen.length) {
+    for (name in state) {
+      if (toopen.indexOf(name) !== -1) {
+        i++;
+      }
+    }
+
+    if (i === toopen.length) openWithSameDimensions = true;
+
+    console.log(state, openWithSameDimensions);
+
     for (i = 0; i < toopen.length; i++) {
-      if (panels.panels[toopen[i]]) {
-        panels.panels[toopen[i]].show();
-        init.push(panels.panels[toopen[i]]);
+      name = toopen[i];
+      if (panels.panels[name]) {
+        if (openWithSameDimensions) {
+          panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+        } else {
+          panels.panels[name].show();
+        }
+        init.push(panels.panels[name]);
       }
     }
 
@@ -73,9 +89,8 @@ panels.restore = function () {
       panels.panels.live.show();
     }
 
-    this.distribute();
+    if (!openWithSameDimensions) this.distribute();
   } else {
-    state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}');
     for (name in state) {
       panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
     }
@@ -83,17 +98,19 @@ panels.restore = function () {
 
   // now restore any data from sessionStorage
   // TODO add default templates somewhere
-  var template = {};
-  for (name in this.panels) {
-    panel = this.panels[name];
-    if (panel.editor) {
-      // panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
-    }
-  }
+  // var template = {};
+  // for (name in this.panels) {
+  //   panel = this.panels[name];
+  //   if (panel.editor) {
+  //     // panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
+  //   }
+  // }
 
   for (i = 0; i < init.length; i++) {
     init[i].init();
   }
+
+  if (panels.getVisible().length) $body.addClass('panelsVisible');
 
 };
 
@@ -224,7 +241,8 @@ panels.focus(panels.getVisible()[0] || null);
 
 
 var editorsReady = setInterval(function () {
-  var ready = true;
+  var ready = true,
+      resizeTimer = null;
   for (var panel in panels.panels) {
     if (!panels.panels[panel].ready) ready = false;
   }
@@ -235,10 +253,11 @@ var editorsReady = setInterval(function () {
     clearInterval(editorsReady);
     // panels.ready = true;
     // if (typeof editors.onReady == 'function') editors.onReady();
-    panels.distribute();
+    // panels.distribute();
 
     $(window).resize(function () {
-      setTimeout(function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
         $document.trigger('sizeeditors');
       }, 100);
     });

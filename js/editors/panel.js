@@ -40,14 +40,15 @@ var Panel = function (name, settings) {
 
   if (!settings.nosplitter) {
     panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
+    panel.splitter.hide();
   } else {
     // create a fake splitter to let the rest of the code work
     panel.splitter = $();
   }
 
-  $document.bind('jsbinReady', function () {
-    panel.splitter.trigger('init');
-  });
+  // $document.bind('jsbinReady', function () {
+  //   panel.splitter.trigger('init');
+  // });
 
   if (settings.beforeRender) {
     $document.bind('render', $.proxy(settings.beforeRender, panel));
@@ -90,20 +91,20 @@ Panel.prototype = {
     panel.$el.show();
     panel.splitter.show();
     panel.visible = true;
-
+    if (panel.settings.show) {
+      panel.settings.show.call(panel, true);
+    }
     panel.controlButton.addClass('active');
 
-    if (x !== undefined) {
-      panel.splitter.trigger('init', x);
-    } else {
-      this.distribute();
-    }
-
-    // panel.controlButton.hide();
-
-    if (this.settings.show) {
-      this.settings.show.call(this, true);
-    }
+    // update the splitter - but do it on the next tick
+    // required to allow the splitter to see it's visible first
+    setTimeout(function () {
+      if (x !== undefined) {
+        panel.splitter.trigger('init', x);
+      } else {
+        panel.distribute();
+      }
+    }, 0);
 
     jsbin.panels.focus(this);
 
@@ -113,16 +114,17 @@ Panel.prototype = {
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
   hide: function () {
-    this.$el.hide();
-    this.visible = false;
+    var panel = this;
+    panel.$el.hide();
+    panel.visible = false;
 
     // update all splitter positions
-    this.splitter.hide();
-    this.controlButton.removeClass('active');
-    this.distribute();
+    panel.splitter.hide();
+    panel.controlButton.removeClass('active');
+    panel.distribute();
 
-    if (this.settings.hide) {
-      this.settings.hide.call(this, true);
+    if (panel.settings.hide) {
+      panel.settings.hide.call(panel, true);
     }
 
     // this.controlButton.show();

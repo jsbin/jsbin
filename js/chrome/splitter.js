@@ -9,7 +9,8 @@ $.fn.splitter = function () {
     var $el = $(this), 
         guid = $.fn.splitter.guid++,
         $parent = $el.parent(),
-        $prev = $el.prev(),
+        type = 'x',
+        $prev = type === 'x' ? $el.prevAll(':visible:first') : $el.nextAll(':visible:first'),
         $handle = $('<div class="resize"></div>'),
         dragging = false,
         width = $parent.width(),
@@ -45,7 +46,6 @@ $.fn.splitter = function () {
             size: $parent.height(),
             cssProp: 'bottom',
             otherCssProp: 'top',
-            size: $parent.height(),
             sizeProp: 'height',
             moveProp: 'pageY',
             init: {
@@ -64,7 +64,6 @@ $.fn.splitter = function () {
             }
           }
         },
-        type = 'x',
         refreshTimer = null,
         settings = splitterSettings[guid] || {};
 
@@ -119,11 +118,15 @@ $.fn.splitter = function () {
         splitterSettings[guid] = settings;
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
 
-        // todo: wait until animations have completed!
+        // wait until animations have completed!
         setTimeout(function () {
           $document.trigger('sizeeditors');
         }, 120);
       }
+    }
+
+    function resetPrev() {
+      $prev = type === 'x' ? $handle.prevAll(':visible:first') : $handle.nextAll(':visible:first');
     }
 
     $document.bind('mouseup touchend', function () {
@@ -149,7 +152,7 @@ $.fn.splitter = function () {
       props[type].size = $parent[props[type].sizeProp]();
       props[type].currentPos = 0; // is this really required then?
 
-      $prev = type === 'x' ? $handle.prevAll(':visible:first') : $handle.nextAll(':visible:first');;
+      resetPrev();
       e.preventDefault();
     }).hover(function () {
       $handle.css('opacity', '1');
@@ -161,6 +164,9 @@ $.fn.splitter = function () {
 
     $handle.bind('init', function (event, x) {
       $handle.css(props[type].init);
+      props[type].size = $parent[props[type].sizeProp]();
+      resetPrev();
+
       $blocker.css('cursor', type == 'x' ? 'ew-resize' : 'ns-resize');
 
       if (type == 'y') {

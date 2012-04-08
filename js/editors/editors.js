@@ -129,10 +129,6 @@ panels.focus = function (panel) {
     $('.panel > .label').removeClass('focus');
     panel.$el.find('.label').addClass('focus');
   }
-
-  if (panel.editor) {
-    // panel.editor.focus();
-  }
 }
 
 // evenly distribute the width of all the visible panels

@@ -37,6 +37,7 @@ $('#loginbtn').click(function () {
   $('#login').show();
   loginVisible = true;
   $username.focus();
+  return false;
 });
 
 $('#logout').click(function (event) {
@@ -54,6 +55,7 @@ $('#logout').click(function (event) {
 
 $('#homebtn').click(function () {
   jsbin.panels.hideAll();
+  return false;
 });
 
 //= require "../chrome/esc"
@@ -114,6 +116,7 @@ $body.click(function (event) {
 
 $('#runwithalerts').click(function () {
   renderLivePreview(true);
+  return false;
 });
 
 $('#createnew').click(function () {

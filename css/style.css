@@ -2175,7 +2175,7 @@ a.button.active:hover {
   margin: 0px 10px 10px 20px;
 }
 
-@emedia (max-height:770px) {
+@media (max-height:770px) {
   .ready #control {
     border-bottom: 6px solid #AAA;
     -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;

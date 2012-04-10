@@ -19,9 +19,13 @@ var iframedelay = (function () {
     } catch (e){};
   };
 
-  doc.open();
-  doc.write('<script>window.parent.' + callbackName + '(window.innerWidth)</script>');
-  doc.close();
+  try {
+    doc.open();
+    doc.write('<script>window.parent.' + callbackName + '(window.innerWidth)</script>');
+    doc.close();
+  } catch (e) {
+    iframedelay.active = true;
+  }
 
   return iframedelay;
 }());

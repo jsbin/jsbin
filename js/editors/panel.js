@@ -95,7 +95,11 @@ Panel.prototype = {
       // update all splitter positions
       $document.trigger('sizeeditors');
       if (panel.editor) {
-        if (panel.virgin) $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('> .label').outerHeight());
+        // populate the panel for the first time
+        if (panel.virgin) {
+          $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('> .label').outerHeight());
+          populateEditor(panel, panel.name);
+        }
         panel.editor.focus();
       }
       jsbin.panels.focus(panel);
@@ -209,8 +213,12 @@ Panel.prototype = {
     // this point in the code, the editor isn't visible, the browser
     // needs one more tick and it'll be there.
     setTimeout(function () {
+      // if the panel isn't visible this only has the effect of putting 
+      // the code in the textarea (though probably costs us a lot more)
+      // it has to be re-populated upon show for the first time because
+      // it appears that CM2 uses the visible height to work out what
+      // should be shown. 
       populateEditor(panel, panel.name);
-      $(editor.win).find('.CodeMirror-scroll > div').css('padding-top', $label.outerHeight());
       panel.ready = true;
 
       if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {

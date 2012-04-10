@@ -13,6 +13,18 @@ var panelShortcuts = {
   53: 'live' // 5
 };
 
+// work out the browser platform
+var ua = navigator.userAgent;
+if (/macintosh|mac os x/.test(ua)) { 
+  $.browser.platform = 'mac'; 
+} else if (/windows|win32/.test(ua)) { 
+  $.browser.platform = 'win'; 
+} else if (/linux/.test(ua)) { 
+  $.browser.platform = 'linux'; 
+} else { 
+  $.browser.platform = ''; 
+} 
+
 function keycontrol(event) {
   event = normalise(event);
 

@@ -20,8 +20,9 @@ var Panel = function (name, settings) {
     panel.editor = CodeMirror.fromTextArea(panel.el, {
       parserfile: [],
       tabMode: 'shift',
+      dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
-      onChange: function () { $document.trigger('codeChange'); return true; },
+      onChange: function () { $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); return true; },
       lineWrapping: true,
       theme: jsbin.settings.codemirror.theme || 'jsbin'
     });
@@ -29,13 +30,6 @@ var Panel = function (name, settings) {
     panel.processor = settings.processor || function (str) { return str; };
 
     panel._setupEditor(panel.editor, name);
-
-    // splitterSettings = {
-    //   resize: function () {
-    //     // fixes cursor position when the panel has been resized
-    //     panel.editor.refresh();
-    //   }
-    // };
   } 
 
   if (!settings.nosplitter) {
@@ -45,10 +39,6 @@ var Panel = function (name, settings) {
     // create a fake splitter to let the rest of the code work
     panel.splitter = $();
   }
-
-  // $document.bind('jsbinReady', function () {
-  //   panel.splitter.trigger('init');
-  // });
 
   if (settings.beforeRender) {
     $document.bind('render', $.proxy(settings.beforeRender, panel));
@@ -73,14 +63,12 @@ var Panel = function (name, settings) {
   this.$el.click(function () {
     panel.$el.trigger('focus');
   });
-  // this.$el.find('.label').prepend('<a href="#close" class="close"></a>').find('.close').click(function () {
-  //   panel.hide();
-  // });
 }
 
 Panel.order = 0;
 
 Panel.prototype = {
+  virgin: true,
   visible: false,
   show: function (x) {
     // check to see if there's a panel to the left.
@@ -107,9 +95,11 @@ Panel.prototype = {
       // update all splitter positions
       $document.trigger('sizeeditors');
       if (panel.editor) {
+        if (panel.virgin) $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('> .label').outerHeight());
         panel.editor.focus();
       }
       jsbin.panels.focus(panel);
+      panel.virgin = false;
   }, 0); 
 
     // TODO save which panels are visible in their profile - but check whether it's their code
@@ -193,50 +183,61 @@ Panel.prototype = {
       editor.focus();
     });
 
-    // var $label = $('.code.' + panel.name + ' > .label');
-    // if (document.body.className.indexOf('ie6') === -1 && $label.length) {
-    //   editor.scroller.scroll(function (event) {
-    //     if (this.scrollTop > 10) {
-    //       $label.stop().animate({ opacity: 0 }, 50, function () {
-    //         $(this).hide();
-    //       });
-    //     } else {
-    //       $label.show().stop().animate({ opacity: 1 }, 250);
-    //     }
-    //   });
-    // }
+    var $label = panel.$el.find('> .label');
+    if (document.body.className.indexOf('ie6') === -1 && $label.length) {
+      editor.scroller.scroll(function (event) {
+        if (this.scrollTop > 10) {
+          $label.stop().animate({ opacity: 0 }, 20, function () {
+            $(this).hide();
+          });
+        } else {
+          $label.show().stop().animate({ opacity: 1 }, 150);
+        }
+      });
+    }
 
     $document.bind('sizeeditors', function () {
-      var top = 0,
-          height = panel.$el.closest('.panel').height();
-      editor.scroller.height(height - top);
+      var height = panel.$el.outerHeight(),
+          offset = 0;
+          // offset = panel.$el.find('> .label').outerHeight();
+
+      editor.scroller.height(height - offset);
       editor.refresh();
     });
 
-    populateEditor(panel, panel.name);
-    panel.ready = true;
+    // required because the populate looks at the height, and at 
+    // this point in the code, the editor isn't visible, the browser
+    // needs one more tick and it'll be there.
+    setTimeout(function () {
+      populateEditor(panel, panel.name);
+      $(editor.win).find('.CodeMirror-scroll > div').css('padding-top', $label.outerHeight());
+      panel.ready = true;
 
-    if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {
-      editor.focus();
-      editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
-    }
+      if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {
+        editor.focus();
+        editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+      }
+    }, 0);
+  },
+  populateEditor: function () {
+    populateEditor(this, this.name);
   }
 };
 
 function populateEditor(editor, panel) {
   // populate - should eventually use: session, saved data, local storage
-  var data = sessionStorage.getItem('jsbin.content.' + panel), // session code
+  var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
       saved = localStorage.getItem('saved-' + panel), // user template
       sessionURL = sessionStorage.getItem('url'),
       changed = false;
 
-  if (template && data == template[panel]) { // restored from original saved
-    editor.setCode(data);
-  } else if (data && sessionURL == template.url) { // try to restore the session first - only if it matches this url
-    editor.setCode(data);
+  if (template && cached == template[panel]) { // restored from original saved
+    editor.setCode(cached);
+  } else if (cached && sessionURL == template.url) { // try to restore the session first - only if it matches this url
+    editor.setCode(cached);
     // tell the document that it's currently being edited, but check that it doesn't match the saved template
     // because sessionStorage gets set on a reload
-    changed = data != saved;
+    changed = cached != saved && cached != template[panel];
   } else if (saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
     editor.setCode(saved);
   } else { // otherwise fall back on the JS Bin default
@@ -244,6 +245,6 @@ function populateEditor(editor, panel) {
   }
 
   if (changed) {
-    $document.trigger('codeChange', [ /* revert triggered */ false, /* don't use fade */ true ]);
+    $document.trigger('codeChange', [ { revert: false, onload: true } ]);
   }
 }

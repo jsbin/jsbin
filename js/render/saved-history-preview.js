@@ -25,7 +25,7 @@ if ($('#history').length) (function () {
   }
 
   var preview = $('#history .preview'),
-      iframe = $('#history iframe')[0];
+      iframe = $('#history iframe')[0],
       bins = $('#history'),
       trs = $('#history tr'),
       current = null,

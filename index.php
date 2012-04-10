@@ -188,7 +188,7 @@ if ($code_id) {
         </tr>
         <tr>
           <td>esc</td>
-          <td>Code complete (JavaScript only)</td>
+          <td>Code complete (JavaScript only) and close open overlays - like this</td>
         </tr>
         <tr>
           <td>ctrl + s</td>
@@ -219,10 +219,10 @@ if ($code_id) {
     echo 'var template = ';
   }
   // doubles as JSON
-  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
+  echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '};';
 ?>
 </script>
-<script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
+<script>var jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
 <script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

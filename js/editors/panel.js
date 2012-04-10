@@ -61,10 +61,10 @@ var Panel = function (name, settings) {
   this.controlButton.appendTo('#panels');
 
   this.$el.focus(function () {
-    jsbin.panels.focus(panel);
+    panel.focus();
   });
   this.$el.click(function () {
-    panel.$el.trigger('focus');
+    panel.focus();
   });
 }
 
@@ -141,6 +141,9 @@ Panel.prototype = {
       this.editor.setCode(content);
     }
   },
+  focus: function () {
+    jsbin.panels.focus(this);
+  },
   render: function () {
     var panel = this;
     if (panel.editor) {
@@ -178,7 +181,7 @@ Panel.prototype = {
 
     // editor.setOption('onKeyEvent', keycontrol);
     editor.setOption('onFocus', function () {
-      panel.$el.trigger('focus');
+      // panel.$el.trigger('focus');
     });
 
     editor.id = panel.name;
@@ -188,6 +191,7 @@ Panel.prototype = {
 
     $(editor.win).click(function () {
       editor.focus();
+      panel.focus();
     });
 
     var $label = panel.$el.find('> .label');
@@ -204,12 +208,14 @@ Panel.prototype = {
     }
 
     $document.bind('sizeeditors', function () {
-      var height = panel.$el.outerHeight(),
-          offset = 0;
-          // offset = panel.$el.find('> .label').outerHeight();
+      if (panel.visible) {
+        var height = panel.$el.outerHeight(),
+            offset = 0;
+            // offset = panel.$el.find('> .label').outerHeight();
 
-      editor.scroller.height(height - offset);
-      editor.refresh();
+        editor.scroller.height(height - offset);
+        try { editor.refresh(); } catch (e) {}
+      }
     });
 
     // required because the populate looks at the height, and at 
@@ -225,8 +231,10 @@ Panel.prototype = {
       panel.ready = true;
 
       if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {
-        editor.focus();
-        editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+        if (panel.visible) {
+          editor.focus();
+          editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+        }
       }
     }, 0);
   },

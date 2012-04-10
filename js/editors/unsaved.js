@@ -14,7 +14,6 @@ $(document).bind('codeChange', function (event, options) { //, revert, onload) {
 });
 
 function updateTitle(revert, onload) {
-  console.log('revert required? ' + revert);
   var title = !documentTitle ? 'JS Bin' : documentTitle;
   if (jsbin.settings.home) title = jsbin.settings.home + '@' + title;
   if (!revert) {

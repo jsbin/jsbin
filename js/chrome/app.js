@@ -20,7 +20,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
-      sessionStorage.setItem('panel', panel.id);
+      if (panel) sessionStorage.setItem('panel', panel.id);
       // try { // this causes errors in IE9 - so we'll use a try/catch to get through it
       //   sessionStorage.setItem('line', editors[panel].getCursor().line);
       //   sessionStorage.setItem('character', editors[panel].getCursor().ch);

@@ -69,9 +69,9 @@ function renderLivePreview(withalerts) {
       // nullify the blocking functions
       // IE requires that this is done in the script, rather than off the window object outside of the doc.write
       if (withalerts !== true) {
-        doc.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+        doc.write('<script>try{window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>');
       } else {
-        doc.write('<script>delete window.print;delete window.alert;delete window.prompt;delete window.confirm;</script>');
+        doc.write('<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;}catch(e){}</script>');
       }
 
       if (jsbinConsole) {

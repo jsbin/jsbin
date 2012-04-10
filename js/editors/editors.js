@@ -70,8 +70,6 @@ panels.restore = function () {
 
     if (i === toopen.length) openWithSameDimensions = true;
 
-    console.log(state, openWithSameDimensions);
-
     for (i = 0; i < toopen.length; i++) {
       name = toopen[i];
       if (panels.panels[name]) {

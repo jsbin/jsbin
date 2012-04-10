@@ -58,10 +58,10 @@ if ($code_id) {
   </div>
   <div class="help">
     <?php if ($code_id) : ?>
-    <span class="meta">
+    <!-- <span class="meta"> -->
       <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
       <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
-    </span>
+    <!-- </span> -->
     <?php endif ?>
     <?php if ($home) : ?>
     <div class="menu">
@@ -120,7 +120,7 @@ if ($code_id) {
     </div>
     <div id="live" class="stretch live panel">
       <div class="label">
-        <strong>Live Preview</strong>
+        <strong>Output</strong>
         <span class="options">
           <button id="runwithalerts" title="And include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
           <label>Always include JS<input type="checkbox" id="enablejs"></label>

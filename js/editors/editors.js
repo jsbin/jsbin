@@ -126,8 +126,8 @@ panels.savecontent = function () {
 panels.focus = function (panel) {
   this.focused = panel;
   if (panel) {
-    $('.panel > .label').removeClass('focus');
-    panel.$el.find('.label').addClass('focus');
+    $('.panel').removeClass('focus');
+    panel.$el.addClass('focus');
   }
 }
 
@@ -188,7 +188,7 @@ var editors = panels.panels = {
   css: new Panel('css', { editor: true, label: 'CSS' }),
   html: new Panel('html', { editor: true, label: 'HTML' }),
   console: new Panel('console', { label: 'Console', init: function () { this.render(); } }),
-  live: new Panel('live', { label: 'Live Preview', show: function () {
+  live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
     $(document).bind('codeChange.live', throttledPreview);
     renderLivePreview();

@@ -22,7 +22,10 @@ var Panel = function (name, settings) {
       tabMode: 'shift',
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
-      onChange: function () { $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); return true; },
+      onChange: function (event) { 
+        $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
+        return true; 
+      },
       lineWrapping: true,
       theme: jsbin.settings.codemirror.theme || 'jsbin'
     });

@@ -123,7 +123,7 @@ if ($code_id) {
         <strong>Output</strong>
         <span class="options">
           <button id="runwithalerts" title="And include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
-          <label>Always include JS<input type="checkbox" id="enablejs"></label>
+          <label>Always run JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>

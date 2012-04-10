@@ -31,7 +31,13 @@
 
 - Include analytics for dynamic nature of JS Bin
 - Libs need to support styles, etc specific to the version
+- I want to monitor the keypress instead of keydown for the close window - as switch app 
 - Expose API for specific tasks:
   - prefilters for panels
   - codemirror config
   - jsbin settings (key mappings?)
+
+
+# IE
+
+- Gutter is being rendered thick if the panel isn't visible - possibly solution, only render CM when made visible - problem is the .getCode won't work - so need to think about how to get around it.

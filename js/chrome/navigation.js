@@ -147,9 +147,9 @@ $('#createnew').click(function () {
   jsbin.panels.saveOnExit = true;
 });
 
-editors.live.disablejs = jsbin.settings.disablejs || true;
+jsbin.settings.includejs = jsbin.settings.includejs || false;
 $('#enablejs').change(function () {
-  jsbin.settings.disablejs = editors.live.disablejs = !this.checked;
+  jsbin.settings.includejs = this.checked;
   editors.live.render();
-}).attr('checked', editors.live.disablejs ? false : true);
+}).attr('checked', jsbin.settings.includejs);
 

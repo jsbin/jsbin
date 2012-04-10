@@ -47,7 +47,7 @@ function renderLivePreview(withalerts) {
  
   // if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
 
-  if (withalerts !== true && (editors.live.disablejs === undefined || editors.live.disablejs === true)) {
+  if (withalerts !== true && jsbin.settings.includejs === false) {
     source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
   }
 

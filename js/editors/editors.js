@@ -188,7 +188,15 @@ var editors = panels.panels = {
   console: new Panel('console', { label: 'Console', init: function () { this.render(); } }),
   live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
-    $(document).bind('codeChange.live', throttledPreview);
+    $(document).bind('codeChange.live', function (event, data) {
+      if (panels.ready) {
+        if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
+          // ignore
+        } else {
+          throttledPreview();
+        }
+      }
+    });
     renderLivePreview();
   }})
 };

@@ -1947,7 +1947,8 @@ a.button.active:hover {
   /*box-shadow: inset 0 1px 6px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05) !important;*/
 }
 
-.open .button-dropdown {
+.open .button-dropdown,
+.open .button-dropdown:hover {
   background: #eee;
 }
 
@@ -2207,9 +2208,26 @@ a.button.active:hover {
   }
 }
 
+#panelswaiting {
+  display: none;
+}
 
+#actionmenu {
+  top: 100%;
+  left: -10px;
+  padding: 0;
+}
 
+#actionmenu .dropdownmenu {
+  margin: 3px 0;
+}
 
+#actionmenu .button {
+  padding: 5px 30px 5px 15px;
+}
 
+#savebtn {
+  width: 50px;
+}
 
 

@@ -35,24 +35,23 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
+      <a id="savebtn" href="<?php echo ROOT?>save" class="save title button">Save</a>
       <div class="menu">
-        <div class="group">
-          <a href="<?php echo ROOT?>save" class="save title button">Save</a><a href="#savemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
-        </div>
-        <div class="dropdown" id="savemenu">
+        <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
+        <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
-<?php if ($code_id) : ?>
+            <a id="createnew" class="button group" title="Create fresh bin" href="<?=ROOT?>">New</a>
+  <?php if ($code_id) : ?>
             <a id="clone" title="Create a new copy" class="button clone group" href="<?php echo ROOT?>clone">Clone</a>
-            <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a>
-<?php else : ?>
-            <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a>
-<?php endif ?>
-            <a id="download" title="Save to drive" class="button download group" href="<?php echo ROOT?>download">Download</a>
-            <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">As template</a>
+            <!-- <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a> -->
+  <?php else : ?>
+            <!-- <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a> -->
+  <?php endif ?>
+            <a id="startingpoint" title="Set as starting code" class="button group" href="<?php echo ROOT?>save">Save as template</a>
+            <a id="download" title="Save to local drive" class="button download group" href="<?php echo ROOT?>download">Download</a>
           </div>
         </div>
       </div>
-      <a id="createnew" class="button group" href="<?=ROOT?>">New</a>
       <div id="panels"></div>
     </div>
   </div>
@@ -82,18 +81,8 @@ if ($code_id) {
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
   <div id="source" class="binview stretch">
-    <div class="code stretch javascript panel">
-      <div class="label"><strong>JavaScript</strong></div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
-      </div>
-    </div>
-    <div class="code stretch css panel">
-      <div class="label"><strong id="csslabel">CSS</strong></div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
-      </div>
-    </div>
+  </div>
+  <div id="panelswaiting">
     <div class="code stretch html panel">
       <div class="label">
         <strong>HTML</strong>
@@ -112,6 +101,18 @@ if ($code_id) {
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
+      </div>
+    </div>
+    <div class="code stretch javascript panel">
+      <div class="label"><strong>JavaScript</strong></div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
+      </div>
+    </div>
+    <div class="code stretch css panel">
+      <div class="label"><strong id="csslabel">CSS</strong></div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">

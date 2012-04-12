@@ -101,7 +101,7 @@ var dropdownButtons = $('.button-dropdown').click(function (e) {
   e.preventDefault();
 })
 
-$('.menu').has('.dropdown').hover(function (event) {
+$('.menu').has('.dropdown.hover').hover(function (event) {
   console.log(event.target)
   if ($(event.target).is('.button-dropdown')) {
     opendropdown(this);
@@ -114,9 +114,8 @@ $('.menu').has('.dropdown').hover(function (event) {
   }
 });
 
-$('.button-dropdown').mouseover(function () {
-  opendropdown(this);
-  onhover = true;
+$('#actionmenu').click(function () {
+  dropdownOpen = true;
 })
 
 $body.click(function (event) {

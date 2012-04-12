@@ -23,8 +23,19 @@ $request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_r
 
 $action = array_pop($request);
 
+if (stripos($action, '.') !== false) {
+  $parts = split('\.', $action);
+  array_push($request, $parts[0]);
+  $action = $parts[1];
+}
+
 // remove the home path section from the request so we can correctly read the next action
 if ($action == $home) {
+  $action = array_pop($request);
+}
+
+// allow us to request .html
+if ($action == 'html') {
   $action = array_pop($request);
 }
 
@@ -104,8 +115,7 @@ if (!$action) {
   // could be listed under a user OR could be listing all the revisions for a particular bin
   
   exit();
-} else if ($action == 'source' || $action == 'js') {
-  header('Content-type: text/javascript');
+} else if ($action == 'source' || $action == 'js' || $action == 'css' || $action == 'json') {
   list($code_id, $revision) = getCodeIdParams($request);
   
   $edit_mode = false;
@@ -117,8 +127,16 @@ if (!$action) {
   }
   
   if ($action == 'js') {
+    header('Content-type: text/javascript');
     echo $javascript;
+  } else if ($action == 'json') {
+    header('Content-type: application/json');
+    echo $javascript;
+  } else if ($action == 'css') {
+    header('Content-type: text/css');
+    echo $css;
   } else {
+    header('Content-type: application/json');
     $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (!$ajax) {
       echo 'var template = ';

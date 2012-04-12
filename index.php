@@ -241,5 +241,67 @@ _gaq.push(['_trackPageview']);
 <?php
   showSaved($home);
 ?>
+<div id="urlHelp" class="modal">
+  <div>
+    <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
+    <h2>JS Bin URLs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="shortcut">URL</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/edit</td>
+          <td>Edit the current bin</td>
+        </tr>
+        <tr>
+          <td>/edit</td>
+          <td>Edit the current bin</td>
+        </tr>
+        <tr>
+          <td>/</td>
+          <td>Hide focused panel</td>
+        </tr>
+        <tr>
+          <td>ctrl + enter</td>
+          <td>If console visible: run JS in console<br>If live visible: render with alerts, prompts &amp; confirms</td>
+        </tr>
+        <tr>
+          <td>ctrl + /</td>
+          <td>Toggle comment on single line</td>
+        </tr>
+        <tr>
+          <td>ctrl + alt + .</td>
+          <td>Close current HTML element</td>
+        </tr>
+        <tr>
+          <td>esc</td>
+          <td>Code complete (JavaScript only) and close open overlays - like this</td>
+        </tr>
+        <tr>
+          <td>ctrl + s</td>
+          <td>Save current Bin</td>
+        </tr>
+        <tr>
+          <td>ctrl + shift + s</td>
+          <td>Clone current Bin</td>
+        </tr>
+        <tr>
+          <td>tab</td>
+          <td>Indents selected lines</td>
+        </tr>
+        <tr>
+          <td>shift + tab</td>
+          <td>Unindents selected lines</td>
+        </tr>
+        <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 </body>
 </html>

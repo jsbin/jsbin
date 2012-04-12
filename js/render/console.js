@@ -506,7 +506,8 @@ jsconsole.init = function () {
   editors.console.settings.render = function () {
     // TODO decide whether we should also grab all the JS in the HTML panel
     // jsconsole.reset();
-    jsconsole.run(editors.javascript.render());
+    var code = editors.javascript.render();
+    if ($.trim(code)) jsconsole.run(code);
   };
   editors.console.settings.show = function () {
     if (editors.live.visible) {

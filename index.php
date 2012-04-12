@@ -35,7 +35,7 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <a id="savebtn" href="<?php echo ROOT?>save" class="save title button">Save</a>
+      <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a>
       <div class="menu">
         <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
         <div class="dropdown" id="actionmenu">
@@ -254,50 +254,21 @@ _gaq.push(['_trackPageview']);
       </thead>
       <tbody>
         <tr>
-          <td>/edit</td>
-          <td>Edit the current bin</td>
-        </tr>
-        <tr>
-          <td>/edit</td>
-          <td>Edit the current bin</td>
-        </tr>
-        <tr>
           <td>/</td>
-          <td>Hide focused panel</td>
+          <td>Show the full rendered output</td>
         </tr>
         <tr>
-          <td>ctrl + enter</td>
-          <td>If console visible: run JS in console<br>If live visible: render with alerts, prompts &amp; confirms</td>
+          <td>/edit</td>
+          <td>Edit the current bin</td>
         </tr>
         <tr>
-          <td>ctrl + /</td>
-          <td>Toggle comment on single line</td>
+          <td>.js</td>
+          <td>Load only the JavaScript for a bin</td>
         </tr>
         <tr>
-          <td>ctrl + alt + .</td>
-          <td>Close current HTML element</td>
+          <td>.css</td>
+          <td>Load only the CSS for a bin</td>
         </tr>
-        <tr>
-          <td>esc</td>
-          <td>Code complete (JavaScript only) and close open overlays - like this</td>
-        </tr>
-        <tr>
-          <td>ctrl + s</td>
-          <td>Save current Bin</td>
-        </tr>
-        <tr>
-          <td>ctrl + shift + s</td>
-          <td>Clone current Bin</td>
-        </tr>
-        <tr>
-          <td>tab</td>
-          <td>Indents selected lines</td>
-        </tr>
-        <tr>
-          <td>shift + tab</td>
-          <td>Unindents selected lines</td>
-        </tr>
-        <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>
       </tbody>
     </table>
   </div>

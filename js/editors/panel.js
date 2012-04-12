@@ -1,4 +1,5 @@
-var $document = $(document);
+var $document = $(document),
+    $source = $('#source');
 
 var editorModes = {
   html: 'htmlmixed',
@@ -10,9 +11,17 @@ var Panel = function (name, settings) {
   var panel = this;
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
-  panel.$el = $('.panel.' + name);
+  panel.$el = $('.panel.' + name).remove();
+  panel.$el.appendTo($source);
   panel.el = document.getElementById(name);
-  panel.order = Panel.order++;
+  panel.order = ++Panel.order;
+
+  // keyboard shortcut (set in keyboardcontrol.js)
+  panelShortcuts[panelShortcuts.start + panel.order] = panel.id;
+
+  if (panel.order === 1) {
+    settings.nosplitter = true;
+  }
 
   var splitterSettings = {};
 

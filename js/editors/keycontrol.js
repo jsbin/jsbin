@@ -5,13 +5,14 @@ var keyboardHelpVisible = false;
 
 $body.keydown(keycontrol);
 
-var panelShortcuts = {
-  49: 'javascript', // 1
-  50: 'css', // 2
-  51: 'html', // 3
-  52: 'console', // 4
-  53: 'live' // 5
-};
+var panelShortcuts = {}
+//   49: 'javascript', // 1
+//   50: 'css', // 2
+//   51: 'html', // 3
+//   52: 'console', // 4
+//   53: 'live' // 5
+// };
+panelShortcuts.start = 48;
 
 // work out the browser platform
 var ua = navigator.userAgent;

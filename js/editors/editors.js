@@ -5,9 +5,9 @@
 //= require "panel"
 //= require "../render/live"
 //= require "../render/console"
+//= require "keycontrol"
 
 var panels = {};
-
 
 panels.getVisible = function () {
   var panels = this.panels,
@@ -182,10 +182,12 @@ Panel.prototype.distribute = function () {
 jsbin.panels = panels;
 
 var editors = panels.panels = {
-  javascript: new Panel('javascript', { editor: true, label: 'JavaScript', nosplitter: true }),
-  css: new Panel('css', { editor: true, label: 'CSS' }),
   html: new Panel('html', { editor: true, label: 'HTML' }),
-  console: new Panel('console', { label: 'Console', init: function () { this.render(); } }),
+  css: new Panel('css', { editor: true, label: 'CSS' }),
+  javascript: new Panel('javascript', { editor: true, label: 'JavaScript', init: function () {
+    // checkForErrors();
+  } }),
+  console: new Panel('console', { label: 'Console' }),
   live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
     $(document).bind('codeChange.live', function (event, data) {
@@ -198,7 +200,7 @@ var editors = panels.panels = {
       }
     });
     renderLivePreview();
-  }})
+  } })
 };
 
 
@@ -245,12 +247,49 @@ Panel.prototype.hide = function () {
 panels.restore();
 panels.focus(panels.getVisible()[0] || null);
 
+// allow panels to be reordered
+(function () {
+  var panelsEl = document.getElementById('panels'),
+      moving = null;
+
+  panelsEl.ondragstart = function (e) { 
+    if (e.target.nodeName == 'A') {
+      moving = e.target;
+    } else {
+      return false;
+    }
+  };
+
+  panelsEl.ondragover = function (e) { 
+    console.log(e)
+    return false; 
+  };
+
+  panelsEl.ondragend = function () { 
+    moving = false;
+    return false; 
+  };
+
+  panelsEl.ondrop = function (e) {
+    console.log(e.dataTransfer);
+    if (moving) {
+
+    }
+    return false;
+  };
+
+}());
+
 
 var editorsReady = setInterval(function () {
   var ready = true,
-      resizeTimer = null;
-  for (var panel in panels.panels) {
-    if (!panels.panels[panel].ready) ready = false;
+      resizeTimer = null,
+      panel,
+      panelId;
+
+  for (panelId in panels.panels) {
+    panel = panels.panels[panelId];
+    if (panel.visible && !panel.ready) ready = false;
   }
 
   panels.ready = ready;
@@ -272,5 +311,3 @@ var editorsReady = setInterval(function () {
     $document.trigger('jsbinReady');
   }
 }, 100);
-
-//= require "keycontrol"

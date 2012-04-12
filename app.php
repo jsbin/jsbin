@@ -514,7 +514,7 @@ HERE_DOC;
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
     } else {
-      $javascript = "// your JavaScript here - remember you can override this default template using 'Save'->'As Template'";
+      $javascript = "/* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
     }    
   }
 

@@ -43,7 +43,7 @@ if ($.browser.opera) {
   setInterval(unload, 500);
 }
 
-$('#library').chosen();
+// $('#library').chosen();
 
 $document.one('jsbinReady', function () {
   $bin.removeAttr('style');

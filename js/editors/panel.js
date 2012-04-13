@@ -113,8 +113,8 @@ Panel.prototype = {
           populateEditor(panel, panel.name);
         }
         panel.editor.focus();
+        panel.focus();
       }
-      jsbin.panels.focus(panel);
       panel.virgin = false;
   }, 0); 
 
@@ -239,10 +239,14 @@ Panel.prototype = {
       populateEditor(panel, panel.name);
       panel.ready = true;
 
-      if (focusedPanel == panel.name || focusedPanel == null && panel.name == 'javascript') {
+      if (focusedPanel == panel.name || focusedPanel == null) {
         if (panel.visible) {
-          editor.focus();
-          editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+          // another fracking timeout to avoid conflict with other panels firing up
+          setTimeout(function () {
+            editor.focus();
+            panel.focus();
+            editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+          }, 0);
         }
       }
     }, 0);

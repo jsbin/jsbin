@@ -155,7 +155,7 @@ panels.distribute = function () {
     $('#history').show();
     setTimeout(function () {
       $body.removeClass('panelsVisible');
-    }, 100);
+    }, 100); // 100 is on purpose to add to the effect of the reveal
   }
 };
 
@@ -164,6 +164,7 @@ panels.show = function (panelId) {
   if (this.panels[panelId].editor) {
     this.panels[panelId].editor.focus();
   }
+  this.panels[panelId].focus();
 }
 
 panels.hideAll = function () {
@@ -299,6 +300,16 @@ var editorsReady = setInterval(function () {
     // panels.ready = true;
     // if (typeof editors.onReady == 'function') editors.onReady();
     // panels.distribute();
+
+    // if live is visible, render it
+    if (panels.panels.live.visible) {
+      panels.panels.live.render();
+    }
+
+    if (panels.panels.console.visible) {
+      panels.panels.console.render();
+    }
+
 
     $(window).resize(function () {
       clearTimeout(resizeTimer);

@@ -56,30 +56,31 @@ if ($code_id) {
         </div>
       </div>
       <div id="panels"></div>
-    </div>
-  </div>
-  <div class="help">
-    <?php if ($code_id) : ?>
-    <!-- <span class="meta"> -->
-      <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
-      <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
-    <!-- </span> -->
-    <?php endif ?>
-    <?php if ($home) : ?>
-    <div class="menu">
-      <div class="group">
-        <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
-      </div>
-      <div class="dropdown" id="homemenu">
-        <div class="dropdownmenu">
-          <a id="logout" class="button group" href="<?php echo ROOT . $code_id?>logout">Logout</a>
+      <div class="help">
+        <?php if ($code_id) : ?>
+        <!-- <span class="meta"> -->
+          <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
+          <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
+        <!-- </span> -->
+        <?php endif ?>
+        <?php if ($home) : ?>
+        <div class="menu">
+          <div class="group">
+            <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
+          </div>
+          <div class="dropdown" id="homemenu">
+            <div class="dropdownmenu">
+              <a id="logout" class="button group" href="<?php echo ROOT . $code_id?>logout">Logout</a>
+            </div>
+          </div>
         </div>
+        <?php else : ?>
+        <a href="#" class="button" id="loginbtn">Log in</a>
+        <?php endif ?>
+        <a href="http://jsbin.tumblr.com" class="button group">Help</a>
       </div>
+
     </div>
-    <?php else : ?>
-    <a href="#" class="button" id="loginbtn">Log in</a>
-    <?php endif ?>
-    <a href="http://jsbin.tumblr.com" class="button group">Help</a>
   </div>
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">

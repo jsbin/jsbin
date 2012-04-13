@@ -59,7 +59,7 @@ $('#logout').click(function (event) {
   return false;
 });
 
-$('#homebtn').click(function () {
+$('.homebtn').click(function () {
   jsbin.panels.hideAll();
   return false;
 });
@@ -125,6 +125,10 @@ $body.click(function (event) {
       return false;
     }
   }
+});
+
+$('.dropdownmenu a').click(function () {
+  closedropdown();
 });
 
 $('#runwithalerts').click(function () {

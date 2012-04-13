@@ -41,6 +41,9 @@ if ($code_id) {
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="createnew" class="button group" title="Create fresh bin" href="<?=ROOT?>">New</a>
+  <?php if ($home) : ?>
+            <a href="#" class="button group homebtn">Open</a>
+  <?php endif ?>
   <?php if ($code_id) : ?>
             <a id="clone" title="Create a new copy" class="button clone group" href="<?php echo ROOT?>clone">Clone</a>
             <!-- <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a> -->
@@ -65,7 +68,7 @@ if ($code_id) {
     <?php if ($home) : ?>
     <div class="menu">
       <div class="group">
-        <a href="#" class="button" id="homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
+        <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
       </div>
       <div class="dropdown" id="homemenu">
         <div class="dropdownmenu">

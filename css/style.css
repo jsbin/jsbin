@@ -826,7 +826,7 @@ ie6, li {
 }
 
 #startingpoint.button.saved {
-  background-image: url(../images/tick.png);
+  /*background-image: url(../images/tick.png);*/
   background-repeat: no-repeat;
   background-position: 8px 7px;
 }

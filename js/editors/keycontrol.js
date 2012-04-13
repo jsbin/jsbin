@@ -26,6 +26,32 @@ if (/macintosh|mac os x/.test(ua)) {
   $.browser.platform = ''; 
 } 
 
+var closekey = $.browser.platform == 'mac' ? 167 : 192;
+
+$document.keydown(function (event) {
+  if (event.metaKey && event.which == 83) {
+    if (event.shiftKey == false) {
+      $('#save').click();
+      event.preventDefault();
+    } else if (event.shiftKey == true) {
+      $('.clone').click();
+      event.preventDefault();
+    }
+  } else if (event.which === 192 && event.metaKey && jsbin.panels.focused) {
+    jsbin.panels.focused.hide();
+    var visible = jsbin.panels.getVisible();
+    if (visible.length) {
+      jsbin.panels.focused = visible[0];
+      if (visible[0].editor) {
+        visible[0].editor.focus();
+      } else {
+        visible[0].$el.focus();
+      }
+      visible[0].focus();
+    }
+  }
+});
+
 function keycontrol(event) {
   event = normalise(event);
 
@@ -64,17 +90,6 @@ function keycontrol(event) {
     if (panelShortcuts[event.which] !== undefined && event.metaKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
-    } else if (event.which === 192 && event.metaKey && jsbin.panels.focused) {
-      jsbin.panels.focused.hide();
-      var visible = jsbin.panels.getVisible();
-      if (visible.length) {
-        jsbin.panels.focused = visible[0];
-        if (visible[0].editor) {
-          visible[0].editor.focus();
-        } else {
-          visible[0].$el.focus();
-        }
-      }
     }
 
     if (event.which == 191 && event.shiftKey && event.metaKey) {

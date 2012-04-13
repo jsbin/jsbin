@@ -2205,6 +2205,11 @@ a.button.active:hover {
     -o-transition: top ease-out 10ms;
     -ms-transition: top ease-out 10ms;
     transition: top ease-out 10ms;
+    -webkit-transition-delay: 100ms;
+    -moz-transition-delay: 100ms;
+    -o-transition-delay: 100ms;
+    -ms-transition-delay: 100ms;
+    transition-delay: 100ms;
   }
 }
 

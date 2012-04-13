@@ -36,7 +36,7 @@
   - prefilters for panels
   - codemirror config
   - jsbin settings (key mappings?)
-
+- Expose all the urls - via slash, but also via dot - ie. abc.js or abc.css
 
 # IE
 

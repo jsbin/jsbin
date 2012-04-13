@@ -70,6 +70,9 @@ $error.delegate('li', 'click', function () {
 });
 
 var checkForErrors = function () {
+  // exit if the javascript panel isn't visible
+  if (!editors.javascript.visible) return;
+
   var hint = jshint(),
       jshintErrors = JSHINT.data(true),
       errors = '',

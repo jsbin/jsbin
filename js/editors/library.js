@@ -24,7 +24,7 @@ $('#library').bind('change', function () {
       thislib = {},
       re,
       i,
-      code = editors.html.editor.getCode();
+      code = editors.html.getCode();
 
   // strip existing libraries out  
   var addAdjust = code.match(/<(script|link) class="jsbin"/g);

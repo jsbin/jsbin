@@ -147,8 +147,8 @@ if ($code_id) {
         <label for="password">Password</label><input id="password" type="password" name="password">
       </div>
       <div>
-        <label for="email">Email *</label><input id="email" type="email" name="email">
-        <p>Email is not required. It can be used reset your password.</p>
+        <label for="email">Email</label><input id="email" type="email" name="email">
+        <p>Email is just used to reset your password - it's not used for anything else.</p>
       </div>
       <div>
         <input type="submit" value="Log in">

@@ -2177,41 +2177,40 @@ a.button.active:hover {
   margin: 0px 10px 10px 20px;
 }
 
-@media (max-height:770px) {
-  .ready #control {
-    border-bottom: 6px solid #AAA;
-    -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;
-    -webkit-transition-delay: 1s;
-    -moz-transition: top ease-out 200ms, border-bottom ease-out 200ms;
-    -moz-transition-delay: 1s;
-    -o-transition: top ease-out 200ms, border-bottom ease-out 200ms;
-    -o-transition-delay: 1s;
-    -ms-transition: top ease-out 200ms, border-bottom ease-out 200ms;
-    -ms-transition-delay: 1s;
-    transition: top ease-out 200ms, border-bottom ease-out 200ms;
-    transition-delay: 1s;
-    top: -36px;
+/*@media (max-height:770px) {*/
+.hideheader.ready #control {
+  border-bottom: 6px solid #AAA;
+  -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  -webkit-transition-delay: 1s;
+  -moz-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  -moz-transition-delay: 1s;
+  -o-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  -o-transition-delay: 1s;
+  -ms-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  -ms-transition-delay: 1s;
+  transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  transition-delay: 1s;
+  top: -36px;
 }
 
-  .ready #bin, 
-  #history, 
-  #history .preview {
-    top: 6px;
-  }
+.hideheader.ready #bin, 
+.hideheader #history, 
+.hideheader #history .preview {
+  top: 6px;
+}
 
-  #control:hover {
-    top: 0;
-    -webkit-transition: top ease-out 10ms;
-    -moz-transition: top ease-out 10ms;
-    -o-transition: top ease-out 10ms;
-    -ms-transition: top ease-out 10ms;
-    transition: top ease-out 10ms;
-    -webkit-transition-delay: 100ms;
-    -moz-transition-delay: 100ms;
-    -o-transition-delay: 100ms;
-    -ms-transition-delay: 100ms;
-    transition-delay: 100ms;
-  }
+.hideheader #control:hover {
+  top: 0;
+  -webkit-transition: top ease-out 10ms;
+  -moz-transition: top ease-out 10ms;
+  -o-transition: top ease-out 10ms;
+  -ms-transition: top ease-out 10ms;
+  transition: top ease-out 10ms;
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -o-transition-delay: 100ms;
+  -ms-transition-delay: 100ms;
+  transition-delay: 100ms;
 }
 
 #panelswaiting {
@@ -2235,3 +2234,4 @@ a.button.active:hover {
 #save {
   width: 50px;
 }
+

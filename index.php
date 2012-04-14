@@ -120,14 +120,20 @@ if ($code_id) {
       </div>
     </div>
     <div class="stretch console panel">
-      <div class="label"><strong>Console</strong></div>
+      <div class="label">
+        <strong>Console</strong>
+        <span class="options">
+          <button id="runconsole" title="ctrl + enter">Run</button>
+        </span>
+      </div>
       <div id="console" class="stretch"><ul id="output"></ul></div>
     </div>
     <div id="live" class="stretch live panel">
       <div class="label">
         <strong>Output</strong>
         <span class="options">
-          <button id="runwithalerts" title="And include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
+          <button id="runwithalerts" title="ctrl + enter
+Include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
           <label>Always run JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
@@ -180,7 +186,11 @@ if ($code_id) {
       </tr>
       <tr>
         <td>ctrl + enter</td>
-        <td>If console visible: run JS in console<br>If live visible: render with alerts, prompts &amp; confirms</td>
+        <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
+      </tr>
+      <tr>
+        <td>ctrl + \</td>
+        <td>Auto hide navigation bar</td>
       </tr>
       <tr>
         <td>ctrl + /</td>
@@ -244,37 +254,34 @@ _gaq.push(['_trackPageview']);
   showSaved($home);
 ?>
 <div id="urlHelp" class="modal">
-  <div>
-    <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
-    <h2>JS Bin URLs</h2>
-    <table>
-      <thead>
-        <tr>
-          <th class="shortcut">URL</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>/</td>
-          <td>Show the full rendered output</td>
-        </tr>
-        <tr>
-          <td>/edit</td>
-          <td>Edit the current bin</td>
-        </tr>
-        <tr>
-          <td>.js</td>
-          <td>Load only the JavaScript for a bin</td>
-        </tr>
-        <tr>
-          <td>.css</td>
-          <td>Load only the CSS for a bin</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
+  <h2>JS Bin URLs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="shortcut">URL</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>/</td>
+        <td>Show the full rendered output</td>
+      </tr>
+      <tr>
+        <td>/edit</td>
+        <td>Edit the current bin</td>
+      </tr>
+      <tr>
+        <td>.js</td>
+        <td>Load only the JavaScript for a bin</td>
+      </tr>
+      <tr>
+        <td>.css</td>
+        <td>Load only the CSS for a bin</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
 </body>
 </html>

@@ -29,6 +29,8 @@ if (/macintosh|mac os x/.test(ua)) {
 var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 $document.keydown(function (event) {
+  if (event.ctrlKey) event.metaKey = true;
+
   if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
       $('#save').click();
@@ -49,6 +51,9 @@ $document.keydown(function (event) {
       }
       visible[0].focus();
     }
+  } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
+    jsbin.settings.hideheader = !jsbin.settings.hideheader;
+    $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
   }
 });
 
@@ -86,13 +91,12 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-
     if (panelShortcuts[event.which] !== undefined && event.metaKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }
 
-    if (event.which == 191 && event.shiftKey && event.metaKey) {
+    if (event.which == 191 && event.metaKey) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');

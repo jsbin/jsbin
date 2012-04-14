@@ -156,3 +156,6 @@ $('#enablejs').change(function () {
   editors.live.render();
 }).attr('checked', jsbin.settings.includejs);
 
+if (jsbin.settings.hideheader) {
+  $body.addClass('hideheader');
+}

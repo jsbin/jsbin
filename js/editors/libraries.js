@@ -16,6 +16,14 @@ var Libraries = function () {
 
 Libraries.prototype.init = function () {
   var libs = {
+    bootstrap: {
+      text: 'Bootstrap',
+      style: ['http://twitter.github.com/bootstrap/assets/css/bootstrap.css',
+              'http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css'],
+      scripts: [
+        { text: 'Bootstrap latest', url: 'http://twitter.github.com/bootstrap/assets/js/bootstrap.js'}
+      ]
+    },
     yui: {
       text: 'YUI',
       scripts: [
@@ -100,7 +108,7 @@ Libraries.prototype.init = function () {
     // }
   },
   // NOTE if a new library category is added, you need to add it here
-  order = 'jquery jqueryui jquerymobile prototype yui mootools dojo others'.split(' '),
+  order = 'jquery jqueryui jquerymobile bootstrap prototype yui mootools dojo others'.split(' '),
   i = 0;
     
   this.length = 0; // triggers support for length prop

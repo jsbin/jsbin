@@ -54,6 +54,16 @@ $document.keydown(function (event) {
   } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
     jsbin.settings.hideheader = !jsbin.settings.hideheader;
     $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
+  } else if (event.which === 76 && event.ctrlKey && jsbin.panels.panels.console.visible) {
+    if (event.shiftKey) {
+      console.log('reset');
+      // reset
+      jsconsole.reset();
+    } else {
+      console.log('clear');
+      // clear
+      jsconsole.clear();
+    }
   }
 });
 
@@ -96,16 +106,10 @@ function keycontrol(event) {
       event.stop();
     }
 
-    if (event.which == 191 && event.metaKey) {
+    if (event.which == 191 && event.metaKey && event.shiftKey) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
-      event.stop();
-    } else if (event.which == 76 && event.shiftKey && event.metaKey) {
-      if (!editors.live.visible) {
-        editors.live.show();
-      }
-      $('#runwithalerts').click();
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');

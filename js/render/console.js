@@ -362,7 +362,7 @@ var output = null,
       },
       reset: function () {
         output.innerHTML = '';
-        jsconsole.init(output);
+        jsconsole.init(output, true);
         return 'Context reset';
       }
     };
@@ -370,12 +370,14 @@ var output = null,
 
 var jsconsole = {
   run: post,
+  clear: commands.clear,
   reset: function () {
     this.run(':reset');
   },
   init: function (outputElement, nohelp) {
     output = outputElement;
 
+    // closure scope
     sandboxframe = document.createElement('iframe');
 
     var oldsandbox = document.getElementById('jsconsole-sandbox');
@@ -502,24 +504,28 @@ jsconsole.remote.warn = jsconsole.remote.info;
 
 window.top._console = jsconsole.remote;
 
-jsconsole.init = function () {
-  editors.console.settings.render = function () {
-    // TODO decide whether we should also grab all the JS in the HTML panel
-    // jsconsole.reset();
-    var code = editors.javascript.render();
-    if ($.trim(code)) jsconsole.run(code);
-  };
-  editors.console.settings.show = function () {
-    if (editors.live.visible) {
-      renderLivePreview();
-    }
-  };
-  editors.console.settings.hide = function () {
-    if (editors.live.visible) {
-      renderLivePreview();
-    }
-  };
-  jsconsole.ready = true;
-  jsconsole.remote.flush();
-  // editors.console.fakeConsole = window._console
-}
+$document.bind('jsbinReady', function () {
+  jsbin.panels.panels.console.init = function () {
+    editors.console.settings.render = function () {
+      // TODO decide whether we should also grab all the JS in the HTML panel
+      // jsconsole.reset();
+      var code = editors.javascript.render();
+      if ($.trim(code)) jsconsole.run(code);
+    };
+    editors.console.settings.show = function () {
+      if (editors.live.visible) {
+        renderLivePreview();
+      }
+    };
+    editors.console.settings.hide = function () {
+      if (editors.live.visible) {
+        renderLivePreview();
+      }
+    };
+    jsconsole.ready = true;
+    jsconsole.remote.flush();
+    // editors.console.fakeConsole = window._console
+  }
+
+  jsbin.panels.panels.console.init();
+});

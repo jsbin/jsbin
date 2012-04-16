@@ -15,7 +15,7 @@ $home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
 //   exit;
 // }
 
-$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
+$request = preg_split('/\//', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
 $action = array_pop($request);
 

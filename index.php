@@ -198,7 +198,7 @@ if ($code_id) {
 ?>
 </script>
 <script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
-<script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
+<script src="<?php echo ROOT?>js/jsbin-<?php echo VERSION?>.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>
 var _gaq = _gaq || [];

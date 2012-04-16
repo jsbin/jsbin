@@ -1,4 +1,5 @@
 //= require "libraries"
+var state = {};
 $('#library').bind('init', function () {
   var $select = $(this),
       html = ['<option value="none">None</option>'],
@@ -14,15 +15,10 @@ $('#library').bind('init', function () {
   }
   
   $select.html( html.join('') ).val(selected);
-}).trigger('init');
-
-var state = {};
-
-$('#library').bind('change', function () {
+}).trigger('init').change(function () {
   var libIndex = [],
       lib = {},
       thislib = {},
-      re,
       i,
       code = editors.html.getCode();
 
@@ -57,8 +53,11 @@ $('#library').bind('change', function () {
       }
       
       if (lib.style) {
-        state.add++;
-        code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" /');
+        if (typeof lib.style === 'string') lib.style = [lib.style];
+        for (i = 0; i < lib.style.length; i++) {
+          state.add++;
+          code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style[i] + '" rel="stylesheet" type="text/css" /');
+        }
       }
     } else { // add to the start of the doc
       code = "<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script>\n' + code;

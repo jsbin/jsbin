@@ -16,6 +16,14 @@ var Libraries = function () {
 
 Libraries.prototype.init = function () {
   var libs = {
+    bootstrap: {
+      text: 'Bootstrap',
+      style: ['http://twitter.github.com/bootstrap/assets/css/bootstrap.css',
+              'http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css'],
+      scripts: [
+        { text: 'Bootstrap latest', url: 'http://twitter.github.com/bootstrap/assets/js/bootstrap.js'}
+      ]
+    },
     yui: {
       text: 'YUI',
       scripts: [
@@ -59,10 +67,11 @@ Libraries.prototype.init = function () {
     jquerymobile : {
       text: 'jQuery Mobile',
       requires: 'http://code.jquery.com/jquery-1.6.4.min.js',
-      style: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0.min.css',
+      style: 'http://code.jquery.com/mobile/latest/jquery.mobile.css',
       scripts: [
-        { text: 'jQuery Mobile 1.0', url: 'http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js' },
-        { text: 'jQuery Mobile 1.0b3', url: 'http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.js' }
+        { text: 'jQuery Mobile Latest', url: 'http://code.jquery.com/mobile/latest/jquery.mobile.js' },
+        { text: 'jQuery Mobile 1.0.1', url: 'http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.1.min.js' },
+        { text: 'jQuery Mobile 1.1.0rc1', url: 'http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.js' }
       ]
     },
     others: {
@@ -99,7 +108,7 @@ Libraries.prototype.init = function () {
     // }
   },
   // NOTE if a new library category is added, you need to add it here
-  order = 'jquery jqueryui jquerymobile prototype yui mootools dojo others'.split(' '),
+  order = 'jquery jqueryui jquerymobile bootstrap prototype yui mootools dojo others'.split(' '),
   i = 0;
     
   this.length = 0; // triggers support for length prop

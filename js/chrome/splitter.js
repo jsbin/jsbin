@@ -7,6 +7,7 @@ $.fn.splitter = function () {
   var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
   return this.each(function () {
     var $el = $(this), 
+        $originalContainer = $(this),
         guid = $.fn.splitter.guid++,
         $parent = $el.parent(),
         type = 'x',
@@ -14,7 +15,9 @@ $.fn.splitter = function () {
         $handle = $('<div class="resize"></div>'),
         dragging = false,
         width = $parent.width(),
-        left = $parent.offset().left,
+        parentOffset = $parent.offset(),
+        left = parentOffset.left,
+        top = parentOffset.top, // usually zero :(
         props = {
           x: {
             currentPos: $parent.offset().left,
@@ -35,8 +38,8 @@ $.fn.splitter = function () {
               opacity: 0,
               position: 'absolute',
               cursor: 'ew-resize',
-              // border: 0,
-              // 'border-left': '1px solid rgba(218, 218, 218, 0.5)',
+              // 'border-top': '0',
+              'border-left': '1px solid rgba(218, 218, 218, 0.5)',
               'z-index': 99999
             }
           },
@@ -59,7 +62,7 @@ $.fn.splitter = function () {
               opacity: 0,
               position: 'absolute',
               border: 0,
-              'border-top': '1px solid rgba(218, 218, 218, 0.5)',
+              // 'border-top': '1px solid rgba(218, 218, 218, 0.5)',
               'z-index': 99999
             }
           }
@@ -67,31 +70,45 @@ $.fn.splitter = function () {
         refreshTimer = null,
         settings = splitterSettings[guid] || {};
 
+    // if (settings.y) {
+    //   type = 'y';
+    // }
+
     var tracker = {
       down: { x: null, y: null },
       delta: { x: null, y: null },
-      track: false
+      track: false,
+      timer: null
     };
     $handle.bind('mousedown', function (event) {
       tracker.down.x = event.pageX;
       tracker.down.y = event.pageY;
       tracker.delta = { x: null, y: null };
-      tracker.target = $handle[type == 'x' ? 'height' : 'width']() * 0.2;
+      tracker.target = $handle[type == 'x' ? 'height' : 'width']() * 0.25;
     });
 
-    /* Disable dynamic splitters for now - RS March 28, 2012 */
     $document.bind('mousemove', function (event) {
       if (dragging) {
         tracker.delta.x = tracker.down.x - event.pageX;
         tracker.delta.y = tracker.down.y - event.pageY;
+        clearTimeout(tracker.timer);
+        tracker.timer = setTimeout(function () {
+          tracker.down.x = event.pageX;
+          tracker.down.y = event.pageY;
+        }, 250);
         var targetType = type == 'x' ? 'y' : 'x';
         if (Math.abs(tracker.delta[targetType]) > tracker.target) {
           $handle.trigger('change', targetType, event[props[targetType].moveProp]);
+          tracker.down.x = event.pageX;
+          tracker.down.y = event.pageY;
         }
       }
     });
 
     function moveSplitter(pos) {
+      if (type === 'y') {
+        pos -= top;
+      }
       var v = pos - props[type].currentPos,
           split = 100 / props[type].size * v,
           delta = (pos - settings[type]) * props[type].multiplier,
@@ -167,11 +184,14 @@ $.fn.splitter = function () {
       props[type].size = $parent[props[type].sizeProp]();
       resetPrev();
 
+      // can only be read at init
+      top = $parent.offset().top;
+
       $blocker.css('cursor', type == 'x' ? 'ew-resize' : 'ns-resize');
 
       if (type == 'y') {
         $el.css('border-right', 0);
-        $prev.css('border-right', 0);
+        $prev.css('border-left', 0);
         $prev.css('border-top', '1px solid #ccc');
       } else {
         // $el.css('border-right', '1px solid #ccc');
@@ -191,6 +211,38 @@ $.fn.splitter = function () {
       $el.css(props[type].cssProp, '0');
       $prev.css(props[type].otherCssProp, '0');
       $el.css('border-' + props[type].cssProp, '0');
+
+      if (toType === 'y') {
+        // 1. drop inside of a new div that encompases the elements
+        $el = $el.find('> *');
+        $handle.appendTo($prev);
+        $el.appendTo($prev);
+        $prev.css('height', '100%');
+        $originalContainer.hide();
+        $handle.css('margin-left', 0);
+        $handle.css('margin-top', 5);
+
+        delete settings.x;
+
+        $originalContainer.next(':visible').trigger('init');
+        // 2. change splitter to the right to point to new block div
+      } else {
+        $el = $prev;
+        $prev = $tmp;
+
+        $el.appendTo($originalContainer);
+        $handle.insertBefore($originalContainer);
+        $el.css('border-top', 0);
+        $el = $originalContainer;
+        $originalContainer.show();
+        $handle.css('margin-top', 0);
+        $handle.css('margin-left', -5);
+        delete settings.y;
+
+        $originalContainer.next(':visible').trigger('init');
+      }
+
+      resetPrev();
 
       type = toType;
 

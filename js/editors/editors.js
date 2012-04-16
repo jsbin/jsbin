@@ -45,7 +45,7 @@ panels.restore = function () {
       panel = null,
       init = [],
       openWithSameDimensions = false,
-      innerWidth = window.innerWidth;
+      width = window.innerWidth;
 
   // otherwise restore the user's regular settings
   // also set a flag indicating whether or not we should save the panel settings
@@ -73,8 +73,9 @@ panels.restore = function () {
     for (i = 0; i < toopen.length; i++) {
       name = toopen[i];
       if (panels.panels[name]) {
+        console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
         if (openWithSameDimensions) {
-          panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+          panels.panels[name].show(width * parseFloat(state[name]) / 100);
         } else {
           panels.panels[name].show();
         }
@@ -90,7 +91,7 @@ panels.restore = function () {
     if (!openWithSameDimensions) this.distribute();
   } else {
     for (name in state) {
-      panels.panels[name].show(innerWidth * parseFloat(state[name]) / 100);
+      panels.panels[name].show(width * parseFloat(state[name]) / 100);
     }
   }
 
@@ -124,32 +125,53 @@ panels.savecontent = function () {
 panels.focus = function (panel) {
   this.focused = panel;
   if (panel) {
-    $('.panel').removeClass('focus');
-    panel.$el.addClass('focus');
+    $('.panel').removeClass('focus').filter('.' + panel.id).addClass('focus');
   }
 }
 
 // evenly distribute the width of all the visible panels
 panels.distribute = function () {
-  var visible = panels.getVisible(),
+  var visible = $('#source .panelwrapper:visible'),
       width = 100,
-      innerWidth = window.innerWidth,
+      height = 0,
+      innerW = window.innerWidth,
+      innerH = $('#source').outerHeight(),
       left = 0,
-      right = 0;
+      right = 0,
+      top = 0,
+      panel,
+      nestedPanels = [];
 
   if (visible.length) {
     $body.addClass('panelsVisible');
-    visible = visible.sort(function (a, b) {
-      return a.order < b.order ? -1 : 1;
-    });
+
+    // visible = visible.sort(function (a, b) {
+    //   return a.order < b.order ? -1 : 1;
+    // });
 
     width = 100 / visible.length;
     for (var i = 0; i < visible.length; i++) {
+      panel = $.data(visible[i], 'panel');
       right = 100 - (width * (i+1));
-      visible[i].$el.css({ top: 0, bottom: 0, left: left + '%', right: right + '%' });
-      visible[i].splitter.trigger('init', innerWidth * left/100);
-      visible[i].splitter[i == 0 ? 'hide' : 'show']();
+      panel.$el.css({ top: 0, bottom: 0, left: left + '%', right: right + '%' });
+      panel.splitter.trigger('init', innerW * left/100);
+      panel.splitter[i == 0 ? 'hide' : 'show']();
       left += width;
+
+      nestedPanels = $(visible[i]).find('.panel');
+      if (nestedPanels.length > 1) {
+        top = 0;
+        nestedPanels = nestedPanels.filter(':visible');
+        console.log(nestedPanels);
+        nestedPanels.each(function (i) {
+          bottom = 100 - (innerH * (i+1));
+          var panel = jsbin.panels.panels[$.data(this, 'name')];
+          $(this).css({ top: top + '%', bottom: bottom + '%' });
+          panel.splitter.trigger('init', innerH * top/100);
+          panel.splitter[i == 0 ? 'hide' : 'show']();
+          left += width;
+        });
+      }
     }
   } else {
     $('#history').show();
@@ -205,7 +227,7 @@ var editors = panels.panels = {
 };
 
 
-jsconsole.init(); // sets up render functions etc.
+// jsconsole.init(); // sets up render functions etc.
 editors.live.settings.render = function () {
   editors.console.render();
   renderLivePreview();
@@ -248,7 +270,7 @@ Panel.prototype.hide = function () {
 panels.restore();
 panels.focus(panels.getVisible()[0] || null);
 
-// allow panels to be reordered
+// allow panels to be reordered - TODO re-enable
 (function () {
   var panelsEl = document.getElementById('panels'),
       moving = null;
@@ -279,7 +301,7 @@ panels.focus(panels.getVisible()[0] || null);
     return false;
   };
 
-}());
+});
 
 
 var editorsReady = setInterval(function () {

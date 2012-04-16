@@ -1,5 +1,5 @@
 //= require <jquery>
-//= require "vendor/jquery.chosen"
+/// require "vendor/jquery.chosen"
 //= require "vendor/polyfills"
 
 if (window.console === undefined) (function () {

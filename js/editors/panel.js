@@ -11,10 +11,17 @@ var Panel = function (name, settings) {
   var panel = this;
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
-  panel.$el = $('.panel.' + name).remove();
+  var $panel = $('.panel.' + name);
+  $panel.data('name', name);
+  panel.$el = $panel.detach();
   panel.$el.appendTo($source);
+  panel.$el.wrapAll('<div class="stretch panelwrapper">');
+  // var wrapper = panel.$el.parent().hide();
+  panel.$el = panel.$el.parent().hide();
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
+
+  panel.$el.data('panel', panel);
 
   // keyboard shortcut (set in keyboardcontrol.js)
   panelShortcuts[panelShortcuts.start + panel.order] = panel.id;
@@ -45,6 +52,7 @@ var Panel = function (name, settings) {
   } 
 
   if (!settings.nosplitter) {
+    // console.log(panel.id, wrapper);
     panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
     panel.splitter.hide();
   } else {
@@ -69,10 +77,10 @@ var Panel = function (name, settings) {
   });
   this.controlButton.appendTo('#panels');
 
-  this.$el.focus(function () {
+  $panel.focus(function () {
     panel.focus();
   });
-  this.$el.click(function () {
+  $panel.add(this.$el.find('.label')).click(function () {
     panel.focus();
   });
 }
@@ -88,8 +96,22 @@ Panel.prototype = {
     // width
     var panel = this;
 
-    panel.$el.show();
-    panel.splitter.show();
+    // panel.$el.show();
+    if (panel.splitter.length) {
+      if (panel.$el.find('.panel').length == 0) {
+        console.log(panel.id, 'showing panel by name')
+        var $panel = $('.panel.' + panel.id).show();
+        // $panel.next().show(); // should be the splitter...
+      } else {
+        console.log(panel.id, 'showing default panel')
+        panel.$el.show();
+      }
+      panel.splitter.show();
+    } else {
+      console.log('showing default panel 2')
+      panel.$el.show();
+    }
+
     panel.visible = true;
     if (panel.settings.show) {
       panel.settings.show.call(panel, true);
@@ -109,7 +131,7 @@ Panel.prototype = {
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
-          $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('> .label').outerHeight());
+          $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('.label').outerHeight());
           populateEditor(panel, panel.name);
         }
         panel.editor.focus();
@@ -122,11 +144,25 @@ Panel.prototype = {
   },
   hide: function () {
     var panel = this;
-    panel.$el.hide();
+    // panel.$el.hide();
     panel.visible = false;
 
     // update all splitter positions
-    panel.splitter.hide();
+    // LOGIC: when you go to hide, you need to check if there's
+    // other panels inside the panel wrapper - if there are
+    // hide the nested panel and any previous visible splitter
+    // if there's only one - then hide the whole thing.
+    if (panel.splitter.length) {
+      if (panel.$el.find('.panel').length == 0) {
+        var $panel = $('.panel.' + panel.id).hide();
+        $panel.prev().hide();
+      } else {
+        panel.$el.hide();
+        panel.splitter.hide();
+      }
+    } else {
+      panel.$el.hide();
+    }
     panel.controlButton.removeClass('active');
     panel.distribute();
 
@@ -203,7 +239,7 @@ Panel.prototype = {
       panel.focus();
     });
 
-    var $label = panel.$el.find('> .label');
+    var $label = panel.$el.find('.label');
     if (document.body.className.indexOf('ie6') === -1 && $label.length) {
       editor.scroller.scroll(function (event) {
         if (this.scrollTop > 10) {
@@ -218,7 +254,7 @@ Panel.prototype = {
 
     $document.bind('sizeeditors', function () {
       if (panel.visible) {
-        var height = panel.$el.outerHeight(),
+        var height = panel.editor.scroller.closest('.panel').outerHeight(),
             offset = 0;
             // offset = panel.$el.find('> .label').outerHeight();
 

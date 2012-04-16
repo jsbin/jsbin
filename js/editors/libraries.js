@@ -18,6 +18,7 @@ Libraries.prototype.init = function () {
   var libs = {
     bootstrap: {
       text: 'Bootstrap',
+      requires: 'http://code.jquery.com/jquery-1.7.2.min.js',
       style: ['http://twitter.github.com/bootstrap/assets/css/bootstrap.css',
               'http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css'],
       scripts: [
@@ -52,7 +53,7 @@ Libraries.prototype.init = function () {
       scripts: [
         { text: 'jQuery latest', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' },
         { text: 'jQuery WIP (via git)', url: 'http://code.jquery.com/jquery-git.js' },
-        { text: 'jQuery 1.7.1', url: 'http://code.jquery.com/jquery-1.7.1.min.js' },
+        { text: 'jQuery 1.7.2', url: 'http://code.jquery.com/jquery-1.7.2.min.js' },
         { text: 'jQuery 1.6.4', url: 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' }
       ]
     },
@@ -66,7 +67,7 @@ Libraries.prototype.init = function () {
     },
     jquerymobile : {
       text: 'jQuery Mobile',
-      requires: 'http://code.jquery.com/jquery-1.6.4.min.js',
+      requires: 'http://code.jquery.com/jquery.min.js',
       style: 'http://code.jquery.com/mobile/latest/jquery.mobile.css',
       scripts: [
         { text: 'jQuery Mobile Latest', url: 'http://code.jquery.com/mobile/latest/jquery.mobile.js' },

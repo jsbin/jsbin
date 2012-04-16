@@ -40,7 +40,7 @@ p {
 
 #control {
   z-index: 199999;
-  min-width: 865px;
+  min-width: 720px;
   height: 36px;
   position: absolute;
 /*  width: 100%;*/
@@ -240,6 +240,8 @@ div.code, #live, .resize {
 #library {
   padding: 2px;
   width: 200px;
+  /*width: 10px;*/
+  margin-left: 5px;
 }
 
 .javascript {
@@ -263,8 +265,8 @@ iframe.javascript {
   height: 23px;
   line-height: 25px;
   padding: 6px 10px;
-  display: block;
-  float: left;
+  display: inline-block;
+  /*float: left;*/
   text-decoration: none;
   margin: 0px 0px;
   /*background: #fff;*/
@@ -363,8 +365,8 @@ body.preview a.preview {
 div.menu {
   margin-left: -1px;
   border-left: 1px solid #ccc;
-  float: left;
-  display: block;
+  /*float: left;*/
+  display: inline-block;
   /*width: 104px;*/
   position: relative; 
   z-index: 20;
@@ -867,7 +869,7 @@ ie6, li {
 
 /* attempt to get a live render preview in */
 #live {
-  display: none;
+  /*display: none;*/
   /*top: 60%;*/
   border-top: 1px solid #ccc;
   background: white;
@@ -1692,10 +1694,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 /* @end */
 
-
-.panel {
-  display: none;
-  border-left: 1px solid #ccc;
+#source > div {
   -webkit-transition: left ease-out 100ms, right ease-out 100ms;
   -moz-transition: left ease-out 100ms, right ease-out 100ms;
   -o-transition: left ease-out 100ms, right ease-out 100ms;
@@ -1703,20 +1702,22 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 /* cancel effects when dragging - otherwise it looks lame and sluggish */
-.dragging .panel {
-  -webkit-transition: none;
-  -moz-transition: none;
-  -o-transition: none;
-  transition: none;
+.dragging * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
+.panel {
+  /*display: none;*/
+  border-left: 1px solid #ccc;
+  background: #fff;
+  background: hsl(0, 0%, 98%);
 }
 
 .panel:first-child {
   border-left: 0;
-}
-
-.panel {
-  background: #fff;
-  background: hsl(0, 0%, 98%);
 }
 
 .panel .label {
@@ -1726,7 +1727,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
   border-bottom: 1px solid #ededed;
 }
 
-.panel.focus .label {
+.focus .label {
   /*background-color: #DBE4F5;*/
   /*box-shadow: inset 0 0 10px #DBE4F5;*/
   /*box-shadow:         inset 0 0 10px #000000;*/
@@ -1938,9 +1939,27 @@ a.button.active:hover {
 }
 
 #panels {
-  width: 480px;
-  margin: 3px auto 0px auto;
+  /*width: 480px;*/
+  /*margin: 3px auto 0px auto;*/
+  text-align: center;
   overflow: hidden;
+  /*background-color: #fff;*/
+  /*background-image: -webkit-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  /*background-image: -moz-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  /*background-image: -o-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  /*background-image: -ms-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  /*background-image: linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  position: absolute;
+  top: 0;
+  width: 100%;
+  /*z-index: 99;*/
+  padding-top: 3px;
+}
+
+#panels a {
+  text-decoration: none;
+  display: inline-block;
+  float: none;
 }
 
 .button-dropdown:hover,

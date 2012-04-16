@@ -35,8 +35,7 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a>
-      <div class="menu">
+      <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a><div class="menu">
         <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
@@ -91,7 +90,7 @@ if ($code_id) {
       <div class="label">
         <strong>HTML</strong>
         <label for="library">Include</label>
-        <select id="library" class="chosen">
+        <select id="library" class="xchosen">
           <option value="none">None</option>
           <option value="jquery">jQuery</option>
           <option value="jquery+jqueryui">jQuery UI</option>

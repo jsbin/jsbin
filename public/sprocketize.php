@@ -15,7 +15,7 @@ $sprocket = new Sprocket($filePath, array(
 	'baseUri' => '../js',
   'baseFolder' => '/js',
   'assetFolder' => '..',
-	'debugMode' => OFFLINE ? true : false,
+	'debugMode' => !IS_PRODUCTION,
   'autoRender' => false
 ));
  

@@ -19,7 +19,7 @@ define('DB_PASSWORD', $settings['db.pass']); // ...and password
 define('DB_HOST',     $settings['db.host']); // 99% chance you won't need to change this value
 
 // change this to suite your offline detection
-define('OFFLINE', $settings['env'] === DEVELOPMENT);
+define('IS_PRODUCTION', $settings['env'] === DEVELOPMENT);
 
 define('HOST', $settings['url.host']);
 
@@ -30,5 +30,5 @@ define('PATH', $settings['url.prefix']);
 define('ROOT', ($settings['url.ssl'] ? 'http' : 'https') . '://' . HOST . PATH);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
-define('VERSION', OFFLINE ? 'debug' : $package['version']);
+define('VERSION', IS_PRODUCTION ? 'debug' : $package['version']);
 ?>

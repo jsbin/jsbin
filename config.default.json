@@ -6,5 +6,6 @@
   "db.name": "jsbin",
   "db.user": "root",
   "db.pass": "",
-  "db.host": "localhost"
+  "db.host": "localhost",
+  "analytics.id": null
 }

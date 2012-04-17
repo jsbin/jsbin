@@ -34,7 +34,8 @@ echo $mustache->render($view, array(
     'css' => $css,
     'javascript' => $javascript
   )),
-  'production?' => IN_PRODUCTION,
+  'production?' => IS_PRODUCTION,
+  'analytics_id' => ANALYTICS_ID,
   'tips' => file_get_contents('tips.json')
 ));
 ?>

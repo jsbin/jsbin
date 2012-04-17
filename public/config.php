@@ -19,7 +19,7 @@ define('DB_PASSWORD', $settings['db.pass']); // ...and password
 define('DB_HOST',     $settings['db.host']); // 99% chance you won't need to change this value
 
 // change this to suite your offline detection
-define('IS_PRODUCTION', $settings['env'] === DEVELOPMENT);
+define('IS_PRODUCTION', $settings['env'] === PRODUCTION);
 
 define('HOST', $settings['url.host']);
 
@@ -27,8 +27,10 @@ define('HOST', $settings['url.host']);
 define('PATH', $settings['url.prefix']);
 
 // The full url to the root page of the app.
-define('ROOT', ($settings['url.ssl'] ? 'http' : 'https') . '://' . HOST . PATH);
+define('ROOT', ($settings['url.ssl'] ? 'https' : 'http') . '://' . HOST . PATH);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
-define('VERSION', IS_PRODUCTION ? 'debug' : $package['version']);
+define('VERSION', !IS_PRODUCTION ? 'debug' : $package['version']);
+
+define('ANALYTICS_ID', $settings['analytics.id']);
 ?>

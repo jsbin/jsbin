@@ -206,10 +206,10 @@ Include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
 </script>
 <script>var jsbin = { root: "{{host}}", version: "{{version}}" }; tips = {{tips}}</script>
 <script src="{{root}}js/{{version}}/jsbin.js"></script>
-{{#offline?}}
+{{#production?}}{{#analytics_id}}
 <script>
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-1656750-13']);
+_gaq.push(['_setAccount', '{{analytics_id}}']);
 _gaq.push(['_trackPageview']);
 
 (function() {
@@ -218,7 +218,7 @@ _gaq.push(['_trackPageview']);
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
 })();
 </script>
-{{/offline?}}
+{{/analytics_id}}{{/production?}}
 {{! showSaved($home) }}
 <div id="urlHelp" class="modal">
   <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>

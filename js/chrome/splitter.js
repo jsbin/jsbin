@@ -200,10 +200,8 @@ $.fn.splitter = function () {
       }
  
       if ($el.is(':hidden')) {
-        console.log('splitter hidden');
         $handle.hide();
       } else {
-        console.log('splitter NOT hidden');
         $el.css('border-' + props[type].cssProp, '1px solid #ccc');
         moveSplitter(x !== undefined ? x : $el.offset()[props[type].cssProp]);
       }

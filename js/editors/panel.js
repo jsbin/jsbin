@@ -94,16 +94,16 @@ Panel.prototype = {
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our
     // width
-    var panel = this;
+    var panel = this,
+        panelCount = panel.$el.find('.panel').length;
 
     // panel.$el.show();
     if (panel.splitter.length) {
-      if (panel.$el.find('.panel').length == 0) {
-        console.log(panel.id, 'showing panel by name')
+      if (panelCount == 0 || panelCount > 1) {
         var $panel = $('.panel.' + panel.id).show();
         // $panel.next().show(); // should be the splitter...
+        $panel.closest('.panelwrapper').show();
       } else {
-        console.log(panel.id, 'showing default panel')
         panel.$el.show();
       }
       panel.splitter.show();
@@ -160,6 +160,12 @@ Panel.prototype = {
       $panel.prev().hide(); // hide the splitter if there is one
 
       // TODO trigger a distribute horizontally
+      if ($panel.closest('.panelwrapper').find('.panel:visible').length === 0) {
+        console.log('hiding related panel');
+        $panel.closest('.panelwrapper').hide();
+        // panel.splitter.hide();
+        // TODO FIXME 
+      }
     } else {
       panel.$el.hide();
       panel.splitter.hide();

@@ -1,1 +1,10 @@
-{}
+{
+  "host": "jsbin.dev",
+  "protocol": "http",
+  "path": "/",
+  "offline": true,
+  "db.name": "jsbin",
+  "db.user": "root",
+  "db.pass": "",
+  "db.host": "localhost"
+}

@@ -1,5 +1,5 @@
 logs
 logs/*
 node_modules
-config.local.php
+config.local.json
 js/jsbin*.js

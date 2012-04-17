@@ -11,11 +11,13 @@ define('DB_HOST', 'localhost'); // 99% chance you won't need to change this valu
 // change this to suite your offline detection
 define('OFFLINE', is_dir('/Users/'));
 
-define('HOST', 'http://jsbin.dev/');
+define('HOST', $_SERVER['HTTP_HOST']);
 
-// if you're running from a subdirectory, change this to the start of the
-// url, i.e. offline.jsbin.com/foobar/ - ROOT would be foobar
-define('ROOT', '/');
+// Path prefix for all jsbin urls.
+define('PATH', '/');
+
+// The full url to the root page of the app.
+define('ROOT', 'http://' . HOST . BASEPATH);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', OFFLINE ? 'debug' : trim(file_get_contents('VERSION')));

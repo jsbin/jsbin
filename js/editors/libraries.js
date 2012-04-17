@@ -7,7 +7,7 @@ var Libraries = function () {
   this.init();
 
   this.userSpecified = JSON.parse(localStorage.getItem('libraries') || "[]");
-  
+
   // read from storage
   for (var i = 0; i < this.userSpecified.length; i++) {
     push.call(this, this.userSpecified[i]);
@@ -28,7 +28,7 @@ Libraries.prototype.init = function () {
     yui: {
       text: 'YUI',
       scripts: [
-        { text: 'YUI 3.3.0', url: 'http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js'},
+        { text: 'YUI 3.5.0', url: 'http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js'},
         { text: 'YUI 2.8.2', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.2/build/yuiloader/yuiloader-min.js'}
       ]
     },
@@ -111,7 +111,7 @@ Libraries.prototype.init = function () {
   // NOTE if a new library category is added, you need to add it here
   order = 'jquery jqueryui jquerymobile bootstrap prototype yui mootools dojo others'.split(' '),
   i = 0;
-    
+
   this.length = 0; // triggers support for length prop
   for (i = 0; i < order.length; i++) {
     push.call(this, libs[order[i]]);

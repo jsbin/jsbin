@@ -29,7 +29,7 @@ Libraries.prototype.init = function () {
       text: 'YUI',
       scripts: [
         { text: 'YUI 3.5.0', url: 'http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js'},
-        { text: 'YUI 2.8.2', url: 'http://ajax.googleapis.com/ajax/libs/yui/2.8.2/build/yuiloader/yuiloader-min.js'}
+        { text: 'YUI 2.9.0', url: 'http://yui.yahooapis.com/2.9.0/build/yuiloader/yuiloader-min.js'}
       ]
     },
     mootools: {

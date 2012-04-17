@@ -108,7 +108,6 @@ Panel.prototype = {
       }
       panel.splitter.show();
     } else {
-      console.log('showing default panel 2')
       panel.$el.show();
     }
 

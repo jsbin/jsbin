@@ -19,7 +19,6 @@
 - Options for pre-rendering
 - .getCode runs through panel language
 - "insertionPoint" means we can have more panels
-- Horizontal/Vertical switching affects code panels only - this will make the implementation MUCH easier
 
 # Save
 

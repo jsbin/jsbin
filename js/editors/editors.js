@@ -163,13 +163,20 @@ panels.distribute = function () {
         top = 0;
         nestedPanels = nestedPanels.filter(':visible');
         console.log(nestedPanels);
+        height = 100 / nestedPanels.length;
         nestedPanels.each(function (i) {
-          bottom = 100 - (innerH * (i+1));
+          debugger;
+          bottom = 100 - (height * (i+1));
           var panel = jsbin.panels.panels[$.data(this, 'name')];
-          $(this).css({ top: top + '%', bottom: bottom + '%' });
-          panel.splitter.trigger('init', innerH * top/100);
-          panel.splitter[i == 0 ? 'hide' : 'show']();
-          left += width;
+          console.log(panel.id, top, bottom);
+          // $(this).css({ top: top + '%', bottom: bottom + '%' });
+          $(this).css('top', top + '%');
+          $(this).css('bottom', bottom + '%' );
+          if (panel.splitter.hasClass('vertical')) {
+            panel.splitter.trigger('init', innerH * top/100);
+            panel.splitter[i == 0 ? 'hide' : 'show']();
+          }
+          top += height;
         });
       }
     }

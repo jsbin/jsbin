@@ -152,17 +152,20 @@ Panel.prototype = {
     // other panels inside the panel wrapper - if there are
     // hide the nested panel and any previous visible splitter
     // if there's only one - then hide the whole thing.
-    if (panel.splitter.length) {
-      if (panel.$el.find('.panel').length == 0) {
-        var $panel = $('.panel.' + panel.id).hide();
-        $panel.prev().hide();
-      } else {
-        panel.$el.hide();
-        panel.splitter.hide();
-      }
+    // if (panel.splitter.length) {
+    var panelCount = panel.$el.find('.panel').length;
+    if (panelCount == 0 || panelCount > 1) {
+      var $panel = $('.panel.' + panel.id).hide();
+      $panel.prev().hide(); // hide the splitter if there is one
+
+      // TODO trigger a distribute horizontally
     } else {
       panel.$el.hide();
+      panel.splitter.hide();
     }
+    // } else {
+    //   panel.$el.hide();
+    // }
     panel.controlButton.removeClass('active');
     panel.distribute();
 

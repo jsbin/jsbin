@@ -200,8 +200,10 @@ $.fn.splitter = function () {
       }
  
       if ($el.is(':hidden')) {
+        console.log('splitter hidden');
         $handle.hide();
       } else {
+        console.log('splitter NOT hidden');
         $el.css('border-' + props[type].cssProp, '1px solid #ccc');
         moveSplitter(x !== undefined ? x : $el.offset()[props[type].cssProp]);
       }
@@ -222,6 +224,8 @@ $.fn.splitter = function () {
         $handle.css('margin-left', 0);
         $handle.css('margin-top', 5);
 
+        $handle.addClass('vertical');
+
         delete settings.x;
 
         $originalContainer.next(':visible').trigger('init');
@@ -232,6 +236,7 @@ $.fn.splitter = function () {
 
         $el.appendTo($originalContainer);
         $handle.insertBefore($originalContainer);
+        $handle.removeClass('vertical');
         $el.css('border-top', 0);
         $el = $originalContainer;
         $originalContainer.show();

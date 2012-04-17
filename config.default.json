@@ -1,8 +1,8 @@
 {
-  "host": "jsbin.dev",
-  "protocol": "http",
-  "path": "/",
-  "offline": true,
+  "env": "development",
+  "url.host": "jsbin.dev",
+  "url.prefix": "/",
+  "url.ssl": false,
   "db.name": "jsbin",
   "db.user": "root",
   "db.pass": "",

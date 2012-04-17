@@ -9,6 +9,9 @@ if (file_exists('../config.local.json')) {
 
 $settings = array_merge($defaults, $locals);
 
+define('PRODUCTION', 'production');
+define('DEVELOPMENT', 'development');
+
 // database settings
 define('DB_NAME',     $settings['db.name']);
 define('DB_USER',     $settings['db.user']); // Your MySQL username
@@ -16,15 +19,15 @@ define('DB_PASSWORD', $settings['db.pass']); // ...and password
 define('DB_HOST',     $settings['db.host']); // 99% chance you won't need to change this value
 
 // change this to suite your offline detection
-define('OFFLINE', $settings['offline']);
+define('OFFLINE', $settings['env'] === DEVELOPMENT);
 
-define('HOST', $settings['host']);
+define('HOST', $settings['url.host']);
 
 // Path prefix for all jsbin urls.
-define('PATH', $settings['path']);
+define('PATH', $settings['url.prefix']);
 
 // The full url to the root page of the app.
-define('ROOT', $settings['protocol'] . '://' . HOST . PATH);
+define('ROOT', ($settings['url.ssl'] ? 'http' : 'https') . '://' . HOST . PATH);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', OFFLINE ? 'debug' : $package['version']);

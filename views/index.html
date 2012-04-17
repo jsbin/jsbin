@@ -37,7 +37,7 @@
         {{#code_id}}
         <!-- <span class="meta"> -->
           <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}images/revert.png" /><img class="disabled" src="{{root}}images/revert-disabled.png" /></a>
-          <a id="jsbinurl" class="button group light left right gap" href="{{code_id_path}}">{{code_id_path}}</a>
+          <a id="jsbinurl" class="button group light left right gap" href="{{code_id_path}}">{{code_id_domain}}</a>
         <!-- </span> -->
         {{/code_id}}
         {{#home}}
@@ -219,7 +219,7 @@ _gaq.push(['_trackPageview']);
 })();
 </script>
 {{/analytics_id}}{{/production?}}
-{{! showSaved($home) }}
+{{{ list_history }}}
 <div id="urlHelp" class="modal">
   <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
   <h2>JS Bin URLs</h2>

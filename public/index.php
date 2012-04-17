@@ -19,6 +19,13 @@ if ($code_id) {
   $code_id_path = ROOT . $code_id . '/';
 }
 
+// Include and capture the results of the show saved function.
+ob_start();
+showSaved($home);
+$list_history = ob_get_clean();
+
+$code_id_domain = preg_replace('/https?:\/\//', '', $code_id_path);
+
 $view = file_get_contents('../views/index.html');
 $mustache = new Mustache;
 echo $mustache->render($view, array(
@@ -28,6 +35,7 @@ echo $mustache->render($view, array(
   'revision' => $revision,
   'code_id' => $code_id,
   'code_id_path' => $code_id_path,
+  'code_id_domain' => $code_id_domain,
   'json_template' => json_encode(array(
     'url' => $code_id_path . ($revision == 1 ? '' : '/' . $revision),
     'html' => $html,
@@ -36,6 +44,7 @@ echo $mustache->render($view, array(
   )),
   'production?' => IS_PRODUCTION,
   'analytics_id' => ANALYTICS_ID,
-  'tips' => file_get_contents('tips.json')
+  'tips' => file_get_contents('tips.json'),
+  'list_history' => $list_history
 ));
 ?>

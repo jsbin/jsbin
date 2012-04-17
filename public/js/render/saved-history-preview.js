@@ -7,7 +7,7 @@ if ($('#history').length) (function () {
   function render(url) {
     iframe.src = url + 'quiet';
     iframe.removeAttribute('hidden');
-    viewing.innerHTML = window.location.hostname + url;
+    viewing.innerHTML = url;
   }
 
   function matchNode(el, nodeName) {

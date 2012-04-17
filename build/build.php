@@ -1,7 +1,8 @@
 <?php
 
-define('VERSION', trim(file_get_contents('VERSION')));
-
+// Parse the package.json file to get the version.
+$package = json_decode(file_get_contents('package.json'));
+define('VERSION', $package->version);
 define('SPROCKETIZED', './public/js/tmp.' . VERSION . '.js');
 define('PRODUCTION', './public/js/jsbin-' . VERSION . '.js');
 

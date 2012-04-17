@@ -112,6 +112,8 @@ Panel.prototype = {
       panel.$el.show();
     }
 
+    $body.addClass('panelsVisible');
+
     panel.visible = true;
     if (panel.settings.show) {
       panel.settings.show.call(panel, true);

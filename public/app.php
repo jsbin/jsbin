@@ -3,6 +3,8 @@
 
 date_default_timezone_set('Europe/London');
 
+require_once('../vendor/mustache.php');
+
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
@@ -137,7 +139,7 @@ if (!$action) {
     echo $css;
   } else {
     header('Content-type: application/json');
-    $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (!$ajax) {
       echo 'var template = ';
     }
@@ -242,14 +244,14 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {
       // FIXME - why *am* I sending "js" and "html" with the url to the bin?
       $data = array(
         code => $code_id,
-        root => ROOT,
+        root => PATH,
         created => date('c', time()),
         revision => $revision,
         url => $url,
@@ -259,7 +261,7 @@ if (!$action) {
         title => getTitleFromCode(array(html => $html, javascript => $javascript))
       );
       echo json_encode($data);
-      // echo '{ "code": "' . $code_id . '", "root": "' . ROOT . '", "created": "' . date('c', time()) . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit", "title": "' .  .'" }';
+      // echo '{ "code": "' . $code_id . '", "root": "' . PATH . '", "created": "' . date('c', time()) . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit", "title": "' .  .'" }';
     }
     
     if (array_key_exists('callback', $_REQUEST)) {
@@ -330,7 +332,7 @@ if (!$action) {
     }
 
     if (!$html && !$ajax) {
-      $javascript = "/*\n  Created using " . $host . ROOT . "\n  Source can be edit via " . $host . ROOT . "$code_id/edit\n*/\n\n" . $javascript;
+      $javascript = "/*\n  Created using " . ROOT . "\n  Source can be edit via " . $host . ROOT . "$code_id/edit\n*/\n\n" . $javascript;
     }
 
     if (!$html) {
@@ -435,7 +437,7 @@ function formatCompletedCode($html, $javascript, $css, $code_id, $revision) {
 
   if (!$ajax && $code_id != 'jsbin') {
     $code_id .= $revision == 1 ? '' : '/' . $revision;
-    $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . $host . ROOT . "\n  Source can be edited via " . $host . ROOT . "$code_id/edit\n\n-->", $html);            
+    $html = preg_replace('/<html(.*)/', "<html$1\n<!--\n\n  Created using " . ROOT . "\n  Source can be edited via " . $host . ROOT . "$code_id/edit\n\n-->", $html);            
   }
 
   return array($html, $javascript, $css);

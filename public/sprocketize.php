@@ -1,14 +1,12 @@
 <?php 
 require_once('config.php');
-require_once('lib/sprockets/sprocket.php');
+require_once('../vendor/sprockets/sprocket.php');
  
 // get path from request
-$pos = strpos($_SERVER['REQUEST_URI'], ROOT);
-if ($pos !== false) $pos = strlen(ROOT);
+$pos = strpos($_SERVER['REQUEST_URI'], PATH);
+if ($pos !== false) $pos = strlen(PATH);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
-
-// strip the ROOT off and add our own
 $filePath = '/' . preg_replace('/\?.*/', '', $request_uri);
  
 // prepare sprocket

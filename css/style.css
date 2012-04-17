@@ -2075,15 +2075,19 @@ a.button.active:hover {
 #history {
   z-index: 0;
   /*position: absolute;*/
-  top: 31px;
+  /*top: 31px;*/
   -webkit-transition: top ease-out 200ms;
   font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;
   padding: 10px 0;
-  position: relative;
-  height: 100%;
+  position: absolute;
+  /*height: 100%;*/
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: auto;
 }
 
@@ -2252,5 +2256,7 @@ a.button.active:hover {
 
 #save {
   width: 50px;
+  position: relative;
+  z-index: 1;
 }
 

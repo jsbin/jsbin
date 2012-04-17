@@ -1,0 +1,18 @@
+{
+  "author": "Remy Sharp <remy@leftlogic.com> (http://remysharp.com)",
+  "name": "jsbin",
+  "description": "Collaborative JavaScript Debugging App",
+  "version": "3.0.0dev",
+  "homepage": "http://jsbin.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/remy/jsbin.git"
+  },
+  "engines": {
+    "node": "~0.6.11"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+  "private": true
+}

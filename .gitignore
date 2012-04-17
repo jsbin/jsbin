@@ -1,3 +1,4 @@
 logs
 logs/*
-config.php
+config.local.php
+js/jsbin*.js

@@ -136,6 +136,11 @@ $('#runwithalerts').click(function () {
   return false;
 });
 
+$('#runconsole').click(function () {
+  editors.console.render();
+  return false;
+});
+
 $('#createnew').click(function () {
   var i, key;
   // FIXME this is out and out [cr]lazy....

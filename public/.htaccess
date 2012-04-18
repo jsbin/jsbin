@@ -32,4 +32,3 @@ RewriteRule ^(.*)$ $1.html [L]
 # using 'index.php' because it forces a '/' request to the handler
 RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
-

@@ -70,10 +70,6 @@ $.fn.splitter = function () {
         refreshTimer = null,
         settings = splitterSettings[guid] || {};
 
-    // if (settings.y) {
-    //   type = 'y';
-    // }
-
     var tracker = {
       down: { x: null, y: null },
       delta: { x: null, y: null },
@@ -196,7 +192,7 @@ $.fn.splitter = function () {
       } else {
         // $el.css('border-right', '1px solid #ccc');
         $el.css('border-top', 0);
-        $prev.css('border-right', '1px solid #ccc');
+        $prev.css('border-left', '1px solid #ccc');
       }
  
       if ($el.is(':hidden')) {
@@ -226,7 +222,7 @@ $.fn.splitter = function () {
 
         delete settings.x;
 
-        $originalContainer.next(':visible').trigger('init');
+        $originalContainer.nextAll(':visible:first').trigger('init');
         // 2. change splitter to the right to point to new block div
       } else {
         $el = $prev;
@@ -242,7 +238,9 @@ $.fn.splitter = function () {
         $handle.css('margin-left', -5);
         delete settings.y;
 
-        $originalContainer.next(':visible').trigger('init');
+        setTimeout(function() {
+          $originalContainer.nextAll(':visible:first').trigger('init');
+        }, 0);
       }
 
       resetPrev();
@@ -264,7 +262,9 @@ $.fn.splitter = function () {
       // reset top/bottom positions
       // reset left/right positions
 
-      $handle.trigger('init', value || $el.offset()[props[type].cssProp] || props[type].size / 2);
+      if (!$el.is(':hidden') && value) {
+        $handle.trigger('init', value || $el.offset()[props[type].cssProp] || props[type].size / 2);
+      }
     });
 
 
@@ -272,6 +272,10 @@ $.fn.splitter = function () {
     $prev.css('height', 'auto');
     $el.data('splitter', $handle);
     $el.before($handle);
+
+    // if (settings.y) {
+    //   $handle.trigger('change', 'y');
+    // }
   });
 };
 

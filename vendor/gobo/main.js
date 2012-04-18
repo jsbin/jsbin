@@ -37,8 +37,8 @@ function main(filename, paths, complete) {
       basepaths = paths || [root];
 
       completefile = sprocketize(filename);
-      // complete(completefile);
-      console.log(completefile);
+      complete(completefile);
+      // console.log(completefile);
     });
   } else {
     usage();

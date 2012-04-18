@@ -132,8 +132,7 @@ if ($code_id) {
         <strong>Output</strong>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
-Include alerts, prompts &amp; confirm boxes">Run JavaScript</button>
-          <label>Always run JS<input type="checkbox" id="enablejs"></label>
+Include alerts, prompts &amp; confirm boxes">Run JS with alerts</button> <label>Always run JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>

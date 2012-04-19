@@ -262,7 +262,7 @@ $.fn.splitter = function () {
       // reset top/bottom positions
       // reset left/right positions
 
-      if (!$el.is(':hidden') && value) {
+      if ($el.is(':visible')) {
         $handle.trigger('init', value || $el.offset()[props[type].cssProp] || props[type].size / 2);
       }
     });

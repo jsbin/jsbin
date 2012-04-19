@@ -217,11 +217,12 @@ var editors = panels.panels = {
   console: new Panel('console', { label: 'Console' }),
   live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
+    var panel = this;
     $(document).bind('codeChange.live', function (event, data) {
       if (panels.ready) {
         if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
           // ignore
-        } else {
+        } else if (panel.visible) {
           throttledPreview();
         }
       }

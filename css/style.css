@@ -239,7 +239,7 @@ div.code, #live, .resize {
 */
 #library {
   padding: 2px;
-  width: 200px;
+  width: 80px;
   /*width: 10px;*/
   margin-left: 5px;
 }
@@ -2009,6 +2009,7 @@ a.button.active:hover {
   /*min-height: 34px;*/
   /*line-height: 34px;*/
   padding: 10px 10px 0 10px;
+  line-height: 20px;
 }
 
 .label label {

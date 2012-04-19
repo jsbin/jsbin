@@ -7,30 +7,43 @@ if (file_exists('../config.local.json')) {
   $locals = json_decode(file_get_contents('../config.local.json'), true);
 }
 
-$settings = array_merge($defaults, $locals);
+function merge_config($arr1, $arr2) {
+  foreach ($arr2 as $key => $val) {
+    if (is_array($val)) {
+      $arr1[$key] = merge_config($arr1[$key], $val);
+    } else {
+      $arr1[$key] = $val;
+    }
+  }
+  return $arr1;
+}
 
-define('PRODUCTION', 'production');
+$settings = merge_config($defaults, $locals);
+$database = $settings['store']['mysql'];
+$url      = $settings['url'];
+
+define('PRODUCTION',  'production');
 define('DEVELOPMENT', 'development');
 
 // database settings
-define('DB_NAME',     $settings['db.name']);
-define('DB_USER',     $settings['db.user']); // Your MySQL username
-define('DB_PASSWORD', $settings['db.pass']); // ...and password
-define('DB_HOST',     $settings['db.host']); // 99% chance you won't need to change this value
+define('DB_NAME',     $database['database']);
+define('DB_USER',     $database['user']);
+define('DB_PASSWORD', $database['password']);
+define('DB_HOST',     $database['host']);
 
 // change this to suite your offline detection
 define('IS_PRODUCTION', $settings['env'] === PRODUCTION);
 
-define('HOST', $settings['url.host']);
+define('HOST', $url['host']);
 
 // Path prefix for all jsbin urls.
-define('PATH', $settings['url.prefix']);
+define('PATH', $url['prefix']);
 
 // The full url to the root page of the app.
-define('ROOT', ($settings['url.ssl'] ? 'https' : 'http') . '://' . HOST . PATH);
+define('ROOT', ($url['ssl'] ? 'https' : 'http') . '://' . HOST . PATH);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', !IS_PRODUCTION ? 'debug' : $package['version']);
 
-define('ANALYTICS_ID', $settings['analytics.id']);
+define('ANALYTICS_ID', $settings['analytics']['id']);
 ?>

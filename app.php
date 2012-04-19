@@ -396,7 +396,7 @@ function formatCompletedCode($html, $javascript, $css, $code_id, $revision) {
   $javascript = preg_replace('@</script@', "<\/script", $javascript);
   
   if ($quiet && $html) {
-    $html = '<script>window.onfocus=function(){return false;};window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
+    $html = '<script>window.onfocus=function(){return false;};window.open=window.print=window.confirm=window.prompt=window.alert=function(){};</script>' . $html;
   } 
   
   if ($html && stripos($html, '%code%') === false && strlen($javascript)) {

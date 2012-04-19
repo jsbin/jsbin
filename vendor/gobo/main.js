@@ -20,6 +20,9 @@ function main(filename, paths, complete) {
     paths = null;
   }
 
+  // Reset the cache because it is very broken.
+  cache = {};
+
   if (paths && ({}).toString.call(paths).indexOf('Array') === -1) {
     paths = [paths];
   }

@@ -69,7 +69,7 @@ if ($code_id) {
           </div>
           <div class="dropdown" id="homemenu">
             <div class="dropdownmenu">
-              <a id="logout" class="button group" href="<?php echo ROOT . $code_id?>logout">Logout</a>
+              <a id="logout" class="button group" href="<?php echo ROOT ?>logout">Logout</a>
             </div>
           </div>
         </div>
@@ -132,7 +132,7 @@ if ($code_id) {
         <strong>Output</strong>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
-Include alerts, prompts &amp; confirm boxes">Run JS with alerts</button> <label>Always run JS<input type="checkbox" id="enablejs"></label>
+Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Real time JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>

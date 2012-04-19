@@ -1,11 +1,23 @@
 {
   "env": "development",
-  "url.host": "jsbin.dev",
-  "url.prefix": "/",
-  "url.ssl": false,
-  "db.name": "jsbin",
-  "db.user": "root",
-  "db.pass": "",
-  "db.host": "localhost",
-  "analytics.id": null
+  "url": {
+    "host": "jsbin.dev",
+    "prefix": "/",
+    "ssl": false
+  },
+  "store": {
+    "adapter": "mysql",
+    "mysql": {
+      "host": "localhost",
+      "user": "root",
+      "password": "",
+      "database": "jsbin"
+    },
+    "sqlite": {
+      "location": "/tmp/jsbin.db"
+    }
+  },
+  "analytics": {
+    "id": null
+  }
 }

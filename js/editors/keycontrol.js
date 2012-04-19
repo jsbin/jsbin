@@ -39,7 +39,7 @@ $document.keydown(function (event) {
       $('.clone').click();
       event.preventDefault();
     }
-  } else if (event.which === 192 && event.metaKey && jsbin.panels.focused) {
+  } else if (event.which === 192 && event.metaKey && event.altKey && jsbin.panels.focused) {
     jsbin.panels.focused.hide();
     var visible = jsbin.panels.getVisible();
     if (visible.length) {
@@ -102,7 +102,7 @@ function keycontrol(event) {
 
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey) {
-      jsbin.panels.show(panelShortcuts[event.which]);
+      jsbin.panels[event.shiftKey ? 'hide' : 'show'](panelShortcuts[event.which]);
       event.stop();
     }
 

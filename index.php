@@ -179,7 +179,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
         <td>Show nth panel</td>
       </tr>
       <tr>
-        <td>ctrl + § or ctrl + `</td>
+        <td>ctrl + alt + §<br>(or `)</td>
         <td>Hide focused panel</td>
       </tr>
       <tr>

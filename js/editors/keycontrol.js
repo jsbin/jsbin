@@ -102,7 +102,7 @@ function keycontrol(event) {
 
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey) {
-      jsbin.panels[event.shiftKey ? 'hide' : 'show'](panelShortcuts[event.which]);
+      jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }
 

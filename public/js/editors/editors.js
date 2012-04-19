@@ -73,7 +73,7 @@ panels.restore = function () {
     for (i = 0; i < toopen.length; i++) {
       name = toopen[i];
       if (panels.panels[name]) {
-        console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
+        // console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
         if (openWithSameDimensions) {
           panels.panels[name].show(width * parseFloat(state[name]) / 100);
         } else {
@@ -134,7 +134,7 @@ panels.distribute = function () {
   var visible = $('#source .panelwrapper:visible'),
       width = 100,
       height = 0,
-      innerW = window.innerWidth,
+      innerW = window.innerWidth - (visible.length - 1), // to compensate for border-left
       innerH = $('#source').outerHeight(),
       left = 0,
       right = 0,
@@ -162,13 +162,10 @@ panels.distribute = function () {
       if (nestedPanels.length > 1) {
         top = 0;
         nestedPanels = nestedPanels.filter(':visible');
-        console.log(nestedPanels);
         height = 100 / nestedPanels.length;
         nestedPanels.each(function (i) {
-          debugger;
           bottom = 100 - (height * (i+1));
           var panel = jsbin.panels.panels[$.data(this, 'name')];
-          console.log(panel.id, top, bottom);
           // $(this).css({ top: top + '%', bottom: bottom + '%' });
           $(this).css('top', top + '%');
           $(this).css('bottom', bottom + '%' );

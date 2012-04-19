@@ -1,7 +1,9 @@
 var $live = $('#live'),
     $body = $('body'),
     showlive = $('#showlive')[0],
-    throttledPreview = throttle(renderLivePreview, 200);
+    throttledPreview = throttle(renderLivePreview, 200),
+    killAlerts = '<script>try{window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
+    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;}catch(e){}</script>';
 
 var iframedelay = (function () {
   var iframedelay = { active : false },
@@ -69,9 +71,9 @@ function renderLivePreview(withalerts) {
       // nullify the blocking functions
       // IE requires that this is done in the script, rather than off the window object outside of the doc.write
       if (withalerts !== true) {
-        doc.write('<script>try{window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>');
+        doc.write(killAlerts);
       } else {
-        doc.write('<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;}catch(e){}</script>');
+        doc.write(restoreAlerts);
       }
 
       if (jsbinConsole) {
@@ -101,6 +103,7 @@ function renderLivePreview(withalerts) {
       };
 
       doc.write(source);
+      doc.write(restoreAlerts);
     }
     doc.close();
     delete jsbin.panels.panels.live.doc;

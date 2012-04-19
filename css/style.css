@@ -41,7 +41,7 @@ p {
 #control {
   z-index: 199999;
   min-width: 720px;
-  height: 36px;
+  height: 35px;
   position: absolute;
 /*  width: 100%;*/
   left: 0;
@@ -148,7 +148,7 @@ a:hover {
 }
 
 #bin {
-  top: 37px;
+  top: 36px;
   width: 100%;
   z-index: 2;
   display: none;
@@ -1956,7 +1956,7 @@ a.button.active:hover {
   top: 0;
   width: 100%;
   /*z-index: 99;*/
-  padding-top: 3px;
+  padding-top: 2px;
 }
 
 #panels a {
@@ -2216,7 +2216,7 @@ a.button.active:hover {
   -ms-transition-delay: 1s;
   transition: top ease-out 200ms, border-bottom ease-out 200ms;
   transition-delay: 1s;
-  top: -36px;
+  top: -35px;
 }
 
 .hideheader.ready #bin, 

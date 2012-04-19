@@ -680,10 +680,17 @@ textarea {
   display: none;
 }
 
+#revert {
+  /*display: inline-block;*/
+  height: 23px;
+}
+
 #revert img {
   margin-top: 1px;
   margin-right: -1px;
   border: 0;
+  vertical-align: top;
+  padding-top: 3px;
 }
 
 #revert img.enabled {

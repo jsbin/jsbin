@@ -1,6 +1,6 @@
 {
   "getBin": "SELECT * FROM sandbox WHERE url=? AND revision=?",
   "getLatestBin": "SELECT * FROM sandbox WHERE url=? ORDER BY revision DESC LIMIT 1",
-  "setBin": "INSERT INTO sandbox (javascript, css, html, created, last_viewed, url, revision) VALUES (?, ?, ?, NOW(), NOW(), ?, ?)",
+  "setBin": "INSERT INTO sandbox (javascript, css, html, created, last_viewed, url, revision, streaming_key) VALUES (?, ?, ?, NOW(), NOW(), ?, ?, ?)",
   "binExists": "SELECT id FROM sandbox WHERE url=? LIMIT 1"
 }

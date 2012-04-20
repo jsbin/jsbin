@@ -2,8 +2,8 @@ var $live = $('#live'),
     $body = $('body'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200),
-    killAlerts = '<script>try{window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
-    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;}catch(e){}</script>';
+    killAlerts = '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
+    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>';
 
 var iframedelay = (function () {
   var iframedelay = { active : false },

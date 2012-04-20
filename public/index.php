@@ -45,6 +45,15 @@ echo $mustache->render($view, array(
   'production?' => IS_PRODUCTION,
   'analytics_id' => ANALYTICS_ID,
   'tips' => file_get_contents('tips.json'),
-  'list_history' => $list_history
+  'list_history' => $list_history,
+  'jsbin' => json_encode(array(
+    'root' => ROOT,
+    'version' => VERSION,
+    'state' => array(
+      'stream' => false,
+      'code' => $code_id || null,
+      'revision' => $revision
+    )
+  ))
 ));
 ?>

@@ -16,7 +16,7 @@
         <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
-            <a id="createnew" class="button group" title="Create fresh bin" href="<?=ROOT?>">New</a>
+            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
             {{#home}}
             <a href="#" class="button group homebtn">Open</a>
             {{/home}}
@@ -47,7 +47,7 @@
           </div>
           <div class="dropdown" id="homemenu">
             <div class="dropdownmenu">
-              <a id="logout" class="button group" href="{{logout}}logout">Logout</a>
+              <a id="logout" class="button group" href="{{root}}logout">Logout</a>
             </div>
           </div>
         </div>
@@ -110,8 +110,8 @@
         <strong>Output</strong>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
-Include alerts, prompts &amp; confirm boxes">Run JS with alerts</button>
-          <label>Always run JS<input type="checkbox" id="enablejs"></label>
+Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
+          <label>Real-time JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>
@@ -158,7 +158,7 @@ Include alerts, prompts &amp; confirm boxes">Run JS with alerts</button>
         <td>Show nth panel</td>
       </tr>
       <tr>
-        <td>ctrl + § or ctrl + `</td>
+        <td>ctrl + alt + §<br />(or `)</td>
         <td>Hide focused panel</td>
       </tr>
       <tr>
@@ -203,8 +203,8 @@ Include alerts, prompts &amp; confirm boxes">Run JS with alerts</button>
 </div>
 <script>
   var template = {{{json_template}}};
+  var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-<script>var jsbin = { root: "{{host}}", version: "{{version}}" }; tips = {{tips}}</script>
 <script src="{{root}}js/{{version}}/jsbin.js"></script>
 {{#production?}}{{#analytics_id}}
 <script>

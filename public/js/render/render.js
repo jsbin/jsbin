@@ -51,6 +51,7 @@ function getPreparedCode() {
   if (!re) {
     re = {
       docReady: /\$\(document\)\.ready/,
+      shortDocReady: /\$\(function/,
       console: /(^.|\b)console\./g,
       script: /<\/script/ig,
       code: /%code%/,
@@ -92,7 +93,7 @@ function getPreparedCode() {
   // note that I'm using split and reconcat instead of replace, because if the js var
   // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
   // gets around the problem.
-  if (!$.trim(source)) {
+  if (!$.trim(source) && $.trim(js)) {
     source = "<pre>\n" + js + "</pre>";
   } else if (re.code.test(source)) {
     parts = source.split('%code%');
@@ -110,10 +111,12 @@ function getPreparedCode() {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }
     // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
-    source += "<script>\n(function(){" + js + "}())\n</script>\n" + close;
+    source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
   }
 
-  if (css) {
+  if (!$.trim(source) && !$.trim(js) && css) {
+    source = "<pre>\n" + css + "</pre>";
+  } else if (css) {
     parts = [];
     close = '';
     if (source.indexOf('</head>') !== -1) {
@@ -130,6 +133,10 @@ function getPreparedCode() {
   if (re.docReady.test(source)) {
     source = source.replace(re.docReady, 'window.onload = ');
   } 
+
+  if (re.shortDocReady.test(source)) {
+    source = source.replace(re.shortDocReady, 'window.onload = (function');
+  }
 
   // read the element out of the source code and plug it in to our document.title
   var newDocTitle = source.match(re.title);

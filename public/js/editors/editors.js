@@ -38,12 +38,13 @@ panels.restore = function () {
       location = window.location,
       search = location.search.substring(1),
       hash = location.hash.substring(1),
-      toopen = search || hash ? (search || hash).split(',') : []
+      toopen = search || hash ? (search || hash).split(',') : [],
       state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}'),
       name = '',
       i = 0,
       panel = null,
       init = [],
+      panelURLValue = '',
       openWithSameDimensions = false,
       width = window.innerWidth;
 
@@ -71,16 +72,29 @@ panels.restore = function () {
     if (i === toopen.length) openWithSameDimensions = true;
 
     for (i = 0; i < toopen.length; i++) {
+      panelURLValue = '';
       name = toopen[i];
-      if (panels.panels[name]) {
-        // console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
-        if (openWithSameDimensions) {
-          panels.panels[name].show(width * parseFloat(state[name]) / 100);
-        } else {
-          panels.panels[name].show();
-        }
-        init.push(panels.panels[name]);
+
+      // if name contains an `=` it means we also need to set that particular panel to that code
+      if (name.indexOf('=') !== -1) {
+        panelURLValue = name.substring(name.indexOf('=') + 1);
+        name = name.substring(0, name.indexOf('='));
       }
+
+      if (panels.panels[name]) {
+        panel = panels.panels[name];
+        // console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
+        if (panel.editor && panelURLValue) {
+          panel.setCode(decodeURIComponent(panelURLValue));
+        }
+
+        if (openWithSameDimensions) {
+          panel.show(width * parseFloat(state[name]) / 100);
+        } else {
+          panel.show();
+        }
+        init.push(panel);
+      } 
     }
 
     // support the old jsbin v1 links directly to the preview
@@ -217,11 +231,12 @@ var editors = panels.panels = {
   console: new Panel('console', { label: 'Console' }),
   live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
+    var panel = this;
     $(document).bind('codeChange.live', function (event, data) {
       if (panels.ready) {
         if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
           // ignore
-        } else {
+        } else if (panel.visible) {
           throttledPreview();
         }
       }

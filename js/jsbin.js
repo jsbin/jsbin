@@ -34,7 +34,13 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 
   window.jsbin || (window.jsbin = {});
   // dodgy?
-  window.jsbin.settings = $.extend(JSON.parse(localStorage.getItem('settings') || '{}'), jsbin.settings);
+  var storedSettings = localStorage.getItem('settings');
+  window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
+
+  if (!storedSettings) {
+    console.log('first timer');
+    // show them the "special" welcome
+  }
 
   if (!jsbin.settings.codemirror) {
     // backward compat with jsbin-v2

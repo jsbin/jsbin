@@ -45,6 +45,8 @@ if ($action == 'quiet') {
   $action = array_pop($request);
 }
 
+// allows the user to save over existing jsbins
+
 $edit_mode = true; // determines whether we should go ahead and load index.php
 $code_id = '';
 
@@ -161,27 +163,15 @@ if (!$action) {
   $method = @$_POST['method'];
   $stream = isset($_POST['stream']) ? true : false;
   $streaming_key = '';
+  $allowUpdate = false;
 
-  if ($stream && isset($_COOKIE['streaming_key'])) {
-    $streaming_key = $_COOKIE['streaming_key'];
-
-    // validate streaming key
-    // requires:
-    // 1. code_id
-    // 2. revision || 1
-    // 3. If all this info is valid, to an update instead of an
-    //    insert, and update the created timestamp which should
-    //    trigger any long polling to fire and update any live
-    //    views
-  }
-  
   // we're using stripos instead of == 'save' because the method *can* be "download,save" to support doing both
   if (stripos($method, 'save') !== false) {
-    
+
     if (stripos($method, 'new') !== false) {
       $code_id = false;
     }
-    
+
     if (!$code_id) {
       $code_id = generateCodeId();
       $revision = 1;
@@ -190,14 +180,20 @@ if (!$action) {
       $revision++;
     }
 
-    $sql = sprintf('insert into sandbox (javascript, css, html, created, last_viewed, url, revision) values ("%s", "%s", "%s", now(), now(), "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($css), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+    $rewriteKey = md5(strval($code_id) . strval($revision) . strval(mt_rand()));
 
+    $sql = sprintf('insert into sandbox (javascript, css, html, created, last_viewed, url, revision, streaming_key) values ("%s", "%s", "%s", now(), now(), "%s", "%s", "%s")', mysql_real_escape_string($javascript), mysql_real_escape_string($css), mysql_real_escape_string($html), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($rewriteKey));
     // a few simple tests to pass before we save
     if (($html == '' && $html == $javascript && $css == '')) {
       // entirely blank isn't going to be saved.
     } else {
       if (!noinsert($html, $javascript)) {
         $ok = mysql_query($sql);
+
+        if ($ok) {
+          $allowUpdate = $rewriteKey;
+        }
+
         if ($home && $ok) {
           // first check they have write permission for this home
           $sql = sprintf('select * from ownership where name="%s" and `key`="%s"', mysql_real_escape_string($home), mysql_real_escape_string($_COOKIE['key']));
@@ -206,13 +202,34 @@ if (!$action) {
             $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
             $ok = mysql_query($sql);
           }
-          // $code_id = $home . '/' . $code_id;
         }
       }
     }
     
-    // error_log('saved: ' . $code_id . ' - ' . $revision . ' -- ' . $ok . ' ' . strlen($sql));
-    // error_log(mysql_error());
+  } else if ($method === 'update') {
+    $checksum = $_POST['checksum'];
+    $code_id = $_POST['code'];
+    $revision = $_POST['revision'];
+    $panel = $_POST['panel'];
+    $content = $_POST['content'];
+
+    $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
+
+    // TODO run against blacklist
+    $ok = mysql_query($sql);
+    $updated = mysql_affected_rows();
+    if ($ok && $updated === 1) {
+      $data = array(ok => true, error => false);
+      echo json_encode($data);
+      exit;
+    } else {
+      $data = array(
+        error => true,
+        message => 'checksum did not check out on revision update'
+      );
+      echo json_encode($data);
+      exit;
+    }
   }
 
   /** 
@@ -256,7 +273,9 @@ if (!$action) {
         edit => $url . '/edit',
         html => $url . '/edit',
         js => $url . '/edit',
-        title => getTitleFromCode(array(html => $html, javascript => $javascript))
+        title => getTitleFromCode(array(html => $html, javascript => $javascript)),
+        allowUpdate => $allowUpdate === false ? false : true,
+        checksum => $allowUpdate
       );
       echo json_encode($data);
       // echo '{ "code": "' . $code_id . '", "root": "' . ROOT . '", "created": "' . date('c', time()) . '", "revision": ' . $revision . ', "url" : "' . $url . '", "edit" : "' . $url . '/edit", "html" : "' . $url . '/edit", "js" : "' . $url . '/edit", "title": "' .  .'" }';

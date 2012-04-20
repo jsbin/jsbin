@@ -5,6 +5,7 @@ include('app.php');
 list($code_id, $revision) = getCodeIdParams($request);
 
 $edit_mode = false;
+$code = $code_id; // copy of the original url/code
 
 if ($code_id) {
   list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision, true);
@@ -233,7 +234,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
   echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '};';
 ?>
 </script>
-<script>var jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
+<script>var jsbin = { state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
 <script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

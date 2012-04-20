@@ -9,6 +9,50 @@ $('a.save').click(function (event) {
   return false;
 });
 
+var saveChecksum = sessionStorage.getItem('checksum') || false;
+
+$document.bind('jsbinReady', function () {
+  var stream = false;
+
+  if (jsbin.state.stream && window.WebSocket) {
+    stream = new WebSocket('ws://' + window.location.origin + '/update');
+  }
+
+  $document.bind('codeChange', throttle(function (event, data) {
+    if (!data.panelId) return;
+
+    if (!saveChecksum) {
+      // create the bin and when the response comes back update the url
+      saveCode('save', true);
+    } else {
+      $.ajax({
+        url: jsbin.root + 'save',
+        data: { 
+          code: jsbin.state.code, 
+          revision: jsbin.state.revision,
+          method: 'update',
+          panel: data.panelId,
+          content: editors[data.panelId].getCode(),
+          checksum: saveChecksum
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+          console.log(data.error ? data.message : 'update ok');
+          if (data.error) {
+            saveCode('save', true, function (data) {
+              savedAlready = data.checksum;
+            });
+          }
+        },
+        error: function () {
+          console.log('update error');
+        }
+      });
+    }
+  }, 250));
+});
+
 $('a.clone').click(function (event) {
   event.preventDefault();
 
@@ -22,10 +66,11 @@ $('a.clone').click(function (event) {
 });
 
 function setupform(method) {
-var $form = $('form#saveform')
+var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="javascript" />')
     .append('<input type="hidden" name="html" />')
-    .append('<input type="hidden" name="css" />');
+    .append('<input type="hidden" name="css" />')
+    .append('<input type="hidden" name="method" />');
 
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=css]').val(editors.css.getCode());
@@ -61,12 +106,21 @@ function saveCode(method, ajax, ajaxCallback) {
       dataType: 'json', 
       type: 'post',
       success: function (data) {
+        var $binGroup,
+            edit;
+
         $('form').attr('action', data.url + '/save');
-        ajaxCallback && ajaxCallback();
+        ajaxCallback && ajaxCallback(data);
+
+        sessionStorage.setItem('checksum', data.checksum);
+        saveChecksum = data.checksum;
 
         if (window.history && window.history.pushState) {
-          var $binGroup = $('#history tr[data-url="' + window.location.pathname.replace(/edit.*$/, '') + '"]'),
-              edit = data.edit.replace(location.protocol + '//' + window.location.hostname, '') + window.location.search;
+          jsbin.state.code = data.code;
+          jsbin.state.revision = data.revision;
+
+          $binGroup = $('#history tr[data-url="' + window.location.pathname.replace(/edit.*$/, '') + '"]');
+          edit = data.edit.replace(location.protocol + '//' + window.location.hostname, '') + window.location.search;
           $binGroup.find('td.url a span.first').removeClass('first');
           $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 

@@ -213,19 +213,28 @@ if (!$action) {
     $panel = $_POST['panel'];
     $content = $_POST['content'];
 
-    $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
+    if ($panel === 'javascript' || $panel === 'css' || $panel === 'html') {
+      $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
 
-    // TODO run against blacklist
-    $ok = mysql_query($sql);
-    $updated = mysql_affected_rows();
-    if ($ok && $updated === 1) {
-      $data = array(ok => true, error => false);
-      echo json_encode($data);
-      exit;
+      // TODO run against blacklist
+      $ok = mysql_query($sql);
+      $updated = mysql_affected_rows();
+      if ($ok && $updated === 1) {
+        $data = array(ok => true, error => false);
+        echo json_encode($data);
+        exit;
+      } else {
+        $data = array(
+          error => true,
+          message => 'checksum did not check out on revision update'
+        );
+        echo json_encode($data);
+        exit;
+      }
     } else {
       $data = array(
         error => true,
-        message => 'checksum did not check out on revision update'
+        message => 'oi oi, you naughty boy'
       );
       echo json_encode($data);
       exit;

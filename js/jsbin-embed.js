@@ -54,17 +54,26 @@ function findCodeInParent(element) {
 
 function findCode(link) {
   var rel = link.rel,
+      query = link.search.substring(1),
       element,
-      code;
+      code,
+      panels = [];
 
-  if (!rel) {
+  if (rel && element = document.getElementById(rel.substring(1))) {
+    code = element[innerText];
+  // else - try to support multiple targets for each panel...
+  // } else if (query.indexOf('=') !== -1) {
+  //   // assumes one of the panels points to an ID
+  //   query.replace(/([^,=]*)=([^,=]*)/g, function (all, key, value) {
+  //     code = document.getElementById(value.substring(1))[innerText];
+
+  //   });
+  } else {
     // go looking through it's parents
     element = findCodeInParent(link);
     if (element) {
       code = element[innerText];
     }
-  } else {
-    code = document.getElementById(rel.substring(1))[innerText];
   }
 
   return code;

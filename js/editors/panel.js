@@ -223,7 +223,7 @@ Panel.prototype = {
       try {
         editor.setValue(str);
       } catch(err) {
-        // console.error(e.id, err + '');
+        // console.error(panel.id, err + '');
       }
     };
 
@@ -237,9 +237,9 @@ Panel.prototype = {
     };
 
     // editor.setOption('onKeyEvent', keycontrol);
-    editor.setOption('onFocus', function () {
+    // editor.setOption('onFocus', function () {
       // panel.$el.trigger('focus');
-    });
+    // });
 
     editor.id = panel.name;
 
@@ -284,8 +284,8 @@ Panel.prototype = {
       // it has to be re-populated upon show for the first time because
       // it appears that CM2 uses the visible height to work out what
       // should be shown. 
-      populateEditor(panel, panel.name);
       panel.ready = true;
+      populateEditor(panel, panel.name);
 
       if (focusedPanel == panel.name || focusedPanel == null) {
         if (panel.visible) {

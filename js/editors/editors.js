@@ -46,7 +46,8 @@ panels.restore = function () {
       init = [],
       panelURLValue = '',
       openWithSameDimensions = false,
-      width = window.innerWidth;
+      width = window.innerWidth,
+      deferredCodeInsert = '';
 
   // otherwise restore the user's regular settings
   // also set a flag indicating whether or not we should save the panel settings
@@ -94,7 +95,41 @@ panels.restore = function () {
           panel.show();
         }
         init.push(panel);
-      } 
+      } else if (name === 'code' && panelURLValue) { // TODO support any varible insertion
+        (function (panelURLValue) {
+          var todo = ['html', 'javascript', 'css'];
+
+          var deferredInsert = function (event, data) {
+            var code, parts, panel = panels.panels[data.panelId] || {};
+
+            console.log(data.panelId && panel.editor && panel.ready, data.panelId, panel.editor, panel.ready);
+            if (data.panelId && panel.editor && panel.ready === true) {
+              todo.splice(todo.indexOf(data.panelId), 1);
+              try { 
+                code = panel.getCode();
+              } catch (e) {
+                console.error(e);
+              }
+              console.log('ok', code.indexOf('%code%'), code);
+              if (code.indexOf('%code%') !== -1) {
+                parts = code.split('%code%');
+                code = parts[0] + decodeURIComponent(panelURLValue) + parts[1];
+                panel.setCode(code);
+                $document.unbind('codeChange', deferredInsert);
+                console.log('deferred code inserted');
+              }
+            }
+
+            if (todo.length === 0) {
+              console.log('unbinding');
+              $document.unbind('codeChange', deferredInsert);
+              console.log('giving up - no insertion point');
+            }
+          };
+
+          $document.bind('codeChange', deferredInsert);
+        }(panelURLValue));
+      }
     }
 
     // support the old jsbin v1 links directly to the preview

@@ -1,5 +1,4 @@
 logs
 logs/*
-node_modules
 config.local.json
-js/jsbin*.js
+public/js/jsbin*.js

@@ -95,40 +95,36 @@ panels.restore = function () {
           panel.show();
         }
         init.push(panel);
-      } else if (name === 'code' && panelURLValue) { // TODO support any varible insertion
-        (function (panelURLValue) {
+      } else if (name && panelURLValue) { // TODO support any varible insertion
+        (function (name, panelURLValue) {
           var todo = ['html', 'javascript', 'css'];
 
           var deferredInsert = function (event, data) {
             var code, parts, panel = panels.panels[data.panelId] || {};
 
-            console.log(data.panelId && panel.editor && panel.ready, data.panelId, panel.editor, panel.ready);
             if (data.panelId && panel.editor && panel.ready === true) {
               todo.splice(todo.indexOf(data.panelId), 1);
               try { 
                 code = panel.getCode();
               } catch (e) {
-                console.error(e);
+                // this really shouldn't happen
+                // console.error(e);
               }
-              console.log('ok', code.indexOf('%code%'), code);
-              if (code.indexOf('%code%') !== -1) {
-                parts = code.split('%code%');
+              if (code.indexOf('%' + name + '%') !== -1) {
+                parts = code.split('%' + name + '%');
                 code = parts[0] + decodeURIComponent(panelURLValue) + parts[1];
                 panel.setCode(code);
                 $document.unbind('codeChange', deferredInsert);
-                console.log('deferred code inserted');
               }
             }
 
             if (todo.length === 0) {
-              console.log('unbinding');
               $document.unbind('codeChange', deferredInsert);
-              console.log('giving up - no insertion point');
             }
           };
 
           $document.bind('codeChange', deferredInsert);
-        }(panelURLValue));
+        }(name, panelURLValue));
       }
     }
 

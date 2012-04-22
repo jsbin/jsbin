@@ -263,7 +263,12 @@ var editors = panels.panels = {
   live: new Panel('live', { label: 'Output', show: function () {
     // contained in live.js
     var panel = this;
-    $(document).bind('codeChange.live', function (event, data) {
+    $document.bind('jsbinReady', function () {
+      if (panel.visible) {
+        renderLivePreview(true);
+      }
+    });
+    $document.bind('codeChange.live', function (event, data) {
       if (panels.ready) {
         if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
           // ignore

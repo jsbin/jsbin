@@ -4,6 +4,7 @@
   "description": "Collaborative JavaScript Debugging App",
   "version": "3.0.0dev",
   "homepage": "http://jsbin.com",
+  "main": "lib/app",
   "repository": {
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"

@@ -238,7 +238,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
 ?>
 </script>
 <script>
-var jsbin = { panels: [], state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; 
+var jsbin = { settings: { panels: [] }, state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; 
 <?php if (isset($custom['settings'])) { ?>
 jsbin.settings = <?php echo json_encode($custom['settings']); ?>;
 <?php } ?>

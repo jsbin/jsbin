@@ -1,0 +1,17 @@
+{
+  "css": "/custom/sebly/custom.css",
+  "default": {
+    "html": "default.html",
+    "javascript": "var canvas = document.getElementById('creativejs'), \n  c = canvas.getContext('2d');"
+  },
+  "settings": {
+    "codemirror": {
+      "indentWithTabs": true, 
+      "indentUnit": 4, 
+      "smartIndent": false, 
+      "electricChars": false,
+      "tabSize": 4
+    },
+    "panels": ["javascript", "live"]
+  }
+}

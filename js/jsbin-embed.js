@@ -59,7 +59,7 @@ function findCode(link) {
       code,
       panels = [];
 
-  if (rel && element = document.getElementById(rel.substring(1))) {
+  if (rel && (element = document.getElementById(rel.substring(1)))) {
     code = element[innerText];
   // else - try to support multiple targets for each panel...
   // } else if (query.indexOf('=') !== -1) {

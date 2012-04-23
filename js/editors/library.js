@@ -1,4 +1,6 @@
 //= require "libraries"
+var state = {};
+
 $('#library').bind('init', function () {
   var $select = $(this),
       html = ['<option value="none">None</option>'],
@@ -15,8 +17,7 @@ $('#library').bind('init', function () {
   
   $select.html( html.join('') ).val(selected);
 }).trigger('init').change(function () {
-  var state = {},
-      libIndex = [],
+  var libIndex = [],
       lib = {},
       thislib = {},
       i,

@@ -242,6 +242,11 @@ div.code, #live, .resize {
   width: 80px;
   /*width: 10px;*/
   margin-left: 5px;
+  position: absolute;
+}
+
+#library:hover {
+  width: auto;
 }
 
 .javascript {

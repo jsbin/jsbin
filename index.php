@@ -29,7 +29,7 @@ if ($code_id) {
 <title>JS Bin - Collaborative JavaScript Debugging</title>
 <link rel="stylesheet" href="<?php echo ROOT?>css/style.css?<?php echo VERSION?>" type="text/css" />
 <?php if (isset($custom['css'])) { ?>
-<link rel="stylesheet" href="<?php echo $custom['css']; ?>?<?php echo VERSION?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo ROOT . $custom['css']; ?>?<?php echo VERSION?>" type="text/css" />
 <?php } ?>
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 

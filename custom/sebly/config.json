@@ -1,5 +1,5 @@
 {
-  "css": "/custom/sebly/custom.css",
+  "css": "custom/sebly/custom.css",
   "default": {
     "html": "default.html",
     "javascript": "var canvas = document.getElementById('creativejs'), \n  c = canvas.getContext('2d');"

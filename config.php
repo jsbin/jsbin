@@ -8,7 +8,7 @@ define('DB_HOST', 'localhost');  // 99% chance you won't need to change this val
 // change this to suite your offline detection
 define('OFFLINE', is_dir('/Users/'));
 
-define('HOST', 'http://jsbin.dev/');
+define('HOST', 'jsbin.dev');
 
 // if you're running from a subdirectory, change this to the start of the
 // url, i.e. offline.jsbin.com/foobar/ - ROOT would be foobar

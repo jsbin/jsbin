@@ -28,6 +28,9 @@ if ($code_id) {
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
 <link rel="stylesheet" href="<?php echo ROOT?>css/style.css?<?php echo VERSION?>" type="text/css" />
+<?php if (isset($custom['css'])) { ?>
+<link rel="stylesheet" href="<?php echo $custom['css']; ?>?<?php echo VERSION?>" type="text/css" />
+<?php } ?>
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
@@ -234,7 +237,13 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
   echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '};';
 ?>
 </script>
-<script>var jsbin = { state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
+<script>
+var jsbin = { panels: [], state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; 
+<?php if (isset($custom['settings'])) { ?>
+jsbin.settings = <?php echo json_encode($custom['settings']); ?>;
+<?php } ?>
+tips = <?php echo file_get_contents('tips.json')?>;
+</script>
 <script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

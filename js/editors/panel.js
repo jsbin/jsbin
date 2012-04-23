@@ -33,7 +33,7 @@ var Panel = function (name, settings) {
   var splitterSettings = {};
 
   if (settings.editor) {
-    panel.editor = CodeMirror.fromTextArea(panel.el, {
+    var cmSettings = {
       parserfile: [],
       tabMode: 'shift',
       dragDrop: false, // we handle it ourselves
@@ -43,8 +43,12 @@ var Panel = function (name, settings) {
         return true; 
       },
       lineWrapping: true,
-      theme: jsbin.settings.codemirror.theme || 'jsbin'
-    });
+      theme: 'jsbin'
+    };
+
+    $.extend(cmSettings, jsbin.settings.codemirror || {});
+
+    panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     panel.processor = settings.processor || function (str) { return str; };
 

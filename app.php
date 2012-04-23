@@ -8,6 +8,24 @@ include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 
+// allows for custom hosting of jsbin - special feature for teachers
+$cname = '';
+$custom = array();
+
+preg_match('/^([a-z0-9\-]+)\.' . HOST . '$/', $_SERVER['HTTP_HOST'], $match);
+
+if (count($match) == 2) {
+  $cname = $match[1];
+}
+
+if ($cname && $cname !== 'www') { // unlikely on the www
+  // we have a custom build of jsbin - let's load their customisations
+  if (file_exists('custom/' . $cname . '/config.json')) {
+    $custom = json_decode(file_get_contents('custom/' . $cname . '/config.json'), true);
+    $custom['__dirname'] = 'custom/' . $cname . '/';
+  }
+}
+
 $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
 if ($pos !== false) $pos = strlen(ROOT);
 
@@ -499,7 +517,7 @@ function getCode($code_id, $revision, $testonly = false) {
 
 function defaultCode($not_found = false) {
   $library = '';
-  global $no_code_found;
+  global $no_code_found, $custom;
   
   if ($not_found) {
     $no_code_found = true;
@@ -507,7 +525,7 @@ function defaultCode($not_found = false) {
   
   $usingRequest = false;
   
-  if (isset($_REQUEST['html']) || isset($_REQUEST['js'])) {
+  if (isset($_REQUEST['html']) || isset($_REQUEST['js']) || isset($_REQUEST['javascript'])) {
     $usingRequest = true;
   }
   
@@ -515,6 +533,8 @@ function defaultCode($not_found = false) {
     $html = $_REQUEST['html'];
   } else if ($usingRequest) {
     $html = '';
+  } else if (isset($custom['default'])) {
+    $html = getCustomCode($custom, 'html');
   } else {
     $html = <<<HERE_DOC
 <!DOCTYPE html>
@@ -541,12 +561,39 @@ HERE_DOC;
   } else {
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
+    } else if (isset($custom['default'])) {
+      $javascript = getCustomCode($custom, 'javascript');
     } else {
       $javascript = "/* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
     }    
   }
 
-  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, '');
+  $css = '';
+
+  if (@$_REQUEST['css']) {
+    $javascript = $_REQUEST['css'];
+  } else {
+    if (isset($custom['default'])) {
+      $css = getCustomCode($custom, 'css');
+    } // else CSS is blank
+  }
+
+  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
+}
+
+function getCustomCode($custom, $prop) {
+  $code = '';
+
+  if (isset($custom['default']) && isset($custom['default'][$prop])) {
+    $propval = $custom['default'][$prop];
+    if (file_exists($custom['__dirname'] . $propval)) {
+      $code = file_get_contents($custom['__dirname'] . $propval);
+    } else {
+      $code = $propval;
+    }
+  }
+
+  return $code;
 }
 
 // I'd consider using a tinyurl type generator, but I've yet to find one.

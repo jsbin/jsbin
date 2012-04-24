@@ -206,20 +206,8 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
 <script src="{{root}}js/{{version}}/jsbin.js"></script>
-{{#production?}}{{#analytics_id}}
-<script>
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '{{analytics_id}}']);
-_gaq.push(['_trackPageview']);
-
-(function() {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-})();
-</script>
-{{/analytics_id}}{{/production?}}
-{{{ list_history }}}
+{{#production?}}{{{analytics}}}{{/production?}}
+{{{list_history}}}
 <div id="urlHelp" class="modal">
   <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
   <h2>JS Bin URLs</h2>

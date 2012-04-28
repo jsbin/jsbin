@@ -16,6 +16,7 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 };
 
 (function (window, document, undefined) {
+  //= require "chrome/analytics"
   //= require "chrome/storage"
 
   // jQuery plugins

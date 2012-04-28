@@ -110,6 +110,9 @@ function keycontrol(event) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
+      if (keyboardHelpVisible) {
+        analytics.help();
+      }
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');

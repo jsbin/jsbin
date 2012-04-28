@@ -101,6 +101,8 @@ Panel.prototype = {
     var panel = this,
         panelCount = panel.$el.find('.panel').length;
 
+    analytics.showPanel(panel.id);
+
     // panel.$el.show();
     if (panel.splitter.length) {
       if (panelCount == 0 || panelCount > 1) {
@@ -151,6 +153,7 @@ Panel.prototype = {
     var panel = this;
     // panel.$el.hide();
     panel.visible = false;
+    analytics.hidePanel(panel.id);
 
     // update all splitter positions
     // LOGIC: when you go to hide, you need to check if there's

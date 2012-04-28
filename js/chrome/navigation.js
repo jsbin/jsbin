@@ -1,6 +1,9 @@
+//= require "../chrome/esc"
+
 var $startingpoint = $('#startingpoint').click(function (event) {
   event.preventDefault();
   if (localStorage) {
+    analytics.saveTemplate();
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
     localStorage.setItem('saved-html', editors.html.getCode());
     $startingpoint.addClass('saved');
@@ -27,6 +30,8 @@ var $revert = $('#revert').click(function () {
     editors[key].populateEditor();
   }
 
+  analytics.revert();
+
   // editors.javascript.focus();
   $('#library').val('none');
   
@@ -40,6 +45,7 @@ var $revert = $('#revert').click(function () {
 });
 
 $('#loginbtn').click(function () {
+  analytics.login();
   $('#login').show();
   loginVisible = true;
   $username.focus();
@@ -47,6 +53,7 @@ $('#loginbtn').click(function () {
 });
 
 $('#logout').click(function (event) {
+  analytics.logout();
   delete jsbin.settings.home;
   // delete cookie
   var date = new Date();
@@ -60,18 +67,9 @@ $('#logout').click(function (event) {
 });
 
 $('.homebtn').click(function () {
+  analytics.open();
   jsbin.panels.hideAll();
   return false;
-});
-
-//= require "../chrome/esc"
-
-var prefsOpen = false;
-
-$('.prefsButton a').click(function (e) {
-  prefsOpen = true;
-  e.preventDefault();
-  $body.toggleClass('prefsOpen');
 });
 
 var dropdownOpen = false,
@@ -131,6 +129,10 @@ $('.dropdownmenu a').click(function () {
   closedropdown();
 });
 
+$('#download').click(function () {
+  analytics.download();
+});
+
 $('#runwithalerts').click(function () {
   renderLivePreview(true);
   return false;
@@ -143,6 +145,7 @@ $('#runconsole').click(function () {
 
 $('#createnew').click(function () {
   var i, key;
+  analytics.createNew();
   // FIXME this is out and out [cr]lazy....
   jsbin.panels.savecontent = function(){};
   for (i = 0; i < sessionStorage.length; i++) {
@@ -158,9 +161,31 @@ $('#createnew').click(function () {
 jsbin.settings.includejs = jsbin.settings.includejs || false;
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
+  analytics.enableLiveJS(jsbin.settings.includejs);
   editors.live.render();
 }).attr('checked', jsbin.settings.includejs);
 
 if (jsbin.settings.hideheader) {
   $body.addClass('hideheader');
 }
+
+// add navigation to insert meta data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

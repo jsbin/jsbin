@@ -4,6 +4,7 @@ $('a.save').click(function (event) {
 
   // save our panel layout - assumes our user is happy with this layout
   jsbin.panels.save();
+  analytics.save();
   saveCode('save', window.location.pathname.indexOf('/edit') !== -1);
 
   return false;
@@ -38,7 +39,6 @@ $document.bind('jsbinReady', function () {
         type: 'post',
         dataType: 'json',
         success: function (data) {
-          console.log(data.error ? data.message : 'update ok');
           if (data.error) {
             saveCode('save', true, function (data) {
               savedAlready = data.checksum;
@@ -58,6 +58,7 @@ $('a.clone').click(function (event) {
 
   // save our panel layout - assumes our user is happy with this layout
   jsbin.panels.save();
+  analytics.clone();
 
   var $form = setupform('save,new');
   $form.submit();

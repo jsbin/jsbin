@@ -21,6 +21,7 @@ var $loginForm = $('#login form').submit(function (event) {
     success: function (data) {
       // cookie is required to share with the server so we can do a redirect on new bin
       if (data.ok) {
+        analytics.login(true);
         var date = new Date();
         date.setTime(date.getTime()+(365*24*60*60*1000)); // set for a year
         document.cookie = 'home=' + name + '; expires=' + date.toGMTString() + '; path=/';
@@ -33,6 +34,7 @@ var $loginForm = $('#login form').submit(function (event) {
           window.location = window.location.pathname + window.location.search;
         }, 500);
       } else {
+        analytics.login(false);
         $loginFeedback.text('"' + name + '" has already been taken. Please either double check the password, or choose another username.');
       }
     }

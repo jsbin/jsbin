@@ -5,6 +5,8 @@ var Gist = function (id) {
       gist = this;
 
   this.code = {};
+
+  analytics.loadGist(id);
   
   iframe.load(function () {
     $('.gist-file', win.body).each(function () {

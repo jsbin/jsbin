@@ -118,7 +118,7 @@ function keycontrol(event) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;
       event.stop();
-    } else if (event.which == 27) {
+    } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
       event.stop();
       return startComplete(panel);
     } else if (event.which == 190 && event.altKey && event.metaKey && panel.id == 'html') {

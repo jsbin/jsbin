@@ -7,7 +7,7 @@ var analytics = {
   },
   clone: function () {
     window._gaq && _gaq.push(['_trackPageview', '/clone' + window.location.pathname]);
-  }
+  },
   saveTemplte: function () {
     window._gaq && _gaq.push(['_trackPageview', '/save-template']);
   },
@@ -46,11 +46,21 @@ var analytics = {
   },
   loadGist: function (id) {
     window._gaq && _gaq.push(['_trackPageview', '/gist/' + id]);
+  },
+  layout: function (panelsVisible) {
+    var layout = [], panel = '';
+
+    if (window._gaq) {
+      for (panel in panelsVisible) {
+        layout.push(panel + ':' + panelsVisible[panel]);
+      }
+      _gaq.push(['_trackPageview', '/layout/' + layout.join('/')]);
+    }
   }
 };
 
 /* TODO
 - run js
 - run console
-
+- final splitter and panel config & positions!!!
 */

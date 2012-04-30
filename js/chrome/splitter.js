@@ -1,4 +1,4 @@
-$.fn.splitter = function () {
+  $.fn.splitter = function () {
   var $document = $(document),
       $blocker = $('<div class="block"></div>'),
       $body = $('body');
@@ -30,8 +30,8 @@ $.fn.splitter = function () {
             init: {
               top: 0,
               bottom: 0,
-              width: 8,
-              'margin-left': '-5px',
+              width: 9,
+              'margin-left': '-4px',
               height: '100%',
               left: 'auto',
               right: 'auto',
@@ -235,7 +235,7 @@ $.fn.splitter = function () {
         $el = $originalContainer;
         $originalContainer.show();
         $handle.css('margin-top', 0);
-        $handle.css('margin-left', -5);
+        $handle.css('margin-left', -4);
         delete settings.y;
 
         setTimeout(function() {
@@ -263,6 +263,21 @@ $.fn.splitter = function () {
       // reset left/right positions
 
       if ($el.is(':visible')) {
+        // find all other handles and recalc their height
+        if (type === 'y') {
+          var otherhandles = $el.find('.resize');
+
+          otherhandles.each(function (i) {
+            // find the top of the 
+            var $h = $(this);
+            if (this === $handle[0]) {
+              // ignore
+            } else {
+              // TODO change to real px :(
+              $h.trigger('init', 100 / (otherhandles - i - 1));
+            }
+          });
+        }
         $handle.trigger('init', value || $el.offset()[props[type].cssProp] || props[type].size / 2);
       }
     });

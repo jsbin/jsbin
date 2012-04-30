@@ -156,6 +156,17 @@ $('#createnew').click(function () {
   }
  
   jsbin.panels.saveOnExit = true;
+
+  // first try to restore their default panels
+  jsbin.panels.restore();
+
+  // if nothing was shown, show html & live
+  setTimeout(function () {
+    if (jsbin.panels.getVisible().length === 0) {
+      jsbin.panels.panels.html.show();
+      jsbin.panels.panels.live.show();
+    }
+  }, 0)
 });
 
 jsbin.settings.includejs = jsbin.settings.includejs || false;

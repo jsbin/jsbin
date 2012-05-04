@@ -278,6 +278,10 @@ var editors = panels.panels = {
       }
     });
     renderLivePreview();
+  }, hide: function () {
+    // detroy the iframe if we hide the panel
+    // note: $live is defined in live.js
+    $live.find('iframe').remove();
   } })
 };
 

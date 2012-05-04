@@ -2,6 +2,7 @@
   "author": "Remy Sharp <remy@leftlogic.com> (http://remysharp.com)",
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
+  "main": "lib/app",
   "version": "3.0.0dev",
   "homepage": "http://jsbin.com",
   "repository": {

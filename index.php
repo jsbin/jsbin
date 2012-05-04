@@ -39,17 +39,18 @@ if ($code_id) {
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a><div class="menu">
-        <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
+      <!-- <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a> -->
+      <div class="menu">
+        <a href="#actionmenu" class="button button-dropdown group">File</a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
+            <a title="Create milestone" class="button save group" href="<?php echo $code_id_path?>save">Create milestone</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="<?=ROOT?>">New</a>
   <?php if ($home) : ?>
             <a href="#" class="button group homebtn">Open</a>
   <?php endif ?>
   <?php if ($code_id) : ?>
             <a id="clone" title="Create a new copy" class="button clone group" href="<?php echo ROOT?>clone">Clone</a>
-            <!-- <a id="save" title="Save new a new revision" class="button save group" href="<?php echo $code_id_path?>save">Save</a> -->
   <?php else : ?>
             <!-- <a id="save" title="Save new bin" class="button save group" href="<?php echo ROOT?>save">Save</a> -->
   <?php endif ?>
@@ -69,7 +70,7 @@ if ($code_id) {
         <?php if ($home) : ?>
         <div class="menu">
           <div class="group">
-            <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
+            <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"></a>
           </div>
           <div class="dropdown" id="homemenu">
             <div class="dropdownmenu">
@@ -92,7 +93,7 @@ if ($code_id) {
   <div id="panelswaiting">
     <div class="code stretch html panel">
       <div class="label">
-        <strong>HTML</strong>
+        <span class="name"><strong>HTML</strong></span>
         <label for="library">Include</label>
         <select id="library" class="xchosen">
           <option value="none">None</option>
@@ -111,20 +112,20 @@ if ($code_id) {
       </div>
     </div>
     <div class="code stretch javascript panel">
-      <div class="label"><strong>JavaScript</strong></div>
+      <div class="label"><span class="name"><strong>JavaScript</strong></span></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label"><strong id="csslabel">CSS</strong></div>
+      <div class="label"><span class="name"><strong id="csslabel">CSS</strong></span></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
       <div class="label">
-        <strong>Console</strong>
+        <span class="name"><strong>Console</strong></span>
         <span class="options">
           <button id="runconsole" title="ctrl + enter">Run</button>
         </span>
@@ -133,10 +134,11 @@ if ($code_id) {
     </div>
     <div id="live" class="stretch live panel">
       <div class="label">
-        <strong>Output</strong>
+        <span class="name"><strong>Output</strong></span>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Real time JS<input type="checkbox" id="enablejs"></label>
+<a id="popout" href="<?php echo $code_id_path?>preview"><img src="<?php echo ROOT ?>images/popout.png"></a>
         </span>
       </div>
     </div>

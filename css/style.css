@@ -1862,6 +1862,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .icon-twitter-sign:after       { content: "\f081"; }
 .icon-github-sign:after        { content: "\f092"; }
 
+.button-dropdown:after           { content: "▾"; padding-left: 10px; }
+.button-dropdown:empty:after           { padding-left: 0px; }
+
+
 .editbox {
   background: white;
   /*padding-top: 5px;*/
@@ -2058,6 +2062,7 @@ a.button.active:hover {
 .label .options {
   float: right;
   display: block;
+  background: #fff;
   /*height: 35px;*/
   /*margin-right: 10px;*/
 }
@@ -2297,7 +2302,7 @@ a.button.active:hover {
 }
 
 #actionmenu .dropdownmenu {
-  margin: 3px 0;
+  margin: 3px 5px;
 }
 
 #actionmenu .button {
@@ -2310,3 +2315,23 @@ a.button.active:hover {
   z-index: 1;
 }
 
+#control .file {
+  padding-left: 10px;
+}
+
+.code .name {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  width: 165px;
+}
+
+.name span {
+  margin-left: -41px;
+  padding-right: 4px;
+  color: #666;
+}
+
+#popout {
+  margin-left: 5px;
+}

@@ -13,6 +13,28 @@ $('a.save').click(function (event) {
 var saveChecksum = sessionStorage.getItem('checksum') || false;
 
 $document.bind('jsbinReady', function () {
+  $('.code.panel .label .name').prepend('<span>Saving</span>');
+
+  var savingLabels = {
+    html: $('.panel.html .name span'),
+    javascript: $('.panel.javascript .name span'),
+    css: $('.panel.css .name span'),
+  };
+
+  console.log(savingLabels);
+
+  $document.bind('codeChange', function (event, data) {
+    savingLabels[data.panelId].text('Saving');
+    savingLabels[data.panelId].stop(true, true).animate({ 'margin-left': 0 }, 100);
+  });
+
+  $document.bind('saveComplete', throttle(function (event, data) {
+    // show saved, then revert out animation
+    savingLabels[data.panelId].css({ 'margin-left': 0 }).stop(true, true).text('Saved').delay(1000).animate({
+      'margin-left': '-41px'
+    }, 100);
+  }, 500));
+
   var stream = false;
 
   if (jsbin.state.stream && window.WebSocket) {
@@ -21,6 +43,8 @@ $document.bind('jsbinReady', function () {
 
   $document.bind('codeChange', throttle(function (event, data) {
     if (!data.panelId) return;
+
+    var panelId = data.panelId;
 
     if (!saveChecksum) {
       // create the bin and when the response comes back update the url
@@ -39,6 +63,7 @@ $document.bind('jsbinReady', function () {
         type: 'post',
         dataType: 'json',
         success: function (data) {
+          $document.trigger('saveComplete', { panelId: panelId });
           if (data.error) {
             saveCode('save', true, function (data) {
               savedAlready = data.checksum;

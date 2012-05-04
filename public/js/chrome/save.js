@@ -70,7 +70,8 @@ var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="javascript" />')
     .append('<input type="hidden" name="html" />')
     .append('<input type="hidden" name="css" />')
-    .append('<input type="hidden" name="method" />');
+    .append('<input type="hidden" name="method" />')
+    .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />');
 
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=css]').val(editors.css.getCode());

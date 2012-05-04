@@ -118,6 +118,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   </div>
   <form id="saveform" method="post" action="{{code_id_path}}save">
     <input type="hidden" name="method" />
+    <input type="hidden" name="_csrf" value="{{token}}" />
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
@@ -140,6 +141,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
       <div>
         <input type="submit" value="Log in">
       </div>
+      <input type="hidden" name="_csrf" value="{{token}}" />
     </form>
   </div>
 </div>

@@ -16,7 +16,8 @@
     "express": "3.0.0alpha1",
     "asyncjs": "0.0.7",
     "hogan.js": "2.0.0",
-    "mysql": "0.9.5"
+    "mysql": "0.9.5",
+    "flatten": "git://github.com/aron/flatten.js.git#v0.1.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},

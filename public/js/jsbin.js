@@ -46,6 +46,16 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
     // backward compat with jsbin-v2
     jsbin.settings.codemirror = {};
   }
+
+  // Add a pre-filter to all ajax requests to add a CSRF header to prevent
+  // malicious form submissions from other domains.
+  jQuery.ajaxPrefilter(function (options, original, xhr) {
+    var skip = {head: 1, get: 1};
+    if (!skip[options.type.toLowerCase()]) {
+      xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
+    }
+  });
+
 //= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"

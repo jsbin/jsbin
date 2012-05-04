@@ -122,7 +122,7 @@ var id = location.pathname.replace(/\/preview.*$/, '');
     queue = [],
     msgType = '',
     useSS = false,
-    es = new EventSource('/spike/' + id);
+    es = new EventSource(id);
 
 try {
   sessionStorage.getItem('foo');

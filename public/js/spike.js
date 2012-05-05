@@ -98,7 +98,7 @@ function restore() {
     eval('data = ' + rawData);
 
     addEvent('load', function () {
-      console.log('scrolling to', data.y);
+      //console.log('scrolling to', data.y);
       window.scrollTo(data.x, data.y);
     });
   } catch (e) {}
@@ -122,24 +122,28 @@ var id = location.pathname.replace(/\/preview.*$/, '');
     queue = [],
     msgType = '',
     useSS = false,
-    es = new EventSource(id);
+    es = null;
+
+setTimeout(function () {
+  es = new EventSource(id + '?' + Math.random());
+  es.addEventListener('css', function (event) {
+    document.getElementById('jsbin-css').innerHTML = event.data;
+  });
+
+  es.addEventListener('javascript', reload);
+  es.addEventListener('html', function (event) {
+    // if the contents of the head has changed, reload,
+    // if it's the body, inject
+    // document.getElementById('jsbin-css').innerHTML = event.data;
+    reload();
+  });
+}, 500);
 
 try {
   sessionStorage.getItem('foo');
   useSS = true;
 } catch (e) {}
 
-es.addEventListener('css', function (event) {
-  document.getElementById('jsbin-css').innerHTML = event.data;
-});
-
-es.addEventListener('javascript', reload);
-es.addEventListener('html', function (event) {
-  // if the contents of the head has changed, reload,
-  // if it's the body, inject
-  // document.getElementById('jsbin-css').innerHTML = event.data;
-  reload();
-});
 
 addEvent('error', function (event) {
   error({ message: event.message }, event.filename + ':' + event.lineno);

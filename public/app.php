@@ -16,6 +16,21 @@ if ($pos !== false) $pos = strlen(ROOT);
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
 
+$csrf = isset($_COOKIE['_csrf']) ? $_COOKIE['_csrf'] : md5(rand());
+if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
+  if (!(
+     (isset($_GET['_csrf']) && $_GET['_csrf'] === $csrf) ||
+     (isset($_POST['_csrf']) && $_POST['_csrf'] === $csrf) ||
+     (isset($_SERVER['HTTP_X_CSRF_TOKEN']) && $_SERVER['HTTP_X_CSRF_TOKEN'] === $csrf)
+  )) {
+    header("HTTP/1.1 403 Access Forbidden");
+    header("Content-Type: text/plain");
+    echo 'Request failed CSRF check';
+    exit;
+  }
+}
+setcookie('_csrf', $csrf);
+
 // if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
 //   header('Location: ' . HOST . $home . '/');
 //   exit;

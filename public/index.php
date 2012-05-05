@@ -52,6 +52,7 @@ echo $mustache->render($view, array(
     'state' => array(
       'stream' => false,
       'code' => $code_id || null,
+      'token' => $csrf,
       'revision' => $revision
     )
   ))

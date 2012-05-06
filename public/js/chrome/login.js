@@ -21,13 +21,6 @@ var $loginForm = $('#login form').submit(function (event) {
     success: function (data) {
       // cookie is required to share with the server so we can do a redirect on new bin
       if (data.ok) {
-        var date = new Date();
-        date.setTime(date.getTime()+(365*24*60*60*1000)); // set for a year
-        document.cookie = 'home=' + name + '; expires=' + date.toGMTString() + '; path=/';
-        // also store encoded key - this is used to authenticate on save
-        // this key doesn't provide security, but provides a way to declare
-        // ownership and cockblocking others from taking a home name.
-        document.cookie = 'key=' + data.key + '; expires=' + date.toGMTString() + '; path=/';
         $loginFeedback.text('Successfully tied this browser to "' + name + '".');
         setTimeout(function () {
           window.location = window.location.pathname + window.location.search;

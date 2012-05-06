@@ -18,7 +18,8 @@ var $loginForm = $('#login form').submit(function (event) {
     data: { name: name, key: key, email: email },
     type: 'post',
     dataType: 'json',
-    success: function (data) {
+    complete: function (jqXHR) {
+      var data = $.parseJSON(jqXHR.responseText) || {};
       // cookie is required to share with the server so we can do a redirect on new bin
       if (data.ok) {
         $loginFeedback.text('Successfully tied this browser to "' + name + '".');

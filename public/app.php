@@ -127,7 +127,21 @@ if (!$action) {
     } else {
       // check key
       $row = mysql_fetch_object($result);
-      if ($bcrypt->verify($key, $row->key)) {
+
+      $hashed  = $row->key;
+      $created = date_parse($row->created);
+      if (!$created || $created['warning_count']) {
+        if ($hashed === sha1($key)) {
+          $hashed = $bcrypt->hash($key);
+          $sql = sprintf('UPDATE ownership SET `key`="%s", `last_login`=NOW(), `created`=NOW(), `updated`=NOW() WHERE `name`="%s"', mysql_real_escape_string($hashed), mysql_real_escape_string($name));
+          if (!mysql_query($sql)) {
+            echo json_encode(array('ok' => false, 'error' => mysql_error()));
+            exit;
+          }
+        }
+      }
+
+      if ($bcrypt->verify($key, $hashed)) {
         $ok = true;
         echo json_encode(array('ok' => true, 'created' => false));
       } else {

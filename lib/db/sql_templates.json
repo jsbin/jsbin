@@ -5,5 +5,7 @@
   "setBinPanel": "UPDATE `sandbox` SET `:panel`=?, `created`=NOW() WHERE `url`=? AND `revision`=? AND `streaming_key`=? and `streaming_key`!=''",
   "binExists": "SELECT id FROM `sandbox` WHERE `url`=? LIMIT 1",
   "getUser": "SELECT * FROM `ownership` WHERE `name`=? LIMIT 1",
-  "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, NOW(), NOW(), NOW())"
+  "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, NOW(), NOW(), NOW())",
+  "touchLogin": "UPDATE `ownership` SET `last_login`=NOW() WHERE `name`=?",
+  "updatePassword": "UPDATE ownership SET `key`=?, `last_login`=NOW(), `created`=NOW(), `updated`=NOW() WHERE `name`=?"
 }

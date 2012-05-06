@@ -144,6 +144,10 @@ if (!$action) {
       if ($bcrypt->verify($key, $hashed)) {
         $ok = true;
         echo json_encode(array('ok' => true, 'created' => false));
+        if (!mysql_query(sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name)))) {
+          echo json_encode(array('ok' => false, 'error' => mysql_error()));
+          exit;
+        }
       } else {
         echo json_encode(array('ok' => false));
       }

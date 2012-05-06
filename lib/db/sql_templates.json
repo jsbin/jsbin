@@ -7,5 +7,5 @@
   "getUser": "SELECT * FROM `ownership` WHERE `name`=? LIMIT 1",
   "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, NOW(), NOW(), NOW())",
   "touchLogin": "UPDATE `ownership` SET `last_login`=NOW() WHERE `name`=?",
-  "updatePassword": "UPDATE ownership SET `key`=?, `last_login`=NOW(), `created`=NOW(), `updated`=NOW() WHERE `name`=?"
+  "updateUserKey": "UPDATE ownership SET `key`=?, `created`=NOW(), `updated`=NOW() WHERE `name`=?"
 }

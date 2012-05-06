@@ -3,6 +3,7 @@
 
 date_default_timezone_set('Europe/London');
 
+require_once('../vendor/bcrypt.php');
 require_once('../vendor/mustache.php');
 
 include('config.php'); // contains DB & important versioning
@@ -14,7 +15,8 @@ $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
 if ($pos !== false) $pos = strlen(ROOT);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
-$home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
+$session = isset($_COOKIE['session']) ? json_decode($_COOKIE['session'], true) : array();
+$home = isset($session['user']) ? $session['user']['name'] : '';
 
 $csrf = isset($_COOKIE['_csrf']) ? $_COOKIE['_csrf'] : md5(rand());
 if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
@@ -100,33 +102,45 @@ if (!$action) {
     // 3.2. if name - check key against encoded key
     // 3.2.1. if match, return ok
     //        else return fail
-    
-    $key = sha1($_POST['key']);
+
+    $bcrypt = new Bcrypt(10);
+
+    $key  = $_POST['key'];
     $name = $_POST['name'];
+    $email = $_POST['email'];
     $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
     $result = mysql_query($sql);
+    $ok = false;
 
     header('content-type: application/json');
-  
+
     if (!mysql_num_rows($result)) {
       // store and okay (note "key" is a reserved word - typical!)
-      $sql = sprintf('insert into ownership (name, `key`) values ("%s", "%s")', mysql_real_escape_string($name), mysql_real_escape_string($key));
+      $key = $bcrypt->hash($key);
+      $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
       $ok = mysql_query($sql);
       if ($ok) {
-        echo json_encode(array('ok' => true, 'key' => $key, 'created' => true));
+        echo json_encode(array('ok' => true, 'created' => true));
       } else {
         echo json_encode(array('ok' => false, 'error' => mysql_error()));
       }
     } else {
       // check key
       $row = mysql_fetch_object($result);
-      if ($row->key == $key) {
-        echo json_encode(array('ok' => true, 'key' => $key, 'created' => false));
+      if ($bcrypt->verify($key, $row->key)) {
+        $ok = true;
+        echo json_encode(array('ok' => true, 'created' => false));
       } else {
         echo json_encode(array('ok' => false));
       }
     }
 
+    if ($ok) {
+      setcookie('session', json_encode(array('user' => array(
+        'name' => $name,
+        'lastLogin' => time()
+      ))), time() + 60 * 60 * 24 * 30, '/', null, false, true);
+    }
     exit;
   }
 } else if ($action == 'list' || $action == 'show') {

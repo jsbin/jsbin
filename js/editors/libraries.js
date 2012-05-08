@@ -28,7 +28,7 @@ Libraries.prototype.init = function () {
     yui: {
       text: 'YUI',
       scripts: [
-        { text: 'YUI 3.5.0', url: 'http://yui.yahooapis.com/3.5.0/build/yui/yui-min.js'},
+        { text: 'YUI 3.5.1', url: 'http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js'},
         { text: 'YUI 2.9.0', url: 'http://yui.yahooapis.com/2.9.0/build/yuiloader/yuiloader-min.js'}
       ]
     },

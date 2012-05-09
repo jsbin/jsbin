@@ -1799,7 +1799,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
 }
 
 #bin {
-  background: #fff url(../images/ll-logo.gif) no-repeat center;
+  background: #fff url(../images/logo.jpg) no-repeat center;
 }
 
 .group.menu .button {

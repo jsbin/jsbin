@@ -7,5 +7,6 @@
   "getUser": "SELECT * FROM `ownership` WHERE `name`=? LIMIT 1",
   "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, NOW(), NOW(), NOW())",
   "touchLogin": "UPDATE `ownership` SET `last_login`=NOW() WHERE `name`=?",
-  "updateUserKey": "UPDATE ownership SET `key`=?, `created`=NOW(), `updated`=NOW() WHERE `name`=?"
+  "updateUserKey": "UPDATE ownership SET `key`=?, `created`=NOW(), `updated`=NOW() WHERE `name`=?",
+  "setBinForUser": "INSERT INTO `owners` (`name`, `url`, `revision`) VALUES (?, ?, ?)"
 }

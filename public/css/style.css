@@ -38,6 +38,10 @@ p {
   margin: 0;
 }
 
+[hidden] {
+  display: none;
+}
+
 #control {
   z-index: 199999;
   min-width: 720px;
@@ -1934,11 +1938,16 @@ a.button.active:hover {
   padding: 5px 20px 5px 10px;
 }
 
-.dropdown a:last-child:hover {
+.dropdownmenu form {
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown .button:last-child:hover {
   /*border-bottom-right-radius: 5px;*/
 }
 
-.dropdown > a:hover {
+.dropdown > .button:hover {
   background: #aaa;
   color: #333;
   text-shadow: 0px 1px 0 rgba(255,255,255,0.3);

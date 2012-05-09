@@ -47,16 +47,12 @@ $('#loginbtn').click(function () {
 });
 
 $('#logout').click(function (event) {
-  delete jsbin.settings.home;
-  // delete cookie
-  var date = new Date();
-  date.setYear(1978);
-  date.setTime(date.getTime()+(365*24*60*60*1000)); // set for a year
-  document.cookie = 'key=""; expires=' + date.toGMTString() + '; path=/';
-  document.cookie = 'home=""; expires=' + date.toGMTString() + '; path=/';
+  event.preventDefault();
 
-  window.location.reload();
-  return false;
+  // We submit a form here because I can't work out how to style the button
+  // element in the form to look the same as the anchor. Ideally we would
+  // remove that and just let the form submit itself...
+  $(this).siblings('form').submit();
 });
 
 $('.homebtn').click(function () {

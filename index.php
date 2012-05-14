@@ -27,6 +27,7 @@ if ($code_id) {
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
+<link rel="icon" href="<?php echo ROOT ?>favicon.ico" />
 <link rel="stylesheet" href="<?php echo ROOT?>css/style.css?<?php echo VERSION?>" type="text/css" />
 <?php if (isset($custom['css'])) { ?>
 <link rel="stylesheet" href="<?php echo ROOT . $custom['css']; ?>?<?php echo VERSION?>" type="text/css" />
@@ -59,6 +60,14 @@ if ($code_id) {
           </div>
         </div>
       </div>
+<!--       <div class="menu">
+        <a href="#include" class="button button-dropdown group">Include</a>
+        <div class="dropdown" id="include">
+          <div class="dropdownmenu">
+
+          </div>
+        </div>
+      </div> -->
       <div id="panels"></div>
       <div class="help">
         <?php if ($code_id) : ?>

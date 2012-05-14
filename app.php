@@ -12,6 +12,9 @@ $host = 'http://' . $_SERVER['HTTP_HOST'];
 $cname = '';
 $custom = array();
 
+// a global - sorry folks / @ac94!
+$last_updated = '';
+
 preg_match('/^([a-z0-9\-]+)\.' . HOST . '$/', $_SERVER['HTTP_HOST'], $match);
 
 if (count($match) == 2) {
@@ -383,6 +386,10 @@ if (!$action) {
       header("Content-type: text/javascript");
     }
 
+    if ($last_updated) {
+      header("Last-Modified: " . date('r', strtotime($last_updated)));
+    }
+
     echo $html ? $html : $javascript;
     $edit_mode = false;
   }
@@ -509,6 +516,10 @@ function getCode($code_id, $revision, $testonly = false) {
     $css = preg_replace('/\r/', '', $row->css);
 
     $revision = $row->revision;
+
+    // this is hack, but it's the easiest way of getting the timestamp out
+    global $last_updated;
+    $last_updated = $row->created;
 
     // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
     return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);

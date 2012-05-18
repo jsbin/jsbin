@@ -15,10 +15,20 @@ $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
 if ($pos !== false) $pos = strlen(ROOT);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
-$session = isset($_COOKIE['session']) ? json_decode($_COOKIE['session'], true) : array();
-$home = isset($session['user']) ? $session['user']['name'] : '';
+$session = isset($_COOKIE['session']) ? $_COOKIE['session'] : null;
+if ($session) {
+  $hash = substr($session, 0, 40);
+  $json = substr($session, 40);
+  if ($hash = session_hash($json)) {
+    $session = json_decode($json, true);
+  } else {
+    $session = array();
+  }
+}
 
+$home = isset($session['user']) ? $session['user']['name'] : '';
 $csrf = isset($_COOKIE['_csrf']) ? $_COOKIE['_csrf'] : md5(rand());
+
 if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
   if (!(
      (isset($_GET['_csrf']) && $_GET['_csrf'] === $csrf) ||
@@ -166,10 +176,12 @@ if (!$action) {
     }
 
     if ($ok) {
-      setcookie('session', json_encode(array('user' => array(
+      $data = json_encode(array('user' => array(
         'name' => $name,
         'lastLogin' => time()
-      ))), time() + 60 * 60 * 24 * 30, '/', null, false, true);
+      )));
+      $hash = session_hash($data);
+      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, '/', null, false, true);
     }
     exit;
   }
@@ -719,6 +731,10 @@ function formatURL($code_id, $revision) {
     $code_id_path = ROOT . $code_id . '/';
   }
   return $code_id_path;
+}
+
+function session_hash($string) {
+  return sha1($string . SECRET_KEY);
 }
 
 ?>

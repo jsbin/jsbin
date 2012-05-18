@@ -660,10 +660,15 @@ HERE_DOC;
 }
 
 function getTitleFromCode($bin) {
-  preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
-  preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
+  preg_match('/<title>([^<]*)<\/title>/', $bin['html'], $match);
+  preg_match('/<body[^>]*>(.*)/s', $bin['html'], $body);
+
   $title = '';
-  if (count($body)) {
+  if (count($match)) {
+    $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
+  }
+
+  if (!$title && count($body)) {
     $title = $body[1];
     if (get_magic_quotes_gpc() && $body[1]) {
       $title = stripslashes($body[1]);
@@ -672,10 +677,6 @@ function getTitleFromCode($bin) {
   }
   if (!$title && $bin['javascript']) {
     $title = preg_replace('/\s+/', ' ', $bin['javascript']);
-  }
-
-  if (!$title && count($match)) {
-    $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
   }
 
   return $title;

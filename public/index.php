@@ -29,6 +29,7 @@ $code_id_domain = preg_replace('/https?:\/\//', '', $code_id_path);
 $view = file_get_contents('../views/index.html');
 $mustache = new Mustache;
 echo $mustache->render($view, array(
+  'token' => $csrf,
   'root' => ROOT,
   'version' => VERSION,
   'home' => $home,

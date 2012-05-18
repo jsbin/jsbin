@@ -1,0 +1,29 @@
+<div id="history">
+  <h2>Open previously saved <em>bins</em>:</h2>
+  <table>
+    {{#bins}}
+    <tbody>
+      {{#.}}
+      <tr data-url="{{url}}" data-edit-url="{{edit_url}}">
+        <td class="url">
+          <a href="{{edit_url}}">
+            <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
+          </a>
+        </td>
+        <td class="created">
+          <a pubdate="{{created}}" href="{{edit_url}}">{{pretty_created}}</a></td>
+        <td class="title">
+          <a href="{{edit_url}}">{{title}}</a>
+        </td>
+      </tr>
+      {{/.}}
+      <tr data-type="spacer"><td colspan=3></td></tr>
+    </tbody>
+    {{/bins}}
+  </table>
+  <div class="preview">
+    <h2>Preview</h2>
+    <p id="viewing"></p>
+    <iframe id="iframe" hidden></iframe>
+  </div>
+</div>

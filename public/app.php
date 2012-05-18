@@ -94,6 +94,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 if (!$action) {
   // do nothing and serve up the page
+} else if ($action == 'logout' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  unset($_COOKIE['session']);
+  setcookie('session', null, -1);
+
+  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : '/';
+  if (!$redirect || stripos($redirect, '://') !== false) {
+    $redirect = '/';
+  }
+  header('HTTP/1.1 303 Found');
+  header('Location: ' . $redirect);
+
+  exit;
 } else if ($action == 'sethome') {
   if ($ajax) {
     // 1. encode the key

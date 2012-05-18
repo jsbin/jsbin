@@ -45,5 +45,8 @@ define('ROOT', ($url['ssl'] ? 'https' : 'http') . '://' . HOST . PATH);
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', !IS_PRODUCTION ? 'debug' : $package['version']);
 
+// Used for hashing session keys.
+define('SECRET_KEY', $settings['session']['secret']);
+
 define('ANALYTICS_ID', $settings['analytics']['id']);
 ?>

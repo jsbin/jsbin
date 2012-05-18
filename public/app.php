@@ -244,13 +244,8 @@ if (!$action) {
         }
 
         if ($home && $ok) {
-          // first check they have write permission for this home
-          $sql = sprintf('select * from ownership where name="%s" and `key`="%s"', mysql_real_escape_string($home), mysql_real_escape_string($_COOKIE['key']));
-          $result = mysql_query($sql);
-          if (mysql_num_rows($result) == 1) {
-            $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-            $ok = mysql_query($sql);
-          }
+          $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+          $ok = mysql_query($sql);
         }
       }
     }

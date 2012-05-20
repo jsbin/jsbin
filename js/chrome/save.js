@@ -20,9 +20,7 @@ $document.bind('jsbinReady', function () {
     javascript: $('.panel.javascript .name span'),
     css: $('.panel.css .name span'),
   };
-
-  console.log(savingLabels);
-
+ 
   $document.bind('codeChange', function (event, data) {
     savingLabels[data.panelId].text('Saving');
     savingLabels[data.panelId].stop(true, true).animate({ 'margin-left': 0 }, 100);

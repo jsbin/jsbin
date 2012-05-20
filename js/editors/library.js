@@ -1,7 +1,7 @@
 //= require "libraries"
 var state = {};
 
-$('#library').bind('init', function () {
+var $library = $('#library').bind('init', function () {
   var $select = $(this),
       html = ['<option value="none">None</option>'],
       selected = $select.val(),
@@ -81,4 +81,10 @@ $('#library').bind('init', function () {
   editors.html.setCode(code);
   editors.html.focus();
   editors.html.editor.setCursor({ line: state.line, ch: state.character });
+});
+
+$library.toggle(function () {
+  $library.css('opacity', 1);
+}, function () {
+  $library.css('opacity', 0);
 });

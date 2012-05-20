@@ -59,7 +59,21 @@ if ($code_id) {
             <a id="download" title="Save to local drive" class="button download group" href="<?php echo ROOT?>download">Download</a>
           </div>
         </div>
+      </div><div class="menu">
+        <a href="#include" class="button button-dropdown group">Include</a>
+        <select id="library" class="xchosen">
+          <option value="none">None</option>
+          <option value="jquery">jQuery</option>
+          <option value="jquery+jqueryui">jQuery UI</option>
+          <option value="yui">YUI</option>
+          <option value="prototype">Prototype</option>
+          <option value="prototype+scriptaculous">Scriptaculous</option>
+          <option value="mootools">Mootools</option>
+          <option value="dojo">Dojo</option>
+          <option value="ext">Ext js</option>
+        </select>
       </div>
+
 <!--       <div class="menu">
         <a href="#include" class="button button-dropdown group">Include</a>
         <div class="dropdown" id="include">
@@ -103,18 +117,6 @@ if ($code_id) {
     <div class="code stretch html panel">
       <div class="label">
         <span class="name"><strong>HTML</strong></span>
-        <label for="library">Include</label>
-        <select id="library" class="xchosen">
-          <option value="none">None</option>
-          <option value="jquery">jQuery</option>
-          <option value="jquery+jqueryui">jQuery UI</option>
-          <option value="yui">YUI</option>
-          <option value="prototype">Prototype</option>
-          <option value="prototype+scriptaculous">Scriptaculous</option>
-          <option value="mootools">Mootools</option>
-          <option value="dojo">Dojo</option>
-          <option value="ext">Ext js</option>
-        </select>
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>

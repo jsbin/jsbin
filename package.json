@@ -18,7 +18,8 @@
     "hogan.js": "2.0.0",
     "mysql": "0.9.5",
     "bcrypt": "0.5.0",
-    "flatten": "git://github.com/aron/flatten.js.git#v0.1.0"
+    "flatten": "git://github.com/aron/flatten.js.git#v0.1.0",
+    "soak": "git://github.com/aron/soak.js.git#v0.3.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},

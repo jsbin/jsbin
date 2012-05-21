@@ -24,13 +24,19 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 
   function throttle(fn, delay) {
     var timer = null;
-    return function () {
+    var throttled = function () {
       var context = this, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
+      throttled.cancel();
+      throttled.timer = setTimeout(function () {
         fn.apply(context, args);
       }, delay);
     };
+
+    throttled.cancel = function () {
+      clearTimeout(throttled.timer);
+    };
+
+    return throttled;
   }
 
   window.jsbin || (window.jsbin = {});

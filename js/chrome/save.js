@@ -13,24 +13,24 @@ $('a.save').click(function (event) {
 var saveChecksum = sessionStorage.getItem('checksum') || false;
 
 $document.bind('jsbinReady', function () {
-  $('.code.panel .label .name').prepend('<span>Saving</span>');
+  $('.code.panel .label .name').append('<span>Saved</span>');
 
   var savingLabels = {
     html: $('.panel.html .name span'),
     javascript: $('.panel.javascript .name span'),
     css: $('.panel.css .name span'),
   };
- 
+
   $document.bind('codeChange', function (event, data) {
-    savingLabels[data.panelId].text('Saving');
-    savingLabels[data.panelId].stop(true, true).animate({ 'margin-left': 0 }, 100);
+    // savingLabels[data.panelId].text('Saving');
+    savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
   });
 
   $document.bind('saveComplete', throttle(function (event, data) {
     // show saved, then revert out animation
-    savingLabels[data.panelId].css({ 'margin-left': 0 }).stop(true, true).text('Saved').delay(1000).animate({
-      'margin-left': '-41px'
-    }, 100);
+    savingLabels[data.panelId].stop(true, true).animate({ 'opacity': 1 }, 100).delay(1200).animate({
+      'opacity': '0'
+    }, 500);
   }, 500));
 
   var stream = false;

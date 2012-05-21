@@ -11,9 +11,12 @@
 }
 
 @font-face {
-  font-family: 'FontAwesome';
-  src: url('../font/fontawesome-webfont.eot');
-  src: url('../font/fontawesome-webfont.eot?#iefix') format('embedded-opentype'), url('../font/fontawesome-webfont.woff') format('woff'), url('../font/fontawesome-webfont.ttf') format('truetype'), url('../font/fontawesome-webfont.svgz#FontAwesomeRegular') format('svg'), url('../font/fontawesome-webfont.svg#FontAwesomeRegular') format('svg');
+  font-family: 'MesloLGMDZ';
+  src: url('../font/meslolgm-dz-regular-webfont.eot');
+  src: url('../font/meslolgm-dz-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../font/meslolgm-dz-regular-webfont.woff') format('woff'),
+       url('../font/meslolgm-dz-regular-webfont.ttf') format('truetype'),
+       url('../font/meslolgm-dz-regular-webfont.svg#meslolgm-dz-regular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -926,7 +929,7 @@ ie6, li {
   outline: none !important;
   background: #FFFFDB;
   border: 0;
-  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
   font-size: 12px;
 }
 
@@ -1064,7 +1067,7 @@ details li, .details li {
 }
 
 #keyboardHelp tbody td:first-child {
-  font-family: "MenschRegular";
+  font-family: MesloLGMDZ, "MenschRegular";
   padding-right: 20px;
   color: yellow;
 }
@@ -1153,7 +1156,7 @@ details li, .details li {
   top: 0;
   bottom: 0;
   line-height: 1.2em;
-  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
   font-size: 12px;
 }
 
@@ -1422,7 +1425,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   font-size: 14px;
   color: #ccc;
   font-weight: normal;
-  font-family: 'FontAwesome', sans-serif;
+  font-family: sans-serif;
   content: "\f057";
 }
 
@@ -1475,7 +1478,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   /*padding-right: 10px;*/
 }
 
-.icon { font-family: 'FontAwesome', sans-serif; }
+.icon { font-family: sans-serif; }
 .icon-download::before           { content: "\f01a"; }
 .icon-download-alt::before       { content: "\f019"; }
 .icon-remove-sign::before        { content: "\f057"; }
@@ -1530,7 +1533,7 @@ a.button.active:hover {
 
 /* log types */
 /*#output span.gutter:before { position: absolute; }*/
-#output span.gutter { font-family: 'FontAwesome', monospace; font-size: 13px; line-height: 20px; }
+#output span.gutter { font-family: monospace; font-size: 13px; line-height: 20px; }
 #output .echo span.gutter:before { content: '\f054 '; color: #3583FC; }
 #output .info span.gutter:before { content: '\f06a '; color: #27A700; }
 #output .error span.gutter:before { content: '\f00d '; color: #E81D20; margin-right: -10px; }
@@ -1553,7 +1556,7 @@ a.button.active:hover {
 
 /* font size control */
 /*#console { top: 35px; bottom: 35px; }*/
-#output li, #exec, .fakeInput { min-height: 20px; font-size: 13px; font-family: MenschRegular, "Menlo", consolas, monospace; }
+#output li, #exec, .fakeInput { min-height: 20px; font-size: 13px; font-family: MesloLGMDZ, MenschRegular, "Menlo", consolas, monospace; }
 
 /** Pretty printing styles. Used with prettify.js. */
 
@@ -1754,7 +1757,7 @@ a.button.active:hover {
   /*position: absolute;*/
   /*top: 31px;*/
   -webkit-transition: top ease-out 200ms;
-  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;

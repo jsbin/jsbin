@@ -110,6 +110,7 @@ var dropdownButtons = $('.button-dropdown').mousedown(function (e) {
     closedropdown();
   }
   menuDown = false;
+  return false;
 });
 
 $('#actionmenu').click(function () {
@@ -220,7 +221,6 @@ $('#addmeta').click(function () {
   cm.setCursor({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length });
   cm.setSelection({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 });
   cm.setOption('onCursorActivity', function () {
-    console.log('clearing');
     cm.setOption('onCursorActivity', null);
     mark.clear();
   });

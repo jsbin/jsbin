@@ -1156,7 +1156,7 @@ details li, .details li {
   bottom: 0;
   line-height: 1.2em;
   font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 
@@ -1532,11 +1532,11 @@ a.button.active:hover {
 
 /* log types */
 /*#output span.gutter:before { position: absolute; }*/
-#output span.gutter { font-family: monospace; font-size: 13px; line-height: 20px; }
-#output .echo span.gutter:before { content: '\f054 '; color: #3583FC; }
-#output .info span.gutter:before { content: '\f06a '; color: #27A700; }
-#output .error span.gutter:before { content: '\f00d '; color: #E81D20; margin-right: -10px; }
-#output .response span.gutter:before { content: '\f053 '; color: #BDC3CD; margin-right: -10px; }
+#output span.gutter { font-family: monospace; font-size: 13px; line-height: 14px; }
+#output .echo span.gutter:before { content: '❯ '; color: #3583FC; font-weight: bold; margin-left: 5px; }
+#output .info span.gutter:before { content: 'i '; color: #27A700; font-weight: bold; margin-left: 4px; }
+#output .error span.gutter:before { content: '× '; color: #E81D20; margin-right: -10px; margin-left: 2px; font-size: 20px; font-weight: bold; }
+#output .response span.gutter:before { content: '« '; color: #BDC3CD; margin-right: -10px; font-size: 20px; }
 
 /* if response is directly next to echo, don't give it a line - only consoles get lines */
 #output li.echo + li.response { border-width: 0px; }
@@ -1959,4 +1959,36 @@ a.button.active:hover {
 
 #popout {
   margin-left: 5px;
+}
+
+.highlight {
+  border-top: 1px solid rgb(255,235,0);
+  border-bottom: 1px solid rgb(255,235,0);
+  box-shadow: 0 1px 0px rgba(0,0,0,0.25);
+  padding: 2px 0;
+  /*margin: -2px 1px;*/
+  text-shadow: 0 1px 0 rgba(255,255,0, 0.5);
+  cursor: default;
+  background: #ff0;
+  background: -moz-linear-gradient(top,  #ffff00 0%, #ffd800 50%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffff00), color-stop(50%,#ffd800));
+  background: -webkit-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  background: -o-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  background: -ms-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  background: linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#ffd800',GradientType=0 );
+}
+
+pre .highlight:first-of-type {
+  border-left: 1px solid rgb(255,235,0);
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-left: 5px;
+}
+
+pre .highlight:last-of-type {
+  border-right: 1px solid rgb(255,235,0);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-right: 5px;
 }

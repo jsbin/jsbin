@@ -73,7 +73,8 @@ $('.homebtn').click(function () {
 });
 
 var dropdownOpen = false,
-    onhover = false;
+    onhover = false,
+    menuDown = false;
 
 function opendropdown(el) {
   if (!dropdownOpen) {
@@ -83,6 +84,7 @@ function opendropdown(el) {
 }
 
 function closedropdown() {
+  menuDown = false;
   if (dropdownOpen) {
     dropdownButtons.closest('.menu').removeClass('open');
     dropdownOpen = false;
@@ -90,31 +92,29 @@ function closedropdown() {
   }
 }
 
-var dropdownButtons = $('.button-dropdown').click(function (e) {
-  if (!dropdownOpen) {
-    opendropdown(this);
-  } else {
-    closedropdown();
-  }
-  e.preventDefault();
-})
+$body.mouseup(function () {
+  menuDown = false;
+});
 
-$('.menu').has('.dropdown.hover').hover(function (event) {
-  console.log(event.target)
-  if ($(event.target).is('.button-dropdown')) {
+var dropdownButtons = $('.button-dropdown').mousedown(function (e) {
+  if (!dropdownOpen) {
+    menuDown = true;
     opendropdown(this);
-    onhover = true;
-  }
-}, function (event) {
-  console.log('hover out');
-  if ($(event.currentTarget).closest('.menu').length && onhover && dropdownOpen) {
+  } 
+  e.preventDefault();
+  return false;
+}).mouseup(function () {
+  return false;
+}).click(function () {
+  if (!menuDown) {
     closedropdown();
   }
+  menuDown = false;
 });
 
 $('#actionmenu').click(function () {
   dropdownOpen = true;
-})
+});
 
 $body.click(function (event) {
   if (dropdownOpen) {
@@ -125,8 +125,9 @@ $body.click(function (event) {
   }
 });
 
-$('.dropdownmenu a').click(function () {
+$('.dropdownmenu a').mouseup(function () {
   closedropdown();
+  $(this).click();
 });
 
 $('#download').click(function () {
@@ -180,8 +181,58 @@ if (jsbin.settings.hideheader) {
   $body.addClass('hideheader');
 }
 
+(function () {
+
+var re = {
+  head: /<head(.*)\n/i,
+  meta: /<meta name="description".*?>/i,
+  metaContent: /content=".*?"/i
+};
+
+$('#addmeta').click(function () {
+  // if not - insert
+  // <meta name="description" content="" />
+  // if meta description is in the HTML, highlight it
+  var editor = jsbin.panels.panels.html,
+      cm = editor.editor,
+      html = editor.getCode();
+
+  if (!re.meta.test(html)) {
+    if (re.head.test(html)) {
+      html = html.replace(re.head, '<head$1\n<meta name="description" content="" />\n');
+    } else {
+      // slap in the top
+      html = '<meta name="description" content="" />\n' + html;
+    }
+  }
+
+  editor.setCode(html);
+
+  // now select the text
+  // editor.editor is the CM object...yeah, sorry about that...
+  var cursor = cm.getSearchCursor(re.meta);
+  cursor.findNext();
+  var mark = cm.markText(cursor.pos.from, cursor.pos.to, 'highlight');
+
+  var contentCursor = cm.getSearchCursor(re.metaContent);
+  contentCursor.findNext();
+
+  cm.setCursor({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length });
+  cm.setSelection({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 });
+  cm.setOption('onCursorActivity', function () {
+    console.log('clearing');
+    cm.setOption('onCursorActivity', null);
+    mark.clear();
+  });
+  cm.focus();
+
+  return false;
+});
+
 // add navigation to insert meta data
 
+
+}());
 
 
 

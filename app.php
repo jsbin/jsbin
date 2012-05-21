@@ -575,7 +575,7 @@ HERE_DOC;
     } else if (isset($custom['default'])) {
       $javascript = getCustomCode($custom, 'javascript');
     } else {
-      $javascript = "/* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
+      $javascript = ""; ///* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
     }    
   }
 
@@ -659,10 +659,17 @@ HERE_DOC;
 }
 
 function getTitleFromCode($bin) {
+  preg_match('/<meta name="description" content="(.*?)"/', $bin['html'], $meta);
   preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
   preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
   $title = '';
-  if (count($body)) {
+  if (count($meta) && strlen(trim($meta[1]))) {
+    $title = $meta[1];
+    if (get_magic_quotes_gpc() && $meta[1]) {
+      $title = stripslashes($meta[1]);
+    }
+    $title = trim(preg_replace('/\s+/', ' ', strip_tags($title)));
+  } else if (count($body)) {
     $title = $body[1];
     if (get_magic_quotes_gpc() && $body[1]) {
       $title = stripslashes($body[1]);

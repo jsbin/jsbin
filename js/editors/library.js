@@ -87,8 +87,8 @@ var $library = $('#library').bind('init', function () {
   editors.html.editor.setCursor({ line: state.line, ch: state.character });
 });
 
-$library.toggle(function () {
-  $library.css('opacity', 1);
-}, function () {
-  $library.css('opacity', 0);
-});
+// $library.toggle(function () {
+//   $library.css('opacity', 1);
+// }, function () {
+//   $library.css('opacity', 0);
+// });

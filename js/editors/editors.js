@@ -253,6 +253,8 @@ Panel.prototype.distribute = function () {
 
 jsbin.panels = panels;
 
+var ignoreDuringLive = /^\s*(while|do|for)[\s*|$]/;
+
 var editors = panels.panels = {
   html: new Panel('html', { editor: true, label: 'HTML' }),
   css: new Panel('css', { editor: true, label: 'CSS' }),
@@ -268,16 +270,40 @@ var editors = panels.panels = {
         renderLivePreview(true);
       }
     });
-    $document.bind('codeChange.live', function (event, data) {
+
+    var deferredLiveRender = null;
+
+    function codeChangeLive(event, data) {
+      clearTimeout(deferredLiveRender);
+
+      var editor, line;
       if (panels.ready) {
         if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
           // ignore
         } else if (panel.visible) {
-          throttledPreview();
+          // test to see if they're write a while loop
+          if (jsbin.panels.focused.id === 'javascript') {
+            // check the current line doesn't match a for or a while or a do - which could trip in to an infinite loop
+            editor = jsbin.panels.focused.editor;
+            line = editor.getLine(editor.getCursor().line);
+            if (ignoreDuringLive.test(line) === true) {
+              // ignore
+              throttledPreview.cancel();
+              deferredLiveRender = setTimeout(function () {
+                codeChangeLive(event, data);
+              }, 1000);
+            } else {
+              throttledPreview();
+            }
+          } else {
+            throttledPreview();
+          }
         }
       }
-    });
-    renderLivePreview();
+    }
+
+    $document.bind('codeChange.live', codeChangeLive);
+    // renderLivePreview();
   }, hide: function () {
     // detroy the iframe if we hide the panel
     // note: $live is defined in live.js

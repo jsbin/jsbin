@@ -264,7 +264,7 @@ iframe.javascript {
   min-width: 100%;
   float: left;
   display: block;
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 }
 
 .dropdownmenu a, .button {

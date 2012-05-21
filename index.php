@@ -45,6 +45,7 @@ if ($code_id) {
         <a href="#actionmenu" class="button button-dropdown group">File</a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
+            <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
             <a title="Create milestone" class="button save group" href="<?php echo $code_id_path?>save">Create milestone</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="<?=ROOT?>">New</a>
   <?php if ($home) : ?>
@@ -87,7 +88,7 @@ if ($code_id) {
         <?php if ($code_id) : ?>
         <!-- <span class="meta"> -->
           <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
-          <a id="jsbinurl" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
+          <a id="jsbinurl" target="_blank" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
         <!-- </span> -->
         <?php endif ?>
         <?php if ($home) : ?>
@@ -149,7 +150,7 @@ if ($code_id) {
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Real time JS<input type="checkbox" id="enablejs"></label>
-<a id="popout" href="<?php echo $code_id_path?>preview"><img src="<?php echo ROOT ?>images/popout.png"></a>
+<a id="popout" target="_blank" href="<?php echo $code_id_path?>preview"><img src="<?php echo ROOT ?>images/popout.png"></a>
         </span>
       </div>
     </div>

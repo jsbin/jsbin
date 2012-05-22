@@ -101,7 +101,7 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-    if (panelShortcuts[event.which] !== undefined && event.metaKey) {
+    if (panelShortcuts[event.which] !== undefined && event.metaKey && event.altKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }

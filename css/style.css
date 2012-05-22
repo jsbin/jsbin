@@ -296,7 +296,7 @@ iframe.javascript {
   margin-right: 10px;
 }
 
-.dropdownmenu a:hover, a.button:hover {
+.dropdownmenu a:hover, a.button:hover, a.hover {
   /*-moz-box-shadow: #fff 0px 0px 5px;*/
   background: rgba(0, 0, 0, 0.04);
   z-index: 1;
@@ -1032,7 +1032,7 @@ details li, .details li {
 #keyboardHelp table, #keyboardHelp h2 {
   margin: 20px auto;
   padding: 20px;
-  width: 520px;
+  width: 560px;
   background: #000;
   border-radius: 5px;
 /*  background: #fff;*/
@@ -1054,7 +1054,7 @@ details li, .details li {
   border-top-right-radius: 0;
   border-top-left-radius: 0; 
   margin-top: 0;
-  width: 560px;
+  width: 600px;
 }
 
 #keyboardHelp thead th {
@@ -1072,7 +1072,7 @@ details li, .details li {
 }
 
 #keyboardHelp .shortcut {
-  width: 220px;
+  width: 260px;
 }
 
 #login > div {
@@ -1486,7 +1486,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .icon-twitter-sign:after       { content: "\f081"; }
 .icon-github-sign:after        { content: "\f092"; }
 
-.button-dropdown:after           { content: "▾"; padding-left: 10px; }
+.button-dropdown:after           { content: "▾"; padding-left: 5px; padding-right: 3px; }
 .button-dropdown:empty:after           { padding-left: 0px; }
 
 

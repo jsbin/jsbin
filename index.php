@@ -193,7 +193,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
     </thead>
     <tbody>
       <tr>
-        <td>ctrl + [panel num]</td>
+        <td>ctrl + alt + [panel num]</td>
         <td>Show nth panel</td>
       </tr>
       <tr>
@@ -229,11 +229,11 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
         <td>Clone current Bin</td>
       </tr>
       <tr>
-        <td>tab</td>
+        <td>cmd + ] (or tab)</td>
         <td>Indents selected lines</td>
       </tr>
       <tr>
-        <td>shift + tab</td>
+        <td>cmd + [ (or shift + tab)</td>
         <td>Unindents selected lines</td>
       </tr>
       <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>

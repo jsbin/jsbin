@@ -86,6 +86,7 @@ var Panel = function (name, settings) {
   });
   $panel.add(this.$el.find('.label')).click(function () {
     panel.focus();
+    return false;
   });
 }
 
@@ -188,7 +189,9 @@ Panel.prototype = {
     }
 
     // this.controlButton.show();
-    $document.trigger('sizeeditors');
+    setTimeout(function () {
+      $document.trigger('sizeeditors');
+    }, 110);
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();

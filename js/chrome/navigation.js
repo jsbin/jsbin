@@ -93,10 +93,12 @@ function closedropdown() {
 }
 
 $body.mouseup(function () {
-  menuDown = false;
+  closedropdown();
 });
 
 var dropdownButtons = $('.button-dropdown').mousedown(function (e) {
+  $dropdownLinks.removeClass('hover');
+
   if (!dropdownOpen) {
     menuDown = true;
     opendropdown(this);
@@ -126,9 +128,12 @@ $body.click(function (event) {
   }
 });
 
-$('.dropdownmenu a').mouseup(function () {
+var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   closedropdown();
   $(this).click();
+}).mouseover(function () {
+  $dropdownLinks.removeClass('hover');
+  $(this).addClass('hover');
 });
 
 $('#download').click(function () {

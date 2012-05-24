@@ -289,7 +289,7 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = $host . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
+    $url = $host . ROOT . $code_id . '/' . $revision; // ($revision == 1 ? '' : '/' . $revision);
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {

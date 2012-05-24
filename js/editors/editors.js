@@ -271,39 +271,7 @@ var editors = panels.panels = {
       }
     });
 
-    var deferredLiveRender = null;
-
-    function codeChangeLive(event, data) {
-      clearTimeout(deferredLiveRender);
-
-      var editor, line;
-      if (panels.ready) {
-        if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
-          // ignore
-        } else if (panel.visible) {
-          // test to see if they're write a while loop
-          if (jsbin.panels.focused.id === 'javascript') {
-            // check the current line doesn't match a for or a while or a do - which could trip in to an infinite loop
-            editor = jsbin.panels.focused.editor;
-            line = editor.getLine(editor.getCursor().line);
-            if (ignoreDuringLive.test(line) === true) {
-              // ignore
-              throttledPreview.cancel();
-              deferredLiveRender = setTimeout(function () {
-                codeChangeLive(event, data);
-              }, 1000);
-            } else {
-              throttledPreview();
-            }
-          } else {
-            throttledPreview();
-          }
-        }
-      }
-    }
-
-    $document.bind('codeChange.live', codeChangeLive);
-    // renderLivePreview();
+    renderLivePreview();
   }, hide: function () {
     // detroy the iframe if we hide the panel
     // note: $live is defined in live.js

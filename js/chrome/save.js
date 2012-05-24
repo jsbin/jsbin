@@ -2,10 +2,8 @@
 $('a.save').click(function (event) {
   event.preventDefault();
 
-  // save our panel layout - assumes our user is happy with this layout
-  jsbin.panels.save();
-  analytics.save();
-  saveCode('save', window.location.pathname.indexOf('/edit') !== -1);
+  analytics.milestone();
+  saveCode('save', true); //window.location.pathname.indexOf('/edit') !== -1);
 
   return false;
 });
@@ -64,7 +62,7 @@ $document.bind('jsbinReady', function () {
           $document.trigger('saveComplete', { panelId: panelId });
           if (data.error) {
             saveCode('save', true, function (data) {
-              savedAlready = data.checksum;
+              // savedAlready = data.checksum;
             });
           }
         },

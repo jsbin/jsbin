@@ -2,8 +2,8 @@ var analytics = {
   revert: function () {
     window._gaq && _gaq.push(['_trackPageview', '/revert' + window.location.pathname]);
   },
-  save: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/save' + window.location.pathname]);
+  milestone: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/milestone' + window.location.pathname]);
   },
   clone: function () {
     window._gaq && _gaq.push(['_trackPageview', '/clone' + window.location.pathname]);

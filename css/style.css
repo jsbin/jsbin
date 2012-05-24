@@ -1627,6 +1627,11 @@ a.button.active:hover {
   padding-top: 2px;
 }
 
+.embed #panels {
+  background: url(/images/jsbin_header.png) no-repeat 6px -2px;
+  min-height: 33px;
+}
+
 #panels a {
   text-decoration: none;
   display: inline-block;
@@ -1754,7 +1759,7 @@ a.button.active:hover {
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;
-  padding: 10px 0;
+  padding: 40px 0 10px 0;
   position: absolute;
   /*height: 100%;*/
   top: 0;
@@ -1762,6 +1767,7 @@ a.button.active:hover {
   right: 0;
   bottom: 0;
   overflow: auto;
+  background: #fff;
 }
 
 #history .preview {
@@ -2005,3 +2011,4 @@ pre .highlight:last-of-type {
   border-bottom-right-radius: 3px;
   padding-right: 5px;
 }*/
+

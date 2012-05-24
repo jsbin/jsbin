@@ -38,11 +38,11 @@ if ($code_id) {
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
 <!--[if gte IE 8 ]><body class="source ie"><![endif]--> 
-<!--[if !IE]><!--><body class="source"><!--<![endif]-->
+<!--[if !IE]><!--><body class="source<?php if ($embed) echo ' embed' ?>"><!--<![endif]-->
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <!-- <a id="save" href="<?php echo ROOT?>save" class="save title button">Save</a> -->
+<?php if (!$embed) : ?>
       <div class="menu">
         <a href="#actionmenu" class="button button-dropdown group">File</a>
         <div class="dropdown" id="actionmenu">
@@ -77,15 +77,7 @@ if ($code_id) {
         </select>
         </a>
       </div>
-
-<!--       <div class="menu">
-        <a href="#include" class="button button-dropdown group">Include</a>
-        <div class="dropdown" id="include">
-          <div class="dropdownmenu">
-
-          </div>
-        </div>
-      </div> -->
+<?php endif ?>
       <div id="panels"></div>
       <div class="help">
         <?php if ($code_id) : ?>
@@ -93,8 +85,9 @@ if ($code_id) {
           <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="<?php echo ROOT?>images/revert.png" /><img class="disabled" src="<?php echo ROOT?>images/revert-disabled.png" /></a>
           <a id="jsbinurl" target="_blank" class="button group light left right gap" href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?>"><?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id?></a>
         <!-- </span> -->
-        <?php endif ?>
-        <?php if ($home) : ?>
+        <?php endif; ?>
+        <?php if (!$embed) : ?>
+          <?php if ($home) : ?>
         <div class="menu">
           <div class="group">
             <a href="#" class="button homebtn"><?php echo $home ?></a><a href="#homemenu" class="button button-dropdown"></a>
@@ -105,8 +98,11 @@ if ($code_id) {
             </div>
           </div>
         </div>
-        <?php else : ?>
+          <?php else : ?>
         <a href="#" class="button" id="loginbtn">Log in</a>
+          <?php endif ?>
+        <?php else: ?>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id ?>/edit" class="button" id="loginbtn">Edit</a>
         <?php endif ?>
         <a href="http://jsbin.tumblr.com" class="button group">Help</a>
       </div>
@@ -152,7 +148,8 @@ if ($code_id) {
         <span class="name"><strong>Output</strong></span>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
-Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Real time JS<input type="checkbox" id="enablejs"></label>
+Include alerts, prompts &amp; confirm boxes">Run with alerts</button> 
+          <?php if (!$embed) : ?><label>Real time JS<input type="checkbox" id="enablejs"></label><?php endif; ?>
 <a id="popout" target="_blank" href="<?php echo $code_id_path?>preview"><img src="<?php echo ROOT ?>images/popout.png"></a>
         </span>
       </div>
@@ -276,7 +273,7 @@ _gaq.push(['_trackPageview']);
 </script>
 <?php endif ?>
 <?php
-  showSaved($home);
+  if (!$embed) showSaved($home);
 ?>
 <div id="urlHelp" class="modal">
   <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>

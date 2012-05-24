@@ -255,29 +255,50 @@ jsbin.panels = panels;
 
 var ignoreDuringLive = /^\s*(while|do|for)[\s*|$]/;
 
-var editors = panels.panels = {
-  html: new Panel('html', { editor: true, label: 'HTML' }),
-  css: new Panel('css', { editor: true, label: 'CSS' }),
-  javascript: new Panel('javascript', { editor: true, label: 'JavaScript', init: function () {
-    // checkForErrors();
-  } }),
-  console: new Panel('console', { label: 'Console' }),
-  live: new Panel('live', { label: 'Output', show: function () {
-    // contained in live.js
-    var panel = this;
-    $document.bind('jsbinReady', function () {
-      if (panel.visible) {
-        renderLivePreview(true);
-      }
-    });
 
-    renderLivePreview();
-  }, hide: function () {
-    // detroy the iframe if we hide the panel
-    // note: $live is defined in live.js
-    $live.find('iframe').remove();
-  } })
+var panelInit = {
+  html: function () {
+    return new Panel('html', { editor: true, label: 'HTML' });
+  },
+  css: function () {
+    return new Panel('css', { editor: true, label: 'CSS' });
+  },
+  javascript: function () {
+    return new Panel('javascript', { editor: true, label: 'JavaScript' });
+  },
+  console: function () {
+    return new Panel('console', { label: 'Console' });
+  },
+  live: function () {
+    function show() {
+      var panel = this;
+      $document.bind('jsbinReady', function () {
+        if (panel.visible) {
+          renderLivePreview(true);
+        }
+      });
+
+      renderLivePreview();
+    }
+
+    function hide() {
+      // detroy the iframe if we hide the panel
+      // note: $live is defined in live.js
+      $live.find('iframe').remove();
+    }
+
+    return new Panel('live', { label: 'Output', show: show, hide: hide });
+  }
 };
+
+var editors = panels.panels = {};
+
+// show all panels (change the order to control the panel order)
+editors.html = panelInit.html();
+editors.css = panelInit.css();
+editors.javascript = panelInit.javascript();
+editors.console = panelInit.console();
+editors.live = panelInit.live();
 
 
 // jsconsole.init(); // sets up render functions etc.

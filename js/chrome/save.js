@@ -21,7 +21,9 @@ $document.bind('jsbinReady', function () {
 
   $document.bind('codeChange', function (event, data) {
     // savingLabels[data.panelId].text('Saving');
-    savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
+    if (savingLabels[data.panelId]) {
+      savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
+    }
   });
 
   $document.bind('saveComplete', throttle(function (event, data) {

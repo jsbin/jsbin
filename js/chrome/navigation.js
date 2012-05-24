@@ -128,12 +128,18 @@ $body.click(function (event) {
   }
 });
 
+var fromClick = false;
 var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   closedropdown();
-  $(this).click();
+  if (!fromClick) {
+    $(this).click();
+  } 
+  fromClick = false;
 }).mouseover(function () {
   $dropdownLinks.removeClass('hover');
   $(this).addClass('hover');
+}).mousedown(function () {
+  fromClick = true;
 });
 
 $('#download').click(function () {
@@ -195,6 +201,8 @@ var re = {
   metaContent: /content=".*?"/i
 };
 
+var metatag = '<meta name="description" content="[add your bin description]" />\n';
+
 $('#addmeta').click(function () {
   // if not - insert
   // <meta name="description" content="" />
@@ -205,10 +213,10 @@ $('#addmeta').click(function () {
 
   if (!re.meta.test(html)) {
     if (re.head.test(html)) {
-      html = html.replace(re.head, '<head$1\n<meta name="description" content="" />\n');
+      html = html.replace(re.head, '<head$1\n' + metatag);
     } else {
       // slap in the top
-      html = '<meta name="description" content="" />\n' + html;
+      html = metatag + html;
     }
   }
 
@@ -218,17 +226,22 @@ $('#addmeta').click(function () {
   // editor.editor is the CM object...yeah, sorry about that...
   var cursor = cm.getSearchCursor(re.meta);
   cursor.findNext();
-  var mark = cm.markText(cursor.pos.from, cursor.pos.to, 'highlight');
 
   var contentCursor = cm.getSearchCursor(re.metaContent);
   contentCursor.findNext();
 
-  cm.setCursor({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length });
-  cm.setSelection({ line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 });
+  var from = { line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, 
+      to = { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 };
+
+  cm.setCursor(from);
+  cm.setSelection(from, to);
   cm.setOption('onCursorActivity', function () {
     cm.setOption('onCursorActivity', null);
     mark.clear();
   });
+
+  var mark = cm.markText(from, to, 'highlight');
+
   cm.focus();
 
   return false;

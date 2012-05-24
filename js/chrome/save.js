@@ -16,7 +16,7 @@ $document.bind('jsbinReady', function () {
   var savingLabels = {
     html: $('.panel.html .name span'),
     javascript: $('.panel.javascript .name span'),
-    css: $('.panel.css .name span'),
+    css: $('.panel.css .name span')
   };
 
   $document.bind('codeChange', function (event, data) {

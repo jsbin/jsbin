@@ -1478,16 +1478,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 .icon { font-family: sans-serif; }
-.icon-download::before           { content: "\f01a"; }
-.icon-download-alt::before       { content: "\f019"; }
-.icon-remove-sign::before        { content: "\f057"; }
-.icon-chevron-down:after       { content: "\f078"; }
-.icon-retweet:after            { content: "\f079"; }
-.icon-twitter-sign:after       { content: "\f081"; }
-.icon-github-sign:after        { content: "\f092"; }
-
-.button-dropdown:after           { content: "▾"; padding-left: 5px; padding-right: 3px; }
-.button-dropdown:empty:after           { padding-left: 0px; }
+.button-dropdown:after,
+.fake-dropdown:after { content: "▾"; padding-left: 5px; padding-right: 3px; }
+.button-dropdown:empty:after,
+.fake-dropdown:empty:after { padding-left: 0px; }
 
 
 .editbox {

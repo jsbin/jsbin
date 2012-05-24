@@ -36,6 +36,7 @@ var Panel = function (name, settings) {
     var cmSettings = {
       parserfile: [],
       tabMode: 'shift',
+      // readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
       onChange: function (event) { 

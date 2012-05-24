@@ -2,6 +2,8 @@
 
 include('app.php'); 
 
+$embed = true;
+
 list($code_id, $revision) = getCodeIdParams($request);
 
 $edit_mode = false;
@@ -61,7 +63,7 @@ if ($code_id) {
           </div>
         </div>
       </div><div class="menu">
-        <a href="#include" class="button button-dropdown group">Include</a>
+        <a href="#include" class="button fake-dropdown group">Include
         <select id="library" class="xchosen">
           <option value="none">None</option>
           <option value="jquery">jQuery</option>
@@ -73,6 +75,7 @@ if ($code_id) {
           <option value="dojo">Dojo</option>
           <option value="ext">Ext js</option>
         </select>
+        </a>
       </div>
 
 <!--       <div class="menu">
@@ -205,6 +208,10 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
         <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
       </tr>
       <tr>
+        <td>ctrl + l</td>
+        <td>Clear the console</td>
+      </tr>
+      <tr>
         <td>ctrl + \</td>
         <td>Auto hide navigation bar</td>
       </tr>
@@ -219,10 +226,6 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
       <tr>
         <td>esc</td>
         <td>Code complete (JavaScript only) and close open overlays - like this</td>
-      </tr>
-      <tr>
-        <td>ctrl + s</td>
-        <td>Save current Bin</td>
       </tr>
       <tr>
         <td>ctrl + shift + s</td>
@@ -252,7 +255,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button> <label>Rea
 ?>
 </script>
 <script>
-var jsbin = { settings: { panels: [] }, state: { stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; 
+var jsbin = { settings: { panels: [] }, state: { embed: <?php echo isset($embed) && $embed ? 'true' : 'false' ?>, stream: false, code: "<?php echo $code ?>", revision: <?php echo $revision ?> }, root: "<?php echo 'http://' . $_SERVER['HTTP_HOST'] . ROOT ?>", version: "<?php echo VERSION?>" }; 
 <?php if (isset($custom['settings'])) { ?>
 jsbin.settings = <?php echo json_encode($custom['settings']); ?>;
 <?php } ?>

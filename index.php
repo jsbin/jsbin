@@ -2,7 +2,7 @@
 
 include('app.php'); 
 
-$embed = true;
+$embed = false;
 
 list($code_id, $revision) = getCodeIdParams($request);
 

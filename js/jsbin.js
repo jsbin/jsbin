@@ -56,7 +56,7 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 
   jsbin.getURL = function () {
     return jsbin.root + jsbin.state.code + '/' + jsbin.state.revision + '/';
-  }
+  };
 //= require "vendor/json2"
 //= require "editors/editors"
 //= require "render/render"

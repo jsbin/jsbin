@@ -300,27 +300,6 @@ if (!$action) {
     }
   }
 
-  /** 
-   * Download
-   *
-   * Now allow the user to download the individual bin.
-   * TODO allow users to download *all* their bins.
-   **/
-  if (stripos($method, 'download') !== false) {
-    // strip escaping (replicated from getCode method):
-    $javascript = preg_replace('/\r/', '', $javascript);
-    $html = preg_replace('/\r/', '', $html);
-    $css = preg_replace('/\r/', '', $css);
-    $html = get_magic_quotes_gpc() ? stripslashes($html) : $html;
-    $javascript = get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript;
-    $css = get_magic_quotes_gpc() ? stripslashes($css) : $css;
-    
-    if (!$code_id) {
-      $code_id = 'untitled';
-      $revision = 1;
-    }
-  }
-
   // If they're saving via an XHR request, then second back JSON or JSONP response
   if ($ajax) {
     // supports plugins making use of JS Bin via ajax calls and callbacks
@@ -352,14 +331,6 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo '")';
     }
-  } else if (stripos($method, 'download') !== false) {
-    // actually go ahead and send a file to prompt the browser to download
-    $originalHTML = $html;
-    list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
-    $ext = $originalHTML ? '.html' : '.js';
-    header('Content-Disposition: attachment; filename="' . $code_id . ($revision == 1 ? '' : '.' . $revision) . $ext . '"');
-    echo $originalHTML ? $html : $javascript;
-    exit;
   } else {
     // code was saved, so lets do a location redirect to the newly saved code
     $edit_mode = false;
@@ -371,7 +342,7 @@ if (!$action) {
   }
   
   
-} else if ($action) { // this should be an id
+} else if ($action === 'download' || $action) { // this should be an id
   $subaction = array_pop($request);
 
   if ($action == 'latest') {
@@ -383,27 +354,40 @@ if (!$action) {
   }
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
   else if ($subaction != 'gist') {
+    $download = false;
+    if ($action === 'download') {
+      $download = true;
+      $action = $subaction;
+      $subaction = array_pop($request);
+    }
+
     if ($subaction && is_numeric($action)) {
       $code_id = $subaction;
       $revision = $action;
     } else {
       $code_id = $action;
-      $revision = 1;
+      $revision = getMaxRevision($code_id);
     }
-    
+
     list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision);
     list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
-    
+
     global $quiet;
+
+    if ($download) {
+      $ext = $html ? 'html' : 'js';
+      $filename = implode(array('jsbin', $code_id, $revision, $ext), '.');
+      header('Content-Disposition: attachment; filename="' . $filename . '"');
+    }
 
     // using new str_lreplace to ensure only the *last* </body> is replaced.
     // FIXME there's still a bug here if </body> appears in the script and not in the
     // markup - but I'll fix that later
-    if (!$quiet) {
+    if (!$quiet && !$download) {
       $html = str_lreplace('</body>', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
     }
 
-    if ($no_code_found == false) {
+    if ($no_code_found == false && !$download) {
       $html = str_lreplace('</body>', googleAnalytics() . '</body>', $html);
     }
 

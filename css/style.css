@@ -21,7 +21,7 @@ body {
   min-width: 976px;
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
-  background: #fff url(../images/logo.png) no-repeat center;
+  background: #fff url(../images/logo2.png) no-repeat center;
   height: 100%;
 }
 
@@ -1756,6 +1756,11 @@ a.button.active:hover {
   bottom: 0;
   overflow: auto;
   background: #fff;
+  display: none;
+}
+
+.ready #history {
+  display: block;
 }
 
 #history .preview {

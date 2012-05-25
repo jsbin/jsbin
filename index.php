@@ -23,7 +23,7 @@ if ($code_id) {
 
 ?>
 <!DOCTYPE html>
-<html id="jsbin" lang="en">
+<html id="jsbin" lang="en" class="<?php if ($embed) echo ' embed' ?>">
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
@@ -36,7 +36,7 @@ if ($code_id) {
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
 <!--[if gte IE 8 ]><body class="source ie"><![endif]--> 
-<!--[if !IE]><!--><body class="source<?php if ($embed) echo ' embed' ?>"><!--<![endif]-->
+<!--[if !IE]><!--><body class="source"><!--<![endif]-->
 <div id="control">
   <div class="control">
     <div class="buttons">

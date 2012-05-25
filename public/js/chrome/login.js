@@ -27,6 +27,7 @@ var $loginForm = $('#login form').submit(function (event) {
           window.location = window.location.pathname + window.location.search;
         }, 500);
       } else {
+        analytics.login(false);
         $loginFeedback.text('"' + name + '" has already been taken. Please either double check the password, or choose another username.');
       }
     }

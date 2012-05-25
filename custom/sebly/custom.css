@@ -1,0 +1,10 @@
+.editbox .CodeMirror {
+  line-height: 1.2em;
+  font-family: Menlo, MenschRegular, Monaco, consolas, monospace;
+  font-size: 16px;
+}
+
+.html > .label label,
+.html > .label select {
+  display: none;
+}

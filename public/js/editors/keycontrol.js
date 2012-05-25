@@ -101,7 +101,7 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-    if (panelShortcuts[event.which] !== undefined && event.metaKey) {
+    if (panelShortcuts[event.which] !== undefined && event.metaKey && event.altKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }
@@ -110,12 +110,15 @@ function keycontrol(event) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
+      if (keyboardHelpVisible) {
+        analytics.help();
+      }
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;
       event.stop();
-    } else if (event.which == 27) {
+    } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
       event.stop();
       return startComplete(panel);
     } else if (event.which == 190 && event.altKey && event.metaKey && panel.id == 'html') {

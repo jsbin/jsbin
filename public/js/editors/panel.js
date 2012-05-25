@@ -8,15 +8,19 @@ var editorModes = {
 };
 
 var Panel = function (name, settings) {
-  var panel = this;
+  var panel = this,
+      showPanelButton = true,
+      $panel = null,
+      splitterSettings = {},
+      cmSettings = {};
+
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
-  var $panel = $('.panel.' + name);
+  $panel = $('.panel.' + name);
   $panel.data('name', name);
   panel.$el = $panel.detach();
   panel.$el.appendTo($source);
   panel.$el.wrapAll('<div class="stretch panelwrapper">');
-  // var wrapper = panel.$el.parent().hide();
   panel.$el = panel.$el.parent().hide();
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
@@ -30,12 +34,12 @@ var Panel = function (name, settings) {
     settings.nosplitter = true;
   }
 
-  var splitterSettings = {};
 
   if (settings.editor) {
-    panel.editor = CodeMirror.fromTextArea(panel.el, {
+    cmSettings = {
       parserfile: [],
       tabMode: 'shift',
+      readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
       onChange: function (event) { 
@@ -43,8 +47,12 @@ var Panel = function (name, settings) {
         return true; 
       },
       lineWrapping: true,
-      theme: jsbin.settings.codemirror.theme || 'jsbin'
-    });
+      theme: 'jsbin'
+    };
+
+    $.extend(cmSettings, jsbin.settings.codemirror || {});
+
+    panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     panel.processor = settings.processor || function (str) { return str; };
 
@@ -69,13 +77,18 @@ var Panel = function (name, settings) {
   }
 
   // append panel to controls
+  if (jsbin.state.embed) {
+    // showPanelButton = window.location.search.indexOf(panel.id) !== -1;
+  }
 
-  this.controlButton = $('<a class="button group" href="#' + name + '">' + (settings.label || name) + '</a>');
-  this.controlButton.click(function () {
-    panel.toggle();
-    return false;
-  });
-  this.controlButton.appendTo('#panels');
+  if (showPanelButton) {
+    this.controlButton = $('<a class="button group" href="#' + name + '">' + (settings.label || name) + '</a>');
+    this.controlButton.click(function () {
+      panel.toggle();
+      return false;
+    });
+    this.controlButton.appendTo('#panels');
+  }
 
   $panel.focus(function () {
     panel.focus();
@@ -96,6 +109,8 @@ Panel.prototype = {
     // width
     var panel = this,
         panelCount = panel.$el.find('.panel').length;
+
+    analytics.showPanel(panel.id);
 
     // panel.$el.show();
     if (panel.splitter.length) {
@@ -147,6 +162,7 @@ Panel.prototype = {
     var panel = this;
     // panel.$el.hide();
     panel.visible = false;
+    analytics.hidePanel(panel.id);
 
     // update all splitter positions
     // LOGIC: when you go to hide, you need to check if there's
@@ -181,7 +197,9 @@ Panel.prototype = {
     }
 
     // this.controlButton.show();
-    $document.trigger('sizeeditors');
+    setTimeout(function () {
+      $document.trigger('sizeeditors');
+    }, 110);
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();
@@ -223,7 +241,7 @@ Panel.prototype = {
       try {
         editor.setValue(str);
       } catch(err) {
-        // console.error(e.id, err + '');
+        // console.error(panel.id, err + '');
       }
     };
 
@@ -237,9 +255,9 @@ Panel.prototype = {
     };
 
     // editor.setOption('onKeyEvent', keycontrol);
-    editor.setOption('onFocus', function () {
+    // editor.setOption('onFocus', function () {
       // panel.$el.trigger('focus');
-    });
+    // });
 
     editor.id = panel.name;
 
@@ -284,8 +302,8 @@ Panel.prototype = {
       // it has to be re-populated upon show for the first time because
       // it appears that CM2 uses the visible height to work out what
       // should be shown. 
-      populateEditor(panel, panel.name);
       panel.ready = true;
+      populateEditor(panel, panel.name);
 
       if (focusedPanel == panel.name || focusedPanel == null) {
         if (panel.visible) {

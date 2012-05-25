@@ -9,7 +9,29 @@ require_once('../vendor/mustache.php');
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
+$embed = false;
 $host = 'http://' . $_SERVER['HTTP_HOST'];
+
+// allows for custom hosting of jsbin - special feature for teachers
+$cname = '';
+$custom = array();
+
+// a global - sorry folks / @ac94!
+$last_updated = '';
+
+preg_match('/^([a-z0-9\-]+)\.' . HOST . '$/', $_SERVER['HTTP_HOST'], $match);
+
+if (count($match) == 2) {
+  $cname = $match[1];
+}
+
+if ($cname && $cname !== 'www') { // unlikely on the www
+  // we have a custom build of jsbin - let's load their customisations
+  if (file_exists('custom/' . $cname . '/config.json')) {
+    $custom = json_decode(file_get_contents('custom/' . $cname . '/config.json'), true);
+    $custom['__dirname'] = 'custom/' . $cname . '/';
+  }
+}
 
 $pos = strpos($_SERVER['REQUEST_URI'], ROOT);
 if ($pos !== false) $pos = strlen(ROOT);
@@ -219,13 +241,13 @@ if (!$action) {
     // doubles as JSON
     echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
   }
-} else if ($action == 'edit') {
+} else if ($action == 'edit' || $action == 'embed') {
   list($code_id, $revision) = getCodeIdParams($request);
+  if ($action == 'embed') $embed = true;
   if ($revision == 'latest') {
     $latest_revision = getMaxRevision($code_id);
     header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
     $edit_mode = false;
-    
   }
 } else if ($action == 'save' || $action == 'clone') {
   list($code_id, $revision) = getCodeIdParams($request);
@@ -281,19 +303,28 @@ if (!$action) {
     $panel = $_POST['panel'];
     $content = $_POST['content'];
 
-    $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
+    if ($panel === 'javascript' || $panel === 'css' || $panel === 'html') {
+      $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
 
-    // TODO run against blacklist
-    $ok = mysql_query($sql);
-    $updated = mysql_affected_rows();
-    if ($ok && $updated === 1) {
-      $data = array(ok => true, error => false);
-      echo json_encode($data);
-      exit;
+      // TODO run against blacklist
+      $ok = mysql_query($sql);
+      $updated = mysql_affected_rows();
+      if ($ok && $updated === 1) {
+        $data = array(ok => true, error => false);
+        echo json_encode($data);
+        exit;
+      } else {
+        $data = array(
+          error => true,
+          message => 'checksum did not check out on revision update'
+        );
+        echo json_encode($data);
+        exit;
+      }
     } else {
       $data = array(
         error => true,
-        message => 'checksum did not check out on revision update'
+        message => 'oi oi, you naughty boy'
       );
       echo json_encode($data);
       exit;
@@ -306,7 +337,9 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
+
+    $url = $host . ROOT . $code_id . '/' . $revision;
+
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {
@@ -406,6 +439,10 @@ if (!$action) {
 
     if (!$html) {
       header("Content-type: text/javascript");
+    }
+
+    if ($last_updated) {
+      header("Last-Modified: " . date('r', strtotime($last_updated)));
     }
 
     echo $html ? $html : $javascript;
@@ -535,6 +572,10 @@ function getCode($code_id, $revision, $testonly = false) {
 
     $revision = $row->revision;
 
+    // this is hack, but it's the easiest way of getting the timestamp out
+    global $last_updated;
+    $last_updated = $row->created;
+
     // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
     return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
   }
@@ -542,7 +583,7 @@ function getCode($code_id, $revision, $testonly = false) {
 
 function defaultCode($not_found = false) {
   $library = '';
-  global $no_code_found;
+  global $no_code_found, $custom;
   
   if ($not_found) {
     $no_code_found = true;
@@ -550,7 +591,7 @@ function defaultCode($not_found = false) {
   
   $usingRequest = false;
   
-  if (isset($_REQUEST['html']) || isset($_REQUEST['js'])) {
+  if (isset($_REQUEST['html']) || isset($_REQUEST['js']) || isset($_REQUEST['javascript'])) {
     $usingRequest = true;
   }
   
@@ -558,12 +599,14 @@ function defaultCode($not_found = false) {
     $html = $_REQUEST['html'];
   } else if ($usingRequest) {
     $html = '';
+  } else if (isset($custom['default'])) {
+    $html = getCustomCode($custom, 'html');
   } else {
     $html = <<<HERE_DOC
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset=utf-8 />
+<meta charset="utf-8" />
 <title>JS Bin</title>
 </head>
 <body>
@@ -584,12 +627,39 @@ HERE_DOC;
   } else {
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
+    } else if (isset($custom['default'])) {
+      $javascript = getCustomCode($custom, 'javascript');
     } else {
-      $javascript = "/* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
+      $javascript = ""; ///* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
     }    
   }
 
-  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, '');
+  $css = '';
+
+  if (@$_REQUEST['css']) {
+    $javascript = $_REQUEST['css'];
+  } else {
+    if (isset($custom['default'])) {
+      $css = getCustomCode($custom, 'css');
+    } // else CSS is blank
+  }
+
+  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
+}
+
+function getCustomCode($custom, $prop) {
+  $code = '';
+
+  if (isset($custom['default']) && isset($custom['default'][$prop])) {
+    $propval = $custom['default'][$prop];
+    if (file_exists($custom['__dirname'] . $propval)) {
+      $code = file_get_contents($custom['__dirname'] . $propval);
+    } else {
+      $code = $propval;
+    }
+  }
+
+  return $code;
 }
 
 // I'd consider using a tinyurl type generator, but I've yet to find one.
@@ -644,15 +714,18 @@ HERE_DOC;
 }
 
 function getTitleFromCode($bin) {
-  preg_match('/<title>([^<]*)<\/title>/', $bin['html'], $match);
-  preg_match('/<body[^>]*>(.*)/s', $bin['html'], $body);
+  preg_match('/<meta name="description" content="(.*?)"/', $bin['html'], $meta);
+  preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
+  preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
 
   $title = '';
-  if (count($match)) {
-    $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
-  }
-
-  if (!$title && count($body)) {
+  if (count($meta) && strlen(trim($meta[1]))) {
+    $title = $meta[1];
+    if (get_magic_quotes_gpc() && $meta[1]) {
+      $title = stripslashes($meta[1]);
+    }
+    $title = trim(preg_replace('/\s+/', ' ', strip_tags($title)));
+  } else if (count($body)) {
     $title = $body[1];
     if (get_magic_quotes_gpc() && $body[1]) {
       $title = stripslashes($body[1]);

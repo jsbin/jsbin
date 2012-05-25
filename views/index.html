@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html id="jsbin" lang="en">
-<head>
+<head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
 <link rel="stylesheet" href="{{root}}css/style.css?{{version}}" type="text/css" />
+{{#custom_css}}<link rel="stylesheet" href="{{custom_css}}?{{version}}" type="text/css" />{{/custom_css}}
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
@@ -12,10 +13,13 @@
 <div id="control">
   <div class="control">
     <div class="buttons">
-        <a id="save" href="{{root}}save" class="save title button">Save</a><div class="menu">
-        <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
+      {{^embed}}
+      <div class="menu">
+        <a href="#actionmenu" class="button button-dropdown group">File</a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
+            <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
+            <a title="Create milestone" class="button save group" href="{{root}}save">Create milestone</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
             {{#home}}
             <a href="#" class="button group homebtn">Open</a>
@@ -31,7 +35,23 @@
             <a id="download" title="Save to local drive" class="button download group" href="{{root}}download">Download</a>
           </div>
         </div>
+      </div><!--
+   --><div class="menu">
+        <a href="#include" class="button fake-dropdown group">Include
+        <select id="library" class="xchosen">
+          <option value="none">None</option>
+          <option value="jquery">jQuery</option>
+          <option value="jquery+jqueryui">jQuery UI</option>
+          <option value="yui">YUI</option>
+          <option value="prototype">Prototype</option>
+          <option value="prototype+scriptaculous">Scriptaculous</option>
+          <option value="mootools">Mootools</option>
+          <option value="dojo">Dojo</option>
+          <option value="ext">Ext js</option>
+        </select>
+        </a>
       </div>
+      {{/embed}}
       <div id="panels"></div>
       <div class="help">
         {{#code_id}}
@@ -40,6 +60,7 @@
           <a id="jsbinurl" class="button group light left right gap" href="{{code_id_path}}">{{code_id_domain}}</a>
         <!-- </span> -->
         {{/code_id}}
+        {{^embed}}
         {{#home}}
         <div class="menu">
           <div class="group">
@@ -60,6 +81,10 @@
         {{^home}}
         <a href="#" class="button" id="loginbtn">Log in</a>
         {{/home}}
+        {{/embed}}
+        {{#embed}}
+        <a href="{{root}}/edit" class="button">Edit</a>
+        {{/embed}}
         <a href="http://jsbin.tumblr.com" class="button group">Help</a>
       </div>
     </div>

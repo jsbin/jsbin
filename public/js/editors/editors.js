@@ -38,15 +38,16 @@ panels.restore = function () {
       location = window.location,
       search = location.search.substring(1),
       hash = location.hash.substring(1),
-      toopen = search || hash ? (search || hash).split(',') : [],
-      state = JSON.parse(localStorage.getItem('jsbin.panels') || '{}'),
+      toopen = search || hash ? (search || hash).split(',') : jsbin.settings.panels || [],
+      state = JSON.parse(localStorage.getItem('jsbin.panels') || 'null'),
       name = '',
       i = 0,
       panel = null,
       init = [],
       panelURLValue = '',
       openWithSameDimensions = false,
-      width = window.innerWidth;
+      width = window.innerWidth,
+      deferredCodeInsert = '';
 
   // otherwise restore the user's regular settings
   // also set a flag indicating whether or not we should save the panel settings
@@ -94,7 +95,37 @@ panels.restore = function () {
           panel.show();
         }
         init.push(panel);
-      } 
+      } else if (name && panelURLValue) { // TODO support any varible insertion
+        (function (name, panelURLValue) {
+          var todo = ['html', 'javascript', 'css'];
+
+          var deferredInsert = function (event, data) {
+            var code, parts, panel = panels.panels[data.panelId] || {};
+
+            if (data.panelId && panel.editor && panel.ready === true) {
+              todo.splice(todo.indexOf(data.panelId), 1);
+              try { 
+                code = panel.getCode();
+              } catch (e) {
+                // this really shouldn't happen
+                // console.error(e);
+              }
+              if (code.indexOf('%' + name + '%') !== -1) {
+                parts = code.split('%' + name + '%');
+                code = parts[0] + decodeURIComponent(panelURLValue) + parts[1];
+                panel.setCode(code);
+                $document.unbind('codeChange', deferredInsert);
+              }
+            }
+
+            if (todo.length === 0) {
+              $document.unbind('codeChange', deferredInsert);
+            }
+          };
+
+          $document.bind('codeChange', deferredInsert);
+        }(name, panelURLValue));
+      }
     }
 
     // support the old jsbin v1 links directly to the preview
@@ -222,28 +253,52 @@ Panel.prototype.distribute = function () {
 
 jsbin.panels = panels;
 
-var editors = panels.panels = {
-  html: new Panel('html', { editor: true, label: 'HTML' }),
-  css: new Panel('css', { editor: true, label: 'CSS' }),
-  javascript: new Panel('javascript', { editor: true, label: 'JavaScript', init: function () {
-    // checkForErrors();
-  } }),
-  console: new Panel('console', { label: 'Console' }),
-  live: new Panel('live', { label: 'Output', show: function () {
-    // contained in live.js
-    var panel = this;
-    $(document).bind('codeChange.live', function (event, data) {
-      if (panels.ready) {
-        if (jsbin.settings.includejs === false && data.panelId === 'javascript') {
-          // ignore
-        } else if (panel.visible) {
-          throttledPreview();
+var ignoreDuringLive = /^\s*(while|do|for)[\s*|$]/;
+
+
+var panelInit = {
+  html: function () {
+    return new Panel('html', { editor: true, label: 'HTML' });
+  },
+  css: function () {
+    return new Panel('css', { editor: true, label: 'CSS' });
+  },
+  javascript: function () {
+    return new Panel('javascript', { editor: true, label: 'JavaScript' });
+  },
+  console: function () {
+    return new Panel('console', { label: 'Console' });
+  },
+  live: function () {
+    function show() {
+      var panel = this;
+      $document.bind('jsbinReady', function () {
+        if (panel.visible) {
+          renderLivePreview(true);
         }
-      }
-    });
-    renderLivePreview();
-  } })
+      });
+
+      renderLivePreview();
+    }
+
+    function hide() {
+      // detroy the iframe if we hide the panel
+      // note: $live is defined in live.js
+      $live.find('iframe').remove();
+    }
+
+    return new Panel('live', { label: 'Output', show: show, hide: hide });
+  }
 };
+
+var editors = panels.panels = {};
+
+// show all panels (change the order to control the panel order)
+editors.html = panelInit.html();
+editors.css = panelInit.css();
+editors.javascript = panelInit.javascript();
+editors.console = panelInit.console();
+editors.live = panelInit.live();
 
 
 // jsconsole.init(); // sets up render functions etc.

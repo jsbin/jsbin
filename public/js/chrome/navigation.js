@@ -137,12 +137,6 @@ var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   fromClick = true;
 });
 
-$('#download').click(function () {
-  window.location = jsbin.getURL() + 'download';
-  analytics.download();
-  return false;
-});
-
 $('#runwithalerts').click(function () {
   renderLivePreview(true);
   return false;

@@ -43,6 +43,7 @@ echo $mustache->render($view, array(
     'css' => $css,
     'javascript' => $javascript
   )),
+  'custom_css' => isset($custom['css']) ? preg_replace('/^\//', '', $custom['css']) : null,
   'production?' => IS_PRODUCTION,
   'analytics_id' => ANALYTICS_ID,
   'embed' => $embed,

@@ -102,7 +102,6 @@ var $form = $('form#saveform').empty()
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);
 
-  $form.attr('action', jsbin.getURL() + method);
   return $form;
 }
 

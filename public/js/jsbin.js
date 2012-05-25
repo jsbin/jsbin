@@ -68,7 +68,7 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
         state = jsbin.state;
 
     if (state.code) {
-      url += state.code;
+      url += '/' + state.code;
 
       if (state.revision && state.revision !== 1) {
         url += '/' + state.revision;

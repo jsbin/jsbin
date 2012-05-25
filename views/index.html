@@ -3,7 +3,7 @@
 <head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="stylesheet" href="{{root}}css/style.css?{{version}}" type="text/css" />
+<link rel="stylesheet" href="{{root}}/css/style.css?{{version}}" type="text/css" />
 {{#custom_css}}<link rel="stylesheet" href="{{custom_css}}?{{version}}" type="text/css" />{{/custom_css}}
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
@@ -19,20 +19,16 @@
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
-            <a title="Create milestone" class="button save group" href="{{root}}save">Create milestone</a>
+            <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
             {{#home}}
             <a href="#" class="button group homebtn">Open</a>
             {{/home}}
             {{#code_id}}
             <a id="clone" title="Create a new copy" class="button clone group" href="%clone">Clone</a>
-            <!-- <a id="save" title="Save new a new revision" class="button save group" href="{{code_id_path}}save">Save</a> -->
             {{/code_id}}
-            {{^code_id}}
-            <!-- <a id="save" title="Save new bin" class="button save group" href="{{root}}save">Save</a> -->
-            {{/code_id}}
-            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}save">Save as template</a>
-            <a id="download" title="Save to local drive" class="button download group" href="{{root}}download">Download</a>
+            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+            <a id="download" title="Save to local drive" class="button download group" href="{{root}}/download">Download</a>
           </div>
         </div>
       </div><!--
@@ -56,7 +52,7 @@
       <div class="help">
         {{#code_id}}
         <!-- <span class="meta"> -->
-          <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}images/revert.png" /><img class="disabled" src="{{root}}images/revert-disabled.png" /></a>
+          <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}/images/revert.png" /><img class="disabled" src="{{root}}/images/revert-disabled.png" /></a>
           <a id="jsbinurl" class="button group light left right gap" href="{{code_id_path}}">{{code_id_domain}}</a>
         <!-- </span> -->
         {{/code_id}}
@@ -68,12 +64,12 @@
           </div>
           <div class="dropdown" id="homemenu">
             <div class="dropdownmenu">
-              <form action="{{root}}logout" method="POST">
+              <form action="{{root}}/logout" method="POST">
                 <input type="hidden" name="_csrf" value="{{token}}" />
                 <input type="hidden" name="_redirect" value="{{url}}" />
                 <button hidden>Logout</button>
               </form>
-              <a id="logout" class="button group" href="{{root}}logout">Logout</a>
+              <a id="logout" class="button group" href="{{root}}/logout">Logout</a>
             </div>
           </div>
         </div>
@@ -237,7 +233,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-<script src="{{root}}js/{{version}}/jsbin.js"></script>
+<script src="{{root}}/js/{{version}}/jsbin.js"></script>
 {{#production?}}{{{analytics}}}{{/production?}}
 {{{list_history}}}
 <div id="urlHelp" class="modal">

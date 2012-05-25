@@ -330,6 +330,12 @@ function populateEditor(editor, panel) {
         sessionURL = sessionStorage.getItem('url'),
         changed = false;
 
+    if (sessionURL !== template.url) {
+      // nuke the live saving checksum
+      sessionStorage.removeItem('checksum');
+      saveChecksum = false;
+    }
+
     if (template && cached == template[panel]) { // restored from original saved
       editor.setCode(cached);
     } else if (cached && sessionURL == template.url) { // try to restore the session first - only if it matches this url

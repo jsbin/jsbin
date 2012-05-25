@@ -49,7 +49,7 @@ $document.bind('jsbinReady', function () {
       saveCode('save', true);
     } else {
       $.ajax({
-        url: jsbin.root + 'save',
+        url: jsbin.getURL() + '/save',
         data: { 
           code: jsbin.state.code, 
           revision: jsbin.state.revision,
@@ -151,6 +151,7 @@ function saveCode(method, ajax, ajaxCallback) {
           $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
           window.history.pushState(null, edit, edit);
+          sessionStorage.setItem('url', jsbin.getURL());
 
           $('#jsbinurl').attr('href', data.url).text(data.url.replace(/http:\/\//, ''));
           updateTitle(true)

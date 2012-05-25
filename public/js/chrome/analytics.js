@@ -1,51 +1,51 @@
 var analytics = {
   revert: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/revert' + window.location.pathname]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/revert' + window.location.pathname]);
   },
   milestone: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/milestone' + window.location.pathname]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/milestone' + window.location.pathname]);
   },
   clone: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/clone' + window.location.pathname]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/clone' + window.location.pathname]);
   },
   saveTemplte: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/save-template']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/save-template']);
   },
   createNew: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/new']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/new']);
   },
   open: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/open']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/open']);
   },
   download: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/download' + window.location.pathname]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/download' + window.location.pathname]);
   },
   showPanel: function (panelId) {
-    window._gaq && _gaq.push(['_trackPageview', '/panel/show/' + panelId]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/panel/show/' + panelId]);
   },
   hidePanel: function (panelId) {
-    window._gaq && _gaq.push(['_trackPageview', '/panel/hide/' + panelId]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/panel/hide/' + panelId]);
   },
   logout: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/logout']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/logout']);
   },
   login: function (ok) {
     if (window._gaq) {
       if (ok === undefined) {
-        _gaq.push(['_trackPageview', '/login']);
+        _gaq.push(['_trackPageview', '/action/login']);
       } else {
-        _gaq.push(['_trackPageview', '/login/'  + ok ? 'success' : 'fail']);
+        _gaq.push(['_trackPageview', '/action/login/'  + ok ? 'success' : 'fail']);
       }
     }
   },
   help: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/help']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/help']);
   },
   enableLiveJS: function (ok) {
-    window._gaq && _gaq.push(['_trackPageview', '/live-js/' + ok ? 'on' : 'off']);
+    window._gaq && _gaq.push(['_trackPageview', '/action/live-js/' + ok ? 'on' : 'off']);
   },
   loadGist: function (id) {
-    window._gaq && _gaq.push(['_trackPageview', '/gist/' + id]);
+    window._gaq && _gaq.push(['_trackPageview', '/action/gist/' + id]);
   },
   layout: function (panelsVisible) {
     var layout = [], panel = '';
@@ -54,7 +54,7 @@ var analytics = {
       for (panel in panelsVisible) {
         layout.push(panel + ':' + panelsVisible[panel]);
       }
-      _gaq.push(['_trackPageview', '/layout/' + layout.join('/')]);
+      _gaq.push(['_trackPageview', '/action/layout/' + layout.join('/')]);
     }
   }
 };

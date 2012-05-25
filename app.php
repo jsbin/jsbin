@@ -6,6 +6,7 @@ date_default_timezone_set('Europe/London');
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
+$embed = false;
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 
 // allows for custom hosting of jsbin - special feature for teachers
@@ -167,13 +168,13 @@ if (!$action) {
     // doubles as JSON
     echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
   }
-} else if ($action == 'edit') {
+} else if ($action == 'edit' || $action == 'embed') {
   list($code_id, $revision) = getCodeIdParams($request);
+  if ($action == 'embed') $embed = true;
   if ($revision == 'latest') {
     $latest_revision = getMaxRevision($code_id);
     header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
     $edit_mode = false;
-    
   }
 } else if ($action == 'save' || $action == 'clone') {
   list($code_id, $revision) = getCodeIdParams($request);

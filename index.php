@@ -2,8 +2,6 @@
 
 include('app.php'); 
 
-$embed = false;
-
 list($code_id, $revision) = getCodeIdParams($request);
 
 $edit_mode = false;
@@ -102,7 +100,7 @@ if ($code_id) {
         <a href="#" class="button" id="loginbtn">Log in</a>
           <?php endif ?>
         <?php else: ?>
-        <a href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id ?>/edit" class="button" id="loginbtn">Edit</a>
+        <a href="http://<?php echo $_SERVER['HTTP_HOST'] . ROOT . $code_id ?>/edit" class="button">Edit</a>
         <?php endif ?>
         <a href="http://jsbin.tumblr.com" class="button group">Help</a>
       </div>

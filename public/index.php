@@ -57,7 +57,8 @@ echo $mustache->render($view, array(
       'code' => $code_id || null,
       'token' => $csrf,
       'revision' => $revision
-    )
+    ),
+    'settings' => isset($custom['settings']) ? $custom['settings'] : array('panels' => array()) 
   ))
 ));
 ?>

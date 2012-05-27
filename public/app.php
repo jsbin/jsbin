@@ -25,6 +25,7 @@ if (count($match) == 2) {
   $cname = $match[1];
 }
 
+$custom = array();
 if ($cname && $cname !== 'www') { // unlikely on the www
   // we have a custom build of jsbin - let's load their customisations
   if (file_exists('custom/' . $cname . '/config.json')) {
@@ -583,7 +584,7 @@ function getCode($code_id, $revision, $testonly = false) {
 
 function defaultCode($not_found = false) {
   $library = '';
-  global $no_code_found, $custom;
+  global $no_code_found;
   
   if ($not_found) {
     $no_code_found = true;
@@ -599,21 +600,8 @@ function defaultCode($not_found = false) {
     $html = $_REQUEST['html'];
   } else if ($usingRequest) {
     $html = '';
-  } else if (isset($custom['default'])) {
-    $html = getCustomCode($custom, 'html');
   } else {
-    $html = <<<HERE_DOC
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8" />
-<title>JS Bin</title>
-</head>
-<body>
-  
-</body>
-</html>
-HERE_DOC;
+    $html = getDefaultCode('html');
   } 
 
   $javascript = '';
@@ -627,36 +615,35 @@ HERE_DOC;
   } else {
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
-    } else if (isset($custom['default'])) {
-      $javascript = getCustomCode($custom, 'javascript');
     } else {
-      $javascript = ""; ///* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
-    }    
+      $javascript = getDefaultCode('javascript');
+    }
   }
 
   $css = '';
 
   if (@$_REQUEST['css']) {
-    $javascript = $_REQUEST['css'];
+    $css = $_REQUEST['css'];
   } else {
-    if (isset($custom['default'])) {
-      $css = getCustomCode($custom, 'css');
-    } // else CSS is blank
+    $css = getDefaultCode('css');
   }
 
   return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
 }
 
-function getCustomCode($custom, $prop) {
+function getDefaultCode($prop) {
+  global $custom;
+
+  $ext = $prop === 'javascript' ? 'js' : $prop;
+  $custom_filename = isset($custom['__dirname']) ? ($custom['__dirname'] . 'default.' . $ext) : null;
+  $default_filename = '../views/default.' . $ext;
   $code = '';
 
-  if (isset($custom['default']) && isset($custom['default'][$prop])) {
-    $propval = $custom['default'][$prop];
-    if (file_exists($custom['__dirname'] . $propval)) {
-      $code = file_get_contents($custom['__dirname'] . $propval);
-    } else {
-      $code = $propval;
-    }
+  if (file_exists($custom_filename)) {
+    $code = file_get_contents($custom_filename);
+  }
+  else if (file_exists($default_filename)) {
+    $code = file_get_contents($default_filename);
   }
 
   return $code;

@@ -148,6 +148,7 @@ Panel.prototype = {
         // populate the panel for the first time
         if (panel.virgin) {
           $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('.label').outerHeight());
+
           populateEditor(panel, panel.name);
         }
         panel.editor.focus();
@@ -282,11 +283,23 @@ Panel.prototype = {
       });
     }
 
+    var $error = null;
     $document.bind('sizeeditors', function () {
       if (panel.visible) {
         var height = panel.editor.scroller.closest('.panel').outerHeight(),
             offset = 0;
             // offset = panel.$el.find('> .label').outerHeight();
+
+        // special case for the javascript panel
+        if (panel.name === 'javascript') {
+          if ($error === null) { // it wasn't there right away, so we populate
+            $error = panel.$el.find('details');
+          }
+          console.log('offset now ', offset)
+          offset += ($error.filter(':visible').height() || 0);
+          console.log('offset after ', offset, $error.filter(':visible').height())
+        }
+
 
         editor.scroller.height(height - offset);
         try { editor.refresh(); } catch (e) {}

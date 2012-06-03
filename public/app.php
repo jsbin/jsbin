@@ -339,7 +339,7 @@ if (!$action) {
       echo $_REQUEST['callback'] . '("';
     }
 
-    $url = $host . ROOT . $code_id . '/' . $revision;
+    $url = ROOT . '/' . $code_id . '/' . $revision;
 
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;

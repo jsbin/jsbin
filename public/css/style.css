@@ -997,6 +997,10 @@ details li, .details li {
   display: block;
 }
 
+.urlHelp #urlHelp {
+  display: block;
+}
+
 .modal {
   display: none;
   position: absolute;
@@ -1025,7 +1029,7 @@ details li, .details li {
   overflow: auto;
 }
 
-#keyboardHelp table, #keyboardHelp h2 {
+.modal table, .modal h2 {
   margin: 20px auto;
   padding: 20px;
   width: 560px;
@@ -1039,35 +1043,35 @@ details li, .details li {
   
 }
 
-#keyboardHelp h2 {
+.modal h2 {
   margin-top: 5%;
   margin-bottom: 0; 
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0; 
 }
 
-#keyboardHelp table {
+.modal table {
   border-top-right-radius: 0;
   border-top-left-radius: 0; 
   margin-top: 0;
   width: 600px;
 }
 
-#keyboardHelp thead th {
+.modal thead th {
   text-align: left;
 }
 
-#keyboardHelp tbody tr {
+.modal tbody tr {
   height: 30px;
 }
 
-#keyboardHelp tbody td:first-child {
+.modal tbody td:first-child {
   font-family: MesloLGMDZ, "MenschRegular";
   padding-right: 20px;
   color: yellow;
 }
 
-#keyboardHelp .shortcut {
+.modal .shortcut {
   width: 260px;
 }
 

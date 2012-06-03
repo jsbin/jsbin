@@ -41,6 +41,9 @@ var analytics = {
   help: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/help']);
   },
+  urls: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/action/urls']);
+  },
   enableLiveJS: function (ok) {
     window._gaq && _gaq.push(['_trackPageview', '/action/live-js/' + ok ? 'on' : 'off']);
   },

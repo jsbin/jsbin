@@ -87,6 +87,8 @@
           </div>
           <div class="dropdown dd-right" id="helpmenu">
             <div class="dropdownmenu">
+              <a id="showhelp" href="#keyboardHelp">Keyboard Shortcuts</a>
+              <a id="showurls" href="#urls">JS Bin URLs</a>
               <a href="http://jsbin.tumblr.com">Tutorials</a>
               <a href="http://jsbin.tumblr.com/faq">FAQ</a>
               <a href="http://github.com/remy/jsbin/issues">File a bug</a>
@@ -238,7 +240,6 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
 {{#production?}}{{{analytics}}}{{/production?}}
 {{{list_history}}}
 <div id="urlHelp" class="modal">
-  <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
   <h2>JS Bin URLs</h2>
   <table>
     <thead>
@@ -264,6 +265,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
         <td>.css</td>
         <td>Load only the CSS for a bin</td>
       </tr>
+      <tr><td colspan="2"><br><small>Where the url may be http://jsbin.com/abc the above url fragments can be added to the url to view it differently.</small></td></tr>
     </tbody>
   </table>
 </div>

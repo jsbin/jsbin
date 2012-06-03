@@ -151,6 +151,24 @@ $('#runconsole').click(function () {
   return false;
 });
 
+$('#showhelp').click(function () {
+  $body.toggleClass('keyboardHelp');
+  keyboardHelpVisible = $body.is('.keyboardHelp');
+  if (keyboardHelpVisible) {
+    analytics.help();
+  }
+  return false;
+});
+
+$('#showurls').click(function () {
+  $body.toggleClass('urlHelp');
+  urlHelpVisible = $body.is('.urlHelp');
+  if (urlHelpVisible) {
+    analytics.urls();
+  }
+  return false;
+});
+
 $('#createnew').click(function () {
   var i, key;
   analytics.createNew();

@@ -1567,16 +1567,18 @@ a.button.active:hover {
   height: auto;
   /*border-bottom-right-radius: 5px;*/
   position: absolute;
-  padding: 3px 20px 10px 3px;
+  /*padding: 3px 20px 10px 3px;*/
+  padding: 0;
 }
 
 .dropdownmenu {
-  margin: 3px;
+  margin: 3px 5px;
   background: white;
   box-shadow: 1px 4px 7px rgba(0,0,0,0.2);;
   border: 1px solid #CCC;
   height: auto;
   border-radius: 5px;
+  text-align: left;
 }
 
 .open .dropdown {
@@ -1928,14 +1930,13 @@ a.button.active:hover {
 #actionmenu {
   top: 100%;
   left: -10px;
-  padding: 0;
 }
 
-#actionmenu .dropdownmenu {
+.dropdownmenu {
   margin: 3px 5px;
 }
 
-#actionmenu .button {
+.dropdownmenu a {
   padding: 5px 30px 5px 15px;
 }
 
@@ -2018,3 +2019,6 @@ pre .highlight:last-of-type {
   padding-right: 5px;
 }*/
 
+.dd-right {
+  right: -10px;
+}

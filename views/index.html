@@ -75,13 +75,26 @@
         </div>
         {{/home}}
         {{^home}}
-        <a href="#" class="button" id="loginbtn">Log in</a>
+        <a href="#" class="button" id="loginbtn">Log in</a><!--
         {{/home}}
         {{/embed}}
         {{#embed}}
-        <a href="{{root}}/edit" class="button">Edit</a>
+        <a href="{{root}}/edit" class="button">Edit</a><!--
         {{/embed}}
-        <a href="http://jsbin.tumblr.com" class="button group">Help</a>
+        --><div class="menu">
+          <div class="group">
+            <a href="#helpmenu" class="button button-dropdown">Help</a>
+          </div>
+          <div class="dropdown dd-right" id="helpmenu">
+            <div class="dropdownmenu">
+              <a href="http://jsbin.tumblr.com">Tutorials</a>
+              <a href="http://jsbin.tumblr.com/faq">FAQ</a>
+              <a href="http://github.com/remy/jsbin/issues">File a bug</a>
+              <a href="http://github.com/remy/jsbin/">Fork on Github</a>
+              <a href="http://jsbin.tumblr.com/about">About</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

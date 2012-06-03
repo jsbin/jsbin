@@ -178,7 +178,6 @@ Panel.prototype = {
 
       // TODO trigger a distribute horizontally
       if ($panel.closest('.panelwrapper').find('.panel:visible').length === 0) {
-        console.log('hiding related panel');
         $panel.closest('.panelwrapper').hide();
         // panel.splitter.hide();
         // TODO FIXME 
@@ -295,11 +294,8 @@ Panel.prototype = {
           if ($error === null) { // it wasn't there right away, so we populate
             $error = panel.$el.find('details');
           }
-          console.log('offset now ', offset)
           offset += ($error.filter(':visible').height() || 0);
-          console.log('offset after ', offset, $error.filter(':visible').height())
         }
-
 
         editor.scroller.height(height - offset);
         try { editor.refresh(); } catch (e) {}

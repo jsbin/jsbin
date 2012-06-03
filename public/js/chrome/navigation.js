@@ -127,7 +127,11 @@ var fromClick = false;
 var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   closedropdown();
   if (!fromClick) {
-    $(this).click();
+    if (this.hostname === window.location.hostname) {
+      $(this).click();
+    } else {
+      window.location = this.href;
+    }
   } 
   fromClick = false;
 }).mouseover(function () {

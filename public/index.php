@@ -16,7 +16,7 @@ if ($revision != 1 && $revision) {
 }
 $code_id_path = ROOT;
 if ($code_id) {
-  $code_id_path = ROOT . $code_id . '/';
+  $code_id_path = ROOT . '/' . $code_id;
 }
 
 // Include and capture the results of the show saved function.

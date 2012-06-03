@@ -139,7 +139,7 @@ function renderLivePreview(withalerts) {
           if (click) {
             $('#live').focus();
           }
-          // return false;
+          return false;
         };
 
         doc.write(source);

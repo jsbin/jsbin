@@ -771,10 +771,13 @@ function showSaved($name) {
 function formatURL($code_id, $revision) {
   if ($revision != 1 && $revision) {
     $code_id .= '/' . $revision;
+  } else {
+    $code_id .= '/1';
   }
+
   $code_id_path = ROOT;
   if ($code_id) {
-    $code_id_path = ROOT . $code_id . '/';
+    $code_id_path = ROOT . '/' . $code_id . '/';
   }
   return $code_id_path;
 }

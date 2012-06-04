@@ -232,13 +232,6 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
     </tbody>
   </table>
 </div>
-<script>
-  var template = {{{json_template}}};
-  var jsbin = {{{jsbin}}}; tips  = {{tips}};
-</script>
-<script src="{{root}}/js/{{version}}/jsbin.js"></script>
-{{#production?}}{{{analytics}}}{{/production?}}
-{{{list_history}}}
 <div id="urlHelp" class="modal">
   <h2>JS Bin URLs</h2>
   <table>
@@ -269,5 +262,12 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
     </tbody>
   </table>
 </div>
+<script>
+  var template = {{{json_template}}};
+  var jsbin = {{{jsbin}}}; tips  = {{tips}};
+</script>
+<script src="{{root}}/js/{{version}}/jsbin.js"></script>
+{{#production?}}{{{analytics}}}{{/production?}}
+{{{list_history}}}
 </body>
 </html>

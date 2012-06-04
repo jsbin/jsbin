@@ -188,13 +188,13 @@ if (!$action) {
 
       if ($bcrypt->verify($key, $hashed)) {
         $ok = true;
-        echo json_encode(array('ok' => true, 'created' => false));
         if (!mysql_query(sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name)))) {
           echo json_encode(array('ok' => false, 'error' => mysql_error()));
           exit;
         }
+        // echo json_encode(array('ok' => true, 'created' => false));
       } else {
-        echo json_encode(array('ok' => false));
+        // echo json_encode(array('ok' => false));
       }
     }
 
@@ -205,6 +205,7 @@ if (!$action) {
       )));
       $hash = session_hash($data);
       setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, '/', null, false, true);
+      echo json_encode(array('ok' => true, 'created' => false));
     }
     exit;
   }

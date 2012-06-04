@@ -2,7 +2,7 @@
 
 include('app.php'); 
 
-list($code_id, $revision) = getCodeIdParams($request);
+list($code, $revision) = getCodeIdParams($request);
 $edit_mode = false;
 
 if ($code_id) {
@@ -10,6 +10,8 @@ if ($code_id) {
 } else {
   list($latest_revision, $html, $javascript, $css) = defaultCode();
 } 
+
+$code_id = $code;
 
 if ($revision != 1 && $revision) {
   $code_id .= '/' . $revision;
@@ -38,7 +40,7 @@ echo $mustache->render($view, array(
   'code_id_path' => $code_id_path,
   'code_id_domain' => $code_id_domain,
   'json_template' => json_encode(array(
-    'url' => $code_id_path . ($revision == 1 ? '' : '/' . $revision),
+    'url' => $code_id_path,
     'html' => $html,
     'css' => $css,
     'javascript' => $javascript
@@ -54,7 +56,7 @@ echo $mustache->render($view, array(
     'version' => VERSION,
     'state' => array(
       'stream' => false,
-      'code' => $code_id || null,
+      'code' => isset($code) && $code ? $code : null,
       'token' => $csrf,
       'revision' => $revision
     ),

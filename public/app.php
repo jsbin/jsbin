@@ -34,8 +34,8 @@ if ($cname && $cname !== 'www') { // unlikely on the www
   }
 }
 
-$pos = strpos($_SERVER['REQUEST_URI'], ROOT);
-if ($pos !== false) $pos = strlen(ROOT);
+$pos = strpos($_SERVER['REQUEST_URI'], PATH);
+if ($pos !== false) $pos = strlen(PATH);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $session = isset($_COOKIE['session']) ? $_COOKIE['session'] : null;

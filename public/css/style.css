@@ -238,7 +238,7 @@ div.code, #live, .resize {
 */
 #library {
   padding: 2px;
-  width: 82px;
+  right: 0;
   margin-left: 5px;
   position: absolute;
   top: -1px;
@@ -1614,6 +1614,7 @@ a.button.active:hover {
 
 .menu > a.button {
   display: inline-block;
+  position: relative;
 }
 
 #panels {

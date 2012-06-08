@@ -1032,15 +1032,13 @@ details li, .details li {
 .modal table, .modal h2 {
   margin: 20px auto;
   padding: 20px;
-  width: 560px;
+  max-width: 560px;
   background: #000;
   border-radius: 5px;
-/*  background: #fff;*/
   -webkit-box-shadow: 0px 5px 80px #505050;
   -moz-box-shadow: 0px 5px 80px #505050;
   -o-box-shadow: 0px 5px 80px #505050;
   -ms-box-shadow: 0px 5px 80px #505050;
-  
 }
 
 .modal h2 {
@@ -1087,10 +1085,18 @@ details li, .details li {
   -moz-box-shadow: 0px 5px 80px #505050;
   -o-box-shadow: 0px 5px 80px #505050;
   -ms-box-shadow: 0px 5px 80px #505050;
+  box-shadow: none;
 }
 
 #login h2 {
   margin-top: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  -ms-box-shadow: none;
+  box-shadow: none;
 }
 
 #login form div {

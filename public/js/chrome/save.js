@@ -153,7 +153,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.history.pushState(null, edit, edit);
           sessionStorage.setItem('url', jsbin.getURL());
 
-          $('#jsbinurl').attr('href', data.url).text(data.url.replace(/http:\/\//, ''));
+          $('#jsbinurl').attr('href', data.url).removeClass('hidden').text(data.url.replace(/http:\/\//, ''));
           updateTitle(true)
         } else {
           window.location = data.edit;

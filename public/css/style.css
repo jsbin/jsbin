@@ -34,7 +34,7 @@ p {
 }
 
 [hidden] {
-  display: none;
+  display: none !important;
 }
 
 #control {
@@ -2032,4 +2032,37 @@ pre .highlight:last-of-type {
 
 .dd-right {
   right: -10px;
+}
+
+#jsbinurl.hidden {
+  opacity: 0;
+  margin-right: -10px;
+  overflow: hidden;
+  width: 0;
+  /*padding: 0;*/
+}
+
+#jsbinurl {
+  width: auto;
+  -webkit-transition-property: opacity, margin-right;
+  -webkit-transition-timing-function: ease-out, ease-out; 
+  -webkit-transition-duration: 100ms, 100ms;
+
+  -webkit-transition: all ease-out 100ms;
+
+  -moz-transition-property: opacity, margin-right;
+  -moz-transition-timing-function: ease-out, ease-out; 
+  -moz-transition-duration: 100ms, 100ms;
+
+  -o-transition-property: opacity, margin-right;
+  -o-transition-timing-function: ease-out, ease-out; 
+  -o-transition-duration: 100ms, 100ms;
+
+  -ms-transition-property: opacity, margin-right;
+  -ms-transition-timing-function: ease-out, ease-out; 
+  -ms-transition-duration: 100ms, 100ms;
+
+  transition-property: opacity, margin-right;
+  transition-timing-function: ease-out, ease-out; 
+  transition-duration: 100ms, 100ms;
 }

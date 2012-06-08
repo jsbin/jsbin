@@ -40,16 +40,18 @@ $document.keydown(function (event) {
       event.preventDefault();
     }
   } else if (event.which === 192 && event.metaKey && event.altKey && jsbin.panels.focused) {
-    jsbin.panels.focused.hide();
+    if (jsbin.panels.focused.visible) jsbin.panels.focused.hide();
     var visible = jsbin.panels.getVisible();
     if (visible.length) {
       jsbin.panels.focused = visible[0];
-      if (visible[0].editor) {
-        visible[0].editor.focus();
+      if (jsbin.panels.focused.editor) {
+        jsbin.panels.focused.editor.focus();
       } else {
-        visible[0].$el.focus();
+        jsbin.panels.focused.$el.focus();
       }
-      visible[0].focus();
+      jsbin.panels.focused.focus();
+    } else if ($('#history').length && !$body.hasClass('panelsVisible')) {
+      $('#history').toggle(100);
     }
   } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
     jsbin.settings.hideheader = !jsbin.settings.hideheader;

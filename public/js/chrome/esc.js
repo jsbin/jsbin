@@ -22,9 +22,7 @@ function hideOpen() {
   } else if (loginVisible) {
     $('#login').hide();
     loginVisible = false;
-  } else if ($('#history').length && !$body.hasClass('panelsVisible')) {
-    $('#history').toggle(100);
-  }
+  } 
 }
 
 $document.delegate('.modal', 'click', function (event) {

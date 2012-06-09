@@ -11,11 +11,6 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.jsbin\.com$ [NC]
 RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
-# following two versions controlled through config.php
-# rule to allow dynamic versioning of our code when live and hit a sprocketized script
-# generic rule for future projects, but could be js/([0-9\.]+)/jsbin\.js js/jsbin-$1.js
-RewriteRule js/(.*)/jsbin.js public/js/jsbin-$1.js [QSA]
-
 # role a sprocket for offline and debug
 RewriteRule js\/debug\/.*\.js$ public/sprocketize.php [QSA,L]
 

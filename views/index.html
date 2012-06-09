@@ -262,8 +262,13 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-<script src="{{root}}/js/{{version}}/jsbin.js"></script>
-{{#production?}}{{{analytics}}}{{/production?}}
+{{^production?}}
+<script src="{{root}}/js/debug/jsbin.js"></script>
+{{/production?}}
+{{#production?}}
+<script src="{{root}}/js/jsbin-{{version}}.js"></script>
+{{{analytics}}}
+{{/production?}}
 {{{list_history}}}
 </body>
 </html>

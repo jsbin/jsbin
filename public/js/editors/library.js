@@ -1,26 +1,31 @@
 //= require "libraries"
-$('#library').bind('init', function () {
+var state = {};
+
+var $library = $('#library').bind('init', function () {
   var $select = $(this),
       html = ['<option value="none">None</option>'],
       selected = $select.val(),
       i, j;
   
   for (i = 0; i < libraries.length; i++) {
-    html.push('<optgroup label="' + libraries[i].text + '">');
+    // if (libraries[i].text !== 'Others') html.push('<optgroup label="' + libraries[i].text + '">');
+    // removed optgroup support in favour of being able to type the library and jumping to the select item
+    html.push('<option value="" class="heading">-------------</option>');
     for (j = 0; j < libraries[i].scripts.length; j++) {
       html.push('<option value="' + i + '-' + j + '">' + libraries[i].scripts[j].text + '</option>');
     }
-    html.push('</optgroup>');
+    // if (libraries[i].text !== 'Others') html.push('</optgroup>');
   }
   
   $select.html( html.join('') ).val(selected);
 }).trigger('init').change(function () {
-  var state = {},
-      libIndex = [],
+  var libIndex = [],
       lib = {},
       thislib = {},
       i,
       code = editors.html.getCode();
+
+  if (this.value === '') return;
 
   // strip existing libraries out  
   var addAdjust = code.match(/<(script|link) class="jsbin"/g);
@@ -81,3 +86,9 @@ $('#library').bind('init', function () {
   editors.html.focus();
   editors.html.editor.setCursor({ line: state.line, ch: state.character });
 });
+
+// $library.toggle(function () {
+//   $library.css('opacity', 1);
+// }, function () {
+//   $library.css('opacity', 0);
+// });

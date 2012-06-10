@@ -1,5 +1,4 @@
 //= require <jquery>
-/// require "vendor/jquery.chosen"
 //= require "vendor/polyfills"
 
 if (window.console === undefined) (function () {
@@ -16,6 +15,7 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 };
 
 (function (window, document, undefined) {
+  //= require "chrome/analytics"
   //= require "chrome/storage"
 
   // jQuery plugins
@@ -23,13 +23,19 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 
   function throttle(fn, delay) {
     var timer = null;
-    return function () {
+    var throttled = function () {
       var context = this, args = arguments;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
+      throttled.cancel();
+      throttled.timer = setTimeout(function () {
         fn.apply(context, args);
       }, delay);
     };
+
+    throttled.cancel = function () {
+      clearTimeout(throttled.timer);
+    };
+
+    return throttled;
   }
 
   window.jsbin || (window.jsbin = {});
@@ -55,6 +61,20 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
       xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
     }
   });
+
+  jsbin.getURL = function () {
+    var url = jsbin.root,
+        state = jsbin.state;
+
+    if (state.code) {
+      url += '/' + state.code;
+
+      if (state.revision && state.revision !== 1) {
+        url += '/' + state.revision;
+      }
+    }
+    return url;
+  };
 
 //= require "vendor/json2"
 //= require "editors/editors"

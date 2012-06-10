@@ -8,7 +8,7 @@
 
 # Logo
 
-- Hire and pay (unless they donate) to get a flipping logo. The crappy orange/black thing is lame Mr Sharp.
+- Get logo in
 
 # URLs
 

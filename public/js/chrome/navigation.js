@@ -1,6 +1,9 @@
+//= require "../chrome/esc"
+
 var $startingpoint = $('#startingpoint').click(function (event) {
   event.preventDefault();
   if (localStorage) {
+    analytics.saveTemplate();
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
     localStorage.setItem('saved-html', editors.html.getCode());
     $startingpoint.addClass('saved');
@@ -27,6 +30,8 @@ var $revert = $('#revert').click(function () {
     editors[key].populateEditor();
   }
 
+  analytics.revert();
+
   // editors.javascript.focus();
   $('#library').val('none');
   
@@ -40,6 +45,7 @@ var $revert = $('#revert').click(function () {
 });
 
 $('#loginbtn').click(function () {
+  analytics.login();
   $('#login').show();
   loginVisible = true;
   $username.focus();
@@ -47,35 +53,23 @@ $('#loginbtn').click(function () {
 });
 
 $('#logout').click(function (event) {
-  delete jsbin.settings.home;
-  // delete cookie
-  var date = new Date();
-  date.setYear(1978);
-  date.setTime(date.getTime()+(365*24*60*60*1000)); // set for a year
-  document.cookie = 'key=""; expires=' + date.toGMTString() + '; path=/';
-  document.cookie = 'home=""; expires=' + date.toGMTString() + '; path=/';
+  event.preventDefault();
 
-  window.location.reload();
-  return false;
+  // We submit a form here because I can't work out how to style the button
+  // element in the form to look the same as the anchor. Ideally we would
+  // remove that and just let the form submit itself...
+  $(this).siblings('form').submit();
 });
 
 $('.homebtn').click(function () {
+  analytics.open();
   jsbin.panels.hideAll();
   return false;
 });
 
-//= require "../chrome/esc"
-
-var prefsOpen = false;
-
-$('.prefsButton a').click(function (e) {
-  prefsOpen = true;
-  e.preventDefault();
-  $body.toggleClass('prefsOpen');
-});
-
 var dropdownOpen = false,
-    onhover = false;
+    onhover = false,
+    menuDown = false;
 
 function opendropdown(el) {
   if (!dropdownOpen) {
@@ -85,6 +79,7 @@ function opendropdown(el) {
 }
 
 function closedropdown() {
+  menuDown = false;
   if (dropdownOpen) {
     dropdownButtons.closest('.menu').removeClass('open');
     dropdownOpen = false;
@@ -92,31 +87,32 @@ function closedropdown() {
   }
 }
 
-var dropdownButtons = $('.button-dropdown').click(function (e) {
-  if (!dropdownOpen) {
-    opendropdown(this);
-  } else {
-    closedropdown();
-  }
-  e.preventDefault();
-})
+$body.mouseup(function () {
+  closedropdown();
+});
 
-$('.menu').has('.dropdown.hover').hover(function (event) {
-  console.log(event.target)
-  if ($(event.target).is('.button-dropdown')) {
+var dropdownButtons = $('.button-dropdown').mousedown(function (e) {
+  $dropdownLinks.removeClass('hover');
+
+  if (!dropdownOpen) {
+    menuDown = true;
     opendropdown(this);
-    onhover = true;
-  }
-}, function (event) {
-  console.log('hover out');
-  if ($(event.currentTarget).closest('.menu').length && onhover && dropdownOpen) {
+  } 
+  e.preventDefault();
+  return false;
+}).mouseup(function () {
+  return false;
+}).click(function () {
+  if (!menuDown) {
     closedropdown();
   }
+  menuDown = false;
+  return false;
 });
 
 $('#actionmenu').click(function () {
   dropdownOpen = true;
-})
+});
 
 $body.click(function (event) {
   if (dropdownOpen) {
@@ -127,8 +123,22 @@ $body.click(function (event) {
   }
 });
 
-$('.dropdownmenu a').click(function () {
+var fromClick = false;
+var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   closedropdown();
+  if (!fromClick) {
+    if (this.hostname === window.location.hostname) {
+      $(this).click();
+    } else {
+      window.location = this.href;
+    }
+  } 
+  fromClick = false;
+}).mouseover(function () {
+  $dropdownLinks.removeClass('hover');
+  $(this).addClass('hover');
+}).mousedown(function () {
+  fromClick = true;
 });
 
 $('#runwithalerts').click(function () {
@@ -141,8 +151,27 @@ $('#runconsole').click(function () {
   return false;
 });
 
+$('#showhelp').click(function () {
+  $body.toggleClass('keyboardHelp');
+  keyboardHelpVisible = $body.is('.keyboardHelp');
+  if (keyboardHelpVisible) {
+    analytics.help();
+  }
+  return false;
+});
+
+$('#showurls').click(function () {
+  $body.toggleClass('urlHelp');
+  urlHelpVisible = $body.is('.urlHelp');
+  if (urlHelpVisible) {
+    analytics.urls();
+  }
+  return false;
+});
+
 $('#createnew').click(function () {
   var i, key;
+  analytics.createNew();
   // FIXME this is out and out [cr]lazy....
   jsbin.panels.savecontent = function(){};
   for (i = 0; i < sessionStorage.length; i++) {
@@ -153,14 +182,85 @@ $('#createnew').click(function () {
   }
  
   jsbin.panels.saveOnExit = true;
+
+  // first try to restore their default panels
+  jsbin.panels.restore();
+
+  // if nothing was shown, show html & live
+  setTimeout(function () {
+    if (jsbin.panels.getVisible().length === 0) {
+      jsbin.panels.panels.html.show();
+      jsbin.panels.panels.live.show();
+    }
+  }, 0)
 });
 
 jsbin.settings.includejs = jsbin.settings.includejs || false;
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
+  analytics.enableLiveJS(jsbin.settings.includejs);
   editors.live.render();
 }).attr('checked', jsbin.settings.includejs);
 
 if (jsbin.settings.hideheader) {
   $body.addClass('hideheader');
 }
+
+(function () {
+
+var re = {
+  head: /<head(.*)\n/i,
+  meta: /<meta name="description".*?>/i,
+  metaContent: /content=".*?"/i
+};
+
+var metatag = '<meta name="description" content="[add your bin description]" />\n';
+
+$('#addmeta').click(function () {
+  // if not - insert
+  // <meta name="description" content="" />
+  // if meta description is in the HTML, highlight it
+  var editor = jsbin.panels.panels.html,
+      cm = editor.editor,
+      html = editor.getCode();
+
+  if (!re.meta.test(html)) {
+    if (re.head.test(html)) {
+      html = html.replace(re.head, '<head$1\n' + metatag);
+    } else {
+      // slap in the top
+      html = metatag + html;
+    }
+  }
+
+  editor.setCode(html);
+
+  // now select the text
+  // editor.editor is the CM object...yeah, sorry about that...
+  var cursor = cm.getSearchCursor(re.meta);
+  cursor.findNext();
+
+  var contentCursor = cm.getSearchCursor(re.metaContent);
+  contentCursor.findNext();
+
+  var from = { line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, 
+      to = { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 };
+
+  cm.setCursor(from);
+  cm.setSelection(from, to);
+  cm.setOption('onCursorActivity', function () {
+    cm.setOption('onCursorActivity', null);
+    mark.clear();
+  });
+
+  var mark = cm.markText(from, to, 'highlight');
+
+  cm.focus();
+
+  return false;
+});
+
+// add navigation to insert meta data
+
+
+}());

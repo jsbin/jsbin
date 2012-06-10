@@ -2,5 +2,3 @@
 
 chdir('public');
 require('index.php');
-
-?>

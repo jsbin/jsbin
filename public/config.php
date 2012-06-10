@@ -40,10 +40,13 @@ define('HOST', $url['host']);
 define('PATH', $url['prefix']);
 
 // The full url to the root page of the app.
-define('ROOT', ($url['ssl'] ? 'https' : 'http') . '://' . HOST . PATH);
+define('ROOT', ($url['ssl'] ? 'https' : 'http') . '://' . HOST . preg_replace('/\/$/', '', PATH));
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', !IS_PRODUCTION ? 'debug' : $package['version']);
+
+// Used for hashing session keys.
+define('SECRET_KEY', $settings['session']['secret']);
 
 define('ANALYTICS_ID', $settings['analytics']['id']);
 ?>

@@ -12,7 +12,7 @@ var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
     unload = function () {
       // sessionStorage.setItem('javascript', editors.javascript.getCode());
       // sessionStorage.setItem('html', editors.html.getCode());
-      sessionStorage.setItem('url', template.url);
+      sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       // if (jsbin.panels.saveOnExit) ;

@@ -3,18 +3,68 @@
 
 date_default_timezone_set('Europe/London');
 
+require_once('../vendor/bcrypt.php');
 require_once('../vendor/mustache.php');
 
 include('config.php'); // contains DB & important versioning
 include('blacklist.php'); // rules to *try* to prevent abuse of jsbin
 
+$embed = false;
 $host = 'http://' . $_SERVER['HTTP_HOST'];
 
-$pos = strpos($_SERVER['REQUEST_URI'], ROOT);
-if ($pos !== false) $pos = strlen(ROOT);
+// allows for custom hosting of jsbin - special feature for teachers
+$cname = '';
+$custom = array();
+
+// a global - sorry folks / @ac94!
+$last_updated = '';
+
+preg_match('/^([a-z0-9\-]+)\.' . HOST . '$/', $_SERVER['HTTP_HOST'], $match);
+
+if (count($match) == 2) {
+  $cname = $match[1];
+}
+
+$custom = array();
+if ($cname && $cname !== 'www') { // unlikely on the www
+  // we have a custom build of jsbin - let's load their customisations
+  if (file_exists('custom/' . $cname . '/config.json')) {
+    $custom = json_decode(file_get_contents('custom/' . $cname . '/config.json'), true);
+    $custom['__dirname'] = 'custom/' . $cname . '/';
+  }
+}
+
+$pos = strpos($_SERVER['REQUEST_URI'], PATH);
+if ($pos !== false) $pos = strlen(PATH);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
-$home = isset($_COOKIE['home']) ? $_COOKIE['home'] : '';
+$session = isset($_COOKIE['session']) ? $_COOKIE['session'] : null;
+if ($session) {
+  $hash = substr($session, 0, 40);
+  $json = substr($session, 40);
+  if ($hash = session_hash($json)) {
+    $session = json_decode($json, true);
+  } else {
+    $session = array();
+  }
+}
+
+$home = isset($session['user']) ? $session['user']['name'] : '';
+$csrf = isset($_COOKIE['_csrf']) ? $_COOKIE['_csrf'] : md5(rand());
+
+if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
+  if (!(
+     (isset($_GET['_csrf']) && $_GET['_csrf'] === $csrf) ||
+     (isset($_POST['_csrf']) && $_POST['_csrf'] === $csrf) ||
+     (isset($_SERVER['HTTP_X_CSRF_TOKEN']) && $_SERVER['HTTP_X_CSRF_TOKEN'] === $csrf)
+  )) {
+    header("HTTP/1.1 403 Access Forbidden");
+    header("Content-Type: text/plain");
+    echo 'Request failed CSRF check';
+    exit;
+  }
+}
+setcookie('_csrf', $csrf);
 
 // if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
 //   header('Location: ' . HOST . $home . '/');
@@ -77,6 +127,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 if (!$action) {
   // do nothing and serve up the page
+} else if ($action == 'logout' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  unset($_COOKIE['session']);
+  setcookie('session', null, -1);
+
+  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : '/';
+  if (!$redirect || stripos($redirect, '://') !== false) {
+    $redirect = '/';
+  }
+  header('HTTP/1.1 303 Found');
+  header('Location: ' . $redirect);
+
+  exit;
 } else if ($action == 'sethome') {
   if ($ajax) {
     // 1. encode the key
@@ -85,33 +147,66 @@ if (!$action) {
     // 3.2. if name - check key against encoded key
     // 3.2.1. if match, return ok
     //        else return fail
-    
-    $key = sha1($_POST['key']);
+
+    $bcrypt = new Bcrypt(10);
+
+    $key  = $_POST['key'];
     $name = $_POST['name'];
+    $email = $_POST['email'];
     $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
     $result = mysql_query($sql);
+    $ok = false;
 
     header('content-type: application/json');
-  
+
     if (!mysql_num_rows($result)) {
       // store and okay (note "key" is a reserved word - typical!)
-      $sql = sprintf('insert into ownership (name, `key`) values ("%s", "%s")', mysql_real_escape_string($name), mysql_real_escape_string($key));
+      $key = $bcrypt->hash($key);
+      $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
       $ok = mysql_query($sql);
       if ($ok) {
-        echo json_encode(array('ok' => true, 'key' => $key, 'created' => true));
+        echo json_encode(array('ok' => true, 'created' => true));
       } else {
         echo json_encode(array('ok' => false, 'error' => mysql_error()));
       }
     } else {
       // check key
       $row = mysql_fetch_object($result);
-      if ($row->key == $key) {
-        echo json_encode(array('ok' => true, 'key' => $key, 'created' => false));
+
+      $hashed  = $row->key;
+      $created = date_parse($row->created);
+      if (!$created || $created['warning_count']) {
+        if ($hashed === sha1($key)) {
+          $hashed = $bcrypt->hash($key);
+          $sql = sprintf('UPDATE ownership SET `key`="%s", `last_login`=NOW(), `created`=NOW(), `updated`=NOW() WHERE `name`="%s"', mysql_real_escape_string($hashed), mysql_real_escape_string($name));
+          if (!mysql_query($sql)) {
+            echo json_encode(array('ok' => false, 'error' => mysql_error()));
+            exit;
+          }
+        }
+      }
+
+      if ($bcrypt->verify($key, $hashed)) {
+        $ok = true;
+        if (!mysql_query(sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name)))) {
+          echo json_encode(array('ok' => false, 'error' => mysql_error()));
+          exit;
+        }
+        // echo json_encode(array('ok' => true, 'created' => false));
       } else {
-        echo json_encode(array('ok' => false));
+        // echo json_encode(array('ok' => false));
       }
     }
 
+    if ($ok) {
+      $data = json_encode(array('user' => array(
+        'name' => $name,
+        'lastLogin' => time()
+      )));
+      $hash = session_hash($data);
+      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, '/', null, false, true);
+      echo json_encode(array('ok' => true, 'created' => false));
+    }
     exit;
   }
 } else if ($action == 'list' || $action == 'show') {
@@ -148,13 +243,13 @@ if (!$action) {
     // doubles as JSON
     echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"css":' . encode($css) . ',"javascript":' . encode($javascript) . '}';
   }
-} else if ($action == 'edit') {
+} else if ($action == 'edit' || $action == 'embed') {
   list($code_id, $revision) = getCodeIdParams($request);
+  if ($action == 'embed') $embed = true;
   if ($revision == 'latest') {
     $latest_revision = getMaxRevision($code_id);
     header('Location: /' . $code_id . '/' . $latest_revision . '/edit');
     $edit_mode = false;
-    
   }
 } else if ($action == 'save' || $action == 'clone') {
   list($code_id, $revision) = getCodeIdParams($request);
@@ -197,13 +292,8 @@ if (!$action) {
         }
 
         if ($home && $ok) {
-          // first check they have write permission for this home
-          $sql = sprintf('select * from ownership where name="%s" and `key`="%s"', mysql_real_escape_string($home), mysql_real_escape_string($_COOKIE['key']));
-          $result = mysql_query($sql);
-          if (mysql_num_rows($result) == 1) {
-            $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
-            $ok = mysql_query($sql);
-          }
+          $sql = sprintf('insert into owners (name, url, revision) values ("%s", "%s", "%s")', mysql_real_escape_string($home), mysql_real_escape_string($code_id), mysql_real_escape_string($revision));
+          $ok = mysql_query($sql);
         }
       }
     }
@@ -215,43 +305,31 @@ if (!$action) {
     $panel = $_POST['panel'];
     $content = $_POST['content'];
 
-    $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
+    if ($panel === 'javascript' || $panel === 'css' || $panel === 'html') {
+      $sql = sprintf('update sandbox set %s="%s", created=now() where url="%s" and revision="%s" and streaming_key="%s" and streaming_key!=""', mysql_real_escape_string($panel), mysql_real_escape_string($content), mysql_real_escape_string($code_id), mysql_real_escape_string($revision), mysql_real_escape_string($checksum));
 
-    // TODO run against blacklist
-    $ok = mysql_query($sql);
-    $updated = mysql_affected_rows();
-    if ($ok && $updated === 1) {
-      $data = array(ok => true, error => false);
-      echo json_encode($data);
-      exit;
+      // TODO run against blacklist
+      $ok = mysql_query($sql);
+      $updated = mysql_affected_rows();
+      if ($ok && $updated === 1) {
+        $data = array(ok => true, error => false);
+        echo json_encode($data);
+        exit;
+      } else {
+        $data = array(
+          error => true,
+          message => 'checksum did not check out on revision update'
+        );
+        echo json_encode($data);
+        exit;
+      }
     } else {
       $data = array(
         error => true,
-        message => 'checksum did not check out on revision update'
+        message => 'oi oi, you naughty boy'
       );
       echo json_encode($data);
       exit;
-    }
-  }
-
-  /** 
-   * Download
-   *
-   * Now allow the user to download the individual bin.
-   * TODO allow users to download *all* their bins.
-   **/
-  if (stripos($method, 'download') !== false) {
-    // strip escaping (replicated from getCode method):
-    $javascript = preg_replace('/\r/', '', $javascript);
-    $html = preg_replace('/\r/', '', $html);
-    $css = preg_replace('/\r/', '', $css);
-    $html = get_magic_quotes_gpc() ? stripslashes($html) : $html;
-    $javascript = get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript;
-    $css = get_magic_quotes_gpc() ? stripslashes($css) : $css;
-    
-    if (!$code_id) {
-      $code_id = 'untitled';
-      $revision = 1;
     }
   }
 
@@ -261,7 +339,9 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo $_REQUEST['callback'] . '("';
     }
-    $url = ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
+
+    $url = ROOT . '/' . $code_id . '/' . $revision;
+
     if (isset($_REQUEST['format']) && strtolower($_REQUEST['format']) == 'plain') {
       echo $url;
     } else {
@@ -286,14 +366,6 @@ if (!$action) {
     if (array_key_exists('callback', $_REQUEST)) {
       echo '")';
     }
-  } else if (stripos($method, 'download') !== false) {
-    // actually go ahead and send a file to prompt the browser to download
-    $originalHTML = $html;
-    list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
-    $ext = $originalHTML ? '.html' : '.js';
-    header('Content-Disposition: attachment; filename="' . $code_id . ($revision == 1 ? '' : '.' . $revision) . $ext . '"');
-    echo $originalHTML ? $html : $javascript;
-    exit;
   } else {
     // code was saved, so lets do a location redirect to the newly saved code
     $edit_mode = false;
@@ -305,7 +377,7 @@ if (!$action) {
   }
   
   
-} else if ($action) { // this should be an id
+} else if ($action === 'download' || $action) { // this should be an id
   $subaction = array_pop($request);
 
   if ($action == 'latest') {
@@ -317,27 +389,40 @@ if (!$action) {
   }
   // gist are formed as jsbin.com/gist/1234 - which land on this condition, so we need to jump out, just in case
   else if ($subaction != 'gist') {
+    $download = false;
+    if ($action === 'download') {
+      $download = true;
+      $action = $subaction;
+      $subaction = array_pop($request);
+    }
+
     if ($subaction && is_numeric($action)) {
       $code_id = $subaction;
       $revision = $action;
     } else {
       $code_id = $action;
-      $revision = 1;
+      $revision = getMaxRevision($code_id);
     }
-    
+
     list($latest_revision, $html, $javascript, $css) = getCode($code_id, $revision);
     list($html, $javascript, $css) = formatCompletedCode($html, $javascript, $css, $code_id, $revision);
-    
+
     global $quiet;
+
+    if ($download) {
+      $ext = $html ? 'html' : 'js';
+      $filename = implode(array('jsbin', $code_id, $revision, $ext), '.');
+      header('Content-Disposition: attachment; filename="' . $filename . '"');
+    }
 
     // using new str_lreplace to ensure only the *last* </body> is replaced.
     // FIXME there's still a bug here if </body> appears in the script and not in the
     // markup - but I'll fix that later
-    if (!$quiet) {
-      $html = str_lreplace('</body>', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+    if (!$quiet && !$download) {
+      $html = str_lreplace('</body>', '<script src="' . ROOT . '/js/render/edit.js"></script>' . "\n</body>", $html);
     }
 
-    if ($no_code_found == false) {
+    if ($no_code_found == false && !$download) {
       $html = str_lreplace('</body>', googleAnalytics() . '</body>', $html);
     }
 
@@ -356,6 +441,10 @@ if (!$action) {
 
     if (!$html) {
       header("Content-type: text/javascript");
+    }
+
+    if ($last_updated) {
+      header("Last-Modified: " . date('r', strtotime($last_updated)));
     }
 
     echo $html ? $html : $javascript;
@@ -485,6 +574,10 @@ function getCode($code_id, $revision, $testonly = false) {
 
     $revision = $row->revision;
 
+    // this is hack, but it's the easiest way of getting the timestamp out
+    global $last_updated;
+    $last_updated = $row->created;
+
     // return array(preg_replace('/\r/', '', $html), preg_replace('/\r/', '', $javascript), $row->streaming, $row->active_tab, $row->active_cursor);
     return array($revision, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
   }
@@ -500,7 +593,7 @@ function defaultCode($not_found = false) {
   
   $usingRequest = false;
   
-  if (isset($_REQUEST['html']) || isset($_REQUEST['js'])) {
+  if (isset($_REQUEST['html']) || isset($_REQUEST['js']) || isset($_REQUEST['javascript'])) {
     $usingRequest = true;
   }
   
@@ -509,18 +602,7 @@ function defaultCode($not_found = false) {
   } else if ($usingRequest) {
     $html = '';
   } else {
-    $html = <<<HERE_DOC
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset=utf-8 />
-<title>JS Bin</title>
-</head>
-<body>
-  
-</body>
-</html>
-HERE_DOC;
+    $html = getDefaultCode('html');
   } 
 
   $javascript = '';
@@ -535,11 +617,37 @@ HERE_DOC;
     if ($not_found) {
       $javascript = 'document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";';
     } else {
-      $javascript = "/* your JavaScript here - remember you can override this default template using 'Save'->'As Template' */\n";
-    }    
+      $javascript = getDefaultCode('javascript');
+    }
   }
 
-  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, '');
+  $css = '';
+
+  if (@$_REQUEST['css']) {
+    $css = $_REQUEST['css'];
+  } else {
+    $css = getDefaultCode('css');
+  }
+
+  return array(0, get_magic_quotes_gpc() ? stripslashes($html) : $html, get_magic_quotes_gpc() ? stripslashes($javascript) : $javascript, get_magic_quotes_gpc() ? stripslashes($css) : $css);
+}
+
+function getDefaultCode($prop) {
+  global $custom;
+
+  $ext = $prop === 'javascript' ? 'js' : $prop;
+  $custom_filename = isset($custom['__dirname']) ? ($custom['__dirname'] . 'default.' . $ext) : null;
+  $default_filename = '../views/default.' . $ext;
+  $code = '';
+
+  if (file_exists($custom_filename)) {
+    $code = file_get_contents($custom_filename);
+  }
+  else if (file_exists($default_filename)) {
+    $code = file_get_contents($default_filename);
+  }
+
+  return $code;
 }
 
 // I'd consider using a tinyurl type generator, but I've yet to find one.
@@ -594,10 +702,18 @@ HERE_DOC;
 }
 
 function getTitleFromCode($bin) {
+  preg_match('/<meta name="description" content="(.*?)"/', $bin['html'], $meta);
   preg_match('/<title>(.*?)<\/title>/', $bin['html'], $match);
   preg_match('/<body.*?>(.*)/s', $bin['html'], $body);
+
   $title = '';
-  if (count($body)) {
+  if (count($meta) && strlen(trim($meta[1]))) {
+    $title = $meta[1];
+    if (get_magic_quotes_gpc() && $meta[1]) {
+      $title = stripslashes($meta[1]);
+    }
+    $title = trim(preg_replace('/\s+/', ' ', strip_tags($title)));
+  } else if (count($body)) {
     $title = $body[1];
     if (get_magic_quotes_gpc() && $body[1]) {
       $title = stripslashes($body[1]);
@@ -606,10 +722,6 @@ function getTitleFromCode($bin) {
   }
   if (!$title && $bin['javascript']) {
     $title = preg_replace('/\s+/', ' ', $bin['javascript']);
-  }
-
-  if (!$title && count($match)) {
-    $title = get_magic_quotes_gpc() ? stripslashes($match[1]) : $match[1];
   }
 
   return $title;
@@ -659,12 +771,19 @@ function showSaved($name) {
 function formatURL($code_id, $revision) {
   if ($revision != 1 && $revision) {
     $code_id .= '/' . $revision;
+  } else {
+    $code_id .= '/1';
   }
+
   $code_id_path = ROOT;
   if ($code_id) {
-    $code_id_path = ROOT . $code_id . '/';
+    $code_id_path = ROOT . '/' . $code_id . '/';
   }
   return $code_id_path;
+}
+
+function session_hash($string) {
+  return sha1($string . SECRET_KEY);
 }
 
 ?>

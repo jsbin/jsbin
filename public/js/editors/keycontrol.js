@@ -40,16 +40,18 @@ $document.keydown(function (event) {
       event.preventDefault();
     }
   } else if (event.which === 192 && event.metaKey && event.altKey && jsbin.panels.focused) {
-    jsbin.panels.focused.hide();
+    if (jsbin.panels.focused.visible) jsbin.panels.focused.hide();
     var visible = jsbin.panels.getVisible();
     if (visible.length) {
       jsbin.panels.focused = visible[0];
-      if (visible[0].editor) {
-        visible[0].editor.focus();
+      if (jsbin.panels.focused.editor) {
+        jsbin.panels.focused.editor.focus();
       } else {
-        visible[0].$el.focus();
+        jsbin.panels.focused.$el.focus();
       }
-      visible[0].focus();
+      jsbin.panels.focused.focus();
+    } else if ($('#history').length && !$body.hasClass('panelsVisible')) {
+      $('#history').toggle(100);
     }
   } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
     jsbin.settings.hideheader = !jsbin.settings.hideheader;
@@ -101,7 +103,7 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-    if (panelShortcuts[event.which] !== undefined && event.metaKey) {
+    if (panelShortcuts[event.which] !== undefined && event.metaKey && event.altKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }
@@ -110,12 +112,15 @@ function keycontrol(event) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
+      if (keyboardHelpVisible) {
+        analytics.help();
+      }
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;
       event.stop();
-    } else if (event.which == 27) {
+    } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
       event.stop();
       return startComplete(panel);
     } else if (event.which == 190 && event.altKey && event.metaKey && panel.id == 'html') {

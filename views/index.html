@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html id="jsbin" lang="en">
-<head>
+<head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="stylesheet" href="{{root}}css/style.css?{{version}}" type="text/css" />
+<link rel="stylesheet" href="{{root}}/css/style.css?{{version}}" type="text/css" />
+{{#custom_css}}<link rel="stylesheet" href="{{root}}/{{custom_css}}?{{version}}" type="text/css" />{{/custom_css}}
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]--> 
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]--> 
@@ -12,62 +13,27 @@
 <div id="control">
   <div class="control">
     <div class="buttons">
-        <a id="save" href="{{root}}save" class="save title button">Save</a><div class="menu">
-        <a href="#actionmenu" class="button button-dropdown group"><span class="icon icon-chevron-down"></span></a>
+      {{^embed}}
+      <div class="menu">
+        <a href="#actionmenu" class="button button-dropdown group">File</a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
+            <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
+            <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
             {{#home}}
             <a href="#" class="button group homebtn">Open</a>
             {{/home}}
             {{#code_id}}
-            <a id="clone" title="Create a new copy" class="button clone group" href="%clone">Clone</a>
-            <!-- <a id="save" title="Save new a new revision" class="button save group" href="{{code_id_path}}save">Save</a> -->
+            <a id="clone" title="Create a new copy" class="button clone group" href="/clone">Clone</a>
             {{/code_id}}
-            {{^code_id}}
-            <!-- <a id="save" title="Save new bin" class="button save group" href="{{root}}save">Save</a> -->
-            {{/code_id}}
-            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}save">Save as template</a>
-            <a id="download" title="Save to local drive" class="button download group" href="{{root}}download">Download</a>
+            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+            <a id="download" title="Save to local drive" class="button download group" href="{{root}}/download">Download</a>
           </div>
         </div>
-      </div>
-      <div id="panels"></div>
-      <div class="help">
-        {{#code_id}}
-        <!-- <span class="meta"> -->
-          <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}images/revert.png" /><img class="disabled" src="{{root}}images/revert-disabled.png" /></a>
-          <a id="jsbinurl" class="button group light left right gap" href="{{code_id_path}}">{{code_id_domain}}</a>
-        <!-- </span> -->
-        {{/code_id}}
-        {{#home}}
-        <div class="menu">
-          <div class="group">
-            <a href="#" class="button homebtn">{{home}}</a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
-          </div>
-          <div class="dropdown" id="homemenu">
-            <div class="dropdownmenu">
-              <a id="logout" class="button group" href="{{root}}logout">Logout</a>
-            </div>
-          </div>
-        </div>
-        {{/home}}
-        {{^home}}
-        <a href="#" class="button" id="loginbtn">Log in</a>
-        {{/home}}
-        <a href="http://jsbin.tumblr.com" class="button group">Help</a>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
-  <div id="source" class="binview stretch">
-  </div>
-  <div id="panelswaiting">
-    <div class="code stretch html panel">
-      <div class="label">
-        <strong>HTML</strong>
-        <label for="library">Include</label>
+      </div><!--
+   --><div class="menu">
+        <a href="#include" class="button fake-dropdown group">Include Library
         <select id="library" class="xchosen">
           <option value="none">None</option>
           <option value="jquery">jQuery</option>
@@ -79,26 +45,85 @@
           <option value="dojo">Dojo</option>
           <option value="ext">Ext js</option>
         </select>
+        </a>
+      </div>
+      {{/embed}}
+      <div id="panels"></div>
+      <div class="help">
+        <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}/images/revert.png" /><img class="disabled" src="{{root}}/images/revert-disabled.png" /></a>
+        <a id="jsbinurl" class="button group light left right gap {{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}">{{code_id_domain}}</a>
+        {{^embed}}
+        {{#home}}
+        <div class="menu">
+          <div class="group">
+            <a href="#" class="button homebtn">{{home}}</a><a href="#homemenu" class="button button-dropdown"><span class="icon icon-chevron-down"></span></a>
+          </div>
+          <div class="dropdown" id="homemenu">
+            <div class="dropdownmenu">
+              <form action="{{root}}/logout" method="POST">
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <input type="hidden" name="_redirect" value="{{url}}" />
+                <button hidden>Logout</button>
+              </form>
+              <a id="logout" class="button group" href="{{root}}/logout">Logout</a>
+            </div>
+          </div>
+        </div><!--
+        {{/home}}
+        {{^home}}
+        <a href="#" class="button" id="loginbtn">Log in</a><!--
+        {{/home}}
+        {{/embed}}
+        {{#embed}}
+        <a href="{{root}}/edit" class="button">Edit</a><!--
+        {{/embed}}
+        --><div class="menu">
+          <div class="group">
+            <a href="#helpmenu" class="button button-dropdown">Help</a>
+          </div>
+          <div class="dropdown dd-right" id="helpmenu">
+            <div class="dropdownmenu">
+              <a id="showhelp" href="#keyboardHelp">Keyboard Shortcuts</a>
+              <a id="showurls" href="#urls">JS Bin URLs</a>
+              <a target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
+              <a target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
+              <a target="_blank" href="http://github.com/remy/jsbin/issues">File a bug</a>
+              <a target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
+              <a target="_blank" href="http://jsbin.tumblr.com/about">About</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
+  <div id="source" class="binview stretch">
+  </div>
+  <div id="panelswaiting">
+    <div class="code stretch html panel">
+      <div class="label">
+        <span class="name"><strong>HTML</strong></span>
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
-      <div class="label"><strong>JavaScript</strong></div>
+      <div class="label"><span class="name"><strong>JavaScript</strong></span></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label"><strong id="csslabel">CSS</strong></div>
+      <div class="label"><span class="name"><strong id="csslabel">CSS</strong></span></div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
       <div class="label">
-        <strong>Console</strong>
+        <span class="name"><strong>Console</strong></span>
         <span class="options">
           <button id="runconsole" title="ctrl + enter">Run</button>
         </span>
@@ -107,7 +132,7 @@
     </div>
     <div id="live" class="stretch live panel">
       <div class="label">
-        <strong>Output</strong>
+        <span class="name"><strong>Output</strong></span>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
@@ -116,7 +141,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
       </div>
     </div>
   </div>
-  <form id="saveform" method="post" action="{{code_id_path}}save">
+  <form id="saveform" method="post" action="{{code_id_path}}/save">
     <input type="hidden" name="method" />
     <input type="hidden" name="_csrf" value="{{token}}" />
   </form>
@@ -203,15 +228,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
     </tbody>
   </table>
 </div>
-<script>
-  var template = {{{json_template}}};
-  var jsbin = {{{jsbin}}}; tips  = {{tips}};
-</script>
-<script src="{{root}}js/{{version}}/jsbin.js"></script>
-{{#production?}}{{{analytics}}}{{/production?}}
-{{{list_history}}}
 <div id="urlHelp" class="modal">
-  <p>Where the url may be http://jsbin.com/abc the following url fragments can be added to the url to view it differently.</p>
   <h2>JS Bin URLs</h2>
   <table>
     <thead>
@@ -237,8 +254,21 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
         <td>.css</td>
         <td>Load only the CSS for a bin</td>
       </tr>
+      <tr><td colspan="2"><br><small>Where the url may be http://jsbin.com/abc the above url fragments can be added to the url to view it differently.</small></td></tr>
     </tbody>
   </table>
 </div>
+<script>
+  var template = {{{json_template}}};
+  var jsbin = {{{jsbin}}}; tips  = {{tips}};
+</script>
+{{^production?}}
+<script src="{{root}}/js/debug/jsbin.js"></script>
+{{/production?}}
+{{#production?}}
+<script src="{{root}}/js/jsbin-{{version}}.js"></script>
+{{{analytics}}}
+{{/production?}}
+{{{list_history}}}
 </body>
 </html>

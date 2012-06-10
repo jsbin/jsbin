@@ -3,3 +3,4 @@
 //= require "../vendor/codemirror2/css"
 //= require "../vendor/codemirror2/javascript"
 //= require "../vendor/codemirror2/htmlmixed"
+//= require "../vendor/codemirror2/searchcursor"

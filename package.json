@@ -5,6 +5,7 @@
   "main": "lib/app",
   "version": "3.0.0dev",
   "homepage": "http://jsbin.com",
+  "main": "lib/app",
   "repository": {
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"
@@ -13,11 +14,13 @@
     "node": "~0.6.11"
   },
   "dependencies": {
-    "express": "3.0.0alpha2",
+    "express": "3.0.0alpha4",
     "asyncjs": "0.0.7",
     "hogan.js": "2.0.0",
     "mysql": "0.9.5",
-    "flatten": "git://github.com/aron/flatten.js.git#v0.1.0"
+    "bcrypt": "0.5.0",
+    "flatten": "git://github.com/aron/flatten.js.git#v0.1.0",
+    "soak": "git://github.com/aron/soak.js.git#v0.3.0"
   },
   "devDependencies": {},
   "optionalDependencies": {},

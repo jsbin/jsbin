@@ -2,9 +2,8 @@
 $('a.save').click(function (event) {
   event.preventDefault();
 
-  // save our panel layout - assumes our user is happy with this layout
-  jsbin.panels.save();
-  saveCode('save', window.location.pathname.indexOf('/edit') !== -1);
+  analytics.milestone();
+  saveCode('save', true); //window.location.pathname.indexOf('/edit') !== -1);
 
   return false;
 });
@@ -12,6 +11,28 @@ $('a.save').click(function (event) {
 var saveChecksum = sessionStorage.getItem('checksum') || false;
 
 $document.bind('jsbinReady', function () {
+  $('.code.panel .label .name').append('<span>Saved</span>');
+
+  var savingLabels = {
+    html: $('.panel.html .name span'),
+    javascript: $('.panel.javascript .name span'),
+    css: $('.panel.css .name span')
+  };
+
+  $document.bind('codeChange', function (event, data) {
+    // savingLabels[data.panelId].text('Saving');
+    if (savingLabels[data.panelId]) {
+      savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
+    }
+  });
+
+  $document.bind('saveComplete', throttle(function (event, data) {
+    // show saved, then revert out animation
+    savingLabels[data.panelId].stop(true, true).animate({ 'opacity': 1 }, 100).delay(1200).animate({
+      'opacity': '0'
+    }, 500);
+  }, 500));
+
   var stream = false;
 
   if (jsbin.state.stream && window.WebSocket) {
@@ -21,12 +42,14 @@ $document.bind('jsbinReady', function () {
   $document.bind('codeChange', throttle(function (event, data) {
     if (!data.panelId) return;
 
+    var panelId = data.panelId;
+
     if (!saveChecksum) {
       // create the bin and when the response comes back update the url
       saveCode('save', true);
     } else {
       $.ajax({
-        url: jsbin.root + 'save',
+        url: jsbin.getURL() + '/save',
         data: { 
           code: jsbin.state.code, 
           revision: jsbin.state.revision,
@@ -38,10 +61,10 @@ $document.bind('jsbinReady', function () {
         type: 'post',
         dataType: 'json',
         success: function (data) {
-          console.log(data.error ? data.message : 'update ok');
+          $document.trigger('saveComplete', { panelId: panelId });
           if (data.error) {
             saveCode('save', true, function (data) {
-              savedAlready = data.checksum;
+              // savedAlready = data.checksum;
             });
           }
         },
@@ -58,6 +81,7 @@ $('a.clone').click(function (event) {
 
   // save our panel layout - assumes our user is happy with this layout
   jsbin.panels.save();
+  analytics.clone();
 
   var $form = setupform('save,new');
   $form.submit();
@@ -77,6 +101,7 @@ var $form = $('form#saveform').empty()
   $form.find('input[name=css]').val(editors.css.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);
+
   return $form;
 }
 
@@ -126,8 +151,9 @@ function saveCode(method, ajax, ajaxCallback) {
           $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
           window.history.pushState(null, edit, edit);
+          sessionStorage.setItem('url', jsbin.getURL());
 
-          $('#jsbinurl').attr('href', data.url).text(data.url.replace(/http:\/\//, ''));
+          $('#jsbinurl').attr('href', data.url).removeClass('hidden').text(data.url.replace(/http:\/\//, ''));
           updateTitle(true)
         } else {
           window.location = data.edit;

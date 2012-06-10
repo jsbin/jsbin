@@ -111,7 +111,9 @@ function getPreparedCode() {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }
     // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
-    source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
+    // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
+    // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
+    source += "<script>\n" + js + "\n</script>\n" + close;
   }
 
   if (!$.trim(source) && !$.trim(js) && css) {

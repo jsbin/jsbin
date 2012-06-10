@@ -1,5 +1,4 @@
 <?php if ( ! defined('ROOT')) exit('No direct script access allowed');
-
 function plural($num) {
   if ($num != 1)
     return "s";
@@ -26,16 +25,16 @@ function getRelativeTime($date) {
     return date("j-M Y", $time);
   return date("j-M", $time);
 }
-?>
-<div id="history">
-<h2>Open previously saved <em>bins</em>:</h2>
-<table>
-<tbody>
-<?php 
+
 $last = null;
-arsort($order);
 list($dummy, $defhtml, $defjs, $defcss) = defaultCode();
+
+$formatted = array();
+
+arsort($order);
 foreach ($order as $key => $value) {
+  $template_bin = array();
+
   foreach ($bins[$key] as $bin) {
     $url = formatURL($bin['url'], $bin['revision']);
     $title = getTitleFromCode($bin);
@@ -49,40 +48,39 @@ foreach ($order as $key => $value) {
     $html = trim($bin['html']);
     $css = trim($bin['css']);
     if ($js && $js !== $defjs) {
-      $args[] = 'javascript';
+    $args[] = 'javascript';
     }
     if ($html && $html !== $defhtml) {
-      $args[] = 'html';
+    $args[] = 'html';
     }
     if ($css && $css !== $defcss) {
-      $args[] = 'css';
+    $args[] = 'css';
     }
 
     // show the console instead of the live render if there's no HTML
     if ($js && !$html) {
-      $args[0] = '?console';
+    $args[0] = '?console';
     }
 
     // TODO decide whether I need the root here...
     $editurl = $url . 'edit' . implode(',', $args);
 
-    if ($firstTime && $last !== null) : ?>
-  <tr data-type="spacer"><td colspan=3></td></tr>
-    <?php endif ?>
-  <tr data-url="<?=$url?>" data-edit-url="<?=$editurl?>">
-    <td class="url"><a href="<?=$editurl?>"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
-    <td class="created"><a pubdate="<?=date('c', strtotime($bin['created']))?>" href="<?=$editurl?>"><?=getRelativeTime($bin['created'])?></a></td>
-    <td class="title"><a href="<?=$editurl?>"><?=substr($title, 0, 200)?></a></td>
-  </tr>
-<?php
-    $last = $bin['url'];
-  } 
-} ?>
-</tbody>
-</table>
-<div class="preview">
-  <h2>Preview</h2>
-  <p id="viewing"></p>
-  <iframe id="iframe" hidden></iframe>
-</div>
-</div>
+    array_push($template_bin, array(
+      'title' => substr($title, 0, 100),
+      'code' => $bin['url'],
+      'revision' => $bin['revision'],
+      'url' => $url,
+      'edit_url' => $editurl,
+      'created' => $bin['created'],
+      'pretty_created' => getRelativeTime($bin['created']),
+      'is_first' => count($template_bin) === 0
+    ));
+  }
+  array_push($formatted, $template_bin);
+}
+
+$view = file_get_contents('../views/history.html');
+$mustache = new Mustache();
+echo $mustache->render($view, array(
+  'bins' => $formatted
+));

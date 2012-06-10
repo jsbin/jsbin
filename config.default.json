@@ -22,5 +22,10 @@
   },
   "analytics": {
     "id": null
+  },
+  "blacklist": {
+    "html": ["processform.cgi", "habbo.com"],
+    "css": [],
+    "javascript": []
   }
 }

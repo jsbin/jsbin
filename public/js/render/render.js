@@ -67,15 +67,15 @@ function getPreparedCode() {
       close = '';
 
   try {
-    source = editors.html.getCode();
+    source = editors.html.render();
   } catch (e) {}
 
   try {
-    js = editors.javascript.getCode();
+    js = editors.javascript.render();
   } catch (e) {}
 
   try {
-    css = editors.css.getCode();
+    css = editors.css.render();
   } catch (e) {}
 
   // redirect JS console logged to our custom log while debugging

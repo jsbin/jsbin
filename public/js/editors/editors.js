@@ -1,11 +1,12 @@
 //= require "codemirror"
-//= require "mobileCodeMirror"
+///= require "mobileCodeMirror"
 //= require "library"
 //= require "unsaved"
 //= require "panel"
 //= require "../render/live"
 //= require "../render/console"
 //= require "keycontrol"
+//= require "../processors/processor"
 
 var panels = {};
 

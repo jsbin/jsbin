@@ -3,6 +3,7 @@
 <head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
+<link 
 <link rel="stylesheet" href="{{root}}/css/style.css?{{version}}" type="text/css" />
 {{#custom_css}}<link rel="stylesheet" href="{{root}}/{{custom_css}}?{{version}}" type="text/css" />{{/custom_css}}
 </head>
@@ -33,7 +34,7 @@
         </div>
       </div><!--
    --><div class="menu">
-        <a href="#include" class="button fake-dropdown group">Include Library
+        <a href="#include" class="button fake-dropdown group">Add library
         <select id="library" class="xchosen">
           <option value="none">None</option>
           <option value="jquery">jQuery</option>
@@ -87,7 +88,7 @@
               <a id="showurls" href="#urls">JS Bin URLs</a>
               <a target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
               <a target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
-              <a target="_blank" href="http://github.com/remy/jsbin/issues">File a bug</a>
+              <a target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
               <a target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
               <a target="_blank" href="http://jsbin.tumblr.com/about">About</a>
             </div>
@@ -245,6 +246,10 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
       <tr>
         <td>/edit</td>
         <td>Edit the current bin</td>
+      </tr>
+      <tr>
+        <td>/quiet</td>
+        <td>Remove analytics and edit button from rendered output</td>
       </tr>
       <tr>
         <td>.js</td>

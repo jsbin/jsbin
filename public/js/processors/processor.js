@@ -14,7 +14,7 @@ var Processor = function (id, url, handler) {
 
 var processors = jsbin.processors = {
   coffeescript: function () {
-    return new Processor('coffeescript', '/js/vendor/coffee-script.js', function (source) {
+    return new Processor('coffeescript', jsbin.root + '/js/vendor/coffee-script.js', function (source) {
       var renderedCode = '';
       try {
         renderedCode = CoffeeScript.compile(source, {
@@ -27,7 +27,7 @@ var processors = jsbin.processors = {
     });
   },
   less: function () {
-    return new Processor('less', '/js/vendor/less-1.3.0.min.js', function (source) {
+    return new Processor('less', jsbin.root + '/js/vendor/less-1.3.0.min.js', function (source) {
       var css = '';
 
       less.Parser().parse(source, function (err, result) {

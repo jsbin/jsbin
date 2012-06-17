@@ -10,7 +10,7 @@ $library.bind('init', function () {
     library = {},
     groupOrder = [],
     group = {},
-    groupLabel = 'Other',
+    groupLabel = '',
     lcGroup = '';
 
   // reset
@@ -48,7 +48,7 @@ $library.bind('init', function () {
 
 $library.bind('change', function () {
   if (!this.value) return;
-  
+
   var selected = this.value.split(':'),
       group = groups[selected[0]],
       library = group.libraries[selected[1]];

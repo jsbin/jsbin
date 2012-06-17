@@ -6,9 +6,6 @@
 
 - ...probably exist!
 
-# Logo
-
-- Get logo in
 
 # URLs
 
@@ -34,7 +31,6 @@
 
 - Include analytics for dynamic nature of JS Bin
 - Libs need to support styles, etc specific to the version
-- I want to monitor the keypress instead of keydown for the close window - as switch app 
 - Expose API for specific tasks:
   - prefilters for panels
   - codemirror config

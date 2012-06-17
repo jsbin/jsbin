@@ -1,24 +1,28 @@
 // yeah, nasty, but it allows me to switch from a RTF to plain text if we're running a iOS
 var noop = function () {};
 
-if (/WebKit.*Mobile.*/.test(navigator.userAgent) || document.body.className.indexOf('ie6') !== -1) {
+if (jsbin.mobile || document.body.className.indexOf('ie6') !== -1) {
   $('body').addClass('mobile');
   Editor = function (el, options) {
     this.textarea = el;
     this.win = { document : this.textarea };
     this.ready = true;
     this.wrapping = document.createElement('div');
-    
+
     var textareaParent = this.textarea.parentNode;
     this.wrapping.appendChild(this.textarea);
     textareaParent.appendChild(this.wrapping);
-    
+
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
-    
+
+    $(this.textarea).keyup(throttle(function () {
+      $(document).trigger('codeChange', { panelId: el.id });
+    }, 200));
+
     options.initCallback && $(options.initCallback);
   };
-  
+
   Editor.prototype = {
     getWrapperElement: function () {
       return this.wrapping;

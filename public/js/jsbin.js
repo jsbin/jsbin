@@ -43,6 +43,9 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   var storedSettings = localStorage.getItem('settings');
   window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
+  // if the above code isn't dodgy, this for hellz bells is:
+  jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
+
   if (!storedSettings) {
     console.log('first timer');
     // show them the "special" welcome

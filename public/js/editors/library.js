@@ -1,109 +1,113 @@
 //= require "libraries"
-var state = {};
 
-var $library = $('#library').bind('init', function () {
-  var $select = $(this),
-      html = ['<option value="none">None</option>'],
-      selected = $select.val(),
-      i, j;
-  
-  for (i = 0; i < libraries.length; i++) {
-    // if (libraries[i].text !== 'Others') html.push('<optgroup label="' + libraries[i].text + '">');
-    // removed optgroup support in favour of being able to type the library and jumping to the select item
-    html.push('<option value="" class="heading">-------------</option>');
-    for (j = 0; j < libraries[i].scripts.length; j++) {
-      html.push('<option value="' + i + '-' + j + '">' + libraries[i].scripts[j].text + '</option>');
-    }
-    // if (libraries[i].text !== 'Others') html.push('</optgroup>');
-  }
-  
-  $select.html( html.join('') ).val(selected);
-}).trigger('init').change(function () {
-  var libIndex = [],
-      lib = {},
-      thislib = {},
-      i,
-      code = editors.html.getCode();
+var $library = $('#library'),
+    groups = {};
 
-  if (this.value === '') return;
+$library.bind('init', function () {
+  var i = 0,
+    j = 0,
+    k = 0,
+    library = {},
+    groupOrder = [],
+    group = {},
+    groupLabel = 'Other',
+    lcGroup = '';
 
-  // strip existing libraries out  
-  var addAdjust = code.match(/<(script|link) class="jsbin"/g);
-  if (addAdjust == null) addAdjust = [];
+  // reset
+  groups = {};
+  $library.empty();
 
-  if (this.value != 'none') {
-    // to restore (note - the adjustment isn't quite 100% right yet)
-    state = {
-      line: editors.html.editor.currentLine(),
-      character: editors.html.editor.getCursor().ch,
-      add: 1 - addAdjust.length
-    };
-
-    libIndex = this.value.split('-');
-    lib = libraries[libIndex[0]];
-    thislib = lib.scripts[libIndex[1]];
-
-    if (thislib.requires) lib.requires = thislib.requires;
-    if (thislib.style) lib.style = thislib.style;
-
-    // all has to happen in reverse order because we're going directly after <head>
-    if (code.indexOf('<head') !== -1) {
-      code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script');
-      if (lib.requires) {
-        state.add++;
-        code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script');
-      }
-
-      if (lib.style) {
-        if (typeof lib.style === 'string') lib.style = [lib.style];
-        for (i = 0; i < lib.style.length; i++) {
-          state.add++;
-          code = code.replace('<head', "<head>\n<" + 'link class="jsbin" href="' + lib.style[i] + '" rel="stylesheet" type="text/css" /');
-        }
-      }
-    } else { // add to the start of the doc
-      if (code.indexOf(lib.script[libIndex[1]].url) === -1) {
-        code = "<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script>\n' + code;
-      }
-      if (lib.requires) {
-        if (code.indexOf(lib.requires) === -1) {
-          state.add++;
-          code = "<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script>\n' + code;
-        }
-      }
-
-      if (lib.style) {
-        if (code.indexOf(lib.style) === -1) {
-          state.add++;
-          code = '<' + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" />\n' + code;
-        }
-      }
+  for (i = 0; i < libraries.length, library = libraries[i]; i++) {
+    groupLabel = library.group || 'Other';
+    lcGroup = groupLabel.toLowerCase().replace(/[^a-z0-9]/ig, '');
+    if (groupOrder.indexOf(lcGroup) === -1) {
+      group = { label: groupLabel, libraries: [], key: lcGroup };
+      groups[lcGroup] = group;
+      groupOrder.push(lcGroup);
+    } else {
+      group = groups[lcGroup];
     }
 
-    state.line += state.add;
-  } else {
-    code = code.replace(/<script class="jsbin".*><\/script>\n?/g, '');
-    code = code.replace(/<link class="jsbin".*\/>\n?/g, '');
-
-    state.line -= state.add;
+    group.libraries.push(library);
   }
 
-  setTimeout(function () {
-    $library.find(':selected').attr('selected', '');
-  }, 0);
+  var html = ['<option value="none">None</option>'];
 
-  editors.html.setCode(code);
-  editors.html.focus();
-  editors.html.editor.setCursor({ line: state.line, ch: state.character });
+  for (i = 0; i < groupOrder.length; i++) {
+    group = groups[groupOrder[i]];
+    html.push('<option value="" data-group="' + group.label + '" class="heading">-------------</option>');
+
+    for (j = 0; j < group.libraries.length, library = group.libraries[j]; j++) {
+      html.push('<option value="' + group.key + ':' + j + '">' + library.label + '</option>');
+    }
+  }
+
+  $library.html( html.join('') );
+}).trigger('init');
+
+
+$library.bind('change', function () {
+  if (!this.value) return;
+  
+  var selected = this.value.split(':'),
+      group = groups[selected[0]],
+      library = group.libraries[selected[1]];
+
+  insertResources(library.url);
 });
 
-// type can be 'script' (default), or 'link'
-function addResource(url, type) {
+function insertResources(urls) {
+  if (!$.isArray(urls)) {
+    urls = [urls];
+  }
+
+  var i = 0,
+      length = urls.length,
+      url = '',
+      code = editors.html.getCode(),
+      state = {
+        line: editors.html.editor.currentLine(),
+        character: editors.html.editor.getCursor().ch,
+        add: 0
+      },
+      html = [],
+      file = '';
+
+  for (i = 0; i < length; i++) {
+    url = urls[i];
+
+    file = url.split('/').pop();
+
+    if (file && code.indexOf(file + '"')) {
+      // attempt to lift out similar scripts
+      if (isCssFile(file)) {
+        code = code.replace(new RegExp('<link.*href=".*?/' + file + '".*?/>\n?'), '');
+      } else {
+        code = code.replace(new RegExp('<script.*src=".*?/' + file + '".*?><' + '/script>\n?'), '');
+      }
+      state.add--;
+    }
+
+    if (isCssFile(url)) {
+      html.push('<' + 'link class="jsbin" href="' + url + '" rel="stylesheet" type="text/css" />');
+    } else {
+      html.push('<' + 'script class="jsbin" src="' + url + '"><' + '/script>');
+    }
+
+    state.add++;
+  }
+
+  if (code.indexOf('<head') !== -1) {
+    code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
+  } else { // add to the start of the doc
+    code = html.join('\n') + code;
+  }
+
+  editors.html.setCode(code);
+  editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
 
 }
 
-// $library.toggle(function () {
-//   $library.css('opacity', 1);
-// }, function () {
-//   $library.css('opacity', 0);
-// });
+function isCssFile(url) {
+  return (url.length - (url.lastIndexOf('.css') + 4) === 0);
+}

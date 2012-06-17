@@ -1,5 +1,5 @@
 //= require "codemirror"
-///= require "mobileCodeMirror"
+//= require "mobileCodeMirror"
 //= require "library"
 //= require "unsaved"
 //= require "panel"

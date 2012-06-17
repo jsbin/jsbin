@@ -22,11 +22,19 @@ panels.getVisible = function () {
 panels.save = function () {
   var visible = this.getVisible(),
       state = {},
-      panel;
+      panel,
+      left = '',
+      width = window.innerWidth;
 
   for (var i = 0; i < visible.length; i++) {
     panel = visible[i];
-    state[panel.name] = panel.$el.css('left');
+    left = panel.$el.css('left');
+    if (left.indexOf('%') === -1) {
+      // convert the pixel to relative - this is because jQuery pulls
+      // % for Webkit based, but px for Firefox & Opera. Cover our bases
+      left = (parseFloat(left)  / width * 100) + '%';
+    }
+    state[panel.name] = left;
   }
 
   localStorage.setItem('jsbin.panels', JSON.stringify(state));

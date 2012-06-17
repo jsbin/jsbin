@@ -1,10 +1,17 @@
-var Processor = function (id, url, handler) {
+var Processor = function (url, init, handler) {
+  if (typeof handler === 'undefined') {
+    handler = init;
+    init = null;
+  }
+
   $.getScript(url, function () {
+    if (init) init();
     callback = handler;
   });
 
   var callback = function () {
-    console.warn(id + ' processor is not ready yet');
+    console.warn('Processor is not ready yet');
+    return '';
   };
 
   return function () {
@@ -14,20 +21,30 @@ var Processor = function (id, url, handler) {
 
 var processors = jsbin.processors = {
   coffeescript: function () {
-    return new Processor('coffeescript', jsbin.root + '/js/vendor/coffee-script.js', function (source) {
-      var renderedCode = '';
-      try {
-        renderedCode = CoffeeScript.compile(source, {
-          bare: true
-        });
-      } catch (e) {
-        console.error(e.message);
-      }
-      return renderedCode;
+    if (!jsbin.settings.processors) {
+      jsbin.settings.processors = {};
+    }
+    jsbin.settings.processors.javascript = 'coffeescript';
+
+    var html = jsbin.panels.panels.html.getCode();
+
+    if (html.indexOf('coffee-script.js') === -1) {
+      // force select the traceur in the client HTML
+      $('#library').val( $('#library').find(':contains("CoffeeScript")').val() ).trigger('change');
+    }
+
+    return function (source) { return source; };
+  },
+  jade: function () {
+    return new Processor(jsbin.root + '/js/vendor/jade.js', function () {
+      // init and expose jade
+      window.jade = require('jade');
+    }, function (source) {
+      return jade.compile(source, { pretty: true })();
     });
   },
   less: function () {
-    return new Processor('less', jsbin.root + '/js/vendor/less-1.3.0.min.js', function (source) {
+    return new Processor(jsbin.root + '/js/vendor/less-1.3.0.min.js', function (source) {
       var css = '';
 
       less.Parser().parse(source, function (err, result) {
@@ -35,9 +52,34 @@ var processors = jsbin.processors = {
           console.error(err);
           return;
         }
-        css = result.toCSS();
+        css = $.trim(result.toCSS());
       });
       return css;
     });
+  },
+  stylus: function () {
+    return new Processor(jsbin.root + '/js/vendor/stylus.js', function (source) {
+      var css = '';
+
+      stylus(source).render(function (err, result) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        css = $.trim(result);
+      });
+      return css;
+    });
+  },
+  traceur: function () {
+    if (!jsbin.settings.processors) {
+      jsbin.settings.processors = {};
+    }
+    jsbin.settings.processors.javascript = 'traceur';
+
+    // force select the traceur in the client HTML
+    $('#library').val( $('#library').find(':contains("Traceur")').val() ).trigger('change');
+
+    return function (source) { return source; };
   }
 };

@@ -30,10 +30,7 @@ var $library = $('#library').bind('init', function () {
   // strip existing libraries out  
   var addAdjust = code.match(/<(script|link) class="jsbin"/g);
   if (addAdjust == null) addAdjust = [];
-  
-  code = code.replace(/<script class="jsbin".*><\/script>\n?/g, '');
-  code = code.replace(/<link class="jsbin".*\/>\n?/g, '');
-  
+
   if (this.value != 'none') {
     // to restore (note - the adjustment isn't quite 100% right yet)
     state = {
@@ -56,7 +53,7 @@ var $library = $('#library').bind('init', function () {
         state.add++;
         code = code.replace('<head', "<head>\n<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script');
       }
-      
+
       if (lib.style) {
         if (typeof lib.style === 'string') lib.style = [lib.style];
         for (i = 0; i < lib.style.length; i++) {
@@ -65,27 +62,45 @@ var $library = $('#library').bind('init', function () {
         }
       }
     } else { // add to the start of the doc
-      code = "<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script>\n' + code;
-      if (lib.requires) {
-        state.add++;
-        code = "<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script>\n' + code;
+      if (code.indexOf(lib.script[libIndex[1]].url) === -1) {
+        code = "<" + 'script class="jsbin" src="' + lib.scripts[libIndex[1]].url + '"><' + '/script>\n' + code;
       }
-      
+      if (lib.requires) {
+        if (code.indexOf(lib.requires) === -1) {
+          state.add++;
+          code = "<" + 'script class="jsbin" src="' + lib.requires + '"><' + '/script>\n' + code;
+        }
+      }
+
       if (lib.style) {
-        state.add++;
-        code = '<' + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" />\n' + code;
+        if (code.indexOf(lib.style) === -1) {
+          state.add++;
+          code = '<' + 'link class="jsbin" href="' + lib.style + '" rel="stylesheet" type="text/css" />\n' + code;
+        }
       }
     }
 
     state.line += state.add;
   } else {
+    code = code.replace(/<script class="jsbin".*><\/script>\n?/g, '');
+    code = code.replace(/<link class="jsbin".*\/>\n?/g, '');
+
     state.line -= state.add;
   }
+
+  setTimeout(function () {
+    $library.find(':selected').attr('selected', '');
+  }, 0);
 
   editors.html.setCode(code);
   editors.html.focus();
   editors.html.editor.setCursor({ line: state.line, ch: state.character });
 });
+
+// type can be 'script' (default), or 'link'
+function addResource(url, type) {
+
+}
 
 // $library.toggle(function () {
 //   $library.css('opacity', 1);

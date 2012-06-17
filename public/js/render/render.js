@@ -68,15 +68,21 @@ function getPreparedCode() {
 
   try {
     source = editors.html.render();
-  } catch (e) {}
+  } catch (e) {
+    console.error(e.message);
+  }
 
   try {
     js = editors.javascript.render();
-  } catch (e) {}
+  } catch (e) {
+    console.error(e.message);
+  }
 
   try {
     css = editors.css.render();
-  } catch (e) {}
+  } catch (e) {
+    console.error(e.message);
+  }
 
   // redirect JS console logged to our custom log while debugging
   if (re.console.test(js)) {
@@ -113,7 +119,8 @@ function getPreparedCode() {
     // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
-    source += "<script>\n" + js + "\n</script>\n" + close;
+    var type = jsbin.settings && jsbin.settings.processors && jsbin.settings.processors.javascript ? ' type="text/' + jsbin.settings.processors.javascript + '"' : '';
+    source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
   }
 
   if (!$.trim(source) && !$.trim(js) && css) {

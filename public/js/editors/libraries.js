@@ -87,6 +87,7 @@ Libraries.prototype.init = function () {
         { text: 'Rapha&euml;l 2.0.0', url: 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.0.0/raphael-min.js' },
         { text: 'Sammy 0.6.3', url: 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js' },
         { text: 'Sencha Touch', url: 'http://cdn.sencha.io/touch/1.1.0/sencha-touch.js', style: 'http://cdn.sencha.io/touch/1.1.0/resources/css/sencha-touch.css' },
+        { text: 'Traceur', requires: 'http://traceur-compiler.googlecode.com/git/src/traceur.js', url: 'http://traceur-compiler.googlecode.com/git/src/bootstrap.js' },
         { text: 'TwitterLib', url: 'http://remy.github.com/twitterlib/twitterlib.min.js' },
         { text: 'underscore 1.3.1', url: 'http://documentcloud.github.com/underscore/underscore-min.js' },
         { text: 'Zepto 0.7', url: 'http://cdnjs.cloudflare.com/ajax/libs/zepto/0.7/zepto.min.js' }

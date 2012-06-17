@@ -130,7 +130,11 @@ var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
     if (this.hostname === window.location.hostname) {
       $(this).click();
     } else {
-      window.location = this.href;
+      if (this.getAttribute('target')) {
+        window.open(this.href);
+      } else {
+        window.location = this.href;
+      }
     }
   } 
   fromClick = false;

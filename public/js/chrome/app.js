@@ -66,4 +66,12 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
   }
 }
 
+// prevent the app from accidently getting scrolled out of view
+document.body.onscroll = window.onscroll = function () {
+  if (document.body.scrollTop !== 0) {
+    window.scrollTo(0,0);
+  }
+  return false;
+};
+
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally

@@ -47,11 +47,19 @@ p {
   right: 0;
   border-bottom: 1px solid #aaa;
   background-color: #fff;
-  background-image: -webkit-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
+/*  background-image: -webkit-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
   background-image: -moz-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
   background-image: -o-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
   background-image: -ms-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
-  background-image: linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);
+  background-image: linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0)), color-stop(50%,rgba(0,0,0,0.15))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0,rgba(0,0,0,0.15) 50%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(0,0,0,0) 0,rgba(0,0,0,0.15) 50%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0,rgba(0,0,0,0.15) 50%); /* IE10+ */
+background: linear-gradient(top,  rgba(0,0,0,0) 0,rgba(0,0,0,0.15) 50%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#26000000',GradientType=0 ); /* IE6-9 */
+
 }
 
 #control, .label {
@@ -1426,6 +1434,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 }
 
+.ie .focus .label {
+  background-position: -10px 0;
+}
+
+
 .panel .label p {
   cursor: pointer;
 }
@@ -1503,15 +1516,15 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   bottom: 0;
 }
 
-.button.active {
-  background-color: #ccc;
+a.active {
+  background-color: #EBF3FF;
   background-color: hsl(215, 100%, 96%);
   text-shadow: 0 1px 0 rgba(255,255,255,0.5);
   border-top: 1px solid #AAA;
   border-left: 1px solid #AAA;
 }
 
-a.button.active:hover {
+a.active:hover {
   /*-moz-box-shadow: #fff 0px 0px 5px;*/
   background-color: hsl(215, 100%, 98%);
   z-index: 1;
@@ -1979,26 +1992,13 @@ a.button.active:hover {
   opacity: 0;
 }
 
-#popout {
-  margin-left: 5px;
+/* these versions of IE don't support the history API anyway */
+.ie .name span {
+  display: none;
 }
 
-.highlight {
-  border-top: 1px solid rgb(255,235,0);
-  border-bottom: 1px solid rgb(255,235,0);
-  box-shadow: 0 1px 0px rgba(0,0,0,0.25);
-  padding: 2px 0;
-  /*margin: -2px 1px;*/
-  text-shadow: 0 1px 0 rgba(255,255,0, 0.5);
-  cursor: default;
-  background: #ff0;
-  background: -moz-linear-gradient(top,  #ffff00 0%, #ffd800 50%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffff00), color-stop(50%,#ffd800));
-  background: -webkit-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
-  background: -o-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
-  background: -ms-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
-  background: linear-gradient(top,  #ffff00 0%,#ffd800 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#ffd800',GradientType=0 );
+#popout {
+  margin-left: 5px;
 }
 
 .highlight {
@@ -2008,7 +2008,7 @@ a.button.active:hover {
   padding: 2px 5px;
   margin: -2px 1px;
   text-shadow: 0 1px 0 rgba(255,255,0, 0.5);
-  cursor: default:
+  cursor: default;
   
   background: #ff0;
   background: -moz-linear-gradient(top,  #ffff00 0%, #ffd800 50%);

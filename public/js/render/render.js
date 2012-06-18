@@ -84,15 +84,6 @@ function getPreparedCode() {
     console.error(e.message);
   }
 
-  // redirect JS console logged to our custom log while debugging
-  if (re.console.test(js)) {
-    if (jsbin.panels.panels.console.visible) {
-      js = js.replace(re.console, 'window.top._console.');
-    } else {
-      js = js.replace(re.console, 'window.top.console.');
-    }
-  }
-
   // escape any script tags in the JS code, because that'll break the mushing together
   js = js.replace(re.script, '<\\/script');
 
@@ -121,6 +112,15 @@ function getPreparedCode() {
     // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
     var type = jsbin.settings && jsbin.settings.processors && jsbin.settings.processors.javascript ? ' type="text/' + jsbin.settings.processors.javascript + '"' : '';
     source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
+  }
+
+  // redirect console logged to our custom log while debugging
+  if (re.console.test(source)) {
+    if (jsbin.panels.panels.console.visible) {
+      source = source.replace(re.console, 'window.top._console.');
+    } else {
+      source = source.replace(re.console, 'window.top.console.');
+    }
   }
 
   if (!$.trim(source) && !$.trim(js) && css) {

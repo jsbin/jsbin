@@ -390,7 +390,7 @@ var jsconsole = {
     sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
     sandbox.open();
     // stupid jumping through hoops if Firebug is open, since overwriting console throws error
-    sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
+    sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
     sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
 
     sandbox.close();

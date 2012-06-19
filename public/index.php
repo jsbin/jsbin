@@ -13,9 +13,9 @@ if ($code_id) {
 
 $code_id = $code;
 
-if ($revision != 1 && $revision) {
-  $code_id .= '/' . $revision;
-}
+// Always include the revision.
+$code_id .= '/' . ($revision || 1);
+
 $code_id_path = ROOT;
 if ($code_id) {
   $code_id_path = ROOT . '/' . $code_id;

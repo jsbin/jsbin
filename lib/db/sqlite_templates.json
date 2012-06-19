@@ -1,0 +1,14 @@
+{
+  "getBin": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
+  "getLatestBin": "SELECT * FROM `sandbox` WHERE `url`=? ORDER BY `revision` DESC LIMIT 1",
+  "setBin": "INSERT INTO `sandbox` (`javascript`, `css`, `html`, `created`, `last_viewed`, `url`, `revision`, `streaming_key`) VALUES (?, ?, ?, DATETIME('NOW'), DATETIME('NOW'), ?, ?, ?)",
+  "setBinPanel": "UPDATE `sandbox` SET `:panel`=?, `created`=DATETIME('NOW') WHERE `url`=? AND `revision`=? AND `streaming_key`=? and `streaming_key`!=''",
+  "binExists": "SELECT id FROM `sandbox` WHERE `url`=? LIMIT 1",
+  "getUser": "SELECT * FROM `ownership` WHERE `name`=? LIMIT 1",
+  "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, DATETIME('NOW'), DATETIME('NOW'), DATETIME('NOW'))",
+  "touchLogin": "UPDATE `ownership` SET `last_login`=DATETIME('NOW') WHERE `name`=?",
+  "updateUserKey": "UPDATE ownership SET `key`=?, `created`=DATETIME('NOW'), `updated`=DATETIME('NOW') WHERE `name`=?",
+  "setBinForUser": "INSERT INTO `owners` (`name`, `url`, `revision`) VALUES (?, ?, ?)",
+  "getBinsByUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? ORDER BY `url`, `revision` DESC",
+  "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1"
+}

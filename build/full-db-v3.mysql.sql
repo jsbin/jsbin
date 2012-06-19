@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   KEY `streaming_key` (`streaming_key`),
   KEY `spam` (`created`,`last_viewed`),
   KEY `revision` (`url`,`revision`)
-) ENGINE=MyISAM AUTO_INCREMENT=1191178 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ownership` (
   `name` char(50) NOT NULL,
@@ -39,4 +39,4 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `revision` int(11) default '1',
   PRIMARY KEY  (`id`),
   KEY `name_url` (`name`,`url`,`revision`)
-) ENGINE=MyISAM AUTO_INCREMENT=8450 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

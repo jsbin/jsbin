@@ -13,8 +13,10 @@ if ($code_id) {
 
 $code_id = $code;
 
-// Always include the revision.
-$code_id .= '/' . ($revision || 1);
+// always include revision *if* we have a code_id
+if ($code_id && $revision) {
+  $code_id .= '/' . $revision;
+}
 
 $code_id_path = ROOT;
 if ($code_id) {

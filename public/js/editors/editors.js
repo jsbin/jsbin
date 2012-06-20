@@ -56,7 +56,8 @@ panels.restore = function () {
       panelURLValue = '',
       openWithSameDimensions = false,
       width = window.innerWidth,
-      deferredCodeInsert = '';
+      deferredCodeInsert = '',
+      focused = !!sessionStorage.getItem('panel');
 
   // otherwise restore the user's regular settings
   // also set a flag indicating whether or not we should save the panel settings
@@ -113,7 +114,7 @@ panels.restore = function () {
 
             if (data.panelId && panel.editor && panel.ready === true) {
               todo.splice(todo.indexOf(data.panelId), 1);
-              try { 
+              try {
                 code = panel.getCode();
               } catch (e) {
                 // this really shouldn't happen
@@ -163,7 +164,13 @@ panels.restore = function () {
     init[i].init();
   }
 
-  if (panels.getVisible().length) $body.addClass('panelsVisible');
+  var visible = panels.getVisible();
+  if (visible.length) {
+    $body.addClass('panelsVisible');
+    if (!focused) {
+      visible[0].show();
+    }
+  }
 
 };
 

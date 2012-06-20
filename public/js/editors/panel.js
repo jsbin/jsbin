@@ -57,7 +57,7 @@ var Panel = function (name, settings) {
     panel.processor = settings.processor || function (str) { return str; };
 
     panel._setupEditor(panel.editor, name);
-  } 
+  }
 
   if (!settings.nosplitter) {
     // console.log(panel.id, wrapper);
@@ -96,7 +96,7 @@ var Panel = function (name, settings) {
   $panel.add(this.$el.find('.label')).click(function () {
     panel.focus();
   });
-}
+};
 
 Panel.order = 0;
 
@@ -114,7 +114,7 @@ Panel.prototype = {
 
     // panel.$el.show();
     if (panel.splitter.length) {
-      if (panelCount == 0 || panelCount > 1) {
+      if (panelCount === 0 || panelCount > 1) {
         var $panel = $('.panel.' + panel.id).show();
         // $panel.next().show(); // should be the splitter...
         $panel.closest('.panelwrapper').show();
@@ -151,11 +151,13 @@ Panel.prototype = {
 
           populateEditor(panel, panel.name);
         }
-        panel.editor.focus();
-        panel.focus();
+        if (!panel.virgin) {
+          panel.editor.focus();
+          panel.focus();
+        }
       }
       panel.virgin = false;
-  }, 0); 
+  }, 0);
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
@@ -172,7 +174,7 @@ Panel.prototype = {
     // if there's only one - then hide the whole thing.
     // if (panel.splitter.length) {
     var panelCount = panel.$el.find('.panel').length;
-    if (panelCount == 0 || panelCount > 1) {
+    if (panelCount === 0 || panelCount > 1) {
       var $panel = $('.panel.' + panel.id).hide();
       $panel.prev().hide(); // hide the splitter if there is one
 
@@ -180,7 +182,7 @@ Panel.prototype = {
       if ($panel.closest('.panelwrapper').find('.panel:visible').length === 0) {
         $panel.closest('.panelwrapper').hide();
         // panel.splitter.hide();
-        // TODO FIXME 
+        // TODO FIXME
       }
     } else {
       panel.$el.hide();
@@ -217,6 +219,8 @@ Panel.prototype = {
   },
   codeSet: false,
   focus: function () {
+    console.trace();
+    console.log('setting focus to ' + this.id);
     jsbin.panels.focus(this);
   },
   render: function () {
@@ -225,10 +229,10 @@ Panel.prototype = {
       return panel.processor(panel.getCode());
     } else if (this.visible && this.settings.render) {
       this.settings.render.call(this);
-    } 
+    }
   },
   init: function () {
-    this.settings.init && this.settings.init.call(this);
+    if (this.settings.init) this.settings.init.call(this);
   },
   _setupEditor: function () {
     var focusedPanel = sessionStorage.getItem('panel'),
@@ -302,19 +306,19 @@ Panel.prototype = {
       }
     });
 
-    // required because the populate looks at the height, and at 
+    // required because the populate looks at the height, and at
     // this point in the code, the editor isn't visible, the browser
     // needs one more tick and it'll be there.
     setTimeout(function () {
-      // if the panel isn't visible this only has the effect of putting 
+      // if the panel isn't visible this only has the effect of putting
       // the code in the textarea (though probably costs us a lot more)
       // it has to be re-populated upon show for the first time because
       // it appears that CM2 uses the visible height to work out what
-      // should be shown. 
+      // should be shown.
       panel.ready = true;
       populateEditor(panel, panel.name);
 
-      if (focusedPanel == panel.name || focusedPanel == null) {
+      if (focusedPanel == panel.name) {
         if (panel.visible) {
           // another fracking timeout to avoid conflict with other panels firing up
           setTimeout(function () {

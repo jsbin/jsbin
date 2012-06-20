@@ -21,7 +21,7 @@ function stringify(o, simple, visited) {
   // check for circular references
   for (vi = 0; vi < visited.length; vi++) {
     if (o === visited[vi]) {
-      circular = true; 
+      circular = true;
       break;
     }
   }
@@ -38,7 +38,6 @@ function stringify(o, simple, visited) {
       parts.push(stringify(o[i], simple, visited));
     }
     json += parts.join(', ') + ']';
-    json;
   } else if (type == '[object Object]') {
     visited.push(o);
 
@@ -61,7 +60,7 @@ function stringify(o, simple, visited) {
     json = 'null';
   } else if (o === undefined) {
     json = 'undefined';
-  } else if (simple == undefined) {
+  } else if (simple === undefined) {
     visited.push(o);
 
     json = type + '{\n';
@@ -93,7 +92,7 @@ function cleanse(s) {
 }
 
 function run(cmd) {
-  var rawoutput = null, 
+  var rawoutput = null,
       className = 'response',
       internalCmd = internalCommand(cmd);
   if (internalCmd) {
@@ -107,7 +106,7 @@ function run(cmd) {
       className = 'error';
     }
     return [className, cleanse(stringify(rawoutput))];
-  } 
+  }
 }
 
 function post(cmd, blind, response /* passed in when echoing from remote console */) {
@@ -195,7 +194,7 @@ window.info = function(cmd) {
   // logAfter = output.querySelector('li.echo') || null;
   // appendLog(li, true);
   appendLog(li);
-}
+};
 
 function appendLog(el, echo) {
   if (echo) {
@@ -233,7 +232,7 @@ function showhelp() {
     '      load also supports following shortcuts: <br />      jquery, underscore, prototype, mootools, dojo, rightjs, coffeescript, yui.<br />      eg. :load jquery',
     ':clear - to clear contents of the console',
     ':about'
-  ]; 
+  ];
   return commands.join('\n');
 }
 
@@ -254,14 +253,14 @@ function loadScript() {
   for (var i = 0; i < arguments.length; i++) {
     (function (url) {
       var script = document.createElement('script');
-      script.src = url
+      script.src = url;
       script.onload = function () {
         window.top.info('Loaded ' + url, 'http://' + window.location.hostname);
         if (url == libraries.coffeescript) window.top.info('Now you can type CoffeeScript instead of plain old JS!');
       };
       script.onerror = function () {
         log('Failed to load ' + url, 'error');
-      }
+      };
       doc.body.appendChild(script);
     })(libraries[arguments[i]] || arguments[i]);
   }
@@ -287,10 +286,10 @@ function loadDOM(url) {
     try {
       window[cb] = null;
       delete window[cb];
-    } catch (e) {}      
-    
+    } catch (e) {}
+
   };
-  
+ 
   document.body.appendChild(script);
   
   return "Loading url into DOM...";
@@ -436,7 +435,7 @@ jsconsole.remote = {
         if (trace[i].indexOf(window.location.toString()) !== -1) {
           parts = trace[i].split(':');
           n = parts.pop();
-          if (parseInt(n) === NaN) {
+          if (isNaN(parseInt(n, 10))) {
             n = parts.pop();
           }
           line = n - 2;
@@ -525,7 +524,7 @@ $document.bind('jsbinReady', function () {
     jsconsole.ready = true;
     jsconsole.remote.flush();
     // editors.console.fakeConsole = window._console
-  }
+  };
 
   jsbin.panels.panels.console.init();
 });

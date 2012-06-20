@@ -271,6 +271,7 @@ iframe.javascript {
 }
 
 .dropdownmenu a, .button {
+  position: relative;
   border: 1px solid #CCC;
   height: 23px;
   line-height: 25px;
@@ -1978,6 +1979,8 @@ a.active:hover {
   overflow: hidden;
   position: relative;
   width: 165px;
+  /* allow a black theme but for the text to still be readable */
+  /*text-shadow: -2px 0 10px white, 2px 0 10px white, 0 2px 10px white, 0 -2px 10px white;*/
 }
 
 .name span {
@@ -2034,6 +2037,7 @@ pre .highlight:last-of-type {
 }
 
 #jsbinurl.hidden {
+  position: absolute;
   opacity: 0;
   margin-right: -10px;
   overflow: hidden;
@@ -2052,6 +2056,8 @@ pre .highlight:last-of-type {
   -moz-transition-property: opacity, margin-right;
   -moz-transition-timing-function: ease-out, ease-out; 
   -moz-transition-duration: 100ms, 100ms;
+
+  -moz-transition: all ease-out 100ms;
 
   -o-transition-property: opacity, margin-right;
   -o-transition-timing-function: ease-out, ease-out; 

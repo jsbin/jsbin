@@ -71,7 +71,7 @@ Libraries.prototype.init = function () {
       style: 'http://code.jquery.com/mobile/latest/jquery.mobile.css',
       scripts: [
         { text: 'jQuery Mobile Latest', url: 'http://code.jquery.com/mobile/latest/jquery.mobile.js' },
-        { text: 'jQuery Mobile 1.0.1', url: 'http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.1.min.js' },
+        { text: 'jQuery Mobile 1.0.1', url: 'http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js' },
         { text: 'jQuery Mobile 1.1.0rc1', url: 'http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.js' }
       ]
     },

@@ -219,8 +219,6 @@ Panel.prototype = {
   },
   codeSet: false,
   focus: function () {
-    console.trace();
-    console.log('setting focus to ' + this.id);
     jsbin.panels.focus(this);
   },
   render: function () {

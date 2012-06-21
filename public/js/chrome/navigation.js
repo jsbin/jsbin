@@ -46,10 +46,10 @@ var $revert = $('#revert').click(function () {
 
 $('#loginbtn').click(function () {
   analytics.login();
-  $('#login').show();
-  loginVisible = true;
+  // $('#login').show();
+  // loginVisible = true;
   $username.focus();
-  return false;
+  // return false;
 });
 
 $('#logout').click(function (event) {
@@ -87,17 +87,22 @@ function closedropdown() {
   }
 }
 
-$body.mouseup(function () {
-  closedropdown();
+$('.button-open').mousedown(function (e) {
+  if (!dropdownOpen) {
+    menuDown = true;
+    opendropdown(this);
+  }
+  e.preventDefault();
+  return false;
 });
 
-var dropdownButtons = $('.button-dropdown').mousedown(function (e) {
+var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e) {
   $dropdownLinks.removeClass('hover');
 
   if (!dropdownOpen) {
     menuDown = true;
     opendropdown(this);
-  } 
+  }
   e.preventDefault();
   return false;
 }).mouseup(function () {
@@ -114,7 +119,7 @@ $('#actionmenu').click(function () {
   dropdownOpen = true;
 });
 
-$body.click(function (event) {
+$body.bind('click mouseup', function (event) {
   if (dropdownOpen) {
     if (!$(event.target).closest('.menu').length) {
       closedropdown();
@@ -136,7 +141,7 @@ var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
         window.location = this.href;
       }
     }
-  } 
+  }
   fromClick = false;
 }).mouseover(function () {
   $dropdownLinks.removeClass('hover');
@@ -196,7 +201,7 @@ $('#createnew').click(function () {
       jsbin.panels.panels.html.show();
       jsbin.panels.panels.live.show();
     }
-  }, 0)
+  }, 0);
 });
 
 jsbin.settings.includejs = jsbin.settings.includejs || false;
@@ -247,7 +252,7 @@ $('#addmeta').click(function () {
   var contentCursor = cm.getSearchCursor(re.metaContent);
   contentCursor.findNext();
 
-  var from = { line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length }, 
+  var from = { line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="description" content="'.length },
       to = { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 };
 
   cm.setCursor(from);

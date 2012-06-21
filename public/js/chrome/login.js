@@ -1,14 +1,16 @@
 var $username = $('#username'),
     $password = $('#password'),
-    $email = $('#email'),
-    $loginFeedback = $('#loginFeedback');
+    $email = $('#email');
 
-var $loginForm = $('#login form').submit(function (event) {
+var $loginForm = $('form.login').submit(function (event) {
   event.preventDefault();
 
-  var name = $username.val(),
-      key = $password.val(),
-      email = $email.val();
+  var form = $(this),
+      name = form.find('input[name=username]').val(),
+      key = form.find('input[name=password]').val(),
+      email = form.find('input[name=email]').val(),
+      $loginFeedback = form.find('.loginFeedback');
+
 
   jsbin.settings.home = name; // will save later
   $loginFeedback.show().text('Checking...');

@@ -83,3 +83,27 @@ var processors = jsbin.processors = {
     return function (source) { return source; };
   }
 };
+
+processors.set = function (panel, preprocessor) {
+  if (jsbin.panels.panels[panel]) {
+    if (preprocessor && processors[preprocessor]) {
+      jsbin.panels.panels[panel].processor = processors[preprocessor]();
+    } else {
+      // remove the preprocessor
+      jsbin.panels.panels[panel].processor = function (source) {
+        return source;
+      };
+    }
+  }
+};
+
+
+
+
+
+
+
+
+
+
+

@@ -101,7 +101,7 @@ function renderLivePreview(withalerts) {
     try {
       doc.open();
 
-      if (debug) {
+      if (jsbin.settings.debug) {
         doc.write('<pre>' + source.replace(/[<>&]/g, function (m) {
           if (m == '<') return '&lt;';
           if (m == '>') return '&gt;';

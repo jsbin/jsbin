@@ -156,6 +156,7 @@ if (!$action) {
     $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
     $result = mysql_query($sql);
     $ok = false;
+    $created = false;
 
     header('content-type: application/json');
 
@@ -163,9 +164,11 @@ if (!$action) {
       // store and okay (note "key" is a reserved word - typical!)
       $key = $bcrypt->hash($key);
       $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
-      $ok = mysql_query($sql);
-      if ($ok) {
-        echo json_encode(array('ok' => true, 'created' => true));
+      $result = mysql_query($sql);
+      if ($result) {
+        $ok = true;
+        $created = true;
+        // echo json_encode(array('ok' => true, 'created' => true));
       } else {
         echo json_encode(array('ok' => false, 'error' => mysql_error()));
       }
@@ -205,7 +208,7 @@ if (!$action) {
       )));
       $hash = session_hash($data);
       setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, '/', null, false, true);
-      echo json_encode(array('ok' => true, 'created' => false));
+      echo json_encode(array('ok' => true, 'created' => $created));
     }
     exit;
   }

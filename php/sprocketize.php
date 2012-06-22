@@ -8,7 +8,9 @@ if ($pos !== false) $pos = strlen(PATH);
 
 $request_uri = substr($_SERVER['REQUEST_URI'], $pos);
 $filePath = '/' . preg_replace('/\?.*/', '', $request_uri);
- 
+
+chdir('../public');
+
 // prepare sprocket
 $sprocket = new Sprocket($filePath, array(    
 	'contentType' => 'application/x-javascript',

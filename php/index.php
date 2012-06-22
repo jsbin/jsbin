@@ -39,6 +39,7 @@ echo $mustache->render($view, array(
   'home' => $home,
   'revision' => $revision,
   'code_id' => $code_id,
+  'url' => $_SERVER['REQUEST_URI'],
   'code_id_path' => $code_id_path,
   'code_id_domain' => $code_id_domain,
   'json_template' => json_encode(array(
@@ -51,7 +52,7 @@ echo $mustache->render($view, array(
   'production?' => IS_PRODUCTION,
   'analytics_id' => ANALYTICS_ID,
   'embed' => $embed,
-  'tips' => file_get_contents('tips.json'),
+  'tips' => file_get_contents('../public/tips.json'),
   'list_history' => $embed ? '' : $list_history,
   'jsbin' => json_encode(array(
     'root' => ROOT,

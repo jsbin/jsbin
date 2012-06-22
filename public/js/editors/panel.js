@@ -128,7 +128,6 @@ Panel.prototype = {
 
     $body.addClass('panelsVisible');
 
-    panel.visible = true;
     if (panel.settings.show) {
       panel.settings.show.call(panel, true);
     }
@@ -137,6 +136,7 @@ Panel.prototype = {
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
     setTimeout(function () {
+      panel.visible = true;
       if (x !== undefined) {
         panel.splitter.trigger('init', x);
       } else {
@@ -226,7 +226,7 @@ Panel.prototype = {
     if (panel.editor) {
       return panel.processor(panel.getCode());
     } else if (this.visible && this.settings.render) {
-      this.settings.render.call(this);
+      this.settings.render.apply(this, arguments);
     }
   },
   init: function () {

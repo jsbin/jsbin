@@ -1077,6 +1077,11 @@ form input[type="password"],
 form input[type="email"] {
   border: 2px solid #b7dffd;
   width: 95%;
+  font-size: 18px;
+}
+
+input {
+  font-size: 16px;
 }
 
 /*

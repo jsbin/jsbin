@@ -90,6 +90,7 @@ processors.set = function (panel, preprocessor) {
       jsbin.panels.panels[panel].processor = processors[preprocessor]();
     } else {
       // remove the preprocessor
+      delete jsbin.settings.processors[panel];
       jsbin.panels.panels[panel].processor = function (source) {
         return source;
       };

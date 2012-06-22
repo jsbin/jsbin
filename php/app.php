@@ -209,6 +209,28 @@ if (!$action) {
     }
     exit;
   }
+} else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  $key = isset($_POST['key']) ? $_POST['key'] : null;
+  $email = isset($_POST['email']) ? $_POST['email'] : null;
+  $set = array();
+
+  if ($email) {
+    $set = '`email`="' . mysql_real_escape_string($email) . '"';
+  }
+
+  if ($key) {
+    $hashed = $bcrypt->hash($key);
+    $set = $set . ' `key`="' . mysql_real_escape_string($hashed) . '"';
+  }
+
+  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', $set, mysql_real_escape_string($name)))) {
+    echo json_encode(array('ok' => false, 'error' => mysql_error()));
+    exit;
+  }
+
+  echo json_encode(array('ok' => true, 'error' => false));
+  exit;
+
 } else if ($action == 'list' || $action == 'show') {
   showSaved($request[0] ? $request[0] : $home);
   // could be listed under a user OR could be listing all the revisions for a particular bin

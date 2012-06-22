@@ -2,14 +2,14 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Reset Your Password</title>
+    <title>Request Password Reset</title>
   </head>
   <body>
     <form action="{{action}}" method="post">
-      <label for="field-password">New Password</label>
-      <input id="field-password" type="password" name="password" />
+      <label for="field-email">Email</label>
+      <input id="field-email" type="email" name="email" />
       <input type="hidden" name="_csrf" value="{{csrf}}" />
-      <button type="submit">Update Password</button>
+      <button type="submit">Request Reset</button>
     </form>
   </body>
 </html>

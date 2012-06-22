@@ -39,7 +39,7 @@ echo $mustache->render($view, array(
   'home' => $home,
   'revision' => $revision,
   'code_id' => $code_id,
-  'url' => $_SERVER['REQUEST_URI'],
+  'url' => PATH . $code_id,
   'code_id_path' => $code_id_path,
   'code_id_domain' => $code_id_domain,
   'json_template' => json_encode(array(

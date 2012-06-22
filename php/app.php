@@ -64,7 +64,7 @@ if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
     exit;
   }
 }
-setcookie('_csrf', $csrf);
+setcookie('_csrf', $csrf, 0, PATH);
 
 // if ($request_uri == '' && $home && stripos($_SERVER['HTTP_HOST'], $home . '/') !== 0) {
 //   header('Location: ' . HOST . $home . '/');
@@ -128,14 +128,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 if (!$action) {
   // do nothing and serve up the page
 } else if ($action == 'logout' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-  unset($_COOKIE['session']);
-  setcookie('session', null, -1);
 
-  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : '/';
+  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : ROOT;
   if (!$redirect || stripos($redirect, '://') !== false) {
-    $redirect = '/';
+    $redirect = ROOT;
   }
   header('HTTP/1.1 303 Found');
+  setcookie('session', null, -1, PATH);
   header('Location: ' . $redirect);
 
   exit;
@@ -207,7 +206,7 @@ if (!$action) {
         'lastLogin' => time()
       )));
       $hash = session_hash($data);
-      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, '/', null, false, true);
+      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, PATH);
       echo json_encode(array('ok' => true, 'created' => $created));
     }
     exit;

@@ -210,8 +210,8 @@ if (!$action) {
     exit;
   }
 } else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
-  $key = isset($_POST['key']) ? $_POST['key'] : null;
-  $email = isset($_POST['email']) ? $_POST['email'] : null;
+  $key = isset($_POST['key']) ? trim($_POST['key']) : null;
+  $email = isset($_POST['email']) ? trim($_POST['email']) : null;
   $set = array();
 
   if ($email) {
@@ -230,7 +230,45 @@ if (!$action) {
 
   echo json_encode(array('ok' => true, 'error' => false));
   exit;
+} else if ($action == 'forgot') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
 
+    if (!$email) {
+      echo json_encode(array('error' => 'Please provide a valid email address'));
+      exit;
+    } else {
+      $sql = 'SELECT * FROM `ownership` WHERE `email`="%s" LIMIT 1';
+      $sql = sprintf($sql, mysql_real_escape_string($email));
+      $result = mysql_query($sql);
+
+      if (!mysql_num_rows($result)) {
+        echo json_encode(array('error' => 'Unable to find a user for that email'));
+      }
+
+      $user = mysql_fetch_object($result);
+      $token = md5(rand());
+      $expires = date('Y-m-d H:i:s', time() + (24 * 60 * 60));
+
+      $sql = 'INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES ("%s", "%s", "%s", NOW())';
+      $sql = sprintf($sql, mysql_real_escape_string($user->name), $token, $expires);
+      if (!mysql_query($sql)) {
+        echo json_encode(array('ok' => false, 'error' => mysql_error()));
+        exit;
+      }
+
+      echo json_encode(array());
+    }
+
+  } else {
+    $view = file_get_contents('../views/request.html');
+    $mustache = new Mustache;
+    echo $mustache->render($view, array(
+      'csrf' => $csrf,
+      'action' => ROOT . '/forgot'
+    ));
+  }
+  exit;
 } else if ($action == 'list' || $action == 'show') {
   showSaved($request[0] ? $request[0] : $home);
   // could be listed under a user OR could be listing all the revisions for a particular bin

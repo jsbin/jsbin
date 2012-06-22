@@ -53,7 +53,7 @@
             <div class="dropdownmenu">
               <form action="{{root}}/logout" method="POST">
                 <input type="hidden" name="_csrf" value="{{token}}" />
-                <input type="hidden" name="_redirect" value="{{url}}" />
+                <input type="hidden" name="_redirect" value="{{code_id_path}}" />
                 <button hidden>Logout</button>
               </form>
               <a id="logout" class="button group" href="{{root}}/logout">Logout</a>

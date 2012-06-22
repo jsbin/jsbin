@@ -1,6 +1,4 @@
 <?php
-// date_default_timezone_set('UTC');
-
 date_default_timezone_set('Europe/London');
 
 require_once('../vendor/bcrypt.php');

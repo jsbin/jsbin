@@ -132,11 +132,11 @@ Panel.prototype = {
       panel.settings.show.call(panel, true);
     }
     panel.controlButton.addClass('active');
+    panel.visible = true;
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
     setTimeout(function () {
-      panel.visible = true;
       if (x !== undefined) {
         panel.splitter.trigger('init', x);
       } else {

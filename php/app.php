@@ -199,12 +199,7 @@ if (!$action) {
     }
 
     if ($ok) {
-      $data = json_encode(array('user' => array(
-        'name' => $name,
-        'lastLogin' => time()
-      )));
-      $hash = session_hash($data);
-      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, PATH);
+      setSession($name);
       echo json_encode(array('ok' => true, 'created' => $created));
     }
     exit;
@@ -212,7 +207,11 @@ if (!$action) {
 } else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
   $key = isset($_POST['key']) ? trim($_POST['key']) : null;
   $email = isset($_POST['email']) ? trim($_POST['email']) : null;
-  $set = array();
+  $set = '';
+
+  if (!$home) {
+    exit;
+  }
 
   if ($email) {
     $set = '`email`="' . mysql_real_escape_string($email) . '"';
@@ -223,7 +222,7 @@ if (!$action) {
     $set = $set . ' `key`="' . mysql_real_escape_string($hashed) . '"';
   }
 
-  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', $set, mysql_real_escape_string($name)))) {
+  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', $set, mysql_real_escape_string($home)))) {
     echo json_encode(array('ok' => false, 'error' => mysql_error()));
     exit;
   }
@@ -259,7 +258,6 @@ if (!$action) {
 
       echo json_encode(array());
     }
-
   } else {
     $view = file_get_contents('../views/request.html');
     $mustache = new Mustache;
@@ -268,6 +266,46 @@ if (!$action) {
       'action' => ROOT . '/forgot'
     ));
   }
+  exit;
+
+} else if ($action == 'reset') {
+  $token = isset($_GET['token']) ? trim($_GET['token']) : null;
+  $user = null;
+
+  if (!$token) {
+    header('Location: ' . PATH);
+    exit;
+  }
+
+  $sql = 'SELECT `ownership`.*, expires FROM `ownership` INNER JOIN `forgot_tokens` ON `name` = `owner_name` WHERE `token` = "%s" AND `forgot_tokens`.`expires` >= NOW()';
+  $sql = sprintf($sql, mysql_real_escape_string($token));
+  $result = mysql_query($sql);
+
+  if (!mysql_num_rows($result)) {
+    header('Location: ' . PATH);
+    exit;
+  } else {
+    $user = mysql_fetch_object($result);
+  }
+
+  $sql = 'DELETE FROM `forgot_tokens` WHERE `expires` <= NOW() OR `owner_name`="%s"';
+  $sql = sprintf($sql, mysql_real_escape_string($user->name));
+  mysql_query($sql);
+
+  if ($user) {
+    setSession($user->name);
+
+    $view = file_get_contents('../views/account.html');
+    $mustache = new Mustache;
+    echo $mustache->render($view, array(
+      'email' => $user->email,
+      'csrf' => $csrf,
+      'action' => ROOT . '/updatehome'
+    ));
+  } else {
+    header('Location: ' . PATH);
+  }
+
   exit;
 } else if ($action == 'list' || $action == 'show') {
   showSaved($request[0] ? $request[0] : $home);
@@ -537,6 +575,14 @@ function str_lreplace($search, $replace, $subject) {
   }
 }
 
+function setSession($name) {
+  $data = json_encode(array('user' => array(
+    'name' => $name,
+    'lastLogin' => time()
+  )));
+  $hash = session_hash($data);
+  setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, PATH);
+}
 
 function getCodeIdParams($request) {
   global $home;

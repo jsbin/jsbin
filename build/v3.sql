@@ -9,9 +9,8 @@ ALTER TABLE ownership
 CREATE TABLE forgot_tokens (
   owner_name VARCHAR(255) NOT NULL,
   token VARCHAR(255) NOT NULL,
-  expired INT(1) NOT NULL DEFAULT 0,
+  expires DATETIME NOT NULL,
   created DATETIME NOT NULL,
-  updated DATETIME NOT NULL,
-  KEY `index_created` (`created`),
-  KEY `index_token_expired_created` (`token`,`expired`,`created`)
+  KEY `index_expires` (`expires`),
+  KEY `index_token_expires` (`token`,`expired`,`expires`)
 );

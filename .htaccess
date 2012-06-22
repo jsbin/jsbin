@@ -12,7 +12,7 @@ RewriteCond %{HTTP_HOST} ^www\.jsbin\.com$ [NC]
 RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
 # role a sprocket for offline and debug
-RewriteRule js\/debug\/.*\.js$ public/sprocketize.php [QSA,L]
+RewriteRule js\/debug\/.*\.js$ php/sprocketize.php [QSA,L]
 
 # if the file or directory exists
 RewriteCond %{REQUEST_FILENAME} -d [OR]

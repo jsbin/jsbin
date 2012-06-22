@@ -1,4 +1,3 @@
 <?php 
-
-chdir('public');
+chdir('php');
 require('index.php');

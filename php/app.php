@@ -224,6 +224,7 @@ if (!$action) {
   }
 
   if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', implode($set, ', '), mysql_real_escape_string($home)))) {
+    header("HTTP/1.1 500 Internal Server Error");
     echo json_encode(array('ok' => false, 'error' => mysql_error()));
     exit;
   }

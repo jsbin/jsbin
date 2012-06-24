@@ -207,22 +207,23 @@ if (!$action) {
 } else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
   $key = isset($_POST['key']) ? trim($_POST['key']) : null;
   $email = isset($_POST['email']) ? trim($_POST['email']) : null;
-  $set = '';
+  $set = array();
 
   if (!$home) {
     exit;
   }
 
   if ($email) {
-    $set = '`email`="' . mysql_real_escape_string($email) . '"';
+    array_push($set, '`email`="' . mysql_real_escape_string($email) . '"');
   }
 
   if ($key) {
+    $bcrypt = new Bcrypt(10);
     $hashed = $bcrypt->hash($key);
-    $set = $set . ' `key`="' . mysql_real_escape_string($hashed) . '"';
+    array_push($set, '`key`="' . mysql_real_escape_string($hashed) . '"');
   }
 
-  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', $set, mysql_real_escape_string($home)))) {
+  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', implode($set, ', '), mysql_real_escape_string($home)))) {
     echo json_encode(array('ok' => false, 'error' => mysql_error()));
     exit;
   }

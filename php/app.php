@@ -227,7 +227,11 @@ if (!$action) {
     exit;
   }
 
-  echo json_encode(array('ok' => true, 'error' => false));
+  if ($ajax) {
+    echo json_encode(array('ok' => true, 'error' => false));
+  } else {
+    header('Location: ' . PATH);
+  }
   exit;
 } else if ($action == 'forgot') {
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -243,6 +247,8 @@ if (!$action) {
 
       if (!mysql_num_rows($result)) {
         echo json_encode(array('error' => 'Unable to find a user for that email'));
+        header("HTTP/1.1 404 Not Found");
+        exit;
       }
 
       $user = mysql_fetch_object($result);
@@ -252,11 +258,30 @@ if (!$action) {
       $sql = 'INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES ("%s", "%s", "%s", NOW())';
       $sql = sprintf($sql, mysql_real_escape_string($user->name), $token, $expires);
       if (!mysql_query($sql)) {
+        header("HTTP/1.1 500 Internal Server Error");
         echo json_encode(array('ok' => false, 'error' => mysql_error()));
         exit;
       }
 
-      echo json_encode(array());
+      $view = file_get_contents('../views/reset_email.txt');
+      $mustache = new Mustache;
+      $mail_body = $mustache->render($view, array(
+        'link' => ROOT . '/reset?token=' . $token,
+        'domain' => $_SERVER['SERVER_NAME']
+      ));
+
+      $result = mail($user->email, 'JSBin Password Reset', $mail_body, 'From: JSBin <help@jsbin.com>');
+      if (!$result) {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo json_encode(array('ok' => false, 'error' => 'Unable to send email'));
+        exit;
+      }
+
+      if ($ajax) {
+        echo json_encode(array());
+      } else {
+        header('Location: ' . PATH);
+      }
     }
   } else {
     $view = file_get_contents('../views/request.html');
@@ -663,7 +688,7 @@ function getCode($code_id, $revision, $testonly = false) {
   $result = mysql_query($sql);
   
   if (!mysql_num_rows($result) && $testonly == false) {
-    header("HTTP/1.0 404 Not Found");
+    header("HTTP/1.1 404 Not Found");
     return defaultCode(true);
   } else if (!mysql_num_rows($result)) {
     return array($revision);

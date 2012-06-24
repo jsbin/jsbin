@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'MesloLGMDZ';
+  src: url('../font/meslolgm-dz-regular-webfont.eot');
+  src: url('../font/meslolgm-dz-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../font/meslolgm-dz-regular-webfont.woff') format('woff'),
+       url('../font/meslolgm-dz-regular-webfont.ttf') format('truetype'),
+       url('../font/meslolgm-dz-regular-webfont.svg#meslolgm-dz-regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

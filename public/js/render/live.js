@@ -49,7 +49,7 @@ function codeChangeLive(event, data) {
       // ignore
     } else if (panel.visible) {
       // test to see if they're write a while loop
-      if (jsbin.panels.focused.id === 'javascript') {
+      if (jsbin.panels.focused && jsbin.panels.focused.id === 'javascript') {
         // check the current line doesn't match a for or a while or a do - which could trip in to an infinite loop
         editor = jsbin.panels.focused.editor;
         line = editor.getLine(editor.getCursor().line);
@@ -101,7 +101,7 @@ function renderLivePreview(withalerts) {
     try {
       doc.open();
 
-      if (debug) {
+      if (jsbin.settings.debug) {
         doc.write('<pre>' + source.replace(/[<>&]/g, function (m) {
           if (m == '<') return '&lt;';
           if (m == '>') return '&gt;';

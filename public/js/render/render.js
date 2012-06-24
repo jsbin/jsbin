@@ -164,7 +164,7 @@ function renderPreview() {
 
   var run = function () {
     win.open();
-    if (debug) {
+    if (jsbin.settings.debug) {
       win.write('<pre>' + source.replace(/[<>&]/g, function (m) {
         if (m == '<') return '&lt;';
         if (m == '>') return '&gt;';

@@ -1,14 +1,3 @@
-@font-face {
-  font-family: 'MesloLGMDZ';
-  src: url('../font/meslolgm-dz-regular-webfont.eot');
-  src: url('../font/meslolgm-dz-regular-webfont.eot?#iefix') format('embedded-opentype'),
-       url('../font/meslolgm-dz-regular-webfont.woff') format('woff'),
-       url('../font/meslolgm-dz-regular-webfont.ttf') format('truetype'),
-       url('../font/meslolgm-dz-regular-webfont.svg#meslolgm-dz-regular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
 html {
   height: 100%;
 }
@@ -888,7 +877,7 @@ ie6, li {
   outline: none !important;
   background: #FFFFDB;
   border: 0;
-  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, Monaco, consolas, monospace;
   font-size: 12px;
 }
 
@@ -1028,7 +1017,7 @@ details li, .details li {
 }
 
 .modal tbody td:first-child {
-  font-family: MesloLGMDZ, "MenschRegular";
+  font-family: MesloLGMDZ, Menlo, Monaco, consolas, monospace;
   padding-right: 20px;
   color: yellow;
 }
@@ -1088,6 +1077,11 @@ form input[type="password"],
 form input[type="email"] {
   border: 2px solid #b7dffd;
   width: 95%;
+  font-size: 18px;
+}
+
+input {
+  font-size: 16px;
 }
 
 /*
@@ -1181,7 +1175,7 @@ form input[type="email"] {
   top: 0;
   bottom: 0;
   line-height: 1.2em;
-  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, Menlo, Monaco, consolas, monospace;
   font-size: 13px;
 }
 
@@ -1580,7 +1574,7 @@ a.active:hover {
 
 /* font size control */
 /*#console { top: 35px; bottom: 35px; }*/
-#output li, #exec, .fakeInput { min-height: 20px; font-size: 13px; font-family: MesloLGMDZ, MenschRegular, "Menlo", consolas, monospace; }
+#output li, #exec, .fakeInput { min-height: 20px; font-size: 13px; font-family: MesloLGMDZ, "Menlo", consolas, monospace; }
 
 /** Pretty printing styles. Used with prettify.js. */
 
@@ -1792,7 +1786,7 @@ a.active:hover {
   /*position: absolute;*/
   /*top: 31px;*/
   -webkit-transition: top ease-out 200ms;
-  font-family: MesloLGMDZ, MenschRegular, Menlo, Monaco, consolas, monospace;
+  font-family: MesloLGMDZ, Menlo, Monaco, consolas, monospace;
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;

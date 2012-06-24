@@ -287,14 +287,10 @@ var panelInit = {
   },
   live: function () {
     function show() {
-      var panel = this;
-      $document.bind('jsbinReady', function () {
-        if (panel.visible) {
-          renderLivePreview(true);
-        }
-      });
-
-      renderLivePreview();
+      // var panel = this;
+      if (panels.ready) {
+        renderLivePreview();
+      }
     }
 
     function hide() {
@@ -318,9 +314,11 @@ editors.live = panelInit.live();
 
 
 // jsconsole.init(); // sets up render functions etc.
-editors.live.settings.render = function () {
-  editors.console.render();
-  renderLivePreview();
+editors.live.settings.render = function (showAlerts) {
+  if (panels.ready) {
+    editors.console.render();
+    renderLivePreview(showAlerts);
+  }
 };
 
 // IMPORTANT this is nasty, but the sequence is important, because the
@@ -415,7 +413,7 @@ var editorsReady = setInterval(function () {
 
     // if live is visible, render it
     if (panels.panels.live.visible) {
-      panels.panels.live.render();
+      panels.panels.live.render(true);
     }
 
     if (panels.panels.console.visible) {

@@ -8,7 +8,7 @@ var analytics = {
   clone: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/clone' + window.location.pathname]);
   },
-  saveTemplte: function () {
+  saveTemplate: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/save-template']);
   },
   createNew: function () {

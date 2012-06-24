@@ -84,4 +84,11 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 //= require "render/render"
 // require "chrome/beta"
 //= require "chrome/app"
+
+var link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = jsbin.root + '/css/font.css?' + jsbin.version;
+link.type = 'text/css';
+document.getElementsByTagName('head')[0].appendChild(link);
+
 })(this, document);

@@ -23,6 +23,13 @@
   "analytics": {
     "id": null
   },
+  "smtp": {
+    "service": "Gmail",
+    "auth": {
+        "user": "",
+        "pass": ""
+    }
+  },
   "blacklist": {
     "html": ["processform.cgi", "habbo.com"],
     "css": [],

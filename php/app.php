@@ -199,16 +199,141 @@ if (!$action) {
     }
 
     if ($ok) {
-      $data = json_encode(array('user' => array(
-        'name' => $name,
-        'lastLogin' => time()
-      )));
-      $hash = session_hash($data);
-      setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, PATH);
+      setSession($name);
       echo json_encode(array('ok' => true, 'created' => $created));
     }
     exit;
   }
+} else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  $key = isset($_POST['key']) ? trim($_POST['key']) : null;
+  $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+  $set = array();
+
+  if (!$home) {
+    exit;
+  }
+
+  if ($email) {
+    array_push($set, '`email`="' . mysql_real_escape_string($email) . '"');
+  }
+
+  if ($key) {
+    $bcrypt = new Bcrypt(10);
+    $hashed = $bcrypt->hash($key);
+    array_push($set, '`key`="' . mysql_real_escape_string($hashed) . '"');
+  }
+
+  if (!mysql_query(sprintf('UPDATE ownership SET %s WHERE `name`="%s"', implode($set, ', '), mysql_real_escape_string($home)))) {
+    header("HTTP/1.1 500 Internal Server Error");
+    echo json_encode(array('ok' => false, 'error' => mysql_error()));
+    exit;
+  }
+
+  if ($ajax) {
+    echo json_encode(array('ok' => true, 'error' => false));
+  } else {
+    header('Location: ' . PATH);
+  }
+  exit;
+} else if ($action == 'forgot') {
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+
+    if (!$email) {
+      echo json_encode(array('error' => 'Please provide a valid email address'));
+      exit;
+    } else {
+      $sql = 'SELECT * FROM `ownership` WHERE `email`="%s" LIMIT 1';
+      $sql = sprintf($sql, mysql_real_escape_string($email));
+      $result = mysql_query($sql);
+
+      if (!mysql_num_rows($result)) {
+        echo json_encode(array('error' => 'Unable to find a user for that email'));
+        header("HTTP/1.1 404 Not Found");
+        exit;
+      }
+
+      $user = mysql_fetch_object($result);
+      $token = md5(rand());
+      $expires = date('Y-m-d H:i:s', time() + (24 * 60 * 60));
+
+      $sql = 'INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES ("%s", "%s", "%s", NOW())';
+      $sql = sprintf($sql, mysql_real_escape_string($user->name), $token, $expires);
+      if (!mysql_query($sql)) {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo json_encode(array('ok' => false, 'error' => mysql_error()));
+        exit;
+      }
+
+      $view = file_get_contents('../views/reset_email.txt');
+      $mustache = new Mustache;
+      $mail_body = $mustache->render($view, array(
+        'link' => ROOT . '/reset?token=' . $token,
+        'domain' => $_SERVER['SERVER_NAME']
+      ));
+
+      $result = mail($user->email, 'JSBin Password Reset', $mail_body, 'From: JSBin <help@jsbin.com>');
+      if (!$result) {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo json_encode(array('ok' => false, 'error' => 'Unable to send email'));
+        exit;
+      }
+
+      if ($ajax) {
+        echo json_encode(array());
+      } else {
+        header('Location: ' . PATH);
+      }
+    }
+  } else {
+    $view = file_get_contents('../views/request.html');
+    $mustache = new Mustache;
+    echo $mustache->render($view, array(
+      'csrf' => $csrf,
+      'action' => ROOT . '/forgot'
+    ));
+  }
+  exit;
+
+} else if ($action == 'reset') {
+  $token = isset($_GET['token']) ? trim($_GET['token']) : null;
+  $user = null;
+
+  if (!$token) {
+    header('Location: ' . PATH);
+    exit;
+  }
+
+  $sql = 'SELECT `ownership`.*, expires FROM `ownership` INNER JOIN `forgot_tokens` ON `name` = `owner_name` WHERE `token` = "%s" AND `forgot_tokens`.`expires` >= NOW()';
+  $sql = sprintf($sql, mysql_real_escape_string($token));
+  $result = mysql_query($sql);
+
+  if (!mysql_num_rows($result)) {
+    header('Location: ' . PATH);
+    exit;
+  } else {
+    $user = mysql_fetch_object($result);
+  }
+
+  $sql = 'DELETE FROM `forgot_tokens` WHERE `expires` <= NOW() OR `owner_name`="%s"';
+  $sql = sprintf($sql, mysql_real_escape_string($user->name));
+  mysql_query($sql);
+
+  if ($user) {
+    setSession($user->name);
+
+    $view = file_get_contents('../views/account.html');
+    $mustache = new Mustache;
+    echo $mustache->render($view, array(
+      'email' => $user->email,
+      'csrf' => $csrf,
+      'action' => ROOT . '/updatehome'
+    ));
+  } else {
+    header('Location: ' . PATH);
+  }
+
+  exit;
 } else if ($action == 'list' || $action == 'show') {
   showSaved($request[0] ? $request[0] : $home);
   // could be listed under a user OR could be listing all the revisions for a particular bin
@@ -477,6 +602,14 @@ function str_lreplace($search, $replace, $subject) {
   }
 }
 
+function setSession($name) {
+  $data = json_encode(array('user' => array(
+    'name' => $name,
+    'lastLogin' => time()
+  )));
+  $hash = session_hash($data);
+  setcookie('session', $hash . $data, time() + 60 * 60 * 24 * 30, PATH);
+}
 
 function getCodeIdParams($request) {
   global $home;
@@ -557,7 +690,7 @@ function getCode($code_id, $revision, $testonly = false) {
   $result = mysql_query($sql);
   
   if (!mysql_num_rows($result) && $testonly == false) {
-    header("HTTP/1.0 404 Not Found");
+    header("HTTP/1.1 404 Not Found");
     return defaultCode(true);
   } else if (!mysql_num_rows($result)) {
     return array($revision);

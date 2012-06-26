@@ -72,22 +72,25 @@ var dropdownOpen = false,
     menuDown = false;
 
 function opendropdown(el) {
+  var menu;
   if (!dropdownOpen) {
-    $(el).closest('.menu').addClass('open');
-    dropdownOpen = true;
+    menu = $(el).closest('.menu').addClass('open').trigger('open');
+    menu.find('input:first').focus();
+    dropdownOpen = el;
   }
 }
 
 function closedropdown() {
   menuDown = false;
   if (dropdownOpen) {
-    dropdownButtons.closest('.menu').removeClass('open');
+    dropdownButtons.closest('.menu').removeClass('open').trigger('close');
     dropdownOpen = false;
     onhover = false;
   }
 }
 
 $('.button-open').mousedown(function (e) {
+  if (dropdownOpen && dropdownOpen !== this) closedropdown();
   if (!dropdownOpen) {
     menuDown = true;
     opendropdown(this);
@@ -98,7 +101,7 @@ $('.button-open').mousedown(function (e) {
 
 var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e) {
   $dropdownLinks.removeClass('hover');
-
+  if (dropdownOpen && dropdownOpen !== this) closedropdown();
   if (!dropdownOpen) {
     menuDown = true;
     opendropdown(this);
@@ -203,6 +206,11 @@ $('#createnew').click(function () {
     }
   }, 0);
 });
+
+$('form.login').closest('.menu').bind('close', function () {
+  $(this).find('.loginFeedback').empty().hide();
+});
+
 
 jsbin.settings.includejs = jsbin.settings.includejs || false;
 $('#enablejs').change(function () {

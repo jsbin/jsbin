@@ -308,7 +308,7 @@ body.preview a.preview {
 }
 
 .group {
-  border-left: 1px solid #ccc;
+  border-left: 0px solid #ccc;
 }
 
 .left {
@@ -1179,6 +1179,10 @@ input {
   font-size: 13px;
 }
 
+.activeline {
+  background: #e8f2ff !important;
+}
+
 
 /* begin CodeMirror's own CSS */
 .CodeMirror {
@@ -1198,8 +1202,10 @@ input {
 .CodeMirror-gutter {
   position: absolute; left: 0; top: 0;
   z-index: 10;
-  background-color: #f7f7f7;
-  border-right: 1px solid #eee;
+  /*background-color: #f7f7f7;*/
+  /*border-right: 1px solid #eee;*/
+  background-color: #fff;
+  border-right: 1px solid #fff;
   min-width: 2em;
   height: 100%;
 }
@@ -1503,10 +1509,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 .icon { font-family: sans-serif; }
-.button-dropdown:after,
-.fake-dropdown:after { content: "▾"; padding-left: 5px; padding-right: 3px; }
-.button-dropdown:empty:after,
-.fake-dropdown:empty:after { padding-left: 0; }
+/*.button-dropdown:after,*/
+/*.fake-dropdown:after { content: "▾"; padding-left: 5px; padding-right: 3px; }*/
+/*.button-dropdown:empty:after,*/
+/*.fake-dropdown:empty:after { padding-left: 0; }*/
 
 
 .editbox {

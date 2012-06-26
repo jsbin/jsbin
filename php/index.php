@@ -30,6 +30,11 @@ $list_history = ob_get_clean();
 
 $code_id_domain = preg_replace('/https?:\/\//', '', $code_id_path);
 
+$gravatar = '';
+if ($email) {
+  $gravatar = 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=28';
+}
+
 $view = file_get_contents('../views/index.html');
 $mustache = new Mustache;
 echo $mustache->render($view, array(
@@ -37,6 +42,7 @@ echo $mustache->render($view, array(
   'root' => ROOT,
   'version' => VERSION,
   'home' => $home,
+  'gravatar' => $gravatar,
   'revision' => $revision,
   'code_id' => $code_id,
   'url' =>  $_SERVER['REQUEST_URI'],

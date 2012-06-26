@@ -48,6 +48,7 @@ if ($session) {
 }
 
 $home = isset($session['user']) ? $session['user']['name'] : '';
+$email = isset($session['user']) ? $session['user']['email'] : '';
 $csrf = isset($_COOKIE['_csrf']) ? $_COOKIE['_csrf'] : md5(rand());
 
 if (!in_array($_SERVER['REQUEST_METHOD'], array('GET', 'HEAD'))) {
@@ -150,14 +151,16 @@ if (!$action) {
     $key  = $_POST['key'];
     $name = $_POST['name'];
     $email = $_POST['email'];
+    // TODO allow email to be used as the lookup key
     $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
     $result = mysql_query($sql);
     $ok = false;
     $created = false;
+    $rows_affected = mysql_num_rows($result);
 
     header('content-type: application/json');
 
-    if (!mysql_num_rows($result)) {
+    if (!$rows_affected && strlen($email)) {
       // store and okay (note "key" is a reserved word - typical!)
       $key = $bcrypt->hash($key);
       $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
@@ -167,12 +170,16 @@ if (!$action) {
         $created = true;
         // echo json_encode(array('ok' => true, 'created' => true));
       } else {
-        echo json_encode(array('ok' => false, 'error' => mysql_error()));
+        echo json_encode(array('ok' => false, 'message' => 'Sorry, I couldn\'t find your account. Can you double check?'));
+
+        // echo json_encode(array('ok' => false, 'error' => mysql_error()));
       }
+    // } else if (!strlen($email)) {
+    //     echo json_encode(array('ok' => false, 'message' => 'ok2 Sorry, I couldn\'t find your account. Can you double check?'));
     } else {
       // check key
       $row = mysql_fetch_object($result);
-
+      $email = $row->email;
       $hashed  = $row->key;
       $created = date_parse($row->created);
       if (!$created || $created['warning_count']) {
@@ -182,7 +189,7 @@ if (!$action) {
           if (!mysql_query($sql)) {
             echo json_encode(array('ok' => false, 'error' => mysql_error()));
             exit;
-          }
+          } 
         }
       }
 
@@ -201,6 +208,7 @@ if (!$action) {
     if ($ok) {
       $data = json_encode(array('user' => array(
         'name' => $name,
+        'email' => $email,
         'lastLogin' => time()
       )));
       $hash = session_hash($data);

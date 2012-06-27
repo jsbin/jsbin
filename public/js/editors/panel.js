@@ -42,6 +42,7 @@ var Panel = function (name, settings) {
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
+      // lineNumbers: true,
       onChange: function (event) { 
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
         return true; 
@@ -142,8 +143,6 @@ Panel.prototype = {
       } else {
         panel.distribute();
       }
-      // update all splitter positions
-      $document.trigger('sizeeditors');
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
@@ -156,6 +155,9 @@ Panel.prototype = {
           panel.focus();
         }
       }
+      // update all splitter positions
+      $document.trigger('sizeeditors');
+
       panel.virgin = false;
   }, 0);
 

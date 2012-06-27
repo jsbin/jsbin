@@ -1701,6 +1701,7 @@ a.active:hover {
 .menu > a.button {
   display: inline-block;
   position: relative;
+  padding: 6px 16px;
 }
 
 #panels {
@@ -1804,7 +1805,7 @@ a.active:hover {
   margin: 10px 0;
 }
 
-#history iframe {
+#history iframe-dead {
   -moz-transform:    scale(0.8);
   -o-transform:      scale(0.8);
   -webkit-transform: scale(0.8);
@@ -1827,9 +1828,16 @@ a.active:hover {
   -ms-transform-origin: 0 0;
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
+}
 
+#history iframe {
   width: 100%;
   height: 100%;
+  border: 0;
+  display: block;
+  margin: 0 auto;
+  /*width: 90%;*/
+
 }
 
 .panelsVisible #history {
@@ -1961,13 +1969,6 @@ a.active:hover {
 #history tr[data-type=spacer]:hover * {
   background: #fff;
   cursor: default;
-}
-
-#history iframe {
-  border: 0;
-  display: block;
-  margin: 0 auto;
-  width: 90%;
 }
 
 #history #viewing {
@@ -2180,4 +2181,10 @@ pre .highlight:last-of-type {
   display: inline-block;
   border-radius: 1px;
   margin-top: -2px;
+  border: 1px solid #fff;
+  -webkit-box-shadow: 0 0 1px #999;
+  -ms-box-shadow: 0 0 1px #999;
+  -o-box-shadow: 0 0 1px #999;
+  -moz-box-shadow: 0 0 1px #999;
+  box-shadow: 0 0 1px #999;
 }

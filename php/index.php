@@ -32,7 +32,7 @@ $code_id_domain = preg_replace('/https?:\/\//', '', $code_id_path);
 
 $gravatar = '';
 if ($email) {
-  $gravatar = 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=28';
+  $gravatar = 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=26';
 }
 
 $view = file_get_contents('../views/index.html');

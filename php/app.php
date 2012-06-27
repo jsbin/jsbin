@@ -279,7 +279,7 @@ if (!$action) {
         'domain' => $_SERVER['SERVER_NAME']
       ));
 
-      $result = mail($user->email, 'JSBin Password Reset', $mail_body, 'From: JSBin <help@jsbin.com>');
+      $result = mail($user->email, 'JSBin Password Reset', $mail_body, 'From: JSBin <the-little-robot-dude@jsbin.com>');
       if (!$result) {
         header("HTTP/1.1 500 Internal Server Error");
         echo json_encode(array('ok' => false, 'error' => 'Unable to send email'));

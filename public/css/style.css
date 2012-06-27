@@ -1418,6 +1418,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-night span.cm-comment { color: #6900a1; }
 .cm-s-night span.cm-builtin, .cm-s-night span.cm-special { color: #ff9e59; }
 
+.CodeMirror-lines {
+  padding: 0;
+}
+
 .ready #bin {
   opacity: 1;
 /*  filter:alpha(opacity=1);*/

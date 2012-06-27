@@ -146,7 +146,7 @@ Panel.prototype = {
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
-          $(panel.editor.win).find('.CodeMirror-scroll > div').css('padding-top', panel.$el.find('.label').outerHeight());
+          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', panel.$el.find('.label').outerHeight());
 
           populateEditor(panel, panel.name);
         }
@@ -275,8 +275,9 @@ Panel.prototype = {
 
     var $label = panel.$el.find('.label');
     if (document.body.className.indexOf('ie6') === -1 && $label.length) {
-      editor.scroller.scroll(function (event) {
-        if (this.scrollTop > 10) {
+      editor.setOption('onScroll', function (event) {
+        var scrollInfo = editor.getScrollInfo();
+        if (scrollInfo.y > 10) {
           $label.stop().animate({ opacity: 0 }, 20, function () {
             $(this).hide();
           });

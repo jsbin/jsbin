@@ -12,5 +12,5 @@ CREATE TABLE forgot_tokens (
   expires DATETIME NOT NULL,
   created DATETIME NOT NULL,
   KEY `index_expires` (`expires`),
-  KEY `index_token_expires` (`token`,`expired`,`expires`)
+  KEY `index_token_expires` (`token`,`created`,`expires`)
 );

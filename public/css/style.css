@@ -1705,7 +1705,7 @@ a.active:hover {
 .menu > a.button {
   display: inline-block;
   position: relative;
-  padding: 6px 16px;
+  padding: 6px 10px;
 }
 
 #panels {

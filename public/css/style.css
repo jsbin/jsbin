@@ -1145,7 +1145,9 @@ input {
   background: #f3b8b6;
   background: rgba(255, 0, 0, 0.2);
   border: 1px solid red;
-  margin: 10px 0;
+  margin: 0;
+  white-space: normal;
+  line-height: 18px;
 }
 
 /*#loginFeedback:empty {
@@ -1561,10 +1563,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 .icon { font-family: sans-serif; }
-/*.button-dropdown:after,*/
-/*.fake-dropdown:after { content: "▾"; padding-left: 5px; padding-right: 3px; }*/
-/*.button-dropdown:empty:after,*/
-/*.fake-dropdown:empty:after { padding-left: 0; }*/
+.button-dropdown-arrow:after,
+.fake-dropdown:after { content: "▾"; padding-left: 5px; padding-right: 3px; }
+.button-dropdown-arrow:empty:after,
+.fake-dropdown:empty:after { padding-left: 0; }
 
 
 .editbox {
@@ -2132,4 +2134,50 @@ pre .highlight:last-of-type {
   transition-property: opacity, margin-right;
   transition-timing-function: ease-out, ease-out; 
   transition-duration: 100ms, 100ms;
+}
+
+.dropdown {
+  margin-top: 8px;
+}
+
+.dropdown > div:after, .dropdown > div:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  left: 17%;
+}
+
+.dropdown > div:after {
+  border-bottom-color: #fff;
+  border-width: 10px;
+  margin-left: -10px;
+  top: -16px;
+}
+
+.dd-right.dropdown > div:after {
+  left: 83%;
+}
+
+.dropdown > div:before {
+  border-bottom-color: #ccc;
+  border-width: 11px;
+  margin-left: -11px;
+  top: -18px;
+}
+
+.dd-right.dropdown > div:before {
+  left: 83%;
+}
+
+.avatar {
+  margin-right: 7px;
+  vertical-align: top;
+  display: inline-block;
+  border-radius: 1px;
+  margin-top: -2px;
 }

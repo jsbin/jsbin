@@ -26,7 +26,7 @@ Requires:
           - SUCCESS: successful log in. Update login time and set session
       2.3 Else if redirected from registration logic
         - ERORR: username taken
-      2.4 Else
+      2.4 Else // also covers account update route
         - ERROR: password doesn't match
 
 ## Registration logic

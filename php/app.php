@@ -139,46 +139,43 @@ if (!$action) {
   exit;
 } else if ($action == 'sethome') {
   if ($ajax) {
-    // 1. encode the key
-    // 2. lookup the name
-    // 3.1. if no name - it's available - store
-    // 3.2. if name - check key against encoded key
-    // 3.2.1. if match, return ok
-    //        else return fail
+    // Logic is in account-logic.md
 
     $bcrypt = new Bcrypt(10);
 
     $key  = $_POST['key'];
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $saved_email = $email; // this gets overwritten later
     // TODO allow email to be used as the lookup key
     $sql = sprintf('select * from ownership where name="%s"', mysql_real_escape_string($name));
     $result = mysql_query($sql);
     $ok = false;
     $created = false;
-    $rows_affected = mysql_num_rows($result);
+    $rows_found = mysql_num_rows($result);
 
     header('content-type: application/json');
 
-    // if no rows found, and there's an email AND they're not logged in already!
-    if ($rows_affected == 0 && strlen($email) && !$home) {
+    // (3) if no rows found, and there's an email AND they're not logged in already!
+    if ($rows_found == 0 && strlen($email) && !$home) {
       // store and okay (note "key" is a reserved word - typical!)
       $key = $bcrypt->hash($key);
       $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
       $result = mysql_query($sql);
+      // (4) created account
       if ($result) {
         $ok = true;
         $created = true;
         // echo json_encode(array('ok' => true, 'created' => true));
       } else {
-        echo json_encode(array('ok' => false, 'message' => 'Sorry, I couldn\'t find your account. Can you double check?'));
-
-        // echo json_encode(array('ok' => false, 'error' => mysql_error()));
+        echo json_encode(array('ok' => false, 'message' => 'Something went wrong when I tried to create your account :-\\', 'error' => mysql_error(), 'step' => '3'));
       }
-    } else if (!$email && !$home && !$rows_affected) {
+    // (1) ERROR - user name doesn't exist
+    } else if (!$email && !$home && !$rows_found) {
       // log in attempt when username wasn't found
-      echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
-    } else if ($rows_affected) {
+      echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work.", 'step' => '1'));
+    // (2) user was found with that name
+    } else if ($rows_found) {
       // check key
       $row = mysql_fetch_object($result);
       $saved_email = $row->email;
@@ -186,52 +183,57 @@ if (!$action) {
       $saved_name = $row->name;
 
       $created = date_parse($row->created);
+
+      // (2.1) account hasn't been updated to bcrypt
       if (!$created || $created['warning_count']) {
+        // (2.1.1) sha1 matches
         if ($hashed === sha1($key)) {
           $hashed = $bcrypt->hash($key);
           $sql = sprintf('UPDATE ownership SET `key`="%s", `last_login`=NOW(), `created`=NOW(), `updated`=NOW() WHERE `name`="%s"', mysql_real_escape_string($hashed), mysql_real_escape_string($name));
           if (!mysql_query($sql)) {
-            echo json_encode(array('ok' => false, 'error' => mysql_error()));
+            echo json_encode(array('ok' => false, 'error' => mysql_error(), 'step' => '2.1.1'));
             exit;
           } 
         }
       }
 
+      // (2.2) check bcrypt passsowrd matches
       if ($bcrypt->verify($key, $hashed)) {
-        if ($home && $home != $saved_name && !$rows_affected) {
-          // trying to change their username - not supported yet.
-          echo json_encode(array('ok' => false, 'message' => "Sorry, changing your username isn't supported just yet. We're on it though!"));
-          exit;
-        }
-
         // otherwise username & password were okay, update their details (including email addy)
         $ok = true;
         $sql = sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name));
+
+        // (2.2.1) logged in, also update their email address
         if ($email && $home) {
           $sql = sprintf('UPDATE ownership SET `email`="%s", `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($email), mysql_real_escape_string($name));
           $saved_email = $email;
-        }
+        } 
 
         if (!mysql_query($sql)) {
-          echo json_encode(array('ok' => false, 'error' => mysql_error()));
+          echo json_encode(array('ok' => false, 'error' => mysql_error(), 'step' => '2.2.1'));
           exit;
         }
-        // echo json_encode(array('ok' => true, 'created' => false));
       } else {
-        // found username, but the password didn't match
-        echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
+        // (2.3) found username, but the password didn't match
+        if ($email && !$home) {
+          echo json_encode(array('ok' => false, 'message' => "Too late I'm afraid, that username is taken.", 'step' => '2.3'));
+        // (2.4) password doesn't match
+        } else {
+          echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work.", 'step' => '2.4'));
+        }
       }
     } else {
-      if ($home && $home != $saved_name && !$rows_affected) {
+      // (6) trying to change username - we don't support this yet
+      if ($home && $home != $saved_name && !$rows_found) {
         // trying to change their username - not supported yet.
-        echo json_encode(array('ok' => false, 'message' => "Sorry, changing your username isn't supported just yet. We're on it though!"));
+        echo json_encode(array('ok' => false, 'message' => "Sorry, changing your username isn't supported just yet. We're on it though!", 'step' => '6'));
       } else {
         echo json_encode(array('ok' => false, 'message' => "Ooh, this is embarrassing. Something's failed and I'm not quite sure what..."));
       }
     }
 
     if ($ok) {
-      setSession($name, $email);
+      setSession($name, $saved_email);
 
       if ($home) {
         echo json_encode(array('ok' => true, 'message' => 'Account updated.'));

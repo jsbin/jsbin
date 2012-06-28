@@ -123,8 +123,8 @@ function renderLivePreview(withalerts) {
         }
 
         // almost jQuery Mobile specific - when the page renders
-        // it moves the focus over to the live preview - since 
-        // we no longer have a "render" panel, our code loses 
+        // it moves the focus over to the live preview - since
+        // we no longer have a "render" panel, our code loses
         // focus which is damn annoying. So, I cancel the iframe
         // focus event...because I can :)
         var click = false;
@@ -160,7 +160,7 @@ function renderLivePreview(withalerts) {
     if (remove) {
       $live.find('iframe:last').remove();
     }
-  }
+  };
 
   // WebKit requires a wait time before actually writing to the iframe
   // annoyingly it's not consistent (I suspect WebKit is the buggy one)

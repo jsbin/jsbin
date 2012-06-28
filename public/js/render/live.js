@@ -138,6 +138,8 @@ function renderLivePreview(withalerts) {
           // allow the iframe to be clicked to create a fake focus
           if (click) {
             $('#live').focus();
+            // also close any open dropdowns
+            closedropdown();
           }
           return false;
         };

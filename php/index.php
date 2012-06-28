@@ -42,6 +42,7 @@ echo $mustache->render($view, array(
   'root' => ROOT,
   'version' => VERSION,
   'home' => $home,
+  'email' => $email,
   'gravatar' => $gravatar,
   'revision' => $revision,
   'code_id' => $code_id,

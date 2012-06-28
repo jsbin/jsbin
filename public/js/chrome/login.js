@@ -24,10 +24,11 @@ var $loginForm = $('form.login').submit(function (event) {
       var data = $.parseJSON(jqXHR.responseText) || {};
       // cookie is required to share with the server so we can do a redirect on new bin
       if (data.ok) {
-        // $loginFeedback.text('Successfully tied this browser to "' + name + '".');
-        // setTimeout(function () {
-        window.location = window.location.pathname + window.location.search;
-        // }, 500);
+        if (data.message) {
+          $loginFeedback.text(data.message);
+        } else {
+          window.location = window.location.pathname + window.location.search;
+        }
       } else {
         analytics.login(false);
         $loginFeedback.text(data.message || ('"' + name + '" has already been taken. Please either double check the password, or choose another username.'));

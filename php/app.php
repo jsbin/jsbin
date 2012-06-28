@@ -160,7 +160,8 @@ if (!$action) {
 
     header('content-type: application/json');
 
-    if (!$rows_affected && strlen($email)) {
+    // if no rows found, and there's an email AND they're not logged in already!
+    if (!$rows_affected && strlen($email) && !$home) {
       // store and okay (note "key" is a reserved word - typical!)
       $key = $bcrypt->hash($key);
       $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
@@ -174,13 +175,16 @@ if (!$action) {
 
         // echo json_encode(array('ok' => false, 'error' => mysql_error()));
       }
-    // } else if (!strlen($email)) {
-    //     echo json_encode(array('ok' => false, 'message' => 'ok2 Sorry, I couldn\'t find your account. Can you double check?'));
+    } else if (!$email && !$home && !$rows_affected) {
+      // log in attempt when username wasn't found
+      echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
     } else {
       // check key
       $row = mysql_fetch_object($result);
-      $email = $row->email;
+      $saved_email = $row->email;
       $hashed  = $row->key;
+      $saved_name = $row->name;
+
       $created = date_parse($row->created);
       if (!$created || $created['warning_count']) {
         if ($hashed === sha1($key)) {
@@ -194,20 +198,39 @@ if (!$action) {
       }
 
       if ($bcrypt->verify($key, $hashed)) {
+        if ($home && $home != $saved_name && !$rows_affected) {
+          // trying to change their username - not supported yet.
+          echo json_encode(array('ok' => false, 'message' => "Sorry, changing your username isn't supported just yet. We're on it though!"));
+          exit;
+        }
+
+        // otherwise username & password were okay, update their details (including email addy)
         $ok = true;
-        if (!mysql_query(sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name)))) {
+        $sql = sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name));
+        if ($email && $home) {
+          $sql = sprintf('UPDATE ownership SET `email`="%s", `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($email), mysql_real_escape_string($name));
+          $saved_email = $email;
+        }
+
+        if (!mysql_query($sql)) {
           echo json_encode(array('ok' => false, 'error' => mysql_error()));
           exit;
         }
         // echo json_encode(array('ok' => true, 'created' => false));
       } else {
-        // echo json_encode(array('ok' => false));
+        // found username, but the password didn't match
+        echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
       }
     }
 
     if ($ok) {
-      setSession($name, $email);
-      echo json_encode(array('ok' => true, 'created' => $created));
+      setSession($name, $saved_email);
+
+      if ($home) {
+        echo json_encode(array('ok' => true, 'message' => 'Account updated.'));
+      } else {
+        echo json_encode(array('ok' => true, 'created' => $created));
+      }
     }
     exit;
   }

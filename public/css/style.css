@@ -1031,8 +1031,7 @@ details li, .details li {
   right: -10px;
 }
 
-#login > div,
-#register > div {
+.dropdowncontent {
   /*background: #e0e0e0;*/
   padding: 10px; 
 }

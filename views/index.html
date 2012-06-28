@@ -50,13 +50,32 @@
             <a href="#" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
           </div>
           <div class="dropdown dd-right" id="homemenu">
-            <div class="dropdownmenu">
-              <form action="{{root}}/logout" method="POST">
+            <div class="dropdowncontent">
+              <form class="login">
+                <p class="loginFeedback"></p>
+                <div>
+                  <label>Username<br><input required value="{{home}}" name="username" type="text"></label>
+                </div>
+                <div>
+                  <label>Email<br>
+                  <input name="email" type="email" value="{{email}}"></label>
+                </div>
+                <div>
+                  <label>Password<br>
+                  <input required name="password" type="password" value=""></<label>
+                </div>
+                <div>
+                  <input type=submit value="Update account">
+                  <a class="logout" href="#logout">Logout</a>
+                </div>
+              </form>
+
+              <form action="{{root}}/logout" method="POST" id="logout">
                 <input type="hidden" name="_csrf" value="{{token}}" />
                 <input type="hidden" name="_redirect" value="{{url}}" />
                 <button hidden>Logout</button>
               </form>
-              <a id="logout" class="button group" href="{{root}}/logout">Logout</a>
+              
             </div>
           </div>
         </div><!--

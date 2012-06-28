@@ -52,13 +52,13 @@ $('#loginbtn').click(function () {
   // return false;
 });
 
-$('#logout').click(function (event) {
+$('.logout').click(function (event) {
   event.preventDefault();
 
   // We submit a form here because I can't work out how to style the button
   // element in the form to look the same as the anchor. Ideally we would
   // remove that and just let the form submit itself...
-  $(this).siblings('form').submit();
+  $(this.hash).submit();
 });
 
 $('.homebtn').click(function () {

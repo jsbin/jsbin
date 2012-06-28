@@ -178,7 +178,7 @@ if (!$action) {
     } else if (!$email && !$home && !$rows_affected) {
       // log in attempt when username wasn't found
       echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
-    } else {
+    } else if ($rows_affected) {
       // check key
       $row = mysql_fetch_object($result);
       $saved_email = $row->email;
@@ -220,6 +220,13 @@ if (!$action) {
       } else {
         // found username, but the password didn't match
         echo json_encode(array('ok' => false, 'message' => "No dice I'm afraid, those details didn't work."));
+      }
+    } else {
+      if ($home && $home != $saved_name && !$rows_affected) {
+        // trying to change their username - not supported yet.
+        echo json_encode(array('ok' => false, 'message' => "Sorry, changing your username isn't supported just yet. We're on it though!"));
+      } else {
+        echo json_encode(array('ok' => false, 'message' => "Ooh, this is embarrassing. Something's failed and I'm not quite sure what..."));
       }
     }
 

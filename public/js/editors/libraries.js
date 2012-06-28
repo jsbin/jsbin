@@ -91,13 +91,13 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://yui.yahooapis.com/3.3.0/build/yui/yui-min.js",
-        "label": "YUI 3.3.0",
+        "url": "http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js",
+        "label": "YUI 3.5.1",
         "group": "YUI"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/yui/2.8.2/build/yuiloader/yuiloader-min.js",
-        "label": "YUI 2.8.2",
+        "url": "http://yui.yahooapis.com/2.9.0/build/yuiloader/yuiloader-min.js",
+        "label": "YUI 2.9.0",
         "group": "YUI"
     },
     {

@@ -12,8 +12,8 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.7.1.min.js",
-        "label": "jQuery 1.7.1",
+        "url": "http://code.jquery.com/jquery-1.7.2.min.js",
+        "label": "jQuery 1.7.2",
         "group": "jQuery"
     },
     {
@@ -41,20 +41,20 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/latest/jquery.mobile.css",
+            "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css",
             "http://code.jquery.com/jquery-1.6.4.min.js",
-            "http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.1.min.js"
+            "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.js"
         ],
-        "label": "jQuery Mobile 1.0.1",
+        "label": "jQuery Mobile 1.1.0",
         "group": "jQuery Mobile"
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/latest/jquery.mobile.css",
+            "http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css",
             "http://code.jquery.com/jquery-1.6.4.min.js",
-            "http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.js"
+            "http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.1.min.js"
         ],
-        "label": "jQuery Mobile 1.1.0rc1",
+        "label": "jQuery Mobile 1.0.1",
         "group": "jQuery Mobile"
     },
     {

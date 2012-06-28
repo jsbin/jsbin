@@ -125,11 +125,15 @@ var libraries = [
             "http://documentcloud.github.com/underscore/underscore-min.js",
             "http://documentcloud.github.com/backbone/backbone-min.js"
         ],
-        "label": "Backbone 0.9.1"
+        "label": "Backbone 0.9.2"
     },
     {
         "url": "http://jashkenas.github.com/coffee-script/extras/coffee-script.js",
         "label": "CoffeeScript"
+    },
+    {
+        "url": "https://github.com/downloads/emberjs/ember.js/ember-0.9.8.1.min.js",
+        "label": "Ember.js 0.9.8.1"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",
@@ -141,6 +145,10 @@ var libraries = [
             "http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.js"
         ],
         "label": "ext-core 3.1.0"
+    },
+    {
+        "url": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.1.0.js",
+        "label": "Knockout 2.1"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js",

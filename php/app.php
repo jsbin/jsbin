@@ -161,7 +161,7 @@ if (!$action) {
     header('content-type: application/json');
 
     // if no rows found, and there's an email AND they're not logged in already!
-    if (!$rows_affected && strlen($email) && !$home) {
+    if ($rows_affected == 0 && strlen($email) && !$home) {
       // store and okay (note "key" is a reserved word - typical!)
       $key = $bcrypt->hash($key);
       $sql = sprintf('insert into ownership (`name`, `key`, `email`, `last_login`, `created`, `updated`) values ("%s", "%s", "%s", NOW(), NOW(), NOW())', mysql_real_escape_string($name), mysql_real_escape_string($key), mysql_real_escape_string($email));
@@ -231,7 +231,7 @@ if (!$action) {
     }
 
     if ($ok) {
-      setSession($name, $saved_email);
+      setSession($name, $email);
 
       if ($home) {
         echo json_encode(array('ok' => true, 'message' => 'Account updated.'));
@@ -241,7 +241,8 @@ if (!$action) {
     }
     exit;
   }
-} else if ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+// disabling - not sure this looks right
+} else if (FALSE && ($action == 'updatehome' && $_SERVER['REQUEST_METHOD'] == 'POST')) {
   $key = isset($_POST['key']) ? trim($_POST['key']) : null;
   $email = isset($_POST['email']) ? trim($_POST['email']) : null;
   $set = array();

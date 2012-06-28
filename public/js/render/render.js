@@ -16,7 +16,7 @@ var iframedelay = (function () {
     try {
       iframe.parentNode.removeChild(iframe);
       delete window[callbackName];
-    } catch (e){};
+    } catch (e){}
   };
 
   try {
@@ -45,7 +45,7 @@ var useCustomConsole = !(function () {
 var re = null;
 
 function getPreparedCode() {
-  // init the regular expression cache because this function 
+  // init the regular expression cache because this function
   // is called much earlier than the above code is actually encountered
   // yay for massive .js app!
   if (!re) {
@@ -64,7 +64,10 @@ function getPreparedCode() {
       source = '',
       js = '',
       css = '',
-      close = '';
+      close = '',
+      hasHTML = false,
+      hasCSS = false,
+      hasJS = false;
 
   try {
     source = editors.html.render();
@@ -72,11 +75,16 @@ function getPreparedCode() {
     console.error(e.message);
   }
 
+  hasHTML = !!$.trim(source);
+
   try {
     js = editors.javascript.render();
+    js += '\n//@ sourceURL: ' + jsbin.getURL().split('/').pop() + '.js';
   } catch (e) {
     console.error(e.message);
   }
+
+  hasJS = !!$.trim(js);
 
   try {
     css = editors.css.render();
@@ -84,21 +92,23 @@ function getPreparedCode() {
     console.error(e.message);
   }
 
+  hasCSS = !!$.trim(css);
+
   // escape any script tags in the JS code, because that'll break the mushing together
   js = js.replace(re.script, '<\\/script');
 
   // note that I'm using split and reconcat instead of replace, because if the js var
   // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
   // gets around the problem.
-  if (!$.trim(source) && $.trim(js)) {
+  if (!hasHTML && hasJS) {
     source = "<pre>\n" + js + "</pre>";
   } else if (re.code.test(source)) {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];
-  } else if (js) {
+  } else if (hasJS) {
     close = '';
     if (source.indexOf('</body>') !== -1) {
-      parts.push(source.substring(0, source.lastIndexOf('</body>')))
+      parts.push(source.substring(0, source.lastIndexOf('</body>')));
       parts.push(source.substring(source.lastIndexOf('</body>')));
 
       source = parts[0];
@@ -123,7 +133,7 @@ function getPreparedCode() {
     }
   }
 
-  if (!$.trim(source) && !$.trim(js) && css) {
+  if (!hasHTML && !hasJS && hasCSS) {
     source = "<pre>\n" + css + "</pre>";
   } else if (css) {
     parts = [];
@@ -157,32 +167,32 @@ function getPreparedCode() {
   return source;
 }
 
-function renderPreview() {
-  var doc = $('#preview iframe')[0], 
-      win = doc.contentDocument || doc.contentWindow.document,
-      source = getPreparedCode();
+// function renderPreview() {
+//   var doc = $('#preview iframe')[0], 
+//       win = doc.contentDocument || doc.contentWindow.document,
+//       source = getPreparedCode();
 
-  var run = function () {
-    win.open();
-    if (jsbin.settings.debug) {
-      win.write('<pre>' + source.replace(/[<>&]/g, function (m) {
-        if (m == '<') return '&lt;';
-        if (m == '>') return '&gt;';
-        if (m == '"') return '&quot;';
-      }) + '</pre>');
-    } else {
-      win.write(source);
-    }
-    win.close();
-  };
+//   var run = function () {
+//     win.open();
+//     if (jsbin.settings.debug) {
+//       win.write('<pre>' + source.replace(/[<>&]/g, function (m) {
+//         if (m == '<') return '&lt;';
+//         if (m == '>') return '&gt;';
+//         if (m == '"') return '&quot;';
+//       }) + '</pre>');
+//     } else {
+//       win.write(source);
+//     }
+//     win.close();
+//   };
 
-  // WebKit requires a wait time before actually writing to the iframe
-  // annoyingly it's not consistent (I suspect WebKit is the buggy one)
-  if (iframedelay.active) {
-    // this setTimeout allows the iframe to be rendered before our code
-    // runs - thus allowing us access to the innerWidth, et al
-    setTimeout(run, 10);
-  } else {
-    run();
-  }
-}
+//   // WebKit requires a wait time before actually writing to the iframe
+//   // annoyingly it's not consistent (I suspect WebKit is the buggy one)
+//   if (iframedelay.active) {
+//     // this setTimeout allows the iframe to be rendered before our code
+//     // runs - thus allowing us access to the innerWidth, et al
+//     setTimeout(run, 10);
+//   } else {
+//     run();
+//   }
+// }

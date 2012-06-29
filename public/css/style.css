@@ -89,7 +89,7 @@ p {
 
 .help a {
   outline: 0;
-  border-right: 0;
+  /*border-right: 0;*/
 }
 
 .starting, .help {
@@ -218,7 +218,9 @@ iframe.javascript {
 
 .dropdownmenu a, .button {
   position: relative;
-  border: 1px solid #CCC;
+  border: 1px solid transparent;
+  border-top: 0;
+  border-bottom: 0;
   height: 23px;
   line-height: 25px;
   padding: 6px 10px;
@@ -231,6 +233,18 @@ iframe.javascript {
   font-size: 13px;
   border-top: 0;
   border-bottom: 0;
+}
+
+#panels .button,
+.dropdownmenu a:hover, .button:hover,
+.dropdownmenu a:active, .button:active,
+.open > .button {
+ border-left: 1px solid #ccc;
+ border-right: 1px solid #ccc; 
+}
+
+#panels .button {
+  border-left: 0;
 }
 
 /*#control span {
@@ -308,7 +322,7 @@ body.preview a.preview {
 }
 
 .group {
-  border-left: 0px solid #ccc;
+  /*border-left: 0px solid #ccc;*/
 }
 
 .left {
@@ -2190,4 +2204,30 @@ pre .highlight:last-of-type {
   -o-box-shadow: 0 0 1px #999;
   -moz-box-shadow: 0 0 1px #999;
   box-shadow: 0 0 1px #999;
+}
+
+.brand {
+  display: none;
+  font-weight: bold;
+  padding: 10px;
+  /*margin-right: 5px;*/
+}
+
+.brand h1 {
+  font-size: 13px;
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.brand img {
+  vertical-align: top;
+}
+
+@media screen and (min-width:740px) {
+  .brand { display: inline-block; }
+}
+
+.button-dropdown-arrow {
+  padding: 6px 6px !important;
 }

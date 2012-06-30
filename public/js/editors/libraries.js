@@ -121,6 +121,14 @@ var libraries = [
         "group": "Dojo"
     },
     {
+        "url" : [
+            "http://code.jquery.com/qunit/qunit-git.css",
+            "http://code.jquery.com/qunit/qunit-git.js"
+        ],
+        "label": "QUnit",
+        "group": "Testing"
+    },
+    {
         "url": [
             "http://documentcloud.github.com/underscore/underscore-min.js",
             "http://documentcloud.github.com/backbone/backbone-min.js"

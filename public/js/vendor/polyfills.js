@@ -89,3 +89,10 @@ if ( !Array.prototype.forEach ) {
     // 8. return undefined
   };
 }
+
+if ( !Object.prototype.hasOwnProperty ) {
+  Object.prototype.hasOwnProperty = function(prop) {
+    var proto = obj.__proto__ || obj.constructor.prototype;
+    return (prop in this) && (!(prop in proto) || proto[prop] !== this[prop]);
+  };
+}

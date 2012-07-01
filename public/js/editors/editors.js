@@ -320,8 +320,8 @@ editors.live = panelInit.live();
 // jsconsole.init(); // sets up render functions etc.
 editors.live.settings.render = function (showAlerts) {
   if (panels.ready) {
-    editors.console.render();
     renderLivePreview(showAlerts);
+    editors.console.render();
   }
 };
 
@@ -358,6 +358,13 @@ Panel.prototype.hide = function () {
 }
 
 
+panels.allEditors = function (fn) {
+  var panelId, panel;
+  for (panelId in panels.panels) {
+    panel = panels.panels[panelId];
+    if (panel.editor) fn(panel);
+  }
+};
 
 panels.restore();
 panels.focus(panels.getVisible()[0] || null);

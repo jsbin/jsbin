@@ -1598,7 +1598,7 @@ html * {
   margin: 0; 
   padding-right: 0;
   position: absolute;
-  z-index: 10;
+  z-index: 11;
 }
 
 .label p {

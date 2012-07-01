@@ -50,12 +50,19 @@ jsbin['mobile'] = /WebKit.*Mobile.*/.test(navigator.userAgent);
 
 if (!storedSettings) {
   console.log('first timer');
-  // show them the "special" welcome
+  // TODO show them the "special" welcome
 }
 
 if (!jsbin.settings['codemirror']) {
   // backward compat with jsbin-v2
   jsbin.settings.codemirror = {};
+} else {
+  // move to editor
+  jsbin.settings.editor = jsbin.settings.codemirror
+}
+
+if (!jsbin.settings.editor) {
+  jsbin.settings.editor = {};
 }
 
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent
@@ -80,6 +87,28 @@ jsbin.getURL = function () {
   }
   return url;
 };
+
+function objectValue(path, context) {
+  var props = path.split('.'),
+      length = props.length,
+      i = 1,
+      currentProp = context || window,
+      value; // = undefined
+
+  if (currentProp[props[0]] !== undefined) {
+    currentProp = currentProp[props[0]];
+    for (; i < length; i++) {
+      if (typeof currentProp[props[i]] === undefined) {
+        break;
+      } else if (i === length - 1) {
+        value = currentProp[props[i]];
+      }
+      currentProp = currentProp[props[i]];
+    }
+  }
+
+  return value;
+}
 
 var $body = $('body'),
     $document = $(document),

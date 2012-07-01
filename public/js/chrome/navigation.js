@@ -183,7 +183,9 @@ $('#showurls').click(function () {
 
 $('.code.panel > .label > span.name').dblclick(function () {
   jsbin.panels.allEditors(function (panel) {
-    panel.editor.setOption('lineNumbers', !panel.editor.getOption('lineNumbers'));
+    var lineNumbers = !panel.editor.getOption('lineNumbers');
+    panel.editor.setOption('lineNumbers', lineNumbers);
+    jsbin.settings.editor.lineNumbers = lineNumbers;
   });
 });
 

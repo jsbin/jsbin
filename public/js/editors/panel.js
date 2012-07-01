@@ -42,7 +42,7 @@ var Panel = function (name, settings) {
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
-      // lineNumbers: true,
+      // lineNumbers: objectValue('jsbin.settings.editor.lineNumbers') || false,
       onChange: function (event) { 
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
         return true; 
@@ -51,7 +51,7 @@ var Panel = function (name, settings) {
       theme: jsbin.settings.theme || 'jsbin'
     };
 
-    $.extend(cmSettings, jsbin.settings.codemirror || {});
+    $.extend(cmSettings, jsbin.settings.editor || {});
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 

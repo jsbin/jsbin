@@ -139,6 +139,10 @@ var $body = $('body'),
       // }
     };
 
+$document.one('jsbinReady', function () {
+  $bin.removeAttr('style');
+  $body.addClass('ready');
+});
 
 //= require "vendor/json2"
 //= require "editors/editors"

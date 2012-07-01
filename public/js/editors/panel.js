@@ -146,7 +146,7 @@ Panel.prototype = {
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
-          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', panel.$el.find('.label').outerHeight());
+          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines, .CodeMirror-gutter-text').css('padding-top', panel.$el.find('.label').outerHeight());
 
           populateEditor(panel, panel.name);
         }
@@ -224,7 +224,8 @@ Panel.prototype = {
     jsbin.panels.focus(this);
   },
   render: function () {
-    var panel = this;
+    var panel = this,
+        ret = null;
     if (panel.editor) {
       return panel.processor(panel.getCode());
     } else if (this.visible && this.settings.render) {

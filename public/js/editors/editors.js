@@ -283,6 +283,7 @@ var panelInit = {
     return new Panel('javascript', { editor: true, label: 'JavaScript' });
   },
   console: function () {
+    // hide and show callbacks registered in console.js
     return new Panel('console', { label: 'Console' });
   },
   live: function () {
@@ -296,7 +297,9 @@ var panelInit = {
     function hide() {
       // detroy the iframe if we hide the panel
       // note: $live is defined in live.js
-      $live.find('iframe').remove();
+      if (panels.panels.console.visible === false) {
+        $live.find('iframe').remove();
+      }
     }
 
     return new Panel('live', { label: 'Output', show: show, hide: hide });

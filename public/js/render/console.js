@@ -81,7 +81,7 @@ function stringify(o, simple, visited) {
     json += parts.join(',\n') + '\n}';
   } else {
     try {
-      json = o+''; // should look like an object      
+      json = o+''; // should look like an object
     } catch (e) {}
   }
   return json;
@@ -99,7 +99,7 @@ function run(cmd) {
     return ['info', internalCmd];
   } else {
     try {
-      if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
+      // if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
       rawoutput = sandboxframe.contentWindow.eval(cmd);
     } catch (e) {
       rawoutput = e.message;
@@ -373,26 +373,35 @@ var jsconsole = {
   reset: function () {
     this.run(':reset');
   },
+  setSandbox: function (newSandbox) {
+    // sandboxframe.parentNode.removeChild(sandboxframe);
+    sandboxframe = newSandbox;
+
+    sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
+    // sandbox.open();
+    // stupid jumping through hoops if Firebug is open, since overwriting console throws error
+    // sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
+    // sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
+
+    sandboxframe.contentWindow.eval('(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();');
+
+    sandbox.close();
+
+  },
   init: function (outputElement, nohelp) {
     output = outputElement;
 
     // closure scope
-    sandboxframe = document.createElement('iframe');
+    sandboxframe = $live.find('iframe')[0]; //document.createElement('iframe');
 
-    var oldsandbox = document.getElementById('jsconsole-sandbox');
-    if (oldsandbox) {
-      body.removeChild(oldsandbox);
-    }
+    // var oldsandbox = document.getElementById('jsconsole-sandbox');
+    // if (oldsandbox) {
+    //   body.removeChild(oldsandbox);
+    // }
 
-    body.appendChild(sandboxframe);
-    sandboxframe.setAttribute('id', 'jsconsole-sandbox');
-    sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
-    sandbox.open();
-    // stupid jumping through hoops if Firebug is open, since overwriting console throws error
-    sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
-    sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-
-    sandbox.close();
+    // body.appendChild(sandboxframe);
+    // sandboxframe.setAttribute('id', 'jsconsole-sandbox');
+    if (sandboxframe) this.setSandbox(sandboxframe);
 
     if (nohelp === undefined) post(':help', true);
   },
@@ -512,13 +521,15 @@ $document.bind('jsbinReady', function () {
       if ($.trim(code)) jsconsole.run(code);
     };
     editors.console.settings.show = function () {
-      if (editors.live.visible) {
-        renderLivePreview();
-      }
+      // if (editors.live.visible) {
+        renderLivePreview(true);
+        jsconsole.setSandbox($live.find('iframe')[0]);
+      // }
     };
     editors.console.settings.hide = function () {
-      if (editors.live.visible) {
-        renderLivePreview();
+      if (!editors.live.visible) {
+        // renderLivePreview();
+        $live.find('iframe').remove();
       }
     };
     jsconsole.ready = true;

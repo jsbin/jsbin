@@ -3,33 +3,6 @@
 //= require "login"
 //= require "tips"
 
-var debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
-    documentTitle = null, // null = JS Bin
-    $bin = $('#bin'),
-    loadGist,
-    $document = $(document),
-    // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
-    unload = function () {
-      // sessionStorage.setItem('javascript', editors.javascript.getCode());
-      // sessionStorage.setItem('html', editors.html.getCode());
-      sessionStorage.setItem('url', jsbin.getURL());
-      localStorage.setItem('settings', JSON.stringify(jsbin.settings));
-
-      // if (jsbin.panels.saveOnExit) ;
-      jsbin.panels.save();
-      jsbin.panels.savecontent();
-
-      var panel = jsbin.panels.focused;
-      if (panel) sessionStorage.setItem('panel', panel.id);
-      // try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-      //   sessionStorage.setItem('line', editors[panel].getCursor().line);
-      //   sessionStorage.setItem('character', editors[panel].getCursor().ch);
-      // } catch (e) {
-      //   sessionStorage.setItem('line', 0);
-      //   sessionStorage.setItem('character', 0);
-      // }
-    };
-
 //= require "storage"
 //= require "navigation"
 //= require "save"

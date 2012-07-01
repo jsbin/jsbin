@@ -48,7 +48,7 @@ var Panel = function (name, settings) {
         return true; 
       },
       lineWrapping: true,
-      theme: 'jsbin'
+      theme: jsbin.settings.theme || 'jsbin'
     };
 
     $.extend(cmSettings, jsbin.settings.codemirror || {});

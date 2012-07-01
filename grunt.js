@@ -17,13 +17,19 @@ module.exports = function (grunt) {
   grunt.registerTask('run', 'Runs JSBin for local development', function (config) {
     var done = this.async(),
         filepath = path.join(__dirname, config || 'config.node.json'),
-        configExists = fs.statSync(filepath).isFile(),
         cmd = '[ -e "`which nodemon`" ] && nodemon --debug . || node --debug .',
         child;
 
     // Set the config for the node app.
-    if (configExists && !process.env.JSBIN_CONFIG) {
-      process.env.JSBIN_CONFIG = filepath;
+    try {
+      if (fs.statSync(filepath).isFile() && !process.env.JSBIN_CONFIG) {
+        process.env.JSBIN_CONFIG = filepath;
+      }
+    } catch (error) {
+      // Ignore if file wasn't found.
+      if (error.errno !== 34 /* ENOENT */) {
+        throw error;
+      }
     }
 
     child = exec(cmd, function (err, stdout, stderr) {

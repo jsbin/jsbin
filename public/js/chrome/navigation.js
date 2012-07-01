@@ -181,6 +181,12 @@ $('#showurls').click(function () {
   return false;
 });
 
+$('.code.panel > .label > span.name').dblclick(function () {
+  jsbin.panels.allEditors(function (panel) {
+    panel.editor.setOption('lineNumbers', !panel.editor.getOption('lineNumbers'));
+  });
+});
+
 $('#createnew').click(function () {
   var i, key;
   analytics.createNew();

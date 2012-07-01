@@ -1169,37 +1169,6 @@ input {
   display: none;
 }
 */
-/* codemirror2 styles */
-.CodeMirror-scroll {
-  margin: 0;
-}
-
-.CodeMirror .CodeMirror-scroll > div {
-  margin: .6em;
-}
-
-.javascript .CodeMirror-scroll > div {
-  /*margin-top: 25px;*/
-}
-
-.html .CodeMirror-scroll > div {
-  /*margin-top: 60px;*/
-}
-
-
-.editbox .CodeMirror {
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  line-height: 1.2em;
-  font-family: MesloLGMDZ, Menlo, Monaco, consolas, monospace;
-  font-size: 13px;
-}
-
-.activeline {
-  background: #e8f2ff !important;
-}
-
 
 /* begin CodeMirror's own CSS */
 .CodeMirror {
@@ -1488,8 +1457,35 @@ html * {
 .cm-s-solarized-dark span.cm-attribute {color: #93a1a1; font-weight: bold; }
 .cm-s-solarized-dark span.cm-meta {color: #268bd2; }
 
+/* codemirror2 styles */
+.CodeMirror-scroll {
+  margin: 0;
+}
+
+.CodeMirror .CodeMirror-scroll > div {
+  margin: .6em 0;
+}
+
+.editbox .CodeMirror {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  line-height: 1.2em;
+  font-family: MesloLGMDZ, Menlo, Monaco, consolas, monospace;
+  font-size: 13px;
+}
+
+.CodeMirror-gutter {
+  border-right: 0;
+  background: none;
+}
+
+.activeline {
+  background: #e8f2ff !important;
+}
+
 .CodeMirror-lines {
-  padding: 0;
+  padding: .6em;
 }
 
 .ready #bin {

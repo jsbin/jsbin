@@ -1,5 +1,9 @@
 {
-  "author": "Remy Sharp <remy@leftlogic.com> (http://remysharp.com)",
+  "author": [{
+    "name": "Remy Sharp",
+    "email": "remy@remysharp.com",
+    "web": "http://remysharp.com"
+  }],
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "lib/app",
@@ -26,5 +30,9 @@
   },
   "devDependencies": {},
   "optionalDependencies": {},
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://rem.mit-license.org"
+  }],
   "private": true
 }

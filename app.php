@@ -275,7 +275,7 @@ if (!$action) {
     // FIXME there's still a bug here if </body> appears in the script and not in the
     // markup - but I'll fix that later
     if (!$quiet) {
-      $html = str_lreplace('</body>', '<script src="/js/render/edit.js"></script>' . "\n</body>", $html);
+      $html = str_lreplace('</body>', '<script src="' . ROOT . '/js/render/edit.js"></script>' . "\n</body>", $html);
     }
 
     if ($no_code_found == false) {

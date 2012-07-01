@@ -85,7 +85,7 @@ if ($code_id) {
   <div class="help">
     <ul class="flat">
       <li><a target="_blank" href="http://jsbin.tumblr.com">Help &amp; tutorials</a></li>
-      <li class="prefsButton"><a href="#"><img src="/images/gear.png"></a></li>
+      <li class="prefsButton"><a href="#"><img src="<?php echo ROOT?>images/gear.png"></a></li>
     </ul>
   </div>
 </div>
@@ -189,7 +189,7 @@ if ($code_id) {
 <script>
 <?php
   // assumes http - if that's not okay, this need to be changed
-  $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $code_id . ($revision == 1 ? '' : '/' . $revision);
+  $url = 'http://' . $_SERVER['HTTP_HOST'] . ROOT . $code_id . ($revision == 1 ? '' : '/' . $revision);
   if (!$ajax) {
     echo 'var template = ';
   }
@@ -197,7 +197,7 @@ if ($code_id) {
   echo '{"url":"' . $url . '","html" : ' . encode($html) . ',"javascript":' . encode($javascript) . '}';
 ?>
 </script>
-<script>jsbin = { root: "<?php echo HOST ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
+<script>jsbin = { root: "<?php echo HOST . ROOT ?>", version: "<?php echo VERSION?>" }; tips = <?php echo file_get_contents('tips.json')?>;</script>
 <script src="<?php echo ROOT?>js/<?php echo VERSION?>/jsbin.js"></script>
 <?php if (!OFFLINE) : ?>
 <script>

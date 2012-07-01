@@ -313,6 +313,7 @@ editors.html = panelInit.html();
 editors.css = panelInit.css();
 editors.javascript = panelInit.javascript();
 editors.console = panelInit.console();
+upgradeConsolePanel(editors.console);
 editors.live = panelInit.live();
 
 

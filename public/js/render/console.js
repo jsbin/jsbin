@@ -512,19 +512,23 @@ jsconsole.remote.warn = jsconsole.remote.info;
 
 window.top._console = jsconsole.remote;
 
-$document.bind('jsbinReady', function () {
-  jsbin.panels.panels.console.init = function () {
+function upgradeConsolePanel(console) {
+  console.init = function () {
     editors.console.settings.render = function () {
       // TODO decide whether we should also grab all the JS in the HTML panel
       // jsconsole.reset();
       var code = editors.javascript.render();
-      if ($.trim(code)) jsconsole.run(code);
+      setTimeout(function () {
+        jsconsole.setSandbox($live.find('iframe')[0]);
+        if ($.trim(code)) jsconsole.run(code);
+      }, 0);
     };
     editors.console.settings.show = function () {
-      // if (editors.live.visible) {
-        renderLivePreview(true);
+      renderLivePreview(true);
+      // setTimeout because the renderLivePreview creates the iframe after a timeout
+      setTimeout(function () {
         jsconsole.setSandbox($live.find('iframe')[0]);
-      // }
+      }, 0);
     };
     editors.console.settings.hide = function () {
       if (!editors.live.visible) {
@@ -537,5 +541,5 @@ $document.bind('jsbinReady', function () {
     // editors.console.fakeConsole = window._console
   };
 
-  jsbin.panels.panels.console.init();
-});
+  console.init();
+}

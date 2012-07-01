@@ -60,6 +60,15 @@ function getPreparedCode() {
     };
   }
 
+  // reset all the regexp positions for reuse
+  re.docReady.lastIndex = 0;
+  re.shortDocReady.lastIndex = 0;
+  re.console.lastIndex = 0;
+  re.script.lastIndex = 0;
+  re.code.lastIndex = 0;
+  re.title.lastIndex = 0;
+  re.winLoad.lastIndex = 0;
+
   var parts = [],
       source = '',
       js = '',
@@ -114,10 +123,13 @@ function getPreparedCode() {
       source = parts[0];
       close = parts.length == 2 && parts[1] ? parts[1] : '';
     }
+
+    // FIXME is this even worth while now we have our own console? RS July 1, 2012
     if (useCustomConsole) {
       source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
     }
-    // source += "<script>\ntry {\n" + js + "\n} catch (e) {" + (window.console === undefined ? '_' : 'window.top.') + "console.error(e)}\n</script>\n" + close;
+
+
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
     var type = jsbin.settings && jsbin.settings.processors && jsbin.settings.processors.javascript ? ' type="text/' + jsbin.settings.processors.javascript + '"' : '';

@@ -35,11 +35,11 @@ function getRelativeTime($date) {
 /* Font via http://robey.lag.net/2010/06/21/mensch-font.html */
 @font-face {
   font-family: 'MenschRegular';
-  src: url('/font/mensch-webfont.eot');
-  src: url('/font/mensch-webfont.eot?#iefix') format('eot'),
-       url('/font/mensch-webfont.woff') format('woff'),
-       url('/font/mensch-webfont.ttf') format('truetype'),
-       url('/font/mensch-webfont.svg#webfont0UwCC656') format('svg');
+  src: url('font/mensch-webfont.eot');
+  src: url('font/mensch-webfont.eot?#iefix') format('eot'),
+       url('font/mensch-webfont.woff') format('woff'),
+       url('font/mensch-webfont.ttf') format('truetype'),
+       url('font/mensch-webfont.svg#webfont0UwCC656') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -216,10 +216,10 @@ foreach ($order as $key => $value) {
     if ($firstTime && $last !== null) : ?>
   <tr data-type="spacer"><td colspan=3></td></tr>
     <?php endif ?>
-  <tr data-url="<?=$url?>">
-    <td class="url"><a href="<?=$url?>edit"><span<?=($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?=$bin['revision']?>/</a></td>
-    <td class="created"><a pubdate="<?=$bin['created']?>" href="<?=$url?>edit"><?=getRelativeTime($bin['created'])?></a></td>
-    <td class="title"><a href="<?=$url?>edit"><?=substr($title, 0, 200)?></a></td>
+  <tr data-url="<?php echo $url?>">
+    <td class="url"><a href="<?php echo $url?>edit"><span<?php echo ($firstTime ? ' class="first"' : '') . '>' . $bin['url']?>/</span><?php echo $bin['revision']?>/</a></td>
+    <td class="created"><a pubdate="<?php echo $bin['created']?>" href="<?php echo $url?>edit"><?php echo getRelativeTime($bin['created'])?></a></td>
+    <td class="title"><a href="<?php echo $url?>edit"><?php echo substr($title, 0, 200)?></a></td>
   </tr>
 <?php
     $last = $bin['url'];
@@ -237,7 +237,7 @@ foreach ($order as $key => $value) {
 function render(url) {
   iframe.src = url + 'quiet';
   iframe.removeAttribute('hidden');
-  viewing.innerHTML = '<?=$_SERVER['HTTP_HOST']?>' + url;
+  viewing.innerHTML = '<?php echo $_SERVER['HTTP_HOST']?>' + url;
 }
 
 function matchNode(el, nodeName) {

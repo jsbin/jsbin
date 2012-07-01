@@ -145,7 +145,7 @@
     $document.bind('mouseup touchend', function () {
       dragging = false;
       $blocker.remove();
-      $handle.css('opacity', '0');
+      // $handle.css( 'opacity', '0');
       $body.removeClass('dragging');
     }).bind('mousemove touchmove', function (event) {
       if (dragging) {
@@ -167,13 +167,17 @@
 
       resetPrev();
       e.preventDefault();
-    }).hover(function () {
+    });
+
+    /*
+    .hover(function () {
       $handle.css('opacity', '1');
     }, function () {
       if (!dragging) {
         $handle.css('opacity', '0');
       }
-    });
+    })
+  */
 
     $handle.bind('init', function (event, x) {
       $handle.css(props[type].init);

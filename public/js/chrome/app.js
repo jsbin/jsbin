@@ -75,3 +75,9 @@ if (!jsbin.mobile) document.body.onscroll = window.onscroll = function () {
 };
 
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
+
+var link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = jsbin.root + '/css/font.css?' + jsbin.version;
+link.type = 'text/css';
+document.getElementsByTagName('head')[0].appendChild(link);

@@ -26,8 +26,8 @@ function prettyDate(time){
 }
 
 // If jQuery is included in the page, adds a jQuery plugin to handle it as well
-if ( typeof $ != "undefined" )
-  $.fn.prettyDate = function(){
+if ( typeof window.$ != "undefined" )
+  window.$.fn.prettyDate = function(){
     return this.each(function(){
       var date = prettyDate(this.getAttribute('pubdate'));
       if ( date )

@@ -35,11 +35,17 @@ if ($email) {
   $gravatar = 'http://www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=26';
 }
 
+$scripts = array();
+if (!IS_PRODUCTION) {
+  $scripts = json_decode(file_get_contents('../scripts.json'));
+}
+
 $view = file_get_contents('../views/index.html');
 $mustache = new Mustache;
 echo $mustache->render($view, array(
   'token' => $csrf,
   'root' => ROOT,
+  'scripts' => $scripts,
   'version' => VERSION,
   'home' => $home,
   'email' => $email,

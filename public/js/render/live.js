@@ -1,5 +1,4 @@
 var $live = $('#live'),
-    $body = $('body'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200),
     killAlerts = '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
@@ -40,7 +39,7 @@ var deferredLiveRender = null;
 function codeChangeLive(event, data) {
   clearTimeout(deferredLiveRender);
 
-  var editor, 
+  var editor,
       line,
       panel = jsbin.panels.panels.live;
 

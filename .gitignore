@@ -3,3 +3,7 @@ logs/*
 config.*.json
 public/js/jsbin*.js
 !config.default.json
+
+public/jsbin-3.0.0dev.min.js.report.txt
+
+public/js/jsbin-3.0.0dev.map

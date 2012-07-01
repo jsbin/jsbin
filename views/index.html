@@ -14,26 +14,26 @@
 <div id="control">
   <div class="control">
     <div class="buttons">
-      <div class="brand">
+      <!-- <div class="brand">
         <img src="{{root}}/favicon.ico"> 
-        <h1>JS Bin</h1>
-      </div>
+        <h1>js bin</h1>
+      </div> -->
       {{^embed}}
       <div class="menu">
-        <a href="#actionmenu" class="button button-dropdown group">File</a>
+        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{root}}/favicon.ico"> <h1>JS Bin</h1></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
             <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
-            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
-            {{#home}}
-            <a href="#" class="button group homebtn">Open</a>
-            {{/home}}
             {{#code_id}}
             <a id="clone" title="Create a new copy" class="button clone group" href="/clone">Clone</a>
             {{/code_id}}
             <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
             <a id="download" title="Save to local drive" class="button download group" href="{{root}}/download">Download</a>
+            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
+            {{#home}}
+            <a href="#" class="button group homebtn">Open</a>
+            {{/home}}
           </div>
         </div>
       </div><!--
@@ -204,50 +204,6 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   </form>
 </div>
 <div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
-<!--
-<div id="login" class="loginbox">
-  <ul class="nav">
-    <li><a href="#regbox">Register</a></li>
-    <li><a class="selected" href="#loginbox">Login</a></li>
-  </ul>
-  <div id="regbox">
-    <p>Registration allows you to easily retrieve all your saved bins.</p>
-    <form>
-      <div>
-        <label for="username">Username</label>
-        <input required id="username" type="text">
-      </div>
-      <div>
-        <label for="email">Email</label>
-        <input id="email" required type="email">
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input required id="password" type="password">
-      </div>
-      <div>
-        <input type=submit value="Register">
-      </div>
-    </form>
-  </div>
-  <div id="loginbox">
-    <form>
-      <div>
-        <label for="username">Username or email</label>
-        <input id="username" type="text">
-      </div>
-      <div>
-        <label for="password">Password</label>
-        <input id="password" type="password">
-      </div>
-      <div>
-        <input type=submit value="Log in">
-        <a id="lostpass" href="#">Lost password?</a>
-      </div>
-    </form>
-  </div>
-</div>
--->
 <div id="old-login" class="modal">
   <div>
     <h2>Log in / Register</h2>
@@ -368,10 +324,12 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
 {{^production?}}
-<script src="{{root}}/js/debug/jsbin.js"></script>
+{{#scripts}}
+<script src="{{root}}{{.}}"></script>
+{{/scripts}}
 {{/production?}}
 {{#production?}}
-<script src="{{root}}/js/jsbin-{{version}}.js"></script>
+<script src="{{root}}/js/jsbin-{{version}}.min.js"></script>
 {{{analytics}}}
 {{/production?}}
 {{{list_history}}}

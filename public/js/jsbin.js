@@ -1,6 +1,9 @@
 //= require <jquery>
 //= require "vendor/polyfills"
 
+// var jQuery = window.jQuery,
+//     $ = jQuery;
+
 if (window.console === undefined) (function () {
   window.console = {
     log: function () {
@@ -14,70 +17,72 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
-(function (window, document, undefined) {
-  //= require "chrome/analytics"
-  //= require "chrome/storage"
+//= require "chrome/analytics"
+//= require "chrome/storage"
 
-  // jQuery plugins
-  //= require "chrome/splitter"
+// jQuery plugins
+//= require "chrome/splitter"
 
-  function throttle(fn, delay) {
-    var timer = null;
-    var throttled = function () {
-      var context = this, args = arguments;
-      throttled.cancel();
-      throttled.timer = setTimeout(function () {
-        fn.apply(context, args);
-      }, delay);
-    };
-
-    throttled.cancel = function () {
-      clearTimeout(throttled.timer);
-    };
-
-    return throttled;
-  }
-
-  window.jsbin || (window.jsbin = {});
-  // dodgy?
-  var storedSettings = localStorage.getItem('settings');
-  window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
-
-  // if the above code isn't dodgy, this for hellz bells is:
-  jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
-
-  if (!storedSettings) {
-    console.log('first timer');
-    // show them the "special" welcome
-  }
-
-  if (!jsbin.settings.codemirror) {
-    // backward compat with jsbin-v2
-    jsbin.settings.codemirror = {};
-  }
-
-  // Add a pre-filter to all ajax requests to add a CSRF header to prevent
-  // malicious form submissions from other domains.
-  jQuery.ajaxPrefilter(function (options, original, xhr) {
-    var skip = {head: 1, get: 1};
-    if (!skip[options.type.toLowerCase()]) {
-      xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
-    }
-  });
-
-  jsbin.getURL = function () {
-    var url = jsbin.root,
-        state = jsbin.state;
-
-    if (state.code) {
-      url += '/' + state.code;
-
-      if (state.revision && state.revision !== 1) {
-        url += '/' + state.revision;
-      }
-    }
-    return url;
+function throttle(fn, delay) {
+  var timer = null;
+  var throttled = function () {
+    var context = this, args = arguments;
+    throttled.cancel();
+    throttled.timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
   };
+
+  throttled.cancel = function () {
+    clearTimeout(throttled.timer);
+  };
+
+  return throttled;
+}
+
+window['jsbin'] || (window['jsbin'] = {});
+// dodgy?
+var storedSettings = localStorage.getItem('settings');
+window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['settings']);
+
+// if the above code isn't dodgy, this for hellz bells is:
+jsbin['mobile'] = /WebKit.*Mobile.*/.test(navigator.userAgent);
+
+if (!storedSettings) {
+  console.log('first timer');
+  // show them the "special" welcome
+}
+
+if (!jsbin.settings['codemirror']) {
+  // backward compat with jsbin-v2
+  jsbin.settings.codemirror = {};
+}
+
+// Add a pre-filter to all ajax requests to add a CSRF header to prevent
+// malicious form submissions from other domains.
+jQuery.ajaxPrefilter(function (options, original, xhr) {
+  var skip = {head: 1, get: 1};
+  if (!skip[options.type.toLowerCase()]) {
+    xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
+  }
+});
+
+jsbin.getURL = function () {
+  var url = jsbin.root,
+      state = jsbin.state;
+
+  if (state.code) {
+    url += '/' + state.code;
+
+    if (state.revision && state.revision !== 1) {
+      url += '/' + state.revision;
+    }
+  }
+  return url;
+};
+
+var $body = $('body'),
+    $document = $(document);
 
 //= require "vendor/json2"
 //= require "editors/editors"
@@ -85,10 +90,3 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
 // require "chrome/beta"
 //= require "chrome/app"
 
-var link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = jsbin.root + '/css/font.css?' + jsbin.version;
-link.type = 'text/css';
-document.getElementsByTagName('head')[0].appendChild(link);
-
-})(this, document);

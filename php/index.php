@@ -62,7 +62,7 @@ echo $mustache->render($view, array(
     'javascript' => $javascript
   )),
   'custom_css' => isset($custom['css']) ? preg_replace('/^\//', '', $custom['css']) : null,
-  'production?' => IS_PRODUCTION,
+  'is_production' => IS_PRODUCTION,
   'analytics_id' => ANALYTICS_ID,
   'embed' => $embed,
   'tips' => file_get_contents('../public/tips.json'),

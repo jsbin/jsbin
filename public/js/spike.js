@@ -118,14 +118,7 @@ function reload() {
   } catch (e) {}
 }
 
-var id = location.pathname.replace(/\/preview.*$/, '');
-    queue = [],
-    msgType = '',
-    useSS = false,
-    es = null;
-
-setTimeout(function () {
-  es = new EventSource(id + '?' + Math.random());
+function renderStream() {
   es.addEventListener('css', function (event) {
     document.getElementById('jsbin-css').innerHTML = event.data;
   });
@@ -137,6 +130,42 @@ setTimeout(function () {
     // document.getElementById('jsbin-css').innerHTML = event.data;
     reload();
   });
+}
+
+function codecastStream() {
+  var editors = jsbin.panels.panels;
+
+  function setCode(event) {
+    var panelId = event.type;
+    editors[panelId].setCode(event.data);
+
+    if (panelId !== 'javascript') {
+
+    }
+  }
+
+  // on data, update the panels, which will cause an automatic render
+  es.addEventListener('css', setCode);
+  es.addEventListener('javascript', setCode);
+  es.addEventListener('html', setCode);
+
+
+}
+
+var id = location.pathname.replace(/\/preview.*$/, '').replace(/\/edit.*$/, ''),
+    codecasting = location.pathname.indexOf('edit/live') !== -1;
+    queue = [],
+    msgType = '',
+    useSS = false,
+    es = null;
+
+setTimeout(function () {
+  es = new EventSource(id + '?' + Math.random());
+  if (codecasting) {
+    codecastStream();
+  } else {
+    renderStream();
+  }
 }, 500);
 
 try {
@@ -145,10 +174,12 @@ try {
 } catch (e) {}
 
 
-addEvent('error', function (event) {
-  error({ message: event.message }, event.filename + ':' + event.lineno);
-});
+if (!codecasting) {
+  addEvent('error', function (event) {
+    error({ message: event.message }, event.filename + ':' + event.lineno);
+  });
 
-restore();
+  restore();
+}
 
 }());

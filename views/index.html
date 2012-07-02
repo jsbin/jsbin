@@ -97,7 +97,7 @@
                 </div>
                 <div>
                   <input type=submit value="Log in">
-                  <a id="lostpass" href="{{root}}/forgot">Lost password?</a>
+                  <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                 </div>
               </form>
             </div>
@@ -328,6 +328,9 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
 <script src="{{root}}/js/jsbin-{{version}}.min.js"></script>
 {{{analytics}}}
 {{/is_production}}
+{{#live}}
+<script src="{{root}}/js/spike.js"></script>
+{{/live}}
 {{{list_history}}}
 </body>
 </html>

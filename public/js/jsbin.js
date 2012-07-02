@@ -59,7 +59,7 @@ if (!jsbin.settings['codemirror']) {
   jsbin.settings.codemirror = {};
 } else {
   // move to editor
-  jsbin.settings.editor = jsbin.settings.codemirror
+  jsbin.settings.editor = jsbin.settings.codemirror;
 }
 
 if (!jsbin.settings.editor) {

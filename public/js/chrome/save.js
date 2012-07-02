@@ -3,78 +3,82 @@ $('a.save').click(function (event) {
   event.preventDefault();
 
   analytics.milestone();
-  saveCode('save', true); //window.location.pathname.indexOf('/edit') !== -1);
+  // if save is disabled, hitting save will trigger a reload
+  saveCode('save', jsbin.saveDisabled === true ? false : true);
 
   return false;
 });
 
 var saveChecksum = sessionStorage.getItem('checksum') || false;
 
-$document.bind('jsbinReady', function () {
-  $('.code.panel .label .name').append('<span>Saved</span>');
+// only start live saving it they're allowed to (whereas save is disabled if they're following)
+if (!jsbin.saveDisabled) {
+  $document.bind('jsbinReady', function () {
+    $('.code.panel .label .name').append('<span>Saved</span>');
 
-  var savingLabels = {
-    html: $('.panel.html .name span'),
-    javascript: $('.panel.javascript .name span'),
-    css: $('.panel.css .name span')
-  };
+    var savingLabels = {
+      html: $('.panel.html .name span'),
+      javascript: $('.panel.javascript .name span'),
+      css: $('.panel.css .name span')
+    };
 
-  $document.bind('codeChange', function (event, data) {
-    // savingLabels[data.panelId].text('Saving');
-    if (savingLabels[data.panelId]) {
-      savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
+    $document.bind('codeChange', function (event, data) {
+      // savingLabels[data.panelId].text('Saving');
+      if (savingLabels[data.panelId]) {
+        savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
+      }
+    });
+
+    $document.bind('saveComplete', throttle(function (event, data) {
+      // show saved, then revert out animation
+      savingLabels[data.panelId].stop(true, true).animate({ 'opacity': 1 }, 100).delay(1200).animate({
+        'opacity': '0'
+      }, 500);
+    }, 500));
+
+    var stream = false;
+
+    if (jsbin.state.stream && window.WebSocket) {
+      stream = new WebSocket('ws://' + window.location.origin + '/update');
     }
-  });
 
-  $document.bind('saveComplete', throttle(function (event, data) {
-    // show saved, then revert out animation
-    savingLabels[data.panelId].stop(true, true).animate({ 'opacity': 1 }, 100).delay(1200).animate({
-      'opacity': '0'
-    }, 500);
-  }, 500));
+    $document.bind('codeChange', throttle(function (event, data) {
+      if (!data.panelId) return;
 
-  var stream = false;
+      var panelId = data.panelId;
 
-  if (jsbin.state.stream && window.WebSocket) {
-    stream = new WebSocket('ws://' + window.location.origin + '/update');
-  }
-
-  $document.bind('codeChange', throttle(function (event, data) {
-    if (!data.panelId) return;
-
-    var panelId = data.panelId;
-
-    if (!saveChecksum) {
-      // create the bin and when the response comes back update the url
-      saveCode('save', true);
-    } else {
-      $.ajax({
-        url: jsbin.getURL() + '/save',
-        data: { 
-          code: jsbin.state.code, 
-          revision: jsbin.state.revision,
-          method: 'update',
-          panel: data.panelId,
-          content: editors[data.panelId].getCode(),
-          checksum: saveChecksum
-        },
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-          $document.trigger('saveComplete', { panelId: panelId });
-          if (data.error) {
-            saveCode('save', true, function (data) {
-              // savedAlready = data.checksum;
-            });
+      if (!saveChecksum) {
+        // create the bin and when the response comes back update the url
+        saveCode('save', true);
+      } else {
+        $.ajax({
+          url: jsbin.getURL() + '/save',
+          data: { 
+            code: jsbin.state.code, 
+            revision: jsbin.state.revision,
+            method: 'update',
+            panel: data.panelId,
+            content: editors[data.panelId].getCode(),
+            checksum: saveChecksum
+          },
+          type: 'post',
+          dataType: 'json',
+          success: function (data) {
+            $document.trigger('saveComplete', { panelId: panelId });
+            if (data.error) {
+              saveCode('save', true, function (data) {
+                // savedAlready = data.checksum;
+              });
+            }
+          },
+          error: function () {
+            console.log('update error');
           }
-        },
-        error: function () {
-          console.log('update error');
-        }
-      });
-    }
-  }, 250));
-});
+        });
+      }
+    }, 250));
+  });
+}
 
 $('a.clone').click(function (event) {
   event.preventDefault();

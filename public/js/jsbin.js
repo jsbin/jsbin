@@ -49,8 +49,9 @@ window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['s
 jsbin['mobile'] = /WebKit.*Mobile.*/.test(navigator.userAgent);
 
 if (!storedSettings) {
-  console.log('first timer');
-  // TODO show them the "special" welcome
+  // first timer - let's welcome them shall we, Dave?
+  localStorage.setItem('settings', '{}');
+  window.location = jsbin.root + '/welcome/1/edit?html,live';
 }
 
 if (!jsbin.settings['codemirror']) {

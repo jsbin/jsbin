@@ -87,12 +87,12 @@ function keycontrol(event) {
   if (event.type == 'keydown') {
     if (codePanel) {
       if (event.metaKey && event.which == 13) {
-        if (editors.console.visible) {
+        if (editors.console.visible && !editors.live.visible) {
           hasRun = true;
           editors.console.render();
         }
         if (editors.live.visible) {
-          renderLivePreview(true);
+          editors.live.render(true);
           hasRun = true;
         }
 

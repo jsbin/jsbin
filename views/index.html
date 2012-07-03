@@ -3,9 +3,9 @@
 <head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="icon" href="{{root}}/favicon.ico">
-<link rel="stylesheet" href="{{root}}/css/style.css?{{version}}" type="text/css">
-{{#custom_css}}<link rel="stylesheet" href="{{root}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
+<link rel="icon" href="{{static}}/favicon.ico">
+<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
+{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]-->
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]-->
@@ -16,7 +16,7 @@
     <div class="buttons">
       {{^embed}}
       <div class="menu">
-        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{root}}/favicon.ico"> <h1>JS Bin</h1></a>
+        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/favicon.ico"> <h1>JS Bin</h1></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
@@ -41,7 +41,7 @@
       {{/embed}}
       <div id="panels"></div>
       <div class="help">
-        <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{root}}/images/revert.png" /><img class="disabled" src="{{root}}/images/revert-disabled.png" /></a>
+        <!-- <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{static}}/images/revert.png" /><img class="disabled" src="{{static}}/images/revert-disabled.png" /></a> -->
         <a id="jsbinurl" class="button group light left right gap {{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}">{{code_id_domain}}</a>
         {{^embed}}
         {{#home}}
@@ -321,15 +321,15 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
 </script>
 {{^is_production}}
 {{#scripts}}
-<script src="{{root}}{{.}}"></script>
+<script src="{{static}}{{.}}"></script>
 {{/scripts}}
 {{/is_production}}
 {{#is_production}}
-<script src="{{root}}/js/jsbin-{{version}}.min.js"></script>
+<script src="{{static}}/js/jsbin-{{version}}.min.js"></script>
 {{{analytics}}}
 {{/is_production}}
 {{#live}}
-<script src="{{root}}/js/spike.js"></script>
+<script src="{{static}}/js/spike.js"></script>
 {{/live}}
 {{{list_history}}}
 </body>

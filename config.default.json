@@ -3,7 +3,8 @@
   "url": {
     "host": "jsbin.dev",
     "prefix": "/",
-    "ssl": false
+    "ssl": false,
+    "static": false
   },
   "store": {
     "adapter": "sqlite",

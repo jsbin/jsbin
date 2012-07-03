@@ -6,15 +6,15 @@
     "ssl": false
   },
   "store": {
-    "adapter": "mysql",
+    "adapter": "sqlite",
+    "sqlite": {
+      "location": "/tmp/jsbin.db"
+    },
     "mysql": {
       "host": "localhost",
       "user": "root",
       "password": "",
       "database": "jsbin"
-    },
-    "sqlite": {
-      "location": "/tmp/jsbin.db"
     }
   },
   "session": {

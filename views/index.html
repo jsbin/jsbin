@@ -3,7 +3,7 @@
 <head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="icon" href="{{static}}/favicon.ico">
+<link rel="icon" href="{{static}}/images/favicon.png">
 <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
 {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
 </head>
@@ -16,7 +16,7 @@
     <div class="buttons">
       {{^embed}}
       <div class="menu">
-        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/favicon.ico"> <h1>JS Bin</h1></a>
+        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
@@ -34,9 +34,9 @@
         </div>
       </div><!--
    --><div class="menu">
-        <a href="#include" class="button group">Add library
+        <span class="button group">Add library
         <select id="library"></select>
-        </a>
+        </span>
       </div>
       {{/embed}}
       <div id="panels"></div>
@@ -188,8 +188,8 @@
         <span class="name"><strong>Output</strong></span>
         <span class="options">
           <button id="runwithalerts" title="ctrl + enter
-Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
-          <label>Real-time JS<input type="checkbox" id="enablejs"></label>
+Include alerts, prompts &amp; confirm boxes">Run with JS</button>
+          <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
         </span>
       </div>
     </div>
@@ -234,7 +234,7 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
     </thead>
     <tbody>
       <tr>
-        <td>ctrl + [panel num]</td>
+        <td>ctrl + alt + [panel num]</td>
         <td>Show nth panel</td>
       </tr>
       <tr>
@@ -270,11 +270,11 @@ Include alerts, prompts &amp; confirm boxes">Run with alerts</button>
         <td>Clone current Bin</td>
       </tr>
       <tr>
-        <td>tab</td>
+        <td>cmd + [ (or tab)</td>
         <td>Indents selected lines</td>
       </tr>
       <tr>
-        <td>shift + tab</td>
+        <td>cmd + ] (or shift + tab)</td>
         <td>Unindents selected lines</td>
       </tr>
       <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>

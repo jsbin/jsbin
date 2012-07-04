@@ -150,10 +150,12 @@ Panel.prototype = {
 
           populateEditor(panel, panel.name);
         }
-        if (!panel.virgin) {
+        if (!panel.virgin || jsbin.panels.ready) {
           panel.editor.focus();
           panel.focus();
         }
+      } else {
+        panel.focus();
       }
       // update all splitter positions
       $document.trigger('sizeeditors');
@@ -202,6 +204,17 @@ Panel.prototype = {
 
     // this.controlButton.show();
     setTimeout(function () {
+      var visible = jsbin.panels.getVisible();
+      if (visible.length) {
+        jsbin.panels.focused = visible[0];
+        if (jsbin.panels.focused.editor) {
+          jsbin.panels.focused.editor.focus();
+        } else {
+          jsbin.panels.focused.$el.focus();
+        }
+        jsbin.panels.focused.focus();
+      }
+
       $document.trigger('sizeeditors');
     }, 110);
   },

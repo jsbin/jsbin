@@ -42,7 +42,6 @@ var Panel = function (name, settings) {
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[name],
-      // lineNumbers: objectValue('jsbin.settings.editor.lineNumbers') || false,
       onChange: function (event) { 
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
         return true; 
@@ -61,7 +60,6 @@ var Panel = function (name, settings) {
   }
 
   if (!settings.nosplitter) {
-    // console.log(panel.id, wrapper);
     panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
     panel.splitter.hide();
   } else {
@@ -195,6 +193,10 @@ Panel.prototype = {
     // } else {
     //   panel.$el.hide();
     // }
+    if (panel.editor) {
+      panel.controlButton.toggleClass('hasContent', !!$.trim(this.getCode()).length);
+    }
+
     panel.controlButton.removeClass('active');
     panel.distribute();
 
@@ -228,6 +230,7 @@ Panel.prototype = {
   },
   setCode: function (content) {
     if (this.editor) {
+      this.controlButton.toggleClass('hasContent', !!$.trim(content||'').length);
       this.codeSet = true;
       this.editor.setCode(content);
     }

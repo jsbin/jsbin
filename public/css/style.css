@@ -855,7 +855,7 @@ ie6, li {
   /*display: none;*/
   /*top: 60%;*/
   /*border-top: 1px solid #ccc;*/
-  background: white;
+  /*background: white;*/
   z-index: 9999;
 }
 
@@ -872,12 +872,7 @@ ie6, li {
 }
 
 #live { 
-  /*background: white url(../images/jsbin-bg.gif) repeat-x 0 -62px;*/
-  background: white;
-  /*top: 0;*/
-  /*left: ;*/
   border-top: 0;
-  /*border-left: 1px solid #ccc;*/
 }
 
 .live #source {
@@ -1534,9 +1529,7 @@ html * {
 }
 
 .panel {
-  /*display: none;*/
-  background: #fff;
-  background: hsl(0, 0%, 98%);
+  background: #f9f9f9
 }
 
 .panelwrapper {
@@ -1644,12 +1637,16 @@ html * {
 
 
 .editbox {
-  background: white;
+  /*background: white;*/
   /*padding-top: 5px;*/
   position: absolute;
   top: 0;
   width: 100%;
   bottom: 0;
+}
+
+.focus {
+  background: white;
 }
 
 a.active {
@@ -1664,10 +1661,6 @@ a.active:hover {
   /*-moz-box-shadow: #fff 0 0 5px;*/
   background-color: hsl(215, 100%, 98%);
   z-index: 1;
-}
-
-.console {
-  background: #fff;
 }
 
 #console { bottom: 35px; left: 0; right: 0; width: 100%; margin-bottom: 35px; overflow: auto; /*border-bottom: 1px solid #5B5C5B;*/ }
@@ -1851,9 +1844,6 @@ a.active:hover {
 .label .options {
   float: right;
   display: block;
-  background: #fff;
-  /*height: 35px;*/
-  /*margin-right: 10px;*/
 }
 
 .label .options label {

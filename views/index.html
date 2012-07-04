@@ -293,11 +293,27 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     <tbody>
       <tr>
         <td>/</td>
-        <td>Show the full rendered output</td>
+        <td>Show the full rendered output.<br><small>This content will update in real time as it's updated from the /edit url.</small></td>
       </tr>
       <tr>
         <td>/edit</td>
         <td>Edit the current bin</td>
+      </tr>
+      <tr>
+        <td>/live</td>
+        <td>Follow a Code Casting session</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last</td>
+        <td>View the last edited bin for this user</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/edit</td>
+        <td>Edit the last edited bin for this user</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/live</td>
+        <td>Follow the Code Casting session for the latest bin for this user</td>
       </tr>
       <tr>
         <td>/quiet</td>
@@ -311,7 +327,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <td>.css</td>
         <td>Load only the CSS for a bin</td>
       </tr>
-      <tr><td colspan="2"><br><small>Where the url may be http://jsbin.com/abc the above url fragments can be added to the url to view it differently.</small></td></tr>
+      <tr><td colspan="2"><br><small>Except for username prefixed urls, the url may start with http://jsbin.com/abc and the url fragments can be added to the url to view it differently.</small></td></tr>
     </tbody>
   </table>
 </div>

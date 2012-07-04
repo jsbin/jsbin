@@ -22,6 +22,11 @@ p {
   margin: 0;
 }
 
+td small {
+  display: block;
+  line-height: 14px;
+}
+
 input {
   font-family: "Helvetica Neue", Helvetica, Arial;
 }

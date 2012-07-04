@@ -5,6 +5,9 @@ $(function ()  {
 
 if ($('#history').length) (function () {
   function render(url) {
+    if (url.lastIndexOf('/') !== url.length - 1) {
+      url += '/';
+    }
     iframe.src = url + 'quiet';
     iframe.removeAttribute('hidden');
     viewing.innerHTML = url;

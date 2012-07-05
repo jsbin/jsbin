@@ -47,6 +47,7 @@ window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['s
 
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin['mobile'] = /WebKit.*Mobile.*/.test(navigator.userAgent);
+jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
 
 if (!storedSettings && window.location.toString() === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?

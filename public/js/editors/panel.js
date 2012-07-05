@@ -260,12 +260,13 @@ Panel.prototype = {
     // overhang from CodeMirror1
     editor.setCode = function (str) {
       //Cannot call method 'chunkSize' of undefined
-      // try {
+      try {
         editor.setValue(str);
-      // } catch(err) {
+      } catch(err) {
         // console.error(panel.id, err);
-      // }
+      }
     };
+
 
     editor.getCode = function () {
       return editor.getValue();
@@ -341,9 +342,11 @@ Panel.prototype = {
         if (panel.visible) {
           // another fracking timeout to avoid conflict with other panels firing up
           setTimeout(function () {
-            editor.focus();
+            if (!jsbin.mobile && !jsbin.tablet) {
+              editor.focus();
+              editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+            }
             panel.focus();
-            editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
           }, 0);
         }
       }

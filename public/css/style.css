@@ -1054,11 +1054,7 @@ details li, .details li {
 .dropdowncontent {
   /*background: #e0e0e0;*/
   padding: 10px; 
-  width: 200px;
-}
-
-#register {
-  width: 200px;
+  min-width: 200px;
 }
 
 #register p {

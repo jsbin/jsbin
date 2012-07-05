@@ -552,7 +552,7 @@ body.preview #source select {
   outline: 0;
 }
 
-textarea {
+.mobile textarea {
   margin: 0.4em;
   border: 0;
   padding: 0;
@@ -1502,19 +1502,6 @@ html * {
   background: #fff;
 }
 
-.CodeMirror-lines pre {
-/*  white-space: normal;*/
-  /*min-height: 14px;*/ /* 12px font-size + arb padding 2px - this increases depending on the font-size */
-}
-
-.CodeMirror-lines > div {
-/*  width: auto !important;*/
-}
-
-.CodeMirror-lines pre.CodeMirror-cursor {
-/*  white-space: pre;*/
-}
-
 #source > div {
   -webkit-transition: left ease-out 100ms, right ease-out 100ms;
   -moz-transition: left ease-out 100ms, right ease-out 100ms;
@@ -2058,10 +2045,18 @@ a.active:hover {
 #history tr.hover *,
 #history tr:hover span,
 #history tr.hover span {
+  background: #61C0FF;
+  color: #fff;
+  cursor: pointer;
+}
+
+#history tr.selected *,
+#history tr.selected span {
   background: #0097fe;
   color: #fff;
-  /*cursor: pointer;*/
+  cursor: pointer;
 }
+
 
 #history tr[data-type=spacer]:hover * {
   background: #fff;

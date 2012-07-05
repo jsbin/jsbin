@@ -230,7 +230,8 @@ Panel.prototype = {
   },
   setCode: function (content) {
     if (this.editor) {
-      this.controlButton.toggleClass('hasContent', !!$.trim(content||'').length);
+      if (content === undefined) content = '';
+      this.controlButton.toggleClass('hasContent', !!$.trim(content).length);
       this.codeSet = true;
       this.editor.setCode(content);
     }
@@ -259,11 +260,11 @@ Panel.prototype = {
     // overhang from CodeMirror1
     editor.setCode = function (str) {
       //Cannot call method 'chunkSize' of undefined
-      try {
+      // try {
         editor.setValue(str);
-      } catch(err) {
-        // console.error(panel.id, err + '');
-      }
+      // } catch(err) {
+        // console.error(panel.id, err);
+      // }
     };
 
     editor.getCode = function () {

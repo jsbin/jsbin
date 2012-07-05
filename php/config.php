@@ -41,6 +41,7 @@ define('PATH', $url['prefix']);
 
 // The full url to the root page of the app.
 define('ROOT', ($url['ssl'] ? 'https' : 'http') . '://' . HOST . preg_replace('/\/$/', '', PATH));
+define('STATIC_URL', (isset($url['static']) && $url['static'] !== false) ? $url['static'] : ROOT);
 
 // wishing PHP were more like JavaScript...wishing I was able to use Node.js they way I had wanted...
 define('VERSION', !IS_PRODUCTION ? 'debug' : $package['version']);

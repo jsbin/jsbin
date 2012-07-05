@@ -45,6 +45,7 @@ $mustache = new Mustache;
 echo $mustache->render($view, array(
   'token' => $csrf,
   'root' => ROOT,
+  'static' => STATIC_URL,
   'scripts' => $scripts,
   'version' => VERSION,
   'home' => $home,

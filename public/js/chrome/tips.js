@@ -20,4 +20,4 @@ window.showTip = function () {
   }
 };
 
-showTip();
+// showTip();

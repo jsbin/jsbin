@@ -109,7 +109,7 @@ var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e)
   e.preventDefault();
   return false;
 }).mouseup(function () {
-  return false;
+  if (menuDown) return false;
 }).click(function () {
   if (!menuDown) {
     closedropdown();
@@ -220,7 +220,7 @@ $('form.login').closest('.menu').bind('close', function () {
 });
 
 
-jsbin.settings.includejs = jsbin.settings.includejs || false;
+jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
   analytics.enableLiveJS(jsbin.settings.includejs);

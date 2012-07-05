@@ -2,9 +2,16 @@
 
 # v3 alpha - hitlist
 
-# Bugs
+# misc
 
-- ...probably exist!
+- think about url structure (currently /edit/live is now /live)
+- detect stubbed out bin (where there's no longer an active key to write), and don't deliver the spike on those bins
+- preprocessor UI
+- preprocessor support on server side - jsbin.com/abc.less (raw less), jsbin.com/abc.css (compiled CSS)
+- screencasts!
+- static uploads for users
+- remove bin from my history
+- 
 
 
 # URLs
@@ -14,7 +21,6 @@
 - /latest is fixed - not redirected
 - If I'm on /latest, any new updates, notify me and I can reload/live refresh if I want
 - Rewind? Possibly not.
-- /last/[username]/ is a hot link to your last + edit, live combo supported
 
 # Code Casting
 

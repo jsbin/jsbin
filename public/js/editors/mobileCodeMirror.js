@@ -1,7 +1,7 @@
 // yeah, nasty, but it allows me to switch from a RTF to plain text if we're running a iOS
 var noop = function () {};
 
-if (jsbin.mobile || document.body.className.indexOf('ie6') !== -1) {
+if (document.body.className.indexOf('ie6') !== -1 || document.body.className.indexOf('ie7') !== -1) {
   $('body').addClass('mobile');
   Editor = function (el, options) {
     this.textarea = el;

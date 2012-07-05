@@ -41,16 +41,15 @@ if ($('#history').length) (function () {
   // bothered to bring jQuery to the party.
   bins.mouseover(function (event) {
     clearTimeout(hoverTimer);
-    event = event || window.event;
-    var url, target = event.target || event.srcElement;
+    var url, target = event.target;
     if (target = matchNode(event.target, 'TR')) {
-      bins.find('tr').removeClass('hover');
       if (target.getAttribute('data-type') !== 'spacer') {
-        target.className = 'hover';
+        // target.className = 'hover';
         // target.onclick = visit;
         url = target.getAttribute('data-url');
         if (current !== url) {
           hoverTimer = setTimeout(function () {
+            bins.find('tr').removeClass('selected').filter(target).addClass('selected');
             current = url;
             render(url);
           }, 200);
@@ -60,7 +59,7 @@ if ($('#history').length) (function () {
   });
 
   $('#history a').prettyDate();
-  setInterval(function(){ $('#history td.created a').prettyDate(); }, 5000);
+  setInterval(function(){ $('#history td.created a').prettyDate(); }, 30 * 1000);
 
 })();
 

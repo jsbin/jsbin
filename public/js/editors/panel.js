@@ -282,6 +282,13 @@ Panel.prototype = {
       // panel.$el.trigger('focus');
     // });
 
+    if (jsbin.mobile || jsbin.tablet) {
+      editor._focus = editor.focus;
+      editor.focus = function () {
+        // console.log('ignoring manual call');
+      };
+    }
+
     editor.id = panel.name;
 
     editor.win = editor.getWrapperElement();

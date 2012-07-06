@@ -1,5 +1,5 @@
 php
-build
+build/*.php
 vendor
 .git*
 .htaccess

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en">
+<html id="jsbin" lang="en"{{#flash_info}} class="showtip"{{/flash_info}}>
 <head{{#embed}} class="embed"{{/embed}}>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
@@ -199,7 +199,14 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     <input type="hidden" name="_csrf" value="{{token}}" />
   </form>
 </div>
-<div id="tip"><p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a></div>
+<div id="tip">
+  {{#flash_info}}
+    <p>{{flash_info}}</p><a class="dismiss" href="#">Dismiss x</a>
+  {{/flash_info}}
+  {{^flash_info}}
+    <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
+  {{/flash_info}}
+</div>
 <div id="old-login" class="modal">
   <div>
     <h2>Log in / Register</h2>

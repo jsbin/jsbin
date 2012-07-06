@@ -1,7 +1,7 @@
 {
   "env": "development",
   "url": {
-    "host": "jsbin.dev",
+    "host": "localhost:3000",
     "prefix": "/",
     "ssl": false,
     "static": false

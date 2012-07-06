@@ -128,7 +128,10 @@ if (!$action) {
   // do nothing and serve up the page
 } else if ($action == 'logout' && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : ROOT;
+  $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+  $referrer = !$referrer && isset($_SERVER['HTTP_REFERRER']) ? $_SERVER['HTTP_REFERRER'] : HOME;
+
+  $redirect = isset($_POST['_redirect']) ? $_POST['_redirect'] : $referrer;
   if (!$redirect || stripos($redirect, '://') !== false) {
     $redirect = ROOT;
   }

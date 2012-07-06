@@ -1,6 +1,44 @@
-CREATE TABLE IF NOT EXISTS `owners` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT ,  `name` char(25) NOT NULL ,  `url` char(255) NOT NULL ,  `revision` integer default '1'); 
-CREATE TABLE IF NOT EXISTS `ownership` (`name` char(50) NOT NULL ,  `key` char(255) NOT NULL ,  `email` varchar(255) NOT NULL default '',  `last_login` datetime NOT NULL ,  `created` datetime NOT NULL ,  `updated` datetime NOT NULL ,  PRIMARY KEY  (`name`) ); 
-CREATE TABLE IF NOT EXISTS `sandbox` (`id` integer NOT NULL PRIMARY KEY AUTOINCREMENT ,  `javascript` text ,  `html` text ,  `created` datetime default NULL ,  `last_viewed` datetime default NULL ,  `url` char(255) default NULL ,  `streaming` char(1) default 'n',  `streaming_key` char(32) ,  `streaming_read_key` char(32) ,  `active_tab` varchar(10) ,  `active_cursor` integer ,  `revision` integer default '1',  `css` text ,  `settings` text );
+CREATE TABLE IF NOT EXISTS `owners` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` VARCHAR(25) NOT NULL,
+  `url` VARCHAR(255) NOT NULL,
+  `revision` INTEGER DEFAULT '1'
+);
+
+CREATE TABLE IF NOT EXISTS `ownership` (
+  `name` VARCHAR(50) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL DEFAULT '',
+  `last_login` DATETIME NOT NULL,
+  `created` DATETIME NOT NULL,
+  `updated` DATETIME NOT NULL,
+  PRIMARY KEY  (`name`)
+);
+
+CREATE TABLE IF NOT EXISTS `sandbox` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `html` TEXT NOT NULL DEFAULT "",
+  `css` TEXT NOT NULL DEFAULT "",
+  `javascript` TEXT NOT NULL  DEFAULT "",
+  `created` DATETIME DEFAULT NULL,
+  `last_viewed` DATETIME DEFAULT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  `streaming` VARCHAR(1) DEFAULT 'n',
+  `streaming_key` VARCHAR(32),
+  `streaming_read_key` VARCHAR(32),
+  `active_tab` VARCHAR(10),
+  `active_cursor` INTEGER,
+  `revision` INTEGER DEFAULT '1',
+  `settings` TEXT NOT NULL DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS `forgot_tokens` (
+  `owner_name` VARCHAR(255) NOT NULL,
+  `token` VARCHAR(255) NOT NULL,
+  `expires` DATETIME NOT NULL,
+  `created` DATETIME NOT NULL
+);
+
 CREATE INDEX IF NOT EXISTS "sandbox_viewed" ON "sandbox" (`last_viewed`);
 CREATE INDEX IF NOT EXISTS "sandbox_url" ON "sandbox" (`url`);
 CREATE INDEX IF NOT EXISTS "sandbox_streaming_key" ON "sandbox" (`streaming_key`);
@@ -8,3 +46,5 @@ CREATE INDEX IF NOT EXISTS "sandbox_spam" ON "sandbox" (`created`,`last_viewed`)
 CREATE INDEX IF NOT EXISTS "sandbox_revision" ON "sandbox" (`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "ownership_name_key" ON "ownership" (`name`,`key`);
 CREATE INDEX IF NOT EXISTS "owners_name_url" ON "owners" (`name`,`url`,`revision`);
+CREATE INDEX IF NOT EXISTS "index_expires" ON "forgot_tokens" (`expires`);
+CREATE INDEX IF NOT EXISTS "index_token_expires" ON "forgot_tokens" (`token`,`created`,`expires`);

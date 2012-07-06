@@ -1,18 +1,18 @@
 CREATE TABLE IF NOT EXISTS `sandbox` (
-  `id` int(11) NOT NULL auto_increment,
-  `javascript` text,
-  `html` text,
-  `created` datetime default NULL,
-  `last_viewed` datetime default NULL,
-  `url` char(255) character set latin1 default NULL,
-  `streaming` char(1) character set latin1 default 'n',
-  `streaming_key` char(32) character set latin1 NOT NULL,
-  `streaming_read_key` char(32) character set latin1 NOT NULL,
-  `active_tab` varchar(10) character set latin1 NOT NULL,
-  `active_cursor` int(11) NOT NULL,
-  `revision` int(11) default '1',
-  `css` text,
-  `settings` text,
+  `id` INT(11) NOT NULL auto_increment,
+  `javascript` TEXT NOT NULL DEFAULT '',
+  `html` TEXT NOT NULL DEFAULT '',
+  `created` datetime DEFAULT NULL,
+  `last_viewed` datetime DEFAULT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  `streaming` VARCHAR(1) DEFAULT 'n',
+  `streaming_key` VARCHAR(32) NOT NULL,
+  `streaming_read_key` VARCHAR(32) NOT NULL,
+  `active_tab` VARCHAR(10) NOT NULL,
+  `active_cursor` INT(11) NOT NULL,
+  `revision` INT(11) DEFAULT '1',
+  `css` TEXT NOT NULL DEFAULT '',
+  `settings` TEXT DEFAULT '',
   PRIMARY KEY  (`id`),
   KEY `viewed` (`last_viewed`),
   KEY `url` (`url`),
@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ownership` (
-  `name` char(50) NOT NULL,
-  `key` char(255) NOT NULL,
-  `email` varchar(255) NOT NULL default '',
+  `name` VARCHAR(50) NOT NULL,
+  `key` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL DEFAULT '',
   `last_login` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
@@ -33,10 +33,10 @@ CREATE TABLE IF NOT EXISTS `ownership` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `owners` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` char(25) NOT NULL,
-  `url` char(255) NOT NULL,
-  `revision` int(11) default '1',
+  `id` INT(11) NOT NULL auto_increment,
+  `name` VARCHAR(25) NOT NULL,
+  `url` VARCHAR(255) NOT NULL,
+  `revision` INT(11) DEFAULT '1',
   PRIMARY KEY  (`id`),
   KEY `name_url` (`name`,`url`,`revision`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

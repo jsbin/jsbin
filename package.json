@@ -9,8 +9,8 @@
   "main": "lib/app",
   "version": "3.0.0dev",
   "homepage": "http://jsbin.com",
-  "main": "./lib/app.js",
-  "bin": "./lib/app.js",
+  "main": "./lib/app",
+  "bin": "./bin/jsbin",
   "repository": {
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"
@@ -26,6 +26,7 @@
     "sqlite3": "2.1.5",
     "bcrypt": "0.7.0",
     "nodemailer": "0.3.20",
+    "commander": "1.0.0",
     "flatten": "git://github.com/aron/flatten.js.git#v0.1.0",
     "soak": "git://github.com/aron/soak.js.git#v0.3.0"
   },

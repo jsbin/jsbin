@@ -1,0 +1,7 @@
+php
+build
+vendor
+.git*
+.htaccess
+*.php
+TODO.md

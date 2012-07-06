@@ -197,8 +197,30 @@ if (!$action) {
         }
       }
 
+
+      if ($home) {
+        $ok = true;
+        if ($email) {
+          $saved_email = $email;
+          $sql = sprintf('UPDATE ownership SET `email`="%s" WHERE `name`="%s"', mysql_real_escape_string($email), mysql_real_escape_string($name));
+
+          if (!mysql_query($sql)) {
+            echo json_encode(array('ok' => false, 'error' => mysql_error(), 'step' => '5.1'));
+            exit;
+          }
+        }
+
+        if ($key) {
+          $saved_email = $email;
+          $sql = sprintf('UPDATE ownership SET `key`="%s" WHERE `name`="%s"', mysql_real_escape_string($bcrypt->hash($key)), mysql_real_escape_string($name));
+
+          if (!mysql_query($sql)) {
+            echo json_encode(array('ok' => false, 'error' => mysql_error(), 'step' => '5.2'));
+            exit;
+          }
+        }
       // (2.2) check bcrypt passsowrd matches
-      if ($bcrypt->verify($key, $hashed)) {
+      } else if ($bcrypt->verify($key, $hashed)) {
         // otherwise username & password were okay, update their details (including email addy)
         $ok = true;
         $sql = sprintf('UPDATE ownership SET `last_login`=NOW() WHERE `name`="%s"', mysql_real_escape_string($name));

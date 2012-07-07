@@ -14,3 +14,6 @@ CREATE TABLE forgot_tokens (
   KEY `index_expires` (`expires`),
   KEY `index_token_expires` (`token`,`created`,`expires`)
 );
+ALTER TABLE owners
+  ADD COLUMN last_updated DATETIME NOT NULL,
+  ADD INDEX `last_updated` (`name`, `last_updated`);

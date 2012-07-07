@@ -133,7 +133,7 @@ $body.bind('click mouseup', function (event) {
 
 var fromClick = false;
 var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
-  closedropdown();
+  setTimeout(closedropdown, 0);
   if (!fromClick) {
     if (this.hostname === window.location.hostname) {
       $(this).click();

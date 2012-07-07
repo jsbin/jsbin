@@ -11,7 +11,7 @@
 - screencasts!
 - static uploads for users
 - remove bin from my history
-- 
+- multiple templates
 
 
 # URLs

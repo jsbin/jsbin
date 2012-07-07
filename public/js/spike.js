@@ -152,8 +152,8 @@ function codecastStream() {
 
 }
 
-var id = location.pathname.replace(/\/preview.*$/, '').replace(/\/edit.*$/, ''),
-    codecasting = location.pathname.indexOf('edit/live') !== -1;
+var id = location.pathname.replace(/\/preview.*$/, '').replace(/\/edit.*$/, '').replace(/\/watch.*$/, ''),
+    codecasting = location.pathname.indexOf('/watch') !== -1;
     queue = [],
     msgType = '',
     useSS = false,

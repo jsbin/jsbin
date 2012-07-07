@@ -336,12 +336,12 @@ panels.update = function () {
     visible.push(visiblePanels[i].name);
   }
 
-  if (history.replaceState) {
-    history.replaceState(null, null, '?' + visible.join(','));
-  } else {
-    // :( this will break jquery mobile - but we're talking IE only at this point, right?
-    location.hash = '#' + visible.join(',');
-  }
+  // if (history.replaceState) {
+  //   history.replaceState(null, null, '?' + visible.join(','));
+  // } else {
+  //   // :( this will break jquery mobile - but we're talking IE only at this point, right?
+  //   location.hash = '#' + visible.join(',');
+  // }
 }
 
 

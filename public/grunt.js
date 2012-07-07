@@ -3,7 +3,7 @@
 // as in: grunt and grind
 function grind(grunt) {
 
-  grunt.loadNpmTasks('grunt-closure-compiler');
+  // grunt.loadNpmTasks('grunt-closure-compiler');
 
   // Project configuration.
   var config = {

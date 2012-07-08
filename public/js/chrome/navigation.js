@@ -122,13 +122,21 @@ $('#actionmenu').click(function () {
   dropdownOpen = true;
 });
 
-$body.bind('click mouseup', function (event) {
+var ignoreUp = false;
+$body.bind('mousedown', function (event) {
   if (dropdownOpen) {
+    if ($(event.target).closest('.menu').length) {
+      ignoreUp = true;
+    }
+  }
+}).bind('click mouseup', function (event) {
+  if (dropdownOpen && !ignoreUp) {
     if (!$(event.target).closest('.menu').length) {
       closedropdown();
       return false;
     }
   }
+  ignoreUp = false;
 });
 
 var fromClick = false;

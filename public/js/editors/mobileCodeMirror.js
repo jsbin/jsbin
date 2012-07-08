@@ -3,6 +3,7 @@ var noop = function () {};
 
 if (document.body.className.indexOf('ie6') !== -1 || document.body.className.indexOf('ie7') !== -1) {
   $('body').addClass('mobile');
+  jsbin.lameEditor = true;
   Editor = function (el, options) {
     this.textarea = el;
     this.win = { document : this.textarea };

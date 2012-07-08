@@ -6,6 +6,7 @@
 <link rel="icon" href="{{static}}/images/favicon.png">
 <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
 {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
+<!--[if lte IE 8 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6"><![endif]-->
 <!--[if lt IE 8 ]><body class="source ie ie7"><![endif]-->
@@ -117,7 +118,7 @@
                 </div>
                 <div>
                   <label>Password<br>
-                  <input required name="password" type="password"></<label>
+                  <input required name="password" type="password"></label>
                 </div>
                 <div>
                   <input type=submit value="Register">
@@ -205,29 +206,6 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{^flash_info}}
     <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
   {{/flash_info}}
-</div>
-<div id="old-login" class="modal">
-  <div>
-    <h2>Log in / Register</h2>
-    <p id="loginFeedback"></p>
-    <p>Logging in will associate your account with all bins you create, and allow you to access that complete history.</p>
-    <form action="/login" method="post">
-      <div>
-        <label for="username">Username</label><input id="username" type="text" name="username">
-      </div>
-      <div>
-        <label for="password">Password</label><input id="password" type="password" name="password">
-      </div>
-      <div>
-        <label for="email">Email</label><input id="email" type="email" name="email">
-        <p>Email is just used to reset your password - it's not used for anything else.</p>
-      </div>
-      <div>
-        <input type="submit" value="Log in">
-      </div>
-      <input type="hidden" name="_csrf" value="{{token}}" />
-    </form>
-  </div>
 </div>
 <div id="keyboardHelp" class="modal">
   <h2>Keyboard Shortcuts</h2>

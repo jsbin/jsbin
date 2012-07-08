@@ -30,18 +30,6 @@ var iframedelay = (function () {
   return iframedelay;
 }());
 
-
-
-var useCustomConsole = !(function () {
-  var ok = typeof window.console !== 'undefined';
-  try {
-    window.console.log('jsbin init test');
-  } catch (e) {
-    ok = false;
-  }
-  return ok;
-})();
-
 var re = null;
 
 function getPreparedCode() {
@@ -123,12 +111,6 @@ function getPreparedCode() {
       source = parts[0];
       close = parts.length == 2 && parts[1] ? parts[1] : '';
     }
-
-    // FIXME is this even worth while now we have our own console? RS July 1, 2012
-    if (useCustomConsole) {
-      source += "<script src=\"http://jsbin.com/js/render/console.js\"></script>\n<script>\n";
-    }
-
 
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;

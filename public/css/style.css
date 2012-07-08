@@ -552,7 +552,9 @@ body.preview #source select {
   outline: 0;
 }
 
-.mobile textarea {
+.mobile textarea,
+.ie6 textarea,
+.ie7 textarea {
   margin: 0.4em;
   border: 0;
   padding: 0;
@@ -570,6 +572,12 @@ body.preview #source select {
   resize: none;
   outline: none;
   -webkit-appearance: none;
+}
+
+.ie6 textarea,
+.ie7 textarea {
+  width: 100%;
+  height: 100%;
 }
 
 #javascript {
@@ -2299,6 +2307,7 @@ pre .highlight:last-of-type {
 }
 
 .brand img {
+  border: 0;
   vertical-align: top;
   margin-top: 4px  ;
 }

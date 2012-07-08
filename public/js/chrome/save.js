@@ -139,7 +139,7 @@ function saveCode(method, ajax, ajaxCallback) {
         var $binGroup,
             edit;
 
-        $('form').attr('action', data.url + '/save');
+        $form.attr('action', data.url + '/save');
         ajaxCallback && ajaxCallback(data);
 
         sessionStorage.setItem('checksum', data.checksum);

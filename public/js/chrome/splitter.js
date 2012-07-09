@@ -39,7 +39,7 @@
               position: 'absolute',
               cursor: 'ew-resize',
               // 'border-top': '0',
-              'border-left': '1px solid rgba(218, 218, 218, 0.5)',
+              'border-left': '2px solid rgba(218, 218, 218, 0.5)',
               'z-index': 99999
             }
           },
@@ -192,17 +192,17 @@
       if (type == 'y') {
         $el.css('border-right', 0);
         $prev.css('border-left', 0);
-        $prev.css('border-top', '1px solid #ccc');
+        $prev.css('border-top', '2px solid #ccc');
       } else {
         // $el.css('border-right', '1px solid #ccc');
         $el.css('border-top', 0);
-        $prev.css('border-left', '1px solid #ccc');
+        $prev.css('border-left', '2px solid #ccc');
       }
  
       if ($el.is(':hidden')) {
         $handle.hide();
       } else {
-        $el.css('border-' + props[type].cssProp, '1px solid #ccc');
+        $el.css('border-' + props[type].cssProp, '2px solid #ccc');
         moveSplitter(x !== undefined ? x : $el.offset()[props[type].cssProp]);
       }
     }); //.trigger('init', settings.x || $el.offset().left);

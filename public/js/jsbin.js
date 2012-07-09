@@ -52,7 +52,7 @@ jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
 if (!storedSettings && window.location.toString() === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
-  window.location = jsbin.root + '/welcome/1/edit?html,live';
+  window.location = jsbin.root + '/welcome/116/edit?html,live';
 }
 
 if (!jsbin.settings['codemirror']) {

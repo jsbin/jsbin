@@ -2,6 +2,10 @@
 // JSON very early in the code
 //= require <json2>
 
+var store = (function () {
+
+var polyfill = false;
+
 var requiresCookies = (function () {
   var ua = navigator.userAgent.toLowerCase(),
       id = null;
@@ -25,6 +29,7 @@ if (!requiresCookies && window.sessionStorage) {
 }
 
 if (!sessionStorage) {
+  polyfill = true;
   sessionStorage = (function () {
     var data = window.top.name ? JSON.parse(window.top.name) : {};
 
@@ -55,4 +60,13 @@ if ((!requiresCookies && !window.localStorage) || requiresCookies) {
   localStorage = window.localStorage;
 } else if (!localStorage) {
   localStorage = sessionStorage;
+}
+
+return { polyfill: polyfill, session: sessionStorage, localStorage: localStorage };
+
+})();
+
+if (store.polyfill === true) {
+  window.sessionStorage = store.sessionStorage;
+  window.localStorage = store.localStorage;
 }

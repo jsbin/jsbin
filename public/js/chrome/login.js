@@ -12,7 +12,7 @@ var $loginForm = $('form.login').submit(function (event) {
       $loginFeedback = form.find('.loginFeedback');
 
 
-  jsbin.settings.home = name; // will save later
+  // jsbin.settings.home = name; // will save later
   $loginFeedback.show().text('Checking...');
 
   $.ajax({
@@ -37,7 +37,7 @@ var $loginForm = $('form.login').submit(function (event) {
   });
 });
 
-if ($('#homebtn').length) {
-  jsbin.settings.home = document.cookie.split('home=')[1].split(';')[0];
-  document.title = jsbin.settings.home + '@' + document.title;
-}
+// if ($('#homebtn').length) {
+//   jsbin.settings.home = document.cookie.split('home=')[1].split(';')[0];
+//   document.title = jsbin.settings.home + '@' + document.title;
+// }

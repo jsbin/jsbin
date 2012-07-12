@@ -89,9 +89,9 @@ function insertResources(urls) {
     }
 
     if (isCssFile(url)) {
-      html.push('<' + 'link class="jsbin" href="' + url + '" rel="stylesheet" type="text/css" />');
+      html.push('<' + 'link href="' + url + '" rel="stylesheet" type="text/css" />');
     } else {
-      html.push('<' + 'script class="jsbin" src="' + url + '"><' + '/script>');
+      html.push('<' + 'script src="' + url + '"><' + '/script>');
     }
 
     state.add++;

@@ -104,7 +104,9 @@ var checkForErrors = function () {
   }
 };
 
-$(document).bind('codeChange', throttle(checkForErrors, 1000));
-$(document).bind('jsbinReady', checkForErrors);
+if (jsbin.settings.jshint === true || jsbin.settings.jshint === undefined) {
+  $(document).bind('codeChange', throttle(checkForErrors, 1000));
+  $(document).bind('jsbinReady', checkForErrors);
+} 
 
 // })();

@@ -44,11 +44,9 @@ function allowDrop(holder) {
       panel.setCode(event.target.result);
       panel.show();
 
-      console.log(panel)
-
       try {
         // now kick off - basically just doing a copy and paste job from @wookiehangover - thanks man! :)
-        var worker = new Worker(jsbin.root + 'js/editors/sync-worker.js');
+        var worker = new Worker(jsbin.root + '/js/editors/sync-worker.js');
 
         // pass the worker the file object
         worker.postMessage(file);
@@ -57,7 +55,6 @@ function allowDrop(holder) {
 
         // bind onmessage handler
         worker.onmessage = function (event) {
-          console.log('setting code');
           var top = scroller.scrollTop;
           panel.setCode(event.data.body);
           scroller.scrollTop = top;

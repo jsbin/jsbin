@@ -45,14 +45,17 @@ window['jsbin'] || (window['jsbin'] = {});
 var storedSettings = localStorage.getItem('settings');
 window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['settings']);
 
+
 // if the above code isn't dodgy, this for hellz bells is:
-jsbin['mobile'] = /WebKit.*Mobile.*/.test(navigator.userAgent);
+jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
 
-if (!storedSettings && window.location.toString() === jsbin.root + '/') {
+if (!storedSettings && window.location.toString() === jsbin.root + '/' ||
+    (location.search.indexOf('api=') !== -1 && window.location.toString().replace(/\?api=.*$/, '') === jsbin.root + '/')) {
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
-  window.location = jsbin.root + '/welcome/130/edit?html,live';
+  window.location = jsbin.root + '/welcome/130/edit?html,live'
+    + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
 }
 
 if (!jsbin.settings['codemirror']) {
@@ -90,27 +93,6 @@ jsbin.getURL = function () {
   return url;
 };
 
-function objectValue(path, context) {
-  var props = path.split('.'),
-      length = props.length,
-      i = 1,
-      currentProp = context || window,
-      value; // = undefined
-
-  if (currentProp[props[0]] !== undefined) {
-    currentProp = currentProp[props[0]];
-    for (; i < length; i++) {
-      if (typeof currentProp[props[i]] === undefined) {
-        break;
-      } else if (i === length - 1) {
-        value = currentProp[props[i]];
-      }
-      currentProp = currentProp[props[i]];
-    }
-  }
-
-  return value;
-}
 
 var $body = $('body'),
     $document = $(document),
@@ -132,14 +114,35 @@ var $body = $('body'),
 
       var panel = jsbin.panels.focused;
       if (panel) sessionStorage.setItem('panel', panel.id);
-      // try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-      //   sessionStorage.setItem('line', editors[panel].getCursor().line);
-      //   sessionStorage.setItem('character', editors[panel].getCursor().ch);
-      // } catch (e) {
-      //   sessionStorage.setItem('line', 0);
-      //   sessionStorage.setItem('character', 0);
-      // }
     };
+
+
+if (location.search.indexOf('api=') !== -1) {
+  (function () {
+    var urlParts = location.search.substring(1).split(','),
+        newUrlParts = [],
+        i = urlParts.length,
+        apiurl = '';
+
+    while (i--) {
+      if (urlParts[i].indexOf('api=') !== -1) {
+        apiurl = urlParts[i].replace(/&?api=/, '');
+      } else {
+        newUrlParts.push(urlParts[i]);
+      }
+    }
+
+    $.getScript(jsbin.root + '/js/chrome/sandbox.js', function () {
+      var sandbox = new Sandbox(apiurl);
+      sandbox.get('settings', function (data) {
+        $.extend(jsbin.settings, data);
+        window.location = location.pathname + (newUrlParts.length ? '?' + newUrlParts.join(',') : '');
+      });
+    });
+
+  }());
+}
+
 
 $document.one('jsbinReady', function () {
   $bin.removeAttr('style');

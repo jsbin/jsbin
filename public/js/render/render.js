@@ -145,9 +145,7 @@ function getPreparedCode() {
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
   if (re.docReady.test(source)) {
     source = source.replace(re.docReady, 'window.onload = ');
-  } 
-
-  if (re.shortDocReady.test(source)) {
+  } else if (re.shortDocReady.test(source)) {
     source = source.replace(re.shortDocReady, 'window.onload = (function');
   }
 
@@ -155,7 +153,7 @@ function getPreparedCode() {
   var newDocTitle = source.match(re.title);
   if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
     documentTitle = newDocTitle[1];
-    updateTitle(!/ \[unsaved\]/.test(document.title));
+    document.title = documentTitle + ' - ' + 'JS Bin';
   }
 
   return source;

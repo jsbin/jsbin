@@ -26,10 +26,14 @@ if (/macintosh|mac os x/.test(ua)) {
   $.browser.platform = ''; 
 } 
 
-var closekey = $.browser.platform == 'mac' ? 167 : 192;
+// var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 $document.keydown(function (event) {
   if (event.ctrlKey) event.metaKey = true;
+
+  var customKeys = objectValue('jsbin.settings.keys') || {},
+      includeAltKey = customKeys.useAlt ? event.altKey : true,
+      closekey = customKeys.closePanel ? customKeys.closePanel : 192;
 
   if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
@@ -39,7 +43,7 @@ $document.keydown(function (event) {
       $('.clone').click();
       event.preventDefault();
     }
-  } else if (event.which === 192 && event.metaKey && event.altKey && jsbin.panels.focused) {
+  } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {
     if (jsbin.panels.focused.visible) jsbin.panels.focused.hide();
     var visible = jsbin.panels.getVisible();
     if (visible.length) {
@@ -83,6 +87,8 @@ function keycontrol(event) {
   var codePanel = { css: 1, javascript: 1, html: 1}[panel.id],
       hasRun = false;
 
+  var includeAltKey = objectValue('jsbin.settings.keys.usealt') ? event.altKey : true;
+
   // these should fire when the key goes down
   if (event.type == 'keydown') {
     if (codePanel) {
@@ -103,7 +109,7 @@ function keycontrol(event) {
     }
 
     // shortcut for showing a panel
-    if (panelShortcuts[event.which] !== undefined && event.metaKey && event.altKey) {
+    if (panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
       jsbin.panels.show(panelShortcuts[event.which]);
       event.stop();
     }
@@ -123,7 +129,7 @@ function keycontrol(event) {
     } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
       event.stop();
       return startComplete(panel);
-    } else if (event.which == 190 && event.altKey && event.metaKey && panel.id == 'html') {
+    } else if (event.which == 190 && includeAltKey && event.metaKey && panel.id == 'html') {
       // auto close the element
       if (panel.somethingSelected()) return;
       // Find the token at the cursor

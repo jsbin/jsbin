@@ -93,6 +93,31 @@ jsbin.getURL = function () {
   return url;
 };
 
+function objectValue(path, context) {
+  var props = path.split('.'),
+      length = props.length,
+      i = 1,
+      currentProp = context || window,
+      value = currentProp[path];
+  try {
+    if (currentProp[props[0]] !== undefined) {
+      currentProp = currentProp[props[0]];
+      for (; i < length; i++) {
+        if (typeof currentProp[props[i]] === undefined) {
+          break;
+        } else if (i === length - 1) {
+          value = currentProp[props[i]];
+        }
+        currentProp = currentProp[props[i]];
+      }
+    }
+  } catch (e) {
+    value = undefined;
+  }
+
+  return value;
+}
+
 
 var $body = $('body'),
     $document = $(document),

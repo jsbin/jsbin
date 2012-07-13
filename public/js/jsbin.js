@@ -50,24 +50,20 @@ window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['s
 jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
 
-if (!storedSettings && window.location.toString() === jsbin.root + '/' ||
-    (location.search.indexOf('api=') !== -1 && window.location.toString().replace(/\?api=.*$/, '') === jsbin.root + '/')) {
+if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
   window.location = jsbin.root + '/welcome/130/edit?html,live'
     + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
 }
 
-if (!jsbin.settings['codemirror']) {
+if (!jsbin.settings.editor) {
   // backward compat with jsbin-v2
-  jsbin.settings.codemirror = {};
-} else {
-  // move to editor
-  jsbin.settings.editor = jsbin.settings.codemirror;
+  jsbin.settings.editor = {};
 }
 
-if (!jsbin.settings.editor) {
-  jsbin.settings.editor = {};
+if (jsbin.settings.codemirror) {
+  $.extend(jsbin.settings.editor, jsbin.settings.codemirror);
 }
 
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent
@@ -122,7 +118,7 @@ function objectValue(path, context) {
 var $body = $('body'),
     $document = $(document),
     debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
-    documentTitle = null, // null = JS Bin
+    documentTitle = 'JS Bin',
     $bin = $('#bin'),
     loadGist,
     $document = $(document),

@@ -67,7 +67,7 @@
         {{#home}}
         <div class="menu">
           <div class="group">
-            <a href="#" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
+            <a href="#" id="avatar" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
           </div>
           <div class="dropdown dd-right" id="homemenu">
             <div class="dropdowncontent">
@@ -209,7 +209,7 @@
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
-          <a target="_blank" title="Live preview" class="url" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+          <a target="_blank" title="Live preview" id="jsbinurl" class="{{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
         </span>
       </div>
     </div>

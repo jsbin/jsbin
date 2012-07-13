@@ -18,6 +18,10 @@ body.ready {
   background: #fff url(../images/jsbin_static.png) no-repeat center;
 }
 
+body.dave {
+  background: #fff url(../images/logo.png) no-repeat center;
+}
+
 p {
   margin: 0;
 }

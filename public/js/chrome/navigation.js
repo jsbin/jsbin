@@ -239,6 +239,17 @@ if (jsbin.settings.hideheader) {
   $body.addClass('hideheader');
 }
 
+var cancelUp = false;
+$('form input').focus(function () {
+  this.select();
+  cancelUp = true;
+}).mouseup(function () {
+  if (cancelUp) {
+    cancelUp = false;
+    return false;
+  }
+});
+
 (function () {
 
 var re = {

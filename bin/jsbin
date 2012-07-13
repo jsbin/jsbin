@@ -44,5 +44,5 @@ app.connect(function (err) {
   }
 
   process.stdout.write('JSBin is up and running. Now point your browser at ' + app.set('url full') + '\n');
-  app.listen(app.set('url port'));
+  app.listen(app.set('port'));
 });

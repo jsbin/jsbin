@@ -63,6 +63,7 @@ if (!jsbin.saveDisabled) {
           },
           type: 'post',
           dataType: 'json',
+          headers: {'Accept': 'application/json'},
           success: function (data) {
             $document.trigger('saveComplete', { panelId: panelId });
             if (data.error) {
@@ -135,6 +136,7 @@ function saveCode(method, ajax, ajaxCallback) {
       data: $form.serialize(),
       dataType: 'json', 
       type: 'post',
+      headers: {'Accept': 'application/json'},
       success: function (data) {
         var $binGroup,
             edit;

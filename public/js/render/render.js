@@ -32,6 +32,10 @@ var iframedelay = (function () {
 
 var re = null;
 
+function two(i) {
+  return ('0'+i).slice(-2);
+}
+
 function getPreparedCode() {
   // init the regular expression cache because this function
   // is called much earlier than the above code is actually encountered
@@ -64,7 +68,8 @@ function getPreparedCode() {
       close = '',
       hasHTML = false,
       hasCSS = false,
-      hasJS = false;
+      hasJS = false,
+      date = new Date();
 
   try {
     source = editors.html.render();
@@ -76,7 +81,8 @@ function getPreparedCode() {
 
   try {
     js = editors.javascript.render();
-    js += '\n//@ sourceURL: ' + jsbin.getURL().split('/').pop() + '.js';
+
+    if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
   } catch (e) {
     console.error(e.message);
   }
@@ -114,7 +120,7 @@ function getPreparedCode() {
 
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
-    var type = jsbin.settings && jsbin.settings.processors && jsbin.settings.processors.javascript ? ' type="text/' + jsbin.settings.processors.javascript + '"' : '';
+    var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
     source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
   }
 

@@ -90,6 +90,9 @@ if ( !Array.prototype.forEach ) {
   };
 }
 
+// https://gist.github.com/1035982
+''.trim||(String.prototype.trim=function(){return this.replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,'')});
+
 if ( !Object.prototype.hasOwnProperty ) {
   Object.prototype.hasOwnProperty = function(prop) {
     var proto = obj.__proto__ || obj.constructor.prototype;

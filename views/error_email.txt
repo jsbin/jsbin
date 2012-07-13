@@ -1,0 +1,20 @@
+Hey,
+
+So JSBin blew up accessing: {{url}}
+
+{{stack}}
+
+{{#body}}
+POST Body:
+
+{{{body}}}
+
+{{/body}}
+{{#session}}
+Session:
+
+{{{session}}}
+
+{{/session}}
+Cheers,
+Dave

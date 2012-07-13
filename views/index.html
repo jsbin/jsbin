@@ -38,12 +38,31 @@
         <span class="button group">Add library
         <select id="library"></select>
         </span>
+      </div><div class="menu {{^code_id}}hidden{{/code_id}}">
+        <a href="#share" class="button button-dropdown group">Share</a>
+        <div class="dropdown" id="share">
+          <div class="dropdowncontent">
+            <form>
+              <div>
+                <label>Live &amp; Full Preview<br><input type="text" readonly value="{{root}}{{code_id_path}}/"></label>
+              </div>
+              <div>
+                <label>Codecast<br><input type="text" readonly value="{{root}}{{code_id_path}}/watch"></label>
+              </div>
+              <div>
+                <label>Code View<br><input type="text" readonly value="{{root}}{{code_id_path}}/edit"></label>
+              </div>
+            </form>
+<!--             <a target="_blank" href="{{code_id_path}}/watch">Codecast</a>
+            <a target="_blank" href="{{code_id_path}}/edit">Edit</a>
+            <a id="jsbinurl" target="_blank" href="{{code_id_path}}/">Full Preview</a>
+ -->          </div>
+        </div>
       </div>
       {{/embed}}
       <div id="panels"></div>
       <div class="help">
         <!-- <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{static}}/images/revert.png" /><img class="disabled" src="{{static}}/images/revert-disabled.png" /></a> -->
-        <a id="jsbinurl" class="button group light left right gap {{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}">{{code_id_domain}}</a>
         {{^embed}}
         {{#home}}
         <div class="menu">
@@ -54,9 +73,9 @@
             <div class="dropdowncontent">
               <form class="login">
                 <p class="loginFeedback"></p>
-                <div>
+                <!-- <div>
                   <label>Username<br><input value="{{home}}" name="username" type="text"></label>
-                </div>
+                </div> -->
                 <div>
                   <label>Email<br>
                   <input name="email" type="email" value="{{email}}"></label>
@@ -190,6 +209,7 @@
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
+          <a target="_blank" title="Live preview" class="url" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
         </span>
       </div>
     </div>

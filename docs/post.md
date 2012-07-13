@@ -19,3 +19,4 @@
 
 # What is a JS Bin
 
+JS Bin was one of the very first public paste bins with the output rendered live in your browser and available to share that completed output. Back in 2008

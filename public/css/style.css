@@ -36,7 +36,8 @@ input[type=email] {
   width: 95%;
 }
 
-[hidden] {
+[hidden],
+.hidden {
   display: none !important;
 }
 

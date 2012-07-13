@@ -31,6 +31,9 @@
         "pass": ""
     }
   },
+  "notify": {
+    "errors": []
+  },
   "blacklist": {
     "html": ["processform.cgi", "habbo.com"],
     "css": [],

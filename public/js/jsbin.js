@@ -103,7 +103,7 @@ function objectValue(path, context) {
     if (currentProp[props[0]] !== undefined) {
       currentProp = currentProp[props[0]];
       for (; i < length; i++) {
-        if (typeof currentProp[props[i]] === undefined) {
+        if (currentProp[props[i]] === undefined) {
           break;
         } else if (i === length - 1) {
           value = currentProp[props[i]];

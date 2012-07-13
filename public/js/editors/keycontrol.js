@@ -35,7 +35,10 @@ $document.keydown(function (event) {
       includeAltKey = customKeys.useAlt ? event.altKey : true,
       closekey = customKeys.closePanel ? customKeys.closePanel : 192;
 
-  if (event.metaKey && event.which == 83) {
+  if (event.metaKey && event.which == 79) {
+    $('.homebtn').click();
+    event.preventDefault();
+  } else if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
       $('#save').click();
       event.preventDefault();

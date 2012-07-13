@@ -32,8 +32,9 @@ $document.keydown(function (event) {
   if (event.ctrlKey) event.metaKey = true;
 
   var customKeys = objectValue('jsbin.settings.keys') || {},
-      includeAltKey = customKeys.useAlt ? event.altKey : true,
-      closekey = customKeys.closePanel ? customKeys.closePanel : 192;
+      includeAltKey = event.altKey, //customKeys.useAlt ? event.altKey : true,
+      closekey = customKeys.closePanel ? customKeys.closePanel : 192
+      $history = $('#history');
 
   if (event.metaKey && event.which == 79) {
     $('.homebtn').click();
@@ -57,8 +58,9 @@ $document.keydown(function (event) {
         jsbin.panels.focused.$el.focus();
       }
       jsbin.panels.focused.focus();
-    } else if ($('#history').length && !$body.hasClass('panelsVisible')) {
-      $('#history').toggle(100);
+    } else if ($history.length && !$body.hasClass('panelsVisible')) {
+      $body.toggleClass('dave', $history.is(':visible'));
+      $history.toggle(100);
     }
   } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
     jsbin.settings.hideheader = !jsbin.settings.hideheader;
@@ -90,7 +92,7 @@ function keycontrol(event) {
   var codePanel = { css: 1, javascript: 1, html: 1}[panel.id],
       hasRun = false;
 
-  var includeAltKey = objectValue('jsbin.settings.keys.usealt') ? event.altKey : true;
+  var includeAltKey = event.altKey; //objectValue('jsbin.settings.keys.usealt') ? event.altKey : true;
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {

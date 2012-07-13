@@ -4,6 +4,7 @@
 
 # misc
 
+- keyboard shortcuts in menu
 - think about url structure (currently /edit/live is now /live)
 - detect stubbed out bin (where there's no longer an active key to write), and don't deliver the spike on those bins
 - preprocessor UI
@@ -12,7 +13,8 @@
 - static uploads for users
 - remove bin from my history
 - multiple templates
-
+- jsbin collections - I want to run a workshop and create a prefix url, that all my bins are saved to, like jsbin. com/rennes-2012/abc/1, jsbin.com/rennes-2012/abc/2, etc
+- delete bins from your homescreen
 
 # URLs
 

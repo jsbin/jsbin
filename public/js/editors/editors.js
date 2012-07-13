@@ -59,6 +59,10 @@ panels.restore = function () {
       deferredCodeInsert = '',
       focused = !!sessionStorage.getItem('panel');
 
+  if (history.replaceState) {
+    history.replaceState(null, '', jsbin.getURL() + '/edit');
+  }
+
   // otherwise restore the user's regular settings
   // also set a flag indicating whether or not we should save the panel settings
   // this is based on whether they're on jsbin.com or if they're on an existing

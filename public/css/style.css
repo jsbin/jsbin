@@ -31,13 +31,18 @@ input {
   font-family: "Helvetica Neue", Helvetica, Arial;
 }
 
+input[type=text],
+input[type=email] {
+  width: 95%;
+}
+
 [hidden] {
   display: none !important;
 }
 
 #control {
   z-index: 199999;
-  min-width: 720px;
+  min-width: 760px;
   height: 35px;
   position: absolute;
 /*  width: 100%;*/
@@ -271,7 +276,7 @@ iframe.javascript {
   margin-right: 10px;
 }
 
-.dropdownmenu a:hover, a.button:hover, a.hover {
+.dropdownmenu a:hover, .button:hover, a.hover {
   /*-moz-box-shadow: #fff 0 0 5px;*/
   background: rgba(0, 0, 0, 0.04);
   z-index: 1;
@@ -1066,7 +1071,7 @@ details li, .details li {
 .dropdowncontent {
   /*background: #e0e0e0;*/
   padding: 10px; 
-  min-width: 200px;
+  min-width: 220px;
 }
 
 #register p {
@@ -1878,6 +1883,10 @@ a.active:hover {
   display: block;
 }
 
+.label .options > * {
+  margin-left: 10px;
+}
+
 .label .options label {
   /*height: 35px;*/
   display: inline-block;
@@ -1889,7 +1898,7 @@ a.active:hover {
 }
 
 .label button { 
-  margin-right: 10px;
+  /*margin-right: 10px;*/
 }
 
 /* history listings */
@@ -2125,6 +2134,10 @@ a.active:hover {
   left: -10px;
 }
 
+#share {
+  left: -10px;
+}
+
 .dropdownmenu {
   margin: 3px 5px;
 }
@@ -2318,4 +2331,10 @@ pre .highlight:last-of-type {
 */
 .button-dropdown-arrow {
   padding: 6px 6px !important;
+}
+
+#share input {
+  font-size: 14px;
+  line-height: 20px;
+  cursor: text;
 }

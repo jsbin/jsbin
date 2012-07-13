@@ -1,3 +1,43 @@
+var render = function() {
+  if (jsbin.panels.panels.live.visible && jsbin.panels.ready) {
+    jsbin.panels.panels.live.render();
+  }
+};
+
+var $processorSelectors = $('div.processorSelector').each(function () {
+  var panelId = this.getAttribute('data-type'),
+      $el = $(this),
+      $label = $el.closest('.label').find('strong a'),
+      originalLabel = $label.text();
+
+  $el.find('a').click(function (e) {
+    var panel = jsbin.panels.panels[panelId];
+
+    e.preventDefault();
+    var target = this.hash.substring(1),
+        label = $(this).text(),
+        code;
+    if (target !== 'convert') {
+      $label.text(label);
+      if (target === panelId) {
+        jsbin.processors.reset(panelId);
+        render();
+      } else {
+        jsbin.processors.set(panelId, target, render);
+      }
+    } else {
+      $label.text(originalLabel);
+      panel.setCode(panel.render());
+      jsbin.processors.reset(panelId);
+    }
+  }).bind('select', function (event, value) {
+    if (value === this.hash.substring(1)) {
+      $label.text($(this).text());
+    }
+  });
+});
+
+
 var Processor = function (url, init, handler) {
   if (typeof handler === 'undefined') {
     handler = init;
@@ -10,7 +50,7 @@ var Processor = function (url, init, handler) {
   });
 
   var callback = function () {
-    console.warn('Processor is not ready yet');
+    console.warn('Processor is not ready yet - trying again');
     return '';
   };
 
@@ -60,7 +100,7 @@ var processors = jsbin.processors = {
       less.Parser().parse(source, function (err, result) {
         if (err) {
           console.error(err);
-          return;
+          return source;
         }
         css = $.trim(result.toCSS());
       });
@@ -91,15 +131,25 @@ var processors = jsbin.processors = {
   }
 };
 
-processors.set = function (panelId, preprocessor) {
-  var panel = jsbin.panels.panels[panelId],
-      cmMode = preprocessor ? editorModes[preprocessor] || editorModes[panelId] : editorModes[panelId];
+processors.set = function (panelId, preprocessor, callback) {
+  var panel = jsbin.panels.panels[panelId];
+
+  // this is kinda nasty, but it allows me to set panel processors during boot up
+  if (panelId instanceof Panel) {
+    panel = panelId;
+    panelId = panel.id;
+  }
+
+  var cmMode = preprocessor ? editorModes[preprocessor] || editorModes[panelId] : editorModes[panelId];
+
   if (panel) {
     if (preprocessor && processors[preprocessor]) {
-      jsbin.settings.processors[panelId] = preprocessor;
+      jsbin.state.processors[panelId] = preprocessor;
       panel.processor = processors[preprocessor](function () {
         // processor is ready
         panel.editor.setOption('mode', cmMode);
+        $processorSelectors.find('a').trigger('select', [preprocessor]);
+        if (callback) callback();
       });
     } else {
       // remove the preprocessor
@@ -108,7 +158,7 @@ processors.set = function (panelId, preprocessor) {
       panel.processor = function (source) {
         return source;
       };
-      delete jsbin.settings.processors[panelId];
+      delete jsbin.state.processors[panelId];
       delete panel.type;
     }
   }
@@ -117,12 +167,3 @@ processors.set = function (panelId, preprocessor) {
 processors.reset = function (panelId) {
   processors.set(panelId);
 };
-
-// restore from settings
-if (jsbin.settings.processors) {
-  ['css', 'javascript', 'html'].forEach(function (panel) {
-    if (jsbin.settings.processors[panel]) {
-      processors.set(panel, jsbin.settings.processors[panel]);
-    }
-  });
-}

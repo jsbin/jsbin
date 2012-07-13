@@ -7,7 +7,7 @@ var editorModes = {
   css: 'css',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
-  less: 'less'
+  less: 'css'
 };
 
 var Panel = function (name, settings) {
@@ -15,7 +15,8 @@ var Panel = function (name, settings) {
       showPanelButton = true,
       $panel = null,
       splitterSettings = {},
-      cmSettings = {};
+      cmSettings = {},
+      panelLanguage = name;
 
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
@@ -37,6 +38,15 @@ var Panel = function (name, settings) {
     settings.nosplitter = true;
   }
 
+  if (jsbin.state.processors && jsbin.state.processors[name]) {
+    panelLanguage = jsbin.state.processors[name];
+    jsbin.processors.set(panel, jsbin.state.processors[name]);
+  } else if (settings.processor) { // FIXME is this even used?
+    panelLanguage = settings.processors[settings.processor];
+    jsbin.processors.set(panel, settings.processor);
+  } else {
+    panel.processor = function (str) { return str; };
+  }
 
   if (settings.editor) {
     cmSettings = {
@@ -44,7 +54,7 @@ var Panel = function (name, settings) {
       tabMode: 'shift',
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
-      mode: editorModes[name],
+      mode: editorModes[panelLanguage],
       onChange: function (event) { 
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
         return true; 
@@ -54,11 +64,7 @@ var Panel = function (name, settings) {
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
-
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
-
-    panel.processor = settings.processor || function (str) { return str; };
-
     panel._setupEditor(panel.editor, name);
   }
 

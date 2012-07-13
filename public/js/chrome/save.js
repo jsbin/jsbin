@@ -36,16 +36,22 @@ if (!jsbin.saveDisabled) {
       }, 500);
     }, 500));
 
-    var stream = false;
+    // TODO use sockets for streaming...or not?
+    // var stream = false;
 
-    if (jsbin.state.stream && window.WebSocket) {
-      stream = new WebSocket('ws://' + window.location.origin + '/update');
-    }
+    // if (jsbin.state.stream && window.WebSocket) {
+    //   stream = new WebSocket('ws://' + window.location.origin + '/update');
+    // }
 
     $document.bind('codeChange', throttle(function (event, data) {
       if (!data.panelId) return;
 
-      var panelId = data.panelId;
+      var panelId = data.panelId,
+          panelSettings = {};
+
+      if (jsbin.state.processors) {
+        panelSettings.processors = jsbin.state.processors;
+      }
 
       if (!saveChecksum) {
         // create the bin and when the response comes back update the url
@@ -59,7 +65,8 @@ if (!jsbin.saveDisabled) {
             method: 'update',
             panel: data.panelId,
             content: editors[data.panelId].getCode(),
-            checksum: saveChecksum
+            checksum: saveChecksum,
+            settings: panelSettings
           },
           type: 'post',
           dataType: 'json',
@@ -163,7 +170,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.history.pushState(null, edit, edit);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
-          // window.location = data.edit;
+          window.location = data.edit;
         }
       },
       error: function () {

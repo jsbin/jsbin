@@ -174,21 +174,47 @@
   </div>
   <div id="panelswaiting">
     <div class="code stretch html panel">
-      <div class="label">
-        <span class="name"><strong>HTML</strong></span>
+      <div class="label menu">
+        <span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span>
+        <div class="dropdown" id="htmlprocessors">
+          <div class="dropdownmenu processorSelector" data-type="html">
+            <a href="#html">HTML</a>
+            <a href="#markdown">Markdown</a>
+            <a href="#jade">Jade</a>
+            <a href="#convert">Convert to HTML</a>
+          </div>
+        </div> 
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
-      <div class="label"><span class="name"><strong>JavaScript</strong></span></div>
+      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+        <div class="dropdown" id="javascriptprocessors">
+          <div class="dropdownmenu processorSelector" data-type="javascript">
+            <a href="#javascript">JavaScript</a>
+            <a href="#coffeescript">CoffeeScript</a>
+            <a href="#traceur">Traceur</a>
+            <a href="#convert">Convert to JavaScript</a>
+          </div>
+        </div> 
+      </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label"><span class="name"><strong id="csslabel">CSS</strong></span></div>
+      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+        <div class="dropdown" id="cssprocessors">
+          <div class="dropdownmenu processorSelector" data-type="css">
+            <a href="#css">CSS</a>
+            <a href="#less">LESS</a>
+            <a href="#stylus"Stylus</a>
+            <a href="#convert">Convert to CSS</a>
+          </div>
+        </div> 
+      </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
       </div>

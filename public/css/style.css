@@ -366,6 +366,12 @@ div.menu {
   /*overflow: hidden;*/
 }
 
+.code .menu {
+  margin-left: 0;
+  padding: 10px 10px 0 10px;
+  display: block;
+}
+
 #control div.group > * {
   display: inline-block;
   float: none;
@@ -1647,6 +1653,14 @@ html * {
 .fake-dropdown:empty:after { padding-left: 0; }
 
 
+.code .fake-dropdown:after {
+  display: none;
+}
+
+.code.focus .fake-dropdown:after {
+  display: inline;
+}
+
 .editbox {
   /*background: white;*/
   /*padding-top: 5px;*/
@@ -1816,6 +1830,10 @@ a.active:hover {
 .open .button-open,
 .open .button-open:hover {
   background: #eee;
+}
+
+.code .open .button-dropdown {
+  background: inherit;
 }
 
 #panels .button {
@@ -2168,6 +2186,10 @@ a.active:hover {
   width: 165px;
   /* allow a black theme but for the text to still be readable */
   /*text-shadow: -2px 0 10px white, 2px 0 10px white, 0 2px 10px white, 0 -2px 10px white;*/
+}
+
+.code .name a {
+  text-decoration: none;
 }
 
 .name span {

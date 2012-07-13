@@ -60,7 +60,7 @@ panels.restore = function () {
       focused = !!sessionStorage.getItem('panel');
 
   if (history.replaceState) {
-    history.replaceState(null, '', jsbin.getURL() + '/edit');
+    history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
   }
 
   // otherwise restore the user's regular settings

@@ -2,7 +2,8 @@ var $live = $('#live'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(renderLivePreview, 200),
     killAlerts = '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
-    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>';
+    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>',
+    liveScrollTop = null;
 
 var iframedelay = (function () {
   var iframedelay = { active : false },
@@ -143,12 +144,24 @@ function renderLivePreview(withalerts) {
           return false;
         };
 
+        win.onscroll = function () {
+          liveScrollTop = this.scrollY;
+        };
+
         doc.write(source);
         doc.write(restoreAlerts);
+
+        if (liveScrollTop !== null) {
+          win.scrollTo(0, liveScrollTop);
+        }
       }
       doc.close();
     } catch (e) {
+      if (jsbinConsole) {
+        window.top._console.error({ message: e.message }, e.filename + ":" + e.lineno);
+      }
       console.error(e);
+      console.log(e);
     }
 
     delete jsbin.panels.panels.live.doc;

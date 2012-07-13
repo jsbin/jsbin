@@ -4,7 +4,10 @@ var $document = $(document),
 var editorModes = {
   html: 'htmlmixed',
   javascript: 'javascript',
-  css: 'css'
+  css: 'css',
+  markdown: 'markdown',
+  coffeescript: 'coffeescript',
+  less: 'less'
 };
 
 var Panel = function (name, settings) {

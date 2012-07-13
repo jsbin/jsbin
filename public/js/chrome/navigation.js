@@ -161,6 +161,12 @@ var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   fromClick = true;
 });
 
+$('#jsbinurl').click(function (e) {
+  setTimeout(function () {
+    jsbin.panels.panels.live.hide();
+  }, 0);
+});
+
 $('#runwithalerts').click(function () {
   renderLivePreview(true);
   return false;

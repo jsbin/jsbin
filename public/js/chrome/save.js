@@ -157,6 +157,8 @@ function saveCode(method, ajax, ajaxCallback) {
           return jsbin.getURL() + this.getAttribute('data-path');
         }).closest('.menu').removeClass('hidden');
 
+        $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
+
         if (window.history && window.history.pushState) {
           window.history.pushState(null, edit, edit);
           sessionStorage.setItem('url', jsbin.getURL());

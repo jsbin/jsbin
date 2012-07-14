@@ -24,11 +24,15 @@
   "analytics": {
     "id": null
   },
-  "smtp": {
-    "service": "Gmail",
-    "auth": {
-        "user": "",
-        "pass": ""
+  "mail": {
+    "adapter": "Sendmail",
+    "Sendmail": {},
+    "SMTP": {
+      "service": "Gmail",
+      "auth": {
+          "user": "",
+          "pass": ""
+      }
     }
   },
   "notify": {

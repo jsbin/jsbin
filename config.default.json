@@ -25,9 +25,9 @@
     "id": null
   },
   "mail": {
-    "adapter": "Sendmail",
-    "Sendmail": {},
-    "SMTP": {
+    "adapter": "sendmail",
+    "sendmail": {},
+    "smtp": {
       "service": "Gmail",
       "auth": {
           "user": "",

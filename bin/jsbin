@@ -32,7 +32,7 @@ cmd.option('-c --config <config.json>', 'path to config file', function (file) {
 });
 
 cmd.option('-e --env <development>', 'deployment environment', function (env) {
-  process.env.ENV = env;
+  process.env.NODE_ENV = env;
 });
 
 cmd.parse(process.argv);
@@ -43,6 +43,6 @@ app.connect(function (err) {
     throw err;
   }
 
-  process.stdout.write('JSBin is up and running. Now point your browser at ' + app.set('url full') + '\n');
+  process.stdout.write('JSBin is up and running on port ' + app.set('port') + '. Now point your browser at ' + app.set('url full') + '\n');
   app.listen(app.set('port'));
 });

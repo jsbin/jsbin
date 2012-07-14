@@ -140,6 +140,10 @@ processors.set = function (panelId, preprocessor, callback) {
     panelId = panel.id;
   }
 
+  if (!jsbin.state.processors) {
+    jsbin.state.processors = {};
+  }
+
   var cmMode = preprocessor ? editorModes[preprocessor] || editorModes[panelId] : editorModes[panelId];
 
   if (panel) {

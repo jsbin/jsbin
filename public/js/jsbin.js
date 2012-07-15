@@ -37,6 +37,10 @@ function throttle(fn, delay) {
 window['jsbin'] || (window['jsbin'] = {});
 // dodgy?
 var storedSettings = localStorage.getItem('settings');
+if (storedSettings === "undefined") {
+  // yes, equals the *string* "undefined", then something went wrong
+  storedSettings = null;
+}
 window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['settings']);
 
 

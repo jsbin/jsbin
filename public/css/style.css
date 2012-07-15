@@ -2161,6 +2161,20 @@ a.active:hover {
   left: -10px;
 }
 
+#sharemenu.hidden {
+  top: -30px;
+}
+
+#sharemenu {
+  display: inline-block !important;
+  -webkit-transition: top ease-out 100ms;
+  -moz-transition: top ease-out 100ms;
+  -o-transition: top ease-out 100ms;
+  -ms-transition: top ease-out 100ms;
+  transition: top ease-out 100ms;
+  top: 0;
+}
+
 .dropdownmenu {
   margin: 3px 5px;
 }

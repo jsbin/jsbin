@@ -13,37 +13,6 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
-var $revert = $('#revert').click(function () {
-  if ($revert.is(':not(.enable)')) {
-    return false;
-  }
-
-  var key = '', i = 0;
-  for (; i < sessionStorage.length; i++) {
-    key = sessionStorage.key(i);
-    if (key.indexOf('jsbin.content.') === 0) {
-      sessionStorage.removeItem(key);
-    }
-  }
-
-  for (key in editors) {
-    editors[key].populateEditor();
-  }
-
-  analytics.revert();
-
-  // editors.javascript.focus();
-  $('#library').val('none');
-  
-  if (window.gist != undefined) {
-    gist.setCode();
-  }
-
-  $document.trigger('codeChange', [ { revert: true } ]);
-
-  return false;
-});
-
 $('#loginbtn').click(function () {
   analytics.login();
   // $('#login').show();
@@ -89,15 +58,16 @@ function closedropdown() {
   }
 }
 
-$('.button-open').mousedown(function (e) {
-  if (dropdownOpen && dropdownOpen !== this) closedropdown();
-  if (!dropdownOpen) {
-    menuDown = true;
-    opendropdown(this);
-  }
-  e.preventDefault();
-  return false;
-});
+// RS: dupe?
+// $('.button-open').mousedown(function (e) {
+//   if (dropdownOpen && dropdownOpen !== this) closedropdown();
+//   if (!dropdownOpen) {
+//     menuDown = true;
+//     opendropdown(this);
+//   }
+//   e.preventDefault();
+//   return false;
+// });
 
 var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e) {
   $dropdownLinks.removeClass('hover');
@@ -144,7 +114,9 @@ var $dropdownLinks = $('.dropdownmenu a').mouseup(function () {
   setTimeout(closedropdown, 0);
   if (!fromClick) {
     if (this.hostname === window.location.hostname) {
-      $(this).click();
+      if ($(this).triggerHandler('click') !== false) {
+        window.location = this.href;
+      }
     } else {
       if (this.getAttribute('target')) {
         window.open(this.href);
@@ -235,6 +207,7 @@ $('form.login').closest('.menu').bind('close', function () {
 
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
+
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
   analytics.enableLiveJS(jsbin.settings.includejs);

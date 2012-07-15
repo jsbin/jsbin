@@ -17,12 +17,6 @@ jQuery.expr[':'].host = function(obj, index, meta, stack) {
   return obj.host == meta[3];
 };
 
-//= require "chrome/analytics"
-//= require "chrome/storage"
-
-// jQuery plugins
-//= require "chrome/splitter"
-
 function throttle(fn, delay) {
   var timer = null;
   var throttled = function () {
@@ -137,6 +131,12 @@ var $body = $('body'),
       if (panel) sessionStorage.setItem('panel', panel.id);
     };
 
+$(window).unload(unload);
+
+// hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
+if ($.browser.opera) {
+  setInterval(unload, 500);
+}
 
 if (location.search.indexOf('api=') !== -1) {
   (function () {

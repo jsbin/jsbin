@@ -157,6 +157,7 @@ if (location.search.indexOf('api=') !== -1) {
       var sandbox = new Sandbox(apiurl);
       sandbox.get('settings', function (data) {
         $.extend(jsbin.settings, data);
+        unload();
         window.location = location.pathname + (newUrlParts.length ? '?' + newUrlParts.join(',') : '');
       });
     });

@@ -1320,7 +1320,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-night span.cm-string { color: #37f14a; }
 .cm-s-night span.cm-meta { color: #7678e2; }
 .cm-s-night span.cm-variable-2 { color: #99b2ff; }
-.cm-s-night span.cm-variable-3, .cm-s-night span.cm-def { white; }
+.cm-s-night span.cm-variable-3, .cm-s-night span.cm-def { color: white; }
 .cm-s-night span.cm-error { color: #9d1e15; }
 .cm-s-night span.cm-bracket { color: #8da6ce; }
 .cm-s-night span.cm-comment { color: #6900a1; }
@@ -1973,14 +1973,14 @@ a.button.active:hover {
 }
 
 .highlight {
-    border: 1px solid rgb(255,235,0);
+  border: 1px solid rgb(255,235,0);
   box-shadow: 0 1px 1px rgba(0,0,0,0.25);
   border-radius: 3px;
   padding: 2px 5px;
   margin: -2px 1px;
   text-shadow: 0 1px 0 rgba(255,255,0, 0.5);
-  cursor: default:
-  
+  cursor: default;
+
   background: #ff0;
   background: -moz-linear-gradient(top,  #ffff00 0%, #ffd800 50%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffff00), color-stop(50%,#ffd800));

@@ -13,6 +13,13 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
+function False(event) {
+  event.stopImmediatePropagation();
+  return false;
+};
+
+$('.disabled').on('click mousedown mouseup', False);
+
 $('#loginbtn').click(function () {
   analytics.login();
   // $('#login').show();
@@ -228,6 +235,10 @@ $('form input').focus(function () {
     return false;
   }
 });
+
+if (window.location.hash) {
+  $('a[href$="' + window.location.hash + '"]').mousedown();
+}
 
 (function () {
 

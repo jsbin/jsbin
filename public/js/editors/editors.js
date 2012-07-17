@@ -59,7 +59,7 @@ panels.restore = function () {
       deferredCodeInsert = '',
       focused = !!sessionStorage.getItem('panel');
 
-  if (history.replaceState) {
+  if (history.replaceState && location.pathname.indexOf('/edit') !== -1) {
     history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
   }
 

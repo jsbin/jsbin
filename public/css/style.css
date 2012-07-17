@@ -287,6 +287,16 @@ iframe.javascript {
   z-index: 1;
 }
 
+.dropdownmenu .disabled {
+  color: #999;
+}
+
+.dropdownmenu .disabled:hover,
+.dropdownmenu .disabled.hover {
+  background: transparent;
+}
+
+
 a.button:active, .button:focus {
   -moz-box-shadow: #C8C8C8 0 0 3px;
   -webkit-box-shadow: #C8C8C8 0 0 3px;
@@ -2162,7 +2172,7 @@ a.active:hover {
 }
 
 #sharemenu.hidden {
-  top: -30px;
+  top: -40px;
 }
 
 #sharemenu {

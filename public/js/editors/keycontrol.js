@@ -41,7 +41,7 @@ $document.keydown(function (event) {
     event.preventDefault();
   } else if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
-      $('#save').click();
+      saveChecksum = false;
       event.preventDefault();
     } else if (event.shiftKey == true) {
       $('.clone').click();

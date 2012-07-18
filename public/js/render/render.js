@@ -48,7 +48,8 @@ function getPreparedCode() {
       script: /<\/script/ig,
       code: /%code%/,
       title: /<title>(.*)<\/title>/i,
-      winLoad: /window\.onload\s*=/
+      winLoad: /window\.onload\s*=/,
+      scriptopen: /<script/gi
     };
   }
 
@@ -60,6 +61,7 @@ function getPreparedCode() {
   re.code.lastIndex = 0;
   re.title.lastIndex = 0;
   re.winLoad.lastIndex = 0;
+  re.scriptopen.lastIndex = 0;
 
   var parts = [],
       source = '',
@@ -74,7 +76,7 @@ function getPreparedCode() {
   try {
     source = editors.html.render();
   } catch (e) {
-    console.error(e.message);
+    console && console.error(e.message);
   }
 
   hasHTML = !!$.trim(source);
@@ -84,7 +86,7 @@ function getPreparedCode() {
 
     if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
   } catch (e) {
-    console.error(e.message);
+    console && console.error(e.message);
   }
 
   hasJS = !!$.trim(js);
@@ -92,7 +94,7 @@ function getPreparedCode() {
   try {
     css = editors.css.render();
   } catch (e) {
-    console.error(e.message);
+    console && console.error(e.message);
   }
 
   hasCSS = !!$.trim(css);
@@ -119,7 +121,7 @@ function getPreparedCode() {
     }
 
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
-    // source += "<script>\n(function(){" + js + "\n}())\n</script>\n" + close;
+    // js = "window.onload = function(){" + js + "\n}\n";
     var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
     source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
   }
@@ -149,10 +151,14 @@ function getPreparedCode() {
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
-  if (re.docReady.test(source)) {
-    source = source.replace(re.docReady, 'window.onload = ');
-  } else if (re.shortDocReady.test(source)) {
-    source = source.replace(re.shortDocReady, 'window.onload = (function');
+  // if (re.docReady.test(source)) {
+  //   source = source.replace(re.docReady, 'window.onload = ');
+  // } else if (re.shortDocReady.test(source)) {
+  //   source = source.replace(re.shortDocReady, 'window.onload = (function');
+  // }
+
+  if (jsbin.ie && re.scriptopen.test(source)) {
+    source = source.replace(re.scriptopen, '<script defer'); 
   }
 
   // read the element out of the source code and plug it in to our document.title

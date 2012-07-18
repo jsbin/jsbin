@@ -375,6 +375,8 @@ panels.focus(panels.getVisible()[0] || null);
 
 // allow panels to be reordered - TODO re-enable
 (function () {
+  return; // disabled for now
+
   var panelsEl = document.getElementById('panels'),
       moving = null;
 
@@ -387,7 +389,6 @@ panels.focus(panels.getVisible()[0] || null);
   };
 
   panelsEl.ondragover = function (e) { 
-    console.log(e)
     return false; 
   };
 
@@ -397,7 +398,6 @@ panels.focus(panels.getVisible()[0] || null);
   };
 
   panelsEl.ondrop = function (e) {
-    console.log(e.dataTransfer);
     if (moving) {
 
     }

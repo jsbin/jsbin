@@ -160,8 +160,6 @@ function renderLivePreview(withalerts) {
       if (jsbinConsole) {
         window.top._console.error({ message: e.message }, e.filename + ":" + e.lineno);
       }
-      console.error(e);
-      console.log(e);
     }
 
     delete jsbin.panels.panels.live.doc;

@@ -89,7 +89,7 @@ if (!jsbin.saveDisabled) {
             }
           },
           error: function () {
-            console.log('update error');
+            console && console.log('update error');
           }
         });
       }

@@ -67,11 +67,9 @@ $document.keydown(function (event) {
     $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
   } else if (event.which === 76 && event.ctrlKey && jsbin.panels.panels.console.visible) {
     if (event.shiftKey) {
-      console.log('reset');
       // reset
       jsconsole.reset();
     } else {
-      console.log('clear');
       // clear
       jsconsole.clear();
     }

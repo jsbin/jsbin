@@ -2323,7 +2323,7 @@ pre .highlight:last-of-type {
 .avatar {
   margin-right: 7px;
   vertical-align: top;
-  display: inline-block;
+  /*display: inline-block;*/
   border-radius: 1px;
   margin-top: -2px;
   border: 1px solid #fff;
@@ -2365,4 +2365,8 @@ pre .highlight:last-of-type {
   font-size: 14px;
   line-height: 20px;
   cursor: text;
+}
+
+.ie span.icon {
+  zoom: 1;
 }

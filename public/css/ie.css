@@ -10,3 +10,12 @@ div {
 #control, .control, .help {
   z-index: auto !important;
 }
+
+/**
+*  Overwrite unicode character with image
+**/
+
+.button-dropdown-arrow:after,
+.fake-dropdown:after {
+  content: url(/images/down-arrow.png); 
+}

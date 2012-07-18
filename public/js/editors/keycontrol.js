@@ -41,7 +41,7 @@ $document.keydown(function (event) {
     event.preventDefault();
   } else if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
-      $('#save').click();
+      saveChecksum = false;
       event.preventDefault();
     } else if (event.shiftKey == true) {
       $('.clone').click();
@@ -67,11 +67,9 @@ $document.keydown(function (event) {
     $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
   } else if (event.which === 76 && event.ctrlKey && jsbin.panels.panels.console.visible) {
     if (event.shiftKey) {
-      console.log('reset');
       // reset
       jsconsole.reset();
     } else {
-      console.log('clear');
       // clear
       jsconsole.clear();
     }

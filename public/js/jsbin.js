@@ -34,19 +34,20 @@ function throttle(fn, delay) {
   return throttled;
 }
 
-window['jsbin'] || (window['jsbin'] = {});
+window['jsbin'] || (window.jsbin = {});
 // dodgy?
 var storedSettings = localStorage.getItem('settings');
 if (storedSettings === "undefined") {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
 }
-window.jsbin['settings'] = $.extend(JSON.parse(storedSettings || '{}'), jsbin['settings']);
+window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
 
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
+jsbin.ie = !+"\v1"; // IE http://webreflection.blogspot.co.uk/2009/01/32-bytes-to-know-if-your-browser-is-ie.html
 
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?

@@ -287,6 +287,16 @@ iframe.javascript {
   z-index: 1;
 }
 
+.dropdownmenu .disabled {
+  color: #999;
+}
+
+.dropdownmenu .disabled:hover,
+.dropdownmenu .disabled.hover {
+  background: transparent;
+}
+
+
 a.button:active, .button:focus {
   -moz-box-shadow: #C8C8C8 0 0 3px;
   -webkit-box-shadow: #C8C8C8 0 0 3px;
@@ -2162,7 +2172,7 @@ a.active:hover {
 }
 
 #sharemenu.hidden {
-  top: -30px;
+  top: -40px;
 }
 
 #sharemenu {
@@ -2268,31 +2278,8 @@ pre .highlight:last-of-type {
   /*padding: 0;*/
 }
 
-#jsbinurl {
-  width: auto;
-  -webkit-transition-property: opacity, margin-right;
-  -webkit-transition-timing-function: ease-out, ease-out; 
-  -webkit-transition-duration: 100ms, 100ms;
-
-  -webkit-transition: all ease-out 100ms;
-
-  -moz-transition-property: opacity, margin-right;
-  -moz-transition-timing-function: ease-out, ease-out; 
-  -moz-transition-duration: 100ms, 100ms;
-
-  -moz-transition: all ease-out 100ms;
-
-  -o-transition-property: opacity, margin-right;
-  -o-transition-timing-function: ease-out, ease-out; 
-  -o-transition-duration: 100ms, 100ms;
-
-  -ms-transition-property: opacity, margin-right;
-  -ms-transition-timing-function: ease-out, ease-out; 
-  -ms-transition-duration: 100ms, 100ms;
-
-  transition-property: opacity, margin-right;
-  transition-timing-function: ease-out, ease-out; 
-  transition-duration: 100ms, 100ms;
+#jsbinurl img {
+  border: 0;
 }
 
 .dropdown {

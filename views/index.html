@@ -22,11 +22,9 @@
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
             <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
-            {{#code_id}}
-            <a id="clone" title="Create a new copy" class="button clone group" href="/clone">Clone</a>
-            {{/code_id}}
             <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
-            <a id="download" title="Save to local drive" class="button download group" href="{{root}}/download">Download</a>
+            <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
+            <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
             <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
             {{#home}}
             <a href="#" class="button group homebtn">Open</a>
@@ -38,7 +36,7 @@
         <span class="button group">Add library
         <select id="library"></select>
         </span>
-      </div><div class="menu {{^code_id}}hidden{{/code_id}}">
+      </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
         <a href="#share" class="button button-dropdown group">Share</a>
         <div class="dropdown" id="share">
           <div class="dropdowncontent">
@@ -53,10 +51,7 @@
                 <label>Code View<br><input type="text" data-path="/edit" readonly value="{{root}}{{code_id_path}}/edit"></label>
               </div>
             </form>
-<!--             <a target="_blank" href="{{code_id_path}}/watch">Codecast</a>
-            <a target="_blank" href="{{code_id_path}}/edit">Edit</a>
-            <a id="jsbinurl" target="_blank" href="{{code_id_path}}/">Full Preview</a>
- -->          </div>
+          </div>
         </div>
       </div>
       {{/embed}}

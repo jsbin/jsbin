@@ -9,6 +9,15 @@ $('a.save').click(function (event) {
   return false;
 });
 
+function updateSavedState() {
+  $('#share').find('input').val(function () {
+    return jsbin.getURL() + this.getAttribute('data-path');
+  }).closest('.menu').removeClass('hidden');
+
+  $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
+  $('#clone').removeClass('hidden');
+}
+
 var saveChecksum = sessionStorage.getItem('checksum') || false;
 
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
@@ -80,7 +89,7 @@ if (!jsbin.saveDisabled) {
             }
           },
           error: function () {
-            console.log('update error');
+            console && console.log('update error');
           }
         });
       }
@@ -162,11 +171,7 @@ function saveCode(method, ajax, ajaxCallback) {
         $binGroup.find('td.url a span.first').removeClass('first');
         $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
-        $('#share').find('input').val(function () {
-          return jsbin.getURL() + this.getAttribute('data-path');
-        }).closest('.menu').removeClass('hidden');
-
-        $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
+        updateSavedState();
 
         if (window.history && window.history.pushState) {
           window.history.pushState(null, edit, edit);

@@ -50,7 +50,7 @@ var Processor = function (url, init, handler) {
   });
 
   var callback = function () {
-    console.warn('Processor is not ready yet - trying again');
+    console && console.warn('Processor is not ready yet - trying again');
     return '';
   };
 
@@ -70,7 +70,7 @@ var processors = jsbin.processors = {
           bare: true
         });
       } catch (e) {
-        console.error(e.message);
+        console && console.error(e.message);
       }
       return renderedCode;
     });
@@ -99,7 +99,7 @@ var processors = jsbin.processors = {
 
       less.Parser().parse(source, function (err, result) {
         if (err) {
-          console.error(err);
+          console && console.error(err);
           return source;
         }
         css = $.trim(result.toCSS());
@@ -113,7 +113,7 @@ var processors = jsbin.processors = {
 
       stylus(source).render(function (err, result) {
         if (err) {
-          console.error(err);
+          console && console.error(err);
           return;
         }
         css = $.trim(result);

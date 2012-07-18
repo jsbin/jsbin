@@ -13,12 +13,10 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
-function False(event) {
+$('.disabled').on('click mousedown mouseup', function (event) {
   event.stopImmediatePropagation();
   return false;
-};
-
-$('.disabled').on('click mousedown mouseup', False);
+});
 
 $('#loginbtn').click(function () {
   analytics.login();

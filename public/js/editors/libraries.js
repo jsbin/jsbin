@@ -153,6 +153,10 @@ var libraries = [
         "group": "Testing"
     },
     {
+        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.1/angular.min.js",
+        "label": "Angular 1.0.1"
+    },
+    {
         "url": [
             "http://documentcloud.github.com/underscore/underscore-min.js",
             "http://documentcloud.github.com/backbone/backbone-min.js"
@@ -190,6 +194,10 @@ var libraries = [
         "url": "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js",
         "label": "Modernizr 2.5.3"
     },
+    {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.6/prefixfree.min.js",
+        "label": "Prefixfree 1.0.6"
+    }
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.3/processing-api.min.js",
         "label": "Processing 1.2.3"

@@ -58,6 +58,9 @@ if ($('#history').length) (function () {
     }
   });
 
+  // Need to replace Z in ISO8601 timestamp with +0000 so prettyDate() doesn't
+  // completely remove it (and parse the date using the local timezone).
+  $('#history a').attr('pubdate', $('#history a').attr('pubdate').replace('Z', '+0000'));
   $('#history a').prettyDate();
   setInterval(function(){ $('#history td.created a').prettyDate(); }, 30 * 1000);
 

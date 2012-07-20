@@ -312,7 +312,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       if (a.indented != b.indented || a.tokenize != b.tokenize) return false;
       for (var ca = a.context, cb = b.context; ; ca = ca.prev, cb = cb.prev) {
         if (!ca || !cb) return ca == cb;
-        if (ca.tagName != cb.tagName) return false;
+        if (ca.tagName != cb.tagName || ca.indent != cb.indent) return false;
       }
     },
 
@@ -320,6 +320,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
   };
 });
 
+CodeMirror.defineMIME("text/xml", "xml");
 CodeMirror.defineMIME("application/xml", "xml");
 if (!CodeMirror.mimeModes.hasOwnProperty("text/html"))
   CodeMirror.defineMIME("text/html", {name: "xml", htmlMode: true});

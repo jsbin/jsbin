@@ -42,7 +42,8 @@ input[type=email] {
 
 input[type=text]:focus,
 input[type=email]:focus,
-input[type=password]:focus {
+input[type=password]:focus,
+textarea:focus {
   border-color: hsl(206, 95%, 55%);
   outline: none;
 }
@@ -1141,10 +1142,22 @@ form label {
 
 form input[type="text"],
 form input[type="password"],
-form input[type="email"] {
+form input[type="email"],
+textarea {
   border: 2px solid #b7dffd;
   width: 95%;
   font-size: 18px;
+}
+
+#sharemenu textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  resize: none;
+  font-size: 14px;
+  height: 32px;
+}
+
+#sharemenu textarea:focus {
+  height: 90px;
 }
 
 input {
@@ -2193,11 +2206,14 @@ a.active:hover {
   top: 0;
 }
 
-#sharemenu .dropdowncontent a {
+#sharemenu strong {
   font-size: 15px;
   padding: 2px 0;
   display: inline-block;
   color: #000;
+} 
+
+#sharemenu strong a {
   text-decoration: none;
 }
 

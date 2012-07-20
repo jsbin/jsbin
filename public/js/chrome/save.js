@@ -12,9 +12,19 @@ $('a.save').click(function (event) {
 function updateSavedState() {
   $('#share form div').each(function () {
     var $div = $(this),
-        url = jsbin.getURL() + this.getAttribute('data-path'),
-        link = $div.find('a').attr('href', url),
-        input = $div.find('input').val(url);
+        url = jsbin.getURL() + this.getAttribute('data-path');
+    $div.find('a').attr('href', url);
+    $div.find('input').val(url);
+    $div.find('textarea').val(function () {
+      return ('<a href="' + url + '?live">' + document.title + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+        return {
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          '&': '&amp;'
+        }[m];
+      });
+    });
   }).closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');

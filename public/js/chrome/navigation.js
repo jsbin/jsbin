@@ -227,7 +227,7 @@ if (jsbin.settings.hideheader) {
 }
 
 var cancelUp = false;
-$('form input').focus(function () {
+$('form input, form textarea').focus(function () {
   this.select();
   cancelUp = true;
 }).mouseup(function () {

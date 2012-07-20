@@ -11,17 +11,8 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www\.jsbin\.com$ [NC]
 RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
 
-# following two versions controlled through config.php
-# rule to allow dynamic versioning of our code when live and hit a sprocketized script
-# generic rule for future projects, but could be js/([0-9\.]+)/jsbin\.js js/jsbin-$1.js
-RewriteRule js/([0-9\.]+)/(.*)\.js js/$2-$1.js [QSA]
-
 # role a sprocket for offline and debug
-RewriteRule js/debug/.*\.js$ sprocketize.php [QSA]
-# RewriteRule \.js$ sprocketize.php [QSA]
-# RewriteRule \.css$ lib/sprocketize.php [QSA]
-
-RewriteRule js/render/remote.js$ sprocketize.php [QSA]
+RewriteRule js\/debug\/.*\.js$ php/sprocketize.php [QSA,L]
 
 # if the file or directory exists
 RewriteCond %{REQUEST_FILENAME} -d [OR]
@@ -31,7 +22,10 @@ RewriteRule .* - [L]
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 
+# this makes serves up the public asset if it exists
+RewriteCond public/$1 -F
+RewriteRule ^(.*)$ public/$1 [QSA,L]
+
 # using 'index.php' because it forces a '/' request to the handler
 RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
-

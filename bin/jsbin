@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+
+var cmd = require('commander'),
+    path = require('path'),
+    fs = require('fs'),
+    app;
+
+function error(msg) {
+  console.error('\n  error: ' + msg + '\n');
+  process.exit(1);
+}
+
+cmd.version(require('../package.json').version);
+
+cmd.option('-p --port <port>', 'port to run on', function (port) {
+  port = parseInt(port, 10);
+  if (port) {
+    process.env.PORT = port;
+  } else {
+    error('-p port must be numeric');
+  }
+});
+
+cmd.option('-c --config <config.json>', 'path to config file', function (file) {
+  file = path.resolve(process.cwd(), file);
+
+  if ((path.existsSync || fs.existsSync)(file)) {
+    process.env.JSBIN_CONFIG = file;
+  } else {
+    error('-c config must be path to a valid config file');
+  }
+});
+
+cmd.option('-e --env <development>', 'deployment environment', function (env) {
+  process.env.NODE_ENV = env;
+});
+
+cmd.parse(process.argv);
+
+app = require('../lib/app.js');
+app.connect(function (err) {
+  if (err) {
+    throw err;
+  }
+
+  process.stdout.write('JSBin is up and running on port ' + app.set('port') + '. Now point your browser at ' + app.set('url full') + '\n');
+  app.listen(app.set('port'));
+});

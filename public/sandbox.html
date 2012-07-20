@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>iframe proxy</title>
+</head>
+<body>
+<script>
+// bashes the domain to set the port to null, disallowing writes from this frame upwards
+document.domain = document.domain;
+(function () {
+  function Queue(processor) {
+    this.queue = [];
+    this.isReady = false;
+    this.processor = processor;
+  }
+
+  Queue.prototype = {
+    ready: function () {
+      if (!this.isReady) {
+        this.isReady = true;
+        this.queue.forEach(this.processor);
+      }
+    },
+    push: function (data) {
+      if (this.isReady) {
+        this.processor(data);
+      } else {
+        this.queue.push(data);
+      }
+    }
+  };
+
+  var source = null,
+      origin = null,
+      queue = new Queue(send);
+
+  function objectValue(path, context) {
+    var props = path.split('.'),
+        length = props.length,
+        i = 1,
+        currentProp = context || window,
+        value = currentProp[path];
+    try {
+      if (currentProp[props[0]] !== undefined) {
+        currentProp = currentProp[props[0]];
+        for (; i < length; i++) {
+          if (typeof currentProp[props[i]] === undefined) {
+            break;
+          } else if (i === length - 1) {
+            value = currentProp[props[i]];
+          }
+          currentProp = currentProp[props[i]];
+        }
+      }
+    } catch (e) {
+      value = undefined;
+    }
+  
+    return value;
+  }
+  
+  function send(eventdata) {
+    var data = JSON.parse(eventdata),
+        result;
+    try {
+      result = JSON.stringify({ guid: data.guid, data: objectValue(data.what) });
+    } catch (e) {
+      result = JSON.stringify({ guid: data.guid, data: undefined });
+    }
+    source.postMessage(result, origin);
+  }
+ 
+  function ready() {
+    queue.ready();
+  }
+ 
+  if (location.search.substring(1)) {
+    (function () {
+      var script = document.createElement('script');
+      script.src = location.search.substring(1);
+      script.onreadystatechange = ready;
+      script.onload = ready;
+      document.body.appendChild(script);
+    }());
+  }
+ 
+  window.addEventListener('message', function (event) {
+    if (event.data === '__ping__') {
+      source = event.source;
+      origin = event.origin;
+      source.postMessage('__pong__', origin);
+    } else {
+      queue.push(event.data);
+    }
+  }, false);
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html id="jsbin" lang="en"{{#flash_info}} class="showtip"{{/flash_info}}>
+<head{{#embed}} class="embed"{{/embed}}>
+<meta charset=utf-8 />
+<title>JS Bin - Collaborative JavaScript Debugging</title>
+<link rel="icon" href="{{static}}/images/favicon.png">
+<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
+{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
+<!--[if lte IE 8 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
+</head>
+<!--[if lt IE 7 ]><body class="source ie ie6"><![endif]-->
+<!--[if lt IE 8 ]><body class="source ie ie7"><![endif]-->
+<!--[if gte IE 8 ]><body class="source ie"><![endif]-->
+<!--[if !IE]><!--><body class="source"><!--<![endif]-->
+<div id="control">
+  <div class="control">
+    <div class="buttons">
+      {{#embed}}
+      <span class="menu">
+        <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+      </span>
+      {{/embed}}
+      {{^embed}}
+      <div class="menu">
+        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
+        <div class="dropdown" id="actionmenu">
+          <div class="dropdownmenu">
+            <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
+            <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
+            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+            <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
+            <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
+            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
+            {{#home}}
+            <a href="#" class="button group homebtn">Open</a>
+            {{/home}}
+          </div>
+        </div>
+      </div><!--
+   --><div class="menu">
+        <span class="button group">Add library
+        <select id="library"></select>
+        </span>
+      </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
+        <a href="#share" class="button button-dropdown group">Share</a>
+        <div class="dropdown" id="share">
+          <div class="dropdowncontent">
+            <form>
+              <div>
+                <label>Live &amp; Full Preview<br><input type="text" data-path="/" readonly value="{{root}}{{code_id_path}}/"></label>
+              </div>
+              <div>
+                <label>Codecast<br><input type="text" data-path="/watch" readonly value="{{root}}{{code_id_path}}/watch"></label>
+              </div>
+              <div>
+                <label>Code View<br><input type="text" data-path="/edit" readonly value="{{root}}{{code_id_path}}/edit"></label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{/embed}}
+      <div id="panels"></div>
+      <div class="help">
+        {{#embed}}<!--
+        {{/embed}}
+        {{^embed}}
+        {{#home}}
+        <div class="menu">
+          <div class="group">
+            <a href="#" id="avatar" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
+          </div>
+          <div class="dropdown dd-right" id="homemenu">
+            <div class="dropdowncontent">
+              <form class="login">
+                <p class="loginFeedback"></p>
+                <!-- <div>
+                  <label>Username<br><input value="{{home}}" name="username" type="text"></label>
+                </div> -->
+                <div>
+                  <label>Email<br>
+                  <input name="email" type="email" value="{{email}}"></label>
+                </div>
+                <div>
+                  <label>Password<br>
+                  <input name="password" type="password" value=""></label>
+                </div>
+                <div>
+                  <input type=submit value="Update account">
+                  <a class="logout" href="#logout">Logout</a>
+                </div>
+              </form>
+
+              <form action="{{root}}/logout" method="POST" id="logout">
+                <input type="hidden" name="_csrf" value="{{token}}" />
+                <button hidden>Logout</button>
+              </form>
+
+            </div>
+          </div>
+        </div><!--
+        {{/home}}
+        {{^home}}
+        <div class="menu">
+          <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+          <div class="dropdown dd-right" id="login">
+            <div class="dropdowncontent">
+              <form class="login">
+                <p class="loginFeedback"></p>
+                <div>
+                  <label>Username<br>
+                  <input name="username" type="text"></label>
+                </div>
+                <div>
+                  <label>Password<br>
+                  <input name="password" type="password"></label>
+                </div>
+                <div>
+                  <input type=submit value="Log in">
+                  <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><div class="menu">
+          <a href="#register" class="button button-open" id="regbtn">Register</a>
+          <div class="dropdown dd-right" id="register">
+            <div class="dropdowncontent">
+              <p>Registration allows you to retrieve your saved files.</p>
+              <form class="login">
+                <p class="loginFeedback"></p>
+                <div>
+                  <label>Username<br><input required name="username" type="text"></label>
+                </div>
+                <div>
+                  <label>Email<br>
+                  <input name="email" required type="email"></label>
+                </div>
+                <div>
+                  <label>Password<br>
+                  <input required name="password" type="password"></label>
+                </div>
+                <div>
+                  <input type=submit value="Register">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div><!--
+        {{/home}}
+        {{/embed}}
+        --><div class="menu">
+            <a href="#helpmenu" class="button button-dropdown">Help</a>
+            <div class="dropdown dd-right" id="helpmenu">
+              <div class="dropdownmenu">
+                <a id="showhelp" href="#keyboardHelp">Keyboard Shortcuts</a>
+                <a id="showurls" href="#urls">JS Bin URLs</a>
+                <a target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
+                <a target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
+                <a target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
+                <a target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
+                <a target="_blank" href="http://jsbin.tumblr.com/about">About</a>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
+  <div id="source" class="binview stretch">
+  </div>
+  <div id="panelswaiting">
+    <div class="code stretch html panel">
+      <div class="label menu">
+        <span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span>
+        <div class="dropdown" id="htmlprocessors">
+          <div class="dropdownmenu processorSelector" data-type="html">
+            <a href="#html">HTML</a>
+            <a href="#markdown">Markdown</a>
+            <a href="#jade">Jade</a>
+            <a href="#convert">Convert to HTML</a>
+          </div>
+        </div> 
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
+      </div>
+    </div>
+    <div class="code stretch javascript panel">
+      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+        <div class="dropdown" id="javascriptprocessors">
+          <div class="dropdownmenu processorSelector" data-type="javascript">
+            <a href="#javascript">JavaScript</a>
+            <a href="#coffeescript">CoffeeScript</a>
+            <a href="#traceur">Traceur</a>
+            <a href="#convert">Convert to JavaScript</a>
+          </div>
+        </div> 
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
+      </div>
+    </div>
+    <div class="code stretch css panel">
+      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+        <div class="dropdown" id="cssprocessors">
+          <div class="dropdownmenu processorSelector" data-type="css">
+            <a href="#css">CSS</a>
+            <a href="#less">LESS</a>
+            <a href="#stylus">Stylus</a>
+            <a href="#convert">Convert to CSS</a>
+          </div>
+        </div> 
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
+      </div>
+    </div>
+    <div class="stretch console panel">
+      <div class="label">
+        <span class="name"><strong>Console</strong></span>
+        <span class="options">
+          <button id="runconsole" title="ctrl + enter">Run</button>
+        </span>
+      </div>
+      <div id="console" class="stretch"><ul id="output"></ul></div>
+    </div>
+    <div id="live" class="stretch live panel">
+      <div class="label">
+        <span class="name"><strong>Output</strong></span>
+        <span class="options">
+          <button id="runwithalerts" title="ctrl + enter
+Include alerts, prompts &amp; confirm boxes">Run with JS</button>
+          <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
+          <a target="_blank" title="Live preview" id="jsbinurl" class="{{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
+    <input type="hidden" name="method" />
+    <input type="hidden" name="_csrf" value="{{token}}" />
+  </form>
+</div>
+<div id="tip">
+  {{#flash_info}}
+    <p>{{flash_info}}</p><a class="dismiss" href="#">Dismiss x</a>
+  {{/flash_info}}
+  {{^flash_info}}
+    <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
+  {{/flash_info}}
+</div>
+<div id="keyboardHelp" class="modal">
+  <h2>Keyboard Shortcuts</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="shortcut">Shortcut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ctrl + [panel num]</td>
+        <td>Show nth panel</td>
+      </tr>
+      <tr>
+        <td>ctrl + §<br />(or `)</td>
+        <td>Hide focused panel</td>
+      </tr>
+      <tr>
+        <td>ctrl + enter</td>
+        <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
+      </tr>
+      <tr>
+        <td>ctrl + \</td>
+        <td>Auto hide navigation bar</td>
+      </tr>
+      <tr>
+        <td>ctrl + /</td>
+        <td>Toggle comment on single line</td>
+      </tr>
+      <!-- <tr>
+        <td>ctrl + alt + .</td>
+        <td>Close current HTML element</td>
+      </tr> -->
+      <tr>
+        <td>esc</td>
+        <td>Code complete (JavaScript only) and close open overlays - like this</td>
+      </tr>
+      <tr>
+        <td>ctrl + s</td>
+        <td>Save current Bin</td>
+      </tr>
+      <tr>
+        <td>ctrl + shift + s</td>
+        <td>Clone current Bin</td>
+      </tr>
+      <tr>
+        <td>cmd + [ (or tab)</td>
+        <td>Indents selected lines</td>
+      </tr>
+      <tr>
+        <td>cmd + ] (or shift + tab)</td>
+        <td>Unindents selected lines</td>
+      </tr>
+      <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>
+    </tbody>
+  </table>
+</div>
+<div id="urlHelp" class="modal">
+  <h2>JS Bin URLs</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="shortcut">URL</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>/</td>
+        <td>Show the full rendered output.<br><small>This content will update in real time as it's updated from the /edit url.</small></td>
+      </tr>
+      <tr>
+        <td>/edit</td>
+        <td>Edit the current bin</td>
+      </tr>
+      <tr>
+        <td>/watch</td>
+        <td>Follow a Code Casting session</td>
+      </tr>
+      <tr>
+        <td>/embed</td>
+        <td>Create an embedded able version of the bin</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last</td>
+        <td>View the last edited bin for this user</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/edit</td>
+        <td>Edit the last edited bin for this user</td>
+      </tr>
+      <tr>
+        <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/watch</td>
+        <td>Follow the Code Casting session for the latest bin for this user</td>
+      </tr>
+      <tr>
+        <td>/quiet</td>
+        <td>Remove analytics and edit button from rendered output</td>
+      </tr>
+      <tr>
+        <td>.js</td>
+        <td>Load only the JavaScript for a bin</td>
+      </tr>
+      <tr>
+        <td>.css</td>
+        <td>Load only the CSS for a bin</td>
+      </tr>
+      <tr><td colspan="2"><br><small>Except for username prefixed urls, the url may start with http://jsbin.com/abc and the url fragments can be added to the url to view it differently.</small></td></tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  var template = {{{json_template}}};
+  var jsbin = {{{jsbin}}}; tips  = {{tips}};
+</script>
+{{^is_production}}
+{{#scripts}}
+<script src="{{static}}{{.}}"></script>
+{{/scripts}}
+{{/is_production}}
+{{#is_production}}
+<script src="{{static}}/js/jsbin-{{version}}.min.js"></script>
+{{{analytics}}}
+{{/is_production}}
+{{#live}}
+<script src="{{static}}/js/spike.js"></script>
+{{/live}}
+{{{list_history}}}
+</body>
+</html>

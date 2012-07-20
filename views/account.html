@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Update your account details</title>
+  </head>
+  <body>
+    <form action="{{action}}" method="post">
+      <label for="field-email">New Password</label>
+      <input id="field-email" type="email" name="email" value="{{email}}" />
+      <label for="field-password">New Password</label>
+      <input id="field-password" type="key" name="key" />
+      <input type="hidden" name="_csrf" value="{{csrf}}" />
+      <input type="hidden" name="_redirect" value="home" />
+      <button type="submit">Update Details</button>
+    </form>
+  </body>
+</html>

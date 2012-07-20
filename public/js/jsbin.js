@@ -47,7 +47,19 @@ window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.setti
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
-jsbin.ie = !+"\v1"; // IE http://webreflection.blogspot.co.uk/2009/01/32-bytes-to-know-if-your-browser-is-ie.html
+// IE detect - sadly uglify is compressing the \v1 trick to death :(
+// via @padolsey & @jdalton - https://gist.github.com/527683
+jsbin.ie = (function(){
+  var undef,
+      v = 3,
+      div = document.createElement('div'),
+      all = div.getElementsByTagName('i');
+  while (
+    div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+    all[0]
+  );
+  return v > 4 ? v : undef;
+}());
 
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?

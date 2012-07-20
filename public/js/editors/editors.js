@@ -103,7 +103,7 @@ panels.restore = function () {
           panel.setCode(decodeURIComponent(panelURLValue));
         }
 
-        if (openWithSameDimensions) {
+        if (openWithSameDimensions && toopen.length > 1) {
           panel.show(width * parseFloat(state[name]) / 100);
         } else {
           panel.show();

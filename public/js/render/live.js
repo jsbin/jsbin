@@ -163,6 +163,25 @@ function renderLivePreview(withalerts) {
       }
       doc.close();
       win.resizeJSBin();
+      if (jsbin.embed) { // allow the iframe to be resized
+        (function () {
+          var dragging = false,
+              height = false, 
+              $window = $(win);
+          $(doc.documentElement).mousedown(function (event) {
+            if (event.pageY > $window.height() - 40) {
+              dragging = event.pageY;
+              height = $body.outerHeight();
+            }
+          }).mousemove(function (event) {
+            if (dragging !== false) {
+              window.top.postMessage({ height: height + (event.pageY - dragging) }, '*');
+            }
+          }).mouseup(function () {
+            dragging = false;
+          });
+        })();
+      }
     } catch (e) {
       if (jsbinConsole) {
         window.top._console.error({ message: e.message }, e.filename + ":" + e.lineno);

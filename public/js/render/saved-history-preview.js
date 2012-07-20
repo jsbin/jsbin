@@ -52,16 +52,18 @@ if ($('#history').length) (function () {
             bins.find('tr').removeClass('selected').filter(target).addClass('selected');
             current = url;
             render(url);
-          }, 200);
+          }, 400);
         }
       }
     }
+    return false;
   });
 
   // Need to replace Z in ISO8601 timestamp with +0000 so prettyDate() doesn't
   // completely remove it (and parse the date using the local timezone).
-  $('#history a').attr('pubdate', $('#history a').attr('pubdate').replace('Z', '+0000'));
-  $('#history a').prettyDate();
+  $('#history a[pubdate]').attr('pubdate', function (i, val) {
+    return val.replace('Z', '+0000');
+  }).prettyDate();
   setInterval(function(){ $('#history td.created a').prettyDate(); }, 30 * 1000);
 
 })();

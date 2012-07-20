@@ -81,8 +81,10 @@ function stringify(o, simple, visited) {
     json += parts.join(',\n') + '\n}';
   } else {
     try {
-      json = o+''; // should look like an object
-    } catch (e) {}
+      json = stringify(o)+''; // should look like an object
+    } catch (e) {
+
+    }
   }
   return json;
 }
@@ -321,6 +323,9 @@ window._console = {
       for (var p in obj) props.push(p);
     } catch (e) {}
     return props;
+  },
+  error: function (err) {
+    log(err.message, 'error');
   }
 };
 
@@ -373,6 +378,7 @@ var jsconsole = {
   reset: function () {
     this.run(':reset');
   },
+  echo: echo,
   setSandbox: function (newSandbox) {
     // sandboxframe.parentNode.removeChild(sandboxframe);
     sandboxframe = newSandbox;
@@ -429,32 +435,33 @@ jsconsole.init(document.getElementById('output'));
 jsconsole.queue = [];
 jsconsole.remote = {
   log: function () {
+    // window.console.log('remote call');
     var cmd = 'console.log';
     try {
       throw new Error();
     } catch (e) {
-      var trace = printStackTrace({ error: e }),
-          code = jsbin.panels.panels.javascript.getCode().split('\n'),
-          allcode = getPreparedCode().split('\n'),
-          parts = [],
-          line,
-          n;
+      // var trace = printStackTrace({ error: e }),
+      //     code = jsbin.panels.panels.javascript.getCode().split('\n'),
+      //     allcode = getPreparedCode().split('\n'),
+      //     parts = [],
+      //     line,
+      //     n;
 
-      for (var i = 0; i < trace.length; i++) {
-        if (trace[i].indexOf(window.location.toString()) !== -1) {
-          parts = trace[i].split(':');
-          n = parts.pop();
-          if (isNaN(parseInt(n, 10))) {
-            n = parts.pop();
-          }
-          line = n - 2;
-          if (code[line] && code[line].indexOf('console.') !== -1) {
-            cmd = $.trim(code[line]);
-            console.log(cmd);
-            break;
-          }
-        }
-      }
+      // for (var i = 0; i < trace.length; i++) {
+      //   if (trace[i].indexOf(window.location.toString()) !== -1) {
+      //     parts = trace[i].split(':');
+      //     n = parts.pop();
+      //     if (isNaN(parseInt(n, 10))) {
+      //       n = parts.pop();
+      //     }
+      //     line = n - 2;
+      //     if (code[line] && code[line].indexOf('console.') !== -1) {
+      //       cmd = $.trim(code[line]);
+      //       console.log(cmd);
+      //       break;
+      //     }
+      //   }
+      // }
     }
 
     var argsObj = jsconsole.stringify(arguments.length == 1 ? arguments[0] : [].slice.call(arguments, 0));
@@ -510,9 +517,12 @@ jsconsole.remote = {
 jsconsole.remote.debug = jsconsole.remote.dir = jsconsole.remote.log;
 jsconsole.remote.warn = jsconsole.remote.info;
 
-window.top._console = jsconsole.remote;
+// window.top._console = jsconsole.remote;
 
 function upgradeConsolePanel(console) {
+  return;
+
+  
   console.init = function () {
     editors.console.settings.render = function () {
       // TODO decide whether we should also grab all the JS in the HTML panel
@@ -520,7 +530,8 @@ function upgradeConsolePanel(console) {
       var code = editors.javascript.render();
       setTimeout(function () {
         jsconsole.setSandbox($live.find('iframe')[0]);
-        if ($.trim(code)) jsconsole.run(code);
+        // if ($.trim(code)) jsconsole.echo(code);
+        // window.console.log('rendering console');
       }, 0);
     };
     editors.console.settings.show = function () {

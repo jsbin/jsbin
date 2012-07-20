@@ -191,6 +191,10 @@ var libraries = [
         "label": "Less 1.1.3"
     },
     {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.4.2/lodash.min.js",
+        "label": "lodash 0.4.2"
+    },
+    {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js",
         "label": "Modernizr 2.5.3"
     },

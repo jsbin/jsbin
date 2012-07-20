@@ -73,6 +73,13 @@ var checkForErrors = function () {
   // exit if the javascript panel isn't visible
   if (!editors.javascript.visible) return;
 
+  // Turn off jshint in for coffeescript
+  if( jsbin.state.processors['javascript'] === 'coffeescript' ) {
+    if( $error.is(':visible') ) $error.hide();
+    $document.trigger('sizeeditors');
+    return;
+  }
+
   var hint = jshint(),
       jshintErrors = JSHINT.data(true),
       errors = '',

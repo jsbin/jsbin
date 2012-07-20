@@ -10,6 +10,8 @@
 
 var panels = {};
 
+var $window = $(window);
+
 panels.getVisible = function () {
   var panels = this.panels,
       visible = [];
@@ -24,7 +26,7 @@ panels.save = function () {
       state = {},
       panel,
       left = '',
-      width = window.innerWidth;
+      width = $window.width();
 
   for (var i = 0; i < visible.length; i++) {
     panel = visible[i];
@@ -55,7 +57,7 @@ panels.restore = function () {
       init = [],
       panelURLValue = '',
       openWithSameDimensions = false,
-      width = window.innerWidth,
+      width = $window.width(),
       deferredCodeInsert = '',
       focused = !!sessionStorage.getItem('panel');
 
@@ -199,7 +201,7 @@ panels.distribute = function () {
   var visible = $('#source .panelwrapper:visible'),
       width = 100,
       height = 0,
-      innerW = window.innerWidth - (visible.length - 1), // to compensate for border-left
+      innerW = $window.width() - (visible.length - 1), // to compensate for border-left
       innerH = $('#source').outerHeight(),
       left = 0,
       right = 0,

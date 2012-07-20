@@ -16,8 +16,8 @@ development.
 ### Merging pull requests
 
 Ideally pull requests should be applied using `git am` as [described
-here][#am]. GitHub happily generates this patch by applying `.patch` to the
-pull request url:
+here][#am]. GitHub [happily generates][#ex] this patch by applying `.patch`
+to the pull request url:
 
     $ curl http://github.com/remy/jsbin/pull/123.patch | git am
 
@@ -40,4 +40,14 @@ and push it up to GitHub.
 
 And you're done.
 
+If for some reason the code fails to apply or it doesn't do what you expect
+you can just delete the test branch.
+
+    $ git am --abort                   # Abort if the patch failed to apply
+    $ git checkout development         # Jump back to development
+    $ git branch -D pull-request-123   # Delete the broken test branch
+
+Then in the pull request let the original author know what went wrong.
+
 [#am]: http://git-scm.com/book/ch5-3.html#Applying-Patches-from-E-mail
+[#ex]: https://github.com/remy/jsbin/pull/190.patch

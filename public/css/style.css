@@ -376,6 +376,13 @@ div.menu {
   /*overflow: hidden;*/
 }
 
+span.menu {
+  z-index: 20;
+  position: relative;
+  display: inline-block;
+  
+}
+
 .code .menu {
   margin-left: 0;
   padding: 10px 10px 0 10px;

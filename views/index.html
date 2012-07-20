@@ -15,6 +15,11 @@
 <div id="control">
   <div class="control">
     <div class="buttons">
+      {{#embed}}
+      <span class="menu">
+        <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+      </span>
+      {{/embed}}
       {{^embed}}
       <div class="menu">
         <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
@@ -57,7 +62,8 @@
       {{/embed}}
       <div id="panels"></div>
       <div class="help">
-        <!-- <a title="Revert" class="button light group left" id="revert" href="#"><img class="enabled" src="{{static}}/images/revert.png" /><img class="disabled" src="{{static}}/images/revert-disabled.png" /></a> -->
+        {{#embed}}<!--
+        {{/embed}}
         {{^embed}}
         {{#home}}
         <div class="menu">
@@ -142,9 +148,6 @@
           </div>
         </div><!--
         {{/home}}
-        {{/embed}}
-        {{#embed}}
-        <a href="{{root}}/edit" class="button">Edit</a><!--
         {{/embed}}
         --><div class="menu">
             <a href="#helpmenu" class="button button-dropdown">Help</a>
@@ -235,7 +238,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
       </div>
     </div>
   </div>
-  <form id="saveform" method="post" action="{{code_id_path}}/save">
+  <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
     <input type="hidden" name="method" />
     <input type="hidden" name="_csrf" value="{{token}}" />
   </form>
@@ -327,6 +330,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
       <tr>
         <td>/watch</td>
         <td>Follow a Code Casting session</td>
+      </tr>
+      <tr>
+        <td>/embed</td>
+        <td>Create an embedded able version of the bin</td>
       </tr>
       <tr>
         <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last</td>

@@ -1,19 +1,18 @@
 (function (window, document, undefined) {
 
+// exit if we already have a script in place doing this task
+if (window.jsbinified !== undefined) return;
+
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
 
 // 1. find all links with class=jsbin
 function getLinks() {
-  var links, alllinks, i = 0, length;
-  if (document.querySelectorAll) {
-    links = [].slice.call(document.querySelectorAll('a.jsbin'));
-  } else {
-    alllinks = document.getElementsByTagName('a');
-    length = links.length;
-    for (; i < length; i++) {
-      if ((' ' + alllinks[i].className + ' ').indexOf(' jsbin ') !== -1) {
-        links.push(alllinks[i]);
-      }
+  var links = [], alllinks, i = 0, length;
+  alllinks = document.getElementsByTagName('a');
+  length = alllinks.length;
+  for (; i < length; i++) {
+    if ((' ' + alllinks[i].className).indexOf(' jsbin-') !== -1) {
+      links.push(alllinks[i]);
     }
   }
 
@@ -112,6 +111,25 @@ function scoop(link) {
   link.search = '?' + query;
 }
 
+function embed(link) {
+  var iframe = document.createElement('iframe'),
+      resize = document.createElement('div');
+  iframe.src = link.href;
+  iframe.className = 'jsbin-embed';
+  link.parentNode.replaceChild(iframe, link);
+
+  var onmessage = function (event) { 
+    event || (event = window.event);
+    iframe.style.height = event.data.height + 'px';
+  };
+
+  if (window.addEventListener) {
+    window.addEventListener('message', onmessage, false);
+  } else {
+    window.attachEvent('onmessage', onmessage);
+  }
+}
+
 // 2. process link based on subclass - jsbin-scoop to start with
 var links = getLinks(),
     i = 0,
@@ -122,6 +140,8 @@ for (; i < length; i++) {
   className = ' ' + links[i].className + ' ';
   if (className.indexOf(' jsbin-scoop ') !== -1) {
     scoop(links[i]);
+  } else if (className.indexOf(' jsbin-embed ') !== -1) {
+    embed(links[i]);
   }
 }
 

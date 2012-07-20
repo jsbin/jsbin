@@ -40,6 +40,13 @@ input[type=email] {
   width: 95%;
 }
 
+input[type=text]:focus,
+input[type=email]:focus,
+input[type=password]:focus {
+  border-color: hsl(206, 95%, 55%);
+  outline: none;
+}
+
 [hidden],
 .hidden {
   display: none !important;
@@ -2184,6 +2191,14 @@ a.active:hover {
   -ms-transition: top ease-out 100ms;
   transition: top ease-out 100ms;
   top: 0;
+}
+
+#sharemenu .dropdowncontent a {
+  font-size: 15px;
+  padding: 2px 0;
+  display: inline-block;
+  color: #000;
+  text-decoration: none;
 }
 
 .dropdownmenu {

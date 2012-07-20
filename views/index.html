@@ -46,14 +46,14 @@
         <div class="dropdown" id="share">
           <div class="dropdowncontent">
             <form>
-              <div>
-                <label>Live &amp; Full Preview<br><input type="text" data-path="/" readonly value="{{root}}{{code_id_path}}/"></label>
+              <div data-path="/">
+                <strong><a target="_blank" href="{{root}}{{code_id_path}}">Live &amp; Full Preview</a></strong><br><input class="link" readonly value="{{root}}{{code_id_path}}/" type="text">
               </div>
-              <div>
-                <label>Codecast<br><input type="text" data-path="/watch" readonly value="{{root}}{{code_id_path}}/watch"></label>
+              <div data-path="/watch">
+                <strong><a target="_blank" href="{{root}}{{code_id_path}}/watch">Codecast</a></strong><br><input class="link" readonly value="{{root}}{{code_id_path}}/watch" type="text">
               </div>
-              <div>
-                <label>Code View<br><input type="text" data-path="/edit" readonly value="{{root}}{{code_id_path}}/edit"></label>
+              <div data-path="/edit">
+                <strong><a target="_blank" href="{{root}}{{code_id_path}}/edit">Code View</a></strong><br><input class="link" readonly value="{{root}}{{code_id_path}}/edit" type="text">
               </div>
             </form>
           </div>
@@ -305,7 +305,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <td>cmd + ] (or shift + tab)</td>
         <td>Unindents selected lines</td>
       </tr>
-      <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr>
+      <!-- <tr><td colspan="2"><br><small>Note that Mac users can use cmd in place of ctrl</small></td></tr> -->
     </tbody>
   </table>
 </div>

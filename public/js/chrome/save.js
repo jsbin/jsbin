@@ -10,15 +10,34 @@ $('a.save').click(function (event) {
 });
 
 function updateSavedState() {
-  $('#share').find('input').val(function () {
-    return jsbin.getURL() + this.getAttribute('data-path');
+  $('#share form div').each(function () {
+    var $div = $(this),
+        url = jsbin.getURL() + this.getAttribute('data-path'),
+        link = $div.find('a').attr('href', url),
+        input = $div.find('input').val(url);
   }).closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
   $('#clone').removeClass('hidden');
 }
 
-var saveChecksum = sessionStorage.getItem('checksum') || false;
+updateSavedState();
+
+
+//       var textwidth = $('a span').innerWidth(true),
+//       outerwidth = $('a:has(span)').width();
+  
+//   if (textwidth > outerwidth) {
+//     $('a').addClass('ellipsis');
+//   }
+
+// $('input').on('change', function () {
+//   $('a').css('width', this.value + 'px');
+//   ellipsis();
+// }).trigger('change');
+// }
+
+var saveChecksum = sessionStorage.getItem('checksum') || jsbin.state.checksum || false;
 
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {

@@ -49,7 +49,10 @@ function opendropdown(el) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
-    menu.find('input:first').focus();
+    var input = menu.find('input:first').focus()[0];
+    if (input) setTimeout(function () {
+      input.select();
+    }, 0);
     dropdownOpen = el;
   }
 }

@@ -176,9 +176,7 @@ $document.one('jsbinReady', function () {
   $body.addClass('ready');
 });
 
-//= require "vendor/json2"
-//= require "editors/editors"
-//= require "render/render"
-// require "chrome/beta"
-//= require "chrome/app"
-
+if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
+  var el = $('#keyboardHelp')[0];
+  el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd');
+})();

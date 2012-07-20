@@ -380,7 +380,6 @@ span.menu {
   z-index: 20;
   position: relative;
   display: inline-block;
-  
 }
 
 .code .menu {
@@ -1567,7 +1566,7 @@ html * {
 }
 
 .panelwrapper {
-  border-left: 1px solid #ccc;
+  /*border-left: 1px solid #ccc;*/
 }
 
 .panel:first-child {
@@ -1829,11 +1828,6 @@ a.active:hover {
   width: 100%;
   /*z-index: 99;*/
   padding-top: 2px;
-}
-
-.embed #panels {
-  background: url(/images/jsbin_header.png) no-repeat 6px -2px;
-  min-height: 33px;
 }
 
 #panels a {

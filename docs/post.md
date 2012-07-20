@@ -56,13 +56,12 @@ Some of these features were always part of JS Bin, but hidden inside of the "bet
 
 ## What's coming next?
 
-[TODO]
+[TODO - i.e. I've got to write this for the article]
 
 - Github auto log in and export to gist
 - Export all previous saved bins (in a single zip file)
 - Exposing more of JS Bin's API
 - Hosting of personal static assets to include in tests (like common images you might use)
-- Preprossesors (they're already live, but there's no UI)
 
 
 

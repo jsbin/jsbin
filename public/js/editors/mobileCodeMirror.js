@@ -1,7 +1,8 @@
 // yeah, nasty, but it allows me to switch from a RTF to plain text if we're running a iOS
-var noop = function () {};
+var noop = function () {},
+    rootClassName = document.body.className;
 
-if (document.body.className.indexOf('ie6') !== -1 || document.body.className.indexOf('ie7') !== -1) {
+if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
   $('body').addClass('mobile');
   jsbin.lameEditor = true;
   Editor = function (el, options) {

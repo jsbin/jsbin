@@ -196,13 +196,17 @@
       } else {
         // $el.css('border-right', '1px solid #ccc');
         $el.css('border-top', 0);
-        $prev.css('border-left', '2px solid #ccc');
+        // $prev.css('border-right', '2px solid #ccc');
       }
  
       if ($el.is(':hidden')) {
         $handle.hide();
       } else {
-        $el.css('border-' + props[type].cssProp, '2px solid #ccc');
+        if ($prev.length) {
+          $el.css('border-' + props[type].cssProp, '2px solid #ccc');
+        } else {
+          $el.css('border-' + props[type].cssProp, '0');
+        }
         moveSplitter(x !== undefined ? x : $el.offset()[props[type].cssProp]);
       }
     }); //.trigger('init', settings.x || $el.offset().left);

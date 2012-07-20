@@ -79,7 +79,8 @@ function two(s) {
 function renderLivePreview(withalerts) {
   var source = getPreparedCode(),
       remove = $live.find('iframe').length > 0,
-      frame = $live.prepend('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first')[0],
+      $frame = $live.prepend('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first'),
+      frame = $frame[0],
       doc = frame.contentDocument || frame.contentWindow.document,
       win = doc.defaultView || doc.parentWindow,
       d = new Date();
@@ -148,6 +149,11 @@ function renderLivePreview(withalerts) {
           liveScrollTop = this.scrollY;
         };
 
+        win.resizeJSBin = throttle(function () {
+          var height = ($body.outerHeight(true) - $frame.height()) + doc.documentElement.offsetHeight;
+          window.top.postMessage({ height: height }, '*');
+        }, 20);
+
         doc.write(source);
         doc.write(restoreAlerts);
 
@@ -156,6 +162,7 @@ function renderLivePreview(withalerts) {
         }
       }
       doc.close();
+      win.resizeJSBin();
     } catch (e) {
       if (jsbinConsole) {
         window.top._console.error({ message: e.message }, e.filename + ":" + e.lineno);

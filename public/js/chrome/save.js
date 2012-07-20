@@ -21,21 +21,7 @@ function updateSavedState() {
   $('#clone').removeClass('hidden');
 }
 
-updateSavedState();
-
-
-//       var textwidth = $('a span').innerWidth(true),
-//       outerwidth = $('a:has(span)').width();
-  
-//   if (textwidth > outerwidth) {
-//     $('a').addClass('ellipsis');
-//   }
-
-// $('input').on('change', function () {
-//   $('a').css('width', this.value + 'px');
-//   ellipsis();
-// }).trigger('change');
-// }
+// updateSavedState();
 
 var saveChecksum = sessionStorage.getItem('checksum') || jsbin.state.checksum || false;
 

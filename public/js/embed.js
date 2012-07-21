@@ -116,6 +116,9 @@ function embed(link) {
       resize = document.createElement('div');
   iframe.src = link.href;
   iframe.className = 'jsbin-embed';
+  iframe.style.border = '1px solid #aaa';
+  iframe.style.width = '100%';
+  iframe.style.minHeight = '300px';
   link.parentNode.replaceChild(iframe, link);
 
   var onmessage = function (event) { 

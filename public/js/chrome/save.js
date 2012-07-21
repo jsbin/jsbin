@@ -188,7 +188,7 @@ function saveCode(method, ajax, ajaxCallback) {
 
         updateSavedState();
 
-        if (false && window.history && window.history.pushState) {
+        if (window.history && window.history.pushState) {
           window.history.pushState(null, edit, edit);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {

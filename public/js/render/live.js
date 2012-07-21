@@ -151,7 +151,7 @@ function renderLivePreview(withalerts) {
 
         win.resizeJSBin = throttle(function () {
           var height = ($body.outerHeight(true) - $frame.height()) + doc.documentElement.offsetHeight;
-          window.top.postMessage({ height: height }, '*');
+          window.parent.postMessage({ height: height }, '*');
         }, 20);
 
         doc.write(source);
@@ -175,7 +175,7 @@ function renderLivePreview(withalerts) {
             }
           }).mousemove(function (event) {
             if (dragging !== false) {
-              window.top.postMessage({ height: height + (event.pageY - dragging) }, '*');
+              window.parent.postMessage({ height: height + (event.pageY - dragging) }, '*');
             }
           }).mouseup(function () {
             dragging = false;

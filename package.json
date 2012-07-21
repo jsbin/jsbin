@@ -28,6 +28,8 @@
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
     "less": "1.3.0",
+    "jade": "0.26.3",
+    "stylus": "0.28.2",
     "flatten": "git://github.com/aron/flatten.js.git#v0.1.0",
     "soak": "git://github.com/aron/soak.js.git#v0.3.0"
   },

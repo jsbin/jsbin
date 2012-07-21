@@ -16,7 +16,7 @@ function updateSavedState() {
     $div.find('a').attr('href', url);
     $div.find('input').val(url);
     $div.find('textarea').val(function () {
-      return ('<a href="' + url + '?live">' + document.title + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      return ('<a href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
         return {
           '<': '&lt;',
           '>': '&gt;',
@@ -188,11 +188,11 @@ function saveCode(method, ajax, ajaxCallback) {
 
         updateSavedState();
 
-        if (window.history && window.history.pushState) {
+        if (false && window.history && window.history.pushState) {
           window.history.pushState(null, edit, edit);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
-          window.location = data.edit;
+          window.location.hash = data.edit;
         }
       },
       error: function () {

@@ -2,7 +2,7 @@
 
 ## What is a JS Bin?
 
-JS Bin was one of the very first public paste bins with the output rendered live in your browser and available to share and edit with the completed output. [Released back in 2008](), JS Bin is now on it's third iteration and finally includes some of the original features I wanted to build JS Bin with.  It's completely free to use all it's features, and it's completely open source and [available on Github]().
+JS Bin was one of the very first public paste bins with the output rendered live in your browser and available to share and edit with the completed output. [Released back in 2008](http://remysharp.com/2008/10/06/js-bin-for-collaborative-javascript-debugging/), JS Bin is now on it's third iteration and finally includes some of the original features I wanted to build JS Bin with.  It's completely free to use all it's features, and it's completely open source and [available on Github](http://github.com/remy/jsbin).
 
 JS Bin exists for two core reasons: 1) creating test and debug cases, and collaboratively debugging those cases. 2) to teach and learn from.
 
@@ -37,6 +37,8 @@ JS Bin can do this. Simply point the device or browser to your full preview URL 
 
 The URL structure even has a shortcut if you're [registered](http://jsbin.com/#register) you can always point the URL to [http://jsbin.com/<username>/last](http://jsbin.com/rem/last) and it'll pull up the last bin you've worked on.
 
+Along with live remote rendering, I've been working with the Adobe Shadow team and they've gone ahead and built in compatability with JS Bin directly in to Shadow. This mean simply when you visit jsbin.com on your desktop, Shadow will automatically show you the rendered output ([here's a demo with their beta software]()).
+
 ### Other important features
 
 Some of these features were always part of JS Bin, but hidden inside of the "beta" access - which required a clunkly console command. Now JS Bin 3 adds the much needed UI to do simple things like login to remember your history of bins.
@@ -49,7 +51,7 @@ Some of these features were always part of JS Bin, but hidden inside of the "bet
 - Console panel (after [@rwaldron's mockup](https://twitter.com/rwaldron/status/179568063660826624) he sent me via Twitter)
 - A load more libraries supported (including Bootstrap, Backbone, etc)
 - Native support in [Adobe Shadow](http://labs.adobe.com/technologies/shadow/) (that's right, point your browser to JS Bin and Adobe Shadow will render the live output automatically)
-- Selectively including live JavaScript
+- 
 - Our badass robot mascot: Dave, the JS Bin Bot (stickers will be made!)
 
 ![Dave](http://3.jsbin.com/images/logo.png)

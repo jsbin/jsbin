@@ -39,6 +39,19 @@ if (saveChecksum) {
   $('#share div.disabled').removeClass('disabled');
 }
 
+// TODO decide whether to expose this code, it disables live saving for IE users
+// until they refresh - via a great big yellow button. For now this is hidden
+// in favour of the nasty hash hack.
+if (false) { // !saveChecksum && !history.pushState) {
+  jsbin.saveDisabled = true;
+
+  $document.bind('jsbinReady', function () {
+    $document.one('codeChange', function () {
+      $('#start-saving').css('display', 'inline-block');
+    });
+  });
+}
+
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {
   $document.bind('jsbinReady', function () {

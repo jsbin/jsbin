@@ -2392,10 +2392,6 @@ pre .highlight:last-of-type {
   margin-top: 4px  ;
 }
 
-/*@media screen and (min-width:740px) {
-  .brand { display: inline-block; }
-}
-*/
 .button-dropdown-arrow {
   padding: 6px 6px !important;
 }
@@ -2408,6 +2404,21 @@ pre .highlight:last-of-type {
 
 .ie span.icon {
   zoom: 1;
+}
+
+#start-saving {
+  display: none;
+}
+
+#start-saving a {
+  border: 1px solid #CCC;
+  padding: 1px 10px;
+  border-radius: 5px;
+  background: #ff0;
+  background: -ms-linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  background: linear-gradient(top,  #ffff00 0%,#ffd800 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#ffd800',GradientType=0 );
+}
 
 #login .forgot {
   display: none;

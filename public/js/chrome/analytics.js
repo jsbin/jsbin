@@ -14,6 +14,9 @@ var analytics = {
   createNew: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/new']);
   },
+  startSaving: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/action/start-saving']);
+  },
   open: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/open']);
   },

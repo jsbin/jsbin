@@ -70,12 +70,12 @@ setcookie('_csrf', $csrf, 0, PATH);
 //   exit;
 // }
 
-$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
+$request = explode('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
 $action = array_pop($request);
 
 if (stripos($action, '.') !== false) {
-  $parts = split('\.', $action);
+  $parts = explode('\.', $action);
   array_push($request, $parts[0]);
   $action = $parts[1];
 }
@@ -876,7 +876,7 @@ function generateURL() {
 	// generates 5 char word
   $vowels = str_split('aeiou');
   $const = str_split('bcdfghjklmnpqrstvwxyz');
-  
+
   $word = '';
   for ($i = 0; $i < 6; $i++) {
     if ($i % 2 == 0) { // even = vowels

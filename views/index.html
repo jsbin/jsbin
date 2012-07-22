@@ -108,6 +108,17 @@
           <a href="#login" class="button button-open" id="loginbtn">Log in</a>
           <div class="dropdown dd-right" id="login">
             <div class="dropdowncontent">
+              <form class="forgot" action="/forgot" method="post">
+                <div>
+                  <label>Email<br>
+                  <input name="email" required type="email"></label>
+                </div>
+                <div>
+                  <input type=submit value="Request password reset">
+                  <input type="hidden" name="_csrf" value="{{token}}">
+                  <input type="hidden" name="_redirect" value="home">
+                </div>
+              </form>
               <form class="login">
                 <p class="loginFeedback"></p>
                 <div>

@@ -2408,4 +2408,15 @@ pre .highlight:last-of-type {
 
 .ie span.icon {
   zoom: 1;
+
+#login .forgot {
+  display: none;
+}
+
+#login.forgot .forgot {
+  display: block;
+}
+
+#login.forgot .login {
+  display: none;
 }

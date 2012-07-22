@@ -211,8 +211,13 @@ $('#createnew').click(function () {
 
 $('form.login').closest('.menu').bind('close', function () {
   $(this).find('.loginFeedback').empty().hide();
+  $('#login').removeClass('forgot');
 });
 
+$('#lostpass').click(function (e) {
+  $('#login').addClass('forgot').find('input[name=email]').focus();
+  return false;
+});
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 

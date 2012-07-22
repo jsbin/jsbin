@@ -11,7 +11,7 @@ $('a.save').click(function (event) {
 
 function updateSavedState() {
   $('#share form div').each(function () {
-    var $div = $(this),
+    var $div = $(this).removeClass('disabled'),
         url = jsbin.getURL() + this.getAttribute('data-path');
     $div.find('a').attr('href', url);
     $div.find('input').val(url);
@@ -34,6 +34,10 @@ function updateSavedState() {
 // updateSavedState();
 
 var saveChecksum = sessionStorage.getItem('checksum') || jsbin.state.checksum || false;
+
+if (saveChecksum) {
+  $('#share div.disabled').removeClass('disabled');
+}
 
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {
@@ -131,8 +135,16 @@ var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="html" />')
     .append('<input type="hidden" name="css" />')
     .append('<input type="hidden" name="method" />')
-    .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />');
+    .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />')
+    .append('<input type="hidden" name="settings" />');
 
+  var settings = {};
+
+  if (jsbin.state.processors) {
+    settings.processors = jsbin.state.processors;
+  }
+
+  $form.find('input[name=settings]').val(JSON.stringify(settings));
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=css]').val(editors.css.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());

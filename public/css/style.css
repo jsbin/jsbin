@@ -295,13 +295,20 @@ iframe.javascript {
   z-index: 1;
 }
 
-.dropdownmenu .disabled {
+.disabled,
+.disabled * {
   color: #999;
 }
 
 .dropdownmenu .disabled:hover,
 .dropdownmenu .disabled.hover {
   background: transparent;
+}
+
+#sharemenu .disabled strong:after {
+  content: ' requires ownership of bin';
+  font-size: 10px;
+  color: #999;
 }
 
 

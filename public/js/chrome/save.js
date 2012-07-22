@@ -94,7 +94,7 @@ if (!jsbin.saveDisabled) {
             panel: data.panelId,
             content: editors[data.panelId].getCode(),
             checksum: saveChecksum,
-            settings: panelSettings
+            settings: JSON.stringify(panelSettings)
           },
           type: 'post',
           dataType: 'json',

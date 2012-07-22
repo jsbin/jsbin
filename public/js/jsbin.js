@@ -93,7 +93,7 @@ jsbin.getURL = function () {
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision && state.revision !== 1) {
+    if (state.revision) {
       url += '/' + state.revision;
     }
   }

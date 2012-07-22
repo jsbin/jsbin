@@ -17,9 +17,7 @@ development.
 
 Ideally pull requests should be applied using `git am` as [described
 here][#am]. GitHub [happily generates][#ex] this patch by applying `.patch`
-to the pull request url:
-
-    $ curl http://github.com/remy/jsbin/pull/123.patch | git am
+to the pull request url.
 
 So to check a pull request does what it says it does you'll probably go
 through a couple of steps. From the development branch create a test branch:
@@ -28,7 +26,7 @@ through a couple of steps. From the development branch create a test branch:
 
 Then apply the users patch:
 
-    $ curl http://github.com/remy/jsbin/pull/123.patch | git am
+    $ curl https://github.com/remy/jsbin/pull/123.patch | git am
 
 Then run and check the code works. If all's good merge it into development
 and push it up to GitHub.

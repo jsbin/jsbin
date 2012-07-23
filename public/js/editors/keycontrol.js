@@ -5,7 +5,7 @@ var keyboardHelpVisible = false;
 
 var customKeys = objectValue('jsbin.settings.keys') || {};
 
-$('#disablekeys').attr('checked', customKeys.disabled).change(function () {
+$('#disablekeys').attr('checked', customKeys.disabled ? true : false).change(function () {
   if (!jsbin.settings.keys) {
     jsbin.settings.keys = {};
   }

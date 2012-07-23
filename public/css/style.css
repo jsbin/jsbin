@@ -27,8 +27,9 @@ p {
 }
 
 td small {
-  display: block;
-  line-height: 14px;
+  /*display: block;*/
+  /*line-height: 14px;*/
+  font-size: 10px;
 }
 
 input {
@@ -306,7 +307,7 @@ iframe.javascript {
 }
 
 #sharemenu .disabled strong:after {
-  content: ' requires ownership of bin';
+  content: ' click to activate';
   font-size: 10px;
   color: #999;
 }
@@ -1766,6 +1767,38 @@ a.active:hover {
 #output li:first-child { border-width: 0; padding-top: 0; }
 
 #jsconsole-sandbox { display: none;}
+
+/* input style - note: moz-shadow purposely omitted because it affects layout */
+#console form { padding: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+#exec, .fakeInput { 
+  resize: none; position: absolute; left: 0; right: 0; border: 0; /*padding: 5px; */outline: 0; color: #000; height: 24px; line-height: 24px; overflow: hidden; 
+}
+
+#exec:before, .fakeInput:before { 
+  font-family: monospace; 
+  font-size: 13px; 
+  line-height: 14px;
+  content: '❯ '; 
+  color: #3583FC; 
+  font-weight: bold; 
+  margin-left: 5px; 
+}
+
+
+/* code complete visual tweaks */
+#cursor { display: inline-block; height: 24px; min-width: 1px; outline: 0; top: 0; left: 0; z-index: 999;}
+
+/* HACK */
+#console form { position: relative; top: 0; width: 100%; z-index: 20; }
+#console { padding-top: 35px; }
+#exec, .fakeInput { position: relative; height: auto; }
+
+#cursor { height: auto; white-space: pre-wrap; }
+
+#exec, .fakeInput { cursor: text; }
+#exec .suggest { color: #999; }
+
+
 
 /* font size control */
 /*#console { top: 35px; bottom: 35px; }*/

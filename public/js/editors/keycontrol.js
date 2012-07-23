@@ -3,7 +3,16 @@
 
 var keyboardHelpVisible = false;
 
-$body.keydown(keycontrol);
+var customKeys = objectValue('jsbin.settings.keys') || {};
+
+$('#disablekeys').attr('checked', customKeys.disabled).change(function () {
+  if (!jsbin.settings.keys) {
+    jsbin.settings.keys = {};
+  }
+  jsbin.settings.keys.disabled = this.checked;
+});
+
+if (!customKeys.disabled) $body.keydown(keycontrol);
 
 var panelShortcuts = {}
 //   49: 'javascript', // 1
@@ -28,13 +37,12 @@ if (/macintosh|mac os x/.test(ua)) {
 
 // var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
-$document.keydown(function (event) {
-  if (event.ctrlKey) event.metaKey = true;
-
-  var customKeys = objectValue('jsbin.settings.keys') || {},
-      includeAltKey = event.altKey, //customKeys.useAlt ? event.altKey : true,
+if (!customKeys.disabled) $document.keydown(function (event) {
+  var includeAltKey = event.altKey, //customKeys.useAlt ? event.altKey : true,
       closekey = customKeys.closePanel ? customKeys.closePanel : 192
       $history = $('#history');
+
+  if (event.ctrlKey) event.metaKey = true;
 
   if (event.metaKey && event.which == 79) {
     $('.homebtn').click();

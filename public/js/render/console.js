@@ -81,7 +81,7 @@ function stringify(o, simple, visited) {
     json += parts.join(',\n') + '\n}';
   } else {
     try {
-      json = stringify(o)+''; // should look like an object
+      json = stringify(o, true)+''; // should look like an object
     } catch (e) {
 
     }
@@ -143,7 +143,17 @@ function post(cmd, blind, response /* passed in when echoing from remote console
 
     appendLog(li);
 
-    output.parentNode.scrollTop = 0;
+    exec.value = '';
+    if (enableCC) {
+      try {
+        // document.getElementsByTagName('a')[0].focus();
+        cursor.focus();
+        document.execCommand('selectAll', false, null);
+        document.execCommand('delete', false, null);
+      } catch (e) {}
+    }
+
+    output.parentNode.scrollTop = output.parentNode.scrollHeight + 1000;
   }
   pos = history.length;
 }
@@ -169,19 +179,7 @@ function echo(cmd) {
 
   logAfter = null;
 
-  if (output.querySelector) {
-    logAfter = output.querySelector('li.echo') || null;
-  } else {
-    var lis = document.getElementsByTagName('li'),
-        len = lis.length,
-        i;
-    for (i = 0; i < len; i++) {
-      if (lis[i].className.indexOf('echo') !== -1) {
-        logAfter = lis[i];
-        break;
-      }
-    }
-  }
+  // logAfter = $(output).find('li.echo:first')[0] || null;
 
   // logAfter = output.querySelector('li.echo') || null;
   appendLog(li, true);
@@ -199,6 +197,9 @@ window.info = function(cmd) {
 };
 
 function appendLog(el, echo) {
+  output.appendChild(el);
+  return;
+
   if (echo) {
     if (!output.firstChild) {
       output.appendChild(el);
@@ -333,9 +334,12 @@ function about() {
   return 'Built by <a target="_new" href="http://twitter.com/rem">@rem</a>';
 }
 
-var output = null,
+var exec = document.getElementById('exec'),
+    form = exec.form || {},
+    output = null,
     sandboxframe = null,
     sandbox = null,
+    codeCompleteTimer = null,
     fakeConsole = 'window.top._console',
     libraries = {
         jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
@@ -369,14 +373,414 @@ var output = null,
         jsconsole.init(output, true);
         return 'Context reset';
       }
-    };
+    },
+    fakeInput = null,
+    // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
+    iOSMobile = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') !== -1,
+    // FIXME Remy, seriously, don't sniff the agent like this, it'll bite you in the arse.
+    enableCC = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') === -1 || navigator.userAgent.indexOf('OS 5_') !== -1;
 
+if (enableCC) {
+  exec.parentNode.innerHTML = '<div autofocus id="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
+  exec = document.getElementById('exec');
+  cursor = document.getElementById('cursor');
+} else {
+  $('#console').addClass('plain');
+}
+
+if (enableCC && iOSMobile) {
+  fakeInput = document.createElement('input');
+  fakeInput.className = 'fakeInput';
+  fakeInput.setAttribute('spellcheck', 'false');
+  fakeInput.setAttribute('autocorrect', 'off');
+  fakeInput.setAttribute('autocapitalize', 'off');
+  exec.parentNode.appendChild(fakeInput);
+}
+
+// sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
+
+// tweaks to interface to allow focus
+// if (!('autofocus' in document.createElement('input'))) exec.focus();
+
+function whichKey(event) {
+  var keys = {38:1, 40:1, Up:38, Down:40, Enter:10, 'U+0009':9, 'U+0008':8, 'U+0190':190, 'Right':39, 
+      // these two are ignored
+      'U+0028': 57, 'U+0026': 55 }; 
+  return keys[event.keyIdentifier] || event.which || event.keyCode;
+}
+
+function setCursorTo(str) {
+  str = enableCC ? cleanse(str) : str;
+  exec.value = str;
+  
+  if (enableCC) {
+    document.execCommand('selectAll', false, null);
+    document.execCommand('delete', false, null);
+    document.execCommand('insertHTML', false, str);
+  } else {
+    var rows = str.match(/\n/g);
+    exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
+  }
+  cursor.focus();
+  // window.scrollTo(0,0);
+}
+
+// output.ontouchstart = output.onclick = function (event) {
+//   event = event || window.event;
+//   if (event.target.nodeName == 'A' && event.target.className == 'permalink') {
+//     var command = decodeURIComponent(event.target.search.substr(1));
+//     setCursorTo(command);
+    
+//     if (liveHistory) {
+//       window.history.pushState(command, command, event.target.href);
+//     }
+    
+//     return false;
+//   }
+// };
+
+exec.ontouchstart = function () {
+  window.scrollTo(0,0);
+};
+
+exec.onkeyup = function (event) {
+  var which = whichKey(event);
+
+  if (enableCC && which != 9 && which != 16) {
+    clearTimeout(codeCompleteTimer);
+    codeCompleteTimer = setTimeout(function () {
+      codeComplete(event);
+    }, 200);
+  } 
+};
+
+if (enableCC) {
+  // disabled for now
+  cursor.__onpaste = function (event) {
+    setTimeout(function () {
+      // this causes the field to lose focus - I'll leave it here for a while, see how we get on.
+      // what I need to do is rip out the contenteditable and replace it with something entirely different
+      cursor.innerHTML = cursor.innerText;
+      // setCursorTo(cursor.innerText);
+    }, 10);
+  };
+}
+
+function findNode(list, node) {
+  var pos = 0;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i] == node) {
+      return pos;
+    }
+    pos += list[i].nodeValue.length;
+  }
+  return -1;
+};
+
+exec.onkeydown = function (event) {
+  event = event || window.event;
+  var keys = {38:1, 40:1}, 
+      wide = body.className == 'large', 
+      which = whichKey(event);
+
+  if (typeof which == 'string') which = which.replace(/\/U\+/, '\\u');
+  if (keys[which]) {
+    if (event.shiftKey) {
+      // changeView(event);
+    } else if (!wide) { // history cycle
+      if (enableCC && window.getSelection) {
+        window.selObj = window.getSelection();
+        var selRange = selObj.getRangeAt(0);
+        
+        cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
+        var value = exec.value,
+            firstnl = value.indexOf('\n'),
+            lastnl = value.lastIndexOf('\n');
+
+        if (firstnl !== -1) {
+          if (which == 38 && cursorPos > firstnl) {
+            return;
+          } else if (which == 40 && cursorPos < lastnl) {
+            return;
+          }
+        }
+      }
+      
+      if (which == 38) { // cycle up
+        pos--;
+        if (pos < 0) pos = 0; //history.length - 1;
+      } else if (which == 40) { // down
+        pos++;
+        if (pos >= history.length) pos = history.length; //0;
+      } 
+      if (history[pos] != undefined && history[pos] !== '') {
+        removeSuggestion();
+        setCursorTo(history[pos])
+        return false;
+      } else if (pos == history.length) {
+        removeSuggestion();
+        setCursorTo('');
+        return false;
+      }
+    }
+  } else if ((which == 13 || which == 10) && event.shiftKey == false) { // enter (what about the other one)
+    removeSuggestion();
+    if (event.shiftKey == true || event.metaKey || event.ctrlKey || !wide) {
+      var command = exec.textContent || exec.value;
+      if (command.length) post(command);
+      return false;
+    }
+  } else if ((which == 13 || which == 10) && !enableCC && event.shiftKey == true) {
+    // manually expand the textarea when we don't have code completion turned on
+    var rows = exec.value.match(/\n/g);
+    rows = rows != null ? rows.length + 2 : 2;
+    exec.setAttribute('rows', rows);
+  } else if (which == 9 && wide) {
+    checkTab(event);
+  } else if (event.shiftKey && event.metaKey && which == 8) {
+    output.innerHTML = '';
+  } else if ((which == 39 || which == 35) && ccPosition !== false) { // complete code
+    completeCode();
+  } else if (event.ctrlKey && which == 76) {
+    output.innerHTML = '';
+  } else if (enableCC) { // try code completion
+    if (ccPosition !== false && which == 9) {
+      codeComplete(event); // cycles available completions
+      return false;
+    } else if (ccPosition !== false && cursor.nextSibling) {
+      removeSuggestion();
+    }
+  }
+};
+
+if (enableCC && iOSMobile) {
+  fakeInput.onkeydown = function (event) {
+    removeSuggestion();
+    var which = whichKey(event);
+    
+    if (which == 13 || which == 10) {
+      post(this.value);
+      this.value = '';
+      cursor.innerHTML = '';
+      return false;
+    }
+  };
+
+  fakeInput.onkeyup = function (event) {
+    cursor.innerHTML = cleanse(this.value);
+    var which = whichKey(event);
+    if (enableCC && which != 9 && which != 16) {
+      clearTimeout(codeCompleteTimer);
+      codeCompleteTimer = setTimeout(function () {
+        codeComplete(event);
+      }, 200);
+    } 
+  };
+
+  var fakeInputFocused = false;
+
+  var dblTapTimer = null,
+      taps = 0;
+
+  form.addEventListener('touchstart', function (event) {
+    // window.scrollTo(0,0);
+    if (ccPosition !== false) {
+      event.preventDefault();
+      clearTimeout(dblTapTimer);
+      taps++;
+
+      if (taps === 2) {
+        completeCode();
+        fakeInput.value = cursor.textContent;
+        removeSuggestion();
+        fakeInput.focus();
+      } else {
+        dblTapTimer = setTimeout(function () {
+          taps = 0;
+          codeComplete({ which: 9 });
+        }, 200);
+      }
+    }
+
+    return false;
+  });
+}
+
+function completeCode(focus) {
+  var tmp = exec.textContent, l = tmp.length;
+  removeSuggestion();
+  
+  cursor.innerHTML = tmp;
+  ccPosition = false;
+  
+  // daft hack to move the focus elsewhere, then back on to the cursor to
+  // move the cursor to the end of the text.
+  document.getElementsByTagName('a')[0].focus();
+  cursor.focus();
+  
+  var range, selection;
+  if (document.createRange) {//Firefox, Chrome, Opera, Safari, IE 9+
+    range = document.createRange();//Create a range (a range is a like the selection but invisible)
+    range.selectNodeContents(cursor);//Select the entire contents of the element with the range
+    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+    selection = window.getSelection();//get the selection object (allows you to change selection)
+    selection.removeAllRanges();//remove any selections already made
+    selection.addRange(range);//make the range you have just created the visible selection
+  } else if (document.selection) {//IE 8 and lower
+    range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+    range.moveToElementText(cursor);//Select the entire contents of the element with the range
+    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+    range.select();//Select the range (make it the visible selection
+  }
+}
+
+form.onsubmit = function (event) {
+  event = event || window.event;
+  event.preventDefault && event.preventDefault();
+  removeSuggestion();
+  post(exec.textContent || exec.value);
+  return false;
+};
+
+document.onkeydown = function (event) {
+  event = event || window.event;
+  var which = event.which || event.keyCode;
+  
+  if (event.shiftKey && event.metaKey && which == 8) {
+    output.innerHTML = '';
+    cursor.focus();
+  } else if (event.target == output.parentNode && which == 32) { // space
+    output.parentNode.scrollTop += 5 + output.parentNode.offsetHeight * (event.shiftKey ? -1 : 1);
+  }
+  
+  // return changeView(event);
+};
+
+exec.onclick = function () {
+  cursor.focus();
+}
+
+function getProps(cmd, filter) {
+  var surpress = {}, props = [];
+  
+  if (!ccCache[cmd]) {
+    try {
+      // surpress alert boxes because they'll actually do something when we're looking
+      // up properties inside of the command we're running
+      surpress.alert = sandboxframe.contentWindow.alert;
+      sandboxframe.contentWindow.alert = function () {};
+      
+      // loop through all of the properties available on the command (that's evaled)
+      ccCache[cmd] = sandboxframe.contentWindow.eval('console.props(' + cmd + ')').sort();
+      
+      // return alert back to it's former self
+      delete sandboxframe.contentWindow.alert;
+    } catch (e) {
+      ccCache[cmd] = [];
+    }
+    
+    // if the return value is undefined, then it means there's no props, so we'll 
+    // empty the code completion
+    if (ccCache[cmd][0] == 'undefined') ccOptions[cmd] = [];    
+    ccPosition = 0;
+    props = ccCache[cmd];
+  } else if (filter) {
+    // console.log('>>' + filter, cmd);
+    for (var i = 0, p; i < ccCache[cmd].length, p = ccCache[cmd][i]; i++) {
+      if (p.indexOf(filter) === 0) {
+        if (p != filter) {
+          props.push(p.substr(filter.length, p.length));
+        }
+      }
+    }
+  } else {
+    props = ccCache[cmd];
+  }
+  
+  return props; 
+}
+
+function codeComplete(event) {
+  var cmd = cursor.textContent.split(/[;\s]+/g).pop(),
+      parts = cmd.split('.'),
+      which = whichKey(event),
+      cc,
+      props = [];
+
+  if (cmd) {
+    // get the command without the dot to allow us to introspect
+    if (cmd.substr(-1) == '.') {
+      // get the command without the '.' so we can eval it and lookup the properties
+      cmd = cmd.substr(0, cmd.length - 1);
+      
+      // returns an array of all the properties from the command
+      props = getProps(cmd);
+    } else {
+      props = getProps(parts.slice(0, parts.length - 1).join('.') || 'window', parts[parts.length - 1]);
+    }
+    if (props.length) {
+      if (which == 9) { // tabbing cycles through the code completion
+        // however if there's only one selection, it'll auto complete
+        if (props.length === 1) {
+          ccPosition = false;
+        } else {
+          if (event.shiftKey) {
+            // backwards
+            ccPosition = ccPosition == 0 ? props.length - 1 : ccPosition-1;
+          } else {
+            ccPosition = ccPosition == props.length - 1 ? 0 : ccPosition+1;
+          }
+        }      
+      } else {
+        ccPosition = 0;
+      }
+    
+      if (ccPosition === false) {
+        completeCode();
+      } else {
+        // position the code completion next to the cursor
+        if (!cursor.nextSibling) {
+          cc = document.createElement('span');
+          cc.className = 'suggest';
+          exec.appendChild(cc);
+        } 
+
+        cursor.nextSibling.innerHTML = props[ccPosition];
+        exec.value = exec.textContent;
+      }
+
+      if (which == 9) return false;
+    } else {
+      ccPosition = false;
+    }
+  } else {
+    ccPosition = false;
+  }
+  
+  if (ccPosition === false && cursor.nextSibling) {
+    removeSuggestion();
+  }
+  
+  exec.value = exec.textContent;
+}
+
+function removeSuggestion() {
+  if (!enableCC) exec.setAttribute('rows', 1);
+  if (enableCC && cursor.nextSibling) cursor.parentNode.removeChild(cursor.nextSibling);
+}
 
 var jsconsole = {
   run: post,
   clear: commands.clear,
   reset: function () {
     this.run(':reset');
+  },
+  focus: function () {
+    if (enableCC) {
+      cursor.focus();
+    } else {
+      $(exec).focus();
+    }
   },
   echo: echo,
   setSandbox: function (newSandbox) {
@@ -393,6 +797,7 @@ var jsconsole = {
 
     sandbox.close();
 
+    getProps('window'); // cache 
   },
   init: function (outputElement, nohelp) {
     output = outputElement;
@@ -520,18 +925,17 @@ jsconsole.remote.warn = jsconsole.remote.info;
 // window.top._console = jsconsole.remote;
 
 function upgradeConsolePanel(console) {
-  return;
-
-  
   console.init = function () {
+    jsbin.panels.panels.console.$el.click(function () {
+      jsconsole.focus();
+    });
     editors.console.settings.render = function () {
       // TODO decide whether we should also grab all the JS in the HTML panel
-      // jsconsole.reset();
       var code = editors.javascript.render();
       setTimeout(function () {
-        jsconsole.setSandbox($live.find('iframe')[0]);
-        // if ($.trim(code)) jsconsole.echo(code);
-        // window.console.log('rendering console');
+        jsconsole.reset();
+        // jsconsole.setSandbox($live.find('iframe')[0]);
+        if ($.trim(code)) jsconsole.run(code);
       }, 0);
     };
     editors.console.settings.show = function () {
@@ -539,6 +943,7 @@ function upgradeConsolePanel(console) {
       // setTimeout because the renderLivePreview creates the iframe after a timeout
       setTimeout(function () {
         jsconsole.setSandbox($live.find('iframe')[0]);
+        if (editors.console.ready) jsconsole.focus();
       }, 0);
     };
     editors.console.settings.hide = function () {

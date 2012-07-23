@@ -1747,11 +1747,11 @@ a.active:hover {
 
 /* log types */
 /*#output span.gutter:before { position: absolute; }*/
-#output span.gutter { font-family: monospace; font-size: 13px; line-height: 14px; }
+#output span.gutter:before { display: inline-block; font-family: monospace; font-size: 13px; line-height: 20px; }
 #output .echo span.gutter:before { content: '❯ '; color: #3583FC; font-weight: bold; margin-left: 5px; }
 #output .info span.gutter:before { content: 'i '; color: #27A700; font-weight: bold; margin-left: 4px; }
 #output .error span.gutter:before { content: '× '; color: #E81D20; margin-right: -10px; margin-left: 2px; font-size: 20px; font-weight: bold; }
-#output .response span.gutter:before { content: '« '; color: #BDC3CD; margin-right: -10px; font-size: 20px; }
+#output .response span.gutter:before { line-height: 16px; content: '« '; color: #BDC3CD; margin-right: -10px; font-size: 20px; }
 
 /* if response is directly next to echo, don't give it a line - only consoles get lines */
 #output li.echo + li.response { border-width: 0; }
@@ -1769,19 +1769,60 @@ a.active:hover {
 #jsconsole-sandbox { display: none;}
 
 /* input style - note: moz-shadow purposely omitted because it affects layout */
-#console form { padding: 5px; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
-#exec, .fakeInput { 
-  resize: none; position: absolute; left: 0; right: 0; border: 0; /*padding: 5px; */outline: 0; color: #000; height: 24px; line-height: 24px; overflow: hidden; 
+#console form { 
+  padding: 5px; 
+  box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;
 }
 
-#exec:before, .fakeInput:before { 
+#console.plain form {
+  padding: 0;
+  margin-left: 23px;
+  width: auto;
+}
+
+#exec, .fakeInput { 
+  resize: none; 
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  border: 0; 
+  /*padding: 5px; */
+  outline: 0; 
+  color: #000; 
+  height: 24px; 
+  line-height: 24px; 
+  overflow: hidden; 
+  background: transparent;
+}
+
+#exec {
+  margin: 0;
+}
+
+#console.plain form:before {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 0px;
+  content: '❯ ';
+  color: #3583FC;
+  font-weight: bold;
+  margin-left: 10px;
+  position: absolute;
+  top: 14px;
+  left: -23px;
+}
+
+.fakeInput:before,
+#exec:before { 
   font-family: monospace; 
-  font-size: 13px; 
+  font-size: 14px; 
   line-height: 14px;
   content: '❯ '; 
   color: #3583FC; 
   font-weight: bold; 
-  margin-left: 5px; 
+  margin-left: 5px;
 }
 
 

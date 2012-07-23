@@ -8,6 +8,7 @@
   "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`) VALUES (?, ?, ?, ?, ?, ?)",
   "touchLogin": "UPDATE `ownership` SET `last_login`=? WHERE `name`=?",
   "updateUserKey": "UPDATE ownership SET `key`=?, `updated`=? WHERE `name`=?",
+  "upgradeUserKey": "UPDATE ownership SET `key`=?, `created`=?, `updated`=? WHERE `name`=?",
   "setBinForUser": "INSERT INTO `owners` (`name`, `url`, `revision`) VALUES (?, ?, ?)",
   "getBinsByUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? ORDER BY `url`, `revision` DESC",
   "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",

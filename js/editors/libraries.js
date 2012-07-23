@@ -96,8 +96,8 @@ Libraries.prototype.init = function () {
     dojo : {
       text: 'Dojo',
       scripts: [
-        { text: 'Dojo 1.6.0', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js' },
-        { text: 'Dojo 1.4.1', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.4.1/dojo/dojo.xd.js' }
+        { text: 'Dojo 1.7.3', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js' },
+        { text: 'Dojo 1.6.0', url: 'http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js' }
       ]
     }
     // ext : {

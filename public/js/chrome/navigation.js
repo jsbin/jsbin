@@ -13,7 +13,7 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   return false;
 });
 
-$('.disabled').on('click mousedown mouseup', function (event) {
+$('a.disabled').on('click mousedown mouseup', function (event) {
   event.stopImmediatePropagation();
   return false;
 });

@@ -11,7 +11,7 @@ $('a.save').click(function (event) {
 
 function updateSavedState() {
   $('#share form div').each(function () {
-    var $div = $(this).removeClass('disabled'),
+    var $div = $(this).removeClass('disabled').unbind('click mousedown mouseup'),
         url = jsbin.getURL() + this.getAttribute('data-path');
     $div.find('a').attr('href', url);
     $div.find('input').val(url);
@@ -36,7 +36,13 @@ function updateSavedState() {
 var saveChecksum = sessionStorage.getItem('checksum') || jsbin.state.checksum || false;
 
 if (saveChecksum) {
-  $('#share div.disabled').removeClass('disabled');
+  // remove the disabled class, but also remove the cancelling event handlers
+  $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
+} else {
+  $('#share div.disabled').one('click', function (event) {
+    event.preventDefault();
+    $('a.save').click();
+  });
 }
 
 // TODO decide whether to expose this code, it disables live saving for IE users

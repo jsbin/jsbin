@@ -101,13 +101,13 @@ var libraries = [
         "group": "YUI"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js",
-        "label": "Mootools 1.3.2",
+        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js",
+        "label": "Mootools 1.4.5",
         "group": "MooTools"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools-yui-compressed.js",
-        "label": "Mootools 1.2.4",
+        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js",
+        "label": "Mootools 1.3.2",
         "group": "MooTools"
     },
     {

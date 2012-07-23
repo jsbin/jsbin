@@ -102,12 +102,12 @@ var libraries = [
     },
     {
         "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js",
-        "label": "Mootools 1.4.5",
+        "label": "MooTools 1.4.5",
         "group": "MooTools"
     },
     {
         "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js",
-        "label": "Mootools 1.3.2",
+        "label": "MooTools 1.3.2",
         "group": "MooTools"
     },
     {

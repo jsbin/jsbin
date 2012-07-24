@@ -43,7 +43,6 @@ if (storedSettings === "undefined") {
 }
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
-
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
@@ -192,3 +191,21 @@ if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
   var el = $('#keyboardHelp')[0];
   el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd');
 })();
+
+if (window.top !== window && location.pathname.indexOf('/embed') === -1) {
+  // we're framed, to switch in to embed mode
+  jsbin.embed = true;
+  jsbin.saveDisabled = true;
+  $('#saveform').attr('target', '_blank');
+  $('html').addClass('embed');
+  // remove elements that we don't need
+  $('#homemenu').closest('.menu').remove();
+  $('#login').closest('.menu').remove();
+  $('#library').closest('.menu').remove();
+  $('#sharemenu').remove();
+  $('a.brand').removeClass('button-dropdown').click(function (event) {
+    this.hash = '';
+    event.stopImmediatePropagation();
+    return true;
+  }).after('<a href="' + jsbin.getURL() + '/save" target="_blank" class="button save">Save</a>');
+}

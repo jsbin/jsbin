@@ -2505,3 +2505,27 @@ pre .highlight:last-of-type {
 #login.forgot .login {
   display: none;
 }
+
+.embed #live .label .name {
+  display: none;
+}
+
+.embed #live .options {
+  overflow: hidden;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  -webkit-transition: opacity ease-in 50ms;
+  -moz-transition: opacity ease-in 50ms;
+  -ms-transition: opacity ease-in 50ms;
+  -o-transition: opacity ease-in 50ms;
+  transition: opacity ease-in 50ms;
+}
+
+.embed #live:hover .options {
+  opacity: 1;
+}
+
+.embed #live iframe {
+  padding-top: 0;
+}

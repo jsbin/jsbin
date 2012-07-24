@@ -22,7 +22,7 @@
       {{/embed}}
       {{^embed}}
       <div class="menu">
-        <a href="#actionmenu" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
+        <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
@@ -56,7 +56,7 @@
                 <strong><a target="_blank" href="{{root}}{{code_id_path}}/edit">Code View</a></strong><br><input class="link" readonly value="{{root}}{{code_id_path}}/edit" type="text">
               </div>
               <div data-path="/embed">
-                <strong>Embed</strong><br><textarea class="link" readonly>&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                <strong>Embed</strong><br><textarea class="link" readonly>&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/edit?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
               </div>
             </form>
           </div>

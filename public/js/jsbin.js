@@ -201,6 +201,7 @@ if (window.top !== window && location.pathname.indexOf('/embed') === -1) {
   // remove elements that we don't need
   $('#homemenu').closest('.menu').remove();
   $('#login').closest('.menu').remove();
+  $('#register').closest('.menu').remove();
   $('#library').closest('.menu').remove();
   $('#sharemenu').remove();
   $('a.brand').removeClass('button-dropdown').click(function (event) {

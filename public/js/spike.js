@@ -120,7 +120,13 @@ function reload() {
 
 function renderStream() {
   es.addEventListener('css', function (event) {
-    document.getElementById('jsbin-css').innerHTML = event.data;
+    var style = document.getElementById('jsbin-css');
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = event.data;
+    } else {
+      style.innerHTML = event.data;
+    }
   });
 
   es.addEventListener('javascript', reload);

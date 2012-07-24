@@ -192,7 +192,7 @@ if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
   el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd');
 })();
 
-if (window.top !== window && location.pathname.indexOf('/embed') === -1) {
+if (false) { //window.top !== window && location.pathname.indexOf('/embed') === -1) {
   // we're framed, to switch in to embed mode
   jsbin.embed = true;
   jsbin.saveDisabled = true;

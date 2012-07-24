@@ -53,8 +53,35 @@ $library.bind('change', function () {
       group = groups[selected[0]],
       library = group.libraries[selected[1]];
 
-  insertResources(library.url);
+  if(library.url && library.url != "")
+  	insertResources(library.url);
+  	
+  if(library.comment && library.comment != "")
+  	insertComment(library.comment);
 });
+
+
+function insertComment(comment) {
+	var code = editors.html.getCode(),
+      state = {
+        line: editors.html.editor.currentLine(),
+        character: editors.html.editor.getCursor().ch,
+        add: 1
+      };
+
+  html = '<!-- ' + comment + ' -->';
+  
+  if (code.indexOf('<head') !== -1) {
+    code = code.replace(/<head>/i, '<head>\n' + html);
+  } else { // add to the start of the doc
+    code = html + code;
+  }
+
+  editors.html.setCode(code);
+  editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
+
+}
+
 
 function insertResources(urls) {
   if (!$.isArray(urls)) {

@@ -77,7 +77,7 @@ function two(s) {
 }
 
 function renderLivePreview(withalerts) {
-  var source = getPreparedCode(),
+  var source = getPreparedCode(jsbin.panels.panels.console.visible),
       remove = $live.find('iframe').length > 0,
       $frame = $live.prepend('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first'),
       frame = $frame[0],
@@ -195,6 +195,10 @@ function renderLivePreview(withalerts) {
     // has run, it doesn't flicker - which fakes a smooth live update.
     if (remove) {
       $live.find('iframe:last').remove();
+    }
+
+    if (jsbin.panels.panels.console.visible) {
+      jsbin.panels.panels.console.render(); // now run the JS
     }
   };
 

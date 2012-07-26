@@ -322,46 +322,44 @@ editors.console = panelInit.console();
 upgradeConsolePanel(editors.console);
 editors.live = panelInit.live();
 
-
 // jsconsole.init(); // sets up render functions etc.
 editors.live.settings.render = function (showAlerts) {
   if (panels.ready) {
     renderLivePreview(showAlerts);
-    editors.console.render();
   }
 };
 
 // IMPORTANT this is nasty, but the sequence is important, because the
 // show/hide method is being called as the panels are being called as
 // the panel is setup - so we hook these handlers on *afterwards*.
-panels.update = function () {
-  var visiblePanels = panels.getVisible(),
-      visible = [],
-      i = 0;
-  for (i = 0; i < visiblePanels.length; i++) {
-    visible.push(visiblePanels[i].name);
-  }
+// panels.update = function () {
+//   var visiblePanels = panels.getVisible(),
+//       visible = [],
+//       i = 0;
+//   for (i = 0; i < visiblePanels.length; i++) {
+//     visible.push(visiblePanels[i].name);
+//   }
 
-  // if (history.replaceState) {
-  //   history.replaceState(null, null, '?' + visible.join(','));
-  // } else {
-  //   // :( this will break jquery mobile - but we're talking IE only at this point, right?
-  //   location.hash = '#' + visible.join(',');
-  // }
-}
+//   if (history.replaceState) {
+//     history.replaceState(null, null, '?' + visible.join(','));
+//   } else {
+//     // :( this will break jquery mobile - but we're talking IE only at this point, right?
+//     location.hash = '#' + visible.join(',');
+//   }
+// }
 
 
-Panel.prototype._show = Panel.prototype.show;
-Panel.prototype.show = function () { 
-  this._show.apply(this, arguments);
-  panels.update();
-}
+// Panel.prototype._show = Panel.prototype.show;
+// Panel.prototype.show = function () { 
+//   this._show.apply(this, arguments);
+//   panels.update();
+// }
 
-Panel.prototype._hide = Panel.prototype.hide;
-Panel.prototype.hide = function () { 
-  this._hide.apply(this, arguments);
-  panels.update();
-}
+// Panel.prototype._hide = Panel.prototype.hide;
+// Panel.prototype.hide = function () { 
+//   this._hide.apply(this, arguments);
+//   panels.update();
+// }
 
 
 panels.allEditors = function (fn) {
@@ -431,12 +429,10 @@ var editorsReady = setInterval(function () {
     // if live is visible, render it
     if (panels.panels.live.visible) {
       panels.panels.live.render(true);
+    } else if (panels.panels.console.visible) {
+      renderLivePreview();
+      // panels.panels.console.render();
     }
-
-    if (panels.panels.console.visible) {
-      panels.panels.console.render();
-    }
-
 
     $(window).resize(function () {
       clearTimeout(resizeTimer);

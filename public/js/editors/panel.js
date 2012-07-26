@@ -31,6 +31,8 @@ var Panel = function (name, settings) {
 
   panel.$el.data('panel', panel);
 
+  this._eventHandlers = {};
+
   // keyboard shortcut (set in keyboardcontrol.js)
   panelShortcuts[panelShortcuts.start + panel.order] = panel.id;
 
@@ -167,6 +169,8 @@ Panel.prototype = {
       // update all splitter positions
       $document.trigger('sizeeditors');
 
+      panel.trigger('show');
+
       panel.virgin = false;
   }, 0);
 
@@ -227,6 +231,7 @@ Panel.prototype = {
       }
 
       $document.trigger('sizeeditors');
+      panel.trigger('hide');
     }, 110);
   },
   toggle: function () {
@@ -255,7 +260,9 @@ Panel.prototype = {
     if (panel.editor) {
       return panel.processor(panel.getCode());
     } else if (this.visible && this.settings.render) {
-      this.settings.render.apply(this, arguments);
+      if (jsbin.panels.ready) {
+        this.settings.render.apply(this, arguments);
+      }
     }
   },
   init: function () {
@@ -370,6 +377,21 @@ Panel.prototype = {
   },
   populateEditor: function () {
     populateEditor(this, this.name);
+  },
+
+  // events
+  on: function (event, fn) {
+    (this._eventHandlers[event] = this._eventHandlers[event] || []).push(fn);
+    return this;
+  },
+
+  trigger: function (event) {
+    var args = [].slice.call(arguments, 1);
+    args.unshift({ type: event });
+    for (var list = this._eventHandlers[event], i = 0; list && list[i];) {
+      list[i++].apply(this, args);
+    }
+    return this;
   }
 };
 

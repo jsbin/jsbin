@@ -1748,7 +1748,7 @@ a.active:hover {
 /* log types */
 /*#output span.gutter:before { position: absolute; }*/
 #output span.gutter:before { display: inline-block; font-family: monospace; font-size: 13px; line-height: 20px; }
-#output .echo span.gutter:before { content: '❯ '; color: #3583FC; font-weight: bold; margin-left: 5px; }
+#output .echo span.gutter:before { content: '❯ '; color: #8595AD; /*#3583FC;*/ font-weight: bold; margin-left: 5px; }
 #output .info span.gutter:before { content: 'i '; color: #27A700; font-weight: bold; margin-left: 4px; }
 #output .error span.gutter:before { content: '× '; color: #E81D20; margin-right: -10px; margin-left: 2px; font-size: 20px; font-weight: bold; }
 #output .response span.gutter:before { line-height: 16px; content: '« '; color: #BDC3CD; margin-right: -10px; font-size: 20px; }

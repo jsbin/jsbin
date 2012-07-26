@@ -106,10 +106,12 @@ function keycontrol(event) {
       if (event.metaKey && event.which == 13) {
         if (editors.console.visible && !editors.live.visible) {
           hasRun = true;
-          editors.console.render();
+          // editors.console.render();
+          $('#runconsole').click();
         }
         if (editors.live.visible) {
-          editors.live.render(true);
+          // editors.live.render(true);
+          $('#runwithalerts').click();
           hasRun = true;
         }
 

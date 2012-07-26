@@ -114,6 +114,11 @@ function run(cmd) {
 function post(cmd, blind, response /* passed in when echoing from remote console */) {
   cmd = trim(cmd);
 
+  if (blind === undefined) {
+    history.push(cmd);
+    setHistory(history);
+  } 
+
   if ((cmd.match(commandPresent) || []).length > 1) {
     // split the command up in to blocks and internal commands and run sequentially
   } else {
@@ -147,13 +152,13 @@ function post(cmd, blind, response /* passed in when echoing from remote console
     if (enableCC) {
       try {
         // document.getElementsByTagName('a')[0].focus();
-        cursor.focus();
-        document.execCommand('selectAll', false, null);
-        document.execCommand('delete', false, null);
+        if (jsbin.panels.focused.id === 'console') {
+          cursor.focus();
+          document.execCommand('selectAll', false, null);
+          document.execCommand('delete', false, null);          
+        }
       } catch (e) {}
     }
-
-    output.parentNode.scrollTop = output.parentNode.scrollHeight + 1000;
   }
   pos = history.length;
 }
@@ -198,6 +203,7 @@ window.info = function(cmd) {
 
 function appendLog(el, echo) {
   output.appendChild(el);
+  output.parentNode.scrollTop = output.parentNode.scrollHeight + 1000;
   return;
 
   if (echo) {
@@ -230,11 +236,12 @@ function noop() {}
 function showhelp() {
   var commands = [
     ':reset - destroy state and start afresh',
+    ':history - list current session history',
     ':load &lt;url&gt; - to inject new DOM',
     ':load &lt;script_url&gt; - to inject external library',
     '      load also supports following shortcuts: <br />      jquery, underscore, prototype, mootools, dojo, rightjs, coffeescript, yui.<br />      eg. :load jquery',
     ':clear - to clear contents of the console',
-    ':about'
+    ':about jsconsole'
   ];
   return commands.join('\n');
 }
@@ -331,7 +338,34 @@ window._console = {
 };
 
 function about() {
-  return 'Built by <a target="_new" href="http://twitter.com/rem">@rem</a>';
+  return 'Ported to JS Bin from <a target="_new" href="http://jsconsole.com">jsconsole.com</a>';
+}
+
+function setHistory(history) {
+  if (typeof JSON == 'undefined') return;
+  
+  try {
+    // because FF with cookies disabled goes nuts, and because sometimes WebKit goes nuts too...
+    sessionStorage.setItem('history', JSON.stringify(history));
+  } catch (e) {}
+}
+
+function getHistory() {
+  var history = [''];
+  
+  if (typeof JSON == 'undefined') return history;
+  
+  try {
+    // because FF with cookies disabled goes nuts, and because sometimes WebKit goes nuts too...
+    history = JSON.parse(sessionStorage.getItem('history') || '[""]');
+  } catch (e) {}
+  return history;
+}
+
+function showHistory() {
+  var h = getHistory();
+  h.shift();
+  return h.join("\n");
 }
 
 var exec = document.getElementById('exec'),
@@ -339,6 +373,7 @@ var exec = document.getElementById('exec'),
     output = null,
     sandboxframe = null,
     sandbox = null,
+    history = getHistory(),
     codeCompleteTimer = null,
     fakeConsole = 'window.top._console',
     libraries = {
@@ -355,8 +390,9 @@ var exec = document.getElementById('exec'),
     logAfter = null,
     lastCmd = null,
     wait = false,
-    commandPresent = /:((?:help|about|load|clear|reset|wait)(?:.*))\n/gi,
-    commands = { 
+    commandPresent = /:((?:help|about|load|clear|reset|wait|history)(?:.*))\n/gi,
+    commands = {
+      history: showHistory,
       help: showhelp, 
       about: about,
       load: load,
@@ -792,10 +828,13 @@ var jsconsole = {
     // stupid jumping through hoops if Firebug is open, since overwriting console throws error
     // sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
     // sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-
+    // sandbox.open();
+    // sandbox.write(getPreparedCode(true));
     sandboxframe.contentWindow.eval('(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();');
 
-    sandbox.close();
+    // sandbox.close();
+
+    this.sandboxframe = sandboxframe;
 
     getProps('window'); // cache 
   },
@@ -925,28 +964,35 @@ jsconsole.remote.warn = jsconsole.remote.info;
 // window.top._console = jsconsole.remote;
 
 function upgradeConsolePanel(console) {
-  console.init = function () {
-    jsbin.panels.panels.console.$el.click(function () {
+  // console.init = function () {
+    console.$el.click(function () {
       jsconsole.focus();
     });
-    editors.console.settings.render = function () {
+    console.reset = function () {
+      jsconsole.reset();
+    };
+    console.settings.render = function () {
+
       // TODO decide whether we should also grab all the JS in the HTML panel
       var code = editors.javascript.render();
-      setTimeout(function () {
-        jsconsole.reset();
-        // jsconsole.setSandbox($live.find('iframe')[0]);
-        if ($.trim(code)) jsconsole.run(code);
-      }, 0);
+      // setTimeout(function () {
+        // $(jsconsole.sandboxframe).on('load', function () {
+          jsconsole.setSandbox($live.find('iframe')[0]);
+
+          if ($.trim(code)) jsconsole.run(code);
+        // });
+      // }, 0);
     };
-    editors.console.settings.show = function () {
-      renderLivePreview(true);
+    console.settings.show = function () {
+      jsconsole.clear();
+      // renderLivePreview(true);
       // setTimeout because the renderLivePreview creates the iframe after a timeout
       setTimeout(function () {
-        jsconsole.setSandbox($live.find('iframe')[0]);
+        // jsconsole.setSandbox($live.find('iframe')[0]);
         if (editors.console.ready) jsconsole.focus();
       }, 0);
     };
-    editors.console.settings.hide = function () {
+    console.settings.hide = function () {
       if (!editors.live.visible) {
         // renderLivePreview();
         $live.find('iframe').remove();
@@ -954,8 +1000,21 @@ function upgradeConsolePanel(console) {
     };
     jsconsole.ready = true;
     jsconsole.remote.flush();
-    // editors.console.fakeConsole = window._console
-  };
 
-  console.init();
+    $document.one('jsbinReady', function () {
+      var hidebutton = function () {
+        $('#runconsole')[this.visible ? 'hide' : 'show']();
+      };
+
+      jsbin.panels.panels.live.on('show', hidebutton).on('hide', hidebutton);
+
+      if (jsbin.panels.panels.live.visible) {
+        $('#runconsole').hide();
+      }
+
+    });
+    // editors.console.fakeConsole = window._console
+  // };
+
+  // console.init();
 }

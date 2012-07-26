@@ -36,7 +36,7 @@ function two(i) {
   return ('0'+i).slice(-2);
 }
 
-function getPreparedCode() {
+function getPreparedCode(nojs) {
   // init the regular expression cache because this function
   // is called much earlier than the above code is actually encountered
   // yay for massive .js app!
@@ -81,15 +81,17 @@ function getPreparedCode() {
 
   hasHTML = !!$.trim(source);
 
-  try {
-    js = editors.javascript.render();
+  if (!nojs) {
+    try {
+      js = editors.javascript.render();
 
-    if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
-  } catch (e) {
-    console && console.error(e.message);
+      if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
+    } catch (e) {
+      console && console.error(e.message);
+    }
   }
 
-  hasJS = !!$.trim(js);
+  hasJS = !!js.trim();
 
   try {
     css = editors.css.render();

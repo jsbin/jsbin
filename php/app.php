@@ -70,12 +70,12 @@ setcookie('_csrf', $csrf, 0, PATH);
 //   exit;
 // }
 
-$request = split('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
+$request = explode('/', preg_replace('/^\//', '', preg_replace('/\/$/', '', preg_replace('/\?.*$/', '', $request_uri ))));
 
 $action = array_pop($request);
 
 if (stripos($action, '.') !== false) {
-  $parts = split('\.', $action);
+  $parts = explode('\.', $action);
   array_push($request, $parts[0]);
   $action = $parts[1];
 }

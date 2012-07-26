@@ -1,20 +1,20 @@
 # TODO
 
-# v3 alpha - hitlist
-
-# misc
+# 3.x
 
 - keyboard shortcuts in menu
 - think about url structure (currently /edit/live is now /live)
 - detect stubbed out bin (where there's no longer an active key to write), and don't deliver the spike on those bins
-- preprocessor UI
-- preprocessor support on server side - jsbin.com/abc.less (raw less), jsbin.com/abc.css (compiled CSS)
-- screencasts!
 - static uploads for users
 - remove bin from my history
 - multiple templates
 - jsbin collections - I want to run a workshop and create a prefix url, that all my bins are saved to, like jsbin. com/rennes-2012/abc/1, jsbin.com/rennes-2012/abc/2, etc
 - delete bins from your homescreen
+- tangle
+- processors in remote rendering
+- shortcut to toggle between output, and whatever panels you had open
+- feedback to the user about number of people viewing their live bin (either through render or through watch)
+- remove sessionStorage store for panels - not required at all anymore!
 
 # URLs
 
@@ -46,7 +46,3 @@
   - codemirror config
   - jsbin settings (key mappings?)
 - Humans.txt
-
-# IE
-
-- Gutter is being rendered thick if the panel isn't visible - possibly solution, only render CM when made visible - problem is the .getCode won't work - so need to think about how to get around it.

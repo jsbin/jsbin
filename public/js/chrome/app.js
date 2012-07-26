@@ -29,3 +29,7 @@ link.rel = 'stylesheet';
 link.href = jsbin.root + '/css/font.css?' + jsbin.version;
 link.type = 'text/css';
 document.getElementsByTagName('head')[0].appendChild(link);
+
+if (jsbin.embed) {
+  analytics.embed();
+}

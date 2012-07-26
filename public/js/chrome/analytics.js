@@ -1,4 +1,7 @@
 var analytics = {
+  embed: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/embed/' + window.top.location.toString()]);
+  },
   revert: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/revert' + window.location.pathname]);
   },

@@ -36,6 +36,9 @@
       }
     }
   },
+  "server": {
+    "logger": "default"
+  },
   "notify": {
     "errors": []
   },

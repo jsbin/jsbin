@@ -16,7 +16,7 @@ For the simplest install process we recommend using Node with SQLite. However, i
 
 You can (and should) install Node directly from `npm` using the following command:
 
-    npm install jsbin
+    $ npm install -g jsbin
 
 This will automatically install all the dependancies.
 

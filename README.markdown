@@ -19,8 +19,8 @@ For detailed instructions on how to build JS Bin in either environment see the [
 If you install [Node.js](http://nodejs.org) installation is easy:
 
 ```
-npm install jsbin
-node .
+$ npm install -g jsbin
+$ jsbin
 ```
 
 Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.

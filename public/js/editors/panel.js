@@ -10,10 +10,10 @@ var editorModes = {
   less: 'css'
 };
 
-if(jsbin.settings.editor.tabMode === "default") {
+if (jsbin.settings.editor.tabMode === 'default') {
   CodeMirror.keyMap.basic.Tab = undefined;
-} else if(jsbin.settings.editor.tabMode !== "classic") {
-  CodeMirror.keyMap.basic.Tab = "indentMore";
+} else if (jsbin.settings.editor.tabMode !== 'classic') {
+  CodeMirror.keyMap.basic.Tab = 'indentMore';
 }
 
 var Panel = function (name, settings) {
@@ -44,6 +44,19 @@ var Panel = function (name, settings) {
 
   if (panel.order === 1) {
     settings.nosplitter = true;
+  }
+
+  // this is nasty and wrong, but I'm going to put here anyway .i..
+  if (this.id === 'javascript') {
+    this.on('processor', function (e, preprocessor) {
+      if (preprocessor === 'none') {
+        jshintEnabled = true;
+        checkForErrors();
+      } else {
+        jshintEnabled = false;
+        $error.hide();
+      }
+    });    
   }
 
   if (jsbin.state.processors && jsbin.state.processors[name]) {

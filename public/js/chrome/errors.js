@@ -16,7 +16,7 @@ var detailsSupport = 'open' in document.createElement('details');
 // yeah, this is happening. Fucking IE...sheesh.
 var html = $.browser.msie && $.browser.version < 9 ? '<div class="details"><div class="summary">warnings</div>' : '<details><summary class="summary">warnings</summary></details>';
 
-var $error = $(html).appendTo('#source .javascript').hide();
+var $error = $(html).appendTo('.panel.javascript').hide();
 
 $error.find('.summary').click(function () {
   if (!detailsSupport) {
@@ -105,16 +105,6 @@ var checkForErrors = function () {
     $document.trigger('sizeeditors');
   }
 };
-
-jsbin.panels.panels.javascript.on('processor', function (e, preprocessor) {
-  if (preprocessor === 'none') {
-    jshintEnabled = true;
-    checkForErrors();
-  } else {
-    jshintEnabled = false;
-    $error.hide();
-  }
-})
 
 if (jsbin.settings.jshint === true || jsbin.settings.jshint === undefined) {
   $(document).bind('codeChange', throttle(checkForErrors, 1000));

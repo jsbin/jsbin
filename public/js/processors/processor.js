@@ -147,6 +147,7 @@ processors.set = function (panelId, preprocessor, callback) {
   var cmMode = preprocessor ? editorModes[preprocessor] || editorModes[panelId] : editorModes[panelId];
 
   if (panel) {
+    panel.trigger('processor', preprocessor || 'none');
     if (preprocessor && processors[preprocessor]) {
       jsbin.state.processors[panelId] = preprocessor;
       panel.processor = processors[preprocessor](function () {

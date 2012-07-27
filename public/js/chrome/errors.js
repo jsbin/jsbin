@@ -9,6 +9,8 @@ var jshint = function () {
   return ok ? true : JSHINT.data();
 };
 
+var jshintEnabled = true;
+
 var detailsSupport = 'open' in document.createElement('details');
 
 // yeah, this is happening. Fucking IE...sheesh.
@@ -70,8 +72,8 @@ $error.delegate('li', 'click', function () {
 });
 
 var checkForErrors = function () {
-  // exit if the javascript panel isn't visible
-  if (!editors.javascript.visible) return;
+  // exit if the javascript panel isn't visible or jshint is disabled (for example by the user or when using a js preprocessor)
+  if (!editors.javascript.visible || !jshintEnabled) return;
 
   var hint = jshint(),
       jshintErrors = JSHINT.data(true),
@@ -103,6 +105,16 @@ var checkForErrors = function () {
     $document.trigger('sizeeditors');
   }
 };
+
+jsbin.panels.panels.javascript.on('processor', function (e, preprocessor) {
+  if (preprocessor === 'none') {
+    jshintEnabled = true;
+    checkForErrors();
+  } else {
+    jshintEnabled = false;
+    $error.hide();
+  }
+})
 
 if (jsbin.settings.jshint === true || jsbin.settings.jshint === undefined) {
   $(document).bind('codeChange', throttle(checkForErrors, 1000));

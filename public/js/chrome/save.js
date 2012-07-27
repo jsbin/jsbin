@@ -69,6 +69,15 @@ if (!jsbin.saveDisabled) {
       css: $('.panel.css .name span')
     };
 
+    jsbin.panels.allEditors(function (panel) {
+      panel.on('processor', function () {
+        // if the url doesn't match the root - i.e. they've actually saved something then save on processor change
+        if (jsbin.root !== jsbin.getURL()) {
+          $document.trigger('codeChange', [{ panelId: panel.id }]);
+        }
+      });
+    });
+
     $document.bind('codeChange', function (event, data) {
       // savingLabels[data.panelId].text('Saving');
       if (savingLabels[data.panelId]) {

@@ -38,6 +38,5 @@
   "licenses": [{
     "type": "MIT",
     "url": "http://rem.mit-license.org"
-  }],
-  "private": true
+  }]
 }

@@ -39,7 +39,7 @@
               position: 'absolute',
               cursor: 'ew-resize',
               // 'border-top': '0',
-              'border-left': '2px solid rgba(218, 218, 218, 0.5)',
+              'border-left': '1px solid rgba(218, 218, 218, 0.5)',
               'z-index': 99999
             }
           },
@@ -203,7 +203,7 @@
         $handle.hide();
       } else {
         if ($prev.length) {
-          $el.css('border-' + props[type].cssProp, '2px solid #ccc');
+          $el.css('border-' + props[type].cssProp, '1px solid #ccc');
         } else {
           $el.css('border-' + props[type].cssProp, '0');
         }

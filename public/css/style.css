@@ -1624,6 +1624,22 @@ html * {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3dafc', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 /
   */
   /*border-right: 1px solid #ccc;*/
+  /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEElEQVQIW2PcfOvPf0YQAQAiYwcToXYG5AAAAABJRU5ErkJggg==);*/
+}
+
+.label:before {
+  position: absolute;
+  display: block;
+  background: #ccc;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  content: '';
+}
+
+.focus .label:before {
+  background: #A3D4FF;
 }
 
 .ie .focus .label {

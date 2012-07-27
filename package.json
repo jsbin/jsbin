@@ -7,7 +7,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "lib/app",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "preferGlobal" : "true",
   "homepage": "http://jsbin.com",
   "main": "./lib/app",
@@ -15,9 +15,6 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"
-  },
-  "engines": {
-    "node": "~0.6.13|0.8.x"
   },
   "dependencies": {
     "express": "3.0.0alpha4",

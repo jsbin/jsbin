@@ -31,6 +31,16 @@ cmd.option('-c --config <config.json>', 'path to config file', function (file) {
   }
 });
 
+cmd.option('-l --logger <default|short|tiny|dev|none>', 'server logger option', function (logger) {
+  var valid = 'default short tiny dev none'.split(' ');
+
+  if (valid.indexOf(logger) !== -1) {
+    process.env.JSBIN_LOGGER = logger;
+  } else {
+    error('-l logger must be one of "' + valid.join('" or "') + '"');
+  }
+})
+
 cmd.option('-e --env <development>', 'deployment environment', function (env) {
   process.env.NODE_ENV = env;
 });
@@ -43,6 +53,6 @@ app.connect(function (err) {
     throw err;
   }
 
-  process.stdout.write('JSBin is up and running on port ' + app.set('port') + '. Now point your browser at ' + app.set('url full') + '\n');
+  process.stdout.write('JS Bin is up and running on port ' + app.set('port') + '. Now point your browser at ' + app.set('url full') + '\n');
   app.listen(app.set('port'));
 });

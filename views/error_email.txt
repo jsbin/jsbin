@@ -5,7 +5,7 @@ So JSBin blew up accessing: {{url}}
 {{stack}}
 
 {{method}} {{path}}
-{{headers}}
+{{{headers}}}
 
 {{#body}}
 POST Body:

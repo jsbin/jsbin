@@ -15,7 +15,7 @@ cmd.version(require('../package.json').version);
 cmd.option('-p --port <port>', 'port to run on', function (port) {
   port = parseInt(port, 10);
   if (port) {
-    process.env.PORT = port;
+    process.env.JSBIN_PORT = port;
   } else {
     error('-p port must be numeric');
   }

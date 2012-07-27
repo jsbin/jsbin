@@ -10,6 +10,12 @@ var editorModes = {
   less: 'css'
 };
 
+if(jsbin.settings.editor.tabMode === "default") {
+  CodeMirror.keyMap.basic.Tab = undefined;
+} else if(jsbin.settings.editor.tabMode !== "classic") {
+  CodeMirror.keyMap.basic.Tab = "indentMore";
+}
+
 var Panel = function (name, settings) {
   var panel = this,
       showPanelButton = true,
@@ -51,7 +57,6 @@ var Panel = function (name, settings) {
   if (settings.editor) {
     cmSettings = {
       parserfile: [],
-      tabMode: 'shift',
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],

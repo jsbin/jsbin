@@ -20,7 +20,6 @@ If you install [Node.js](http://nodejs.org) installation is easy:
 
 ```
 npm install jsbin
-cd jsbin
 node .
 ```
 

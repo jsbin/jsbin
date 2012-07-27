@@ -48,11 +48,4 @@ cmd.option('-e --env <development>', 'deployment environment', function (env) {
 cmd.parse(process.argv);
 
 app = require('../lib/app.js');
-app.connect(function (err) {
-  if (err) {
-    throw err;
-  }
-
-  process.stdout.write('JS Bin is up and running on port ' + app.set('port') + '. Now point your browser at ' + app.set('url full') + '\n');
-  app.listen(app.set('port'));
-});
+app.connect();

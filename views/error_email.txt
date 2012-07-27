@@ -4,17 +4,23 @@ So JSBin blew up accessing: {{url}}
 
 {{stack}}
 
+{{method}} {{path}}
+{{headers}}
+
 {{#body}}
 POST Body:
 
 {{{body}}}
 
 {{/body}}
+
 {{#session}}
 Session:
 
 {{{session}}}
 
 {{/session}}
+
 Cheers,
+
 Dave

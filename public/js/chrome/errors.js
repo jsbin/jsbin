@@ -106,6 +106,16 @@ var checkForErrors = function () {
   }
 };
 
+jsbin.panels.panels.javascript.on('processor', function (e, preprocessor) {
+  if (preprocessor === 'none') {
+    jshintEnabled = true;
+    checkForErrors();
+  } else {
+    jshintEnabled = false;
+    $error.hide();
+  }
+})
+
 if (jsbin.settings.jshint === true || jsbin.settings.jshint === undefined) {
   $(document).bind('codeChange', throttle(checkForErrors, 1000));
   $(document).bind('jsbinReady', checkForErrors);

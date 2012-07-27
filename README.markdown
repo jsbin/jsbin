@@ -2,22 +2,43 @@
 
 ## Build Process
 
-JS Bin is currently designed to work offline in development mode and online in production mode - which should trigger automatically.
+JS Bin has been designed to work both online at http://jsbin.com but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging @js_bin on twitter).
 
-This is controlled through the config.php and the `jsbin.js` file that is pulled in.  When offline, this file is generated on the fly through a php version of Sprockets (tweaked by me to support multiple base paths).  The production version will be pre-built, via Sprockets & Google's closure compiler.
+There's two installation paths: Node (recommended) and PHP.
 
-If you want to install JS Bin on your own machine, make sure you check out the [installing JS Bin wiki guide](https://github.com/remy/jsbin/wiki/How-to-install-JS-Bin-in-your-own-environment).
+Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour does not support the following:
 
-## Collaborative JavaScript Debugging
+- Remote rendering
+- CodeCasting
+- Processors
 
-* Test live JavaScript with HTML and CSS context
-* Public URLs render outside of JS Bin
-* Inject major JavaScript libraries
+However, everything else released in v3 of JS Bin is available in both.
+
+For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](docs/running-your-own-jsbin.md).
+
+If you install [Node.js](http://nodejs.org) installation is easy:
+
+```
+npm install jsbin
+cd jsbin
+node .
+```
+
+Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.
+
+
+## What can JS Bin do?
+
+* Write code and have it both save in real-time, but also render a full preview in real-time
+* Help debug other people's JavaScript, HTML or CSS by sharing and editing urls
+* CodeCast - where you share what you're typing in JS Bin in real-time
+* Remote rendering - view the output of your JS Bin on any device on any platform, updating in real-time
+* Processors, including: coffee-script, LESS, Markdown and Jade.
 * Debug remote Ajax calls
 
 ## About
 
-JS Bin is an open source collaborative JavaScript debugging tool.
+JS Bin is an open source collaborative web development debugging tool.
 
 ## Who built this?
 
@@ -26,6 +47,8 @@ JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open so
 If you would like to work with Remy and his company, [Left Logic](http://leftlogic.com) on a front end development project, [please get in touch](http://leftlogic.com/contact?message=Found%20through%20jsbin.com).
 
 UX was kindly donated by [Danny Hope](http://yandleblog.com) who also tweets as [@yandle](http://twitter.com/yandle).
+
+The vast majority of the port from PHP to Node was done by [Aron Carroll](http://aroncarroll.com/) who also plays in github as [@aron](http://github.com/aron).
 
 ## A short history
 

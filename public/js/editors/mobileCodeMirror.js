@@ -70,4 +70,7 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
   CodeMirror.fromTextArea = function (el, options) {
       return new Editor(el, options);
   };
+
+  CodeMirror.keyMap = { basic: {} };
+
 }

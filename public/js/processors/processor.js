@@ -39,6 +39,8 @@ var $processorSelectors = $('div.processorSelector').each(function () {
 
 
 var Processor = function (url, init, handler) {
+  var failed = false;
+
   if (typeof handler === 'undefined') {
     handler = init;
     init = null;
@@ -47,10 +49,14 @@ var Processor = function (url, init, handler) {
   $.getScript(url, function () {
     if (init) init();
     callback = handler;
+    if (failed) {
+      renderLivePreview();
+    }
   });
 
   var callback = function () {
     console && console.warn('Processor is not ready yet - trying again');
+    failed = true;
     return '';
   };
 

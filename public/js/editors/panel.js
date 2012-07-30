@@ -110,7 +110,7 @@ var Panel = function (name, settings) {
   }
 
   if (showPanelButton) {
-    this.controlButton = $('<a class="button group" href="#' + name + '">' + (settings.label || name) + '</a>');
+    this.controlButton = $('<a class="button group" href="?' + name + '">' + (settings.label || name) + '</a>');
     this.controlButton.click(function () {
       panel.toggle();
       return false;

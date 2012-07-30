@@ -1627,7 +1627,7 @@ html * {
   /*background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEElEQVQIW2PcfOvPf0YQAQAiYwcToXYG5AAAAABJRU5ErkJggg==);*/
 }
 
-.label:before {
+.panel:before {
   position: absolute;
   display: block;
   background: #ccc;
@@ -1638,7 +1638,7 @@ html * {
   content: '';
 }
 
-.focus .label:before {
+.focus.panel:before {
   background: #A3D4FF;
 }
 

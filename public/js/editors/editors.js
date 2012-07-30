@@ -39,7 +39,7 @@ panels.save = function () {
     state[panel.name] = left;
   }
 
-  localStorage.setItem('jsbin.panels', JSON.stringify(state));
+  sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
 }
 
 panels.restore = function () {
@@ -50,7 +50,12 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = search || hash ? (search || hash).split(',') : jsbin.settings.panels || [],
-      state = JSON.parse(localStorage.getItem('jsbin.panels') || 'null'),
+      state = JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
+      hasContent = {
+        javascript: editors.javascript.getCode().length,
+        css: editors.css.getCode().length,
+        html: editors.html.getCode().length
+      },
       name = '',
       i = 0,
       panel = null,
@@ -63,6 +68,13 @@ panels.restore = function () {
 
   if (history.replaceState && location.pathname.indexOf('/edit') !== -1) {
     history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
+  }
+
+  if (toopen.length === 0 && state === null) {
+    if (hasContent.javascript) toopen.push('javascript');
+    if (hasContent.html) toopen.push('html');
+    if (hasContent.css) toopen.push('css');
+    toopen.push('live');
   }
 
   // otherwise restore the user's regular settings
@@ -370,7 +382,9 @@ panels.allEditors = function (fn) {
   }
 };
 
-panels.restore();
+setTimeout(function () {
+  panels.restore();
+}, 10);
 panels.focus(panels.getVisible()[0] || null);
 
 // allow panels to be reordered - TODO re-enable

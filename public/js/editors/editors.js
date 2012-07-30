@@ -430,8 +430,7 @@ var editorsReady = setInterval(function () {
     if (panels.panels.live.visible) {
       panels.panels.live.render(true);
     } else if (panels.panels.console.visible) {
-      renderLivePreview();
-      // panels.panels.console.render();
+      renderLivePreview(true);
     }
 
     $(window).resize(function () {

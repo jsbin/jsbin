@@ -836,7 +836,34 @@ var jsconsole = {
 
     this.sandboxframe = sandboxframe;
 
+    if (sandbox.readyState !== 'complete') {
+      this.ready = false;
+    } else {
+      jsconsole.onload();
+    }
+
+    sandbox.onreadystatechange = function () {
+      if (sandbox.readyState === 'complete') {
+        jsconsole.ready = true;
+        jsconsole.onload();
+      }
+    };
+
     getProps('window'); // cache 
+  },
+  _onloadQueue: [],
+  onload: function (fn) {
+    var i = 0, length = this._onloadQueue.length;
+    if (this.ready === false && fn) { // if not ready and callback passed - cache it
+      this._onloadQueue.push(fn);
+    } else if (this.ready === true && !fn) { // if ready and not callback - flush cache
+      for (; i < length; i++) {
+        this._onloadQueue[i].call(this);
+      }
+      this._onloadQueue = [];      
+    } else if (fn) { // if callback and ready - run callback
+      fn.call(this);
+    }
   },
   init: function (outputElement, nohelp) {
     output = outputElement;
@@ -974,14 +1001,11 @@ function upgradeConsolePanel(console) {
     console.settings.render = function () {
 
       // TODO decide whether we should also grab all the JS in the HTML panel
-      var code = editors.javascript.render();
-      // setTimeout(function () {
-        // $(jsconsole.sandboxframe).on('load', function () {
-          jsconsole.setSandbox($live.find('iframe')[0]);
-
-          if ($.trim(code)) jsconsole.run(code);
-        // });
-      // }, 0);
+      var code = editors.javascript.render().trim();
+      jsconsole.setSandbox($live.find('iframe')[0]);
+      jsconsole.onload(function () { 
+        jsconsole.run(code);
+      });
     };
     console.settings.show = function () {
       jsconsole.clear();
@@ -998,7 +1022,7 @@ function upgradeConsolePanel(console) {
         $live.find('iframe').remove();
       }
     };
-    jsconsole.ready = true;
+    // jsconsole.ready = true;
     jsconsole.remote.flush();
 
     $document.one('jsbinReady', function () {

@@ -41,6 +41,16 @@ $('.homebtn').click(function () {
   return false;
 });
 
+var $lockrevision = $('.lockrevision').click(function (event) {
+  event.preventDefault();
+  $lockrevision.addClass('disabled').attr('disabled', true);
+  saveChecksum = false;
+});
+
+$('#sharemenu').bind('open', function () {
+  $lockrevision.removeClass('disabled').removeAttr('disabled');
+})
+
 var dropdownOpen = false,
     onhover = false,
     menuDown = false;
@@ -49,7 +59,7 @@ function opendropdown(el) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
-    var input = menu.find('input:visible:first').focus()[0];
+    var input = menu.find(':text:visible:first').focus()[0];
     if (input) setTimeout(function () {
       input.select();
     }, 0);

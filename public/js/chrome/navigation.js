@@ -43,13 +43,21 @@ $('.homebtn').click(function () {
 
 var $lockrevision = $('.lockrevision').click(function (event) {
   event.preventDefault();
+  analytics.lock();
   $lockrevision.addClass('disabled').attr('disabled', true);
   saveChecksum = false;
 });
 
+$document.on('saved', function () {
+  $lockrevision.val(function (i, val) {
+    return val.replace(/#\d+$/, '#' + jsbin.state.revision);
+  });
+});
+
 $('#sharemenu').bind('open', function () {
+  analytics.openShare();
   $lockrevision.removeClass('disabled').removeAttr('disabled');
-})
+});
 
 var dropdownOpen = false,
     onhover = false,

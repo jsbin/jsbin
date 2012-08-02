@@ -12,10 +12,10 @@ var analytics = {
     window._gaq && _gaq.push(['_trackPageview', '/action/clone' + window.location.pathname]);
   },
   lock: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/lock-revision');
+    window._gaq && _gaq.push(['_trackPageview', '/action/lock-revision']);
   },
   openShare: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/open-share');
+    window._gaq && _gaq.push(['_trackPageview', '/action/open-share']);
   },
   saveTemplate: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/save-template']);

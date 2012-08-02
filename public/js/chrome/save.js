@@ -9,7 +9,7 @@ $('a.save').click(function (event) {
   return false;
 });
 
-function updateSavedState() {
+$document.on('saved', function updateSavedState() {
   $('#share form div').each(function () {
     var $div = $(this).removeClass('disabled').unbind('click mousedown mouseup'),
         url = jsbin.getURL() + this.getAttribute('data-path');
@@ -29,7 +29,7 @@ function updateSavedState() {
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
   $('#clone').removeClass('hidden');
-}
+});
 
 // updateSavedState();
 
@@ -226,7 +226,7 @@ function saveCode(method, ajax, ajaxCallback) {
         $binGroup.find('td.url a span.first').removeClass('first');
         $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
-        updateSavedState();
+        $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
           window.history.pushState(null, edit, edit);

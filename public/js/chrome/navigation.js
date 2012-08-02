@@ -41,6 +41,24 @@ $('.homebtn').click(function () {
   return false;
 });
 
+var $lockrevision = $('.lockrevision').click(function (event) {
+  event.preventDefault();
+  analytics.lock();
+  $lockrevision.addClass('disabled').attr('disabled', true);
+  saveChecksum = false;
+});
+
+$document.on('saved', function () {
+  $lockrevision.val(function (i, val) {
+    return val.replace(/#\d+$/, '#' + jsbin.state.revision);
+  });
+});
+
+$('#sharemenu').bind('open', function () {
+  analytics.openShare();
+  $lockrevision.removeClass('disabled').removeAttr('disabled');
+});
+
 var dropdownOpen = false,
     onhover = false,
     menuDown = false;
@@ -49,7 +67,7 @@ function opendropdown(el) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
-    var input = menu.find('input:visible:first').focus()[0];
+    var input = menu.find(':text:visible:first').focus()[0];
     if (input) setTimeout(function () {
       input.select();
     }, 0);

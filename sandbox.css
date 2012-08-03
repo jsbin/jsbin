@@ -1,0 +1,447 @@
+body {
+  background-color: #121212;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  font: 16px Helvetica, verdana, sans-serif;
+  height: 100%;
+  overflow: hidden;
+}
+
+body.light {
+  background-color: #fff;
+  color: #000;
+}
+
+p {
+  margin: 10px 0;
+  line-height: 1.3em;
+}
+
+a {
+  color: #fff;
+  background-color: #121212;
+  padding: 3px;
+}
+
+body.light a {
+  background-color: #fff;
+  color: #000;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+em {
+  background: #222;
+  padding: 3px;
+  font-style: normal;
+}
+
+em a {
+  background: #222;
+  padding: 3px;
+  font-style: normal;  
+}
+
+form {
+  background: url(/header-bg.gif) repeat-x top left;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 30px 0 10px 0;
+}
+
+
+#header ul,
+#navigation {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+  height: 14px;
+}
+
+#navigation {
+  height: 25px;
+}
+
+#header li,
+#navigation li {
+  display: inline;
+}
+
+code {
+  font-family: Monaco, "Courier New"; 
+}
+
+#headerWrapper {
+  height: 83px;
+  background: url(/header-bg.gif) repeat-x top left;
+}
+
+#header {
+  color: #fff;
+  position: relative;
+  text-shadow: #884622 1px 1px 0;
+}
+
+#wrapper {
+  clear: left;
+  padding: 10px;
+/*  border-top: 1px solid #616161;*/
+}
+
+#body {
+/*  position: relative;*/
+}
+
+#navigation li a:focus {
+  outline: 0;
+}
+
+#navigation li a {
+  opacity: 0.8;
+  -moz-opacity: 0.8;
+  filter:alpha(opacity=80);
+  outline: 0;
+  padding: 10px;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+/*  border: 1px solid #000;*/
+  border-bottom: 1px solid rgb(18, 18, 18);
+  background-color: #121212;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  float: left;
+  display: block;
+  min-width: 88px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+body.light #navigation li a {
+  background-color: #fff;
+  color: #000;
+}
+
+#navigation li a:hover {
+  opacity: 1;
+  -moz-opacity: 1;
+  filter:alpha(opacity=100);
+  background-color: #151515;
+  cursor: pointer;
+}
+
+#navigation li a.selected {
+  opacity: 1;
+  -moz-opacity: 1;
+  filter:alpha(opacity=100);
+  background-color: #121212;
+/*  border: 1px solid #616161;*/
+  border-bottom: 0;
+  padding-bottom: 11px;
+}
+
+textarea, pre, .codeSizer { 
+  position: absolute;
+  border: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 14px; 
+  font-family: Monaco, "Courier New"; 
+  background: #121212; 
+  color: #FFF; 
+  margin: 0px; 
+  border: 0; 
+  overflow: auto;
+}
+
+textarea { 
+  width: 100%;
+  height: 100%;
+  top: 83px;
+}
+
+body.light textarea, body.light pre, body.light .codeSizer {
+  background: #fff;
+  color: #000;
+}
+
+#body textarea {
+/*  width: 100%;
+  padding: 5px;
+  height: 100px;
+  min-height: 100px;
+  max-height: 9990px;
+*/  display: none;
+}
+
+#body iframe, #output {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#body iframe {
+  background-color: #fff;
+}
+
+.codeSizer {
+  position: absolute;
+  visibility: hidden;
+  left: -9999px;
+  top: -9999px;
+}
+
+#header a {
+  text-shadow: none;
+  padding: 3px;
+  background: #fff;
+  color: #000;
+}
+
+#header a:hover {
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  top: 11px;
+}
+
+#javascript pre, #html pre {
+  padding: 5px;
+  position: relative;
+  min-height: 400px;
+}
+
+#javascript pre .help, #html pre .help {
+  font: 16px Helvetica, verdana, sans-serif;
+  display: none;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px;
+  background-color: #333;
+  color: #fff;
+}
+
+#javascript pre:hover, #html pre:hover {
+  border: 1px dashed #333;
+  padding: 4px;
+}
+
+#javascript pre:hover .help, #html pre:hover .help {
+/*#javascript pre .help, #html pre .help {*/
+  display: block;
+}
+
+body.light #javascript pre .help, body.light #html pre .help {
+  background-color: #999;
+}
+
+body.light #javascript pre:hover, body.light #html pre:hover {
+  border: 1px dashed #999;
+}
+
+#video {
+  position: relative;
+}
+
+.videoBlock {
+  margin: 0 auto;
+  width: 1038px;
+}
+
+#intro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background: url(/op7.png) repeat;
+  display: none;
+}
+
+#intro .lightbox {
+  background: #ccc;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  color: #000;
+  padding: 10px;
+  width: 600px;
+  margin: 50px auto;
+  position: relative;
+}
+
+#intro .lightbox div {
+  background: #fff;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;  
+  border: 1px solid #fff;
+  padding: 20px;
+}
+
+#intro h1 {
+  margin: 0 0 22px 0;
+}
+
+#intro ul,
+#intro ol {
+  padding-left: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+#intro li {
+  margin: 20px;
+  font-size: 130%;
+}
+
+#intro p {
+  text-align: center;
+  font-size: 150%;
+  padding: 20px 0;
+}
+
+#intro small {
+/*  position: absolute;
+*/  width: 560px;
+  bottom: 20px;
+  display: block;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+#options {
+  display: none;
+}
+
+#options div {
+  padding: 10px;
+}
+
+#footer {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 0;
+  font-size: 65%;
+  color: #282828;
+}
+
+#footer a {
+  color: #6B6B6B;
+  background: transparent;
+}
+
+#footer a img {
+  vertical-align: bottom;
+  opacity: 0.5;
+  -moz-opacity: 0.5;
+  filter:alpha(opacity=50);
+}
+
+#footer a:hover img {
+  opacity: 1;
+  -moz-opacity: 1;
+  filter:alpha(opacity=100);
+}
+
+body.light #footer, body.light #footer a {
+  color: #ccc;
+}
+
+#header a.streaming {
+  background-color: #009000;
+  color: #fff;
+}
+
+/*
+===============================================================================
+Chili is the jQuery code highlighter plugin
+...............................................................................
+                                               Copyright 2007 / Andrea Ercolino
+-------------------------------------------------------------------------------
+LICENSE: http://www.opensource.org/licenses/mit-license.php
+WEBSITE: http://noteslog.com/chili/
+===============================================================================
+*/
+
+/*
+this file shows how to configure a static setup
+it must be linked from the head of a page like: 
+<link rel="stylesheet" type="text/css" href="chili/recipes.css"/>
+
+// Using a play on Gruber Dark:
+// http://daringfireball.net/projects/bbcolors/schemes/
+
+*/
+
+.html { color: #f3f3ff; }
+.html .tag    { color: #73C836; }
+.html .aname  { color: #95A99F; }
+.html .avalue { color: #96A6C8; }
+.html .mlcom  { color: #CC8C3C; }
+.html .entity { color: #fd3; }
+
+.javascript { color: #F3F3FF; }
+.javascript .mlcom    { color: #5f617e; }
+.javascript .com      { color: #5f617e; }
+.javascript .regexp   { color: #906; }
+.javascript .string   { color: #CC8C3C; }
+.javascript .global   { color: #CC8C3C; }
+.javascript .keywords { color: #96A6C8; }
+.javascript .numbers  { color: #858ef4; }
+.javascript .method   { color: #73C836; }
+.javascript .selector   { color: #CC8C3C; }
+
+.javascript .jquery .object       { color: red; font-weight: bold; }
+.javascript .jquery .private      { background-color: #CCCC99; }
+.javascript .jquery .attributes   { background-color: #CCCC00; }
+.javascript .jquery .traversing   { background-color: #CCCC00; }
+.javascript .jquery .manipulation { background-color: #CCCC00; }
+.javascript .jquery .utilities    { background-color: #CCCCFF; }
+.javascript .jquery .core         { background-color: #7F7FFF; color: white; }
+.javascript .jquery .ajax         { background-color: #7F7FFF; color: #FFD400; }
+.javascript .jquery .css          { background-color: #999900; color: white; }
+.javascript .jquery .effects      { background-color: #FFAA00; }
+.javascript .jquery .events       { background-color: #FFD400; }
+
+
+body.light .html { color: #212121; }
+body.light .html .tag    { color: navy; }
+body.light .html .aname  { color: purple; }
+body.light .html .avalue { color: fuchsia; }
+body.light .html .mlcom  { color: green; }
+body.light .html .entity { color: teal; }
+
+body.light .javascript { color: #212121; }
+body.light .javascript .mlcom    { color: #4040c2; }
+body.light .javascript .com      { color: green; }
+body.light .javascript .regexp   { color: maroon; }
+body.light .javascript .string   { color: teal; }
+body.light .javascript .keywords { color: navy; font-weight: bold; }
+body.light .javascript .global   { color: blue; }
+body.light .javascript .numbers  { color: red; }
+
+#header #ffbanner {
+  padding: 0 0 0 10px; 
+  background: none; 
+  position: absolute;
+  top: 1px;
+}
+
+#ffbanner img {
+  border: 0;
+}

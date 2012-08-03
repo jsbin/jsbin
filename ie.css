@@ -1,0 +1,15 @@
+ul, li, div, #codeId {
+  zoom: 1;
+}
+
+#navigation li {
+  margin-left: 10px;
+}
+
+#navigation li a {
+  background-color: #363636;
+}
+
+#header li {
+  margin-left: 5px;
+}

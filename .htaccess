@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+
+# $Id: .htaccess,v 1.3 2006/11/09 09:08:14 remy Exp $
+Options +FollowSymLinks +ExecCGI
+RewriteEngine On
+RewriteBase /
+
+# strip www. from the domain
+RewriteCond %{HTTP_HOST} ^www\.jsbin\.com$ [NC]
+RewriteRule ^(.*)$ http://jsbin.com/$1 [R=301,L]
+
+# used when site is down or making significant upgrades
+# RewriteCond %{REQUEST_FILENAME} images
+# RewriteRule .* - [L]
+# RewriteRule .* down.html
+
+# if the file or directory don't exist
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule .* - [L]
+
+RewriteRule ^about$ about.php [L]
+
+# using 'index.php' because it forces a '/' request to the handler
+RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+

@@ -421,7 +421,9 @@ function populateEditor(editor, panel) {
         sessionURL = sessionStorage.getItem('url'),
         changed = false;
 
-    if (sessionURL !== template.url) {
+    // if we clone the bin, there will be a checksum on the state object
+    // which means we happily have write access to the bin
+    if (sessionURL !== template.url && !jsbin.state.checksum) {
       // nuke the live saving checksum
       sessionStorage.removeItem('checksum');
       saveChecksum = false;

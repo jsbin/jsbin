@@ -33,7 +33,7 @@ $document.on('saved', function updateSavedState() {
 
 // updateSavedState();
 
-var saveChecksum = sessionStorage.getItem('checksum') || jsbin.state.checksum || false;
+var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
 if (saveChecksum) {
   // remove the disabled class, but also remove the cancelling event handlers

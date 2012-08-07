@@ -49,7 +49,12 @@ if (!customKeys.disabled) $document.keydown(function (event) {
     event.preventDefault();
   } else if (event.metaKey && event.which == 83) {
     if (event.shiftKey == false) {
-      saveChecksum = false;
+      if (saveChecksum) {
+        saveChecksum = false;
+      } else {
+        // trigger an initial save
+        $('a.save:first').click();
+      }
       event.preventDefault();
     } else if (event.shiftKey == true) {
       $('.clone').click();

@@ -16,7 +16,7 @@ $document.on('saved', function updateSavedState() {
     $div.find('a').attr('href', url);
     $div.find('input').val(url);
     $div.find('textarea').val(function () {
-      return ('<a href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      return ('<a class="jsbin-embed" href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
         return {
           '<': '&lt;',
           '>': '&gt;',

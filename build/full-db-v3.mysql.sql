@@ -6,6 +6,8 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   `last_viewed` datetime DEFAULT NULL,
   `last_updated` datetime DEFAULT NULL,
   `url` VARCHAR(255) DEFAULT NULL,
+  `active` VARCHAR(1) DEFAULT 'y',
+  `reported` DATETIME DEFAULT NULL,
   `streaming` VARCHAR(1) DEFAULT 'n',
   `streaming_key` VARCHAR(32) NOT NULL,
   `streaming_read_key` VARCHAR(32) NOT NULL,

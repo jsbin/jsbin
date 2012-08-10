@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   `html` TEXT NOT NULL DEFAULT '',
   `created` datetime DEFAULT NULL,
   `last_viewed` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
   `url` VARCHAR(255) DEFAULT NULL,
   `streaming` VARCHAR(1) DEFAULT 'n',
   `streaming_key` VARCHAR(32) NOT NULL,
@@ -18,7 +19,8 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   KEY `url` (`url`),
   KEY `streaming_key` (`streaming_key`),
   KEY `spam` (`created`,`last_viewed`),
-  KEY `revision` (`url`,`revision`)
+  KEY `revision` (`url`,`revision`),
+  KEY `last_updated` (`name`, `last_updated`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `ownership` (

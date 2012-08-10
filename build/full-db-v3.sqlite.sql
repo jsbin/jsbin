@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   `name` VARCHAR(25) NOT NULL,
   `url` VARCHAR(255) NOT NULL,
-  `revision` INTEGER DEFAULT '1'
+  `revision` INTEGER DEFAULT '1',
+  `last_updated` DATETIME DEFAULT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `ownership` (
@@ -50,3 +51,4 @@ CREATE INDEX IF NOT EXISTS "ownership_name_key" ON "ownership" (`name`,`key`);
 CREATE INDEX IF NOT EXISTS "owners_name_url" ON "owners" (`name`,`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "index_expires" ON "forgot_tokens" (`expires`);
 CREATE INDEX IF NOT EXISTS "index_token_expires" ON "forgot_tokens" (`token`,`created`,`expires`);
+CREATE INDEX IF NOT EXISTS "index_owners_last_updated" ON "owners" (`name`, `last_updated`);

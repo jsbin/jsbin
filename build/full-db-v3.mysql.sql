@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   `created` datetime DEFAULT NULL,
   `last_viewed` datetime DEFAULT NULL,
   `last_updated` datetime DEFAULT NULL,
+  `active` VARCHAR(1) DEFAULT 'y',
+  `reported` DATETIME DEFAULT NULL,
   `settings` TEXT DEFAULT '',
   `streaming` VARCHAR(1) DEFAULT 'n',
   `streaming_key` VARCHAR(32) NOT NULL,

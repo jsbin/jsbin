@@ -1,5 +1,5 @@
 // shows this is run through jsbin & you can edit
-function jsbinShowEdit(ROOT) {
+function jsbinShowEdit(options) {
   if (window.location.hash == '#noedit') return;
   var ie = (!+"\v1");
  
@@ -8,7 +8,7 @@ function jsbinShowEdit(ROOT) {
   el.id = 'edit-with-js-bin';
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
-  el.innerHTML = '<a href="' + href + 'edit"><img src="' + ROOT + '/images/favicon.png">Edit with JS Bin</a><a href="' + href + 'report">Report Abuse</a>';
+  el.innerHTML = '<a href="' + href + 'edit"><img src="' + options.root + '/images/favicon.png" width="16" height="16">Edit with JS Bin</a><form method="post" action="' + href + 'report"><button name="_csrf" value="' + options.csrf + '">Report Abuse</button></form>';
   
 
   var over;
@@ -24,7 +24,7 @@ function jsbinShowEdit(ROOT) {
 
   var style = document.createElement('link');
   style.setAttribute('rel', 'stylesheet');
-  style.setAttribute('href', ROOT + '/css/edit.css');
+  style.setAttribute('href', options.root + '/css/edit.css');
 
   var moveTimer = null;
   setTimeout(function () {

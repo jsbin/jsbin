@@ -12,13 +12,13 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.7.2.min.js",
-        "label": "jQuery 1.7.2",
+        "url": "http://code.jquery.com/jquery-1.8.0.min.js",
+        "label": "jQuery 1.8.0",
         "group": "jQuery"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js",
-        "label": "jQuery 1.6.4",
+        "url": "http://code.jquery.com/jquery-1.7.2.min.js",
+        "label": "jQuery 1.7.2",
         "group": "jQuery"
     },
     {
@@ -73,8 +73,8 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js",
-        "label": "Prototype 1.7.0.0",
+        "url": "http://ajax.googleapis.com/ajax/libs/prototype/1.7.1/prototype.js",
+        "label": "Prototype 1.7.1",
         "group": "Prototype"
     },
     {
@@ -126,7 +126,7 @@ var libraries = [
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.default.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.dataviz.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.mobile.all.min.css",
-            "http://code.jquery.com/jquery-1.7.1.min.js",
+            "http://code.jquery.com/jquery-1.8.0.min.js",
             "http://cdn.kendostatic.com/2012.2.710/js/kendo.all.min.js"
         ],
         "label": "Kendo UI Q2 2012",
@@ -138,7 +138,7 @@ var libraries = [
             "http://cdn.kendostatic.com/2012.1.322/styles/kendo.default.min.css",
             "http://cdn.kendostatic.com/2012.1.322/styles/kendo.dataviz.min.css",
             "http://cdn.kendostatic.com/2012.1.322/styles/kendo.mobile.all.min.css",
-            "http://code.jquery.com/jquery-1.7.1.min.js",
+            "http://code.jquery.com/jquery-1.8.0.min.js",
             "http://cdn.kendostatic.com/2012.1.322/js/kendo.all.min.js"
         ],
         "label": "Kendo UI Q1 2012",

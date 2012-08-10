@@ -42,6 +42,10 @@
 #edit-with-js-bin button {
   float: none;
 }
+#edit-with-js-bin button::-moz-focus-inner {
+    padding: 0;
+    border: 0
+}
 #edit-with-js-bin a img {
   vertical-align: top;
   border: 0px;

@@ -14,10 +14,11 @@ document.addEventListener("contextmenu", function(event){
 // clickedEl to be in place. If it isn't - it's kinda screwed!
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
   if (request == "getClickedEl" && clickedEl) {
-    var url = getJSBinURL(clickedEl);
+    var code = getJSBinURL(clickedEl);
 
-    if (url) {
-      sendResponse(url);
+    if (code) {
+      sendResponse(code);
+      // postForm(code);
     } else {
       // this should be pretty unlikely
       alert("Couldn't find the code - sorry. Copy & Paste?");
@@ -28,13 +29,18 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 function getJSBinURL(element) {
   var code = findCode(element),
       language = detectLanguage(code),
-      url = null;
+      url = null,
+      data = {};
 
   if (code) {
-    url = 'http://jsbin.com?live,' + language + '=' + encodeURIComponent(code);
+    data.language = language;
+    data.code = code;
+    // url = 'http://jsbin.com?live,' + language + '=' + encodeURIComponent(code);
+  } else {
+    data = null
   }
 
-  return url;
+  return data;
 }
 
 function findCode(element) {
@@ -95,7 +101,7 @@ function detectLanguage(code) {
       csscount = (code.split("{").length - 1),
       jscount = (code.split(".").length - 1);
 
-  if (htmlcount > csscount && htmlcount > jscount) {
+  if (/<html/i.test(code) || (htmlcount > csscount && htmlcount > jscount)) {
     return 'html';
   } else if (csscount > htmlcount && csscount > jscount) {
     return 'css';
@@ -103,4 +109,3 @@ function detectLanguage(code) {
     return 'javascript';
   }
 }
-

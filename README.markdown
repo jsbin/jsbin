@@ -2,7 +2,7 @@
 
 ## Build Process
 
-JS Bin has been designed to work both online at http://jsbin.com but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging @js_bin on twitter).
+JS Bin has been designed to work both online at http://jsbin.com but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
 
 There's two installation paths: Node (recommended) and PHP.
 

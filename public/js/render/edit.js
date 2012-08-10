@@ -1,30 +1,30 @@
 // shows this is run through jsbin & you can edit
-(function () {
+function jsbinShowEdit(ROOT) {
   if (window.location.hash == '#noedit') return;
   var ie = (!+"\v1");
  
-  function hide() {
-    el.style.opacity = 0;
-  }
-
   var el = document.createElement('div'); 
   
   el.id = 'edit-with-js-bin';
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
-  el.innerHTML = '<a href="' + href + '/edit"><img src="http://binarytales.local:3000/images/favicon.png">Edit with JS Bin</a><a href="report/' + href + '">Report Abuse</a>';
+  el.innerHTML = '<a href="' + href + 'edit"><img src="' + ROOT + '/images/favicon.png">Edit with JS Bin</a><a href="' + href + 'report">Report Abuse</a>';
   
+
+  var over;
   el.onmouseover = function () {
     this.style.opacity = 1;
+    over = true;
   };
 
   el.onmouseout = function () {
     this.style.opacity = 0;
+    over = false;
   };
 
   var style = document.createElement('link');
   style.setAttribute('rel', 'stylesheet');
-  style.setAttribute('href', '/css/edit.css');
+  style.setAttribute('href', ROOT + '/css/edit.css');
 
   var moveTimer = null;
   setTimeout(function () {
@@ -41,6 +41,10 @@
     } catch (e) {}
   }, 100);
 
+  function hide() {
+    if (!over) el.style.opacity = 0;
+  }
+
   function show() {
     if (!ie && (el.style.opacity*1) == 0) { // TODO IE compat
       el.style.opacity = 1;
@@ -51,4 +55,4 @@
     clearTimeout(moveTimer);
     moveTimer = setTimeout(hide, 2000);
   }
-})();
+}

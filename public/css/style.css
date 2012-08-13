@@ -1580,10 +1580,10 @@ html * {
 }
 
 #source > div {
-  -webkit-transition: left ease-out 100ms, right ease-out 100ms;
+  /*-webkit-transition: left ease-out 100ms, right ease-out 100ms;
   -moz-transition: left ease-out 100ms, right ease-out 100ms;
   -o-transition: left ease-out 100ms, right ease-out 100ms;
-  transition: left ease-out 100ms, right ease-out 100ms;
+  transition: left ease-out 100ms, right ease-out 100ms;*/
 }
 
 /* cancel effects when dragging - otherwise it looks lame and sluggish */

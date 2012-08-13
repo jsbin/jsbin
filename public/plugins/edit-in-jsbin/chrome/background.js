@@ -15,3 +15,10 @@ var id = chrome.contextMenus.create({
     });
   }
 });
+
+function postForm(code) {
+  return ["var input = document.getElementsByTagName('input')[0];",
+          "input.name = '" + code.language + "';",
+          'input.value = "' + encodeURIComponent(code.code) + '";',
+          "input.form.submit();"].join('\n');
+}

@@ -236,21 +236,21 @@ Panel.prototype = {
     }
 
     // this.controlButton.show();
-    setTimeout(function () {
-      var visible = jsbin.panels.getVisible();
-      if (visible.length) {
-        jsbin.panels.focused = visible[0];
-        if (jsbin.panels.focused.editor) {
-          jsbin.panels.focused.editor.focus();
-        } else {
-          jsbin.panels.focused.$el.focus();
-        }
-        jsbin.panels.focused.focus();
+    // setTimeout(function () {
+    var visible = jsbin.panels.getVisible();
+    if (visible.length) {
+      jsbin.panels.focused = visible[0];
+      if (jsbin.panels.focused.editor) {
+        jsbin.panels.focused.editor.focus();
+      } else {
+        jsbin.panels.focused.$el.focus();
       }
+      jsbin.panels.focused.focus();
+    }
 
-      $document.trigger('sizeeditors');
-      panel.trigger('hide');
-    }, 110);
+    $document.trigger('sizeeditors');
+    panel.trigger('hide');
+    // }, 110);
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();

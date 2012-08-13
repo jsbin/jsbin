@@ -44,7 +44,7 @@ if (storedSettings === "undefined") {
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
 // if the above code isn't dodgy, this for hellz bells is:
-jsbin.mobile = /WebKit.*Mobile.*/.test(navigator.userAgent);
+jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
 // IE detect - sadly uglify is compressing the \v1 trick to death :(
 // via @padolsey & @jdalton - https://gist.github.com/527683

@@ -384,7 +384,7 @@ var exec = document.getElementById('exec'),
         underscore: 'http://documentcloud.github.com/underscore/underscore-min.js',
         rightjs: 'http://rightjs.org/hotlink/right.js',
         coffeescript: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js',
-        yui: 'http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js'
+        yui: 'http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js'
     },
     body = document.getElementsByTagName('body')[0],
     logAfter = null,

@@ -89,6 +89,19 @@ function renderLivePreview(withalerts) {
 
   if (withalerts !== true && jsbin.settings.includejs === false) {
     source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+  } else if (withalerts) {
+    // send an update to the server that we ran the code
+    if (saveChecksum) {
+      $.ajax({
+        url: jsbin.getURL() + '/reload',
+        data: { 
+          code: jsbin.state.code, 
+          revision: jsbin.state.revision,
+          checksum: saveChecksum
+        },
+        type: 'post'
+      });
+    }
   }
 
   // strip autofocus from the markup - prevents the focus switching out of the editable area

@@ -140,7 +140,6 @@ var $body = $('body'),
           sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
           sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
         } catch (e) {
-          debugger;
           sessionStorage.setItem('line', 0);
           sessionStorage.setItem('character', 0);
         }

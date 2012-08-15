@@ -1,15 +1,21 @@
 // inside a ready call because history DOM is rendered *after* our JS to improve load times.
 if (!jsbin.embed) $(function ()  {
 
-$.ajax({
-  dataType: 'html',
-  url: '/list',
-  success: function (html) {
-    $body.append(html);
-    hookUserHistory();
-  }
-});
+function loadList() {
+  $.ajax({
+    dataType: 'html',
+    url: '/list',
+    error: function () {
+      setTimeout(loadList, 500);
+    },
+    success: function (html) {
+      $body.append(html);
+      hookUserHistory();
+    }
+  });
+}
 
+loadList();
 
 function hookUserHistory() {
   if ($('#history').length) (function () {

@@ -135,7 +135,17 @@ var $body = $('body'),
     // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
       // sessionStorage.setItem('javascript', editors.javascript.getCode());
-      // sessionStorage.setItem('html', editors.html.getCode());
+      if (jsbin.panels.focused.editor) {
+        try { // this causes errors in IE9 - so we'll use a try/catch to get through it
+          sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
+          sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
+        } catch (e) {
+          debugger;
+          sessionStorage.setItem('line', 0);
+          sessionStorage.setItem('character', 0);
+        }
+      }
+      
       sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 

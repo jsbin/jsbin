@@ -31,6 +31,7 @@ var Panel = function (name, settings) {
   panel.$el = $panel.detach();
   panel.$el.appendTo($source);
   panel.$el.wrapAll('<div class="stretch panelwrapper">');
+  panel.$panel = panel.$el;
   panel.$el = panel.$el.parent().hide();
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
@@ -164,7 +165,7 @@ Panel.prototype = {
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
-    setTimeout(function () {
+    // setTimeout(function () {
       if (x !== undefined) {
         panel.splitter.trigger('init', x);
       } else {
@@ -190,7 +191,7 @@ Panel.prototype = {
       panel.trigger('show');
 
       panel.virgin = false;
-  }, 0);
+  // }, 0);
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
@@ -269,7 +270,11 @@ Panel.prototype = {
     }
   },
   codeSet: false,
+  blur: function () {
+    this.$panel.addClass('blur');
+  },
   focus: function () {
+    this.$panel.removeClass('blur');
     jsbin.panels.focus(this);
   },
   render: function () {
@@ -380,16 +385,26 @@ Panel.prototype = {
       populateEditor(panel, panel.name);
 
       if (focusedPanel == panel.name) {
-        if (panel.visible) {
-          // another fracking timeout to avoid conflict with other panels firing up
-          setTimeout(function () {
-            if (!jsbin.mobile && !jsbin.tablet) {
-              editor.focus();
-              editor.setCursor({ line: (sessionStorage.getItem('line') || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+        // another fracking timeout to avoid conflict with other panels firing up
+        setTimeout(function () {
+          panel.focus();
+          if (panel.visible && !jsbin.mobile && !jsbin.tablet) {
+            editor.focus();
+
+            var code = editor.getCode().split('\n'),
+                blank = null,
+                i = 0;
+
+            for (; i < code.length; i++) {
+              if (blank === null && code[i].trim() === '') {
+                blank = i;
+                break;
+              }
             }
-            panel.focus();
-          }, 0);
-        }
+
+            editor.setCursor({ line: (sessionStorage.getItem('line') || blank || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+          }
+        }, 0);
       }
     }, 0);
   },

@@ -129,6 +129,7 @@ function renderStream() {
     }
   });
 
+  es.addEventListener('reload', reload);
   es.addEventListener('javascript', reload);
   es.addEventListener('html', function (event) {
     // if the contents of the head has changed, reload,

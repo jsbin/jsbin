@@ -12,7 +12,7 @@
   "setBinForUser": "INSERT INTO `owners` (`name`, `url`, `revision`) VALUES (?, ?, ?)",
   "getBinsByUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? ORDER BY `url`, `revision` DESC",
   "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
-  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? ORDER BY `last_updated` DESC LIMIT 1",
+  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 ORDER BY `last_updated` DESC LIMIT 1",
   "touchOwnership": "UPDATE `owners` SET `last_updated`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateUserEmail": "UPDATE ownership SET `email`=?, `updated`=? WHERE `name`=?",
   "getUserByEmail": "SELECT * FROM `ownership` WHERE `email`=? LIMIT 1",

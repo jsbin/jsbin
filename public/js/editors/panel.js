@@ -10,6 +10,8 @@ var editorModes = {
   less: 'css'
 };
 
+var badChars = new RegExp('\u200B', 'g');
+
 if (jsbin.settings.editor.tabMode === 'default') {
   CodeMirror.keyMap.basic.Tab = undefined;
 } else if (jsbin.settings.editor.tabMode !== 'classic') {
@@ -258,7 +260,8 @@ Panel.prototype = {
   },
   getCode: function () {
     if (this.editor) {
-      return this.editor.getCode();
+      badChars.lastIndex = 0;
+      return this.editor.getCode().replace(badChars, '');
     }
   },
   setCode: function (content) {

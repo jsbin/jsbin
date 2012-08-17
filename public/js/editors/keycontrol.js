@@ -122,6 +122,10 @@ function keycontrol(event) {
 
         if (hasRun) {
           event.stop();
+        } else {
+          // if we have write access - do a save - this will make this bin our latest for use with
+          // /<user>/last/ - useful for phonegap inject
+          sendReload();
         }
       }
     }

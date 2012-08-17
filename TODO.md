@@ -2,6 +2,7 @@
 
 # 3.x
 
+- Stats based on Google analytics - 
 - keyboard shortcuts in menu
 - think about url structure (currently /edit/live is now /live)
 - detect stubbed out bin (where there's no longer an active key to write), and don't deliver the spike on those bins

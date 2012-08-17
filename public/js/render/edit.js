@@ -8,7 +8,7 @@ function jsbinShowEdit(options) {
   el.id = 'edit-with-js-bin';
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
-  el.innerHTML = '<a href="' + href + 'edit"><img src="' + options.root + '/images/favicon.png" width="16" height="16">Edit with JS Bin</a><form method="post" action="' + href + 'report"><button name="_csrf" value="' + options.csrf + '">Report Abuse</button></form>';
+  el.innerHTML = '<a href="' + href + 'edit"><img src="' + options.root + '/images/favicon.png" width="16" height="16">Edit with JS Bin</a><form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><button name="_csrf" value="' + options.csrf + '">Report Abuse</button></form>';
   
 
   var over;
@@ -20,6 +20,16 @@ function jsbinShowEdit(options) {
   el.onmouseout = function () {
     this.style.opacity = 0;
     over = false;
+  };
+
+  var getEmail = function (event) {
+    var email = window.prompt("Please let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
+    if (email && email != '') { // TODO: Better email pattern matching
+      document.getElementById('abuseEmail').value = email;
+    } else {
+      event.preventDefault();
+      return false;
+    }
   };
 
   var style = document.createElement('link');
@@ -35,6 +45,7 @@ function jsbinShowEdit(options) {
 
       if (document.addEventListener) {
         document.addEventListener('mousemove', show, false);
+        el.getElementsByTagName('form')[0].addEventListener('submit', getEmail, false);
       } else {
         document.attachEvent('onmousemove', show);
       }

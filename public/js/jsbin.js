@@ -4,13 +4,15 @@
 // var jQuery = window.jQuery,
 //     $ = jQuery;
 
-if (window.console === undefined) (function () {
-  window.console = {
+try {
+  console.log('init');
+} catch (e) {
+  var console = {
     log: function () {
       // alert([].slice.call(arguments).join('\n'));
     }
   };
-})();
+}
 
 // required because jQuery 1.4.4 lost ability to search my object property :( (i.e. a[host=foo.com])
 jQuery.expr[':'].host = function(obj, index, meta, stack) {

@@ -9,29 +9,43 @@ $('a.save').click(function (event) {
   return false;
 });
 
-$document.on('saved', function updateSavedState() {
-  $('#share form div').each(function () {
-    var $div = $(this).removeClass('disabled').unbind('click mousedown mouseup'),
-        url = jsbin.getURL() + this.getAttribute('data-path');
-    $div.find('a').attr('href', url);
-    $div.find('input').val(url);
-    $div.find('textarea').val(function () {
-      return ('<a class="jsbin-embed" href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
-        return {
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          '&': '&amp;'
-        }[m];
-      });
-    });
-  }).closest('.menu').removeClass('hidden');
+var $shareLinks = $('#share .link');
+$document.one('saved', function () {
+  $shareLinks.removeClass('disabled').unbind('click mousedown mouseup');
+});
+
+function updateSavedState() {
+  $shareLinks.each(function () {
+    var url = jsbin.getURL() + this.getAttribute('data-path'),
+        nodeName = this.nodeName;
+    if (nodeName === 'A') {
+      this.href = url;
+    } else if (nodeName === 'INPUT') {
+      this.value = url;
+    } else if (nodeName === 'TEXTAREA') {
+      this.value = ('<a class="jsbin-embed" href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+          return {
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            '&': '&amp;'
+          }[m];
+        });
+    }
+  });
+}
+
+$('#sharemenu').bind('open', function () {
+  updateSavedState();
+});
+
+$document.on('saved', function () {
+  updateSavedState();
+  $shareLinks.closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
   $('#clone').removeClass('hidden');
 });
-
-// updateSavedState();
 
 var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 

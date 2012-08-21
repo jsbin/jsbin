@@ -1438,6 +1438,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-jsbin span.cm-tag {color: #881280;}
 .cm-s-jsbin span.cm-attribute {color: #994500;}
 
+/* jsbin - based on web inspector */
+/*.panel:not(.focus) .cm-s-jsbin span {color: #666 !important; }*/
+/*.activeline {background: #e8f2ff !important;}*/
+
 
 /* neat */
 .cm-s-neat span.cm-comment { color: #a86; }
@@ -1720,14 +1724,14 @@ html * {
 .fake-dropdown:empty:after { padding-left: 0; }
 
 
-.code .fake-dropdown:after {
+/*.code .fake-dropdown:after {
   display: none;
 }
 
 .code.focus .fake-dropdown:after {
   display: inline;
 }
-
+*/
 .editbox {
   /*background: white;*/
   /*padding-top: 5px;*/

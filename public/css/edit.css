@@ -61,7 +61,7 @@
 }
 
 #edit-with-js-bin a.jsbin-edit b {
-  width: 0;
+  /*width: 0;*/
   display: inline-block;
   overflow: hidden;
   white-space:nowrap;
@@ -73,7 +73,7 @@
   margin-right: 17px;
 }
 
-#edit-with-js-bin:hover a.jsbin-edit b {
+#edit-with-js-bin a.jsbin-edit b { /*:hover*/
   width: 75px;
 }
 

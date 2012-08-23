@@ -2,63 +2,90 @@
   opacity: 1;
   position: fixed;
   top: 0;
-  right: 5px;
+  right: 0;
+  padding-left: 40px;
+  padding-bottom: 20px;
   -webkit-transition: opacity ease-out 100ms;
   -moz-transition: opacity ease-out 100ms;
   -ms-transition: opacity ease-out 100ms;
   -o-transition: opacity ease-out 100ms;
   transition: opacity ease-out 100ms;
 }
+
 #edit-with-js-bin form {
-  display:  block;
-  float: left;
+  display: inline-block;
   margin: 0;
   padding: 0;
 }
-#edit-with-js-bin a,
-#edit-with-js-bin button {
-  display:  block;
-  float: left;
-  margin: 0;
-  padding: 5px 10px;
-  color: rgb(51, 51, 51);
-  text-shadow: rgb(255, 255, 255) 0px 1px 1px;
-  text-decoration: none;
-  font-style: normal;
-  font-variant: normal;
+
+
+#edit-with-js-bin div {
+  padding: 0 5px 1px 7px;
+  border: 1px solid #999; 
+  border-top: 0;
+  border-right: 0;
+  background: #ddd;
+}
+
+
+#edit-with-js-bin b {
   font-weight: normal;
-  font-size: 12px;
-  line-height: 16px;
-  font-family: 'Helvetica Neue', Arial, Helvetica;
-  background-color: #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0)), color-stop(50%,rgba(0,0,0,0.15)));  
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0.15) 50%);
-  background-image: -moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#26000000',GradientType=0 );
-  border-bottom-right-radius: 5px;
-  border: 1px solid rgb(153, 153, 153);
-  border-top: none;
 }
+
+#edit-with-js-bin a {
+  /*opacity: 0.9;*/
+  display: inline-block;
+  position: relative;
+  padding: 7px 2px;
+  color: #666;
+  text-shadow: white 0px 1px 1px;
+  text-decoration: none;
+  font: 12px 'Helvetica Neue', Arial, Helvetica;
+}
+
 #edit-with-js-bin button {
-  float: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.5;
 }
-#edit-with-js-bin button::-moz-focus-inner {
-    padding: 0;
-    border: 0
-}
-#edit-with-js-bin a img {
-  vertical-align: top;
-  border: 0px;
-}
-#edit-with-js-bin a:first-child {
-  border-right: none; 
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 0;
-}
-#edit-with-js-bin a:hover,
+
 #edit-with-js-bin button:hover {
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0)), color-stop(50%,rgba(0,0,0,0.25)));  
-  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0.25) 50%);
-  background: -moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.25) 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#46000000',GradientType=0
+  opacity: 1;
+}
+
+#edit-with-js-bin button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+#edit-with-js-bin a.jsbin-edit b {
+  width: 0;
+  display: inline-block;
+  overflow: hidden;
+  white-space:nowrap;
+  -webkit-transition: width ease-in-out 100ms;
+  -moz-transition: width ease-in 100ms;
+  -ms-transition: width ease-in 100ms;
+  -o-transition: width ease-in 100ms;
+  transition: width ease-in 100ms;
+  margin-right: 17px;
+}
+
+#edit-with-js-bin:hover a.jsbin-edit b {
+  width: 75px;
+}
+
+#edit-with-js-bin a img {
+  position: absolute;
+  right: 0px;
+  vertical-align: top;
+  opacity: 1;
+  border: 0;
+  top: 6px;
+}
+
+#edit-with-js-bin a:hover {
+  color: #333;
 }

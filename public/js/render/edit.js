@@ -3,18 +3,23 @@ function jsbinShowEdit(options) {
   if (window.location.hash == '#noedit') return;
   var ie = (!+"\v1");
  
-  var el = document.createElement('div'); 
+  function hide() {
+    if (over === false) el.style.opacity = 0;
+  }
+
+  var el = document.createElement('div'),
+      over = false; 
   
   el.id = 'edit-with-js-bin';
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
-  el.innerHTML = '<a href="' + href + 'edit"><img src="' + options.root + '/images/favicon.png" width="16" height="16">Edit with JS Bin</a><form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><button name="_csrf" value="' + options.csrf + '">Report Abuse</button></form>';
-  
+
+  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a>&nbsp;<form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><button name="_csrf" title="Report Abuse" value="' + options.csrf + '">&#9873</button></form></div>';
 
   var over;
   el.onmouseover = function () {
-    this.style.opacity = 1;
     over = true;
+    this.style.opacity = 1;
   };
 
   el.onmouseout = function () {
@@ -24,10 +29,10 @@ function jsbinShowEdit(options) {
 
   var getEmail = function (event) {
     var email = window.prompt("Please let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
-    if (email && email != '') { // TODO: Better email pattern matching
+    if (email && email != '' && email.indexOf('@') !== -1) { // TODO: Better email pattern matching
       document.getElementById('abuseEmail').value = email;
     } else {
-      event.preventDefault();
+      if (event.preventDefault) event.preventDefault();
       return false;
     }
   };
@@ -46,15 +51,18 @@ function jsbinShowEdit(options) {
       if (document.addEventListener) {
         document.addEventListener('mousemove', show, false);
         el.getElementsByTagName('form')[0].addEventListener('submit', getEmail, false);
+        document.addEventListener('mouseout', function () {
+          over = false;
+        }, false);
       } else {
         document.attachEvent('onmousemove', show);
+        el.getElementsByTagName('form')[0].attachEvent('onsubmit', getEmail);
+        document.attachEvent('onmouseout', function () {
+          over = false;
+        }, false);
       }
     } catch (e) {}
   }, 100);
-
-  function hide() {
-    if (!over) el.style.opacity = 0;
-  }
 
   function show() {
     if (!ie && (el.style.opacity*1) == 0) { // TODO IE compat

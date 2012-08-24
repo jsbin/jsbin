@@ -176,7 +176,9 @@ Panel.prototype = {
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
-          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines, .CodeMirror-gutter-text').css('padding-top', panel.$el.find('.label').outerHeight());
+          var top = panel.$el.find('.label').outerHeight();
+          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
+          $(panel.editor.win).find('.CodeMirror-gutter').css('margin-top', top);
 
           populateEditor(panel, panel.name);
         }

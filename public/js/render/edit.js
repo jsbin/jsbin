@@ -4,7 +4,7 @@ function jsbinShowEdit(options) {
   var ie = (!+"\v1");
  
   function hide() {
-    if (over === false) el.style.opacity = 0;
+    if (over === false) el.style.top = '-60px';
   }
 
   var el = document.createElement('div'),
@@ -19,12 +19,12 @@ function jsbinShowEdit(options) {
   var over;
   el.onmouseover = function () {
     over = true;
-    this.style.opacity = 1;
+    this.style.top = 0;
   };
 
   el.onmouseout = function () {
-    this.style.opacity = 0;
     over = false;
+    hide();
   };
 
   var getEmail = function (event) {
@@ -65,12 +65,12 @@ function jsbinShowEdit(options) {
   }, 100);
 
   function show() {
-    if (!ie && (el.style.opacity*1) == 0) { // TODO IE compat
-      el.style.opacity = 1;
-    } else if (ie) {
-      el.style.opacity = 1;
-      el.style.display = 'block';
-    }
+    // if (!ie && (el.style.top*1) == 0) { // TODO IE compat
+      el.style.top = 0;
+    // } else if (ie) {
+      // el.style.top = 1;
+      // el.style.display = 'block';
+    // }
     clearTimeout(moveTimer);
     moveTimer = setTimeout(hide, 2000);
   }

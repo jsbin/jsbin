@@ -2,14 +2,14 @@
   opacity: 1;
   position: fixed;
   top: 0;
-  right: 0;
+  right: 5px;
   padding-left: 40px;
   padding-bottom: 20px;
-  -webkit-transition: opacity ease-out 100ms;
-  -moz-transition: opacity ease-out 100ms;
-  -ms-transition: opacity ease-out 100ms;
-  -o-transition: opacity ease-out 100ms;
-  transition: opacity ease-out 100ms;
+  -webkit-transition: top ease-out 100ms;
+  -moz-transition: top ease-out 100ms;
+  -ms-transition: top ease-out 100ms;
+  -o-transition: top ease-out 100ms;
+  transition: top ease-out 100ms;
 }
 
 #edit-with-js-bin form {
@@ -23,7 +23,7 @@
   padding: 0 5px 1px 7px;
   border: 1px solid #999; 
   border-top: 0;
-  border-right: 0;
+  /*border-right: 0;*/
   background: #ddd;
 }
 
@@ -33,7 +33,7 @@
 }
 
 #edit-with-js-bin a {
-  /*opacity: 0.9;*/
+  opacity: 0.9;
   display: inline-block;
   position: relative;
   padding: 7px 2px;
@@ -51,7 +51,8 @@
   opacity: 0.5;
 }
 
-#edit-with-js-bin button:hover {
+#edit-with-js-bin button:hover,
+#edit-with-js-bin a:hover {
   opacity: 1;
 }
 

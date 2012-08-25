@@ -42,7 +42,8 @@
     "logger": "default"
   },
   "notify": {
-    "errors": []
+    "errors": [],
+    "report": []
   },
   "blacklist": {
     "html": ["processform.cgi", "habbo.com"],

@@ -7,6 +7,9 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   `javascript` TEXT NOT NULL DEFAULT '',
   `created` datetime DEFAULT NULL,
   `last_viewed` datetime DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  `active` VARCHAR(1) DEFAULT 'y',
+  `reported` DATETIME DEFAULT NULL,
   `settings` TEXT DEFAULT '',
   `streaming` VARCHAR(1) DEFAULT 'n',
   `streaming_key` VARCHAR(32) NOT NULL,
@@ -18,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   KEY `url` (`url`),
   KEY `streaming_key` (`streaming_key`),
   KEY `spam` (`created`,`last_viewed`),
-  KEY `revision` (`url`,`revision`)
+  KEY `revision` (`url`,`revision`),
+  KEY `last_updated` (`name`, `last_updated`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `ownership` (

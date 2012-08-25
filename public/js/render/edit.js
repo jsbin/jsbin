@@ -1,54 +1,77 @@
 // shows this is run through jsbin & you can edit
-(function () {
+function jsbinShowEdit(options) {
   if (window.location.hash == '#noedit') return;
   var ie = (!+"\v1");
  
-  function set(el, props, hover) {
-    for (var prop in props) {
-      el.style[prop] = props[prop];
-    }
-  }
-
   function hide() {
-    set(el, { opacity: '0' });
+    if (over === false) el.style.top = '-60px';
   }
 
-  var el = document.createElement('a'); 
+  var el = document.createElement('div'),
+      over = false; 
+  
+  el.id = 'edit-with-js-bin';
 
-  set(el, { opacity: 1, position: 'fixed', top: '-1px', right: '-1px', padding: '5px 10px', background: '#ccc', color: '#333', 'text-shadow': '0px 1px 1px #fff', 'border-top-right-radius': '5px', MozBorderRadiusBottomleft: '5px', border: '1px solid #999', textDecoration: 'none', font: '12px "Helvetica Neue", Arial, Helvetica', WebkitTransition: 'opacity ease-out 100ms', MozTransition: 'opacity ease-out 100ms', OTransition: 'opacity ease-out 100ms', transition: 'opacity ease-out 100ms' });
+  var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
 
-  el.innerHTML = 'Edit in jsbin.com';
-  el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
+  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a>&nbsp;<form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><button name="_csrf" title="Report Abuse" value="' + options.csrf + '">&#9873</button></form></div>';
 
+  var over;
   el.onmouseover = function () {
-    this.style.opacity = 1;
+    over = true;
+    this.style.top = 0;
   };
 
   el.onmouseout = function () {
-    this.style.opacity = 0;
+    over = false;
+    hide();
   };
+
+  var getEmail = function (event) {
+    var email = window.prompt("Please let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
+    if (email && email != '' && email.indexOf('@') !== -1) { // TODO: Better email pattern matching
+      document.getElementById('abuseEmail').value = email;
+    } else {
+      if (event.preventDefault) event.preventDefault();
+      return false;
+    }
+  };
+
+  var style = document.createElement('link');
+  style.setAttribute('rel', 'stylesheet');
+  style.setAttribute('href', options.root + '/css/edit.css');
 
   var moveTimer = null;
   setTimeout(function () {
     try {
+      document.getElementsByTagName('head')[0].appendChild(style);
       document.body.appendChild(el);
       setTimeout(hide, 2000);
 
       if (document.addEventListener) {
         document.addEventListener('mousemove', show, false);
+        el.getElementsByTagName('form')[0].addEventListener('submit', getEmail, false);
+        document.addEventListener('mouseout', function () {
+          over = false;
+        }, false);
       } else {
         document.attachEvent('onmousemove', show);
+        el.getElementsByTagName('form')[0].attachEvent('onsubmit', getEmail);
+        document.attachEvent('onmouseout', function () {
+          over = false;
+        }, false);
       }
     } catch (e) {}
   }, 100);
 
   function show() {
-    if (!ie && (el.style.opacity*1) == 0) { // TODO IE compat
-      el.style.opacity = 1;
-    } else if (ie) {
-      set(el, { display: 'block', opacity: '1' });
-    }
+    // if (!ie && (el.style.top*1) == 0) { // TODO IE compat
+      el.style.top = 0;
+    // } else if (ie) {
+      // el.style.top = 1;
+      // el.style.display = 'block';
+    // }
     clearTimeout(moveTimer);
     moveTimer = setTimeout(hide, 2000);
   }
-})();
+}

@@ -1,0 +1,92 @@
+#edit-with-js-bin {
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  right: 5px;
+  padding-left: 40px;
+  padding-bottom: 20px;
+  -webkit-transition: top ease-out 100ms;
+  -moz-transition: top ease-out 100ms;
+  -ms-transition: top ease-out 100ms;
+  -o-transition: top ease-out 100ms;
+  transition: top ease-out 100ms;
+}
+
+#edit-with-js-bin form {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+
+#edit-with-js-bin div {
+  padding: 0 5px 1px 7px;
+  border: 1px solid #999; 
+  border-top: 0;
+  /*border-right: 0;*/
+  background: #ddd;
+}
+
+
+#edit-with-js-bin b {
+  font-weight: normal;
+}
+
+#edit-with-js-bin a {
+  opacity: 0.9;
+  display: inline-block;
+  position: relative;
+  padding: 7px 2px;
+  color: #666;
+  text-shadow: white 0px 1px 1px;
+  text-decoration: none;
+  font: 12px 'Helvetica Neue', Arial, Helvetica;
+}
+
+#edit-with-js-bin button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+#edit-with-js-bin button:hover,
+#edit-with-js-bin a:hover {
+  opacity: 1;
+}
+
+#edit-with-js-bin button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+#edit-with-js-bin a.jsbin-edit b {
+  /*width: 0;*/
+  display: inline-block;
+  overflow: hidden;
+  white-space:nowrap;
+  -webkit-transition: width ease-in-out 100ms;
+  -moz-transition: width ease-in 100ms;
+  -ms-transition: width ease-in 100ms;
+  -o-transition: width ease-in 100ms;
+  transition: width ease-in 100ms;
+  margin-right: 17px;
+}
+
+#edit-with-js-bin a.jsbin-edit b { /*:hover*/
+  width: 75px;
+}
+
+#edit-with-js-bin a img {
+  position: absolute;
+  right: 0px;
+  vertical-align: top;
+  opacity: 1;
+  border: 0;
+  top: 6px;
+}
+
+#edit-with-js-bin a:hover {
+  color: #333;
+}

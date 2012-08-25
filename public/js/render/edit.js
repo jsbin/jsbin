@@ -14,7 +14,7 @@ function jsbinShowEdit(options) {
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
 
-  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a>&nbsp;<form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><button name="_csrf" title="Report Abuse" value="' + options.csrf + '">&#9873</button></form></div>';
+  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a>&nbsp;<form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><input type="hidden" name="url" value="' + window.location.toString() + '"><button name="_csrf" title="Report Abuse" value="' + options.csrf + '">&#9873</button></form></div>';
 
   var over;
   el.onmouseover = function () {

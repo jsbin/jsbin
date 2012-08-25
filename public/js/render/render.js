@@ -76,7 +76,7 @@ function getPreparedCode(nojs) {
   try {
     source = editors.html.render();
   } catch (e) {
-    console && console.error(e.message);
+    window.console && window.console.error(e.message);
   }
 
   hasHTML = !!$.trim(source);
@@ -87,7 +87,7 @@ function getPreparedCode(nojs) {
 
       if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
     } catch (e) {
-      console && console.error(e.message);
+      window.console && window.console.error(e.message);
     }
   }
 
@@ -96,7 +96,7 @@ function getPreparedCode(nojs) {
   try {
     css = editors.css.render();
   } catch (e) {
-    console && console.error(e.message);
+    window.console && window.console.error(e.message);
   }
 
   hasCSS = !!$.trim(css);

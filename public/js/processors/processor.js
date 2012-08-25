@@ -55,7 +55,7 @@ var Processor = function (url, init, handler) {
   });
 
   var callback = function () {
-    console && console.warn('Processor is not ready yet - trying again');
+    window.console && window.console.warn('Processor is not ready yet - trying again');
     failed = true;
     return '';
   };

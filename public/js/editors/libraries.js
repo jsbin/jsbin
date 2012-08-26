@@ -25,6 +25,15 @@ var libraries = [
         "url": [
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.js"
+        ],
+        "label": "jQuery UI latest",
+        "group": "jQuery UI"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"
         ],
         "label": "jQuery UI 1.8.13",

@@ -1260,8 +1260,7 @@ input {
 }
 
 .CodeMirror-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto;
   height: 300px;
   /* This is needed to prevent an IE[67] bug where the scrolled content
      is visible outside of the scrolling box. */
@@ -1271,13 +1270,11 @@ input {
 
 /* Vertical scrollbar */
 .CodeMirror-scrollbar {
-  float: right;
+  position: absolute;
+  right: 0; top: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-
-  /* This corrects for the 1px gap introduced to the left of the scrollbar
-     by the rule for .CodeMirror-scrollbar-inner. */
-  margin-left: -1px;
+  z-index: 5;
 }
 .CodeMirror-scrollbar-inner {
   /* This needs to have a nonzero width in order for the scrollbar to appear
@@ -1313,15 +1310,12 @@ input {
   text-align: right;
   padding: .4em .2em .4em .4em;
   white-space: pre !important;
+  cursor: default;
 }
 .CodeMirror-lines {
   padding: .4em;
   white-space: pre;
   cursor: text;
-}
-.CodeMirror-lines * {
-  /* Necessary for throw-scrolling to decelerate properly on Safari. */
-  pointer-events: none;
 }
 
 .CodeMirror pre {
@@ -1384,14 +1378,50 @@ div.CodeMirror-selected { background: #d9d9d9; }
   background: rgba(255, 255, 0, .4);
 }
 
+/* Default theme */
+
+.cm-s-default span.cm-keyword {color: #708;}
+.cm-s-default span.cm-atom {color: #219;}
+.cm-s-default span.cm-number {color: #164;}
+.cm-s-default span.cm-def {color: #00f;}
+.cm-s-default span.cm-variable {color: black;}
+.cm-s-default span.cm-variable-2 {color: #05a;}
+.cm-s-default span.cm-variable-3 {color: #085;}
+.cm-s-default span.cm-property {color: black;}
+.cm-s-default span.cm-operator {color: black;}
+.cm-s-default span.cm-comment {color: #a50;}
+.cm-s-default span.cm-string {color: #a11;}
+.cm-s-default span.cm-string-2 {color: #f50;}
+.cm-s-default span.cm-meta {color: #555;}
+.cm-s-default span.cm-error {color: #f00;}
+.cm-s-default span.cm-qualifier {color: #555;}
+.cm-s-default span.cm-builtin {color: #30a;}
+.cm-s-default span.cm-bracket {color: #cc7;}
+.cm-s-default span.cm-tag {color: #170;}
+.cm-s-default span.cm-attribute {color: #00c;}
+.cm-s-default span.cm-header {color: blue;}
+.cm-s-default span.cm-quote {color: #090;}
+.cm-s-default span.cm-hr {color: #999;}
+.cm-s-default span.cm-link {color: #00c;}
 
 span.cm-header, span.cm-strong {font-weight: bold;}
 span.cm-em {font-style: italic;}
 span.cm-emstrong {font-style: italic; font-weight: bold;}
 span.cm-link {text-decoration: underline;}
 
+span.cm-invalidchar {color: #f00;}
+
 div.CodeMirror span.CodeMirror-matchingbracket {color: #0f0;}
 div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
+
+@media print {
+
+  /* Hide the cursor when printing */
+  .CodeMirror pre.CodeMirror-cursor {
+    visibility: hidden;
+  }
+
+}
 
 /* codemirror2 JS Bin custom styles */
 .CodeMirror-scroll {
@@ -2417,30 +2447,7 @@ pre .highlight:last-of-type {
 
 
 /** CodeMirror Themes **/
-/* Default theme */
-.cm-s-default span.cm-keyword {color: #708;}
-.cm-s-default span.cm-atom {color: #219;}
-.cm-s-default span.cm-number {color: #164;}
-.cm-s-default span.cm-def {color: #00f;}
-.cm-s-default span.cm-variable {color: black;}
-.cm-s-default span.cm-variable-2 {color: #05a;}
-.cm-s-default span.cm-variable-3 {color: #085;}
-.cm-s-default span.cm-property {color: black;}
-.cm-s-default span.cm-operator {color: black;}
-.cm-s-default span.cm-comment {color: #a50;}
-.cm-s-default span.cm-string {color: #a11;}
-.cm-s-default span.cm-string-2 {color: #f50;}
-.cm-s-default span.cm-meta {color: #555;}
-.cm-s-default span.cm-error {color: #f00;}
-.cm-s-default span.cm-qualifier {color: #555;}
-.cm-s-default span.cm-builtin {color: #30a;}
-.cm-s-default span.cm-bracket {color: #cc7;}
-.cm-s-default span.cm-tag {color: #170;}
-.cm-s-default span.cm-attribute {color: #00c;}
-.cm-s-default span.cm-header {color: #a0a;}
-.cm-s-default span.cm-quote {color: #090;}
-.cm-s-default span.cm-hr {color: #999;}
-.cm-s-default span.cm-link {color: #00c;}
+/* Default theme is higher in the style sheet with codemirror's own code */
 
 /* jsbin - based on web inspector */
 .cm-s-jsbin span.cm-keyword {color: #AA0D91;}

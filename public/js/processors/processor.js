@@ -99,7 +99,7 @@ var processors = jsbin.processors = {
         '  var canvas = document.querySelector("canvas");',
         '  if (!canvas) {',
         '    canvas = document.createElement("canvas");',
-        '    document.body.appendChild(canvas);',
+        '    (document.body || document.documentElement).appendChild(canvas);',
         '  }',
         '  canvas.width = window.innerWidth;',
         '  canvas.height = window.innerHeight;',

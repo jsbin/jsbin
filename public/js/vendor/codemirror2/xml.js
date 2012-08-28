@@ -30,7 +30,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
     },
     doNotIndent: {"pre": true},
     allowUnquoted: true,
-    allowMissing: false
+    allowMissing: true
   } : {
     autoSelfClosers: {},
     implicitlyClosed: {},
@@ -229,7 +229,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       if (type == "endTag") { popContext(); return cont(); }
       setStyle = "error";
       return cont(arguments.callee);
-    }
+    };
   }
   function maybePopContext(nextTagName) {
     var parentTagName;

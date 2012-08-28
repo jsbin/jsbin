@@ -185,7 +185,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
   function pushlex(type, info) {
     var result = function() {
       var state = cx.state;
-      state.lexical = new JSLexical(state.indented, cx.stream.column(), type, null, state.lexical, info)
+      state.lexical = new JSLexical(state.indented, cx.stream.column(), type, null, state.lexical, info);
     };
     result.lex = true;
     return result;
@@ -243,7 +243,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
     
   function maybeoperator(type, value) {
     if (type == "operator" && /\+\+|--/.test(value)) return cont(maybeoperator);
-    if (type == "operator" || type == ":") return cont(expression);
+    if (type == "operator" && value == "?") return cont(expression, expect(":"), expression);
     if (type == ";") return;
     if (type == "(") return cont(pushlex(")"), commasep(expression, ")"), poplex, maybeoperator);
     if (type == ".") return cont(property, maybeoperator);

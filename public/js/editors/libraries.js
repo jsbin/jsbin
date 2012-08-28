@@ -204,7 +204,7 @@ var libraries = [
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.3.6/processing-api.min.js",
-        "label": "Processing 1.2.3"
+        "label": "Processing 1.3.6"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.0.0/raphael-min.js",

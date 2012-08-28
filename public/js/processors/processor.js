@@ -88,6 +88,29 @@ var processors = jsbin.processors = {
       return markdown.toHTML(source);
     });
   },
+  processing: function (ready) {
+    return new Processor(jsbin.root + '/js/vendor/processing.min.js', function () {
+      $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
+      // init and expose jade
+      $.getScript(jsbin.root + '/js/vendor/codemirror2/clike.js', ready);
+    }, function (source) {
+      source = [
+        '(function(){',
+        '  var canvas = document.querySelector("canvas");',
+        '  if (!canvas) {',
+        '    canvas = document.createElement("canvas");',
+        '    document.body.appendChild(canvas);',
+        '  }',
+        '  canvas.width = window.innerWidth;',
+        '  canvas.height = window.innerHeight;',
+        '  var sketchProc = ' + Processing.compile(source).sourceCode + ';',
+        '  var p = new Processing(canvas, sketchProc);',
+        '})();'
+      ].join('\n');
+
+      return source;
+    });
+  },
   jade: function (ready) {
     return new Processor(jsbin.root + '/js/vendor/jade.js', function () {
       // init and expose jade

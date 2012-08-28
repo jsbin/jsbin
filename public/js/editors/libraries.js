@@ -203,7 +203,7 @@ var libraries = [
         "label": "Prefixfree 1.0.6"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.2.3/processing-api.min.js",
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.3.6/processing-api.min.js",
         "label": "Processing 1.2.3"
     },
     {

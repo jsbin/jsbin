@@ -7,7 +7,8 @@ var editorModes = {
   css: 'css',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
-  less: 'css'
+  less: 'css',
+  processing: 'text/x-csrc'
 };
 
 var badChars = new RegExp('\u200B', 'g');

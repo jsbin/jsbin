@@ -21,6 +21,7 @@
     var cur = editor.getCursor(), token = getToken(editor, cur), tprop = token;
     // If it's not a 'word-style' token, ignore the token.
 		if (!/^[\w$_]*$/.test(token.string)) {
+      return;
       token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
                        className: token.string == "." ? "property" : null};
     }
@@ -53,7 +54,11 @@
   }
 
   CodeMirror.javascriptHint = function(editor) {
-    return scriptHint(editor, javascriptKeywords,
+    var keywords = dedupe(javascriptKeywords.concat(editor.getCode().replace(/\W/g, ' ').replace(/\s+/g, ' ').trim().split(' '))).sort(function (a, b) {
+      return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
+    });
+
+    return scriptHint(editor, keywords,
                       function (e, cur) {return e.getTokenAt(cur);});
   };
 
@@ -91,8 +96,10 @@
 
   function getCompletions(token, context, keywords) {
     var found = [], start = token.string;
+
     function maybeAdd(str) {
-      if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
+      // console.log('maybeAdd str', str, 'start', start, 'indexOf', str.indexOf(start));
+      if (str.indexOf(start) == 0 && !arrayContains(found, str) && str !== start) found.push(str);
     }
     function gatherCompletions(obj) {
       if (typeof obj == "string") forEach(stringProps, maybeAdd);
@@ -121,8 +128,12 @@
       while (base != null && context.length)
         base = base[context.pop().string];
       if (base != null) gatherCompletions(base);
+
+      if (found.length === 0) {
+        forEach(keywords, maybeAdd);
+      }
     }
-    else {
+    else { // JSBIN EDIT: never do this
       // If not, just look in the window object and any local scope
       // (reading into JS mode internals to get at the local variables)
       for (var v = token.state.localVars; v; v = v.next) maybeAdd(v.name);

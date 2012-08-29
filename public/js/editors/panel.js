@@ -19,6 +19,14 @@ if (jsbin.settings.editor.tabMode === 'default') {
   CodeMirror.keyMap.basic.Tab = 'indentMore';
 }
 
+if (!CodeMirror.commands) { 
+  CodeMirror.commands = {}; 
+}
+
+CodeMirror.commands.autocomplete = function(cm) {
+  CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+};
+
 var Panel = function (name, settings) {
   var panel = this,
       showPanelButton = true,
@@ -84,10 +92,15 @@ var Panel = function (name, settings) {
         return true; 
       },
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      theme: jsbin.settings.theme || 'jsbin',
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
+
+    if (name === 'javascript' || name === 'html') {
+      cmSettings.extraKeys = { 'Esc': 'autocomplete' };
+    }
+
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
     panel._setupEditor(panel.editor, name);
   }

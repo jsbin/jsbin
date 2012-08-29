@@ -104,7 +104,6 @@ function renderLivePreview(withalerts) {
   if (withalerts !== true && jsbin.settings.includejs === false) {
     source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
   } else if (withalerts) {
-    console.log('sending reload');
     // send an update to the server that we ran the code
     sendReload();
   }

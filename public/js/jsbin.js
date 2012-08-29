@@ -44,6 +44,25 @@ function escapeHTML(html){
     .replace(/"/g, '&quot;');
 };
 
+function dedupe(array) {
+  var hash    = {},
+      results = [],
+      hasOwn  = Object.prototype.hasOwnProperty,
+      i, item, len;
+
+  for (i = 0, len = array.length; i < len; i += 1) {
+    item = array[i];
+
+    if (!hasOwn.call(hash, item)) {
+      hash[item] = 1;
+      results.push(item);
+    }
+  }
+
+  return results;
+}
+
+
 window['jsbin'] || (window.jsbin = {});
 // dodgy?
 var storedSettings = localStorage.getItem('settings');

@@ -149,8 +149,8 @@ function keycontrol(event) {
       keyboardHelpVisible = false;
       event.stop();
     } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
-      event.stop();
-      return startComplete(panel);
+      // event.stop();
+      // return CodeMirror.commands.autocomplete(jsbin.panels.focused.editor);
     } else if (event.which == 190 && includeAltKey && event.metaKey && panel.id == 'html') {
       // auto close the element
       if (panel.somethingSelected()) return;

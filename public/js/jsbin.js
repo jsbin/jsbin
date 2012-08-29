@@ -36,6 +36,14 @@ function throttle(fn, delay) {
   return throttled;
 }
 
+function escapeHTML(html){
+  return String(html)
+    .replace(/&(?!\w+;)/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+};
+
 window['jsbin'] || (window.jsbin = {});
 // dodgy?
 var storedSettings = localStorage.getItem('settings');

@@ -88,9 +88,9 @@ var checkForErrors = function () {
         errors = jshintErrors.errors;
     for (var i = 0; i < errors.length; i++) {
       if (typeof errors[i] == 'string') {
-        html.push(errors[i]);
+        html.push(escapeHTML(errors[i]));
       } else {
-        html.push('Line ' + errors[i].line + ': ' + errors[i].evidence + ' --- ' + errors[i].reason);
+        html.push('Line ' + errors[i].line + ': ' + escapeHTML(errors[i].evidence) + ' --- ' + escapeHTML(errors[i].reason));
       }
     }
     

@@ -1,7 +1,14 @@
 // inside a ready call because history DOM is rendered *after* our JS to improve load times.
 if (!jsbin.embed) $(function ()  {
 
+var listLoaded = false;
+
 function loadList() {
+  if (listLoaded) {
+    return;
+  }
+  listLoaded = true;
+
   $.ajax({
     dataType: 'html',
     url: '/list',
@@ -15,7 +22,20 @@ function loadList() {
   });
 }
 
-loadList();
+// this code attempts to only call the list ajax request only if
+// the user should want to see the list page - most users will
+// jump in and jump out of jsbin, and never see this page,
+// so let's not send this ajax request.
+setTimeout(function () {
+  var panelsVisible = $body.hasClass('panelsVisible');
+
+  if (!panelsVisible) {
+    loadList();
+  } else {
+    // if the user hovers over their profile page or the 'open' link, then load the list then
+    $('.homebtn').one('hover', loadList);
+  }
+}, 0);
 
 function hookUserHistory() {
   if ($('#history').length) (function () {

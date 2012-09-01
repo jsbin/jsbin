@@ -28,7 +28,7 @@ function jsbinShowEdit(options) {
   };
 
   var getEmail = function (event) {
-    var email = window.prompt("Please let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
+    var email = window.prompt("\n** REPORT ABUSE ** \n\nPlease let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
     if (email && email != '' && email.indexOf('@') !== -1) { // TODO: Better email pattern matching
       document.getElementById('abuseEmail').value = email;
     } else {

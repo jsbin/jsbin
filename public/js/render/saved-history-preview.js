@@ -1,6 +1,3 @@
-// inside a ready call because history DOM is rendered *after* our JS to improve load times.
-if (!jsbin.embed) $(function ()  {
-
 var listLoaded = false;
 
 function loadList() {
@@ -13,6 +10,7 @@ function loadList() {
     dataType: 'html',
     url: '/list',
     error: function () {
+      listLoaded = false;
       setTimeout(loadList, 500);
     },
     success: function (html) {
@@ -21,21 +19,6 @@ function loadList() {
     }
   });
 }
-
-// this code attempts to only call the list ajax request only if
-// the user should want to see the list page - most users will
-// jump in and jump out of jsbin, and never see this page,
-// so let's not send this ajax request.
-setTimeout(function () {
-  var panelsVisible = $body.hasClass('panelsVisible');
-
-  if (!panelsVisible) {
-    loadList();
-  } else {
-    // if the user hovers over their profile page or the 'open' link, then load the list then
-    $('.homebtn').one('hover', loadList);
-  }
-}, 0);
 
 function hookUserHistory() {
   if ($('#history').length) (function () {
@@ -103,5 +86,32 @@ function hookUserHistory() {
 
   })();
 }
+
+// inside a ready call because history DOM is rendered *after* our JS to improve load times.
+if (!jsbin.embed) $(function ()  {
+
+  // this code attempts to only call the list ajax request only if
+  // the user should want to see the list page - most users will
+  // jump in and jump out of jsbin, and never see this page,
+  // so let's not send this ajax request.
+  setTimeout(function () {
+    var panelsVisible = $body.hasClass('panelsVisible');
+
+    if (!panelsVisible) {
+      loadList();
+    } else {
+      // if the user hovers over their profile page or the 'open' link, then load the list then
+      $('.homebtn').one('hover', loadList);
+      function panelCloseIntent() {
+        var activeCount = $panelButtons.filter('.active').length;
+        if (activeCount === 1 && $(this).hasClass('active')) {
+          $panelButtons.unbind('mousedown', panelCloseIntent);
+          loadList();
+        }
+      };
+
+      var $panelButtons = $('#panels a').on('mousedown', panelCloseIntent);
+    }
+  }, 0);
 
 });

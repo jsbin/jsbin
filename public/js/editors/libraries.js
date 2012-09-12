@@ -263,7 +263,7 @@ var libraries = [
             "http://code.jquery.com/jquery-1.7.1.min.js",
             " http://canjs.us/release/latest/can.jquery.js"
         ],
-        "label": "CanJS 1.0.7 for jQuery",
+        "label": "CanJS 1.0.7 for jQuery"
     }
 ];
 

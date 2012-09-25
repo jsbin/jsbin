@@ -101,6 +101,17 @@ var Panel = function (name, settings) {
       cmSettings.extraKeys = { 'Esc': 'autocomplete' };
     }
 
+    // Add Zen Coding to html pane
+    if (name === 'html') {
+      $.extend(cmSettings, {
+        syntax: 'html',   /* define Zen Coding syntax */
+        profile: 'html', /* define Zen Coding output profile */
+        onKeyEvent: function() { /* send all key events to Zen Coding */
+          return zen_editor.handleKeyEvent.apply(zen_editor, arguments);
+        }
+      });
+    }
+
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
     panel._setupEditor(panel.editor, name);
   }

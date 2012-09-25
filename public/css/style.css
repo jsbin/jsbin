@@ -232,6 +232,7 @@ a:hover {
   height: 37px;
   border: 1px solid #CCC;
   outline: none;
+  width: 86px;
 }
 
 iframe.javascript {

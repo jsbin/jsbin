@@ -257,6 +257,13 @@ var libraries = [
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/0.7/zepto.min.js",
         "label": "Zepto 0.7"
+    },
+    {
+        "url":[
+            "http://code.jquery.com/jquery-1.7.1.min.js",
+            " http://canjs.us/release/latest/can.jquery.js"
+        ],
+        "label": "CanJS 1.0.7 for jQuery"
     }
 ];
 

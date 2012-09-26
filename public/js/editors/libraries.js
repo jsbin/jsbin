@@ -109,8 +109,8 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://yui.yahooapis.com/3.6.0/build/yui/yui-min.js",
-        "label": "YUI 3.6.0",
+        "url": "http://yui.yahooapis.com/3.7.2/build/yui/yui-min.js",
+        "label": "YUI 3.7.2",
         "group": "YUI"
     },
     {

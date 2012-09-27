@@ -129,14 +129,34 @@ var libraries = [
         "group": "MooTools"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js",
-        "label": "Dojo 1.6.0",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js",
+        "label": "Dojo 1.8.0",
         "group": "Dojo"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.4.1/dojo/dojo.xd.js",
-        "label": "Dojo 1.4.1",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js",
+        "label": "Dojo 1.7.3",
         "group": "Dojo"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js",
+        "label": "Dojo 1.6.1",
+        "group": "Dojo"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css",
+        "label": "Dijit 1.8.0 (Claro)",
+        "group": "Dijit"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css",
+        "label": "Dijit 1.7.3 (Claro)",
+        "group": "Dijit"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/claro/claro.css",
+        "label": "Dijit 1.6.1 (Claro)",
+        "group": "Dijit"
     },
     {
         "url": [

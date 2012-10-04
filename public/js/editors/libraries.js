@@ -59,6 +59,15 @@ var libraries = [
     },
     {
         "url": [
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css",
+            "http://code.jquery.com/jquery-1.8.2.min.js",
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"
+        ],
+        "label": "jQuery Mobile 1.2.0",
+        "group": "jQuery Mobile"
+    },
+    {
+        "url": [
             "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css",
             "http://code.jquery.com/jquery-1.6.4.min.js",
             "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.js"

@@ -182,9 +182,7 @@ var libraries = [
         "label": "Backbone 0.9.2"
     },
     {
-        "url": [
-            "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4.0/bonsai.min.js"
-        ],
+        "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4.0/bonsai.min.js",
         "label": "Bonsai 0.4.0"
     },
     {

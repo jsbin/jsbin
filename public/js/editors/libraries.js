@@ -183,7 +183,7 @@ var libraries = [
     },
     {
         "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
-        "label": "Bonsai 0.4.0"
+        "label": "Bonsai 0.4.latest"
     },
     {
         "url": "http://jashkenas.github.com/coffee-script/extras/coffee-script.js",

@@ -81,8 +81,8 @@ var Processor = function (url, init, handler) {
 
 var processors = jsbin.processors = {
   coffeescript: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/coffee-script.js', function () {
-      $.getScript(jsbin.root + '/js/vendor/codemirror2/coffeescript.js', ready);
+    return new Processor(jsbin.static + '/js/vendor/coffee-script.js', function () {
+      $.getScript(jsbin.static + '/js/vendor/codemirror2/coffeescript.js', ready);
     }, function (source) { 
       var renderedCode = '';
       try {
@@ -96,7 +96,7 @@ var processors = jsbin.processors = {
     });
   },
   typescript: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/typescript.min.js', ready, function (source) {
+    return new Processor(jsbin.static + '/js/vendor/typescript.min.js', ready, function (source) {
       var noop = function () {};
       var outfile = { 
         source: "", 
@@ -139,17 +139,17 @@ var processors = jsbin.processors = {
     });
   },
   markdown: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/markdown.js', function () {
-      $.getScript(jsbin.root + '/js/vendor/codemirror2/markdown.js', ready);
+    return new Processor(jsbin.static + '/js/vendor/markdown.js', function () {
+      $.getScript(jsbin.static + '/js/vendor/codemirror2/markdown.js', ready);
     }, function (source) {
       return markdown.toHTML(source);
     });
   },
   processing: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/processing.min.js', function () {
+    return new Processor(jsbin.static + '/js/vendor/processing.min.js', function () {
       $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
       // init and expose jade
-      $.getScript(jsbin.root + '/js/vendor/codemirror2/clike.js', ready);
+      $.getScript(jsbin.static + '/js/vendor/codemirror2/clike.js', ready);
     }, function (source) {
       source = [
         '(function(){',
@@ -169,7 +169,7 @@ var processors = jsbin.processors = {
     });
   },
   jade: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/jade.js', function () {
+    return new Processor(jsbin.static + '/js/vendor/jade.js', function () {
       // init and expose jade
       window.jade = require('jade');
       ready();
@@ -178,8 +178,8 @@ var processors = jsbin.processors = {
     });
   },
   less: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/less-1.3.0.min.js', function () {
-      $.getScript(jsbin.root + '/js/vendor/codemirror2/less.js', ready);
+    return new Processor(jsbin.static + '/js/vendor/less-1.3.0.min.js', function () {
+      $.getScript(jsbin.static + '/js/vendor/codemirror2/less.js', ready);
     }, function (source) {
       var css = '';
 
@@ -194,7 +194,7 @@ var processors = jsbin.processors = {
     });
   },
   stylus: function (ready) {
-    return new Processor(jsbin.root + '/js/vendor/stylus.js', ready, function (source) {
+    return new Processor(jsbin.static + '/js/vendor/stylus.js', ready, function (source) {
       var css = '';
 
       stylus(source).render(function (err, result) {

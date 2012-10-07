@@ -19,7 +19,7 @@
     "express": "3.0.0alpha4",
     "asyncjs": "0.0.7",
     "hogan.js": "2.0.0",
-    "mysql": "0.9.6",
+    "mysql": "*",
     "sqlite3": "2.1.5",
     "bcrypt": "0.7.0",
     "nodemailer": "0.3.20",

@@ -46,13 +46,27 @@ var Processor = function (url, init, handler) {
     init = null;
   }
 
-  $.getScript(url, function () {
+  var script = document.createElement('script');
+  script.src = url;
+
+  var scriptCB = function () {
     if (init) init();
     callback = handler;
     if (failed) {
       renderLivePreview();
     }
-  });
+  };
+
+  script.onreadystatechange = script.onload = function() {
+    var state = script.readyState;
+    if (!scriptCB.done && (!state || /loaded|complete/.test(state))) {
+      scriptCB.done = true;
+      scriptCB();
+      script.parentNode.removeChild(script);
+    }
+  };
+
+  document.body.appendChild(script);
 
   var callback = function () {
     window.console && window.console.warn('Processor is not ready yet - trying again');

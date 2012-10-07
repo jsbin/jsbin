@@ -81,6 +81,49 @@ var processors = jsbin.processors = {
       return renderedCode;
     });
   },
+  typescript: function (ready) {
+    return new Processor(jsbin.root + '/js/vendor/typescript.min.js', ready, function (source) {
+      var noop = function () {};
+      var outfile = { 
+        source: "", 
+        Write: function (s) { 
+          this.source += s; 
+        }, 
+        WriteLine: function (s) { 
+          this.source += s + "\n"; 
+        }, 
+        Close: noop 
+      };
+
+      var outerr = { 
+        Write: noop,
+        WriteLine: noop,
+        Close: noop
+      };
+
+      var parseErrors = [];
+
+      var compiler = new TypeScript.TypeScriptCompiler(outfile, outerr);
+
+      compiler.setErrorCallback(function (start, len, message) { 
+        parseErrors.push({ start: start, len: len, message: message }); 
+      });
+      compiler.parser.errorRecovery = true;
+
+      compiler.addUnit(source, 'jsbin.ts');
+      compiler.typeCheck();
+      compiler.reTypeCheck();
+      compiler.emit();
+
+      for (var i = 0, len = parseErrors.length; i < len; i++) {
+        console.log('Error Message: ' + parseErrors[i].message);
+        console.log('Error Start: ' + parseErrors[i].start);
+        console.log('Error Length: ' + parseErrors[i].len);
+      }
+
+      return outfile.source;
+    });
+  },
   markdown: function (ready) {
     return new Processor(jsbin.root + '/js/vendor/markdown.js', function () {
       $.getScript(jsbin.root + '/js/vendor/codemirror2/markdown.js', ready);

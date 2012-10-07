@@ -5,6 +5,7 @@ var editorModes = {
   html: 'htmlmixed',
   javascript: 'javascript',
   css: 'css',
+  typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
   less: 'css',

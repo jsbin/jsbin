@@ -12,8 +12,8 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.8.1.min.js",
-        "label": "jQuery 1.8.1",
+        "url": "http://code.jquery.com/jquery-1.8.2.min.js",
+        "label": "jQuery 1.8.2",
         "group": "jQuery"
     },
     {
@@ -59,11 +59,11 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css",
+            "http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css",
             "http://code.jquery.com/jquery-1.6.4.min.js",
-            "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.js"
+            "http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"
         ],
-        "label": "jQuery Mobile 1.1.0",
+        "label": "jQuery Mobile 1.1.1",
         "group": "jQuery Mobile"
     },
     {
@@ -180,6 +180,10 @@ var libraries = [
             "http://documentcloud.github.com/backbone/backbone-min.js"
         ],
         "label": "Backbone 0.9.2"
+    },
+    {
+        "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
+        "label": "Bonsai 0.4.latest"
     },
     {
         "url": "http://jashkenas.github.com/coffee-script/extras/coffee-script.js",

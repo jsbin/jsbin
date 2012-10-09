@@ -102,6 +102,9 @@ function run(cmd) {
   } else {
     try {
       // if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
+      if( ! sandboxframe ) {
+        sandboxframe = $live.find('iframe')[0];
+      }
       rawoutput = sandboxframe.contentWindow.eval(cmd);
     } catch (e) {
       rawoutput = e.message;
@@ -1017,9 +1020,10 @@ function upgradeConsolePanel(console) {
       }, 0);
     };
     console.settings.hide = function () {
+      // Removal code is commented out so that the
+      // output iframe is never removed
       if (!editors.live.visible) {
-        // renderLivePreview();
-        $live.find('iframe').remove();
+        // $live.find('iframe').remove();
       }
     };
     // jsconsole.ready = true;

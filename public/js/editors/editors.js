@@ -315,8 +315,9 @@ var panelInit = {
     function hide() {
       // detroy the iframe if we hide the panel
       // note: $live is defined in live.js
+      // Commented out so that the live iframe is never destroyed
       if (panels.panels.console.visible === false) {
-        $live.find('iframe').remove();
+        // $live.find('iframe').remove();
       }
     }
 

@@ -11,6 +11,7 @@
 "/js/vendor/codemirror2/searchcursor.js",
 "/js/vendor/codemirror2/simple-hint.js",
 "/js/vendor/codemirror2/javascript-hint.js",
+"/js/vendor/codemirror2/zen_codemirror.js",
 "/js/vendor/json2.js",
 "/js/vendor/prettyprint.js",
 "/js/chrome/storage.js",

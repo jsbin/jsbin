@@ -103,7 +103,7 @@ var Panel = function (name, settings) {
     }
 
     // Add Zen Coding to html pane
-    if (name === 'html' && jsbin.settings.editor.zen === true) {
+    if (name === 'html') {
       $.extend(cmSettings, {
         syntax: 'html',   /* define Zen Coding syntax */
         profile: 'html', /* define Zen Coding output profile */

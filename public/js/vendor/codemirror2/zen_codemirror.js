@@ -5604,7 +5604,7 @@ var zen_editor = (function(){
   
   // add default shortcuts
   addShortcut('Meta+E', 'Expand Abbreviation');
-  addShortcut('Tab', 'Expand Abbreviation');
+  // addShortcut('Tab', 'Expand Abbreviation');
   addShortcut('Meta+D', 'Balance Tag Outward');
   addShortcut('Shift+Meta+D', 'Balance Tag inward');
   addShortcut('Shift+Meta+A', 'Wrap with Abbreviation');

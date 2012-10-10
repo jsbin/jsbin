@@ -139,7 +139,7 @@ function getPreparedCode(nojs) {
 
   if (!hasHTML && !hasJS && hasCSS) {
     source = "<pre>\n" + css + "</pre>";
-  } else if (css) {
+  } else if (css && hasHTML) {
     parts = [];
     close = '';
     if (source.indexOf('</head>') !== -1) {

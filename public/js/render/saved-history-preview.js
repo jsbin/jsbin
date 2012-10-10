@@ -8,7 +8,7 @@ function loadList() {
 
   $.ajax({
     dataType: 'html',
-    url: '/list',
+    url: jsbin.getURL() + '/list',
     error: function () {
       listLoaded = false;
       setTimeout(loadList, 500);

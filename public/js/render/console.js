@@ -7,6 +7,10 @@ function sortci(a, b) {
   return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
 }
 
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 // custom because I want to be able to introspect native browser objects *and* functions
 function stringify(o, simple, visited) {
   var json = '', i, vi, type = '', parts = [], names = [], circular = false;
@@ -27,7 +31,10 @@ function stringify(o, simple, visited) {
   }
 
   if (circular) {
-    json = '[circular]';
+    json = '[circular ' + type.slice(1);
+    if (o.outerHTML) {
+      json += ":\n" + htmlEntities(o.outerHTML);
+    }
   } else if (type == '[object String]') {
     json = '"' + o.replace(/"/g, '\\"') + '"';
   } else if (type == '[object Array]') {
@@ -80,8 +87,9 @@ function stringify(o, simple, visited) {
     }
     json += parts.join(',\n') + '\n}';
   } else {
+    visited.push(o);
     try {
-      json = stringify(o, true)+''; // should look like an object
+      json = stringify(o, true, visited)+''; // should look like an object
     } catch (e) {
 
     }

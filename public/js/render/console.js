@@ -337,22 +337,26 @@ window._console = {
     for (; i < l; i++) {
       log(stringify(arguments[i], true));
     }
+    window.console.log.apply(window.console, arguments);
   },
   dir: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
       log(stringify(arguments[i]));
     }
+    window.console.dir.apply(window.console, arguments);
   },
   props: function (obj) {
     var props = [], realObj;
     try {
       for (var p in obj) props.push(p);
     } catch (e) {}
+    window.console.props.apply(window.console, arguments);
     return props;
   },
   error: function (err) {
     log(err.message, 'error');
+    window.console.error.apply(window.console, arguments);
   }
 };
 

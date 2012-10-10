@@ -91,7 +91,7 @@ function two(s) {
 }
 
 function renderLivePreview(withalerts) {
-  var source = getPreparedCode(jsbin.panels.panels.console.visible),
+  var source = getPreparedCode(), //jsbin.panels.panels.console.visible),
       remove = $live.find('iframe').length > 0,
       $frame = $live.prepend('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first'),
       frame = $frame[0],
@@ -214,9 +214,9 @@ function renderLivePreview(withalerts) {
       $live.find('iframe:last').remove();
     }
 
-    if (jsbin.panels.panels.console.visible) {
-      jsbin.panels.panels.console.render(); // now run the JS
-    }
+    // if (jsbin.panels.panels.console.visible) {
+    //   jsbin.panels.panels.console.render(); // now run the JS
+    // }
   };
 
   // WebKit requires a wait time before actually writing to the iframe

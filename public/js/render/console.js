@@ -102,10 +102,6 @@ function run(cmd) {
   } else {
     try {
       // if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
-      if( ! sandboxframe ) {
-        renderLivePreview(false);
-        sandboxframe = $live.find('iframe')[0];
-      }
       rawoutput = sandboxframe.contentWindow.eval(cmd);
     } catch (e) {
       rawoutput = e.message;
@@ -137,34 +133,53 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  response = response || run(cmd);
-
-  if (response !== undefined) {
-    el.className = 'response';
-    span.innerHTML = response[1];
-
-    if (response[0] != 'info') prettyPrint([span]);
-    el.appendChild(span);
-
-    li.className = response[0];
-    li.innerHTML = '<span class="gutter"></span>';
-    li.appendChild(el);
-
-    appendLog(li);
-
-    exec.value = '';
-    if (enableCC) {
-      try {
-        // document.getElementsByTagName('a')[0].focus();
-        if (jsbin.panels.focused.id === 'console') {
-          cursor.focus();
-          document.execCommand('selectAll', false, null);
-          document.execCommand('delete', false, null);          
-        }
-      } catch (e) {}
+  // This is nasty, nasty, nasty and comes from run(cmd)
+  // Does not belong here
+  if (!internalCommand(cmd)) {
+    if (!(sandboxframe && sandboxframe.contentWindow)) {
+      // Boo. There must be a nice way to do this.
+      sandboxframe = $live.find('iframe')[0];
+      // Only force it to render if there's no live iframe
+      if( ! sandboxframe ) {
+        renderLivePreview(false);
+      }
+      sandboxframe = $live.find('iframe')[0];
+      jsconsole.setSandbox(sandboxframe);
     }
   }
-  pos = history.length;
+
+  // In a setTimeout so that renderLivePreview has time for the iframe to load
+  setTimeout(function () {
+    response = response || run(cmd);
+    
+    if (response !== undefined) {
+      el.className = 'response';
+      span.innerHTML = response[1];
+
+      if (response[0] != 'info') prettyPrint([span]);
+      el.appendChild(span);
+
+      li.className = response[0];
+      li.innerHTML = '<span class="gutter"></span>';
+      li.appendChild(el);
+
+      appendLog(li);
+
+      exec.value = '';
+      if (enableCC) {
+        try {
+          // document.getElementsByTagName('a')[0].focus();
+          if (jsbin.panels.focused.id === 'console') {
+            cursor.focus();
+            document.execCommand('selectAll', false, null);
+            document.execCommand('delete', false, null);          
+          }
+        } catch (e) {}
+      }
+    }
+    pos = history.length;
+  }, 0);
+
 }
 
 function log(msg, className) {
@@ -1002,14 +1017,14 @@ function upgradeConsolePanel(console) {
     console.reset = function () {
       jsconsole.reset();
     };
-    console.settings.render = function () {
-
-      // TODO decide whether we should also grab all the JS in the HTML panel
-      var code = editors.javascript.render().trim();
-      jsconsole.setSandbox($live.find('iframe')[0]);
-      jsconsole.onload(function () { 
+    console.settings.render = function (withAlerts) {
+      var html = editors.html.render().trim();
+      if (html === "") {
+        var code = editors.javascript.render().trim();
         jsconsole.run(code);
-      });
+      } else {
+        renderLivePreview(withAlerts || false);
+      }
     };
     console.settings.show = function () {
       jsconsole.clear();

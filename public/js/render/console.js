@@ -103,6 +103,7 @@ function run(cmd) {
     try {
       // if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
       if( ! sandboxframe ) {
+        renderLivePreview(false);
         sandboxframe = $live.find('iframe')[0];
       }
       rawoutput = sandboxframe.contentWindow.eval(cmd);

@@ -442,11 +442,12 @@ var editorsReady = setInterval(function () {
     // panels.distribute();
 
     // if live is visible, render it
-    if (panels.panels.live.visible) {
-      panels.panels.live.render(true);
-    } else if (panels.panels.console.visible) {
-      renderLivePreview(true);
-    }
+    // if (panels.panels.live.visible) {
+    //   panels.panels.live.render(true);
+    // } else if (panels.panels.console.visible) {
+    //   renderLivePreview(true);
+    // }
+    $('#runconsole').trigger('click');
 
     $(window).resize(function () {
       clearTimeout(resizeTimer);

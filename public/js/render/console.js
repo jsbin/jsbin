@@ -148,10 +148,10 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       // Boo. There must be a nice way to do this.
       sandboxframe = $live.find('iframe')[0];
       // Only force it to render if there's no live iframe
-      if( ! sandboxframe ) {
+      if (!(sandboxframe && sandboxframe.contentWindow)) {
         renderLivePreview(false);
+        sandboxframe = $live.find('iframe')[0];
       }
-      sandboxframe = $live.find('iframe')[0];
       jsconsole.setSandbox(sandboxframe);
     }
   }

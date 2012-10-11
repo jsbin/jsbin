@@ -109,7 +109,6 @@ function run(cmd) {
     return ['info', internalCmd];
   } else {
     try {
-      // if ('CoffeeScript' in sandboxframe.contentWindow) cmd = sandboxframe.contentWindow.CoffeeScript.compile(cmd, {bare:true});
       rawoutput = sandboxframe.contentWindow.eval(cmd);
     } catch (e) {
       rawoutput = e.message;
@@ -141,9 +140,12 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  // This is nasty, nasty, nasty and comes from run(cmd)
-  // Does not belong here
   if (!internalCommand(cmd)) {
+
+    // Compile the command according the the processor
+    cmd = editors.javascript.processor(cmd);
+
+    // Fix console not having iframe
     if (!(sandboxframe && sandboxframe.contentWindow)) {
       // Boo. There must be a nice way to do this.
       sandboxframe = $live.find('iframe')[0];

@@ -441,13 +441,14 @@ var editorsReady = setInterval(function () {
     // if (typeof editors.onReady == 'function') editors.onReady();
     // panels.distribute();
 
-    // if live is visible, render it
-    // if (panels.panels.live.visible) {
-    //   panels.panels.live.render(true);
-    // } else if (panels.panels.console.visible) {
-    //   renderLivePreview(true);
-    // }
-    $('#runconsole').trigger('click');
+    // if the console is visible, it'll handle rendering of the output and console
+    if (panels.panels.console.visible) {
+      editors.console.render();
+    } else {
+      // otherwise, force a render
+      renderLivePreview();
+    }    
+
 
     $(window).resize(function () {
       clearTimeout(resizeTimer);

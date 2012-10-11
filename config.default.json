@@ -7,6 +7,9 @@
     "ssl": false,
     "static": false
   },
+  "bin": {
+    "max-size": 1572864
+  },
   "store": {
     "adapter": "sqlite",
     "sqlite": {

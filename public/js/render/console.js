@@ -36,7 +36,7 @@ function stringify(o, simple, visited) {
       json += ":\n" + htmlEntities(o.outerHTML);
     }
   } else if (type == '[object String]') {
-    json = '"' + o.replace(/"/g, '\\"') + '"';
+    json = '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
   } else if (type == '[object Array]') {
     visited.push(o);
 

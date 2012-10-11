@@ -166,7 +166,11 @@ $('#jsbinurl').click(function (e) {
 });
 
 $('#runwithalerts').click(function () {
-  renderLivePreview(true);
+  if (editors.console.visible) {
+    editors.console.render(true);
+  } else {
+    renderLivePreview(true);
+  }
   return false;
 });
 

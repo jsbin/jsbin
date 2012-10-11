@@ -315,8 +315,9 @@ var panelInit = {
     function hide() {
       // detroy the iframe if we hide the panel
       // note: $live is defined in live.js
+      // Commented out so that the live iframe is never destroyed
       if (panels.panels.console.visible === false) {
-        $live.find('iframe').remove();
+        // $live.find('iframe').remove();
       }
     }
 
@@ -441,11 +442,12 @@ var editorsReady = setInterval(function () {
     // panels.distribute();
 
     // if live is visible, render it
-    if (panels.panels.live.visible) {
-      panels.panels.live.render(true);
-    } else if (panels.panels.console.visible) {
-      renderLivePreview(true);
-    }
+    // if (panels.panels.live.visible) {
+    //   panels.panels.live.render(true);
+    // } else if (panels.panels.console.visible) {
+    //   renderLivePreview(true);
+    // }
+    $('#runconsole').trigger('click');
 
     $(window).resize(function () {
       clearTimeout(resizeTimer);

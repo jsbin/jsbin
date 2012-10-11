@@ -1,45 +1,12 @@
-var render = function() {
-  if (jsbin.panels.panels.live.visible && jsbin.panels.ready) {
-    jsbin.panels.panels.live.render();
-  }
-};
-
-var $processorSelectors = $('div.processorSelector').each(function () {
-  var panelId = this.getAttribute('data-type'),
-      $el = $(this),
-      $label = $el.closest('.label').find('strong a'),
-      originalLabel = $label.text();
-
-  $el.find('a').click(function (e) {
-    var panel = jsbin.panels.panels[panelId];
-
-    e.preventDefault();
-    var target = this.hash.substring(1),
-        label = $(this).text(),
-        code;
-    if (target !== 'convert') {
-      $label.text(label);
-      if (target === panelId) {
-        jsbin.processors.reset(panelId);
-        render();
-      } else {
-        jsbin.processors.set(panelId, target, render);
-      }
-    } else {
-      $label.text(originalLabel);
-      panel.setCode(panel.render());
-      jsbin.processors.reset(panelId);
-    }
-  }).bind('select', function (event, value) {
-    if (value === this.hash.substring(1)) {
-      $label.text($(this).text());
-    }
-  });
-});
-
-
 var Processor = function (url, init, handler) {
   var failed = false;
+
+  // Overwritten when the script loads
+  var callback = function () {
+    window.console && window.console.warn('Processor is not ready yet - trying again');
+    failed = true;
+    return '';
+  };
 
   if (typeof handler === 'undefined') {
     handler = init;
@@ -49,11 +16,13 @@ var Processor = function (url, init, handler) {
   var script = document.createElement('script');
   script.src = url;
 
+  // Script has loaded.
+  // Run any init code, and swap the callback. If we failed, try again.
   var scriptCB = function () {
     if (init) init();
     callback = handler;
     if (failed) {
-      renderLivePreview();
+      editors.console.render();
     }
   };
 
@@ -67,12 +36,6 @@ var Processor = function (url, init, handler) {
   };
 
   document.body.appendChild(script);
-
-  var callback = function () {
-    window.console && window.console.warn('Processor is not ready yet - trying again');
-    failed = true;
-    return '';
-  };
 
   return function () {
     return callback.apply(this, arguments);
@@ -237,10 +200,53 @@ var processors = jsbin.processors = {
       project.addFile(sourceFile);
       var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
 
-      return ProjectWriter.write(res);
+      var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions. Eat me.\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
+      return msg + ProjectWriter.write(res);
     });
   }
 };
+
+
+var render = function() {
+  if (jsbin.panels.ready) {
+    editors.console.render();
+  }
+};
+
+var $processorSelectors = $('div.processorSelector').each(function () {
+  var panelId = this.getAttribute('data-type'),
+      $el = $(this),
+      $label = $el.closest('.label').find('strong a'),
+      originalLabel = $label.text();
+
+  $el.find('a').click(function (e) {
+    var panel = jsbin.panels.panels[panelId];
+
+    e.preventDefault();
+    var target = this.hash.substring(1),
+        label = $(this).text(),
+        code;
+    if (target !== 'convert') {
+      $label.text(label);
+      if (target === panelId) {
+        jsbin.processors.reset(panelId);
+        render();
+      } else {
+        jsbin.processors.set(panelId, target, render);
+      }
+    } else {
+      $label.text(originalLabel);
+      panel.setCode(panel.render());
+      jsbin.processors.reset(panelId);
+    }
+  }).bind('select', function (event, value) {
+    if (value === this.hash.substring(1)) {
+      $label.text($(this).text());
+    }
+  });
+});
+
+
 
 processors.set = function (panelId, preprocessor, callback) {
   var panel = jsbin.panels.panels[panelId];

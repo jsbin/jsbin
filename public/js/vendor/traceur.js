@@ -1,4 +1,3 @@
-
 this.traceurImportScript = function() { }; 
 (function(global, factory) { 
   if(typeof exports === 'object') { 

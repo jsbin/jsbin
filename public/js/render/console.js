@@ -7,6 +7,10 @@ function sortci(a, b) {
   return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
 }
 
+function htmlEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 // custom because I want to be able to introspect native browser objects *and* functions
 function stringify(o, simple, visited) {
   var json = '', i, vi, type = '', parts = [], names = [], circular = false;
@@ -27,9 +31,12 @@ function stringify(o, simple, visited) {
   }
 
   if (circular) {
-    json = '[circular]';
+    json = '[circular ' + type.slice(1);
+    if (o.outerHTML) {
+      json += ":\n" + htmlEntities(o.outerHTML);
+    }
   } else if (type == '[object String]') {
-    json = '"' + o.replace(/"/g, '\\"') + '"';
+    json = '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
   } else if (type == '[object Array]') {
     visited.push(o);
 
@@ -80,8 +87,9 @@ function stringify(o, simple, visited) {
     }
     json += parts.join(',\n') + '\n}';
   } else {
+    visited.push(o);
     try {
-      json = stringify(o, true)+''; // should look like an object
+      json = stringify(o, true, visited)+''; // should look like an object
     } catch (e) {
 
     }
@@ -133,34 +141,53 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  response = response || run(cmd);
-
-  if (response !== undefined) {
-    el.className = 'response';
-    span.innerHTML = response[1];
-
-    if (response[0] != 'info') prettyPrint([span]);
-    el.appendChild(span);
-
-    li.className = response[0];
-    li.innerHTML = '<span class="gutter"></span>';
-    li.appendChild(el);
-
-    appendLog(li);
-
-    exec.value = '';
-    if (enableCC) {
-      try {
-        // document.getElementsByTagName('a')[0].focus();
-        if (jsbin.panels.focused.id === 'console') {
-          cursor.focus();
-          document.execCommand('selectAll', false, null);
-          document.execCommand('delete', false, null);          
-        }
-      } catch (e) {}
+  // This is nasty, nasty, nasty and comes from run(cmd)
+  // Does not belong here
+  if (!internalCommand(cmd)) {
+    if (!(sandboxframe && sandboxframe.contentWindow)) {
+      // Boo. There must be a nice way to do this.
+      sandboxframe = $live.find('iframe')[0];
+      // Only force it to render if there's no live iframe
+      if (!(sandboxframe && sandboxframe.contentWindow)) {
+        renderLivePreview(false);
+        sandboxframe = $live.find('iframe')[0];
+      }
+      jsconsole.setSandbox(sandboxframe);
     }
   }
-  pos = history.length;
+
+  // In a setTimeout so that renderLivePreview has time for the iframe to load
+  setTimeout(function () {
+    response = response || run(cmd);
+    
+    if (response !== undefined) {
+      el.className = 'response';
+      span.innerHTML = response[1];
+
+      if (response[0] != 'info') prettyPrint([span]);
+      el.appendChild(span);
+
+      li.className = response[0];
+      li.innerHTML = '<span class="gutter"></span>';
+      li.appendChild(el);
+
+      appendLog(li);
+
+      exec.value = '';
+      if (enableCC) {
+        try {
+          // document.getElementsByTagName('a')[0].focus();
+          if (jsbin.panels.focused.id === 'console') {
+            cursor.focus();
+            document.execCommand('selectAll', false, null);
+            document.execCommand('delete', false, null);          
+          }
+        } catch (e) {}
+      }
+    }
+    pos = history.length;
+  }, 0);
+
 }
 
 function log(msg, className) {
@@ -318,22 +345,26 @@ window._console = {
     for (; i < l; i++) {
       log(stringify(arguments[i], true));
     }
+    window.console.log.apply(window.console, arguments);
   },
   dir: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
       log(stringify(arguments[i]));
     }
+    window.console.dir.apply(window.console, arguments);
   },
   props: function (obj) {
     var props = [], realObj;
     try {
       for (var p in obj) props.push(p);
     } catch (e) {}
+    window.console.props.apply(window.console, arguments);
     return props;
   },
   error: function (err) {
     log(err.message, 'error');
+    window.console.error.apply(window.console, arguments);
   }
 };
 
@@ -998,14 +1029,14 @@ function upgradeConsolePanel(console) {
     console.reset = function () {
       jsconsole.reset();
     };
-    console.settings.render = function () {
-
-      // TODO decide whether we should also grab all the JS in the HTML panel
-      var code = editors.javascript.render().trim();
-      jsconsole.setSandbox($live.find('iframe')[0]);
-      jsconsole.onload(function () { 
+    console.settings.render = function (withAlerts) {
+      var html = editors.html.render().trim();
+      if (html === "") {
+        var code = editors.javascript.render().trim();
         jsconsole.run(code);
-      });
+      } else {
+        renderLivePreview(withAlerts || false);
+      }
     };
     console.settings.show = function () {
       jsconsole.clear();
@@ -1017,9 +1048,10 @@ function upgradeConsolePanel(console) {
       }, 0);
     };
     console.settings.hide = function () {
+      // Removal code is commented out so that the
+      // output iframe is never removed
       if (!editors.live.visible) {
-        // renderLivePreview();
-        $live.find('iframe').remove();
+        // $live.find('iframe').remove();
       }
     };
     // jsconsole.ready = true;

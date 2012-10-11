@@ -245,8 +245,7 @@ var libraries = [
     },
     {
         "url": [
-            "http://traceur-compiler.googlecode.com/git/src/traceur.js",
-            "http://traceur-compiler.googlecode.com/git/src/bootstrap.js"
+            jsbin.static + "/js/vendor/traceur.js"
         ],
         "label": "Traceur"
     },

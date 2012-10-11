@@ -207,13 +207,38 @@ var processors = jsbin.processors = {
       return css;
     });
   },
-  traceur: function () {
-    jsbin.panels.panels.javascript.type = 'traceur';
+  traceur: function (ready) {
+    var SourceMapConsumer,
+        SourceMapGenerator,
+        ProjectWriter,
+        ErrorReporter,
+        hasError;
+    return new Processor(jsbin.static + '/js/vendor/traceur.js', function () {
+      // Only create these once, when the processor is loaded
+      $('#library').val( $('#library').find(':contains("Traceur")').val() ).trigger('change');
+      SourceMapConsumer = traceur.outputgeneration.SourceMapConsumer;
+      SourceMapGenerator = traceur.outputgeneration.SourceMapGenerator;
+      ProjectWriter = traceur.outputgeneration.ProjectWriter;
+      ErrorReporter = traceur.util.ErrorReporter;
+      ready();
+    }, function (source) {
+      hasError = false;
 
-    // force select the traceur in the client HTML
-    $('#library').val( $('#library').find(':contains("Traceur")').val() ).trigger('change');
-    ready();
-    return function (source) { return source; };
+      var reporter = new ErrorReporter();
+      reporter.reportMessageInternal = function(location, kind, format, args) {
+        window.console.error(ErrorReporter.format(location, format, args));
+      };
+
+      var url = location.href;
+      var project = new traceur.semantics.symbols.Project(url);
+      var name = 'jsbin';
+
+      var sourceFile = new traceur.syntax.SourceFile(name, source);
+      project.addFile(sourceFile);
+      var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
+
+      return ProjectWriter.write(res);
+    });
   }
 };
 

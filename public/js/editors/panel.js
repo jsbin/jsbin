@@ -193,7 +193,7 @@ Panel.prototype = {
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
-    // setTimeout(function () {
+    setTimeout(function () {
       if (x !== undefined) {
         panel.splitter.trigger('init', x);
       } else {
@@ -221,7 +221,7 @@ Panel.prototype = {
       panel.trigger('show');
 
       panel.virgin = false;
-  // }, 0);
+  }, 0);
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },

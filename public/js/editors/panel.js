@@ -435,7 +435,7 @@ Panel.prototype = {
 
             editor.setCursor({ line: (sessionStorage.getItem('line') || blank || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
           }
-        }, 50); // This is totally arbitrary
+        }, 110); // This is totally arbitrary
       }
     }, 0);
   },

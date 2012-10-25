@@ -41,11 +41,11 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"
         ],
-        "label": "jQuery UI 1.9.0",
+        "label": "jQuery UI 1.9.1",
         "group": "jQuery UI"
     },
     {

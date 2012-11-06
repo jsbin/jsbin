@@ -276,6 +276,10 @@ var libraries = [
             " http://canjs.us/release/latest/can.jquery.js"
         ],
         "label": "CanJS 1.0.7 for jQuery"
+    },
+    {
+        "url": "http://maps.googleapis.com/maps/api/js?sensor=false",
+        "label": "Google Maps API v3 latest"
     }
 ];
 

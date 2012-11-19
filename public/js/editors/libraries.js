@@ -149,6 +149,20 @@ var libraries = [
     },
     {
         "url": [
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.common.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.rtl.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.default.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.dataviz.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.dataviz.default.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.mobile.all.min.css",
+            "http://code.jquery.com/jquery-1.8.2.min.js",
+            "http://cdn.kendostatic.com/2012.3.1114/js/kendo.all.min.js"
+        ],
+        "label": "Kendo UI Q3 2012",
+        "group": "Kendo UI"
+    },
+    {
+        "url": [
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.common.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.default.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.dataviz.min.css",

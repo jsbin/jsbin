@@ -127,8 +127,8 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://yui.yahooapis.com/3.7.2/build/yui/yui-min.js",
-        "label": "YUI 3.7.2",
+        "url": "http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js",
+        "label": "YUI 3.7.3",
         "group": "YUI"
     },
     {

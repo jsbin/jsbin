@@ -94,7 +94,7 @@ var libraries = [
         "group": "jQuery Mobile"
     },
     {
-        "url": [
+    "url": [
             "http://code.jquery.com/jquery.min.js",
             "http://twitter.github.com/bootstrap/assets/css/bootstrap.css",
             "http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css",
@@ -240,7 +240,7 @@ var libraries = [
             "http://documentcloud.github.com/underscore/underscore-min.js",
             "http://documentcloud.github.com/backbone/backbone-min.js"
         ],
-        "label": "Backbone 0.9.2"
+        "label": "Backbone latest"
     },
     {
         "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
@@ -316,18 +316,18 @@ var libraries = [
     },
     {
         "url": "http://documentcloud.github.com/underscore/underscore-min.js",
-        "label": "underscore 1.3.1"
+        "label": "underscore latest"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/0.7/zepto.min.js",
-        "label": "Zepto 0.7"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
+        "label": "Zepto 1.0rc1"
     },
     {
         "url":[
             "http://code.jquery.com/jquery-1.7.1.min.js",
             " http://canjs.us/release/latest/can.jquery.js"
         ],
-        "label": "CanJS 1.0.7 for jQuery"
+        "label": "CanJS for jQuery"
     }
 ];
 

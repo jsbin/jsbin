@@ -12,8 +12,8 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.8.2.min.js",
-        "label": "jQuery 1.8.2",
+        "url": "http://code.jquery.com/jquery-1.8.3.min.js",
+        "label": "jQuery 1.8.3",
         "group": "jQuery"
     },
     {
@@ -64,6 +64,15 @@ var libraries = [
             "http://code.jquery.com/mobile/latest/jquery.mobile.js"
         ],
         "label": "jQuery Mobile Latest",
+        "group": "jQuery Mobile"
+    },
+    {
+        "url": [
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css",
+            "http://code.jquery.com/jquery-1.8.2.min.js",
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"
+        ],
+        "label": "jQuery Mobile 1.2.0",
         "group": "jQuery Mobile"
     },
     {
@@ -158,7 +167,7 @@ var libraries = [
             "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"
         ],
         "label": "Dijit 1.8.0 (Claro)",
-        "group": "Dijit"
+        "group": "Dojo"
     },
     {
         "url": [
@@ -166,7 +175,7 @@ var libraries = [
             "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js"
         ],
         "label": "Dijit 1.7.3 (Claro)",
-        "group": "Dijit"
+        "group": "Dojo"
     },
     {
         "url": [
@@ -174,7 +183,7 @@ var libraries = [
             "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"
         ],
         "label": "Dijit 1.6.1 (Claro)",
-        "group": "Dijit"
+        "group": "Dojo"
     },
     {
         "url": [

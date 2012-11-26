@@ -18,7 +18,7 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
 
-    $(this.textarea).keyup(throttle(function () {
+    $(this.textarea).blur(throttle(function () {
       $(document).trigger('codeChange', { panelId: el.id });
     }, 200));
 

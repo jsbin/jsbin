@@ -398,7 +398,7 @@ Panel.prototype = {
           offset += ($error.filter(':visible').height() || 0);
         }
 
-        editor.scroller.height(height - offset);
+        if (!jsbin.lameEditor) { editor.scroller.height(height - offset); }
         try { editor.refresh(); } catch (e) {}
       }
     });

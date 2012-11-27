@@ -160,7 +160,13 @@ function getPreparedCode(nojs) {
   // }
 
   if (jsbin.ie && re.scriptopen.test(source)) {
-    source = source.replace(re.scriptopen, '<script defer'); 
+    source = source.replace(/<script(.*?)>/gi, function (all, match) {
+      if (match.indexOf('src') !== -1) {
+        return all;
+      } else {
+        return '<script defer' + match + '>';
+      }
+    });
   }
 
   // read the element out of the source code and plug it in to our document.title

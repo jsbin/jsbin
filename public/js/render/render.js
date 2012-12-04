@@ -159,6 +159,9 @@ function getPreparedCode(nojs) {
   //   source = source.replace(re.shortDocReady, 'window.onload = (function');
   // }
 
+  // Add defer to all inline script tags in IE.
+  // This is because IE runs scripts as it loads them, so variables that scripts like jQuery add to the
+  // global scope are undefined. See http://jsbin.com/ijapom/5
   if (jsbin.ie && re.scriptopen.test(source)) {
     source = source.replace(/<script(.*?)>/gi, function (all, match) {
       if (match.indexOf('src') !== -1) {

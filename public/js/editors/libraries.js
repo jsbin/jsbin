@@ -212,18 +212,6 @@ var libraries = [
         "group": "Kendo UI"
     },
     {
-        "url": [
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.common.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.default.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.dataviz.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.mobile.all.min.css",
-            "http://code.jquery.com/jquery-1.7.2.min.js",
-            "http://cdn.kendostatic.com/2012.1.322/js/kendo.all.min.js"
-        ],
-        "label": "Kendo UI Q1 2012",
-        "group": "Kendo UI"
-    },
-    {
         "url" : [
             "http://code.jquery.com/qunit/qunit-git.css",
             "http://code.jquery.com/qunit/qunit-git.js"

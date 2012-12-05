@@ -150,7 +150,7 @@ if (!jsbin.saveDisabled) {
             }
           },
           error: function () {
-            console && console.log('update error');
+            window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
           }
         });
       }
@@ -250,7 +250,7 @@ function saveCode(method, ajax, ajaxCallback) {
         }
       },
       error: function () {
-
+        window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
       }
     });
   } else {

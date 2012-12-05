@@ -97,8 +97,9 @@ function renderLivePreview(withalerts) {
       frame = $frame[0],
       doc = frame.contentDocument || frame.contentWindow.document,
       win = doc.defaultView || doc.parentWindow,
-      d = new Date();
- 
+      d = new Date(),
+      combinedSource = [];
+
   // if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
 
   if (withalerts !== true && jsbin.settings.includejs === false) {
@@ -129,13 +130,13 @@ function renderLivePreview(withalerts) {
         // nullify the blocking functions
         // IE requires that this is done in the script, rather than off the window object outside of the doc.write
         if (withalerts !== true) {
-          doc.write(killAlerts);
+          combinedSource.push(killAlerts);
         } else {
-          doc.write(restoreAlerts);
+          combinedSource.push(restoreAlerts);
         }
 
         if (jsbinConsole) {
-          doc.write('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.top._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
+          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.top._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
 
           // doc.write('<script>(function () { var fakeConsole = ' + jsbinConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })(); window.onerror = function () { console.error.apply(console, arguments); }</script>');
         }
@@ -171,8 +172,10 @@ function renderLivePreview(withalerts) {
           window.parent.postMessage({ height: height }, '*');
         }, 20);
 
-        doc.write(source);
-        doc.write(restoreAlerts);
+        combinedSource.push(source);
+        combinedSource.push(restoreAlerts);
+        // Only one doc.write. Fixes IE crashing bug.
+        doc.write(combinedSource.join('\n'));
 
         if (liveScrollTop !== null) {
           win.scrollTo(0, liveScrollTop);

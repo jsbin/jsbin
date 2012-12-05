@@ -142,9 +142,6 @@ function post(cmd, blind, response /* passed in when echoing from remote console
 
   if (!internalCommand(cmd)) {
 
-    // Compile the command according the the processor
-    cmd = editors.javascript.processor(cmd);
-
     // Fix console not having iframe
     if (!(sandboxframe && sandboxframe.contentWindow)) {
       // Boo. There must be a nice way to do this.

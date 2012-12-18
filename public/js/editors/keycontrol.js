@@ -38,7 +38,7 @@ if (/macintosh|mac os x/.test(ua)) {
 // var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 if (!customKeys.disabled) $document.keydown(function (event) {
-  var includeAltKey = event.altKey, //customKeys.useAlt ? event.altKey : true,
+  var includeAltKey = customKeys.useAlt ? event.altKey : true,
       closekey = customKeys.closePanel ? customKeys.closePanel : 192
       $history = $('#history');
 

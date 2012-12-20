@@ -239,6 +239,10 @@ var libraries = [
         "label": "CoffeeScript"
     },
     {
+        "label": "CSS3Pie",
+        "comment": "Add 'behavior: url(/js/vendor/PIE.htc);' to each CSS selector that you'd like to include PIE on."
+    },
+    {
         "url": "https://github.com/downloads/emberjs/ember.js/ember-0.9.8.1.min.js",
         "label": "Ember.js 0.9.8.1"
     },

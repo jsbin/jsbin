@@ -5,11 +5,11 @@ var keyboardHelpVisible = false;
 
 var customKeys = objectValue('jsbin.settings.keys') || {};
 
-$('#disablekeys').attr('checked', customKeys.disabled ? true : false).change(function () {
+$('#enablealt').attr('checked', customKeys.useAlt ? true : false).change(function () {
   if (!jsbin.settings.keys) {
     jsbin.settings.keys = {};
   }
-  jsbin.settings.keys.disabled = this.checked;
+  jsbin.settings.keys.useAlt = this.checked;
 });
 
 if (!customKeys.disabled) $body.keydown(keycontrol);
@@ -38,8 +38,8 @@ if (/macintosh|mac os x/.test(ua)) {
 // var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 if (!customKeys.disabled) $document.keydown(function (event) {
-  var includeAltKey = event.altKey, //customKeys.useAlt ? event.altKey : true,
-      closekey = customKeys.closePanel ? customKeys.closePanel : 192
+  var includeAltKey = customKeys.useAlt ? event.altKey : true,
+      closekey = customKeys.closePanel ? customKeys.closePanel : 192,
       $history = $('#history');
 
   if (event.ctrlKey) event.metaKey = true;
@@ -103,7 +103,7 @@ function keycontrol(event) {
   var codePanel = { css: 1, javascript: 1, html: 1}[panel.id],
       hasRun = false;
 
-  var includeAltKey = event.altKey; //objectValue('jsbin.settings.keys.usealt') ? event.altKey : true;
+  var includeAltKey = customKeys.useAlt ? event.altKey : true;
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {

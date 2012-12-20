@@ -1113,6 +1113,11 @@ details li, .details li {
   width: 260px;
 }
 
+.modal a {
+  color: yellow;
+  text-shadow: none;
+}
+
 #login, #register {
   position: absolute;
   right: -10px;

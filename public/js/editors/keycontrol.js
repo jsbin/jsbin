@@ -5,11 +5,11 @@ var keyboardHelpVisible = false;
 
 var customKeys = objectValue('jsbin.settings.keys') || {};
 
-$('#disablekeys').attr('checked', customKeys.disabled ? true : false).change(function () {
+$('#enablealt').attr('checked', customKeys.useAlt ? true : false).change(function () {
   if (!jsbin.settings.keys) {
     jsbin.settings.keys = {};
   }
-  jsbin.settings.keys.disabled = this.checked;
+  jsbin.settings.keys.useAlt = this.checked;
 });
 
 if (!customKeys.disabled) $body.keydown(keycontrol);

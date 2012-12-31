@@ -2,7 +2,7 @@
 
 ## Build Process
 
-JS Bin has been designed to work both online at http://jsbin.com but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
+JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
 
 There's two installation paths: Node (recommended) and PHP.
 
@@ -14,7 +14,7 @@ Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavo
 
 However, everything else released in v3 of JS Bin is available in both.
 
-For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](docs/running-your-own-jsbin.md).
+For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](/remy/jsbin/blob/master/docs/running-your-own-jsbin.md).
 
 If you install [Node.js](http://nodejs.org) installation is easy:
 

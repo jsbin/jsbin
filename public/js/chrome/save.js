@@ -20,7 +20,7 @@ function onSaveError(jqXHR) {
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
   } else {
-    console && console.log('update error');
+    window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});;
   }
 }
 

@@ -142,9 +142,6 @@ function post(cmd, blind, response /* passed in when echoing from remote console
 
   if (!internalCommand(cmd)) {
 
-    // Compile the command according the the processor
-    cmd = editors.javascript.processor(cmd);
-
     // Fix console not having iframe
     if (!(sandboxframe && sandboxframe.contentWindow)) {
       // Boo. There must be a nice way to do this.
@@ -417,7 +414,7 @@ var exec = document.getElementById('exec'),
         underscore: 'http://documentcloud.github.com/underscore/underscore-min.js',
         rightjs: 'http://rightjs.org/hotlink/right.js',
         coffeescript: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js',
-        yui: 'http://yui.yahooapis.com/3.7.2/build/yui/yui-min.js'
+        yui: 'http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js'
     },
     body = document.getElementsByTagName('body')[0],
     logAfter = null,

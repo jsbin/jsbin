@@ -12,8 +12,8 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.8.2.min.js",
-        "label": "jQuery 1.8.2",
+        "url": "http://code.jquery.com/jquery-1.8.3.min.js",
+        "label": "jQuery 1.8.3",
         "group": "jQuery"
     },
     {
@@ -41,11 +41,20 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css",
-            "http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"
         ],
-        "label": "jQuery UI 1.8.23",
+        "label": "jQuery UI 1.9.1",
+        "group": "jQuery UI"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"
+        ],
+        "label": "jQuery UI 1.8.24",
         "group": "jQuery UI"
     },
     {
@@ -55,6 +64,15 @@ var libraries = [
             "http://code.jquery.com/mobile/latest/jquery.mobile.js"
         ],
         "label": "jQuery Mobile Latest",
+        "group": "jQuery Mobile"
+    },
+    {
+        "url": [
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css",
+            "http://code.jquery.com/jquery-1.8.2.min.js",
+            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"
+        ],
+        "label": "jQuery Mobile 1.2.0",
         "group": "jQuery Mobile"
     },
     {
@@ -76,7 +94,7 @@ var libraries = [
         "group": "jQuery Mobile"
     },
     {
-        "url": [
+    "url": [
             "http://code.jquery.com/jquery.min.js",
             "http://twitter.github.com/bootstrap/assets/css/bootstrap.css",
             "http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css",
@@ -109,8 +127,8 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://yui.yahooapis.com/3.7.2/build/yui/yui-min.js",
-        "label": "YUI 3.7.2",
+        "url": "http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js",
+        "label": "YUI 3.7.3",
         "group": "YUI"
     },
     {
@@ -129,14 +147,57 @@ var libraries = [
         "group": "MooTools"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js",
-        "label": "Dojo 1.6.0",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js",
+        "label": "Dojo 1.8.0",
         "group": "Dojo"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.4.1/dojo/dojo.xd.js",
-        "label": "Dojo 1.4.1",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js",
+        "label": "Dojo 1.7.3",
         "group": "Dojo"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js",
+        "label": "Dojo 1.6.1",
+        "group": "Dojo"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"
+        ],
+        "label": "Dijit 1.8.0 (Claro)",
+        "group": "Dojo"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js"
+        ],
+        "label": "Dijit 1.7.3 (Claro)",
+        "group": "Dojo"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"
+        ],
+        "label": "Dijit 1.6.1 (Claro)",
+        "group": "Dojo"
+    },
+    {
+        "url": [
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.common.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.rtl.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.default.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.dataviz.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.dataviz.default.min.css",
+            "http://cdn.kendostatic.com/2012.3.1114/styles/kendo.mobile.all.min.css",
+            "http://code.jquery.com/jquery-1.8.2.min.js",
+            "http://cdn.kendostatic.com/2012.3.1114/js/kendo.all.min.js"
+        ],
+        "label": "Kendo UI Q3 2012",
+        "group": "Kendo UI"
     },
     {
         "url": [
@@ -144,22 +205,10 @@ var libraries = [
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.default.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.dataviz.min.css",
             "http://cdn.kendostatic.com/2012.2.710/styles/kendo.mobile.all.min.css",
-            "http://code.jquery.com/jquery-1.8.0.min.js",
+            "http://code.jquery.com/jquery-1.7.2.min.js",
             "http://cdn.kendostatic.com/2012.2.710/js/kendo.all.min.js"
         ],
         "label": "Kendo UI Q2 2012",
-        "group": "Kendo UI"
-    },
-    {
-        "url": [
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.common.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.default.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.dataviz.min.css",
-            "http://cdn.kendostatic.com/2012.1.322/styles/kendo.mobile.all.min.css",
-            "http://code.jquery.com/jquery-1.8.0.min.js",
-            "http://cdn.kendostatic.com/2012.1.322/js/kendo.all.min.js"
-        ],
-        "label": "Kendo UI Q1 2012",
         "group": "Kendo UI"
     },
     {
@@ -179,7 +228,7 @@ var libraries = [
             "http://documentcloud.github.com/underscore/underscore-min.js",
             "http://documentcloud.github.com/backbone/backbone-min.js"
         ],
-        "label": "Backbone 0.9.2"
+        "label": "Backbone latest"
     },
     {
         "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
@@ -255,18 +304,18 @@ var libraries = [
     },
     {
         "url": "http://documentcloud.github.com/underscore/underscore-min.js",
-        "label": "underscore 1.3.1"
+        "label": "underscore latest"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/0.7/zepto.min.js",
-        "label": "Zepto 0.7"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
+        "label": "Zepto 1.0rc1"
     },
     {
         "url":[
             "http://code.jquery.com/jquery-1.7.1.min.js",
             " http://canjs.us/release/latest/can.jquery.js"
         ],
-        "label": "CanJS 1.0.7 for jQuery"
+        "label": "CanJS for jQuery"
     }
 ];
 

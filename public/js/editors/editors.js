@@ -43,7 +43,7 @@ panels.save = function () {
 }
 
 panels.restore = function () {
-  // if there are panel names on the hash (v2 of jsbin) or in the jquery (v3)
+  // if there are panel names on the hash (v2 of jsbin) or in the query (v3)
   // then restore those specific panels and evenly distribute them.
   var open = [],
       location = window.location,
@@ -90,7 +90,7 @@ panels.restore = function () {
   // TODO decide whether the above code I'm trying too hard.
 
   /* Boot code */
-  // then allow them to view specific panels based on comma separated hash fragment
+  // then allow them to view specific panels based on comma separated hash fragment/query
   if (toopen.length) {
     for (name in state) {
       if (toopen.indexOf(name) !== -1) {

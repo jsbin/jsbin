@@ -10,7 +10,7 @@ if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('java
   if (editors.ready) {
     loadGist();
   } else {
-    editors.onReady = loadGist;
+    $document.on('jsbinReady', loadGist);
   }
 }
 

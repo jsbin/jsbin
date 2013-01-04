@@ -46,10 +46,23 @@ var processors = jsbin.processors = {
   coffeescript: function (ready) {
     return new Processor(jsbin.static + '/js/vendor/coffee-script.js', function () {
       $.getScript(jsbin.static + '/js/vendor/codemirror2/coffeescript.js', ready);
-    }, function (source) { 
+    }, function (source) {
       var renderedCode = '';
       try {
         renderedCode = CoffeeScript.compile(source, {
+          bare: true
+        });
+      } catch (e) {
+        console && console.error(e.message);
+      }
+      return renderedCode;
+    });
+  },
+  livescript: function (ready) {
+    return new Processor(jsbin.static + '/js/vendor/livescript.js', ready, function (source) {
+      var renderedCode = '';
+      try {
+        renderedCode = LiveScript.compile(source, {
           bare: true
         });
       } catch (e) {

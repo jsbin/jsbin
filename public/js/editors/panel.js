@@ -8,6 +8,7 @@ var editorModes = {
   typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
+  livescript: 'livescript',
   less: 'css',
   processing: 'text/x-csrc'
 };

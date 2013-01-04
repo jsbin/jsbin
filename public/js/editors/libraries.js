@@ -220,8 +220,8 @@ var libraries = [
         "group": "Testing"
     },
     {
-        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.1/angular.min.js",
-        "label": "Angular 1.0.1"
+        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.3/angular.min.js",
+        "label": "Angular 1.0.3"
     },
     {
         "url": [

@@ -44,7 +44,7 @@ function getPreparedCode(nojs) {
     re = {
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
-      console: /(^.|\b)console\.(\S+)/g,
+      console: /(<script>[\s\S]*)console\.(\S+[\s\S]*<\/script>)/g,
       script: /<\/script/ig,
       code: /%code%/,
       title: /<title>(.*)<\/title>/i,
@@ -131,9 +131,9 @@ function getPreparedCode(nojs) {
   // redirect console logged to our custom log while debugging
   if (re.console.test(source)) {
     if (jsbin.panels.panels.console.visible) {
-      source = source.replace(re.console, 'window.top._console.$2');
+      source = source.replace(re.console, '$1window.top._console.$2');
     } else {
-      source = source.replace(re.console, 'window.top.console.$2');
+      source = source.replace(re.console, '$1window.top.console.$2');
     }
   }
 

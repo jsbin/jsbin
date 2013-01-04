@@ -258,8 +258,8 @@ var libraries = [
         "label": "Knockout 2.1"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js",
-        "label": "Less 1.1.3"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js",
+        "label": "Less 1.3.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.5.2/lodash.min.js",

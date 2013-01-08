@@ -327,13 +327,23 @@ for (var i = 0; i < libraries.userSpecified.length; i++) {
 }
 
 libraries.add = function (lib) {
-  // save to localStorage
-  lib.group = 'Custom';
-  this.userSpecified.push(lib);
+  // Extract each script from a list (as documented) or use the default way
+  if (lib.scripts) {
+    lib.scripts.forEach(function (script) {
+      script.group = lib.text;
+      script.label = script.text;
+      this.userSpecified.push(script);
+      libraries.push(script);
+    }.bind(this));
+  } else {
+    // Adding a lib according to the above schema
+    lib.group = 'Custom';
+    this.userSpecified.push(lib);
+    libraries.push(lib);
+  }
   try {
     localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
   } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
-  libraries.push(lib);
   $('#library').trigger('init');
 };
 

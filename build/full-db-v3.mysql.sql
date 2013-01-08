@@ -43,6 +43,7 @@ CREATE TABLE `owners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` char(25) NOT NULL,
   `url` char(255) NOT NULL,
+  `summary` varchar(255) NOT NULL DEFAULT '',
   `revision` int(11) DEFAULT '1',
   `last_updated` datetime NOT NULL,
   PRIMARY KEY (`id`),

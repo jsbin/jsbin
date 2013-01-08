@@ -1,9 +1,11 @@
 {
-  "author": [{
-    "name": "Remy Sharp",
-    "email": "remy@remysharp.com",
-    "web": "http://remysharp.com"
-  }],
+  "author": [
+    {
+      "name": "Remy Sharp",
+      "email": "remy@remysharp.com",
+      "web": "http://remysharp.com"
+    }
+  ],
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
@@ -28,12 +30,15 @@
     "jade": "0.26.3",
     "stylus": "0.28.2",
     "flatten.js": "0.1.0",
-    "soak": "0.3.0"
+    "soak": "0.3.0",
+    "async": "~0.1.22"
   },
   "devDependencies": {},
   "optionalDependencies": {},
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://rem.mit-license.org"
-  }]
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://rem.mit-license.org"
+    }
+  ]
 }

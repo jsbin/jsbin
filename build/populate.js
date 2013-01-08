@@ -26,6 +26,7 @@ var populateBin = function (ownerBin, done) {
     if (err) return done(err);
 
     ownerBin.summary = utils.titleForBin(sandboxBin);
+    ownerBin.date = ownerBin.last_updated;
     store.touchOwnership(ownerBin, done);
   });
 };

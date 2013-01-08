@@ -38,7 +38,7 @@ if (/macintosh|mac os x/.test(ua)) {
 // var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 if (!customKeys.disabled) $document.keydown(function (event) {
-  var includeAltKey = customKeys.useAlt ? event.altKey : true,
+  var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
       closekey = customKeys.closePanel ? customKeys.closePanel : 192,
       $history = $('#history');
 
@@ -103,7 +103,7 @@ function keycontrol(event) {
   var codePanel = { css: 1, javascript: 1, html: 1}[panel.id],
       hasRun = false;
 
-  var includeAltKey = customKeys.useAlt ? event.altKey : true;
+  var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey;
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {

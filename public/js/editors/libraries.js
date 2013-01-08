@@ -254,8 +254,8 @@ var libraries = [
         "label": "ext-core 3.1.0"
     },
     {
-        "url": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.1.0.js",
-        "label": "Knockout 2.1"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js",
+        "label": "Knockout 2.2"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js",

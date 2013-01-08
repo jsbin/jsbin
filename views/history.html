@@ -10,10 +10,11 @@
             <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
           </a>
         </td>
-        <td class="created">
-          <a pubdate="{{created}}" href="{{edit_url}}">{{pretty_created}}</a></td>
+        <td class="last_updated">
+          <a pubdate="{{last_updated}}" href="{{edit_url}}">{{pretty_last_updated}}</a>
+        </td>
         <td class="title">
-          <a href="{{edit_url}}">{{title}}</a>
+          <a href="{{edit_url}}">{{summary}}</a>
         </td>
       </tr>
       {{/.}}

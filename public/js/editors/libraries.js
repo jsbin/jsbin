@@ -220,8 +220,8 @@ var libraries = [
         "group": "Testing"
     },
     {
-        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.1/angular.min.js",
-        "label": "Angular 1.0.1"
+        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.3/angular.min.js",
+        "label": "Angular 1.0.3"
     },
     {
         "url": [
@@ -254,12 +254,12 @@ var libraries = [
         "label": "ext-core 3.1.0"
     },
     {
-        "url": "http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.1.0.js",
-        "label": "Knockout 2.1"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js",
+        "label": "Knockout 2.2"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.1.3/less-1.1.3.min.js",
-        "label": "Less 1.1.3"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js",
+        "label": "Less 1.3.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.5.2/lodash.min.js",
@@ -327,13 +327,23 @@ for (var i = 0; i < libraries.userSpecified.length; i++) {
 }
 
 libraries.add = function (lib) {
-  // save to localStorage
-  lib.group = 'Custom';
-  this.userSpecified.push(lib);
+  // Extract each script from a list (as documented) or use the default way
+  if (lib.scripts) {
+    lib.scripts.forEach(function (script) {
+      script.group = lib.text;
+      script.label = script.text;
+      this.userSpecified.push(script);
+      libraries.push(script);
+    }.bind(this));
+  } else {
+    // Adding a lib according to the above schema
+    lib.group = 'Custom';
+    this.userSpecified.push(lib);
+    libraries.push(lib);
+  }
   try {
     localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
   } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
-  libraries.push(lib);
   $('#library').trigger('init');
 };
 

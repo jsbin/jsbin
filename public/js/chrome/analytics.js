@@ -1,4 +1,7 @@
 var analytics = {
+  libraryMenu: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/action/open-library-menu']);
+  },
   embed: function () {
     window._gaq && _gaq.push(['_trackPageview', '/embed/' + window.top.location.toString()]);
   },

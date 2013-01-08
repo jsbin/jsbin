@@ -54,6 +54,8 @@ $library.bind('change', function () {
       library = group.libraries[selected[1]];
 
   insertResources(library.url);
+}).on('click', function () {
+  analytics.libraryMenu();
 });
 
 function insertResources(urls) {

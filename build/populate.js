@@ -28,7 +28,8 @@ var populateBin = function (ownerBin, done) {
 
     ownerBin.summary = utils.titleForBin(sandboxBin);
 
-    if (!ownerBin.last_updated || isNaN(ownerBin.last_updated.getTime())) ownerBin.date = new Date(sandboxBin.created);
+    if (!ownerBin.last_updated || isNaN(ownerBin.last_updated.getTime())) { ownerBin.date = new Date(sandboxBin.created); }
+    else { ownerBin.date = ownerBin.last_updated; }
 
     store.touchOwnership(ownerBin, done);
   });

@@ -24,6 +24,7 @@ var populateBin = function (ownerBin, done) {
   
   getBin(ownerBin, function (err, sandboxBin) {
     if (err) return done(err);
+    if (!sandboxBin) return done();
 
     ownerBin.summary = utils.titleForBin(sandboxBin);
 
@@ -35,10 +36,28 @@ var populateBin = function (ownerBin, done) {
 
 // Start
 
-store.getAllOwners(function (err, results) {
-  if (err) return console.error('getAllOwners:', err);
+var start = 0,
+    completed = 0,
+    blocksize = 150;
 
-  async.forEach(results, populateBin, function (err) {
-    if (err) return console.error('async done:', err);
+var populate = function () {
+  store.getOwnersBlock(start, blocksize, function (err, owners) {
+    if (err) return console.error('getAllOwners:', err);
+
+    async.forEachSeries(owners, populateBin, function (err) {
+      if (err) return console.error('async done:', err);
+
+      completed += owners.length;
+
+      if (owners.length < blocksize) {
+        console.log('===== done %d', completed);
+      } else {
+        console.log('===== block %d', completed);
+        start += blocksize;
+        setTimeout(populate, 1000 * 0.5);
+      }
+    });
   });
-});
+};
+
+populate();

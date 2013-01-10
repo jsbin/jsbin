@@ -2020,12 +2020,13 @@ a.active:hover {
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/
   font-size: 13px;
-  padding: 40px 0 10px 0;
+  padding: 0 0 10px 0;
   position: absolute;
   /*height: 100%;*/
-  top: 0;
+  top: 36px;
   left: 0;
   right: 0;
+  right: 30%;
   bottom: 0;
   overflow: auto;
   background: #fff;
@@ -2064,7 +2065,7 @@ a.active:hover {
 #history table {
   border-collapse: collapse;
   table-layout: fixed;
-  width: 70%;
+  width: 100%;
   position: relative;
 }
 

@@ -352,7 +352,8 @@ Panel.prototype = {
       // panel.$el.trigger('focus');
     // });
 
-    if (jsbin.mobile || jsbin.tablet) {
+    // This prevents the browser from jumping
+    if (jsbin.mobile || jsbin.tablet || jsbin.embed) {
       editor._focus = editor.focus;
       editor.focus = function () {
         // console.log('ignoring manual call');

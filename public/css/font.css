@@ -8,3 +8,15 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+    font-family: 'SourceCodeProRegular';
+    src: url('../font/SourceCodePro-Regular-webfont.eot');
+    src: url('../font/SourceCodePro-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/SourceCodePro-Regular-webfont.woff') format('woff'),
+         url('../font/SourceCodePro-Regular-webfont.ttf') format('truetype'),
+         url('../font/SourceCodePro-Regular-webfont.svg#SourceCodeProRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

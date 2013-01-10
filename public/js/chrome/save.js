@@ -14,6 +14,16 @@ $document.one('saved', function () {
   $shareLinks.removeClass('disabled').unbind('click mousedown mouseup');
 });
 
+function onSaveError(jqXHR) {
+  if (jqXHR.status === 413) {
+    // Hijack the tip label to show an error message.
+    $('#tip p').html('Sorry this bin is too large for us to save');
+    $(document.documentElement).addClass('showtip');
+  } else {
+    window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});;
+  }
+}
+
 function updateSavedState() {
   $shareLinks.each(function () {
     var url = jsbin.getURL() + this.getAttribute('data-path'),
@@ -149,9 +159,7 @@ if (!jsbin.saveDisabled) {
               });
             }
           },
-          error: function () {
-            window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-          }
+          error: onSaveError
         });
       }
     }, 250));
@@ -249,9 +257,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: function () {
-        window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-      }
+      error: onSaveError
     });
   } else {
     $form.submit();

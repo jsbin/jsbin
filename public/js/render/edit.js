@@ -2,19 +2,19 @@
 function jsbinShowEdit(options) {
   if (window.location.hash == '#noedit') return;
   var ie = (!+"\v1");
- 
+
   function hide() {
     if (over === false) el.style.top = '-60px';
   }
 
   var el = document.createElement('div'),
-      over = false; 
-  
+      over = false;
+
   el.id = 'edit-with-js-bin';
 
   var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
 
-  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a>&nbsp;<form method="post" action="' + href + 'report"><input type="hidden" name="email" id="abuseEmail"><input type="hidden" name="url" value="' + window.location.toString() + '"><button name="_csrf" title="Report Abuse" value="' + options.csrf + '">&#9873</button></form></div>';
+  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a></div>';
 
   var over;
   el.onmouseover = function () {
@@ -25,16 +25,6 @@ function jsbinShowEdit(options) {
   el.onmouseout = function () {
     over = false;
     hide();
-  };
-
-  var getEmail = function (event) {
-    var email = window.prompt("\n** REPORT ABUSE ** \n\nPlease let us know your real email address, we'll use this to validate this is a real abuse report case - thanks!", "");
-    if (email && email != '' && email.indexOf('@') !== -1) { // TODO: Better email pattern matching
-      document.getElementById('abuseEmail').value = email;
-    } else {
-      if (event.preventDefault) event.preventDefault();
-      return false;
-    }
   };
 
   var style = document.createElement('link');

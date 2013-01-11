@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.12, for Linux (i686)
+-- MySQL dump 10.13  Distrib 5.5.9, for osx10.6 (i386)
 --
 -- Host: localhost    Database: jsbin
 -- ------------------------------------------------------
--- Server version	5.5.12
+-- Server version 5.5.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,15 +41,18 @@ DROP TABLE IF EXISTS `owners`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `owners` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(25) NOT NULL,
+  `name` char(255) NOT NULL,
   `url` char(255) NOT NULL,
-  `summary` varchar(255) NOT NULL DEFAULT '',
   `revision` int(11) DEFAULT '1',
   `last_updated` datetime NOT NULL,
+  `summary` varchar(255) NOT NULL DEFAULT '',
+  `html` tinyint(1) NOT NULL DEFAULT '0',
+  `css` tinyint(1) NOT NULL DEFAULT '0',
+  `javascript` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name_url` (`name`,`url`,`revision`),
   KEY `last_updated` (`name`,`last_updated`)
-) ENGINE=InnoDB AUTO_INCREMENT=82778 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +104,7 @@ CREATE TABLE `sandbox` (
   KEY `streaming_key` (`streaming_key`),
   KEY `spam` (`created`,`last_viewed`),
   KEY `revision` (`url`(191),`revision`)
-) ENGINE=InnoDB AUTO_INCREMENT=1585411 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1585463 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -113,4 +116,4 @@ CREATE TABLE `sandbox` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-10-16 20:17:10
+-- Dump completed on 2013-01-11  9:26:38

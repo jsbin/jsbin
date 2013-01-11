@@ -4,7 +4,10 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `url` VARCHAR(255) NOT NULL,
   `summary` VARCHAR(255) NOT NULL DEFAULT '',
   `revision` INTEGER DEFAULT '1',
-  `last_updated` DATETIME DEFAULT NULL
+  `last_updated` DATETIME DEFAULT NULL,
+  `html` INTEGER(1) NOT NULL DEFAULT '0',
+  `css` INTEGER(1) NOT NULL DEFAULT '0',
+  `javascript` INTEGER(1) NOT NULL DEFAULT '0'
 );
 
 CREATE TABLE IF NOT EXISTS `ownership` (
@@ -50,6 +53,6 @@ CREATE INDEX IF NOT EXISTS "sandbox_spam" ON "sandbox" (`created`,`last_viewed`)
 CREATE INDEX IF NOT EXISTS "sandbox_revision" ON "sandbox" (`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "ownership_name_key" ON "ownership" (`name`,`key`);
 CREATE INDEX IF NOT EXISTS "owners_name_url" ON "owners" (`name`,`url`,`revision`);
+CREATE INDEX IF NOT EXISTS "index_owners_last_updated" ON "owners" (`name`, `last_updated`);
 CREATE INDEX IF NOT EXISTS "index_expires" ON "forgot_tokens" (`expires`);
 CREATE INDEX IF NOT EXISTS "index_token_expires" ON "forgot_tokens" (`token`,`created`,`expires`);
-CREATE INDEX IF NOT EXISTS "index_owners_last_updated" ON "owners" (`name`, `last_updated`);

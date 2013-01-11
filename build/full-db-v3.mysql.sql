@@ -52,7 +52,7 @@ CREATE TABLE `owners` (
   PRIMARY KEY (`id`),
   KEY `name_url` (`name`,`url`,`revision`),
   KEY `last_updated` (`name`,`last_updated`)
-) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

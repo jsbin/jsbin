@@ -1,18 +1,11 @@
 ;(function () {
 
-  var listLoaded = false;
-
-  function loadList() {
-    if (listLoaded) {
-      return;
-    }
-    listLoaded = true;
-
+  var loadList = function () {
+    $('#history').remove();
     $.ajax({
       dataType: 'html',
       url: jsbin.root + '/list',
       error: function () {
-        listLoaded = false;
         setTimeout(loadList, 500);
       },
       success: function (html) {
@@ -20,74 +13,62 @@
         hookUserHistory();
       }
     });
-  }
+  };
 
-  function hookUserHistory() {
-    if ($('#history').length) (function () {
-      function render(url) {
-        if (url.lastIndexOf('/') !== url.length - 1) {
-          url += '/';
-        }
-        iframe.src = url + 'quiet';
-        iframe.removeAttribute('hidden');
-        viewing.innerHTML = url;
+  var updatePreview = function(url, $iframe) {
+    $iframe.attr('src', url + '/quiet');
+    $iframe.removeAttr('hidden');
+  };
+
+  var updateViewing = function (url, $viewing) {
+    $viewing.text(url);
+  };
+
+  var hookUserHistory = function () {
+    var $history = $('#history');
+    if (!$history.length) return;
+
+    var $iframe = $('iframe', $history),
+        $viewing = $('#viewing', $history),
+        $bins = $history,
+        $trs = $('tr', $history),
+        $created = ('td.created a', $history),
+        current = null,
+        hoverTimer = null;
+
+    // Load bin from data-edit-url
+    $bins.delegate('tr', 'click', function () {
+      window.location = this.getAttribute('data-edit-url');
+    });
+
+    // Delay a preview load after tr mouseover
+    $trs.mouseover(function (event) {
+      var $this = $(this),
+          url = $this.attr('data-url');
+      clearTimeout(hoverTimer);
+      if ($this.attr('data-type') !== 'spacer' && current !== url) {
+        hoverTimer = setTimeout(function () {
+          $trs.removeClass('selected');
+          $this.addClass('selected');
+          current = url;
+          updatePreview(url, $iframe);
+          updateViewing(url, $viewing);
+        }, 400);
       }
+      return false;
+    });
 
-      function matchNode(el, nodeName) {
-        if (el.nodeName == nodeName) {
-          return el;
-        } else if (el.nodeName == 'BODY') {
-          return false;
-        } else {
-          return matchNode(el.parentNode, nodeName);
-        }
-      }
+    // Update the time every 30 secs
+    // Need to replace Z in ISO8601 timestamp with +0000 so prettyDate() doesn't
+    // completely remove it (and parse the date using the local timezone).
+    $('a[pubdate]', $history).attr('pubdate', function (i, val) {
+      return val.replace('Z', '+0000');
+    }).prettyDate();
+    setInterval(function(){
+      $created.prettyDate();
+    }, 30 * 1000);
 
-      function visit() {
-        window.location = this.getAttribute('data-edit-url');
-      }
-
-      var preview = $('#history .preview'),
-          iframe = $('#history iframe')[0],
-          bins = $('#history'),
-          trs = $('#history tr'),
-          current = null,
-          viewing = $('#history #viewing')[0],
-          hoverTimer = null;
-
-      // stop iframe load removing focus from our main window
-      bins.delegate('tr', 'click', visit);
-      // this is some nasty code - just because I couldn't be
-      // bothered to bring jQuery to the party.
-      bins.mouseover(function (event) {
-        clearTimeout(hoverTimer);
-        var url, target = event.target;
-        if (target = matchNode(event.target, 'TR')) {
-          if (target.getAttribute('data-type') !== 'spacer') {
-            // target.className = 'hover';
-            // target.onclick = visit;
-            url = target.getAttribute('data-url');
-            if (current !== url) {
-              hoverTimer = setTimeout(function () {
-                bins.find('tr').removeClass('selected').filter(target).addClass('selected');
-                current = url;
-                render(url);
-              }, 400);
-            }
-          }
-        }
-        return false;
-      });
-
-      // Need to replace Z in ISO8601 timestamp with +0000 so prettyDate() doesn't
-      // completely remove it (and parse the date using the local timezone).
-      $('#history a[pubdate]').attr('pubdate', function (i, val) {
-        return val.replace('Z', '+0000');
-      }).prettyDate();
-      setInterval(function(){ $('#history td.created a').prettyDate(); }, 30 * 1000);
-
-    })();
-  }
+  };
 
   // inside a ready call because history DOM is rendered *after* our JS to improve load times.
   $(function ()  {

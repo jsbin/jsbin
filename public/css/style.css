@@ -2193,7 +2193,6 @@ a.active:hover {
 /* The archive buttons */
 
 #history .archive_action {
-  width: 10%;
   text-align: right;
   padding-right: 10px;
 }

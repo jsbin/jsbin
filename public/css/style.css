@@ -2090,6 +2090,7 @@ a.active:hover {
 #history td {
   margin: 0;
   padding: 3px 0;
+  width: 15%;
 }
 
 #history a {
@@ -2101,7 +2102,7 @@ a.active:hover {
 
 #history .url {
   text-align: right;
-  width: 25%;
+  width: 20%;
   padding-left: 20px;
   padding-right: 20px;
 }
@@ -2131,6 +2132,7 @@ a.active:hover {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  width: 50%;
 }
 
 #history tr:hover *,
@@ -2196,6 +2198,7 @@ a.active:hover {
 #history .archive_action {
   text-align: right;
   padding-right: 10px;
+  width: 10%;
 }
 
 #history .archive_action span {

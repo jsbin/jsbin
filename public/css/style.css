@@ -2201,14 +2201,18 @@ a.active:hover {
 #history .archive_action span {
   display: none;
 }
+#history .archived .archive_action span {
+  display: inline;
+}
 
-#history .archive_action a {
-  color: #ccc;
+#history .archive_action a,
+#history .archive_action span {
+  color: #ccc !important;
 }
 
 #history .archive_action:hover a,
 #history .archive_action:hover span {
-  color: black;
+  color: black !important;
 }
 
 #history .archive_action:hover span {

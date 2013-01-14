@@ -42,9 +42,29 @@
       window.location = this.getAttribute('data-edit-url');
     });
 
+    $bins.delegate('.archive, .unarchive', 'click', function (e) {
+      console.log(e);
+      var $this = $(this);
+      console.log('hitting', $this.attr('href'));
+      $.ajax({
+        type: 'POST',
+        url: $this.attr('href'),
+        error: function () {
+          alert("Something went wrong, please try again");
+          console.log.apply(console, [].slice.call(arguments));
+        },
+        success: function () {
+          $this.parents('tr').toggleClass('archived');
+        }
+      });
+      return false;
+    });
+
+    // Toggle show archive
     $toggle.change(function () {
       $history.toggleClass('archive_mode');
     });
+
 
     // Delay a preview load after tr mouseover
     $trs.mouseover(function (event) {

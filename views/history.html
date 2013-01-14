@@ -9,7 +9,7 @@
     {{#bins}}
     <tbody>
       {{#.}}
-      <tr class="{{#active}}active{{/active}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
+      <tr class="{{^active}}archived{{/active}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
         <td class="url">
           <a href="{{edit_url}}">
             <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
@@ -18,8 +18,9 @@
         <td class="last_updated">
           <a pubdate="{{last_updated}}" href="{{edit_url}}">{{pretty_last_updated}}</a>
         </td>
-        <td class="activate">
-          <a href="#"><span>Archive</span> x</a>
+        <td class="archive_action">
+          <a href="#" class="archive"><span>Archive</span> x</a>
+          <a href="#" class="unarchive"><span>Un-archive</span> &infin;</a>
         </td>
         <td class="title">
           <a href="{{edit_url}}">{{summary}}</a>

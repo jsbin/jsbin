@@ -33,12 +33,17 @@
         $bins = $history,
         $trs = $('tr', $history),
         $created = $('td.created a', $history),
+        $toggle = $('.toggle_archive', $history),
         current = null,
         hoverTimer = null;
 
     // Load bin from data-edit-url
     $bins.delegate('tr', 'click', function () {
       window.location = this.getAttribute('data-edit-url');
+    });
+
+    $toggle.change(function () {
+      $history.toggleClass('archive_mode');
     });
 
     // Delay a preview load after tr mouseover

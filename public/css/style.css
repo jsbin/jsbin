@@ -2087,6 +2087,10 @@ a.active:hover {
   background: #fff;
 }
 
+#history tr.archived {
+  display: none;
+}
+
 #history td {
   margin: 0;
   padding: 3px 0;
@@ -2160,26 +2164,54 @@ a.active:hover {
   margin: 0 10px 10px 20px;
 }
 
-#history.inactive .active {
+/* Archive */
+
+/* By default, don't show archived rows */
+#history.archive_mode tr {
   display: none;
 }
 
-#history .activate {
+/* By default, hide the unarchive button */
+#history .unarchive {
+  display: none;
+}
+
+/* Show archived rows when in archive mode */
+#history.archive_mode tr.archived {
+  display: table-row;
+}
+
+/* Show the unarchive button and hide the archive button in archive_mode */
+#history.archive_mode .unarchive {
+  display: inline;
+}
+
+#history.archive_mode .archive {
+  display: none;
+}
+
+/* The archive buttons */
+
+#history .archive_action {
   width: 10%;
   text-align: right;
   padding-right: 10px;
 }
 
-#history .activate span {
+#history .archive_action span {
   display: none;
 }
 
-#history .activate a {
+#history .archive_action a {
   color: #ccc;
 }
 
-#history .activate:hover a, #history .activate:hover span {
+#history .archive_action:hover a,
+#history .archive_action:hover span {
   color: black;
+}
+
+#history .archive_action:hover span {
   display: inline;
 }
 

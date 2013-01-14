@@ -2204,17 +2204,20 @@ a.active:hover {
   display: inline;
 }
 
+#history .archive_action a {
+  padding-left: 10%;
+}
 #history .archive_action a,
 #history .archive_action span {
   color: #ccc !important;
 }
 
-#history .archive_action:hover a,
-#history .archive_action:hover span {
+#history .archive_action a:hover,
+#history .archive_action a:hover span {
   color: black !important;
 }
 
-#history .archive_action:hover span {
+#history .archive_action a:hover span {
   display: inline;
 }
 

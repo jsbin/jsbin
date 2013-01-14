@@ -9,7 +9,7 @@
     {{#bins}}
     <tbody>
       {{#.}}
-      <tr class="{{^active}}archived{{/active}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
+      <tr class="{{#archive}}archived{{/archive}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
         <td class="url">
           <a href="{{edit_url}}">
             <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/

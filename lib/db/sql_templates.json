@@ -20,7 +20,7 @@
   "touchOwners": "UPDATE `owners` SET `last_updated`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `:panel`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "populateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `html`=?, `css`=?, `javascript`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
-  "archiveBin": "UPDATE `owners` SET `active`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
+  "archiveBin": "UPDATE `owners` SET `archive`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateUserEmail": "UPDATE ownership SET `email`=?, `updated`=? WHERE `name`=?",
   "getUserByEmail": "SELECT * FROM `ownership` WHERE `email`=? LIMIT 1",
   "getUserForForgotToken": "SELECT `ownership`.*, expires FROM `ownership` INNER JOIN `forgot_tokens` ON `name` = `owner_name` WHERE `token` = ? AND `forgot_tokens`.`expires` >= ?",

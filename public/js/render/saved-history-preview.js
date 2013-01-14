@@ -32,7 +32,7 @@
         $viewing = $('#viewing', $history),
         $bins = $history,
         $trs = $('tr', $history),
-        $created = ('td.created a', $history),
+        $created = $('td.created a', $history),
         current = null,
         hoverTimer = null;
 

@@ -41,7 +41,8 @@ function hookUserHistory() {
       }
     }
 
-    function visit() {
+    function visit(event) {
+      if (event.shiftKey || event.metaKey) return;
       window.location = this.getAttribute('data-edit-url');
     }
 

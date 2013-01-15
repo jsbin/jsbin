@@ -36,7 +36,12 @@ $('.logout').click(function (event) {
 });
 
 $('.homebtn').click(function () {
-  analytics.open();
+  if (this.id === 'avatar') {
+    analytics.openFromAvatar();
+  } else {
+    analytics.open();
+  }
+  
   jsbin.panels.hideAll();
   return false;
 });

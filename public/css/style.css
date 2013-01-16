@@ -2082,18 +2082,25 @@ a.active:hover {
   position: relative;
 }
 
+#history tr.last:after {
+  content: '';
+  display: block;
+  height: 10px;
+}
+
 #history tr {
   cursor: pointer;
   background: #fff;
 }
 
-#history tbody tr:last-child {
-  border-bottom: 10px solid white;
+#history tr.last {
+  /* border-bottom: 10px solid white; */
 }
 
 #history td {
   margin: 0;
-  padding: 3px 0;
+  padding: 0;
+  line-height: 1.5;
   width: 15%;
 }
 
@@ -2120,7 +2127,7 @@ a.active:hover {
   visibility: hidden;
 }
 
-#history .url span.first {
+#history tr.first .url span {
   visibility: visible;
 }
 
@@ -2158,6 +2165,11 @@ a.active:hover {
 #history #viewing {
   font-size: 10px;
   margin: 0 10px 10px 20px;
+}
+
+#history tr.spacer:hover * {
+  background: #fff;
+  cursor: default;
 }
 
 /* Archive */
@@ -2200,10 +2212,10 @@ a.active:hover {
 }
 
 #history .archive_action span {
-  display: none;
+  visibility: hidden;
 }
 #history .archived .archive_action span {
-  display: inline;
+  visibility: visible;
 }
 
 #history .archive_action a {
@@ -2220,7 +2232,7 @@ a.active:hover {
 }
 
 #history .archive_action a:hover span {
-  display: inline;
+  visibility: visible;
 }
 
 /*@media (max-height:770px) {*/

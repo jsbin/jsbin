@@ -24,6 +24,36 @@
     $viewing.text(url);
   };
 
+  var updateLayout = function ($tbodys) {
+    console.log('update');
+    $tbodys.each(function () {
+      var $tbody = $(this),
+          $trs = $('tr', $tbody),
+          $spacer = $('.spacer', $tbody).css({ display: 'none' });
+      if ($trs.filter(':visible').length > 0) {
+        $spacer.css({ display: 'table-row' });
+      }
+      $trs.removeClass('first');
+      $('tr', $tbody)
+        .removeClass('last')
+        .not(':hidden')
+        .last()
+        .addClass('last');
+      $trs.filter(':not(.archived)').each(function (index) {
+        var $tr = $(this);
+        if (index === 0) {
+          $tr.addClass('first');
+        }
+      });
+      $trs.filter('.archived').each(function (index) {
+        var $tr = $(this);
+        if (index === 0) {
+         $tr.addClass('first');
+        }
+      });
+    });
+  };
+
   var hookUserHistory = function () {
     var $history = $('#history');
     if (!$history.length) return;
@@ -31,6 +61,7 @@
     var $iframe = $('iframe', $history),
         $viewing = $('#viewing', $history),
         $bins = $history,
+        $tbodys = $('tbody', $history),
         $trs = $('tr', $history),
         $created = $('td.created a', $history),
         $toggle = $('.toggle_archive', $history),
@@ -53,6 +84,7 @@
         },
         success: function () {
           $this.parents('tr').toggleClass('archived');
+          updateLayout($tbodys);
         }
       });
       return false;
@@ -61,6 +93,7 @@
     // Toggle show archive
     $toggle.change(function () {
       $history.toggleClass('archive_mode');
+      updateLayout($tbodys);
     });
 
     // Delay a preview load after tr mouseover
@@ -68,7 +101,7 @@
       var $this = $(this),
           url = $this.attr('data-url');
       clearTimeout(hoverTimer);
-      if (current !== url) {
+      if (!$this.hasClass('spacer') && current !== url) {
         hoverTimer = setTimeout(function () {
           $trs.removeClass('selected');
           $this.addClass('selected');
@@ -89,6 +122,8 @@
     setInterval(function(){
       $created.prettyDate();
     }, 30 * 1000);
+
+    setTimeout(updateLayout.bind(null, $tbodys), 0);
 
   };
 

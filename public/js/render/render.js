@@ -44,7 +44,7 @@ function getPreparedCode(nojs) {
     re = {
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
-      console: /(<script>[\s\S]*)console\.(\S+[\s\S]*<\/script>)/g,
+      console: /(^.|\b)console\.(\S+)/g,
       script: /<\/script/ig,
       code: /%code%/,
       title: /<title>(.*)<\/title>/i,
@@ -130,11 +130,21 @@ function getPreparedCode(nojs) {
 
   // redirect console logged to our custom log while debugging
   if (re.console.test(source)) {
-    if (jsbin.panels.panels.console.visible) {
-      source = source.replace(re.console, '$1window.top._console.$2');
-    } else {
-      source = source.replace(re.console, '$1window.top.console.$2');
-    }
+    var replaceWith = 'window.top.' + (jsbin.panels.panels.console.visible ? '_console.' : 'console.');
+    // yes, this code looks stupid, but in fact what it does is look for
+    // 'console.' and then checks the position of the code. If it's inside
+    // an openning script tag, it'll change it to window.top._console,
+    // otherwise it'll leave it.
+    source = source.replace(re.console, function (all, str, arg, pos) {
+      var open = source.lastIndexOf('<script', pos),
+          close = source.lastIndexOf('</script', pos);
+
+      if (open > close) {
+        return replaceWith + arg;
+      } else {
+        return all;
+      }
+    });
   }
 
   if (!hasHTML && !hasJS && hasCSS) {
@@ -143,7 +153,7 @@ function getPreparedCode(nojs) {
     parts = [];
     close = '';
     if (source.indexOf('</head>') !== -1) {
-      parts.push(source.substring(0, source.lastIndexOf('</head>')))
+      parts.push(source.substring(0, source.lastIndexOf('</head>')));
       parts.push(source.substring(source.lastIndexOf('</head>')));
 
       source = parts[0];

@@ -2,4 +2,5 @@ logs
 logs/*
 config.*.json
 public/js/jsbin*.js
+.nodemonignore
 !config.default.json

@@ -63,11 +63,11 @@
     });
 
     // Delay a preview load after tr mouseover
-    $trs.mouseover(function (event) {
+    $bins.delegate('tr', 'mouseover', function (event) {
       var $this = $(this),
           url = $this.attr('data-url');
       clearTimeout(hoverTimer);
-      if ($this.attr('data-type') !== 'spacer' && current !== url) {
+      if (current !== url) {
         hoverTimer = setTimeout(function () {
           $trs.removeClass('selected');
           $this.addClass('selected');

@@ -2087,6 +2087,10 @@ a.active:hover {
   background: #fff;
 }
 
+#history tbody tr:last-child {
+  border-bottom: 10px solid white;
+}
+
 #history td {
   margin: 0;
   padding: 3px 0;
@@ -2149,12 +2153,6 @@ a.active:hover {
   background: #0097fe;
   color: #fff;
   cursor: pointer;
-}
-
-
-#history tr[data-type=spacer]:hover * {
-  background: #fff;
-  cursor: default;
 }
 
 #history #viewing {

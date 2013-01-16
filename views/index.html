@@ -25,15 +25,16 @@
         <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
         <div class="dropdown" id="actionmenu">
           <div class="dropdownmenu">
+            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
+            {{#home}}
+            <a href="#" class="button group homebtn">Open</a>
+            {{/home}}
+            <hr>
             <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
             <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
             <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
             <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
             <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
-            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
-            {{#home}}
-            <a href="#" class="button group homebtn">Open</a>
-            {{/home}}
           </div>
         </div>
       </div><!--
@@ -174,9 +175,11 @@
               <div class="dropdownmenu">
                 <a id="showhelp" href="#keyboardHelp">Keyboard Shortcuts</a>
                 <a id="showurls" href="#urls">JS Bin URLs</a>
+                <hr>
                 <a target="_blank" href="/videos">Videos</a>
                 <a target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
                 <a target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
+                <hr>
                 <a target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
                 <a target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
                 <a target="_blank" href="http://jsbin.tumblr.com/about">About</a>

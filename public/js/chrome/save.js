@@ -194,6 +194,12 @@ var $form = $('form#saveform').empty()
     settings.processors = jsbin.state.processors;
   }
 
+  // this prevents new revisions forking off the welcome bin
+  // because it's looking silly!
+  if (jsbin.state.code === 'welcome') {
+    $form.attr('action', '/save');
+  }
+
   $form.find('input[name=settings]').val(JSON.stringify(settings));
   $form.find('input[name=javascript]').val(editors.javascript.getCode());
   $form.find('input[name=css]').val(editors.css.getCode());

@@ -39,6 +39,7 @@
 
     // Load bin from data-edit-url
     $bins.delegate('tr', 'click', function () {
+      if (event.shiftKey || event.metaKey) return;
       window.location = this.getAttribute('data-edit-url');
     });
 

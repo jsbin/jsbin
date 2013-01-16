@@ -2305,6 +2305,14 @@ a.active:hover {
   padding: 5px 30px 5px 15px;
 }
 
+.dropdownmenu hr {
+  border-style: solid;
+  border-color: #DFDFDF;
+  border-width: 1px;
+  border-bottom: none;
+  margin: 0;
+}
+
 #save {
   width: 50px;
   position: relative;

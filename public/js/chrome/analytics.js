@@ -32,6 +32,9 @@ var analytics = {
   open: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/open']);
   },
+  openFromAvatar: function () {
+    window._gaq && _gaq.push(['_trackPageview', '/action/open-from-avatar']);
+  },
   download: function () {
     window._gaq && _gaq.push(['_trackPageview', '/action/download' + window.location.pathname]);
   },

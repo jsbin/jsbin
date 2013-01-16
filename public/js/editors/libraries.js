@@ -244,8 +244,12 @@ var libraries = [
         "label": "CoffeeScript"
     },
     {
-        "url": "https://github.com/downloads/emberjs/ember.js/ember-0.9.8.1.min.js",
-        "label": "Ember.js 0.9.8.1"
+        "url": [
+            "http://code.jquery.com/jquery.min.js",
+            "http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js",
+            "https://github.com/downloads/emberjs/ember.js/ember-1.0.0-pre.2.min.js"
+        ],
+        "label": "Ember.js 1.0.0pre2"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",

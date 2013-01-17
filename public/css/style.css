@@ -2082,19 +2082,9 @@ a.active:hover {
   position: relative;
 }
 
-#history tr.last:after {
-  content: '';
-  display: block;
-  height: 10px;
-}
-
 #history tr {
   cursor: pointer;
   background: #fff;
-}
-
-#history tr.last {
-  /* border-bottom: 10px solid white; */
 }
 
 #history td {
@@ -2165,6 +2155,12 @@ a.active:hover {
 #history #viewing {
   font-size: 10px;
   margin: 0 10px 10px 20px;
+}
+
+#history.archive_mode tr.spacer,
+#history tr.spacer {
+  height: 10px;
+  display: table-row;
 }
 
 #history tr.spacer:hover * {

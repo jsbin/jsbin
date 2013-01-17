@@ -24,33 +24,18 @@
     $viewing.text(url);
   };
 
-  var updateLayout = function ($tbodys) {
-    console.log('update');
+  var updateLayout = function ($tbodys, archiveMode) {
     $tbodys.each(function () {
       var $tbody = $(this),
-          $trs = $('tr', $tbody),
-          $spacer = $('.spacer', $tbody).css({ display: 'none' });
-      if ($trs.filter(':visible').length > 0) {
-        $spacer.css({ display: 'table-row' });
+          filter = archiveMode ? '.archived' : ':not(.archived)',
+          $trs = $('tr' + filter, $tbody).filter(':not(.spacer)');
+      $trs.filter('.first').removeClass('first');
+      if ($trs.length > 0) {
+        $tbody.removeClass('hidden');
+        $trs.first().addClass('first');
+      } else {
+        $tbody.addClass('hidden');
       }
-      $trs.removeClass('first');
-      $('tr', $tbody)
-        .removeClass('last')
-        .not(':hidden')
-        .last()
-        .addClass('last');
-      $trs.filter(':not(.archived)').each(function (index) {
-        var $tr = $(this);
-        if (index === 0) {
-          $tr.addClass('first');
-        }
-      });
-      $trs.filter('.archived').each(function (index) {
-        var $tr = $(this);
-        if (index === 0) {
-         $tr.addClass('first');
-        }
-      });
     });
   };
 
@@ -66,7 +51,8 @@
         $created = $('td.created a', $history),
         $toggle = $('.toggle_archive', $history),
         current = null,
-        hoverTimer = null;
+        hoverTimer = null,
+        layoutTimer = null;
 
     // Load bin from data-edit-url
     $bins.delegate('tr', 'click', function () {
@@ -75,17 +61,19 @@
     });
 
     $bins.delegate('.archive, .unarchive', 'click', function (e) {
-      var $this = $(this);
+      var $this = $(this),
+          $row = $this.parents('tr');
+      $row.toggleClass('archived');
+      updateLayout($tbodys, $history.hasClass('archive_mode'));
       $.ajax({
         type: 'POST',
         url: $this.attr('href'),
         error: function () {
           alert("Something went wrong, please try again");
+          $row.toggleClass('archived');
+          updateLayout($tbodys, $history.hasClass('archive_mode'));
         },
-        success: function () {
-          $this.parents('tr').toggleClass('archived');
-          updateLayout($tbodys);
-        }
+        success: function () {}
       });
       return false;
     });
@@ -93,7 +81,7 @@
     // Toggle show archive
     $toggle.change(function () {
       $history.toggleClass('archive_mode');
-      updateLayout($tbodys);
+      updateLayout($tbodys, $history.hasClass('archive_mode'));
     });
 
     // Delay a preview load after tr mouseover
@@ -123,7 +111,7 @@
       $created.prettyDate();
     }, 30 * 1000);
 
-    setTimeout(updateLayout.bind(null, $tbodys), 0);
+    setTimeout(updateLayout.bind(null, $tbodys, false), 0);
 
   };
 

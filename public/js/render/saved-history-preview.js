@@ -1,18 +1,23 @@
 ;(function () {
+  var $body = $('body');
 
   var loadList = function () {
-    $('#history').remove();
-    $.ajax({
-      dataType: 'html',
-      url: jsbin.root + '/list',
-      error: function () {
-        setTimeout(loadList, 500);
-      },
-      success: function (html) {
-        $body.append(html);
-        hookUserHistory();
-      }
-    });
+    if ($('html').hasClass('public-listing')) {
+      hookUserHistory();
+    } else {
+      $('#history').remove();
+      $.ajax({
+        dataType: 'html',
+        url: jsbin.root + '/list',
+        error: function () {
+          setTimeout(loadList, 500);
+        },
+        success: function (html) {
+          $body.append(html);
+          hookUserHistory();
+        }
+      });
+    }
   };
 
   var updatePreview = function(url, $iframe) {
@@ -115,7 +120,10 @@
       $created.prettyDate();
     }, 30 * 1000);
 
-    setTimeout(updateLayout.bind(null, $tbodys, false), 0);
+    // removed .bind use to avoid requirement for polyfill when viewing public pages
+    setTimeout(function () {
+      updateLayout($tbodys, false);
+    }, 0);
 
   };
 

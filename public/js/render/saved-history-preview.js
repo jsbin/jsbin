@@ -13,6 +13,8 @@
           setTimeout(loadList, 500);
         },
         success: function (html) {
+          // prevent this from being called again
+          loadList = function () {};
           $body.append(html);
           hookUserHistory();
         }

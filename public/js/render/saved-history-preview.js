@@ -1,118 +1,156 @@
-var listLoaded = false;
+;(function () {
 
-function loadList() {
-  if (listLoaded) {
-    return;
-  }
-  listLoaded = true;
-
-  $.ajax({
-    dataType: 'html',
-    url: jsbin.root + '/list',
-    error: function () {
-      listLoaded = false;
-      setTimeout(loadList, 500);
-    },
-    success: function (html) {
-      $body.append(html);
-      hookUserHistory();
-    }
-  });
-}
-
-function hookUserHistory() {
-  if ($('#history').length) (function () {
-    function render(url) {
-      if (url.lastIndexOf('/') !== url.length - 1) {
-        url += '/';
+  var loadList = function () {
+    $('#history').remove();
+    $.ajax({
+      dataType: 'html',
+      url: jsbin.root + '/list',
+      error: function () {
+        setTimeout(loadList, 500);
+      },
+      success: function (html) {
+        $body.append(html);
+        hookUserHistory();
       }
-      iframe.src = url + 'quiet';
-      iframe.removeAttribute('hidden');
-      viewing.innerHTML = url;
-    }
+    });
+  };
 
-    function matchNode(el, nodeName) {
-      if (el.nodeName == nodeName) {
-        return el;
-      } else if (el.nodeName == 'BODY') {
-        return false;
-      } else {
-        return matchNode(el.parentNode, nodeName);
-      }
-    }
+  var updatePreview = function(url, $iframe) {
+    $iframe.attr('src', url + '/quiet');
+    $iframe.removeAttr('hidden');
+  };
 
-    function visit(event) {
+  var updateViewing = function (url, $viewing) {
+    $viewing.text(url);
+  };
+
+  var updateLayout = function ($tbodys, archiveMode) {
+    var $parent = $tbodys.parent();
+    $tbodys
+      .detach()
+      .each(function () {
+        var $tbody = $(this),
+            filter = archiveMode ? '.archived' : ':not(.archived)',
+            $trs = $('tr' + filter, $tbody).filter(':not(.spacer)');
+        if ($trs.length > 0) {
+          $trs.filter('.first').removeClass('first');
+          $tbody.removeClass('hidden');
+          $trs.first().addClass('first');
+        } else {
+          $tbody.addClass('hidden');
+        }
+      })
+      .appendTo($parent);
+  };
+
+  var hookUserHistory = function () {
+    var $history = $('#history');
+    if (!$history.length) return;
+
+    var $iframe = $('iframe', $history),
+        $viewing = $('#viewing', $history),
+        $bins = $history,
+        $tbodys = $('tbody', $history),
+        $trs = $('tr', $history),
+        $created = $('td.created a', $history),
+        $toggle = $('.toggle_archive', $history),
+        current = null,
+        hoverTimer = null,
+        layoutTimer = null;
+
+    // Load bin from data-edit-url
+    $bins.delegate('tr:not(.spacer)', 'click', function () {
       if (event.shiftKey || event.metaKey) return;
       window.location = this.getAttribute('data-edit-url');
-    }
+    });
 
-    var preview = $('#history .preview'),
-        iframe = $('#history iframe')[0],
-        bins = $('#history'),
-        trs = $('#history tr'),
-        current = null,
-        viewing = $('#history #viewing')[0],
-        hoverTimer = null;
+    $bins.delegate('.archive, .unarchive', 'click', function (e) {
+      var $this = $(this),
+          $row = $this.parents('tr');
+      $row.toggleClass('archived');
+      updateLayout($tbodys, $history.hasClass('archive_mode'));
+      $.ajax({
+        type: 'POST',
+        url: $this.attr('href'),
+        error: function () {
+          alert("Something went wrong, please try again");
+          $row.toggleClass('archived');
+          updateLayout($tbodys, $history.hasClass('archive_mode'));
+        },
+        success: function () {}
+      });
+      return false;
+    });
 
-    // stop iframe load removing focus from our main window
-    bins.delegate('tr', 'click', visit);
-    // this is some nasty code - just because I couldn't be
-    // bothered to bring jQuery to the party.
-    bins.mouseover(function (event) {
+    // Toggle show archive
+    $toggle.change(function () {
+      $history.toggleClass('archive_mode');
+      updateLayout($tbodys, $history.hasClass('archive_mode'));
+    });
+
+    // Delay a preview load after tr mouseover
+    $bins.delegate('tr', 'mouseover', function (event) {
+      var $this = $(this),
+          url = $this.attr('data-url');
       clearTimeout(hoverTimer);
-      var url, target = event.target;
-      if (target = matchNode(event.target, 'TR')) {
-        if (target.getAttribute('data-type') !== 'spacer') {
-          // target.className = 'hover';
-          // target.onclick = visit;
-          url = target.getAttribute('data-url');
-          if (current !== url) {
-            hoverTimer = setTimeout(function () {
-              bins.find('tr').removeClass('selected').filter(target).addClass('selected');
-              current = url;
-              render(url);
-            }, 400);
-          }
-        }
+      if (!$this.hasClass('spacer') && current !== url) {
+        hoverTimer = setTimeout(function () {
+          $trs.removeClass('selected');
+          $this.addClass('selected');
+          current = url;
+          updatePreview(url, $iframe);
+          updateViewing(url, $viewing);
+        }, 400);
       }
       return false;
     });
 
+    // Update the time every 30 secs
     // Need to replace Z in ISO8601 timestamp with +0000 so prettyDate() doesn't
     // completely remove it (and parse the date using the local timezone).
-    $('#history a[pubdate]').attr('pubdate', function (i, val) {
+    $('a[pubdate]', $history).attr('pubdate', function (i, val) {
       return val.replace('Z', '+0000');
     }).prettyDate();
-    setInterval(function(){ $('#history td.created a').prettyDate(); }, 30 * 1000);
+    setInterval(function(){
+      $created.prettyDate();
+    }, 30 * 1000);
 
-  })();
-}
+    setTimeout(updateLayout.bind(null, $tbodys, false), 0);
 
-// inside a ready call because history DOM is rendered *after* our JS to improve load times.
-if (!jsbin.embed) $(function ()  {
+  };
 
-  // this code attempts to only call the list ajax request only if
-  // the user should want to see the list page - most users will
-  // jump in and jump out of jsbin, and never see this page,
-  // so let's not send this ajax request.
-  setTimeout(function () {
-    var panelsVisible = $body.hasClass('panelsVisible');
+  // inside a ready call because history DOM is rendered *after* our JS to improve load times.
+  $(function ()  {
+    if (jsbin.embed) return;
+
+    var $panelButtons = $('#panels a'),
+        $homebtn = $('.homebtn'),
+        panelsVisible = $body.hasClass('panelsVisible');
+
+    var panelCloseIntent = function() {
+      var activeCount = $panelButtons.filter('.active').length;
+      if (activeCount === 1 && $(this).hasClass('active')) {
+        loadList();
+      }
+    };
+
+    // this code attempts to only call the list ajax request only if
+    // the user should want to see the list page - most users will
+    // jump in and jump out of jsbin, and never see this page,
+    // so let's not send this ajax request.
+    //
+    // The list should be loaded when:
+    //   - user hovers the home button
+    //   - they arrive at the page with no panels open
+    //   - they close all the panels
 
     if (!panelsVisible) {
       loadList();
     } else {
-      // if the user hovers over their profile page or the 'open' link, then load the list then
-      $('.homebtn').one('hover', loadList);
-      function panelCloseIntent() {
-        var activeCount = $panelButtons.filter('.active').length;
-        if (activeCount === 1 && $(this).hasClass('active')) {
-          $panelButtons.unbind('mousedown', panelCloseIntent);
-          loadList();
-        }
-      };
-
-      var $panelButtons = $('#panels a').on('mousedown', panelCloseIntent);
+      $homebtn.one('hover', loadList);
+      $panelButtons.on('mousedown', panelCloseIntent);
     }
-  }, 0);
 
-});
+  });
+
+}());

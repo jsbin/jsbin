@@ -25,18 +25,22 @@
   };
 
   var updateLayout = function ($tbodys, archiveMode) {
-    $tbodys.each(function () {
-      var $tbody = $(this),
-          filter = archiveMode ? '.archived' : ':not(.archived)',
-          $trs = $('tr' + filter, $tbody).filter(':not(.spacer)');
-      $trs.filter('.first').removeClass('first');
-      if ($trs.length > 0) {
-        $tbody.removeClass('hidden');
-        $trs.first().addClass('first');
-      } else {
-        $tbody.addClass('hidden');
-      }
-    });
+    var $parent = $tbodys.parent();
+    $tbodys
+      .detach()
+      .each(function () {
+        var $tbody = $(this),
+            filter = archiveMode ? '.archived' : ':not(.archived)',
+            $trs = $('tr' + filter, $tbody).filter(':not(.spacer)');
+        if ($trs.length > 0) {
+          $trs.filter('.first').removeClass('first');
+          $tbody.removeClass('hidden');
+          $trs.first().addClass('first');
+        } else {
+          $tbody.addClass('hidden');
+        }
+      })
+      .appendTo($parent);
   };
 
   var hookUserHistory = function () {
@@ -55,7 +59,7 @@
         layoutTimer = null;
 
     // Load bin from data-edit-url
-    $bins.delegate('tr', 'click', function () {
+    $bins.delegate('tr:not(.spacer)', 'click', function () {
       if (event.shiftKey || event.metaKey) return;
       window.location = this.getAttribute('data-edit-url');
     });

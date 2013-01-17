@@ -9,6 +9,8 @@
         setTimeout(loadList, 500);
       },
       success: function (html) {
+        // disable the loadList functionality
+        loadList = function () {};
         $body.append(html);
         hookUserHistory();
       }

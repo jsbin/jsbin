@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
+<html id="jsbin" lang="en" class="public-listing {{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
@@ -12,6 +12,9 @@
 <!--[if lt IE 8 ]><body class="source ie ie7 ready"><![endif]-->
 <!--[if gte IE 8 ]><body class="source ie ready"><![endif]-->
 <!--[if !IE]><!--><body id="listpage" class="source ready"><!--<![endif]-->
+<script>
+  var jsbin = {{{jsbin}}};
+</script>
 {{^is_production}}
 {{#scripts}}
 <script src="{{static}}{{.}}"></script>

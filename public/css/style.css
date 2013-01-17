@@ -1242,9 +1242,9 @@ input {
 .loginFeedback {
   display: none;
   padding: 3px;
-  background: #f3b8b6;
-  background: rgba(255, 0, 0, 0.2);
-  border: 1px solid red;
+  background: #EFF3B6;
+  background: rgba(255, 253, 0, 0.2);
+  border: 1px solid rgb(219, 225, 45);
   margin: 0;
   white-space: normal;
   line-height: 18px;

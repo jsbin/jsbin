@@ -2231,6 +2231,25 @@ a.active:hover {
   visibility: visible;
 }
 
+/* public history */
+.public-listing .menu,
+.public-listing .archive_action {
+  display: none;
+}
+
+.public-listing body {
+  overflow: auto;
+}
+
+.public-listing #history {
+  position: relative;
+  top: 0;
+}
+
+.public-listing #history .preview {
+  top: 0;
+}
+
 /*@media (max-height:770px) {*/
 .hideheader.ready #control {
   border-bottom: 6px solid #AAA;

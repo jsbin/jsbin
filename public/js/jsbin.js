@@ -118,8 +118,8 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   }
 });
 
-jsbin.getURL = function () {
-  var url = jsbin.root,
+jsbin.getURL = function (withoutRoot) {
+  var url = withoutRoot ? '' : jsbin.root,
       state = jsbin.state;
 
   if (state.code) {

@@ -28,6 +28,10 @@ CodeMirror.commands.autocomplete = function(cm) {
   CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
 };
 
+CodeMirror.commands.snippets = function (cm) {
+  CodeMirror.snippets(cm);
+}
+
 var Panel = function (name, settings) {
   var panel = this,
       showPanelButton = true,
@@ -101,6 +105,8 @@ var Panel = function (name, settings) {
     if (name === 'javascript' || name === 'html') {
       cmSettings.extraKeys = { 'Esc': 'autocomplete' };
     }
+
+    cmSettings.extraKeys = { 'Tab': 'snippets' };
 
     // Add Zen Coding to html pane
     if (name === 'html') {

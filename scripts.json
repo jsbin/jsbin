@@ -16,6 +16,7 @@
 "/js/vendor/prettyprint.js",
 "/js/chrome/storage.js",
 "/js/jsbin.js",
+"/js/editors/snippets.cm.js",
 "/js/editors/mobileCodeMirror.js",
 "/js/chrome/splitter.js",
 "/js/chrome/analytics.js",

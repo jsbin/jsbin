@@ -20,8 +20,8 @@ if (jsbin.settings.editor.tabMode === 'default') {
   CodeMirror.keyMap.basic.Tab = 'indentMore';
 }
 
-if (!CodeMirror.commands) { 
-  CodeMirror.commands = {}; 
+if (!CodeMirror.commands) {
+  CodeMirror.commands = {};
 }
 
 CodeMirror.commands.autocomplete = function(cm) {
@@ -73,7 +73,7 @@ var Panel = function (name, settings) {
         jshintEnabled = false;
         $error.hide();
       }
-    });    
+    });
   }
 
   if (jsbin.state.processors && jsbin.state.processors[name]) {
@@ -92,12 +92,8 @@ var Panel = function (name, settings) {
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
-      onChange: function (event) { 
-        $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]); 
-        return true; 
-      },
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin',
+      theme: jsbin.settings.theme || 'jsbin'
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -120,6 +116,12 @@ var Panel = function (name, settings) {
     }
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
+
+    // Bind events using CM3 syntax
+    panel.editor.on('change', function (event) {
+      $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]);
+      return true;
+    });
     panel._setupEditor(panel.editor, name);
   }
 

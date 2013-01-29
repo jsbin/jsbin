@@ -98,11 +98,13 @@ var Panel = function (name, settings) {
 
     $.extend(cmSettings, jsbin.settings.editor || {});
 
+    cmSettings.extraKeys = {};
+
     if (name === 'javascript' || name === 'html') {
-      cmSettings.extraKeys = { 'Esc': 'autocomplete' };
+      cmSettings.extraKeys.Esc = 'autocomplete';
     }
 
-    cmSettings.extraKeys = { 'Tab': 'snippets' };
+    cmSettings.extraKeys.Tab = 'snippets';
 
     // Add Zen Coding to html pane
     if (name === 'html') {

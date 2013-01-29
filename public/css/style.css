@@ -947,7 +947,7 @@ ie6, li {
   right: 0;
 }
 
-/* .CodeMirror-completions {
+.CodeMirror-completions {
   position: absolute;
   overflow: hidden;
   border: 2px solid #DFE0B4;
@@ -962,7 +962,7 @@ ie6, li {
   border: 0;
   font-family: SourceCodeProRegular, Monaco, consolas, monospace;
   font-size: 13px;
-} */
+}
 
 .showtip #bin {
   bottom: 26px;

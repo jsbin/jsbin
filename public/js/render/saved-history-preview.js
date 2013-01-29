@@ -1,22 +1,25 @@
 ;(function () {
-  var $body = $('body');
+  var $body = $('body'),
+      loaded = false;
 
   var loadList = function () {
+    if (loaded) return;
+
     if ($('html').hasClass('public-listing')) {
       hookUserHistory();
     } else {
-      $('#history').remove();
       $.ajax({
         dataType: 'html',
         url: jsbin.root + '/list',
         error: function () {
+          $('#history').remove();
           setTimeout(loadList, 500);
         },
         success: function (html) {
-          // prevent this from being called again
-          loadList = function () {};
+          $('#history').remove();
           $body.append(html);
           hookUserHistory();
+          loaded = true;
         }
       });
     }
@@ -51,9 +54,11 @@
   };
 
   var hookUserHistory = function () {
+    // Loading the HTML from the server may have failed
     var $history = $('#history');
     if (!$history.length) return;
 
+    // Cache some useful elements
     var $iframe = $('iframe', $history),
         $viewing = $('#viewing', $history),
         $bins = $history,
@@ -65,21 +70,25 @@
         hoverTimer = null,
         layoutTimer = null;
 
-    // Load bin from data-edit-url
+    // Load bin from data-edit-url attribute when user clicks on a row
     $bins.delegate('tr:not(.spacer)', 'click', function () {
       if (event.shiftKey || event.metaKey) return;
       window.location = this.getAttribute('data-edit-url');
     });
 
+    // Archive & un-archive click handlers
     $bins.delegate('.archive, .unarchive', 'click', function (e) {
       var $this = $(this),
           $row = $this.parents('tr');
+      // Instantly update this row and the page layout
       $row.toggleClass('archived');
       updateLayout($tbodys, $history.hasClass('archive_mode'));
+      // Then send the update to the server
       $.ajax({
         type: 'POST',
         url: $this.attr('href'),
         error: function () {
+          // Undo if something went wrong
           alert("Something went wrong, please try again");
           $row.toggleClass('archived');
           updateLayout($tbodys, $history.hasClass('archive_mode'));
@@ -89,13 +98,14 @@
       return false;
     });
 
-    // Toggle show archive
+    // Handle toggling of archive view
     $toggle.change(function () {
       $history.toggleClass('archive_mode');
       updateLayout($tbodys, $history.hasClass('archive_mode'));
     });
 
-    // Delay a preview load after tr mouseover
+
+    // Load a preview on tr mouseover (delayed by 400ms)
     $bins.delegate('tr', 'mouseover', function (event) {
       var $this = $(this),
           url = $this.attr('data-url');
@@ -122,7 +132,7 @@
       $created.prettyDate();
     }, 30 * 1000);
 
-    // removed .bind use to avoid requirement for polyfill when viewing public pages
+    // Update the layout straign away
     setTimeout(function () {
       updateLayout($tbodys, false);
     }, 0);
@@ -151,14 +161,14 @@
     //
     // The list should be loaded when:
     //   - user hovers the home button
-    //   - they arrive at the page with no panels open
     //   - they close all the panels
+    //   - they arrive at the page with no panels open
+
+    $homebtn.on('click', loadList);
+    $panelButtons.on('mousedown', panelCloseIntent);
 
     if (!panelsVisible) {
       loadList();
-    } else {
-      $homebtn.one('hover', loadList);
-      $panelButtons.on('mousedown', panelCloseIntent);
     }
 
   });

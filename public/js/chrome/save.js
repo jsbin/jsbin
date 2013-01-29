@@ -139,8 +139,8 @@ if (!jsbin.saveDisabled) {
       } else {
         $.ajax({
           url: jsbin.getURL() + '/save',
-          data: { 
-            code: jsbin.state.code, 
+          data: {
+            code: jsbin.state.code,
             revision: jsbin.state.revision,
             method: 'update',
             panel: data.panelId,
@@ -233,7 +233,7 @@ function saveCode(method, ajax, ajaxCallback) {
     $.ajax({
       url: $form.attr('action'),
       data: $form.serialize(),
-      dataType: 'json', 
+      dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},
       success: function (data) {

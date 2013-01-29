@@ -1261,7 +1261,6 @@ input {
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: 300px;
 }
 .CodeMirror-scroll {
   /* Set scrolling behaviour here */
@@ -1495,6 +1494,41 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   .CodeMirror div.CodeMirror-cursor {
     visibility: hidden;
   }
+}
+
+/* codemirror JS Bin custom styles */
+.CodeMirror-scroll {
+  margin: 0;
+}
+
+.CodeMirror .CodeMirror-scroll > div {
+  margin: .6em 0;
+}
+
+.editbox .CodeMirror {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  line-height: 1.2em;
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+  font-size: 14px;
+}
+
+.CodeMirror-gutter {
+  border-right: 0;
+  background: none;
+}
+
+.CodeMirror-gutter-text {
+  padding-top: 0;
+}
+
+.activeline {
+  background: #e8f2ff !important;
+}
+
+.CodeMirror-lines {
+  padding: .4em;
 }
 
 /* END CODEMIRROR CSS */

@@ -1,7 +1,10 @@
 ;(function () {
-  var $body = $('body');
+  var $body = $('body'),
+      loaded = false;
 
   var loadList = function () {
+    if (loaded) return;
+
     if ($('html').hasClass('public-listing')) {
       hookUserHistory();
     } else {
@@ -16,6 +19,7 @@
           $('#history').remove();
           $body.append(html);
           hookUserHistory();
+          loaded = true;
         }
       });
     }

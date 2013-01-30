@@ -1497,9 +1497,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 /* codemirror JS Bin custom styles */
-.CodeMirror-scroll {
-  margin: 0;
-}
 
 .CodeMirror .CodeMirror-scroll > div {
   margin: .6em 0;

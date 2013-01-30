@@ -315,12 +315,12 @@ $('#addmeta').click(function () {
 
   cm.setCursor(from);
   cm.setSelection(from, to);
-  cm.setOption('onCursorActivity', function () {
-    cm.setOption('onCursorActivity', null);
+  cm.on('cursoractivity', function () {
+    cm.on('cursoractivity', null);
     mark.clear();
   });
 
-  var mark = cm.markText(from, to, 'highlight');
+  var mark = cm.markText(from, to, { className: 'highlight' });
 
   cm.focus();
 

@@ -382,9 +382,9 @@ Panel.prototype = {
 
     var $label = panel.$el.find('.label');
     if (document.body.className.indexOf('ie6') === -1 && $label.length) {
-      editor.setOption('onScroll', function (event) {
+      editor.on('scroll', function (event) {
         var scrollInfo = editor.getScrollInfo();
-        if (scrollInfo.y > 10) {
+        if (scrollInfo.top > 10) {
           $label.stop().animate({ opacity: 0 }, 20, function () {
             $(this).hide();
           });

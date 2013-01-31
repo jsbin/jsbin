@@ -62,9 +62,10 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     },
     nthLine: noop,
     refresh: noop,
-    selectLines: noop
+    selectLines: noop,
+    on: noop
   };
-  
+
   CodeMirror = function () {};
 
   CodeMirror.fromTextArea = function (el, options) {

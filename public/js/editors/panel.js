@@ -213,6 +213,7 @@ Panel.prototype = {
         // populate the panel for the first time
         if (panel.virgin) {
           var top = panel.$el.find('.label').outerHeight();
+          top += 8;
           $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
           $(panel.editor.win).find('.CodeMirror-gutter').css('margin-top', top);
 

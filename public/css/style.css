@@ -1007,6 +1007,7 @@ ie6, li {
   font-size: 12px;
   background: #FEE0E0;
   color: #bb0000;
+  z-index: 10;
 }
 
 .summary, summary {
@@ -1498,10 +1499,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 /* codemirror JS Bin custom styles */
 
-.CodeMirror .CodeMirror-scroll > div {
-  margin: .6em 0;
-}
-
 .editbox .CodeMirror {
   height: 100%;
   top: 0;
@@ -1511,7 +1508,12 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   font-size: 14px;
 }
 
-.CodeMirror-gutter {
+.CodeMirror-lines {
+  /*margin-top: 8px;*/
+  padding: .4em;
+}
+
+.CodeMirror-gutters {
   border-right: 0;
   background: none;
 }
@@ -1524,8 +1526,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   background: #e8f2ff !important;
 }
 
-.CodeMirror-lines {
-  padding: .4em;
+.CodeMirror-linenumbers {
+  padding-left: 0;
 }
 
 /* END CODEMIRROR CSS */

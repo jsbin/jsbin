@@ -28,9 +28,11 @@ CodeMirror.commands.autocomplete = function(cm) {
   CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
 };
 
-CodeMirror.commands.snippets = function (cm) {
-  CodeMirror.snippets(cm);
-}
+var foldFunc = {
+  css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+  javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+  html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
+};
 
 var Panel = function (name, settings) {
   var panel = this,
@@ -100,20 +102,25 @@ var Panel = function (name, settings) {
 
     cmSettings.extraKeys = {};
 
-    if (name === 'javascript' || name === 'html') {
-      cmSettings.extraKeys.Esc = 'autocomplete';
+    if (cmSettings.foldcode) {
+      cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
+        foldFunc[name](cm, cm.getCursor().line);
+      };
     }
 
-    cmSettings.extraKeys.Tab = 'snippets';
+    // only the js panel for now, I'd like this to work in
+    // the HTML panel too, but only when you were in JS scope
+    if (name === 'javascript') {
+      cmSettings.extraKeys.Tab = 'autocomplete';
+    }
+
+    // cmSettings.extraKeys.Tab = 'snippets';
 
     // Add Zen Coding to html pane
     if (name === 'html') {
       $.extend(cmSettings, {
         syntax: 'html',   /* define Zen Coding syntax */
-        profile: 'html', /* define Zen Coding output profile */
-        onKeyEvent: function() { /* send all key events to Zen Coding */
-          return zen_editor.handleKeyEvent.apply(zen_editor, arguments);
-        }
+        profile: 'html'   /* define Zen Coding output profile */
       });
     }
 
@@ -124,6 +131,11 @@ var Panel = function (name, settings) {
       $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]);
       return true;
     });
+
+    if (cmSettings.foldcode) {
+      panel.editor.on('gutterClick', foldFunc[name]);
+    }
+
     panel._setupEditor(panel.editor, name);
   }
 
@@ -215,7 +227,6 @@ Panel.prototype = {
           var top = panel.$el.find('.label').outerHeight();
           top += 8;
           $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
-          $(panel.editor.win).find('.CodeMirror-gutter').css('margin-top', top);
 
           populateEditor(panel, panel.name);
         }
@@ -410,7 +421,9 @@ Panel.prototype = {
           offset += ($error.filter(':visible').height() || 0);
         }
 
-        if (!jsbin.lameEditor) { editor.scroller.height(height - offset); }
+        if (!jsbin.lameEditor) { 
+          editor.scroller.height(height - offset); 
+        }
         try { editor.refresh(); } catch (e) {}
       }
     });

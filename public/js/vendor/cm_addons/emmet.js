@@ -1277,6 +1277,11 @@ if (typeof exports !== 'undefined') {
     exports = module.exports = emmet;
   }
   exports.emmet = emmet;
+}
+
+// export as Require.js module
+if (typeof define !== 'undefined') {
+  define(emmet);
 }/**
  * Emmet abbreviation parser.
  * Takes string abbreviation and recursively parses it into a tree. The parsed 
@@ -9922,7 +9927,9 @@ emmet.exec(function(require, _) {
   
   require('actions').add('update_image_size', function(editor) {
     var result;
-    if (String(editor.getSyntax()) == 'css') {
+    // this action will definitely won’t work in SASS dialect,
+    // but may work in SCSS or LESS
+    if (_.include(['css', 'less', 'scss'], String(editor.getSyntax()))) {
       result = updateImageSizeCSS(editor);
     } else {
       result = updateImageSizeHTML(editor);
@@ -10164,7 +10171,7 @@ emmet.define('cssResolver', function(require, _) {
    * @returns {String}
    */
   function normalizeValue(value) {
-    if (value.charAt(0) == '-' && !/^\-[\.\d]/) {
+    if (value.charAt(0) == '-' && !/^\-[\.\d]/.test(value)) {
       value = value.replace(/^\-+/, '');
     }
     
@@ -12006,6 +12013,10 @@ emmet.exec(function(require, _){
     });
   }
   
+  function isRoot(item) {
+    return !item.parent;
+  }
+  
   /**
    * Processes element with matched resource of type <code>snippet</code>
    * @param {AbbreviationNode} item
@@ -12016,7 +12027,7 @@ emmet.exec(function(require, _){
     item.start = item.end = '';
     if (!isVeryFirstChild(item) && profile.tag_nl !== false && shouldAddLineBreak(item, profile)) {
       // check if we’re not inside inline element
-      if (!require('abbreviationUtils').isInline(item.parent)) {
+      if (isRoot(item.parent) || !require('abbreviationUtils').isInline(item.parent)) {
         item.start = require('utils').getNewline() + item.start;
       }
     }
@@ -12754,6 +12765,7 @@ emmet.exec(function(require, _) {
       "bdcl:c": "border-collapse:collapse;",
       "bdcl:s": "border-collapse:separate;",
       "bdc": "border-color:#${1:000};",
+      "bdc:t": "border-color:transparent;",
       "bdi": "border-image:url(|);",
       "bdi:n": "border-image:none;",
       "bdti": "border-top-image:url(|);",
@@ -12813,6 +12825,7 @@ emmet.exec(function(require, _) {
       "bdts": "border-top-style:|;",
       "bdts:n": "border-top-style:none;",
       "bdtc": "border-top-color:#${1:000};",
+      "bdtc:t": "border-top-color:transparent;",
       "bdr": "border-right:|;",
       "br": "border-right:|;",
       "bdr+": "border-right:${1:1px} ${2:solid} ${3:#000};",
@@ -12821,6 +12834,7 @@ emmet.exec(function(require, _) {
       "bdrs": "border-right-style:|;",
       "bdrs:n": "border-right-style:none;",
       "bdrc": "border-right-color:#${1:000};",
+      "bdrc:t": "border-right-color:transparent;",
       "bdb": "border-bottom:|;",
       "bb": "border-bottom:|;",
       "bdb+": "border-bottom:${1:1px} ${2:solid} ${3:#000};",
@@ -12829,6 +12843,7 @@ emmet.exec(function(require, _) {
       "bdbs": "border-bottom-style:|;",
       "bdbs:n": "border-bottom-style:none;",
       "bdbc": "border-bottom-color:#${1:000};",
+      "bdbc:t": "border-bottom-color:transparent;",
       "bdl": "border-left:|;",
       "bl": "border-left:|;",
       "bdl+": "border-left:${1:1px} ${2:solid} ${3:#000};",
@@ -12837,6 +12852,7 @@ emmet.exec(function(require, _) {
       "bdls": "border-left-style:|;",
       "bdls:n": "border-left-style:none;",
       "bdlc": "border-left-color:#${1:000};",
+      "bdlc:t": "border-left-color:transparent;",
       "bdrs": "border-radius:|;",
       "bdtrrs": "border-top-right-radius:|;",
       "bdtlrs": "border-top-left-radius:|;",
@@ -12847,6 +12863,7 @@ emmet.exec(function(require, _) {
       "bg:n": "background:none;",
       "bg:ie": "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${1:x}.png',sizingMethod='${2:crop}');",
       "bgc": "background-color:#${1:fff};",
+      "bgc:t": "background-color:transparent;",
       "bgi": "background-image:url(|);",
       "bgi:n": "background-image:none;",
       "bgr": "background-repeat:|;",
@@ -12932,6 +12949,7 @@ emmet.exec(function(require, _) {
       "ta:l": "text-align:left;",
       "ta:c": "text-align:center;",
       "ta:r": "text-align:right;",
+      "ta:j": "text-align:justify;",
       "tal": "text-align-last:|;",
       "tal:a": "text-align-last:auto;",
       "tal:l": "text-align-last:left;",
@@ -13316,7 +13334,8 @@ emmet.exec(function(require, _) {
   
   "haml": {
     "filters": "haml",
-    "extends": "html"
+    "extends": "html",
+    "profile": "xml"
   },
   
   "scss": {
@@ -13334,7 +13353,8 @@ emmet.exec(function(require, _) {
   "stylus": {
     "extends": "css"
   }
-}, 'system');});/**
+}
+, 'system');});/**
  * Implementation of {@link IEmmetEditor} interface for CodeMirror2
  * @param {Function} require
  * @param {Underscore} _
@@ -13529,7 +13549,7 @@ emmet.define('cm-editor-proxy', function(require, _) {
       require('resources').setVariable('indentation', indentation);
     },
 
-    addAction: function(commandName, keybinding) {
+    addAction: function(commandName, keybinding, target) {
       // register Emmet command as predefined CodeMirror command
       // for latter use
       var cmCommand = 'emmet.' + commandName;
@@ -13540,13 +13560,26 @@ emmet.define('cm-editor-proxy', function(require, _) {
       }
 
       if (keybinding) {
-        if (!CodeMirror.defaults.extraKeys)
-          CodeMirror.defaults.extraKeys = {};
+        if (!target) {
+          // check out CM3 keymap style
+          if (CodeMirror.keyMap && CodeMirror.keyMap['default']) {
+            target = CodeMirror.keyMap['default'];
+          } else {
+            if (!CodeMirror.defaults.extraKeys) {
+              CodeMirror.defaults.extraKeys = {};
+            }
 
-        if (!mac)
+            target = CodeMirror.defaults.extraKeys;
+          }
+        }
+
+        if (!mac) {
           keybinding = keybinding.replace('Cmd', 'Ctrl');
+        }
 
-        CodeMirror.defaults.extraKeys[keybinding] = cmCommand;
+        if (target) {
+          target[keybinding] = cmCommand;
+        }
       }      
     }
   };
@@ -13587,7 +13620,9 @@ emmet.define('cm-editor-proxy', function(require, _) {
     keymap = emmetKeymap;
   }
   
-  _.each(keymap, editorProxy.addAction);
+  _.each(keymap, function(commandName, keybinding) {
+    keymap, editorProxy.addAction(commandName, keybinding);
+  });
 
   return editorProxy;
 });

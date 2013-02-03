@@ -12,6 +12,12 @@
 
       var tempToken = editor.getTokenAt(editor.getCursor());
 
+      // JSBIN CUSTOM CHANGE
+      if (tempToken.state.mode === 'html' || tempToken.string.trim() === '') {
+        throw CodeMirror.Pass;
+        return;
+      }
+
       // Don't show completions if token has changed and the option is set.
       if (options.closeOnTokenChange && previousToken != null &&
           (tempToken.start != previousToken.start || tempToken.type != previousToken.type)) {

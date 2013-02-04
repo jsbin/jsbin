@@ -24,6 +24,7 @@
       token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
                        type: token.string == "." ? "property" : null};
     }
+
     // If it is a property, find out what it is a property of.
     while (tprop.type == "property") {
       tprop = getToken(editor, {line: cur.line, ch: tprop.start});
@@ -40,9 +41,9 @@
           }
         } while (level > 0);
         tprop = getToken(editor, {line: cur.line, ch: tprop.start});
-	if (tprop.type.indexOf("variable") === 0)
-	  tprop.type = "function";
-	else return; // no clue
+      	if (tprop.type.indexOf("variable") === 0)
+      	  tprop.type = "function";
+      	else return; // no clue
       }
       if (!context) var context = [];
       context.push(tprop);
@@ -53,7 +54,16 @@
   }
 
   CodeMirror.javascriptHint = function(editor, options) {
-    return scriptHint(editor, javascriptKeywords,
+    // JSBIN EDIT
+    var keywords = dedupe(javascriptKeywords.concat(editor.getCode().replace(/\W/g, ' ').replace(/\s+/g, ' ').trim().split(' '))).sort(function (a, b) {
+      return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
+    });
+
+    var cur = editor.getCursor();
+    var token = editor.getTokenAt(cur);
+    keywords.splice(keywords.indexOf(token.string), 1);
+
+    return scriptHint(editor, keywords,
                       function (e, cur) {return e.getTokenAt(cur);},
                       options);
   };
@@ -93,7 +103,8 @@
   function getCompletions(token, context, keywords, options) {
     var found = [], start = token.string;
     function maybeAdd(str) {
-      if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
+      if (str.indexOf(start) == 0 && !arrayContains(found, str) && str !== start) found.push(str);
+      // if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
     }
     function gatherCompletions(obj) {
       if (typeof obj == "string") forEach(stringProps, maybeAdd);
@@ -124,6 +135,12 @@
       while (base != null && context.length)
         base = base[context.pop().string];
       if (base != null) gatherCompletions(base);
+
+      // JSBIN edit
+      if (found.length === 0) {
+        forEach(keywords, maybeAdd);
+      }
+
     }
     else {
       // If not, just look in the window object and any local scope

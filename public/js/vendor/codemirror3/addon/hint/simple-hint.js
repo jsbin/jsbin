@@ -25,6 +25,7 @@
       }
 
       var result = getHints(editor, givenOptions);
+
       if (!result || !result.list.length) return;
       var completions = result.list;
       function insert(str) {
@@ -77,7 +78,7 @@
       CodeMirror.on(sel, "keydown", function(event) {
         var code = event.keyCode;
         // Enter
-        if (code == 13) {CodeMirror.e_stop(event); pick();}
+        if (code == 13 || (done === false && code === 9)) {CodeMirror.e_stop(event); pick();}
         // Escape
         else if (code == 27) {CodeMirror.e_stop(event); close(); editor.focus();}
         else if (code != 38 && code != 40 && code != 33 && code != 34 && !CodeMirror.isModifierKey(event)) {

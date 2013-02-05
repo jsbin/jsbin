@@ -22,6 +22,11 @@ panels.getVisible = function () {
 };
 
 panels.save = function () {
+  // don't save panel state if we're in embed mode
+  if (jsbin.embed) {
+    return;
+  }
+
   var visible = this.getVisible(),
       state = {},
       panel,
@@ -50,7 +55,7 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = search || hash ? (search || hash).split(',') : jsbin.settings.panels || [],
-      state = JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
+      state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
       hasContent = {
         javascript: editors.javascript.getCode().length,
         css: editors.css.getCode().length,

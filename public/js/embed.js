@@ -60,8 +60,6 @@ if (window.jsbinified !== undefined) return;
 
 // ---- here begins the jsbin embed - based on the embedding doc: https://github.com/remy/jsbin/blob/master/docs/embedding.md
 
-window.jsbinified = true;
-
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
 
 // 1. find all links with class=jsbin
@@ -82,7 +80,6 @@ function findCodeInParent(element) {
   var match = element;
 
   while (match = match.previousSibling) {
-    console.log(match.nodeName);
     if (match.nodeName === 'PRE') {
       break;
     }
@@ -174,13 +171,14 @@ function embed(link) {
   var iframe = document.createElement('iframe'),
       resize = document.createElement('div');
   iframe.src = link.href;
+  iframe._src = link.href; // support for google slide embed
   iframe.className = 'jsbin-embed';
   iframe.style.border = '1px solid #aaa';
   iframe.style.width = '100%';
   iframe.style.minHeight = '300px';
   link.parentNode.replaceChild(iframe, link);
 
-  var onmessage = function (event) { 
+  var onmessage = function (event) {
     event || (event = window.event);
     iframe.style.height = event.data.height + 'px';
   };
@@ -192,21 +190,40 @@ function embed(link) {
   }
 }
 
-domready(function () {
-  // 2. process link based on subclass - jsbin-scoop to start with
-  var links = getLinks(),
-      i = 0,
-      length = links.length,
-      className = '';
+var useDOMReady = true,
+    scripts = document.getElementsByTagName('script'),
+    last = scripts[scripts.length - 1],
+    link;
 
-  for (; i < length; i++) {
-    className = ' ' + links[i].className + ' ';
-    if (className.indexOf(' jsbin-scoop ') !== -1) {
-      scoop(links[i]);
-    } else if (className.indexOf(' jsbin-embed ') !== -1) {
-      embed(links[i]);
-    }
+// this supports early embeding - probably only applies to Google's slides.js
+if (last.nodeName === 'SCRIPT') { // then it's us
+  link = last.previousSibling;
+  if (link.nodeName === 'A' && (' ' + link.className + ' ').indexOf(' jsbin-embed ') !== -1) {
+    // we have a winner
+    useDOMReady = false;
+    link.className = link.className.replace(/jsbin\-embed/, '');
+    embed(link);
   }
-});
+}
 
+if (useDOMReady) {
+  window.jsbinified = true;
+
+  domready(function () {
+    // 2. process link based on subclass - jsbin-scoop to start with
+    var links = getLinks(),
+        i = 0,
+        length = links.length,
+        className = '';
+
+    for (; i < length; i++) {
+      className = ' ' + links[i].className + ' ';
+      if (className.indexOf(' jsbin-scoop ') !== -1) {
+        scoop(links[i]);
+      } else if (className.indexOf(' jsbin-embed ') !== -1) {
+        embed(links[i]);
+      }
+    }
+  });
+}
 }(this, document));

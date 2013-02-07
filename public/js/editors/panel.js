@@ -130,9 +130,7 @@ var Panel = function (name, settings) {
       return true;
     });
 
-    if (cmSettings.foldcode) {
-      panel.editor.on('gutterClick', foldFunc[name]);
-    }
+    panel.editor.on('gutterClick', foldFunc[name]);
 
     panel._setupEditor(panel.editor, name);
   }

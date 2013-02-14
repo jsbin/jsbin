@@ -66,7 +66,13 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     on: noop
   };
 
-  CodeMirror = function () {};
+  var _oldCM = CodeMirror;
+
+  CodeMirror = noop;
+
+  for (var key in _oldCM) {
+    CodeMirror[key] = noop;
+  }
 
   CodeMirror.fromTextArea = function (el, options) {
       return new Editor(el, options);

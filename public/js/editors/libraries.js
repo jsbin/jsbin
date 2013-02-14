@@ -252,6 +252,14 @@ var libraries = [
         "label": "Ember.js 1.0.0pre2"
     },
     {
+        "url": [
+            "http://code.jquery.com/jquery.min.js",
+            "https://raw.github.com/wycats/handlebars.js/1.0.rc.2/dist/handlebars.js",
+            "https://raw.github.com/emberjs/ember.js/latest-builds/ember.js"
+        ],
+        "label": "Ember.js latest"
+    },
+    {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",
         "label": "ES5 shim 1.2.4"
     },

@@ -31,7 +31,8 @@
     "stylus": "0.28.2",
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
-    "async": "~0.1.22"
+    "async": "~0.1.22",
+    "lynx": "0.0.11"
   },
   "devDependencies": {},
   "optionalDependencies": {},

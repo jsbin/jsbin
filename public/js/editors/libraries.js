@@ -245,11 +245,11 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/jquery.min.js",
-            "http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js",
-            "https://github.com/downloads/emberjs/ember.js/ember-1.0.0-pre.2.min.js"
+            "http://code.jquery.com/jquery.js",
+            "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
+            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.js"
         ],
-        "label": "Ember.js 1.0.0pre2"
+        "label": "Ember.js 1.0.0-rc.1"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",

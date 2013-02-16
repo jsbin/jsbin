@@ -246,6 +246,14 @@ var libraries = [
     {
         "url": [
             "http://code.jquery.com/jquery.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.min.js"
+        ],
+        "label": "Ember.js 1.0.0-rc.1"
+    },
+    {
+        "url": [
+            "http://code.jquery.com/jquery.min.js",
             "http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.rc.1.js",
             "https://github.com/downloads/emberjs/ember.js/ember-1.0.0-pre.2.min.js"
         ],

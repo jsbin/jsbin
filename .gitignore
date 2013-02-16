@@ -4,3 +4,4 @@ config.*.json
 public/js/jsbin*.js
 .nodemonignore
 !config.default.json
+statsd.js

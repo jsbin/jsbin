@@ -168,44 +168,6 @@ function keycontrol(event) {
       // start a new tag
       event.stop();
       return startTagComplete(panel);
-    } else if (event.which == 191 && event.metaKey && codePanel) {
-      // auto close the element
-      if (panel.somethingSelected()) return;
-      
-      var cur = panel.getCursor(false), 
-          token = panel.getTokenAt(cur),
-          type = token && token.state && token.state.htmlState && token.state.htmlState.context && token.state.htmlState.context.tagName ? token.state.htmlState.context.tagName : 'script',
-          line = panel.getLine(cur.line);
-
-      if (token && token.state && token.state.htmlState && token.state.htmlState.context == null) {
-        type = 'html';
-      }
-      
-      if (type == 'style') {
-        if (line.match(/\s*\/\*/) !== null) {
-          // already contains comment - remove
-          panel.setLine(cur.line, line.replace(/\/\*\s?/, '').replace(/\s?\*\//, ''));
-        } else {
-          panel.setLine(cur.line, '/* ' + line + ' */');
-        }
-      } else if (type == 'script') {
-        // FIXME - could put a JS comment next to a <script> tag
-        if (line.match(/\s*\/\//) !== null) {
-          // already contains comment - remove
-          panel.setLine(cur.line, line.replace(/(\s*)\/\/\s?/, '$1'));
-        } else {
-          panel.setLine(cur.line, '// ' + line);
-        }      
-      } else {
-        if (line.match(/\s*<!--/) !== null) {
-          // already contains comment - remove
-          panel.setLine(cur.line, line.replace(/<!--\s?/, '').replace(/\s?-->/, ''));
-        } else {
-          panel.setLine(cur.line, '<!-- ' + line + ' -->');
-        }      
-      }
-
-      event.stop();
     }
   }
   // return true;

@@ -8487,10 +8487,10 @@ emmet.exec(function(require, _) {
       }
     }
     
-    if (info.syntax == 'css')
-      return toggleCSSComment(editor);
+    if (info.syntax == 'html')
+      return toggleHTMLComment(editor);
     
-    return toggleHTMLComment(editor);
+    return toggleCSSComment(editor);
   });
 });/**
  * Move between next/prev edit points. 'Edit points' are places between tags 

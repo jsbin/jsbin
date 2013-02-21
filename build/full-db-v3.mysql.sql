@@ -49,6 +49,7 @@ CREATE TABLE `owners` (
   `html` tinyint(1) NOT NULL DEFAULT '0',
   `css` tinyint(1) NOT NULL DEFAULT '0',
   `javascript` tinyint(1) NOT NULL DEFAULT '0',
+  `archive` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name_url` (`name`,`url`,`revision`),
   KEY `last_updated` (`name`,`last_updated`)

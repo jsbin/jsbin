@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `summary` VARCHAR(255) NOT NULL DEFAULT '',
   `html` INTEGER DEFAULT '0',
   `css` INTEGER DEFAULT '0',
-  `javascript` INTEGER DEFAULT '0'
+  `javascript` INTEGER DEFAULT '0',
+  `archive` INTEGER DEFAULT '0'
 );
 
 CREATE TABLE IF NOT EXISTS `ownership` (

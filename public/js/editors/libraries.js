@@ -342,6 +342,12 @@ var libraries = [
             "http://cdnjs.cloudflare.com/ajax/libs/three.js/r55/three.min.js"
         ],
         "label": "Three.js"
+    },
+    {
+        "url":[
+            "http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
+        ],
+        "label": "HTML5 shiv"
     }
 ];
 

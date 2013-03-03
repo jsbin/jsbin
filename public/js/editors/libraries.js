@@ -336,6 +336,12 @@ var libraries = [
             " http://canjs.us/release/latest/can.jquery.js"
         ],
         "label": "CanJS for jQuery"
+    },
+    {
+        "url":[
+            "http://cdnjs.cloudflare.com/ajax/libs/three.js/r55/three.min.js"
+        ],
+        "label": "Three.js"
     }
 ];
 

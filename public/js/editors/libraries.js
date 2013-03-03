@@ -225,6 +225,21 @@ var libraries = [
         "group": "Testing"
     },
     {
+        "url": "http://zeptojs.com/zepto.min.js",
+        "label": "Zepto latest"
+        "group": "Zepto"
+    },
+    {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js",
+        "label": "Zepto 1.0"
+        "group": "Zepto"
+    },
+    {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
+        "label": "Zepto 1.0rc1"
+        "group": "Zepto"
+    },
+    {
         "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.3/angular.min.js",
         "label": "Angular 1.0.3"
     },
@@ -314,10 +329,6 @@ var libraries = [
     {
         "url": "http://documentcloud.github.com/underscore/underscore-min.js",
         "label": "underscore latest"
-    },
-    {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
-        "label": "Zepto 1.0rc1"
     },
     {
         "url":[

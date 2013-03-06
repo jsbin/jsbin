@@ -25,7 +25,9 @@ if (!jsbin.mobile) document.body.onscroll = window.onscroll = function () {
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 
 // ignore this browser control - should set focus to browser
-delete CodeMirror.keyMap.default['Cmd-L'];
+try { // throws (up) in IE8
+  delete CodeMirror.keyMap.default['Cmd-L'];
+} catch (e) {}
 
 
 var link = document.createElement('link');

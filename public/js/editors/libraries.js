@@ -225,8 +225,29 @@ var libraries = [
         "group": "Testing"
     },
     {
-        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.3/angular.min.js",
-        "label": "Angular 1.0.3"
+        "url": "http://zeptojs.com/zepto.min.js",
+        "label": "Zepto latest"
+        "group": "Zepto"
+    },
+    {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js",
+        "label": "Zepto 1.0"
+        "group": "Zepto"
+    },
+    {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
+        "label": "Zepto 1.0rc1"
+        "group": "Zepto"
+    },
+    {
+        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js",
+        "label": "Angular 1.1.3 Unstable"
+        "group": "Angular"
+    },
+    {
+        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js",
+        "label": "Angular 1.0.5 Stable"
+        "group": "Angular"
     },
     {
         "url": [
@@ -316,15 +337,23 @@ var libraries = [
         "label": "underscore latest"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
-        "label": "Zepto 1.0rc1"
-    },
-    {
         "url":[
             "http://code.jquery.com/jquery-1.9.1.min.js",
             " http://canjs.us/release/latest/can.jquery.js"
         ],
         "label": "CanJS for jQuery"
+    },
+    {
+        "url":[
+            "http://cdnjs.cloudflare.com/ajax/libs/three.js/r55/three.min.js"
+        ],
+        "label": "Three.js"
+    },
+    {
+        "url":[
+            "http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
+        ],
+        "label": "HTML5 shiv"
     }
 ];
 

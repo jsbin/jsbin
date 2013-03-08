@@ -235,11 +235,6 @@ var libraries = [
         "group": "Zepto"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0rc1/zepto.min.js",
-        "label": "Zepto 1.0rc1"
-        "group": "Zepto"
-    },
-    {
         "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js",
         "label": "Angular 1.1.3 Unstable"
         "group": "Angular"

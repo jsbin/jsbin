@@ -240,8 +240,14 @@ var libraries = [
         "group": "Zepto"
     },
     {
-        "url":"http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.3/angular.min.js",
-        "label": "Angular 1.0.3"
+        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js",
+        "label": "Angular 1.1.3 Unstable"
+        "group": "Angular"
+    },
+    {
+        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js",
+        "label": "Angular 1.0.5 Stable"
+        "group": "Angular"
     },
     {
         "url": [

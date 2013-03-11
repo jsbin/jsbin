@@ -174,6 +174,10 @@ var Panel = function (name, settings) {
 
     panel.editor.on('gutterClick', foldFunc[name]);
 
+    panel.editor.on('focus', function () {
+      panel.focus();
+    });
+
     panel._setupEditor(panel.editor, name);
   }
 
@@ -276,7 +280,7 @@ Panel.prototype = {
           if (panel.settings.init) {
             setTimeout(function () {
               panel.settings.init.call(panel);
-            }, 0);
+            }, 10);
           }
         }
       } else {
@@ -362,7 +366,7 @@ Panel.prototype = {
   setCode: function (content) {
     if (this.editor) {
       if (content === undefined) content = '';
-      this.controlButton.toggleClass('hasContent', !!$.trim(content).length);
+      this.controlButton.toggleClass('hasContent', !!content.trim().length);
       this.codeSet = true;
       this.editor.setCode(content);
     }
@@ -431,11 +435,6 @@ Panel.prototype = {
 
     editor.win = editor.getWrapperElement();
     editor.scroller = $(editor.getScrollerElement());
-
-    $(editor.win).click(function () {
-      editor.focus();
-      panel.focus();
-    });
 
     var $label = panel.$el.find('.label');
     if (document.body.className.indexOf('ie6') === -1 && $label.length) {

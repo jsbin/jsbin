@@ -111,8 +111,8 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       }
     }
     else if (ch == "#") {
-        stream.skipToEnd();
-        return ret("error", "error");
+      stream.skipToEnd();
+      return ret("error", "error");
     }
     else if (isOperatorChar.test(ch)) {
       stream.eatWhile(isOperatorChar);
@@ -242,7 +242,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
   poplex.lex = true;
 
   function expect(wanted) {
-    return function expecting(type) {
+    return function(type) {
       if (type == wanted) return cont();
       else if (wanted == ";") return pass();
       else return cont(arguments.callee);
@@ -283,8 +283,11 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
   }
     
   function maybeoperator(type, value) {
-    if (type == "operator" && /\+\+|--/.test(value)) return cont(maybeoperator);
-    if (type == "operator" && value == "?") return cont(expression, expect(":"), expression);
+    if (type == "operator") {
+      if (/\+\+|--/.test(value)) return cont(maybeoperator);
+      if (value == "?") return cont(expression, expect(":"), expression);
+      return cont(expression);
+    }
     if (type == ";") return;
     if (type == "(") return cont(pushlex(")"), commasep(expression, ")"), poplex, maybeoperator);
     if (type == ".") return cont(property, maybeoperator);
@@ -299,6 +302,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
   }
   function objprop(type) {
     if (type == "variable") cx.marked = "property";
+    else if (type == "number" || type == "string") cx.marked = type + " property";
     if (atomicTypes.hasOwnProperty(type)) return cont(expect(":"), expression);
   }
   function commasep(what, end) {
@@ -307,7 +311,7 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
       if (type == end) return cont();
       return cont(expect(end));
     }
-    return function commaSeparated(type) {
+    return function(type) {
       if (type == end) return cont();
       else return pass(what, proceed);
     };

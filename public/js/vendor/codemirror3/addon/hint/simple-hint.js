@@ -12,12 +12,6 @@
 
       var tempToken = editor.getTokenAt(editor.getCursor());
 
-      // JSBIN CUSTOM CHANGE
-      if (tempToken.state.mode === 'html' || tempToken.string.trim() === '') {
-        throw CodeMirror.Pass;
-        return;
-      }
-
       // Don't show completions if token has changed and the option is set.
       if (options.closeOnTokenChange && previousToken != null &&
           (tempToken.start != previousToken.start || tempToken.type != previousToken.type)) {
@@ -25,7 +19,6 @@
       }
 
       var result = getHints(editor, givenOptions);
-
       if (!result || !result.list.length) return;
       var completions = result.list;
       function insert(str) {
@@ -78,7 +71,7 @@
       CodeMirror.on(sel, "keydown", function(event) {
         var code = event.keyCode;
         // Enter
-        if (code == 13 || (done === false && code === 9)) {CodeMirror.e_stop(event); pick();}
+        if (code == 13) {CodeMirror.e_stop(event); pick();}
         // Escape
         else if (code == 27) {CodeMirror.e_stop(event); close(); editor.focus();}
         else if (code != 38 && code != 40 && code != 33 && code != 34 && !CodeMirror.isModifierKey(event)) {

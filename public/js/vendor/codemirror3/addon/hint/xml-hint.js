@@ -1,27 +1,14 @@
-
 (function() {
 
     CodeMirror.xmlHints = [];
 
-    CodeMirror.xmlHint = function(cm, simbol) {
-
-        if(simbol.length > 0) {
-            var cursor = cm.getCursor();
-            cm.replaceSelection(simbol);
-            cursor = {line: cursor.line, ch: cursor.ch + 1};
-            cm.setCursor(cursor);
-        }
-
-        CodeMirror.simpleHint(cm, getHint);
-    };
-
-    var getHint = function(cm) {
+    CodeMirror.xmlHint = function(cm) {
 
         var cursor = cm.getCursor();
 
         if (cursor.ch > 0) {
 
-            var text = cm.getRange({line: 0, ch: 0}, cursor);
+            var text = cm.getRange(CodeMirror.Pos(0, 0), cursor);
             var typed = '';
             var simbol = '';
             for(var i = text.length - 1; i >= 0; i--) {
@@ -51,10 +38,10 @@
 
             return {
                 list: hints,
-                from: { line: cursor.line, ch: cursor.ch - typed.length },
+                from: CodeMirror.Pos(cursor.line, cursor.ch - typed.length),
                 to: cursor
             };
-        };
+        }
     };
 
     var getActiveElement = function(text) {

@@ -3318,3 +3318,8 @@ THE SOFTWARE.
 .cm-s-xq-dark span.cm-bracket {color: #cc7;}
 .cm-s-xq-dark span.cm-tag {color: #FFBD40;}
 .cm-s-xq-dark span.cm-attribute {color: #FFF700;}
+
+.CodeMirror-activeline .CodeMirror-linenumber,
+.CodeMirror-activeline-background {
+  background: #e8f2ff !important;
+}

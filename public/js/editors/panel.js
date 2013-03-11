@@ -136,6 +136,7 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
+      styleActiveLine: true,
       theme: jsbin.settings.theme || 'jsbin'
     };
 

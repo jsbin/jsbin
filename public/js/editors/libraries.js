@@ -235,22 +235,22 @@ var libraries = [
     },
     {
         "url": "http://zeptojs.com/zepto.min.js",
-        "label": "Zepto latest"
+        "label": "Zepto latest",
         "group": "Zepto"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js",
-        "label": "Zepto 1.0"
+        "label": "Zepto 1.0",
         "group": "Zepto"
     },
     {
         "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js",
-        "label": "Angular 1.1.3 Unstable"
+        "label": "Angular 1.1.3 Unstable",
         "group": "Angular"
     },
     {
         "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js",
-        "label": "Angular 1.0.5 Stable"
+        "label": "Angular 1.0.5 Stable",
         "group": "Angular"
     },
     {

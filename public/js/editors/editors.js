@@ -297,7 +297,27 @@ var ignoreDuringLive = /^\s*(while|do|for)[\s*|$]/;
 
 var panelInit = {
   html: function () {
-    return new Panel('html', { editor: true, label: 'HTML' });
+    var init = function () {
+      // set cursor position on first blank line
+      // 1. read all the inital lines
+      var lines = this.editor.getValue().split('\n'),
+          blank = -1;
+      lines.forEach(function (line, i) {
+        if (blank === -1 && line.trim().length === 0) {
+          blank = i;
+          //exit
+        }
+      });
+
+      if (blank !== -1) {
+        this.editor.setCursor({ line: blank, ch: 2 });
+        if (lines[blank].length === 0) {
+          this.editor.indentLine(blank, 'add');
+        }
+      }
+    };
+
+    return new Panel('html', { editor: true, label: 'HTML', init: init });
   },
   css: function () {
     return new Panel('css', { editor: true, label: 'CSS' });
@@ -452,7 +472,7 @@ var editorsReady = setInterval(function () {
     } else {
       // otherwise, force a render
       renderLivePreview();
-    }    
+    }
 
 
     $(window).resize(function () {

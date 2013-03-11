@@ -272,6 +272,13 @@ Panel.prototype = {
           panel.editor.focus();
           panel.focus();
         }
+        if (panel.virgin) {
+          if (panel.settings.init) {
+            setTimeout(function () {
+              panel.settings.init.call(panel);
+            }, 0);
+          }
+        }
       } else {
         panel.focus();
       }

@@ -1304,7 +1304,7 @@ if (typeof define !== 'undefined') {
  */
 emmet.define('abbreviationParser', function(require, _) {
   var reValidName = /^[\w\-\$\:@\!%]+\+?$/i;
-  var reWord = /[\w\-:\$]/;
+  var reWord = /[\w\-:\$@]/;
   
   var pairs = {
     '[': ']',
@@ -1433,6 +1433,8 @@ emmet.define('abbreviationParser', function(require, _) {
       _.each(this.children, function(child) {
         child.updateProperty(name, value);
       });
+      
+      return this;
     },
     
     /**
@@ -2031,16 +2033,18 @@ emmet.define('abbreviationParser', function(require, _) {
    * @returns {AbbreviationNode}
    */
   function unroll(node) {
-    for (var i = node.children.length - 1, j, child; i >= 0; i--) {
+    for (var i = node.children.length - 1, j, child, maxCount; i >= 0; i--) {
       child = node.children[i];
       
       if (child.isRepeating()) {
-        j = child.repeatCount;
+        maxCount = j = child.repeatCount;
         child.repeatCount = 1;
         child.updateProperty('counter', 1);
+        child.updateProperty('maxCount', maxCount);
         while (--j > 0) {
           child.parent.addChild(child.clone(), i + 1)
-            .updateProperty('counter', j + 1);
+            .updateProperty('counter', j + 1)
+            .updateProperty('maxCount', maxCount);
         }
       }
     }
@@ -2085,7 +2089,7 @@ emmet.define('abbreviationParser', function(require, _) {
   
   // XXX add counter replacer function as output processor
   outputProcessors.push(function(text, node) {
-    return require('utils').replaceCounter(text, node.counter);
+    return require('utils').replaceCounter(text, node.counter, node.maxCount);
   });
   
   return {
@@ -3512,6 +3516,23 @@ emmet.define('utils', function(require, _) {
     },
     
     /**
+     * Returns list of paddings that should be used to align passed string
+     * @param {Array} strings
+     * @returns {Array}
+     */
+    getStringsPads: function(strings) {
+      var lengths = _.map(strings, function(s) {
+        return _.isString(s) ? s.length : +s;
+      });
+      
+      var max = _.max(lengths);
+      return _.map(lengths, function(l) {
+        var pad = max - l;
+        return pad ? this.repeatString(' ', pad) : '';
+      }, this);
+    },
+    
+    /**
      * Indents text with padding
      * @param {String} text Text to indent
      * @param {String} pad Padding size (number) or padding itself (string)
@@ -3646,16 +3667,22 @@ emmet.define('utils', function(require, _) {
     
     /**
      * Replaces '$' character in string assuming it might be escaped with '\'
-     * @param {String} str String where caracter should be replaced
-     * @param {String} value Replace value. Might be a <code>Function</code>
+     * @param {String} str String where character should be replaced
+     * @param {String} value New value
      * @return {String}
      */
-    replaceCounter: function(str, value) {
+    replaceCounter: function(str, value, total) {
       var symbol = '$';
       // in case we received strings from Java, convert the to native strings
       str = String(str);
       value = String(value);
+      
+      if (/^\-?\d+$/.test(value)) {
+        value = +value;
+      }
+      
       var that = this;
+      
       return this.replaceUnescapedSymbol(str, symbol, function(str, symbol, pos, matchNum){
         if (str.charAt(pos + 1) == '{' || that.isNumeric(str.charAt(pos + 1)) ) {
           // it's a variable, skip it
@@ -3665,7 +3692,27 @@ emmet.define('utils', function(require, _) {
         // replace sequense of $ symbols with padded number  
         var j = pos + 1;
         while(str.charAt(j) == '$' && str.charAt(j + 1) != '{') j++;
-        return [str.substring(pos, j), that.zeroPadString(value, j - pos)];
+        var pad = j - pos;
+        
+        // get counter base
+        var base = 0, decrement = false, m;
+        if (m = str.substr(j).match(/^@(\-?)(\d*)/)) {
+          j += m[0].length;
+          
+          if (m[1]) {
+            decrement = true;
+          }
+          
+          base = parseInt(m[2] || 1) - 1;
+        }
+        
+        if (decrement && total && _.isNumber(value)) {
+          value = total - value + 1;
+        }
+        
+        value += base;
+        
+        return [str.substring(pos, j), that.zeroPadString(value + '', pad)];
       });
     },
     
@@ -5996,9 +6043,14 @@ emmet.define('htmlMatcher', function(require, _) {
       for (var i = pos; i >= 0; i--) {
         if (open = matcher.open(i)) {
           // found opening tag
-          if (open.selfClose && open.range.cmp(pos, 'lt', 'gt')) {
-            // inside self-closing tag
-            break;
+          if (open.selfClose) {
+            if (open.range.cmp(pos, 'lt', 'gt')) {
+              // inside self-closing tag, found match
+              break;
+            }
+            
+            // outside self-closing tag, continue
+            continue;
           }
           
           close = findClosingPair(open, matcher);
@@ -6385,8 +6437,9 @@ emmet.define('tabStops', function(require, _) {
           return require('utils').getCaretPlaceholder();
         
         var attr = node.attribute(varName);
-        if (!_.isUndefined(attr))
+        if (!_.isUndefined(attr) && attr !== str) {
           return attr;
+        }
         
         var varValue = res.getVariable(varName);
         if (varValue)
@@ -6398,11 +6451,6 @@ emmet.define('tabStops', function(require, _) {
           
         return '${' + placeholderMemo[varName] + ':' + varName + '}';
       };
-    },
-    
-    resetPlaceholderCounter: function() {
-      console.log('deprecated');
-      startPlaceholderNum = 100;
     },
     
     /**
@@ -9797,15 +9845,23 @@ emmet.exec(function(require, _) {
       throw "Can't find " + imgPath + ' file';
     }
     
-    var b64 = require('base64').encode(String(file.read(realImgPath)));
-    if (!b64) {
-      throw "Can't encode file content to base64";
-    }
-    
-    b64 = 'data:' + (actionUtils.mimeTypes[String(file.getExt(realImgPath))] || defaultMimeType) +
-      ';base64,' + b64;
+    file.read(realImgPath, function(err, content) {
+      if (err) {
+        throw 'Unable to read ' + realImgPath + ': ' + err;
+      }
       
-    editor.replaceContent('$0' + b64, pos, pos + imgPath.length);
+      var b64 = require('base64').encode(String(content));
+      if (!b64) {
+        throw "Can't encode file content to base64";
+      }
+      
+      b64 = 'data:' + (actionUtils.mimeTypes[String(file.getExt(realImgPath))] || defaultMimeType) +
+        ';base64,' + b64;
+        
+      editor.replaceContent('$0' + b64, pos, pos + imgPath.length);
+    });
+    
+    
     return true;
   }
 
@@ -9852,21 +9908,19 @@ emmet.exec(function(require, _) {
     var info = require('editorUtils').outputInfo(editor);
     var xmlElem = require('xmlEditTree').parseFromPosition(info.content, offset, true);
     if (xmlElem && (xmlElem.name() || '').toLowerCase() == 'img') {
-      
-      var size = getImageSizeForSource(editor, xmlElem.value('src'));
-      if (size) {
-        var compoundData = xmlElem.range(true);
-        xmlElem.value('width', size.width);
-        xmlElem.value('height', size.height, xmlElem.indexOf('width') + 1);
-        
-        return _.extend(compoundData, {
-          data: xmlElem.toString(),
-          caret: offset
-        });
-      }
+      getImageSizeForSource(editor, xmlElem.value('src'), function(size) {
+        if (size) {
+          var compoundData = xmlElem.range(true);
+          xmlElem.value('width', size.width);
+          xmlElem.value('height', size.height, xmlElem.indexOf('width') + 1);
+          
+          require('actionUtils').compoundUpdate(editor, _.extend(compoundData, {
+            data: xmlElem.toString(),
+            caret: offset
+          }));
+        }
+      });
     }
-    
-    return null;
   }
   
   /**
@@ -9883,21 +9937,20 @@ emmet.exec(function(require, _) {
       // check if there is property with image under caret
       var prop = cssRule.itemFromPosition(offset, true), m;
       if (prop && (m = /url\((["']?)(.+?)\1\)/i.exec(prop.value() || ''))) {
-        var size = getImageSizeForSource(editor, m[2]);
-        if (size) {
-          var compoundData = cssRule.range(true);
-          cssRule.value('width', size.width + 'px');
-          cssRule.value('height', size.height + 'px', cssRule.indexOf('width') + 1);
-          
-          return _.extend(compoundData, {
-            data: cssRule.toString(),
-            caret: offset
-          });
-        }
+        getImageSizeForSource(editor, m[2], function(size) {
+          if (size) {
+            var compoundData = cssRule.range(true);
+            cssRule.value('width', size.width + 'px');
+            cssRule.value('height', size.height + 'px', cssRule.indexOf('width') + 1);
+            
+            require('actionUtils').compoundUpdate(editor, _.extend(compoundData, {
+              data: cssRule.toString(),
+              caret: offset
+            }));
+          }
+        });
       }
     }
-    
-    return null;
   }
   
   /**
@@ -9905,37 +9958,43 @@ emmet.exec(function(require, _) {
    * @param {IEmmetEditor} editor
    * @param {String} src Image source (path or data:url)
    */
-  function getImageSizeForSource(editor, src) {
+  function getImageSizeForSource(editor, src, callback) {
     var fileContent;
+    var au = require('actionUtils');
     if (src) {
       // check if it is data:url
       if (/^data:/.test(src)) {
         fileContent = require('base64').decode( src.replace(/^data\:.+?;.+?,/, '') );
-      } else {
-        var file = require('file');
-        var absPath = file.locateFile(editor.getFilePath(), src);
-        if (absPath === null) {
-          throw "Can't find " + src + ' file';
-        }
-        
-        fileContent = String(file.read(absPath));
+        return callback(au.getImageSize(fileContent));
       }
       
-      return require('actionUtils').getImageSize(fileContent);
+      var file = require('file');
+      var absPath = file.locateFile(editor.getFilePath(), src);
+      if (absPath === null) {
+        throw "Can't find " + src + ' file';
+      }
+      
+      file.read(absPath, function(err, content) {
+        if (err) {
+          throw 'Unable to read ' + absPath + ': ' + err;
+        }
+        
+        content = String(content);
+        callback(au.getImageSize(content));
+      });
     }
   }
   
   require('actions').add('update_image_size', function(editor) {
-    var result;
     // this action will definitely won’t work in SASS dialect,
     // but may work in SCSS or LESS
     if (_.include(['css', 'less', 'scss'], String(editor.getSyntax()))) {
-      result = updateImageSizeCSS(editor);
+      updateImageSizeCSS(editor);
     } else {
-      result = updateImageSizeHTML(editor);
+      updateImageSizeHTML(editor);
     }
     
-    return require('actionUtils').compoundUpdate(editor, result);
+    return true;
   });
 });/**
  * Resolver for fast CSS typing. Handles abbreviations with the following 
@@ -10099,7 +10158,7 @@ emmet.define('cssResolver', function(require, _) {
   prefs.define('css.keywords', 'auto, inherit', 
       'A comma-separated list of valid keywords that can be used in CSS abbreviations.');
   
-  prefs.define('css.keywordAliases', 'a:auto, i:inherit, s:solid, da:dashed, do:dotted', 
+  prefs.define('css.keywordAliases', 'a:auto, i:inherit, s:solid, da:dashed, do:dotted, t:transparent', 
       'A comma-separated list of keyword aliases, used in CSS abbreviation. '
       + 'Each alias should be defined as <code>alias:keyword_name</code>.');
   
@@ -10129,6 +10188,10 @@ emmet.define('cssResolver', function(require, _) {
       'The minium score (from 0 to 1) that fuzzy-matched abbreviation should ' 
       + 'achive. Lower values may produce many false-positive matches, '
       + 'higher values may reduce possible matches.');
+  
+  prefs.define('css.alignVendor', false, 
+      'If set to <code>true</code>, all generated vendor-prefixed properties ' 
+      + 'will be aligned by real property name.');
   
   
   function isNumeric(ch) {
@@ -10184,6 +10247,10 @@ emmet.define('cssResolver', function(require, _) {
   
   function normalizeHexColor(value) {
     var hex = value.replace(/^#+/, '') || '0';
+    if (hex.toLowerCase() == 't') {
+      return 'transparent';
+    }
+    
     var repeat = require('utils').repeatString;
     var color = null;
     switch (hex.length) {
@@ -10239,30 +10306,6 @@ emmet.define('cssResolver', function(require, _) {
   
   function isValidKeyword(keyword) {
     return _.include(prefs.getArray('css.keywords'), getKeyword(keyword));
-  }
-  
-  /**
-   * Split snippet into a CSS property-value pair
-   * @param {String} snippet
-   */
-  function splitSnippet(snippet) {
-    var utils = require('utils');
-    snippet = utils.trim(snippet);
-    if (snippet.indexOf(':') == -1) {
-      return {
-        name: snippet,
-        value: defaultValue
-      };
-    }
-    
-    var pair = snippet.split(':');
-    
-    return {
-      name: utils.trim(pair.shift()),
-      // replace ${0} tabstop to produce valid vendor-prefixed values
-      // where possible
-      value: utils.trim(pair.join(':')).replace(/^(\$\{0\}|\$0)(\s*;?)$/, '${1}$2')
-    };
   }
   
   /**
@@ -10616,7 +10659,7 @@ emmet.define('cssResolver', function(require, _) {
       
       while (ch = stream.next()) {
         if (ch == '#') {
-          stream.match(/^[0-9a-f]+/, true);
+          stream.match(/^t|[0-9a-f]+/i, true);
           values.push(stream.current());
         } else if (ch == '-') {
           if (isValidKeyword(_.last(values)) || 
@@ -10710,15 +10753,11 @@ emmet.define('cssResolver', function(require, _) {
       var valuesData = this.extractValues(prefixData.property);
       var abbrData = _.extend(prefixData, valuesData);
       
-      snippet = resources.findSnippet(syntax, abbrData.property);
-      
-      // fallback to some old snippets like m:a
-//      if (!snippet && ~abbrData.property.indexOf(':')) {
-//        var parts = abbrData.property.split(':');
-//        var propertyName = parts.shift();
-//        snippet = resources.findSnippet(syntax, propertyName) || propertyName;
-//        abbrData.values = this.parseValues(parts.join(':'));
-//      }
+      if (!snippet) {
+        snippet = resources.findSnippet(syntax, abbrData.property);
+      } else {
+        abbrData.values = null;
+      }
       
       if (!snippet && prefs.get('css.fuzzySearch')) {
         // let’s try fuzzy search
@@ -10735,7 +10774,7 @@ emmet.define('cssResolver', function(require, _) {
         return snippet;
       }
       
-      var snippetObj = splitSnippet(snippet);
+      var snippetObj = this.splitSnippet(snippet);
       var result = [];
       if (!value && abbrData.values) {
         value = _.map(abbrData.values, function(val) {
@@ -10749,18 +10788,27 @@ emmet.define('cssResolver', function(require, _) {
         ? findPrefixes(snippetObj.name, autoInsertPrefixes && abbrData.prefixes != 'all')
         : abbrData.prefixes;
         
+        
+      var names = [], propName;
       _.each(prefixes, function(p) {
         if (p in vendorPrefixes) {
-          result.push(transformSnippet(
-              vendorPrefixes[p].transformName(snippetObj.name) 
-              + ':' + snippetObj.value,
+          propName = vendorPrefixes[p].transformName(snippetObj.name);
+          names.push(propName);
+          result.push(transformSnippet(propName + ':' + snippetObj.value,
               isImportant, syntax));
-          
         }
       });
       
       // put the original property
       result.push(transformSnippet(snippetObj.name + ':' + snippetObj.value, isImportant, syntax));
+      names.push(snippetObj.name);
+      
+      if (prefs.get('css.alignVendor')) {
+        var pads = require('utils').getStringsPads(names);
+        result = _.map(result, function(prop, i) {
+          return pads[i] + prop;
+        });
+      }
       
       return result;
     },
@@ -10782,6 +10830,30 @@ emmet.define('cssResolver', function(require, _) {
         return snippet.data;
       
       return String(snippet);
+    },
+    
+    /**
+     * Split snippet into a CSS property-value pair
+     * @param {String} snippet
+     */
+    splitSnippet: function(snippet) {
+      var utils = require('utils');
+      snippet = utils.trim(snippet);
+      if (snippet.indexOf(':') == -1) {
+        return {
+          name: snippet,
+          value: defaultValue
+        };
+      }
+      
+      var pair = snippet.split(':');
+      
+      return {
+        name: utils.trim(pair.shift()),
+        // replace ${0} tabstop to produce valid vendor-prefixed values
+        // where possible
+        value: utils.trim(pair.join(':')).replace(/^(\$\{0\}|\$0)(\s*;?)$/, '${1}$2')
+      };
     },
     
     getSyntaxPreference: getSyntaxPreference,
@@ -10919,6 +10991,29 @@ emmet.define('cssGradient', function(require, _) {
   }
   
   /**
+   * Resolves property name (abbreviation): searches for snippet definition in 
+   * 'resources' and returns new name of matched property
+   */
+  function resolvePropertyName(name, syntax) {
+    var res = require('resources');
+    var prefs = require('preferences');
+    var snippet = res.findSnippet(syntax, name);
+    
+    if (!snippet && prefs.get('css.fuzzySearch')) {
+      snippet = res.fuzzyFindSnippet(syntax, name, 
+          parseFloat(prefs.get('css.fuzzySearchMinScore')));
+    }
+    
+    if (snippet) {
+      if (!_.isString(snippet)) {
+        snippet = snippet.data;
+      }
+      
+      return require('cssResolver').splitSnippet(snippet).name;
+    }
+  }
+  
+  /**
    * Fills-out implied positions in color-stops. This function is useful for
    * old Webkit gradient definitions
    */
@@ -11043,14 +11138,41 @@ emmet.define('cssGradient', function(require, _) {
   function pasteGradient(property, gradient, valueRange) {
     var rule = property.parent;
     var utils = require('utils');
+    var alignVendor = require('preferences').get('css.alignVendor');
+    
+    // we may have aligned gradient definitions: find the smallest value
+    // separator
+    var sep = property.styleSeparator;
+    var before = property.styleBefore;
     
     // first, remove all properties within CSS rule with the same name and
     // gradient definition
     _.each(rule.getAll(getPrefixedNames(property.name())), function(item) {
       if (item != property && /gradient/i.test(item.value())) {
+        if (item.styleSeparator.length < sep.length) {
+          sep = item.styleSeparator;
+        }
+        if (item.styleBefore.length < before.length) {
+          before = item.styleBefore;
+        }
         rule.remove(item);
       }
     });
+    
+    if (alignVendor) {
+      // update prefix
+      if (before != property.styleBefore) {
+        var fullRange = property.fullRange();
+        rule._updateSource(before, fullRange.start, fullRange.start + property.styleBefore.length);
+        property.styleBefore = before;
+      }
+      
+      // update separator value
+      if (sep != property.styleSeparator) {
+        rule._updateSource(sep, property.nameRange().end, property.valueRange().start);
+        property.styleSeparator = sep;
+      }
+    }
     
     var value = property.value();
     if (!valueRange)
@@ -11065,6 +11187,28 @@ emmet.define('cssGradient', function(require, _) {
     
     // create list of properties to insert
     var propsToInsert = getPropertiesForGradient(gradient, property.name());
+    
+    // align prefixed values
+    if (alignVendor) {
+      var values = _.pluck(propsToInsert, 'value');
+      var names = _.pluck(propsToInsert, 'name');
+      values.push(property.value());
+      names.push(property.name());
+      
+      var valuePads = utils.getStringsPads(_.map(values, function(v) {
+        return v.substring(0, v.indexOf('('));
+      }));
+      
+      var namePads = utils.getStringsPads(names);
+      property.name(_.last(namePads) + property.name());
+      
+      _.each(propsToInsert, function(prop, i) {
+        prop.name = namePads[i] + prop.name;
+        prop.value = valuePads[i] + prop.value;
+      });
+      
+      property.value(_.last(valuePads) + property.value());
+    }
     
     // put vendor-prefixed definitions before current rule
     _.each(propsToInsert, function(prop) {
@@ -11131,6 +11275,16 @@ emmet.define('cssGradient', function(require, _) {
       
       var sep = css.getSyntaxPreference('valueSeparator', syntax);
       var end = css.getSyntaxPreference('propertyEnd', syntax);
+      
+      if (require('preferences').get('css.alignVendor')) {
+        var pads = require('utils').getStringsPads(_.map(props, function(prop) {
+          return prop.value.substring(0, prop.value.indexOf('('));
+        }));
+        _.each(props, function(prop, i) {
+          prop.value = pads[i] + prop.value;
+        });
+      }
+      
       props = _.map(props, function(item) {
         return item.name + sep + item.value + end;
       });
@@ -11212,6 +11366,12 @@ emmet.define('cssGradient', function(require, _) {
         
         // make sure current property has terminating semicolon
         css.property.end(';');
+        
+        // resolve CSS property name
+        var resolvedName = resolvePropertyName(css.property.name(), syntax);
+        if (resolvedName) {
+          css.property.name(resolvedName);
+        }
         
         pasteGradient(css.property, g.gradient, g.valueRange);
         editor.replaceContent(css.rule.toString(), ruleStart, ruleEnd, true);
@@ -11949,7 +12109,24 @@ emmet.exec(function(require, _) {
 emmet.exec(function(require, _){
   var placeholder = '%s';
   
-  function getIndentation() {
+  /** @type preferences */
+  var prefs = require('preferences');
+  prefs.define('format.noIndentTags', 'html', 
+      'A comma-separated list of tag names that should not get inner indentation.');
+  
+  prefs.define('format.forceIndentationForTags', 'body', 
+    'A comma-separated list of tag names that should <em>always</em> get inner indentation.');
+  
+  /**
+   * Get indentation for given node
+   * @param {AbbreviationNode} node
+   * @returns {String}
+   */
+  function getIndentation(node) {
+    if (_.include(prefs.getArray('format.noIndentTags') || [], node.name())) {
+      return '';
+    }
+    
     return require('resources').getVariable('indentation');
   }
   
@@ -12069,10 +12246,14 @@ emmet.exec(function(require, _){
     var abbrUtils = require('abbreviationUtils');
     var isUnary = abbrUtils.isUnary(item);
     var nl = utils.getNewline();
+    var indent = getIndentation(item);
       
     // formatting output
     if (profile.tag_nl !== false) {
       var forceNl = profile.tag_nl === true && (profile.tag_nl_leaf || item.children.length);
+      if (!forceNl) {
+        forceNl = _.include(prefs.getArray('format.forceIndentationForTags') || [], item.name());
+      }
       
       // formatting block-level elements
       if (!item.isTextNode()) {
@@ -12086,14 +12267,14 @@ emmet.exec(function(require, _){
             item.end = nl + item.end;
             
           if (abbrUtils.hasTagsInContent(item) || (forceNl && !item.children.length && !isUnary))
-            item.start += nl + getIndentation();
+            item.start += nl + indent;
         } else if (abbrUtils.isInline(item) && hasBlockSibling(item) && !isVeryFirstChild(item)) {
           item.start = nl + item.start;
         } else if (abbrUtils.isInline(item) && shouldBreakInsideInline(item, profile)) {
           item.end = nl + item.end;
         }
         
-        item.padding = getIndentation() ;
+        item.padding = indent;
       }
     }
     
@@ -12306,8 +12487,15 @@ emmet.exec(function(require, _) {
     item.start = utils.replaceSubstring(item.start, start, item.start.indexOf(placeholder), placeholder);
     item.end = utils.replaceSubstring(item.end, end, item.end.indexOf(placeholder), placeholder);
     
-    if (!item.children.length && !isUnary && item.content.indexOf(cursor) == -1)
+    // should we put caret placeholder after opening tag?
+    if (
+        !item.children.length 
+        && !isUnary 
+        && !~item.content.indexOf(cursor)
+        && !require('tabStops').extract(item.content).tabstops.length
+      ) {
       item.start += cursor;
+    }
     
     return item;
   }
@@ -12639,11 +12827,54 @@ emmet.exec(function(require, _) {
     "filters": "html",
     "snippets": {
       "@i": "@import url(|);",
-      "@m": "@media print {\n\t|\n}",
+      "@import": "@import url(|);",
+      "@m": "@media ${1:screen} {\n\t|\n}",
+      "@media": "@media ${1:screen} {\n\t|\n}",
       "@f": "@font-face {\n\tfont-family:|;\n\tsrc:url(|);\n}",
       "@f+": "@font-face {\n\tfont-family: '${1:FontName}';\n\tsrc: url('${2:FileName}.eot');\n\tsrc: url('${2:FileName}.eot?#iefix') format('embedded-opentype'),\n\t\t url('${2:FileName}.woff') format('woff'),\n\t\t url('${2:FileName}.ttf') format('truetype'),\n\t\t url('${2:FileName}.svg#${1:FontName}') format('svg');\n\tfont-style: ${3:normal};\n\tfont-weight: ${4:normal};\n}",
+
+      "@kf": "@-webkit-keyframes ${1:identifier} {\n\t${2:from} { ${3} }${6}\n\t${4:to} { ${5} }\n}\n@-o-keyframes ${1:identifier} {\n\t${2:from} { ${3} }${6}\n\t${4:to} { ${5} }\n}\n@-moz-keyframes ${1:identifier} {\n\t${2:from} { ${3} }${6}\n\t${4:to} { ${5} }\n}\n@keyframes ${1:identifier} {\n\t${2:from} { ${3} }${6}\n\t${4:to} { ${5} }\n}",
+
+
+      "anim": "animation:|;",
+      "anim-": "animation:${1:name} ${2:duration} ${3:timing-function} ${4:delay} ${5:iteration-count} ${6:direction} ${7:fill-mode};",
+      "animdel": "animation-delay:${1:time};",
+      
+      "animdir": "animation-direction:${1:normal};",
+      "animdir:n": "animation-direction:normal;",
+      "animdir:r": "animation-direction:reverse;",
+      "animdir:a": "animation-direction:alternate;",
+      "animdir:ar": "animation-direction:alternate-reverse;",
+      
+      "animdur": "animation-duration:${1:0}s;",
+      
+      "animfm": "animation-fill-mode:${1:both};",
+      "animfm:f": "animation-fill-mode:forwards;",
+      "animfm:b": "animation-fill-mode:backwards;",
+      "animfm:bt": "animation-fill-mode:both;",
+      "animfm:bh": "animation-fill-mode:both;",
+      
+      "animic": "animation-iteration-count:${1:1};",
+      "animic:i": "animation-iteration-count:infinite;",
+      
+      "animn": "animation-name:${1:none};",
+
+      "animps": "animation-play-state:${1:running};",
+      "animps:p": "animation-play-state:paused;",
+      "animps:r": "animation-play-state:running;",
+
+      "animtf": "animation-timing-function:${1:linear};",
+      "animtf:e": "animation-timing-function:ease;",
+      "animtf:ei": "animation-timing-function:ease-in;",
+      "animtf:eo": "animation-timing-function:ease-out;",
+      "animtf:eio": "animation-timing-function:ease-in-out;",
+      "animtf:l": "animation-timing-function:linear;",
+      "animtf:cb": "animation-timing-function:cubic-bezier(${1:0.1}, ${2:0.7}, ${3:1.0}, ${3:0.1});",
+      
+      "ap": "appearance:${none}",
+
       "!": "!important",
-      "pos": "position:|;",
+      "pos": "position:${1:relative};",
       "pos:s": "position:static;",
       "pos:a": "position:absolute;",
       "pos:r": "position:relative;",
@@ -12658,16 +12889,28 @@ emmet.exec(function(require, _) {
       "l:a": "left:auto;",
       "z": "z-index:|;",
       "z:a": "z-index:auto;",
-      "fl": "float:|;",
+      "fl": "float:${1:left};",
       "fl:n": "float:none;",
       "fl:l": "float:left;",
       "fl:r": "float:right;",
-      "cl": "clear:|;",
+      "cl": "clear:${1:both};",
       "cl:n": "clear:none;",
       "cl:l": "clear:left;",
       "cl:r": "clear:right;",
       "cl:b": "clear:both;",
-      "d": "display:|;",
+
+      "colm": "columns:|;",
+      "colmc": "column-count:|;",
+      "colmf": "column-fill:|;",
+      "colmg": "column-gap:|;",
+      "colmr": "column-rule:|;",
+      "colmrc": "column-rule-color:|;",
+      "colmrs": "column-rule-style:|;",
+      "colmrw": "column-rule-width:|;",
+      "colms": "column-span:|;",
+      "colmw": "column-width:|;",
+
+      "d": "display:${1:block};",
       "d:n": "display:none;",
       "d:b": "display:block;",
       "d:i": "display:inline;",
@@ -12690,39 +12933,42 @@ emmet.exec(function(require, _) {
       "d:rbbg": "display:ruby-base-group;",
       "d:rbt": "display:ruby-text;",
       "d:rbtg": "display:ruby-text-group;",
-      "v": "visibility:|;",
+      "v": "visibility:${1:hidden};",
       "v:v": "visibility:visible;",
       "v:h": "visibility:hidden;",
       "v:c": "visibility:collapse;",
-      "ov": "overflow:|;",
+      "ov": "overflow:${1:hidden};",
       "ov:v": "overflow:visible;",
       "ov:h": "overflow:hidden;",
       "ov:s": "overflow:scroll;",
       "ov:a": "overflow:auto;",
-      "ovx": "overflow-x:|;",
+      "ovx": "overflow-x:${1:hidden};",
       "ovx:v": "overflow-x:visible;",
       "ovx:h": "overflow-x:hidden;",
       "ovx:s": "overflow-x:scroll;",
       "ovx:a": "overflow-x:auto;",
-      "ovy": "overflow-y:|;",
+      "ovy": "overflow-y:${1:hidden};",
       "ovy:v": "overflow-y:visible;",
       "ovy:h": "overflow-y:hidden;",
       "ovy:s": "overflow-y:scroll;",
       "ovy:a": "overflow-y:auto;",
-      "ovs": "overflow-style:|;",
+      "ovs": "overflow-style:${1:scrollbar};",
       "ovs:a": "overflow-style:auto;",
       "ovs:s": "overflow-style:scrollbar;",
       "ovs:p": "overflow-style:panner;",
       "ovs:m": "overflow-style:move;",
       "ovs:mq": "overflow-style:marquee;",
       "zoo": "zoom:1;",
+      "zm": "zoom:1;",
       "cp": "clip:|;",
       "cp:a": "clip:auto;",
-      "cp:r": "clip:rect(|);",
-      "bxz": "box-sizing:|;",
+      "cp:r": "clip:rect(${1:top} ${2:right} ${3:bottom} ${4:left});",
+      "bxz": "box-sizing:${1:border-box};",
       "bxz:cb": "box-sizing:content-box;",
       "bxz:bb": "box-sizing:border-box;",
-      "bxsh": "box-shadow:${1:hoff} ${2:voff} ${3:radius} ${4:color};",
+      "bxsh": "box-shadow:${1:inset }${2:hoff} ${3:voff} ${4:blur} ${5:color};",
+      "bxsh:r": "box-shadow:${1:inset }${2:hoff} ${3:voff} ${4:blur} ${5:spread }rgb(${6:0}, ${7:0}, ${8:0});",
+      "bxsh:ra": "box-shadow:${1:inset }${2:h} ${3:v} ${4:blur} ${5:spread }rgba(${6:0}, ${7:0}, ${8:0}, .${9:5});",
       "bxsh:n": "box-shadow:none;",
       "m": "margin:|;",
       "m:a": "margin:auto;",
@@ -12749,17 +12995,22 @@ emmet.exec(function(require, _) {
       "mah:n": "max-height:none;",
       "miw": "min-width:|;",
       "mih": "min-height:|;",
-      "o": "outline:|;",
-      "o:n": "outline:none;",
-      "oo": "outline-offset:|;",
-      "ow": "outline-width:|;",
-      "os": "outline-style:|;",
-      "oc": "outline-color:#${1:000};",
-      "oc:i": "outline-color:invert;",
+      "mar": "max-resolution:${1:res};",
+      "mir": "min-resolution:${1:res};",
+      "ori": "orientation:|;",
+      "ori:l": "orientation:landscape;",
+      "ori:p": "orientation:portrait;",
+      "ol": "outline:|;",
+      "ol:n": "outline:none;",
+      "olo": "outline-offset:|;",
+      "olw": "outline-width:|;",
+      "ols": "outline-style:|;",
+      "olc": "outline-color:#${1:000};",
+      "olc:i": "outline-color:invert;",
       "bd": "border:|;",
       "bd+": "border:${1:1px} ${2:solid} ${3:#000};",
       "bd:n": "border:none;",
-      "bdbk": "border-break:|;",
+      "bdbk": "border-break:${1:close};",
       "bdbk:c": "border-break:close;",
       "bdcl": "border-collapse:|;",
       "bdcl:c": "border-collapse:collapse;",
@@ -12791,7 +13042,7 @@ emmet.exec(function(require, _) {
       "bdbli": "border-bottom-left-image:url(|);",
       "bdbli:n": "border-bottom-left-image:none;",
       "bdbli:c": "border-bottom-left-image:continue;",
-      "bdf": "border-fit:|;",
+      "bdf": "border-fit:${1:repeat};",
       "bdf:c": "border-fit:clip;",
       "bdf:r": "border-fit:repeat;",
       "bdf:sc": "border-fit:scale;",
@@ -12799,8 +13050,8 @@ emmet.exec(function(require, _) {
       "bdf:ow": "border-fit:overwrite;",
       "bdf:of": "border-fit:overflow;",
       "bdf:sp": "border-fit:space;",
-      "bdl": "border-length:|;",
-      "bdl:a": "border-length:auto;",
+      "bdlen": "border-length:|;",
+      "bdlen:a": "border-length:auto;",
       "bdsp": "border-spacing:|;",
       "bds": "border-style:|;",
       "bds:n": "border-style:none;",
@@ -12817,11 +13068,14 @@ emmet.exec(function(require, _) {
       "bds:i": "border-style:inset;",
       "bds:o": "border-style:outset;",
       "bdw": "border-width:|;",
+      "bdtw": "border-top-width:|;",
+      "bdrw": "border-right-width:|;",
+      "bdbw": "border-bottom-width:|;",
+      "bdlw": "border-left-width:|;",
       "bdt": "border-top:|;",
       "bt": "border-top:|;",
       "bdt+": "border-top:${1:1px} ${2:solid} ${3:#000};",
       "bdt:n": "border-top:none;",
-      "bdtw": "border-top-width:|;",
       "bdts": "border-top-style:|;",
       "bdts:n": "border-top-style:none;",
       "bdtc": "border-top-color:#${1:000};",
@@ -12830,16 +13084,14 @@ emmet.exec(function(require, _) {
       "br": "border-right:|;",
       "bdr+": "border-right:${1:1px} ${2:solid} ${3:#000};",
       "bdr:n": "border-right:none;",
-      "bdrw": "border-right-width:|;",
-      "bdrs": "border-right-style:|;",
-      "bdrs:n": "border-right-style:none;",
+      "bdrst": "border-right-style:|;",
+      "bdrst:n": "border-right-style:none;",
       "bdrc": "border-right-color:#${1:000};",
       "bdrc:t": "border-right-color:transparent;",
       "bdb": "border-bottom:|;",
       "bb": "border-bottom:|;",
       "bdb+": "border-bottom:${1:1px} ${2:solid} ${3:#000};",
       "bdb:n": "border-bottom:none;",
-      "bdbw": "border-bottom-width:|;",
       "bdbs": "border-bottom-style:|;",
       "bdbs:n": "border-bottom-style:none;",
       "bdbc": "border-bottom-color:#${1:000};",
@@ -12848,7 +13100,6 @@ emmet.exec(function(require, _) {
       "bl": "border-left:|;",
       "bdl+": "border-left:${1:1px} ${2:solid} ${3:#000};",
       "bdl:n": "border-left:none;",
-      "bdlw": "border-left-width:|;",
       "bdls": "border-left-style:|;",
       "bdls:n": "border-left-style:none;",
       "bdlc": "border-left-color:#${1:000};",
@@ -12870,6 +13121,8 @@ emmet.exec(function(require, _) {
       "bgr:n": "background-repeat:no-repeat;",
       "bgr:x": "background-repeat:repeat-x;",
       "bgr:y": "background-repeat:repeat-y;",
+      "bgr:sp": "background-repeat:space;",
+      "bgr:rd": "background-repeat:round;",
       "bga": "background-attachment:|;",
       "bga:f": "background-attachment:fixed;",
       "bga:s": "background-attachment:scroll;",
@@ -12880,7 +13133,7 @@ emmet.exec(function(require, _) {
       "bgbk:bb": "background-break:bounding-box;",
       "bgbk:eb": "background-break:each-box;",
       "bgbk:c": "background-break:continuous;",
-      "bgcp": "background-clip:|;",
+      "bgcp": "background-clip:${1:padding-box};",
       "bgcp:bb": "background-clip:border-box;",
       "bgcp:pb": "background-clip:padding-box;",
       "bgcp:cb": "background-clip:content-box;",
@@ -12889,13 +13142,25 @@ emmet.exec(function(require, _) {
       "bgo:pb": "background-origin:padding-box;",
       "bgo:bb": "background-origin:border-box;",
       "bgo:cb": "background-origin:content-box;",
-      "bgz": "background-size:|;",
-      "bgz:a": "background-size:auto;",
-      "bgz:ct": "background-size:contain;",
-      "bgz:cv": "background-size:cover;",
+      "bgsz": "background-size:|;",
+      "bgsz:a": "background-size:auto;",
+      "bgsz:ct": "background-size:contain;",
+      "bgsz:cv": "background-size:cover;",
       "c": "color:#${1:000};",
+      "c:r": "color:rgb(${1:0}, ${2:0}, ${3:0});",
+      "c:ra": "color:rgba(${1:0}, ${2:0}, ${3:0}, .${4:5});",
       "cm": "/* |${child} */",
-      "cn": "content:|;",
+      "cnt": "content:'|';",
+      "cnt:n": "content:normal;",
+      "cnt:oq": "content:open-quote;",
+      "cnt:noq": "content:no-open-quote;",
+      "cnt:cq": "content:close-quote;",
+      "cnt:ncq": "content:no-close-quote;",
+      "cnt:a": "content:attr(|);",
+      "cnt:c": "content:counter(|);",
+      "cnt:cs": "content:counters(|);",
+
+
       "tbl": "table-layout:|;",
       "tbl:a": "table-layout:auto;",
       "tbl:f": "table-layout:fixed;",
@@ -12936,7 +13201,7 @@ emmet.exec(function(require, _) {
       "ct:cs": "content:counters(|);",
       "coi": "counter-increment:|;",
       "cor": "counter-reset:|;",
-      "va": "vertical-align:|;",
+      "va": "vertical-align:${1:top};",
       "va:sup": "vertical-align:super;",
       "va:t": "vertical-align:top;",
       "va:tt": "vertical-align:text-top;",
@@ -12945,17 +13210,17 @@ emmet.exec(function(require, _) {
       "va:b": "vertical-align:bottom;",
       "va:tb": "vertical-align:text-bottom;",
       "va:sub": "vertical-align:sub;",
-      "ta": "text-align:|;",
+      "ta": "text-align:${1:left};",
       "ta:l": "text-align:left;",
       "ta:c": "text-align:center;",
       "ta:r": "text-align:right;",
       "ta:j": "text-align:justify;",
-      "tal": "text-align-last:|;",
+      "ta-lst": "text-align-last:|;",
       "tal:a": "text-align-last:auto;",
       "tal:l": "text-align-last:left;",
       "tal:c": "text-align-last:center;",
       "tal:r": "text-align-last:right;",
-      "td": "text-decoration:|;",
+      "td": "text-decoration:${1:none};",
       "td:n": "text-decoration:none;",
       "td:u": "text-decoration:underline;",
       "td:o": "text-decoration:overline;",
@@ -12983,12 +13248,15 @@ emmet.exec(function(require, _) {
       "tj:d": "text-justify:distribute;",
       "tj:k": "text-justify:kashida;",
       "tj:t": "text-justify:tibetan;",
+      "tov": "text-overflow:${ellipsis};",
+      "tov:e": "text-overflow:ellipsis;",
+      "tov:c": "text-overflow:clip;",
       "to": "text-outline:|;",
       "to+": "text-outline:${1:0} ${2:0} ${3:#000};",
       "to:n": "text-outline:none;",
       "tr": "text-replace:|;",
       "tr:n": "text-replace:none;",
-      "tt": "text-transform:|;",
+      "tt": "text-transform:${1:uppercase};",
       "tt:n": "text-transform:none;",
       "tt:c": "text-transform:capitalize;",
       "tt:u": "text-transform:uppercase;",
@@ -12999,6 +13267,8 @@ emmet.exec(function(require, _) {
       "tw:u": "text-wrap:unrestricted;",
       "tw:s": "text-wrap:suppress;",
       "tsh": "text-shadow:${1:hoff} ${2:voff} ${3:blur} ${4:#000};",
+      "tsh:r": "text-shadow:${1:h} ${2:v} ${3:blur} rgb(${4:0}, ${5:0}, ${6:0});",
+      "tsh:ra": "text-shadow:${1:h} ${2:v} ${3:blur} rgba(${4:0}, ${5:0}, ${6:0}, .${7:5});",
       "tsh+": "text-shadow:${1:0} ${2:0} ${3:0} ${4:#000};",
       "tsh:n": "text-shadow:none;",
       "trf": "transform:|;",
@@ -13011,6 +13281,8 @@ emmet.exec(function(require, _) {
       "trf:t": "transform: translate(${1:x}, ${2:y});",
       "trf:tx": "transform: translateX(${1:x});",
       "trf:ty": "transform: translateY(${1:y});",
+      "trfo": "transform-origin:|;",
+      "trfs": "transform-style:${1:preserve-3d};",
       "trs": "transition:${1:prop} ${2:time};",
       "trsde": "transition-delay:${1:time};",
       "trsdu": "transition-duration:${1:time};",
@@ -13049,7 +13321,7 @@ emmet.exec(function(require, _) {
       "fw:b": "font-weight:bold;",
       "fw:br": "font-weight:bolder;",
       "fw:lr": "font-weight:lighter;",
-      "fs": "font-style:|;",
+      "fs": "font-style:${italic};",
       "fs:n": "font-style:normal;",
       "fs:i": "font-style:italic;",
       "fs:o": "font-style:oblique;",
@@ -13097,12 +13369,12 @@ emmet.exec(function(require, _) {
       "op": "opacity:|;",
       "op:ie": "filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=100);",
       "op:ms": "-ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=100)';",
-      "rz": "resize:|;",
-      "rz:n": "resize:none;",
-      "rz:b": "resize:both;",
-      "rz:h": "resize:horizontal;",
-      "rz:v": "resize:vertical;",
-      "cur": "cursor:|;",
+      "rsz": "resize:|;",
+      "rsz:n": "resize:none;",
+      "rsz:b": "resize:both;",
+      "rsz:h": "resize:horizontal;",
+      "rsz:v": "resize:vertical;",
+      "cur": "cursor:${pointer};",
       "cur:a": "cursor:auto;",
       "cur:d": "cursor:default;",
       "cur:c": "cursor:crosshair;",
@@ -13125,7 +13397,13 @@ emmet.exec(function(require, _) {
       "pgba:l": "page-break-after:left;",
       "pgba:r": "page-break-after:right;",
       "orp": "orphans:|;",
-      "wid": "widows:|;"
+      "us": "user-select:${none};",
+      "wid": "widows:|;",
+      "wfsm": "-webkit-font-smoothing:${antialiased};",
+      "wfsm:a": "-webkit-font-smoothing:antialiased;",
+      "wfsm:s": "-webkit-font-smoothing:subpixel-antialiased;",
+      "wfsm:sa": "-webkit-font-smoothing:subpixel-antialiased;",
+      "wfsm:n": "-webkit-font-smoothing:none;"
     }
   },
   
@@ -13133,16 +13411,17 @@ emmet.exec(function(require, _) {
     "filters": "html",
     "profile": "html",
     "snippets": {
+      "!!!":    "<!doctype html>",
+      "!!!4t":  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">",
+      "!!!4s":  "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">",
+      "!!!xt":  "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">",
+      "!!!xs":  "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">",
+      "!!!xxs": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">",
+
       "c": "<!-- |${child} -->",
       "cc:ie6": "<!--[if lte IE 6]>\n\t${child}|\n<![endif]-->",
       "cc:ie": "<!--[if IE]>\n\t${child}|\n<![endif]-->",
-      "cc:noie": "<!--[if !IE]><!-->\n\t${child}|\n<!--<![endif]-->",
-      "html:4t": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html lang=\"${lang}\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\">\n\t<title>${1:Document}</title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>",
-      "html:4s": "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n<html lang=\"${lang}\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\">\n\t<title>${1:Document}</title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>",
-      "html:xt": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"${lang}\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\" />\n\t<title></title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>",
-      "html:xs": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"${lang}\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\" />\n\t<title>${1:Document}</title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>",
-      "html:xxs": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"${lang}\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\" />\n\t<title>${1:Document}</title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>",
-      "html:5": "<!doctype html>\n<html lang=\"${lang}\">\n<head>\n\t<meta charset=\"${charset}\">\n\t<title>${1:Document}</title>\n</head>\n<body>\n\t${child}${2}\n</body>\n</html>"
+      "cc:noie": "<!--[if !IE]><!-->\n\t${child}|\n<!--<![endif]-->"
     },
     
     "abbreviations": {
@@ -13165,6 +13444,7 @@ emmet.exec(function(require, _) {
       "link:atom": "<link rel=\"alternate\" type=\"application/atom+xml\" title=\"Atom\" href=\"${1:atom.xml}\" />",
       "meta:utf": "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\" />",
       "meta:win": "<meta http-equiv=\"Content-Type\" content=\"text/html;charset=windows-1251\" />",
+      "meta:vp": "<meta name=\"viewport\" content=\"width=${1:device-width}, user-scalable=${2:no}, initial-scale=${3:1.0}, maximum-scale=${4:1.0}, minimum-scale=${5:1.0}\" />",
       "meta:compat": "<meta http-equiv=\"X-UA-Compatible\" content=\"${1:IE=7}\" />",
       "style": "<style>",
       "script": "<script>",
@@ -13184,45 +13464,46 @@ emmet.exec(function(require, _) {
       "form:get": "<form action=\"\" method=\"get\">",
       "form:post": "<form action=\"\" method=\"post\">",
       "label": "<label for=\"\">",
-      "input": "<input type=\"\" />",
-      "input:hidden": "<input type=\"hidden\" name=\"\" />",
-      "input:h": "<input type=\"hidden\" name=\"\" />",
-      "input:text": "<input type=\"text\" name=\"\" id=\"\" />",
-      "input:t": "<input type=\"text\" name=\"\" id=\"\" />",
-      "input:search": "<input type=\"search\" name=\"\" id=\"\" />",
-      "input:email": "<input type=\"email\" name=\"\" id=\"\" />",
-      "input:url": "<input type=\"url\" name=\"\" id=\"\" />",
-      "input:password": "<input type=\"password\" name=\"\" id=\"\" />",
-      "input:p": "<input type=\"password\" name=\"\" id=\"\" />",
-      "input:datetime": "<input type=\"datetime\" name=\"\" id=\"\" />",
-      "input:date": "<input type=\"date\" name=\"\" id=\"\" />",
-      "input:datetime-local": "<input type=\"datetime-local\" name=\"\" id=\"\" />",
-      "input:month": "<input type=\"month\" name=\"\" id=\"\" />",
-      "input:week": "<input type=\"week\" name=\"\" id=\"\" />",
-      "input:time": "<input type=\"time\" name=\"\" id=\"\" />",
-      "input:number": "<input type=\"number\" name=\"\" id=\"\" />",
-      "input:color": "<input type=\"color\" name=\"\" id=\"\" />",
-      "input:checkbox": "<input type=\"checkbox\" name=\"\" id=\"\" />",
-      "input:c": "<input type=\"checkbox\" name=\"\" id=\"\" />",
-      "input:radio": "<input type=\"radio\" name=\"\" id=\"\" />",
-      "input:r": "<input type=\"radio\" name=\"\" id=\"\" />",
-      "input:range": "<input type=\"range\" name=\"\" id=\"\" />",
-      "input:file": "<input type=\"file\" name=\"\" id=\"\" />",
-      "input:f": "<input type=\"file\" name=\"\" id=\"\" />",
+      "input": "<input type=\"${1:text}\" />",
+      "inp": "<input type=\"${1:text}\" name=\"\" id=\"\" />",
+      "input:hidden": "input[type=hidden name]",
+      "input:h": "input:hidden",
+      "input:text": "inp",
+      "input:t": "inp",
+      "input:search": "inp[type=search]",
+      "input:email": "inp[type=email]",
+      "input:url": "inp[type=url]",
+      "input:password": "inp[type=password]",
+      "input:p": "input:password",
+      "input:datetime": "inp[type=datetime]",
+      "input:date": "inp[type=date]",
+      "input:datetime-local": "inp[type=datetime-local]",
+      "input:month": "inp[type=month]",
+      "input:week": "inp[type=week]",
+      "input:time": "inp[type=time]",
+      "input:number": "inp[type=number]",
+      "input:color": "inp[type=color]",
+      "input:checkbox": "inp[type=checkbox]",
+      "input:c": "input:checkbox",
+      "input:radio": "inp[type=radio]",
+      "input:r": "input:radio",
+      "input:range": "inp[type=range]",
+      "input:file": "inp[type=file]",
+      "input:f": "input:file",
       "input:submit": "<input type=\"submit\" value=\"\" />",
-      "input:s": "<input type=\"submit\" value=\"\" />",
+      "input:s": "input:submit",
       "input:image": "<input type=\"image\" src=\"\" alt=\"\" />",
-      "input:i": "<input type=\"image\" src=\"\" alt=\"\" />",
-      "input:reset": "<input type=\"reset\" value=\"\" />",
+      "input:i": "input:image",
       "input:button": "<input type=\"button\" value=\"\" />",
-      "input:b": "<input type=\"button\" value=\"\" />",
-      "select": "<select name=\"\" id=\"\"></select>",
-      "option": "<option value=\"\"></option>",
+      "input:b": "input:button",
+      "input:reset": "input:button[type=reset]",
+      "select": "<select name=\"\" id=\"\">",
+      "option": "<option value=\"\">",
       "textarea": "<textarea name=\"\" id=\"\" cols=\"${1:30}\" rows=\"${2:10}\">",
-      "menu:context": "<menu type=\"context\">",
-      "menu:c": "<menu type=\"context\">",
-      "menu:toolbar": "<menu type=\"toolbar\">",
-      "menu:t": "<menu type=\"toolbar\">",
+      "menu:context": "menu[type=context]>",
+      "menu:c": "menu:context",
+      "menu:toolbar": "menu[type=toolbar]>",
+      "menu:t": "menu:toolbar",
       "video": "<video src=\"\">",
       "audio": "<audio src=\"\">",
       "html:xml": "<html xmlns=\"http://www.w3.org/1999/xhtml\">",
@@ -13258,6 +13539,15 @@ emmet.exec(function(require, _) {
       "out": "output",
       "det": "details",
       "cmd": "command",
+      "doc": "html>(head>meta[charset=UTF-8]+title{${1:Document}})+body",
+      "doc4": "html>(head>meta[http-equiv=\"Content-Type\" content=\"text/html;charset=${charset}\"]+title{${1:Document}})",
+
+      "html:4t":  "!!!4t+doc4[lang=${lang}]",
+      "html:4s":  "!!!4s+doc4[lang=${lang}]",
+      "html:xt":  "!!!xt+doc4[xmlns=http://www.w3.org/1999/xhtml xml:lang=${lang}]",
+      "html:xs":  "!!!xs+doc4[xmlns=http://www.w3.org/1999/xhtml xml:lang=${lang}]",
+      "html:xxs": "!!!xxs+doc4[xmlns=http://www.w3.org/1999/xhtml xml:lang=${lang}]",
+      "html:5":   "!!!+doc[lang=${lang}]",
       
       "ol+": "ol>li",
       "ul+": "ul>li",
@@ -13328,7 +13618,11 @@ emmet.exec(function(require, _) {
       "proc": "<xsl:processing-instruction name=\"\">",
       "sort": "<xsl:sort select=\"\" order=\"\"/>",
 
-      "choose+": "xsl:choose>xsl:when+xsl:otherwise"
+      "choose+": "xsl:choose>xsl:when+xsl:otherwise",
+      "xsl": "!!!+xsl:stylesheet[version=1.0 xmlns:xsl=http://www.w3.org/1999/XSL/Transform]>{\n|}"
+    }, 
+    "snippets": {
+      "!!!": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     }
   },
   
@@ -13589,12 +13883,21 @@ emmet.define('cm-editor-proxy', function(require, _) {
     return require('resources').hasSyntax(syntax);
   }
   
+  function noop() {
+    if (CodeMirror.version >= '3.1') {
+      return CodeMirror.Pass;
+    }
+    
+    throw CodeMirror.Pass;
+  }
+  
   function runEmmetCommand(name, editor) {
     editorProxy.setupContext(editor);
     if (name == 'expand_abbreviation_with_tab' && (editorProxy.getSelection() || !isValidSyntax())) {
       // pass through Tab key handler if there's a selection
-      throw CodeMirror.Pass;
+      return noop();
     }
+    
     var success = true;
     
     try {
@@ -13611,7 +13914,7 @@ emmet.define('cm-editor-proxy', function(require, _) {
     } catch (e) {}
     
     if (!success) {
-      throw CodeMirror.Pass;
+      return noop();
     }
   }
   

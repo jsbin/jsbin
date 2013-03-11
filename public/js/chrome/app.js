@@ -30,7 +30,7 @@ delete CodeMirror.keyMap['default']['Cmd-L'];
 
 var link = document.createElement('link');
 link.rel = 'stylesheet';
-link.href = jsbin.root + '/css/font.css?' + jsbin.version;
+link.href = jsbin['static'] + '/css/font.css?' + jsbin.version;
 link.type = 'text/css';
 document.getElementsByTagName('head')[0].appendChild(link);
 

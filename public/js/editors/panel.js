@@ -25,7 +25,7 @@ if (!CodeMirror.commands) {
 }
 
 CodeMirror.commands.autocomplete = function(cm) {
-  CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+  return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
 };
 
 var foldFunc = {

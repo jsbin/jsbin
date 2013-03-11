@@ -1510,7 +1510,12 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .CodeMirror-lines {
   /*margin-top: 8px;*/
-  padding: .4em;
+  padding: .4em 0;
+}
+
+/* get some padding back in the editor after losing it above */
+.CodeMirror pre {
+  padding: 0 0.4em;
 }
 
 .CodeMirror-gutters {
@@ -1523,7 +1528,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 .activeline {
-  background: #e8f2ff !important;
+  background: #F2F7FF !important;
 }
 
 .CodeMirror-linenumbers {

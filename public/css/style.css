@@ -1038,6 +1038,13 @@ details li, .details li {
   display: block;
 }
 
+.modal > div {
+  width: 600px;
+  margin: 5% auto;
+  box-shadow: 0 5px 80px #3D3D3D;
+  max-width: 600px;
+}
+
 .modal {
   display: none;
   position: absolute;
@@ -1053,13 +1060,13 @@ details li, .details li {
   /*background: rgba(0,0,0,0.85);*/
   /*background: -webkit-radial-gradient(rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%, rgba(0, 0, 0, 0.7));*/
 
-  background-color: #000;
-  background: rgba(0,0,0,0.85);
-  background: -moz-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+  /*background-color: #000;*/
+  background: rgba(0,0,0,0.15);
+  /*background: -moz-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
   background: -webkit-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 35%,rgba(0, 0, 0, 0.7) 100%);
   background: -o-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
   background: -ms-radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
-  background: radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);
+  background: radial-gradient(50% 50%, ellipse cover, rgba(127, 127, 127, 0.5), rgba(127, 127, 127, 0.5) 33%,rgba(0, 0, 0, 0.7) 100%);*/
 
   color: #fff;
   font-size: 16px;
@@ -1073,20 +1080,14 @@ details li, .details li {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  background: #000;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 5px 80px #505050;
-  -moz-box-shadow: 0 5px 80px #505050;
-  -o-box-shadow: 0 5px 80px #505050;
-  -ms-box-shadow: 0 5px 80px #505050;
-  box-shadow: 0 5px 80px #505050;
+  background: #fff;
+  color: #333;
 }
 
 .modal h2 {
   margin-top: 5%;
   margin-bottom: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  padding-bottom: 0;
 }
 
 .modal table {
@@ -1094,6 +1095,11 @@ details li, .details li {
   border-top-left-radius: 0;
   margin-top: 0;
   width: 600px;
+  border-spacing: 0;
+}
+
+.modal table td {
+  border: 2px solid white;
 }
 
 .modal thead th {
@@ -1107,7 +1113,11 @@ details li, .details li {
 .modal tbody td:first-child {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   padding-right: 20px;
-  color: yellow;
+  color: blue;
+}
+
+.modal tbody td small {
+  color: #333;
 }
 
 .modal .shortcut {
@@ -1115,8 +1125,16 @@ details li, .details li {
 }
 
 .modal a {
-  color: yellow;
+  color: #616161;
   text-shadow: none;
+}
+
+.modal table tbody tr:hover {
+  background: #f3f3f3;
+}
+
+.modal table tbody tr:hover td {
+  border: 2px solid #f3f3f3;
 }
 
 #login, #register {

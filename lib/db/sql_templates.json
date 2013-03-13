@@ -10,7 +10,7 @@
   "touchLogin": "UPDATE `ownership` SET `last_login`=? WHERE `name`=?",
   "updateUserKey": "UPDATE ownership SET `key`=?, `updated`=? WHERE `name`=?",
   "upgradeUserKey": "UPDATE ownership SET `key`=?, `created`=?, `updated`=? WHERE `name`=?",
-  "getBinsByUser": "SELECT SUBSTR(s.html, 1, 400) as html, SUBSTR(s.javascript, 1, 200) as javascript, SUBSTR(s.css, 1, 100) as css, o.archive, o.last_updated, o.url, o.revision FROM `owners` as o, `sandbox` s WHERE o.url=s.url and o.revision=s.revision and o.name=?",
+  "getBinsByUser": "SELECT SUBSTR(s.html, 1, 200) as html, SUBSTR(s.javascript, 1, 100) as javascript, SUBSTR(s.css, 1, 100) as css, o.archive, o.last_updated, o.url, o.revision FROM `owners` as o, `sandbox` s WHERE o.url=s.url and o.revision=s.revision and o.name=?",
   "OLDDgetBinsByUser": "SELECT *, `last_updated` as `created` FROM `owners` WHERE `name`=?",
   "getAllOwners": "SELECT * FROM `owners`",
   "getOwnersBlock": "SELECT * FROM `owners` LIMIT ?, ?",

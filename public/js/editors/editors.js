@@ -275,7 +275,31 @@ panels.show = function (panelId) {
     this.panels[panelId].editor.focus();
   }
   this.panels[panelId].focus();
-}
+};
+
+panels.hide = function (panelId) {
+  var $history = $('#history'); // TODO shouldn't have to keep hitting this
+  var panels = this.panels;
+  if (panels[panelId].visible) {
+    panels[panelId].hide();
+  }
+  
+  var visible = jsbin.panels.getVisible();
+  if (visible.length) {
+    jsbin.panels.focused = visible[0];
+    if (jsbin.panels.focused.editor) {
+      jsbin.panels.focused.editor.focus();
+    } else {
+      jsbin.panels.focused.$el.focus();
+    }
+    jsbin.panels.focused.focus();
+  } else if ($history.length && !$body.hasClass('panelsVisible')) {
+    $body.toggleClass('dave', $history.is(':visible'));
+    $history.toggle(100);
+  } else if ($history.length === 0) {
+    // TODO load up the history
+  }
+};
 
 panels.hideAll = function () {
   var visible = panels.getVisible(),
@@ -283,7 +307,7 @@ panels.hideAll = function () {
   while (i--) {
     visible[i].hide();
   }
-}
+};
 
 // dirty, but simple
 Panel.prototype.distribute = function () {

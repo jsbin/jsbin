@@ -39,8 +39,7 @@ if (/macintosh|mac os x/.test(ua)) {
 
 if (!customKeys.disabled) $document.keydown(function (event) {
   var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
-      closekey = customKeys.closePanel ? customKeys.closePanel : 192,
-      $history = $('#history');
+      closekey = customKeys.closePanel ? customKeys.closePanel : 192;
 
   if (event.ctrlKey) event.metaKey = true;
 
@@ -61,20 +60,7 @@ if (!customKeys.disabled) $document.keydown(function (event) {
       event.preventDefault();
     }
   } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {
-    if (jsbin.panels.focused.visible) jsbin.panels.focused.hide();
-    var visible = jsbin.panels.getVisible();
-    if (visible.length) {
-      jsbin.panels.focused = visible[0];
-      if (jsbin.panels.focused.editor) {
-        jsbin.panels.focused.editor.focus();
-      } else {
-        jsbin.panels.focused.$el.focus();
-      }
-      jsbin.panels.focused.focus();
-    } else if ($history.length && !$body.hasClass('panelsVisible')) {
-      $body.toggleClass('dave', $history.is(':visible'));
-      $history.toggle(100);
-    }
+    jsbin.panels.hide(jsbin.panels.focused.id);
   } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
     jsbin.settings.hideheader = !jsbin.settings.hideheader;
     $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
@@ -132,7 +118,13 @@ function keycontrol(event) {
 
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
-      jsbin.panels.show(panelShortcuts[event.which]);
+      if (jsbin.panels.focused.id === panelShortcuts[event.which]) {
+        // hide 
+        jsbin.panels.hide(panelShortcuts[event.which]);
+      } else {
+        // show
+        jsbin.panels.show(panelShortcuts[event.which]);
+      }
       event.stop();
     }
 

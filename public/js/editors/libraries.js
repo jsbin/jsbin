@@ -33,7 +33,7 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
         ],
@@ -51,16 +51,16 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
         ],
-        "label": "jQuery UI 1.10.1",
+        "label": "jQuery UI 1.10.2",
         "group": "jQuery UI"
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
         ],
@@ -69,7 +69,7 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/base/jquery-ui.css",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css",
             "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"
         ],

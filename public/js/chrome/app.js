@@ -24,8 +24,13 @@ if (!jsbin.mobile) document.body.onscroll = window.onscroll = function () {
 
 window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 
-// ignore this browser control - should set focus to browser
+// These are keys that CodeMirror (and Emmet) should never take over
+// ref: https://gist.github.com/rodneyrehm/5213304
 delete CodeMirror.keyMap['default']['Cmd-L'];
+delete CodeMirror.keyMap['default']['Cmd-T'];
+delete CodeMirror.keyMap['default']['Cmd-W'];
+delete CodeMirror.keyMap['default']['Cmd-J'];
+delete CodeMirror.keyMap['default']['Cmd-R'];
 
 
 var link = document.createElement('link');

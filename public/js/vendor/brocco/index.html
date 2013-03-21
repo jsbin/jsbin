@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- This HTML page renders the documentation for [Brocco](?brocco.js) and
+     also serves as an example of how to create dynamic documentation
+     using it. -->
+<link rel="stylesheet" href="vendor/docco.css">
+<title></title>
+<div id="container">
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+        <!-- These are links for the pages that will
+             be documented. <code>[jump-to.js](?jump-to.js)</code>
+             automatically turns them into real links on page load. -->
+        <a class="source">brocco.js</a>
+        <a class="source">jump-to.js</a>
+        <a class="source">html-and-css.js</a>
+        <a class="source">index.html</a>
+      </div>
+  </div>
+</div>
+<script src="vendor/showdown.js"></script>
+<script src="vendor/codemirror.js"></script>
+<script src="vendor/codemirror-javascript-mode.js"></script>
+<script src="vendor/codemirror-xml-mode.js"></script>
+<script src="vendor/codemirror-css-mode.js"></script>
+<script src="vendor/codemirror-htmlmixed-mode.js"></script>
+<script src="brocco.js"></script>
+<script src="html-and-css.js"></script>
+<script src="jump-to.js"></script>

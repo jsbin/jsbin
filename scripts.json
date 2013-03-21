@@ -17,6 +17,8 @@
 "/js/vendor/codemirror3/addon/selection/active-line.js",
 "/js/vendor/json2.js",
 "/js/vendor/prettyprint.js",
+"/js/vendor/brocco/brocco.js",
+"/js/vendor/brocco/html-and-css.js",
 "/js/chrome/storage.js",
 "/js/jsbin.js",
 "/js/editors/mobileCodeMirror.js",

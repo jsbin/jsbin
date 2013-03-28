@@ -108,7 +108,11 @@ function getPreparedCode(nojs) {
   // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
   // gets around the problem.
   if (!hasHTML && hasJS) {
-    source = "<pre>\n" + js + "</pre>";
+    source = "<pre>\n" + js.replace(/[<>&]/g, function (m) {
+          if (m == '<') return '&lt;';
+          if (m == '>') return '&gt;';
+          if (m == '"') return '&quot;';
+        }) + "</pre>";
   } else if (re.code.test(source)) {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];

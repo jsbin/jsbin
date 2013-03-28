@@ -45,7 +45,7 @@ var Processor = function (url, init, handler) {
 var processors = jsbin.processors = {
   coffeescript: function (ready) {
     return new Processor(jsbin.static + '/js/vendor/coffee-script.js', function () {
-      $.getScript(jsbin.static + '/js/vendor/codemirror2/coffeescript.js', ready);
+      $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/coffeescript/coffeescript.js', ready);
     }, function (source) { 
       var renderedCode = '';
       try {
@@ -103,7 +103,7 @@ var processors = jsbin.processors = {
   },
   markdown: function (ready) {
     return new Processor(jsbin.static + '/js/vendor/markdown.js', function () {
-      $.getScript(jsbin.static + '/js/vendor/codemirror2/markdown.js', ready);
+      $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/markdown/markdown.js', ready);
     }, function (source) {
       return markdown.toHTML(source);
     });
@@ -112,7 +112,7 @@ var processors = jsbin.processors = {
     return new Processor(jsbin.static + '/js/vendor/processing.min.js', function () {
       $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
       // init and expose jade
-      $.getScript(jsbin.static + '/js/vendor/codemirror2/clike.js', ready);
+      $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/clike/clike.js', ready);
     }, function (source) {
       source = [
         '(function(){',
@@ -142,7 +142,7 @@ var processors = jsbin.processors = {
   },
   less: function (ready) {
     return new Processor(jsbin.static + '/js/vendor/less-1.3.0.min.js', function () {
-      $.getScript(jsbin.static + '/js/vendor/codemirror2/less.js', ready);
+      $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/less/less.js', ready);
     }, function (source) {
       var css = '';
 

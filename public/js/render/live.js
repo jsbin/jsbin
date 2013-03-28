@@ -167,6 +167,18 @@ function renderLivePreview(withalerts) {
           liveScrollTop = this.scrollY;
         };
 
+        var size = $live.find('.size'),
+            timer = null;
+
+        var hide = throttle(function () {
+          size.fadeOut(200);
+        }, 2000);
+        $(win).on('resize', function () {
+          // clearTimeout(timer);
+          size.show().html(this.innerWidth + 'px');
+          hide();
+        });
+
         win.resizeJSBin = throttle(function () {
           var height = ($body.outerHeight(true) - $frame.height()) + doc.documentElement.offsetHeight;
           window.parent.postMessage({ height: height }, '*');

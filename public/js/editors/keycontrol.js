@@ -75,6 +75,8 @@ if (!customKeys.disabled) $document.keydown(function (event) {
   }
 });
 
+var ignoreNextKey = false;
+
 function keycontrol(event) {
   event = normalise(event);
 
@@ -90,6 +92,16 @@ function keycontrol(event) {
       hasRun = false;
 
   var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey;
+
+  if (event.which === 27 && !ignoreNextKey) {
+    ignoreNextKey = true;
+    return;
+  } else if (ignoreNextKey && panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
+    ignoreNextKey = false;
+    return;
+  } else if (!event.metaKey) {
+    ignoreNextKey = false;
+  }
 
   // these should fire when the key goes down
   if (event.type == 'keydown') {

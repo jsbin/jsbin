@@ -292,13 +292,17 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
       </thead>
       <tbody>
         <tr>
-          <td>ctrl + [panel num]</td>
-          <td>Show nth panel</td>
+          <td>ctrl + [num]</td>
+          <td>Toggle nth panel</td>
         </tr>
         <tr>
+          <td>esc, ctrl + [num]</td>
+          <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
+        </tr>
+        <!--<tr>
           <td>ctrl + §<br />(or `)</td>
           <td>Hide focused panel</td>
-        </tr>
+        </tr>-->
         <tr>
           <td>ctrl + enter</td>
           <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
@@ -309,31 +313,31 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         </tr>
         <tr>
           <td>ctrl + /</td>
-          <td>Toggle comment on single line</td>
+          <td>Toggle comment on selected lines</td>
         </tr>
         <!-- <tr>
           <td>ctrl + alt + .</td>
           <td>Close current HTML element</td>
         </tr> -->
         <tr>
+          <td>cmd + [</td>
+          <td>Indents selected lines</td>
+        </tr>
+        <tr>
+          <td>cmd + ]</td>
+          <td>Unindents selected lines</td>
+        </tr>
+        <tr>
           <td>tab</td>
-          <td>Code complete (JavaScript only) and Emmet expand abbreviation</td>
+          <td>Code complete (JavaScript only) &amp; Emmet expand</td>
         </tr>
         <tr>
           <td>ctrl + s</td>
-          <td>Save current Bin</td>
+          <td>Freeze current Bin</td>
         </tr>
         <tr>
           <td>ctrl + shift + s</td>
           <td>Clone current Bin</td>
-        </tr>
-        <tr>
-          <td>cmd + [ (or tab)</td>
-          <td>Indents selected lines</td>
-        </tr>
-        <tr>
-          <td>cmd + ] (or shift + tab)</td>
-          <td>Unindents selected lines</td>
         </tr>
 
         <tr><td colspan="2"><small><br>JS Bin also supports <a href="http://docs.emmet.io/" target="_blank">Emmet/Zen Coding</a> shortcuts</small></td></tr>

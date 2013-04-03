@@ -231,7 +231,7 @@ $document.one('jsbinReady', function () {
 
 if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
   var el = $('#keyboardHelp')[0];
-  el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd');
+  el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd').replace(/Ctrl/g, 'ctrl');
 })();
 
 if (false) { //window.top !== window && location.pathname.indexOf('/embed') === -1) {

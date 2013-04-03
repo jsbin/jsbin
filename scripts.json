@@ -15,6 +15,8 @@
 "/js/vendor/codemirror3/addon/edit/matchbrackets.js",
 "/js/vendor/codemirror3/addon/fold/foldcode.js",
 "/js/vendor/codemirror3/addon/selection/active-line.js",
+"/js/vendor/codemirror3/addon/search/searchcursor.js",
+"/js/vendor/codemirror3/addon/search/match-highlighter.js",
 "/js/vendor/json2.js",
 "/js/vendor/prettyprint.js",
 "/js/chrome/storage.js",

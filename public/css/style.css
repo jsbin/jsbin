@@ -3346,3 +3346,7 @@ THE SOFTWARE.
 .focus .CodeMirror-activeline-background {
   background: #e8f2ff !important;
 }
+
+.CodeMirror-focused .cm-matchhighlight {
+  outline: 1px solid #666;
+}

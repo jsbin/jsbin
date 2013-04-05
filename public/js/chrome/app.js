@@ -1,5 +1,5 @@
 // if a gist has been requested, lazy load the gist library and plug it in
-if (/gist\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {
+if (/gist(\/.*)?\/\d+/.test(window.location.pathname) && (!sessionStorage.getItem('javascript') && !sessionStorage.getItem('html'))) {
   window.editors = editors; // needs to be global when the callback triggers to set the content
   loadGist = function () {
     $.getScript('/js/chrome/gist.js', function () {

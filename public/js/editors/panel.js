@@ -12,7 +12,7 @@ var editorModes = {
   processing: 'text/x-csrc'
 };
 
-var badChars = new RegExp('\u200B', 'g');
+var badChars = new RegExp('[\u200B\u0080-\u00a0]', 'g');
 
 if (jsbin.settings.editor.tabMode === 'default') {
   CodeMirror.keyMap.basic.Tab = undefined;
@@ -369,7 +369,7 @@ Panel.prototype = {
       if (content === undefined) content = '';
       this.controlButton.toggleClass('hasContent', !!content.trim().length);
       this.codeSet = true;
-      this.editor.setCode(content);
+      this.editor.setCode(content.replace(badChars, ''));
     }
   },
   codeSet: false,

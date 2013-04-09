@@ -262,8 +262,8 @@ var libraries = [
     },
     {
         "url": [
-            "http://documentcloud.github.com/underscore/underscore-min.js",
-            "http://documentcloud.github.com/backbone/backbone-min.js"
+            "http://documentcloud.github.io/underscore/underscore-min.js",
+            "http://documentcloud.github.io/backbone/backbone-min.js"
         ],
         "label": "Backbone latest"
     },
@@ -272,7 +272,7 @@ var libraries = [
         "label": "Bonsai 0.4.latest"
     },
     {
-        "url": "http://jashkenas.github.com/coffee-script/extras/coffee-script.js",
+        "url": "http://jashkenas.github.io/coffee-script/extras/coffee-script.js",
         "label": "CoffeeScript"
     },
     {
@@ -340,11 +340,11 @@ var libraries = [
         "label": "Traceur"
     },
     {
-        "url": "http://remy.github.com/twitterlib/twitterlib.min.js",
+        "url": "http://remy.github.io/twitterlib/twitterlib.min.js",
         "label": "TwitterLib"
     },
     {
-        "url": "http://documentcloud.github.com/underscore/underscore-min.js",
+        "url": "http://documentcloud.github.io/underscore/underscore-min.js",
         "label": "underscore latest"
     },
     {

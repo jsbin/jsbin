@@ -11,6 +11,8 @@ JS Bin is an open source collaborative web development debugging tool.
 * Processors, including: coffee-script, LESS, Markdown and Jade.
 * Debug remote Ajax calls
 
+Find out more about JS Bin's features via the [YouTube JS Bin playlist](http://jsbin.com/videos).
+
 ## Who built this?
 
 JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open source and available [http://github.com/remy/jsbin](http://github.com/remy/jsbin). You can also follow [@rem](http://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.

@@ -9,3 +9,4 @@
 - Smarter share box: Danny has visuals for this too. Includes ability to select which panels you want to share, and picking a specific point in time.
 - Co-op editing? Maybe, might be a bit pie-in-the-sky.
 - Searching bins. Filtering in your ‘Open’ list, searching across all bins maybe?
+- Better mobile experience

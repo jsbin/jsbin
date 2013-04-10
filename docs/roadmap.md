@@ -10,3 +10,7 @@
 - Co-op editing? Maybe, might be a bit pie-in-the-sky.
 - Searching bins. Filtering in your ‘Open’ list, searching across all bins maybe?
 - Better mobile experience
+- Showing process
+  - Comments
+  - Timestamped comments
+  - Timestamped audio comments

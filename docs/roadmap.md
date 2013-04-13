@@ -10,7 +10,8 @@
 - Co-op editing? Maybe, might be a bit pie-in-the-sky.
 - Searching bins. Filtering in your ‘Open’ list, searching across all bins maybe?
 - Better mobile experience
-- Showing process
+- Complete splitter work (currently able to drag splitter to change orientatoin, but it doesn't save)
+- Showing process via timeline scrubbing
   - Comments
   - Timestamped comments
   - Timestamped audio comments

@@ -15,3 +15,4 @@
   - Comments
   - Timestamped comments
   - Timestamped audio comments
+- Notification system for local installs to know when an update is available

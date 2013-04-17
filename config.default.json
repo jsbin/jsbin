@@ -52,6 +52,7 @@
     "javascript": []
   },
   "reserved": [
+    "donate",
     "list",
     "show",
     "gist",
@@ -71,6 +72,8 @@
     "blog",
     "business",
     "contacts",
+    "collection",
+    "collections",
     "devices",
     "download",
     "downloads",

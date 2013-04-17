@@ -295,6 +295,16 @@ var libraries = [
         "label": "ext-core 3.1.0"
     },
     {
+        "url": [
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.min.css",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.min.css",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/custom.modernizr.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/jquery.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js"
+        ],
+        "label": "Foundation 4.1.2"
+    },
+    {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js",
         "label": "Knockout 2.2"
     },

@@ -262,6 +262,30 @@ var libraries = [
     },
     {
         "url": [
+            "http://nightly.enyojs.com/latest/enyo-nightly/enyo.css",
+            "http://nightly.enyojs.com/latest/enyo-nightly/enyo.js",
+            "http://nightly.enyojs.com/latest/lib/layout/package.js",
+            "http://nightly.enyojs.com/latest/lib/onyx/package.js",
+            "http://nightly.enyojs.com/latest/lib/g11n/package.js",
+            "http://nightly.enyojs.com/latest/lib/canvas/package.js"
+        ],
+        "label": "Enyo latest",
+        "group": "Enyo"
+    },
+    {
+        "url": [
+            "http://enyojs.com/enyo-2.2.0/enyo.css",
+            "http://enyojs.com/enyo-2.2.0/enyo.js",
+            "http://enyojs.com/enyo-2.2.0/lib/layout/package.js",
+            "http://enyojs.com/enyo-2.2.0/lib/onyx/package.js",
+            "http://enyojs.com/enyo-2.2.0/lib/g11n/package.js",
+            "http://enyojs.com/enyo-2.2.0/lib/canvas/package.js"
+        ],
+        "label": "Enyo 2.2.0",
+        "group": "Enyo"
+    },
+    {
+        "url": [
             "http://documentcloud.github.io/underscore/underscore-min.js",
             "http://documentcloud.github.io/backbone/backbone-min.js"
         ],

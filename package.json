@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.2.27",
+  "version": "3.2.28",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -33,7 +33,7 @@
     "soak": "0.3.0",
     "async": "~0.1.22",
     "lynx": "0.0.11",
-    "grunt": "~0.4.0",
+    "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-uglify": "~0.1.1"

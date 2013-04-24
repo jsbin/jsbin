@@ -54,17 +54,14 @@ var store = (function () {
 // because: I want to hurt you firefox, that's why.
 store.backup = {};
 
-if (hasStore('localStorage')) {
-  store.backup.localStorage = window.localStorage;
-  store.backup.sessionStorage = window.sessionStorage;
-}
+// if (hasStore('localStorage')) {
+//   store.backup.localStorage = window.localStorage;
+//   store.backup.sessionStorage = window.sessionStorage;
+// }
 
-var sessionStorage = {}, localStorage = {};
+// var sessionStorage = {}, localStorage = {};
 
 if (store.polyfill === true) {
-  sessionStorage = store.sessionStorage;
-  localStorage = store.localStorage;
-} else {
-  sessionStorage = store.backup.sessionStorage;
-  localStorage = store.backup.localStorage;
+  window.sessionStorage = store.sessionStorage;
+  window.localStorage = store.localStorage;
 }

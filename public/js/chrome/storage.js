@@ -1,18 +1,14 @@
-// I would like to lazy load json2, but I'm worried we're trying to access
-// JSON very early in the code
-//= require <json2>
+function hasStore(type) {
+  try {
+    return type in window && window[type] !== null;
+  } catch(e) {
+    return false;
+  }
+}
 
 var store = (function () {
   "use strict";
   var polyfill = false;
-
-  function hasStore(type) {
-    try {
-      return type in window && window[type] !== null;
-    } catch(e) {
-      return false;
-    }
-  }
 
   // Firefox with Cookies disabled triggers a security error when we probe window.sessionStorage
   // currently we're just disabling all the session features if that's the case.
@@ -55,13 +51,20 @@ var store = (function () {
 
 })();
 
-var localStorage = {}, 
-    sessionStorage = {};
+// because: I want to hurt you firefox, that's why.
+store.backup = {};
+
+if (hasStore('localStorage')) {
+  store.backup.localStorage = window.localStorage;
+  store.backup.sessionStorage = window.sessionStorage;
+}
+
+var sessionStorage = {}, localStorage = {};
 
 if (store.polyfill === true) {
   sessionStorage = store.sessionStorage;
   localStorage = store.localStorage;
 } else {
-  delete localStorage;
-  delete sessionStorage;
+  sessionStorage = store.backup.sessionStorage;
+  localStorage = store.backup.localStorage;
 }

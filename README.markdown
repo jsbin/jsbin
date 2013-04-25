@@ -47,7 +47,7 @@ Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavo
 
 However, everything else [released in v3.0.0](https://github.com/remy/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. PHP mileage may vary!
 
-For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](/remy/jsbin/blob/master/docs/running-your-own-jsbin.md).
+For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](/docs/running-your-own-jsbin.md).
 
 If you install [Node.js](http://nodejs.org) installation is easy:
 

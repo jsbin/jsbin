@@ -303,9 +303,9 @@ var libraries = [
         "url": [
             "http://code.jquery.com/jquery.js",
             "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.js"
+            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.3/ember.js"
         ],
-        "label": "Ember.js 1.0.0-rc.1"
+        "label": "Ember.js 1.0.0-rc.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",

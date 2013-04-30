@@ -32,13 +32,14 @@
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
     "async": "~0.1.22",
-    "lynx": "0.0.11",
+    "lynx": "0.0.11"
+  },
+  "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-uglify": "~0.1.1"
   },
-  "devDependencies": {},
   "optionalDependencies": {},
   "licenses": [
     {

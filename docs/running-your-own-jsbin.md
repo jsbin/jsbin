@@ -41,12 +41,15 @@ This is whether you want to run in development mode (recommended) or production.
 This is an object controlling how URLs are generated in JS Bin. If you plan to run JS Bin from a subdirectory, you must change these settings.
 
 * url.host: The host you will access JS Bin on, eg. `jsbin.dev` is what we use offline. If you want to include a port number here you should do, eg. `jsbin.dev:8000` will request JS Bin over port 8000.
-* url.prefix: `/` or your subdirectory that JS Bin should be accessed from. For instance, if you run JS Bin under `http://remysharp.com/jsbin` the `url.prefix` value must be `/jsbin/`. 
+* url.prefix: `/` or your subdirectory that JS Bin should be accessed from. For instance, if you run JS Bin under `http://remysharp.com/jsbin` the `url.prefix` value must be `/jsbin/`.
 * url.ssl: `false` or `true` whether you want to run JS Bin over SSL.
 * url.static: `false` or a url, such as `http://static.jsbin.dev:8000/jsbin/`. This will control where static assets are served from. If the value is `false`, they will be served from the same path as dyanmic content.
 
+### Custom config file location
 
+To start JS Bin with a config file from another location, set the `JSBIN_CONFIG` environment variable as a path to the custom file. The path should be absolute, or relative to your current working directory:
 
+    $ JSBIN_CONFIG=~/jsbin.json jsbin
 
 ## Running from a subdirectory
 

@@ -1885,7 +1885,7 @@ a.active:hover {
 .dropdowncontent {
   margin: 3px 5px;
   background: white;
-  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);;
+  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);
   border: 1px solid #CCC;
   height: auto;
   border-radius: 5px;
@@ -2891,7 +2891,7 @@ html * {
 
 .cm-s-eclipse .CodeMirror-matchingbracket {
   border:1px solid grey;
-  color:black !important;;
+  color:black !important;
 }
 .cm-s-elegant span.cm-number, .cm-s-elegant span.cm-string, .cm-s-elegant span.cm-atom {color: #762;}
 .cm-s-elegant span.cm-comment {color: #262; font-style: italic; line-height: 1em;}

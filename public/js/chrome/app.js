@@ -40,6 +40,5 @@ link.type = 'text/css';
 document.getElementsByTagName('head')[0].appendChild(link);
 
 if (jsbin.embed) {
-  $(window).on('focus', function (e) { return false; });
   analytics.embed();
 }

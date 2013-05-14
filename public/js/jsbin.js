@@ -252,3 +252,9 @@ if (false) { //window.top !== window && location.pathname.indexOf('/embed') === 
     return true;
   }).after('<a href="' + jsbin.getURL() + '/save" target="_blank" class="button save">Save</a>');
 }
+
+if (jsbin.embed) {
+  $(window).on('focus', function () {
+    return false;
+  });
+}

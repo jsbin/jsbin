@@ -62,6 +62,27 @@ if (window.jsbinified !== undefined) return;
 
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
 
+function getPositionTop (element) {
+  var offset = 0;
+  while(element) {
+    offset += element["offsetTop"];
+    element = element.offsetParent;
+  }
+  return offset;
+}
+
+/* Is a given element is visible or not? */
+function isElementVisible(elem, tolerance) {
+  tolerance = tolerance || 0;
+  // Get the top and bottom position of the given element.
+  var posTop = getPositionTop(elem) - tolerance;
+  var posBottom = posTop + elem.offsetHeight + tolerance;
+  // Get the top and bottom position of the *visible* part of the window.
+  var visibleTop = document.body.scrollTop;
+  var visibleBottom = visibleTop + document.documentElement.clientHeight;
+  return ((posBottom >= visibleTop) && (posTop <= visibleBottom));
+}
+
 // 1. find all links with class=jsbin
 function getLinks() {
   var links = [], alllinks, i = 0, length;
@@ -190,40 +211,57 @@ function embed(link) {
   }
 }
 
+function maybeLoad(elem) {
+  if (elem.lazyLoaded) return;
+  if (isElementVisible(elem, 100)) {
+    elem.lazyLoaded = true;
+    var className = ' ' + elem.className + ' ';
+    if (className.indexOf(' jsbin-scoop ') !== -1) {
+      scoop(elem);
+    } else if (className.indexOf(' jsbin-embed ') !== -1) {
+      embed(elem);
+    }
+  }
+}
+
+function lazyEmbed(links) {
+  return function (e) {
+    var i = 0, length = links.length;
+    for (; i < length; i++) {
+      maybeLoad(links[i]);
+    }
+  };
+}
+
 var useDOMReady = true,
     scripts = document.getElementsByTagName('script'),
     last = scripts[scripts.length - 1],
     link;
 
 // this supports early embeding - probably only applies to Google's slides.js
-if (last.nodeName === 'SCRIPT') { // then it's us
-  link = last.previousSibling;
-  if (link.nodeName === 'A' && (' ' + link.className + ' ').indexOf(' jsbin-embed ') !== -1) {
-    // we have a winner
-    useDOMReady = false;
-    link.className = link.className.replace(/jsbin\-embed/, '');
-    embed(link);
-  }
-}
+// if (last.nodeName === 'SCRIPT') { // then it's us
+//   link = last.previousSibling;
+//   if (link.nodeName === 'A' && (' ' + link.className + ' ').indexOf(' jsbin-embed ') !== -1) {
+//     // we have a winner
+//     useDOMReady = false;
+//     link.className = link.className.replace(/jsbin\-embed/, '');
+//     embed(link);
+//   }
+// }
 
 if (useDOMReady) {
   window.jsbinified = true;
 
   domready(function () {
     // 2. process link based on subclass - jsbin-scoop to start with
-    var links = getLinks(),
-        i = 0,
-        length = links.length,
-        className = '';
-
-    for (; i < length; i++) {
-      className = ' ' + links[i].className + ' ';
-      if (className.indexOf(' jsbin-scoop ') !== -1) {
-        scoop(links[i]);
-      } else if (className.indexOf(' jsbin-embed ') !== -1) {
-        embed(links[i]);
-      }
+    var links = getLinks();
+    var onscroll = lazyEmbed(links);
+    if (window.addEventListener) {
+      window.addEventListener('scroll', onscroll, false);
+    } else {
+      window.attachEvent('onscroll', onscroll);
     }
+    onscroll();
   });
 }
 }(this, document));

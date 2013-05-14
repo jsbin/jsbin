@@ -6,7 +6,7 @@ if (/gist(\/.*)?\/\d+/.test(window.location.pathname) && (!sessionStorage.getIte
       window.gist = new Gist(window.location.pathname.replace(/.*?(\d+).*/, "$1"));
     });
   };
-  
+
   if (editors.ready) {
     loadGist();
   } else {
@@ -40,5 +40,6 @@ link.type = 'text/css';
 document.getElementsByTagName('head')[0].appendChild(link);
 
 if (jsbin.embed) {
+  $(window).on('focus', function (e) { return false; });
   analytics.embed();
 }

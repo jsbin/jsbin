@@ -146,8 +146,8 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://yui.yahooapis.com/3.9.1/build/yui/yui-min.js",
-        "label": "YUI 3.9.1",
+        "url": "http://yui.yahooapis.com/3.10.0/build/yui/yui.js",
+        "label": "YUI 3.10.0",
         "group": "YUI"
     },
     {
@@ -303,9 +303,9 @@ var libraries = [
         "url": [
             "http://code.jquery.com/jquery.js",
             "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.1/ember.js"
+            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.3/ember.js"
         ],
-        "label": "Ember.js 1.0.0-rc.1"
+        "label": "Ember.js 1.0.0-rc.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",
@@ -327,6 +327,10 @@ var libraries = [
             "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js"
         ],
         "label": "Foundation 4.1.2"
+    },
+    {
+        "url": "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
+        "label": "Handlebars.js 1.0.0-rc.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js",

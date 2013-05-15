@@ -1043,7 +1043,7 @@ function upgradeConsolePanel(console) {
       // setTimeout because the renderLivePreview creates the iframe after a timeout
       setTimeout(function () {
         // jsconsole.setSandbox($live.find('iframe')[0]);
-        if (editors.console.ready) jsconsole.focus();
+        if (editors.console.ready && !jsbin.embed) jsconsole.focus();
       }, 0);
     };
     console.settings.hide = function () {

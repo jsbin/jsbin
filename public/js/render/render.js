@@ -133,7 +133,7 @@ function getPreparedCode(nojs) {
   }
 
   // redirect console logged to our custom log while debugging
-  if (re.console.test(source)) {
+  if (re.console.test(source) && !jsbin.embed) {
     var replaceWith = 'window.top.' + (jsbin.panels.panels.console.visible ? '_console.' : 'console.');
     // yes, this code looks stupid, but in fact what it does is look for
     // 'console.' and then checks the position of the code. If it's inside

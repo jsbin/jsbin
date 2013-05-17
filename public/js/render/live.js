@@ -35,12 +35,27 @@ var iframedelay = (function () {
   return iframedelay;
 }());
 
+/**
+ * Grab the doctype from a string.
+ *
+ * Returns an object with doctype and tail keys.
+ */
+function getDoctype(str) {
+  // [\s\S] matches multiline doctypes
+  var doctype = (str.match(/<!doctype [\s\S]*?>/i) || [''])[0],
+      tail = str.substr(doctype.length);
+  return {
+    doctype: doctype,
+    tail: tail
+  };
+}
+
 function sendReload() {
   if (saveChecksum) {
     $.ajax({
       url: jsbin.getURL() + '/reload',
-      data: { 
-        code: jsbin.state.code, 
+      data: {
+        code: jsbin.state.code,
         revision: jsbin.state.revision,
         checksum: saveChecksum
       },
@@ -127,6 +142,14 @@ function renderLivePreview(withalerts) {
           if (m == '"') return '&quot;';
         }) + '</pre>');
       } else {
+
+        // Make sure the doctype is the first thing in the source
+        var doctypeObj = getDoctype(source),
+            doctype = doctypeObj.doctype;
+        console.log('sup2');
+        source = doctypeObj.tail;
+        combinedSource.push(doctype);
+
         // nullify the blocking functions
         // IE requires that this is done in the script, rather than off the window object outside of the doc.write
         if (withalerts !== true) {
@@ -198,7 +221,7 @@ function renderLivePreview(withalerts) {
       if (jsbin.embed) { // allow the iframe to be resized
         (function () {
           var dragging = false,
-              height = false, 
+              height = false,
               $window = $(win);
           $(doc.documentElement).mousedown(function (event) {
             if (event.pageY > $window.height() - 40) {

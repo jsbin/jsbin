@@ -27,7 +27,7 @@ var getBin = function (ownerBin, cb) {
 
 var populateBin = function (ownerBin, done) {
   console.log("%d", ownerBin.id);
-  
+
   getBin(ownerBin, function (err, sandboxBin) {
     if (err) return done(err);
     if (!sandboxBin) return done();

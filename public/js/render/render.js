@@ -26,7 +26,7 @@ var iframedelay = (function () {
   } catch (e) {
     iframedelay.active = true;
   }
-  
+
   return iframedelay;
 }());
 
@@ -133,7 +133,7 @@ function getPreparedCode(nojs) {
   }
 
   // redirect console logged to our custom log while debugging
-  if (re.console.test(source)) {
+  if (re.console.test(source) && !jsbin.embed) {
     var replaceWith = 'window.top.' + (jsbin.panels.panels.console.visible ? '_console.' : 'console.');
     // yes, this code looks stupid, but in fact what it does is look for
     // 'console.' and then checks the position of the code. If it's inside
@@ -197,7 +197,7 @@ function getPreparedCode(nojs) {
 }
 
 // function renderPreview() {
-//   var doc = $('#preview iframe')[0], 
+//   var doc = $('#preview iframe')[0],
 //       win = doc.contentDocument || doc.contentWindow.document,
 //       source = getPreparedCode();
 

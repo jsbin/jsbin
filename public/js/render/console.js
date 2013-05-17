@@ -177,7 +177,9 @@ function post(cmd, blind, response /* passed in when echoing from remote console
         try {
           // document.getElementsByTagName('a')[0].focus();
           if (jsbin.panels.focused.id === 'console') {
-            cursor.focus();
+            if (!jsbin.embed) {
+              cursor.focus();
+            }
             document.execCommand('selectAll', false, null);
             document.execCommand('delete', false, null);
           }

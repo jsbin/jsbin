@@ -26,7 +26,7 @@ var iframedelay = (function () {
   } catch (e) {
     iframedelay.active = true;
   }
-  
+
   return iframedelay;
 }());
 
@@ -197,7 +197,7 @@ function getPreparedCode(nojs) {
 }
 
 // function renderPreview() {
-//   var doc = $('#preview iframe')[0], 
+//   var doc = $('#preview iframe')[0],
 //       win = doc.contentDocument || doc.contentWindow.document,
 //       source = getPreparedCode();
 

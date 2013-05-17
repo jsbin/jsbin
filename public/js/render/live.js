@@ -40,15 +40,19 @@ var iframedelay = (function () {
  *
  * Returns an object with doctype and tail keys.
  */
-function getDoctype(str) {
+var getDoctype = (function () {
+  // Cached regex
   // [\s\S] matches multiline doctypes
-  var doctype = (str.match(/<!doctype [\s\S]*?>/i) || [''])[0],
-      tail = str.substr(doctype.length);
-  return {
-    doctype: doctype,
-    tail: tail
+  var regex = /<!doctype [\s\S]*?>/i;
+  return function (str) {
+    var doctype = (str.match(regex) || [''])[0],
+        tail = str.substr(doctype.length);
+    return {
+      doctype: doctype,
+      tail: tail
+    };
   };
-}
+}());
 
 function sendReload() {
   if (saveChecksum) {
@@ -146,7 +150,6 @@ function renderLivePreview(withalerts) {
         // Make sure the doctype is the first thing in the source
         var doctypeObj = getDoctype(source),
             doctype = doctypeObj.doctype;
-        console.log('sup2');
         source = doctypeObj.tail;
         combinedSource.push(doctype);
 

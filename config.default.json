@@ -47,6 +47,9 @@
     "errors": [],
     "report": []
   },
+  "api": {
+    "allowAnonymous": true
+  },
   "blacklist": {
     "html": ["processform.cgi", "habbo.com"],
     "css": [],

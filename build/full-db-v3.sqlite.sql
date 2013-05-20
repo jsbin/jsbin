@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `ownership` (
   `name` VARCHAR(50) PRIMARY KEY NOT NULL,
   `key` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL DEFAULT '',
+  `api_key` VARCHAR(255) NULL,
   `last_login` DATETIME NOT NULL,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL
@@ -52,6 +53,7 @@ CREATE INDEX IF NOT EXISTS "sandbox_streaming_key" ON "sandbox" (`streaming_key`
 CREATE INDEX IF NOT EXISTS "sandbox_spam" ON "sandbox" (`created`,`last_viewed`);
 CREATE INDEX IF NOT EXISTS "sandbox_revision" ON "sandbox" (`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "ownership_name_key" ON "ownership" (`name`,`key`);
+CREATE INDEX IF NOT EXISTS "ownership_api_key" ON "ownership" (`api_key`);
 CREATE INDEX IF NOT EXISTS "owners_name_url" ON "owners" (`name`,`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "index_owners_last_updated" ON "owners" (`name`, `last_updated`);
 CREATE INDEX IF NOT EXISTS "index_expires" ON "forgot_tokens" (`expires`);

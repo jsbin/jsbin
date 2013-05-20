@@ -23,6 +23,7 @@
     "hogan.js": "2.0.0",
     "mysql": "0.9.x",
     "sqlite3": "2.1.7",
+    "pg": "1.1.0",
     "bcrypt": "0.7.5",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",

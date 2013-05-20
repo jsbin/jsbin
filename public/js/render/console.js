@@ -177,7 +177,9 @@ function post(cmd, blind, response /* passed in when echoing from remote console
         try {
           // document.getElementsByTagName('a')[0].focus();
           if (jsbin.panels.focused.id === 'console') {
-            cursor.focus();
+            if (!jsbin.embed) {
+              cursor.focus();
+            }
             document.execCommand('selectAll', false, null);
             document.execCommand('delete', false, null);
           }
@@ -447,7 +449,8 @@ var exec = document.getElementById('exec'),
     enableCC = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') === -1 || navigator.userAgent.indexOf('OS 5_') !== -1;
 
 if (enableCC) {
-  exec.parentNode.innerHTML = '<div autofocus id="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
+  var autofocus = jsbin.embed ? '' : 'autofocus';
+  exec.parentNode.innerHTML = '<div ' + autofocus + ' autoid="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
   exec = document.getElementById('exec');
   cursor = document.getElementById('cursor');
 } else {

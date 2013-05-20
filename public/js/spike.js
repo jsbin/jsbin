@@ -119,7 +119,7 @@ function reload() {
 }
 
 function renderStream() {
-  es.addEventListener('css', function (event) {
+  es.addEventListener('css:processed', function (event) {
     var style = document.getElementById('jsbin-css');
 
     if (style.styleSheet) {
@@ -130,8 +130,8 @@ function renderStream() {
   });
 
   es.addEventListener('reload', reload);
-  es.addEventListener('javascript', reload);
-  es.addEventListener('html', function (event) {
+  es.addEventListener('javascript:processed', reload);
+  es.addEventListener('html:processed', function (event) {
     // if the contents of the head has changed, reload,
     // if it's the body, inject
     // document.getElementById('jsbin-css').innerHTML = event.data;

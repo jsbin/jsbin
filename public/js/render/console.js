@@ -450,7 +450,7 @@ var exec = document.getElementById('exec'),
 
 if (enableCC) {
   var autofocus = jsbin.embed ? '' : 'autofocus';
-  exec.parentNode.innerHTML = '<div ' + autofocus + ' autoid="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
+  exec.parentNode.innerHTML = '<div ' + autofocus + ' id="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
   exec = document.getElementById('exec');
   cursor = document.getElementById('cursor');
 } else {

@@ -407,7 +407,7 @@ var exec = document.getElementById('exec'),
     sandbox = null,
     history = getHistory(),
     codeCompleteTimer = null,
-    fakeConsole = 'window.top._console',
+    fakeConsole = 'window.parent._console',
     libraries = {
         jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
         prototype: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',

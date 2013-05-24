@@ -43,6 +43,9 @@
   "server": {
     "logger": "default"
   },
+  "client": {
+    "user": true
+  },
   "notify": {
     "errors": [],
     "report": []

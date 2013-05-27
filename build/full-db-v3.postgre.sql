@@ -23,6 +23,7 @@ ALTER TABLE ONLY owners ALTER COLUMN id SET DEFAULT nextval('owners_id_seq'::reg
 ALTER TABLE ONLY owners ADD CONSTRAINT owners_pkey PRIMARY KEY (id);
 
 CREATE TABLE IF NOT EXISTS ownership (
+  id INTEGER NOT NULL,
   name VARCHAR(50) NOT NULL,
   key VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL DEFAULT '',
@@ -31,6 +32,16 @@ CREATE TABLE IF NOT EXISTS ownership (
   created TIMESTAMP NOT NULL,
   updated TIMESTAMP NOT NULL
 );
+
+CREATE SEQUENCE ownership_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE ownership_id_seq OWNED BY ownership.id;
+ALTER TABLE ONLY ownership ALTER COLUMN id SET DEFAULT nextval('ownership_id_seq'::regclass);
 ALTER TABLE ONLY ownership ADD CONSTRAINT ownership_pkey PRIMARY KEY (name);
 
 CREATE TABLE IF NOT EXISTS sandbox (

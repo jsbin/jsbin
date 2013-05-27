@@ -1,7 +1,7 @@
 {
   "getBin": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
   "getLatestBin": "SELECT * FROM `sandbox` WHERE `url`=? ORDER BY `revision` DESC LIMIT 1",
-  "setBin": "INSERT INTO `sandbox` (`javascript`, `css`, `html`, `created`, `last_viewed`, `url`, `revision`, `streaming_key`, `streaming_read_key`, `settings`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  "setBin": "INSERT INTO `sandbox` (`javascript`, `css`, `html`, `created`, `last_viewed`, `url`, `revision`, `streaming_key`, `streaming_read_key`, `settings`, `active_tab`, `active_cursor`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '', 0)",
   "setBinPanel": "UPDATE `sandbox` SET `:panel`=?, `settings`=?, `created`=? WHERE `url`=? AND `revision`=? AND `streaming_key`=? AND `streaming_key`!='' AND `active`='y'",
   "binExists": "SELECT id FROM `sandbox` WHERE `url`=? LIMIT 1",
   "getUser": "SELECT * FROM `ownership` WHERE `name`=? LIMIT 1",

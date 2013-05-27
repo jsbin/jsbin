@@ -201,8 +201,10 @@ function renderLivePreview(withalerts) {
         }, 2000);
         $(win).on('resize', function () {
           // clearTimeout(timer);
-          size.show().html(this.innerWidth + 'px');
-          hide();
+          if (!jsbin.embed) {
+            size.show().html(this.innerWidth + 'px');
+            hide();
+          }
         });
 
         win.resizeJSBin = throttle(function () {

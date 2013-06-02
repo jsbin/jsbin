@@ -16,160 +16,160 @@
   <div class="control">
     <div class="buttons">
       {{#embed}}
-      <span class="menu">
-        <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
-      </span>
+        <span class="menu">
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+        </span>
       {{/embed}}
       {{^embed}}
-      <div class="menu">
-        <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
-        <div class="dropdown" id="actionmenu">
-          <div class="dropdownmenu">
-            <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
-            {{#home}}
-            <a href="#" class="button group homebtn">Open</a>
-            {{/home}}
-            <hr>
-            <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
-            <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
-            <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
-            <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
-            <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
+        <div class="menu">
+          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
+          <div class="dropdown" id="actionmenu">
+            <div class="dropdownmenu">
+              <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
+              {{#home}}
+              <a href="#" class="button group homebtn">Open</a>
+              {{/home}}
+              <hr>
+              <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
+              <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
+              <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+              <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
+              <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
+            </div>
           </div>
-        </div>
-      </div><!--
-   --><div class="menu">
-        <span class="button group">Add library
-        <select id="library"></select>
-        </span>
-      </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
-        <a href="#share" class="button button-dropdown group">Share</a>
-        <div class="dropdown" id="share">
-          <div class="dropdowncontent">
-            <form>
-              <div class="lockoption" id="enablelock"><input type="button" title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="lockrevision" value="Lock revision #{{revision}}"> <small>from further changes.</small></div>
-              <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
-              <div>
-                <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Live &amp; Full Preview</a></strong><br><input data-path="/" class="link" value="{{root}}{{code_id_path}}/" type="text">
-              </div>
-              <div>
-                <strong><a class="link" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Code View</a></strong><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
-              </div>
-              <div>
-                <strong>Embed</strong><br><textarea data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
-              </div>
-              <div class="disabled">
-                <strong><a class="link" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></strong><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
-              </div>
-            </form>
+        </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
+     --><div class="menu">
+          <span class="button group">Add library
+          <select id="library"></select>
+          </span>
+        </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
+          <a href="#share" class="button button-dropdown group">Share</a>
+          <div class="dropdown" id="share">
+            <div class="dropdowncontent">
+              <form>
+                <div class="lockoption" id="enablelock"><input type="button" title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="lockrevision" value="Lock revision #{{revision}}"> <small>from further changes.</small></div>
+                <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
+                <div>
+                  <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Live &amp; Full Preview</a></strong><br><input data-path="/" class="link" value="{{root}}{{code_id_path}}/" type="text">
+                </div>
+                <div>
+                  <strong><a class="link" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Code View</a></strong><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                </div>
+                <div>
+                  <strong>Embed</strong><br><textarea data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                </div>
+                <div class="disabled">
+                  <strong><a class="link" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></strong><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
+                </div>
+              </form>
+            </div>
           </div>
+        </div><!-- intentional space -->
+        <div id="start-saving" class="menu">
+          <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
         </div>
-      </div><!-- intentional space -->
-      <div id="start-saving" class="menu">
-        <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
-      </div>
       {{/embed}}
       <div id="panels"></div>
       <div class="help">
-        {{#embed}}<!--
-        {{/embed}}
         {{^embed}}
-        {{#home}}
-        <div class="menu">
-          <div class="group">
-            <a href="#" id="avatar" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
-          </div>
-          <div class="dropdown dd-right" id="homemenu">
-            <div class="dropdowncontent">
-              <form class="login">
-                <p class="loginFeedback"></p>
-                <!-- <div>
-                  <label>Username<br><input value="{{home}}" name="username" type="text"></label>
-                </div> -->
-                <div>
-                  <label>Email<br>
-                  <input name="email" type="email" value="{{email}}"></label>
-                </div>
-                <div>
-                  <label>Password<br>
-                  <input name="password" type="password" value=""></label>
-                </div>
-                <div>
-                  <input type=submit value="Update account">
-                  <a class="logout" href="#logout">Logout</a>
-                </div>
-              </form>
+          {{#home}}
+            <div class="menu">
+              <div class="group">
+                <a href="#" id="avatar" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
+              </div>
+              <div class="dropdown dd-right" id="homemenu">
+                <div class="dropdowncontent">
+                  <form class="login">
+                    <p class="loginFeedback"></p>
+                    <!-- <div>
+                      <label>Username<br><input value="{{home}}" name="username" type="text"></label>
+                    </div> -->
+                    <div>
+                      <label>Email<br>
+                      <input name="email" type="email" value="{{email}}"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input name="password" type="password" value=""></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Update account">
+                      <a class="logout" href="#logout">Logout</a>
+                    </div>
+                  </form>
 
-              <form action="{{root}}/logout" method="POST" id="logout">
-                <input type="hidden" name="_csrf" value="{{token}}" />
-                <button hidden>Logout</button>
-              </form>
+                  <form action="{{root}}/logout" method="POST" id="logout">
+                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <button hidden>Logout</button>
+                  </form>
 
+                </div>
+              </div>
             </div>
-          </div>
-        </div><!--
-        {{/home}}
-        {{^home}}
-        <div class="menu">
-          <a href="#login" class="button button-open" id="loginbtn">Log in</a>
-          <div class="dropdown dd-right" id="login">
-            <div class="dropdowncontent">
-              <form class="forgot" action="/forgot" method="post">
-                <div>
-                  <label>Email<br>
-                  <input name="email" required type="email"></label>
+          {{/home}}
+          {{^home}}
+            {{#client.user}}
+              <div class="menu">
+                <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+                <div class="dropdown dd-right" id="login">
+                  <div class="dropdowncontent">
+                    <form class="forgot" action="/forgot" method="post">
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Request password reset">
+                        <input type="hidden" name="_csrf" value="{{token}}">
+                        <input type="hidden" name="_redirect" value="home">
+                      </div>
+                    </form>
+                    <form class="login">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username or Email<br>
+                        <input name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Log in">
+                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <div>
-                  <input type=submit value="Request password reset">
-                  <input type="hidden" name="_csrf" value="{{token}}">
-                  <input type="hidden" name="_redirect" value="home">
+              </div><div class="menu">
+                <a href="#register" class="button button-open" id="regbtn">Register</a>
+                <div class="dropdown dd-right" id="register">
+                  <div class="dropdowncontent">
+                    <p>Registration allows you to retrieve your saved files.</p>
+                    <form class="login">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username<br><input required name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input required name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Register">
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              </form>
-              <form class="login">
-                <p class="loginFeedback"></p>
-                <div>
-                  <label>Username or Email<br>
-                  <input name="username" type="text"></label>
-                </div>
-                <div>
-                  <label>Password<br>
-                  <input name="password" type="password"></label>
-                </div>
-                <div>
-                  <input type=submit value="Log in">
-                  <a id="lostpass" href="{{root}}/forgot">Reset password</a>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div><div class="menu">
-          <a href="#register" class="button button-open" id="regbtn">Register</a>
-          <div class="dropdown dd-right" id="register">
-            <div class="dropdowncontent">
-              <p>Registration allows you to retrieve your saved files.</p>
-              <form class="login">
-                <p class="loginFeedback"></p>
-                <div>
-                  <label>Username<br><input required name="username" type="text"></label>
-                </div>
-                <div>
-                  <label>Email<br>
-                  <input name="email" required type="email"></label>
-                </div>
-                <div>
-                  <label>Password<br>
-                  <input required name="password" type="password"></label>
-                </div>
-                <div>
-                  <input type=submit value="Register">
-                </div>
-              </form>
-            </div>
-          </div>
-        </div><!--
-        {{/home}}
+              </div>
+            {{/client.user}}
+          {{/home}}
         {{/embed}}
-        --><div class="menu">
+          <div class="menu">
             <a href="#helpmenu" class="button button-dropdown">Help</a>
             <div class="dropdown dd-right" id="helpmenu">
               <div class="dropdownmenu">
@@ -205,7 +205,7 @@
             <a href="#jade">Jade</a>
             <a href="#convert">Convert to HTML</a>
           </div>
-        </div> 
+        </div>
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
@@ -222,7 +222,7 @@
             <a href="#typescript">TypeScript</a>
             <a href="#convert">Convert to JavaScript</a>
           </div>
-        </div> 
+        </div>
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
@@ -237,7 +237,7 @@
             <a href="#stylus">Stylus</a>
             <a href="#convert">Convert to CSS</a>
           </div>
-        </div> 
+        </div>
       </div>
       <div class="editbox">
         <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>

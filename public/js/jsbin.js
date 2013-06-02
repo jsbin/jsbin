@@ -1,9 +1,3 @@
-//= require <jquery>
-//= require "vendor/polyfills"
-
-// var jQuery = window.jQuery,
-//     $ = jQuery;
-
 try {
   console.log('init');
 } catch (e) {

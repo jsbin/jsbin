@@ -45,10 +45,6 @@ module.exports = function (grunt) {
     child.stderr.on('data', process.stderr.write.bind(process.stderr));
   });
 
-  var scriptsRelative = require('./scripts.json').map(function (script) {
-    return 'public' + script;
-  });
-
   var pkg = grunt.file.readJSON('package.json');
 
   var distpaths = {
@@ -59,6 +55,9 @@ module.exports = function (grunt) {
 
   var config = {
     pkg: pkg,
+    scriptsRelative: require('./scripts.json').map(function (script) {
+      return 'public' + script;
+    }),
     jshint: {
       dist: {
         files: {
@@ -67,7 +66,7 @@ module.exports = function (grunt) {
       },
       build: {
         files: {
-          src: [].slice.apply(scriptsRelative)
+          src: '<%= scriptsRelative %>'
         }
       }
     },
@@ -76,23 +75,29 @@ module.exports = function (grunt) {
         separator: ';'
       },
       dist: {
-        src: [].slice.apply(scriptsRelative),
+        src: [
+          'public/js/intro.js',
+          '<%= scriptsRelative %>',
+          'public/js/outro.js'
+        ],
         dest: distpaths.script
       }
     },
     uglify: {
       options: {
         compress: { unsafe: false },
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
-        sourceMap: distpaths.map,
-        sourceMapPrefix: 2,
-        sourceMapRoot: '/js'
       },
       dist: {
-        src: scriptsRelative,
+        options: {
+          banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                  '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
+          sourceMap: distpaths.map,
+          sourceMappingURL: '/js/prod/jsbin.map.json',
+          sourceMapPrefix: 2,
+          sourceMapRoot: '/js',
+        },
+        src: '<%= scriptsRelative %>',
         dest: distpaths.min
-          // 'public/js/<%= pkg.name %>-<%= pkg.version %>.min.js' : scriptsRelative
       }
     },
     watch: {
@@ -102,41 +107,6 @@ module.exports = function (grunt) {
     run: {}
   };
 
-  grunt.registerTask("postbuild", function() {
-    var filename = grunt.template.process(distpaths.min, pkg),
-        text = fs.readFileSync( filename, "utf8" );
-
-    grunt.log.writeln('checking ' + filename + ' (' + text.length + ')');
-
-    // Modify map/min so that it points to files in the same folder;
-    // see https://github.com/mishoo/UglifyJS2/issues/47
-    // if (/\.map.json$/.test(filename)) {
-    //   text = text.replace( /"public\//g, "\"/" );
-    //   fs.writeFileSync( filename, text, "utf-8" );
-    // } else 
-
-    if (/\.min\.js$/.test(filename)) {
-      // Wrap sourceMap directive in multiline comments (#13274)
-      text = text.replace(/\n?(\/\/@\s*sourceMappingURL=)(.*)/,
-        function( _, directive, path ) {
-          map = "\n" + directive + path.replace( /^public\/js/, "/js" );
-          return "";
-        });
-      if (map) {
-        text = text.replace( /(^\/\*[\w\W]*?)\s*\*\/|$/,
-          function( _, comment ) {
-            return ( comment || "\n/*" ) + map + "\n*/";
-          });
-      }
-      fs.writeFileSync( filename, text, "utf-8" );
-    }
-});
-
-
-  config.concat.dist.src.unshift('public/js/intro.js');
-  config.concat.dist.src.push('public/js/outro.js');
-
-
   // Project configuration.
   grunt.initConfig(config);
 
@@ -145,7 +115,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
 
   // Default task.
-  grunt.registerTask('build', ['concat', 'uglify', 'postbuild']);
+  grunt.registerTask('build', ['concat', 'uglify']);
   grunt.registerTask('default', ['jshint']);
 
 };

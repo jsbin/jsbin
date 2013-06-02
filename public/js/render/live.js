@@ -1,6 +1,21 @@
+function tryToRender() {
+  if (window.Worker) {
+    // this code creates a web worker, and if it doesn't complete the 
+    // execution inside of 100ms, it'll return false suggesting there may
+    // be an infinite loop
+    testForHang(function (ok) {
+      if (ok) {
+        renderLivePreview();
+      }
+    });
+  } else {
+    renderLivePreview();
+  }
+}
+
 var $live = $('#live'),
     showlive = $('#showlive')[0],
-    throttledPreview = throttle(renderLivePreview, 200),
+    throttledPreview = throttle(tryToRender, 200),
     killAlerts = '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
     restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>',
     liveScrollTop = null;
@@ -201,8 +216,10 @@ function renderLivePreview(withalerts) {
         }, 2000);
         $(win).on('resize', function () {
           // clearTimeout(timer);
-          size.show().html(this.innerWidth + 'px');
-          hide();
+          if (!jsbin.embed) {
+            size.show().html(this.innerWidth + 'px');
+            hide();
+          }
         });
 
         win.resizeJSBin = throttle(function () {

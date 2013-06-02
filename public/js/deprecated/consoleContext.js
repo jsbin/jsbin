@@ -3,9 +3,9 @@ function ConsoleContext(context) {
   this.context = context;
   this.executable = typeof context == 'function';
 
-  this.active = false;  
+  this.active = false;
   this.original = window.top.console;
-  
+
   // yeah, lame, but we've no way to detect the console arguments support, because
   // it can only be tested from the /actual/ console.
   this.supported = /chrome/i.test(navigator.userAgent);
@@ -20,7 +20,7 @@ ConsoleContext.prototype = {
       context.eval('console.' + method + '(' + arguments.callee.caller.caller.arguments[0].toString().match(re)[1] + ')');
     } else {
       this.original[method].apply(this.original, args);
-    }    
+    }
   },
   log: function () {
     this.hijack('log', [].slice.call(arguments));
@@ -48,7 +48,7 @@ ConsoleContext.prototype = {
     if (this.supported) {
       this.active = false;
       if (console == this) this.original.log('--- console context switched back to original ---');
-      window.top.console = this.original;      
+      window.top.console = this.original;
     }
   }
 };

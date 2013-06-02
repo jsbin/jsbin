@@ -195,33 +195,3 @@ function getPreparedCode(nojs) {
 
   return source;
 }
-
-// function renderPreview() {
-//   var doc = $('#preview iframe')[0],
-//       win = doc.contentDocument || doc.contentWindow.document,
-//       source = getPreparedCode();
-
-//   var run = function () {
-//     win.open();
-//     if (jsbin.settings.debug) {
-//       win.write('<pre>' + source.replace(/[<>&]/g, function (m) {
-//         if (m == '<') return '&lt;';
-//         if (m == '>') return '&gt;';
-//         if (m == '"') return '&quot;';
-//       }) + '</pre>');
-//     } else {
-//       win.write(source);
-//     }
-//     win.close();
-//   };
-
-//   // WebKit requires a wait time before actually writing to the iframe
-//   // annoyingly it's not consistent (I suspect WebKit is the buggy one)
-//   if (iframedelay.active) {
-//     // this setTimeout allows the iframe to be rendered before our code
-//     // runs - thus allowing us access to the innerWidth, et al
-//     setTimeout(run, 10);
-//   } else {
-//     run();
-//   }
-// }

@@ -443,6 +443,7 @@ var exec = document.getElementById('exec'),
       }
     },
     fakeInput = null,
+    cursor = document.getElementById('cursor'),
     // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
     iOSMobile = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') !== -1,
     // FIXME Remy, seriously, don't sniff the agent like this, it'll bite you in the arse.

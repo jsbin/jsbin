@@ -7,7 +7,7 @@ var document = {
       appendChild: noop,
       addEventListener: noop
     },
-    alert: noop,
+    alert = noop,
     console = {
       log: noop,
       dir: noop

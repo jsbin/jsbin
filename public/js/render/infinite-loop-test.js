@@ -3,7 +3,6 @@ function testForHang(callback) {
       timer = null;
 
   worker.onmessage = function (e) {
-    console.log(e.data);
     clearTimeout(timer);
     if (e.data.code === 'READY') {
       timer = setTimeout(function () {
@@ -17,7 +16,7 @@ function testForHang(callback) {
       clearTimeout(timer);
       callback(false);
     } else {
-      console.log('unexpected response from loop worker');
+//      console.log('unexpected response from loop worker');
       callback(true);
     }
     

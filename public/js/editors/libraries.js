@@ -410,7 +410,7 @@ var libraries = [
             "http://vjs.zencdn.net/4.0/video.js"
         ],
         "label": "Video.js"
-    },
+    }
 ];
 
 window.libraries = libraries; // expose a command line API

@@ -3,7 +3,7 @@ function tryToRender() {
   // only works to detect infinite loops in very simple situations.
   // what it needs is a few polyfills in the worker for DOM API
   // and probably canvas API.
-  if (window.Worker) {
+  if (false && window.Worker) {
     // this code creates a web worker, and if it doesn't complete the 
     // execution inside of 100ms, it'll return false suggesting there may
     // be an infinite loop

@@ -403,7 +403,14 @@ var libraries = [
             "http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
         ],
         "label": "HTML5 shiv"
-    }
+    },
+    {
+        "url": [
+            "http://vjs.zencdn.net/4.0/video-js.css",
+            "http://vjs.zencdn.net/4.0/video.js"
+        ],
+        "label": "Video.js"
+    },
 ];
 
 window.libraries = libraries; // expose a command line API

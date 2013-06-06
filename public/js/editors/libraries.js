@@ -286,8 +286,8 @@ var libraries = [
     },
     {
         "url": [
-            "http://documentcloud.github.io/underscore/underscore-min.js",
-            "http://documentcloud.github.io/backbone/backbone-min.js"
+            "http://documentcloud.github.com/underscore/underscore-min.js",
+            "http://documentcloud.github.com/backbone/backbone-min.js"
         ],
         "label": "Backbone latest"
     },
@@ -382,7 +382,7 @@ var libraries = [
         "label": "TwitterLib"
     },
     {
-        "url": "http://documentcloud.github.io/underscore/underscore-min.js",
+        "url": "http://documentcloud.github.com/underscore/underscore-min.js",
         "label": "underscore latest"
     },
     {

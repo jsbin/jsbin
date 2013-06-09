@@ -295,7 +295,7 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/jquery.js",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.9/jquery.min.js",
             "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.4/ember.min.js"
         ],
         "label": "Ember.js 1.0.0-rc.4"

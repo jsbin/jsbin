@@ -2,43 +2,29 @@
 
 var libraries = [
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
-        "label": "jQuery latest",
-        "group": "jQuery"
-    },
-    {
         "url": "http://code.jquery.com/jquery-git.js",
         "label": "jQuery WIP (via git)",
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-2.0.0b2.js",
-        "label": "jQuery 2.0 beta 2",
+        "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js",
+        "label": "jQuery 2.0.2",
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.9.1.min.js",
-        "label": "jQuery 1.9.1",
+        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
+        "label": "jQuery 1.latest",
         "group": "jQuery"
     },
     {
-        "url": "http://code.jquery.com/jquery-1.8.3.min.js",
+        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js",
+        "label": "jQuery 1.10.1",
+        "group": "jQuery"
+    },
+    {
+        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js",
         "label": "jQuery 1.8.3",
         "group": "jQuery"
-    },
-    {
-        "url": "http://code.jquery.com/jquery-1.7.2.min.js",
-        "label": "jQuery 1.7.2",
-        "group": "jQuery"
-    },
-    {
-        "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css",
-            "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
-        ],
-        "label": "jQuery UI latest",
-        "group": "jQuery UI"
     },
     {
         "url": [
@@ -51,17 +37,26 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.css",
-            "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"
         ],
-        "label": "jQuery UI 1.10.2",
+        "label": "jQuery UI latest",
         "group": "jQuery UI"
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css",
-            "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"
+        ],
+        "label": "jQuery UI 1.10.3",
+        "group": "jQuery UI"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.min.css",
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
             "http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"
         ],
         "label": "jQuery UI 1.9.2",
@@ -69,17 +64,8 @@ var libraries = [
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/smoothness/jquery-ui.css",
-            "http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js",
-            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"
-        ],
-        "label": "jQuery UI 1.8.24",
-        "group": "jQuery UI"
-    },
-    {
-        "url": [
             "http://code.jquery.com/mobile/latest/jquery.mobile.css",
-            "http://code.jquery.com/jquery-1.6.4.min.js",
+            "http://code.jquery.com/jquery-1.9.1.min.js",
             "http://code.jquery.com/mobile/latest/jquery.mobile.js"
         ],
         "label": "jQuery Mobile Latest",
@@ -87,29 +73,29 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css",
+            "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css",
             "http://code.jquery.com/jquery-1.8.2.min.js",
-            "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"
+            "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"
         ],
-        "label": "jQuery Mobile 1.2.0",
+        "label": "jQuery Mobile 1.3.1",
         "group": "jQuery Mobile"
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css",
-            "http://code.jquery.com/jquery-1.6.4.min.js",
-            "http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"
+            "http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css",
+            "http://code.jquery.com/jquery-1.8.3.min.js",
+            "http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"
         ],
-        "label": "jQuery Mobile 1.1.1",
+        "label": "jQuery Mobile 1.2.1",
         "group": "jQuery Mobile"
     },
     {
         "url": [
-            "http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css",
+            "http://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.css",
             "http://code.jquery.com/jquery-1.6.4.min.js",
-            "http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.1.min.js"
+            "http://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.js"
         ],
-        "label": "jQuery Mobile 1.0.1",
+        "label": "jQuery Mobile 1.1.2",
         "group": "jQuery Mobile"
     },
     {
@@ -128,13 +114,21 @@ var libraries = [
         "group": "Prototype"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/prototype/1.7.1/prototype.js",
+        "url": "http://ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js",
         "label": "Prototype 1.7.1",
         "group": "Prototype"
     },
     {
         "url": "http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js",
         "label": "Prototype 1.6.1.0",
+        "group": "Prototype"
+    },
+    {
+        "url": [
+            "http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js",
+            "http://ajax.googleapis.com/ajax/libs/scriptaculous/1/scriptaculous.js"
+        ],
+        "label": "script.aculo.us latest",
         "group": "Prototype"
     },
     {
@@ -156,52 +150,52 @@ var libraries = [
         "group": "YUI"
     },
     {
+        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js",
+        "label": "MooTools latest",
+        "group": "MooTools"
+    },
+    {
         "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js",
         "label": "MooTools 1.4.5",
         "group": "MooTools"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/mootools/1.3.2/mootools-yui-compressed.js",
-        "label": "MooTools 1.3.2",
-        "group": "MooTools"
-    },
-    {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js",
-        "label": "Dojo 1.8.0",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js",
+        "label": "Dojo latest",
         "group": "Dojo"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js",
-        "label": "Dojo 1.7.3",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.8/dojo/dojo.js",
+        "label": "Dojo 1.8.4",
         "group": "Dojo"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js",
-        "label": "Dojo 1.6.1",
+        "url": "http://ajax.googleapis.com/ajax/libs/dojo/1.7/dojo/dojo.js",
+        "label": "Dojo 1.7.4",
         "group": "Dojo"
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/claro/claro.css",
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"
+            "http://ajax.googleapis.com/ajax/libs/dojo/1/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js"
         ],
-        "label": "Dijit 1.8.0 (Claro)",
+        "label": "Dijit latest (Claro)",
         "group": "Dojo"
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css",
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js"
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dojo/dojo.js"
         ],
-        "label": "Dijit 1.7.3 (Claro)",
+        "label": "Dijit 1.8.4 (Claro)",
         "group": "Dojo"
     },
     {
         "url": [
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dijit/themes/claro/claro.css",
-            "http://ajax.googleapis.com/ajax/libs/dojo/1.6.1/dojo/dojo.xd.js"
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.4/dijit/themes/claro/claro.css",
+            "http://ajax.googleapis.com/ajax/libs/dojo/1.7.4/dojo/dojo.xd.js"
         ],
-        "label": "Dijit 1.6.1 (Claro)",
+        "label": "Dijit 1.7.4 (Claro)",
         "group": "Dojo"
     },
     {
@@ -251,13 +245,13 @@ var libraries = [
         "group": "Zepto"
     },
     {
-        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.1.3/angular.min.js",
-        "label": "Angular 1.1.3 Unstable",
+        "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js",
+        "label": "Angular 1.1.5 Unstable",
         "group": "Angular"
     },
     {
-        "url":"http://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js",
-        "label": "Angular 1.0.5 Stable",
+        "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js",
+        "label": "Angular 1.0.7 Stable",
         "group": "Angular"
     },
     {
@@ -292,7 +286,7 @@ var libraries = [
         "label": "Backbone latest"
     },
     {
-        "url": "//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
         "label": "Bonsai 0.4.latest"
     },
     {
@@ -301,68 +295,67 @@ var libraries = [
     },
     {
         "url": [
-            "http://code.jquery.com/jquery.js",
-            "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-            "//cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.3/ember.js"
+            "http://ajax.googleapis.com/ajax/libs/jquery/1.9/jquery.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.4/ember.min.js"
         ],
-        "label": "Ember.js 1.0.0-rc.3"
+        "label": "Ember.js 1.0.0-rc.4"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/1.2.4/es5-shim.min.js",
-        "label": "ES5 shim 1.2.4"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js",
+        "label": "ES5 shim 2.0.8"
     },
     {
         "url": [
             "http://extjs.cachefly.net/ext-3.1.0/resources/css/ext-all.css",
-            "http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.js"
+            "http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.min.js"
         ],
         "label": "ext-core 3.1.0"
     },
     {
         "url": [
-            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/normalize.min.css",
-            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/css/foundation.min.css",
-            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/custom.modernizr.min.js",
-            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/vendor/jquery.min.js",
-            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.2/js/foundation.min.js"
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/normalize.min.css",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/css/foundation.min.css",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/custom.modernizr.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/vendor/jquery.min.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/foundation/4.1.6/js/foundation.min.js"
         ],
-        "label": "Foundation 4.1.2"
+        "label": "Foundation 4.1.6"
     },
     {
-        "url": "//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-        "label": "Handlebars.js 1.0.0-rc.3"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js",
+        "label": "Handlebars.js 1.0.0"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min.js",
-        "label": "Knockout 2.2"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js",
+        "label": "Knockout 2.2.1"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js",
         "label": "Less 1.3.3"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/0.5.2/lodash.min.js",
-        "label": "lodash 0.5.2"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.min.js",
+        "label": "lodash 1.2.1"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.5.3/modernizr.min.js",
-        "label": "Modernizr 2.5.3"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js",
+        "label": "Modernizr 2.6.2"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.6/prefixfree.min.js",
-        "label": "Prefixfree 1.0.6"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js",
+        "label": "Prefixfree 1.0.7"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.3.6/processing-api.min.js",
-        "label": "Processing 1.3.6"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js",
+        "label": "Processing 1.4.1"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.0.0/raphael-min.js",
-        "label": "Rapha&euml;l 2.0.0"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js",
+        "label": "Rapha&euml;l 2.1.0"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.6.3/sammy.min.js",
-        "label": "Sammy 0.6.3"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js",
+        "label": "Sammy 0.7.4"
     },
     {
         "url": [
@@ -388,15 +381,15 @@ var libraries = [
     {
         "url":[
             "http://code.jquery.com/jquery-1.9.1.min.js",
-            " http://canjs.us/release/latest/can.jquery.js"
+            " //canjs.us/release/latest/can.jquery.js"
         ],
         "label": "CanJS for jQuery"
     },
     {
         "url":[
-            "http://cdnjs.cloudflare.com/ajax/libs/three.js/r55/three.min.js"
+            "http://cdnjs.cloudflare.com/ajax/libs/three.js/r58/three.min.js"
         ],
-        "label": "Three.js"
+        "label": "Three.js r58"
     },
     {
         "url":[

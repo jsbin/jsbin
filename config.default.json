@@ -11,7 +11,7 @@
   "store": {
     "adapter": "sqlite",
     "sqlite": {
-      "location": "/tmp/jsbin.db"
+      "location": "jsbin.sqlite"
     },
     "mysql": {
       "host": "localhost",

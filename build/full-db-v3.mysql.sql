@@ -67,11 +67,13 @@ CREATE TABLE `ownership` (
   `name` char(50) NOT NULL,
   `key` char(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
+  `api_key` VARCHAR(255) NULL,
   `last_login` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`name`),
-  KEY `name_key` (`name`,`key`)
+  KEY `name_key` (`name`,`key`),
+  KEY `ownership_api_key` (`api_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

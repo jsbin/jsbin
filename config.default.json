@@ -50,6 +50,11 @@
     "errors": [],
     "report": []
   },
+  "api": {
+    "allowAnonymous": false,
+    "allowReadOnly": true,
+    "requireSSL": false
+  },
   "blacklist": {
     "html": ["processform.cgi", "habbo.com"],
     "css": [],
@@ -66,6 +71,7 @@
     "activity",
     "all",
     "announcements",
+    "api",
     "api_rules",
     "api_terms",
     "apirules",

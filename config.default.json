@@ -48,7 +48,8 @@
     "report": []
   },
   "api": {
-    "allowAnonymous": true,
+    "allowAnonymous": false,
+    "allowReadOnly": true,
     "requireSSL": false
   },
   "blacklist": {

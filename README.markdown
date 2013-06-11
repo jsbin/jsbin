@@ -33,6 +33,24 @@ The original idea spawned from a conversation with another developer in trying t
 
 [Version 1](http://1.jsbin.com) of [JS Bin](http://www.flickr.com/photos/remysharp/4284906136) took me the best part of 4 hours to develop [back in 2008](http://remysharp.com/2008/10/06/js-bin-for-collaborative-javascript-debugging/), but [version 2](http://2.jsbin.com) was been rewritten from the ground up and is completely [open source](http://github.com/remy/jsbin).
 
+## API
+
+A simple REST based API exists for anonymous users if it is enabled in your config.*.json, or can be restricted to registered users with a key specified in `ownership.ownership_api_key`
+
+If authentication is required (`allowAnonymous = false`), then an auth_key must be provided as part of an token authorization header or as a querystring with the value `api_key`.  Curl examples:
+
+```
+$ curl http://{{host}}/api/:bin -H "Authorization: token {{token_key}}"
+$ curl http://{{host}}/api/:bin?api_key={{token_key}}
+```
+
+End points are:
+
+- `GET /api/:bin` - Retrieve the latest version of the bin with that specified ID
+- `GET /api/:bin/:rev` - Retrieve the specific version of the bin with the specified ID and revision
+- `POST /api/save` - Create a new bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
+- `POST /api/:bin/save` - Create a new revision for the specified bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
+
 ## Build Process
 
 JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).

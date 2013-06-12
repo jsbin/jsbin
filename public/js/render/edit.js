@@ -7,14 +7,13 @@ function jsbinShowEdit(options) {
     if (over === false) el.style.top = '-60px';
   }
 
-  var el = document.createElement('div'),
+  var el = document.createElement('a'),
       over = false;
 
   el.id = 'edit-with-js-bin';
+  el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
 
-  var href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/');
-
-  el.innerHTML = '<div><a class="jsbin-edit" href="' + href + 'edit"><b>Edit in JS Bin</b> <img src="' + options.root + '/images/favicon.png" width="16" height="16"></a></div>';
+  el.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png" width="16" height="16">';
 
   var over;
   el.onmouseover = function () {
@@ -40,13 +39,11 @@ function jsbinShowEdit(options) {
 
       if (document.addEventListener) {
         document.addEventListener('mousemove', show, false);
-        el.getElementsByTagName('form')[0].addEventListener('submit', getEmail, false);
         document.addEventListener('mouseout', function () {
           over = false;
         }, false);
       } else {
         document.attachEvent('onmousemove', show);
-        el.getElementsByTagName('form')[0].attachEvent('onsubmit', getEmail);
         document.attachEvent('onmouseout', function () {
           over = false;
         }, false);

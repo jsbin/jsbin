@@ -20,10 +20,9 @@
 
   /* slide in/out transition */
   -webkit-transition: top ease-out 100ms;
-  -moz-transition: top ease-out 100ms;
-  -ms-transition: top ease-out 100ms;
-  -o-transition: top ease-out 100ms;
-  transition: top ease-out 100ms;
+     -moz-transition: top ease-out 100ms;
+       -o-transition: top ease-out 100ms;
+          transition: top ease-out 100ms;
 }
 
 #edit-with-js-bin:hover {

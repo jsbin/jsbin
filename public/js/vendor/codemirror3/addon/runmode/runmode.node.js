@@ -60,8 +60,20 @@ exports.startState = function(mode, a1, a2) {
 };
 
 var modes = exports.modes = {}, mimeModes = exports.mimeModes = {};
-exports.defineMode = function(name, mode) { modes[name] = mode; };
+exports.defineMode = function(name, mode) {
+  if (arguments.length > 2) {
+    mode.dependencies = [];
+    for (var i = 2; i < arguments.length; ++i) mode.dependencies.push(arguments[i]);
+  }
+  modes[name] = mode;
+};
 exports.defineMIME = function(mime, spec) { mimeModes[mime] = spec; };
+
+exports.defineMode("null", function() {
+  return {token: function(stream) {stream.skipToEnd();}};
+});
+exports.defineMIME("text/plain", "null");
+
 exports.getMode = function(options, spec) {
   if (typeof spec == "string" && mimeModes.hasOwnProperty(spec))
     spec = mimeModes[spec];

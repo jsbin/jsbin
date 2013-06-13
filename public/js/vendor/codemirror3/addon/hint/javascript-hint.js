@@ -4,7 +4,7 @@
   function forEach(arr, f) {
     for (var i = 0, e = arr.length; i < e; ++i) f(arr[i]);
   }
-  
+
   function arrayContains(arr, item) {
     if (!Array.prototype.indexOf) {
       var i = arr.length;
@@ -21,8 +21,10 @@
   function scriptHint(editor, keywords, getToken, options) {
     // Find the token at the cursor
     var cur = editor.getCursor(), token = getToken(editor, cur), tprop = token;
+    token.state = CodeMirror.innerMode(editor.getMode(), token.state).state;
+
     // If it's not a 'word-style' token, ignore the token.
-		if (!/^[\w$_]*$/.test(token.string)) {
+    if (!/^[\w$_]*$/.test(token.string)) {
       token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
                        type: token.string == "." ? "property" : null};
     }
@@ -42,9 +44,9 @@
           }
         } while (level > 0);
         tprop = getToken(editor, Pos(cur.line, tprop.start));
-	if (tprop.type.indexOf("variable") === 0)
-	  tprop.type = "function";
-	else return; // no clue
+        if (tprop.type.indexOf("variable") === 0)
+          tprop.type = "function";
+        else return; // no clue
       }
       if (!context) var context = [];
       context.push(tprop);

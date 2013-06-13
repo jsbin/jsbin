@@ -158,7 +158,7 @@ CodeMirror.defineMode('coffeescript', function(conf) {
         if (stream.match(identifiers)) {
             return 'variable';
         }
-        
+
         if (stream.match(properties)) {
             return 'property';
         }
@@ -337,8 +337,9 @@ CodeMirror.defineMode('coffeescript', function(conf) {
             }
 
             return state.scopes[0].offset;
-        }
+        },
 
+        lineComment: "#"
     };
     return external;
 });

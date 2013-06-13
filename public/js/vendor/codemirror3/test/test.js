@@ -32,6 +32,8 @@ var opera_version = opera && navigator.userAgent.match(/Version\/(\d+\.\d+)/);
 if (opera_version) opera_version = Number(opera_version);
 var opera_lt10 = opera && (!opera_version || opera_version < 10);
 
+namespace = "core_";
+
 test("core_fromTextArea", function() {
   var te = document.getElementById("code");
   te.value = "CONTENT";
@@ -512,6 +514,7 @@ testCM("scrollSnap", function(cm) {
 });
 
 testCM("selectionPos", function(cm) {
+  if (phantom) return;
   cm.setSize(100, 100);
   addDoc(cm, 200, 100);
   cm.setSelection(Pos(1, 100), Pos(98, 100));
@@ -857,7 +860,7 @@ testCM("verticalScroll", function(cm) {
   cm.setLine(0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
   is(sc.scrollWidth > baseWidth, "scrollbar present");
   cm.setLine(0, "foo");
-  eq(sc.scrollWidth, baseWidth, "scrollbar gone");
+  if (!phantom) eq(sc.scrollWidth, baseWidth, "scrollbar gone");
   cm.setLine(0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
   cm.setLine(1, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbh");
   is(sc.scrollWidth > baseWidth, "present again");
@@ -909,14 +912,42 @@ testCM("wordMovementCommands", function(cm) {
   cm.execCommand("goWordLeft");
   eqPos(cm.getCursor(), Pos(0, 9));
   cm.execCommand("goWordRight"); cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
-  eqPos(cm.getCursor(), Pos(1, 1));
-  cm.execCommand("goWordRight");
+  eqPos(cm.getCursor(), Pos(0, 24));
+  cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(1, 9));
   cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(1, 13));
   cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(2, 0));
 }, {value: "this is (the) firstline.\na foo12\u00e9\u00f8\u00d7bar\n"});
+
+testCM("groupMovementCommands", function(cm) {
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 0));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 4));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 7));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 10));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 7));
+  cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 15));
+  cm.setCursor(Pos(0, 17));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 16));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 14));
+  cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 20));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(1, 5));
+  cm.execCommand("goGroupLeft"); cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(1, 0));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 16));
+}, {value: "booo ba---quux. ffff\n  abc d"});
 
 testCM("charMovementCommands", function(cm) {
   cm.execCommand("goCharLeft"); cm.execCommand("goColumnLeft");
@@ -984,7 +1015,8 @@ testCM("verticalMovementCommandsWrapping", function(cm) {
 
 testCM("rtlMovement", function(cm) {
   forEach(["خحج", "خحabcخحج", "abخحخحجcd", "abخde", "abخح2342خ1حج", "خ1ح2خح3حxج",
-           "خحcd", "1خحcd", "abcdeح1ج", "خمرحبها مها!", "foobarر"], function(line) {
+           "خحcd", "1خحcd", "abcdeح1ج", "خمرحبها مها!", "foobarر",
+           "<img src=\"/בדיקה3.jpg\">"], function(line) {
     var inv = line.charAt(0) == "خ";
     cm.setValue(line + "\n"); cm.execCommand(inv ? "goLineEnd" : "goLineStart");
     var cursor = byClassName(cm.getWrapperElement(), "CodeMirror-cursor")[0];
@@ -1049,6 +1081,7 @@ testCM("lineChangeEvents", function(cm) {
 });
 
 testCM("scrollEntirelyToRight", function(cm) {
+  if (phantom) return;
   addDoc(cm, 500, 2);
   cm.setCursor(Pos(0, 500));
   var wrap = cm.getWrapperElement(), cur = byClassName(wrap, "CodeMirror-cursor")[0];
@@ -1268,7 +1301,7 @@ testCM("addKeyMap", function(cm) {
   sendKey(39);
   eqPos(cm.getCursor(), Pos(0, 1));
   eq(test, 1);
-  cm.addKeyMap(map2);
+  cm.addKeyMap(map2, true);
   sendKey(39);
   eq(test, 2);
   cm.removeKeyMap(map1);
@@ -1342,4 +1375,29 @@ testCM("beforeSelectionChange", function(cm) {
   cm.execCommand("selectAll");
   eqPos(cm.getCursor("start"), Pos(0, 0));
   eqPos(cm.getCursor("end"), Pos(9, 9));
+});
+
+testCM("change_removedText", function(cm) {
+  cm.setValue("abc\ndef");
+
+  var removedText;
+  cm.on("change", function(cm, change) {
+    removedText = [change.removed, change.next && change.next.removed];
+  });
+
+  cm.operation(function() {
+    cm.replaceRange("xyz", Pos(0, 0), Pos(1,1));
+    cm.replaceRange("123", Pos(0,0));
+  });
+
+  eq(removedText[0].join("\n"), "abc\nd");
+  eq(removedText[1].join("\n"), "");
+
+  cm.undo();
+  eq(removedText[0].join("\n"), "123");
+  eq(removedText[1].join("\n"), "xyz");
+
+  cm.redo();
+  eq(removedText[0].join("\n"), "abc\nd");
+  eq(removedText[1].join("\n"), "");
 });

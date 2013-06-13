@@ -1,5 +1,7 @@
 CodeMirror.defineMode("xml", function(config, parserConfig) {
   var indentUnit = config.indentUnit;
+  var multilineTagIndentFactor = parserConfig.multilineTagIndentFactor || 1;
+
   var Kludges = parserConfig.htmlMode ? {
     autoSelfClosers: {'area': true, 'base': true, 'br': true, 'col': true, 'command': true,
                       'embed': true, 'frame': true, 'hr': true, 'img': true, 'input': true,
@@ -84,7 +86,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       var ok;
       if (stream.eat("#")) {
         if (stream.eat("x")) {
-          ok = stream.eatWhile(/[a-fA-F\d]/) && stream.eat(";");          
+          ok = stream.eatWhile(/[a-fA-F\d]/) && stream.eat(";");
         } else {
           ok = stream.eatWhile(/[\d]/) && stream.eat(";");
         }
@@ -165,7 +167,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
     };
   }
 
-  var curState, setStyle;
+  var curState, curStream, setStyle;
   function pass() {
     for (var i = arguments.length - 1; i >= 0; i--) curState.cc.push(arguments[i]);
   }
@@ -191,6 +193,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
   function element(type) {
     if (type == "openTag") {
       curState.tagName = tagName;
+      curState.tagStart = curStream.column();
       return cont(attributes, endtag(curState.startOfLine));
     } else if (type == "closeTag") {
       var err = false;
@@ -212,7 +215,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
   function endtag(startOfLine) {
     return function(type) {
       var tagName = curState.tagName;
-      curState.tagName = null;
+      curState.tagName = curState.tagStart = null;
       if (type == "selfcloseTag" ||
           (type == "endTag" && Kludges.autoSelfClosers.hasOwnProperty(tagName.toLowerCase()))) {
         maybePopContext(tagName.toLowerCase());
@@ -274,11 +277,11 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
 
   return {
     startState: function() {
-      return {tokenize: inText, cc: [], indented: 0, startOfLine: true, tagName: null, context: null};
+      return {tokenize: inText, cc: [], indented: 0, startOfLine: true, tagName: null, tagStart: null, context: null};
     },
 
     token: function(stream, state) {
-      if (stream.sol()) {
+      if (!state.tagName && stream.sol()) {
         state.startOfLine = true;
         state.indented = stream.indentation();
       }
@@ -288,7 +291,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       var style = state.tokenize(stream, state);
       state.type = type;
       if ((style || type) && style != "comment") {
-        curState = state;
+        curState = state; curStream = stream;
         while (true) {
           var comb = state.cc.pop() || element;
           if (comb(type || style)) break;
@@ -303,6 +306,7 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
       if ((state.tokenize != inTag && state.tokenize != inText) ||
           context && context.noIndent)
         return fullLine ? fullLine.match(/^(\s*)/)[0].length : 0;
+      if (state.tagName) return state.tagStart + indentUnit * multilineTagIndentFactor;
       if (alignCDATA && /<!\[CDATA\[/.test(textAfter)) return 0;
       if (context && /^<\//.test(textAfter))
         context = context.prev;
@@ -313,6 +317,8 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
     },
 
     electricChars: "/",
+    blockCommentStart: "<!--",
+    blockCommentEnd: "-->",
 
     configuration: parserConfig.htmlMode ? "html" : "xml"
   };

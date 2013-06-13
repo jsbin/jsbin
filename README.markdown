@@ -1,4 +1,4 @@
-# JS Bin
+# JS Bin [![Stories in Ready](http://githubkanban.herokuapp.com/remy/jsbin.png)](http://huboard.com/remy/jsbin/board)
 
 JS Bin is an open source collaborative web development debugging tool.
 

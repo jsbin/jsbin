@@ -96,6 +96,10 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                    </div>
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
@@ -138,6 +142,10 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -161,6 +169,10 @@
                       </div>
                       <div>
                         <input type=submit value="Register">
+                      </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                       </div>
                     </form>
                   </div>

@@ -54,6 +54,43 @@ textarea:focus {
   outline: none;
 }
 
+.btn-github {
+  font-size: 1em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 1px 2px #eee;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 6px 10px 5px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-github:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+
+.btn-github img {
+  vertical-align: middle;
+  top: -1px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.login .btn-github {
+  display: block;
+  width: 100%;
+}
+
+.login-splitter {
+  display: block;
+  font-style: italic;
+  text-align: center;
+}
+
 [hidden],
 .hidden {
   display: none !important;

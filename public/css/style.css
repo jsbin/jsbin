@@ -2975,6 +2975,7 @@ div.CodeMirror span.CodeMirror-matchingbracket { color: #7EFC7E; }/*65FC65*/
 .cm-s-monokai .CodeMirror-gutters {background: #272822; border-right: 0px;}
 .cm-s-monokai .CodeMirror-linenumber {color: #d0d0d0;}
 .cm-s-monokai .CodeMirror-cursor {border-left: 1px solid #f8f8f0 !important;}
+.focus .cm-s-monokai .CodeMirror-activeline-background, .focus .cm-s-monokai .CodeMirror-linebackground, .focus .cm-s-monokai .CodeMirror-activeline .CodeMirror-linenumber {background:#3E3D32 !important}
 
 .cm-s-monokai span.cm-comment {color: #75715e;}
 .cm-s-monokai span.cm-atom {color: #ae81ff;}

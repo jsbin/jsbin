@@ -206,6 +206,9 @@ setTimeout(function () {
   } else {
     renderStream();
   }
+  es.addEventListener('stats', function () {
+    // Could handle stats events here
+  });
 }, 500);
 
 // If this is the render stream, restore data from before the last reload if

@@ -2992,6 +2992,7 @@ div.CodeMirror span.CodeMirror-matchingbracket { color: #7EFC7E; }/*65FC65*/
 .cm-s-monokai span.cm-tag {color: #f92672;}
 .cm-s-monokai span.cm-link {color: #ae81ff;}
 
+.cm-s-monokai .activeline {background:#3E3D32}
 .cm-s-monokai .CodeMirror-matchingbracket {
   text-decoration: underline;
   color: white !important;

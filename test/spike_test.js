@@ -1,6 +1,6 @@
 var spike = require('../lib/spike');
 
-describe('makeEvent', function () {
+describe('splike.utils.makeEvent', function () {
 
   it('should convert some string data into a valid event', function () {
     var result = spike.utils.makeEvent('example', 'hello');
@@ -21,6 +21,19 @@ describe('makeEvent', function () {
       'event:example',
       '\n'
     ].join('\n'));
+  });
+
+  it('should create an event even if no data is passed', function () {
+    var result = spike.utils.makeEvent('example');
+    result.should.equal([
+      'event:example',
+      '\n'
+    ].join('\n'));
+  });
+
+  it('should return nothing if nothing is passed', function () {
+    var result = spike.utils.makeEvent();
+    result.should.equal('');
   });
 
 });

@@ -75,7 +75,11 @@ function stringify(o, simple) {
 
 function addEvent(type, fn) {
   window.addEventListener ? window.addEventListener(type, fn, false) : window.attachEvent('on' + type, fn);
-};
+}
+
+function cleanPath(str) {
+  return (''+str).replace(/[^a-z0-9\/]/g, '');
+}
 
 function error(error, cmd) {
   var msg = JSON.stringify({ response: error.message, cmd: cmd, type: 'error' });
@@ -161,6 +165,10 @@ function renderStream() {
   });
 
   es.addEventListener('reload', reload);
+  // Update the url when the revision is bumped
+  es.addEventListener('bump-revision', function (event) {
+    window.location.pathname = cleanPath(event.data);
+  });
   // Javascript and HTML cause a reload. Would be nice to make it possible to
   // inject HTML changes in future.
   es.addEventListener('javascript:processed', reload);

@@ -189,6 +189,10 @@ function codecastStream() {
     editors[panelId].setCode(event.data);
   }
 
+  // Update the url when the revision is bumped
+  es.addEventListener('bump-revision', function (event) {
+    window.location.pathname = cleanPath(event.data) + '/watch';
+  });
   // on data, update the panels, which will cause an automatic render
   es.addEventListener('css', setCode);
   es.addEventListener('javascript', setCode);

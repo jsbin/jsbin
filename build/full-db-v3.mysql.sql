@@ -68,7 +68,7 @@ CREATE TABLE `ownership` (
   `key` char(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
   `api_key` VARCHAR(255) NULL,
-  `github_token` VARCHAR(255) NULL,
+  `github_token` VARCHAR(255),
   `last_login` datetime NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,

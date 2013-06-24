@@ -1,6 +1,6 @@
 var $html = $(document.documentElement);
 
-$('#tip a.dismiss').click(function () {
+$('#tip').on('click', 'a.dismiss', function () {
   $html.removeClass('showtip');
   $(window).resize();
   return false;
@@ -13,7 +13,7 @@ window.showTip = function () {
       if (id > jsbin.settings.lastTip) {
         $('#tip p').html(tips[id]);
         jsbin.settings.lastTip = id;
-        $html.addClass('showtip'); 
+        $html.addClass('showtip');
         break;
       }
     }

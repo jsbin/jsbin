@@ -35,3 +35,44 @@ Gist.prototype.setCode = function () {
     editors[type].setCode(gist.code[type]);
   }
 };
+
+/**
+ * Export as gist
+ */
+
+$(function () {
+
+  $('body').on('click', '#export-as-gist', function (e) {
+    e.preventDefault();
+    var gist = {
+      'public': true,
+      files: {}
+    };
+    $.each([
+      { panel: 'html' },
+      { panel: 'css' },
+      { panel: 'javascript', extension: 'js' }
+    ], function (index, data) {
+      var ext = data.extension || data.panel;
+      gist.files['jsbin.' + ext] = {
+        content: jsbin.panels.panels[data.panel].getCode()
+      };
+    });
+
+    var token = '';
+    if (jsbin.user && jsbin.user.github_token) {
+      token = '?access_token=' + jsbin.user.github_token;
+    }
+
+    $.ajax({
+      type: "POST",
+      url: 'https://api.github.com/gists' + token,
+      data: JSON.stringify(gist),
+      dataType: 'json',
+      crossDomain: true,
+      success: function (data) {
+        $document.trigger('info', 'Gist created! <a href="'+data.html_url+'" target="_blank">Open in new tab.</a>');
+      }
+    });
+  });
+});

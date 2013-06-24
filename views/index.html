@@ -33,6 +33,9 @@
               <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
               <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
               <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+              <a id="export-as-gist"
+                  title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin"
+                  class="button group" href="#">Export as gist</a>
               <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
               <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
             </div>

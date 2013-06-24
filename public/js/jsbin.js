@@ -107,7 +107,8 @@ if (jsbin.settings.editor.theme) {
 // malicious form submissions from other domains.
 jQuery.ajaxPrefilter(function (options, original, xhr) {
   var skip = {head: 1, get: 1};
-  if (!skip[options.type.toLowerCase()]) {
+  if (!skip[options.type.toLowerCase()] &&
+      !options.url.match(/^https:\/\/api.github.com/)) {
     xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
   }
 });
@@ -171,7 +172,7 @@ var $body = $('body'),
           sessionStorage.setItem('character', 0);
         }
       }
-      
+
       sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
@@ -252,3 +253,9 @@ if (jsbin.embed) {
     return false;
   });
 }
+
+$document.on('info', function (event, data) {
+  console.log.apply(console, [].slice.call(arguments));
+  $('#tip').html('<p>'+data+'</p><a class="dismiss" href="#">Dismiss x</a>');
+  $html.addClass('showtip');
+});

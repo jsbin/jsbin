@@ -53,9 +53,14 @@ $(function () {
       { panel: 'css' },
       { panel: 'javascript', extension: 'js' }
     ], function (index, data) {
+      var code;
+      try {
+        code = jsbin.panels.panels[data.panel].getCode();
+      } catch(e) {}
+      if (!code || !code.length) return;
       var ext = data.extension || data.panel;
       gist.files['jsbin.' + ext] = {
-        content: jsbin.panels.panels[data.panel].getCode()
+        content: code
       };
     });
 

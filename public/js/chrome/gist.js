@@ -42,8 +42,7 @@ Gist.prototype.setCode = function () {
 
 $(function () {
 
-  $('body').on('click', '#export-as-gist', function (e) {
-    e.preventDefault();
+  $('#export-as-gist').click(function (e) {
     var gist = {
       'public': true,
       files: {}
@@ -58,8 +57,15 @@ $(function () {
         code = jsbin.panels.panels[data.panel].getCode();
       } catch(e) {}
       if (!code || !code.length) return;
-      var ext = data.extension || data.panel;
-      gist.files['jsbin.' + ext] = {
+      // Figure out what the file extension should be according to the processor
+      var ext = data.extension || data.panel,
+          processor = jsbin.panels.panels[data.panel].processor;
+      if (processor && processor.extensions) {
+        ext = processor.extensions[0] || processor.name;
+      }
+      // Build a file name
+      var file = ['jsbin', jsbin.state.code, ext].join('.');
+      gist.files[file] = {
         content: code
       };
     });
@@ -79,5 +85,7 @@ $(function () {
         $document.trigger('info', 'Gist created! <a href="'+data.html_url+'" target="_blank">Open in new tab.</a>');
       }
     });
+    // return false becuase there's weird even stuff going on. ask @rem.
+    return false;
   });
 });

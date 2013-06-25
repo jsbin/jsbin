@@ -46,12 +46,15 @@ $(function () {
     var gist = {
       'public': true,
       files: {}
-    };
-    $.each([
+    },
+    panels = [
       { panel: 'html' },
       { panel: 'css' },
       { panel: 'javascript', extension: 'js' }
-    ], function (index, data) {
+    ];
+
+    // Add files to gist for each panel
+    panels.forEach(function (data, index) {
       var code;
       try {
         code = jsbin.panels.panels[data.panel].getCode();

@@ -4,7 +4,7 @@ function tryToRender() {
   // what it needs is a few polyfills in the worker for DOM API
   // and probably canvas API.
   if (false && window.Worker) {
-    // this code creates a web worker, and if it doesn't complete the 
+    // this code creates a web worker, and if it doesn't complete the
     // execution inside of 100ms, it'll return false suggesting there may
     // be an infinite loop
     testForHang(function (ok) {
@@ -151,7 +151,7 @@ function renderLivePreview(withalerts) {
   source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
 
   var run = function () {
-    var jsbinConsole = jsbin.panels.panels.console.visible ? 'window.top._console' : false;
+    var jsbinConsole = jsbin.panels.panels.console.visible ? 'window.jsbinWindow._console' : false;
 
     // we're wrapping the whole thing in a try/catch in case the doc.write breaks the
     // execution and never reaches the point where it removes the previous iframe.
@@ -159,6 +159,7 @@ function renderLivePreview(withalerts) {
       doc.open();
 
       if (jsbin.settings.debug) {
+        window._console.info('Rendering source in debug mode');
         doc.write('<pre>' + source.replace(/[<>&]/g, function (m) {
           if (m == '<') return '&lt;';
           if (m == '>') return '&gt;';
@@ -181,7 +182,7 @@ function renderLivePreview(withalerts) {
         }
 
         if (jsbinConsole) {
-          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.top._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
+          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) {window. jsbinWindow._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
 
           // doc.write('<script>(function () { var fakeConsole = ' + jsbinConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })(); window.onerror = function () { console.error.apply(console, arguments); }</script>');
         }
@@ -231,6 +232,9 @@ function renderLivePreview(withalerts) {
           window.parent.postMessage({ height: height }, '*');
         }, 20);
 
+        // ensures that the console from the iframe has access to the right context
+        win.jsbinWindow = window;
+
         combinedSource.push(source);
         combinedSource.push(restoreAlerts);
         // Only one doc.write. Fixes IE crashing bug.
@@ -241,8 +245,15 @@ function renderLivePreview(withalerts) {
         }
       }
       doc.close();
-      win.resizeJSBin();
+
       if (jsbin.embed) { // allow the iframe to be resized
+        if (!jsbin.settings.debug) {
+          win.resizeJSBin();
+        }
+
+        // super unknown code that allows the user to *sometimes, if they're lucky*
+        // resize the iframe by dragging the bottom of the frame. Mr Sharp, me thinks
+        // you're being too clever for your own good.
         (function () {
           var dragging = false,
               height = false,
@@ -263,7 +274,7 @@ function renderLivePreview(withalerts) {
       }
     } catch (e) {
       if (jsbinConsole) {
-        window.top._console.error({ message: e.message }, e.filename + ":" + e.lineno);
+        window._console.error({ message: e.message }, e.filename + ":" + e.lineno);
       }
     }
 

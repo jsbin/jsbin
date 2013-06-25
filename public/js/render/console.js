@@ -369,6 +369,9 @@ window._console = {
   }
 };
 
+// give info support too
+window._console.info = window._console.log;
+
 function about() {
   return 'Ported to JS Bin from <a target="_new" href="http://jsconsole.com">jsconsole.com</a>';
 }

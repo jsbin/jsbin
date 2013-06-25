@@ -245,8 +245,15 @@ function renderLivePreview(withalerts) {
         }
       }
       doc.close();
-      win.resizeJSBin();
+
       if (jsbin.embed) { // allow the iframe to be resized
+        if (!jsbin.settings.debug) {
+          win.resizeJSBin();
+        }
+
+        // super unknown code that allows the user to *sometimes, if they're lucky*
+        // resize the iframe by dragging the bottom of the frame. Mr Sharp, me thinks
+        // you're being too clever for your own good.
         (function () {
           var dragging = false,
               height = false,

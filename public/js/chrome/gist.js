@@ -1,53 +1,47 @@
-var Gist = function (id) {
-  this.code = '';
-  var iframe = $('<iframe id="gistloader' + id + '" />').css('display', 'none').appendTo(document.body),
-      win = iframe[0].contentDocument || iframe[0].contentWindow.document,
-      gist = this;
+var Gist = (function () {
 
-  this.code = {};
-
-  analytics.loadGist(id);
-
-  iframe.load(function () {
-    $('.gist-file', win.body).each(function () {
-      var code = [];
-      $('pre .line', this).each(function () {
-        code.push($(this).text());
+  var Gist = function (id) {
+    var gist = this,
+        token = '';
+    gist.code = {};
+    if (jsbin.user && jsbin.user.github_token) {
+      token = '?access_token=' + jsbin.user.github_token;
+    }
+    $.get('https://api.github.com/gists/' + id + token, function (data) {
+      if (!data) return;
+      $.each(data.files, function (fileName, fileData) {
+        console.log.apply(console, [].slice.call(arguments));
+        var ext = fileName.split('.').slice(-1).join('');
+        console.log(ext);
+        gist.code[ext] = fileData.content;
       });
-
-      var metaHref = $('.gist-meta a:first', this).attr('href');
-      var type = 'html'
-      if (metaHref.substr(-2) == 'js') type = 'javascript';
-      if (metaHref.substr(-3) == 'css') type = 'css';
-
-      gist.code[type] = code.join("\n");
+      gist.setCode();
     });
-    gist.setCode();
-    iframe.remove();
-  });
-  win.open();
-  win.write('<script src="http://gist.github.com/' + id + '.js"></script>');
-  win.close();
-};
+    return this;
+  };
 
-Gist.prototype.setCode = function () {
-  for (var type in this.code) {
-    editors[type].setCode(gist.code[type]);
-  }
-};
+  Gist.prototype.setCode = function () {
+    var gist = this;
+    $.each(gist.code, function (ext, data) {
+      var processorInit = jsbin.processors.findByExtension(ext),
+          target = processorInit.target || processorInit.id,
+          panel = jsbin.panels.panels[target];
+      if (!panel) return;
+      processors.set(target, processorInit.id);
+      panel.setCode(data);
+    });
+  };
 
-/**
- * Export as gist
- */
-
-$(function () {
+  /**
+   * Export as gist
+   */
 
   $('#export-as-gist').click(function (e) {
     var gist = {
       'public': true,
       files: {}
-    },
-    panels = [
+    };
+    var panels = [
       { panel: 'html' },
       { panel: 'css' },
       { panel: 'javascript', extension: 'js' }
@@ -91,4 +85,7 @@ $(function () {
     // return false becuase there's weird even stuff going on. ask @rem.
     return false;
   });
-});
+
+  return Gist;
+
+}());

@@ -87,7 +87,7 @@ var Gist = (function () {
       crossDomain: true,
       success: function (data) {
         $document.trigger('tip', {
-          type: 'info',
+          type: 'notification',
           content: 'Gist created! <a href="'+data.html_url+'" target="_blank">Open in new tab.</a>'
         });
       },

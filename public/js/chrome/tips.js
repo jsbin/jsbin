@@ -16,7 +16,6 @@
     $tipContent.html(data.content);
     $tip.removeClass().addClass(data.type || 'info');
     $html.addClass('showtip');
-    alert(data.content);
   };
 
   /**
@@ -47,6 +46,13 @@
   $('#tip').on('click', 'a.dismiss', function () {
     removeTip();
     return false;
+  });
+
+
+  $('body').keyup(function (event) {
+    if (event.which == 27) {
+      removeTip();
+    }
   });
 
 }());

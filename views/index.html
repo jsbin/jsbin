@@ -290,12 +290,11 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </form>
 </div>
 <div id="tip">
-  {{#flash_info}}
-    <p>{{flash_info}}</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
-  {{^flash_info}}
-    <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
+  <p>
+    {{#flash_info}}{{flash_info}}{{/flash_info}}
+    {{^flash_info}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_info}}
+  </p>
+  <a class="dismiss" href="#">Dismiss x</a>
 </div>
 <div id="keyboardHelp" class="modal">
   <div>

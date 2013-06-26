@@ -1,5 +1,12 @@
 var Gist = (function () {
 
+  // Only allow gist import/export if CORS is supported
+  var CORS = !!('withCredentials' in new XMLHttpRequest() ||
+                typeof XDomainRequest !== "undefined");
+  if (!CORS) return $(function () {
+    $('#export-as-gist').remove();
+  });
+
   var Gist = function (id) {
     var gist = this,
         token = '';
@@ -79,7 +86,16 @@ var Gist = (function () {
       dataType: 'json',
       crossDomain: true,
       success: function (data) {
-        $document.trigger('info', 'Gist created! <a href="'+data.html_url+'" target="_blank">Open in new tab.</a>');
+        $document.trigger('tip', {
+          type: 'info',
+          content: 'Gist created! <a href="'+data.html_url+'" target="_blank">Open in new tab.</a>'
+        });
+      },
+      error: function (xhr, status) {
+        $document.trigger('tip', {
+          type: 'error',
+          content: 'Error: ' + status
+        });
       }
     });
     // return false becuase there's weird even stuff going on. ask @rem.

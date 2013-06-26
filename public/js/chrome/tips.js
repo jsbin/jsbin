@@ -1,23 +1,52 @@
-var $html = $(document.documentElement);
+(function () {
 
-$('#tip').on('click', 'a.dismiss', function () {
-  $html.removeClass('showtip');
-  $(window).resize();
-  return false;
-});
+  var $html = $(document.documentElement),
+      $tip = $('#tip'),
+      $tipContent = $('p', $tip);
 
-window.showTip = function () {
-  if (jsbin.settings.lastTip === undefined) jsbin.settings.lastTip = -1;
-  if (tips) {
-    for (var id = 0; id < tips.length; id++) {
-      if (id > jsbin.settings.lastTip) {
-        $('#tip p').html(tips[id]);
-        jsbin.settings.lastTip = id;
-        $html.addClass('showtip');
-        break;
-      }
+  var removeTip = function (cb) {
+    $html.removeClass('showtip');
+    $tip.removeClass();
+    $tipContent.html('');
+    $(window).resize();
+    cb && setTimeout(cb, 0);
+  };
+
+  var setTip = function (data) {
+    $tipContent.html(data.content);
+    $tip.removeClass().addClass(data.type || 'info');
+    $html.addClass('showtip');
+    alert(data.content);
+  };
+
+  /**
+   * Trigger a tip to be shown.
+   *
+   *   $document.trigger('tip', 'You have an infinite loop in your HTML.');
+   *
+   *    $document.trigger('tip', {
+   *      type: 'error',
+   *      content: 'Do you even Javascript?'
+   *    });
+   */
+  $document.on('tip', function (event, data) {
+    var tipData = data;
+    if (typeof data === 'string') {
+      tipData = {};
+      tipData.content = data;
+      tipData.type = 'info';
     }
-  }
-};
+    // If the content and the type haven't changed, just set it again.
+    if ($tipContent.html() === tipData.content &&
+        $tip.hasClass(tipData.type)) return setTip(data);
+    removeTip(function () {
+      setTip(tipData);
+    });
+  });
 
-// showTip();
+  $('#tip').on('click', 'a.dismiss', function () {
+    removeTip();
+    return false;
+  });
+
+}());

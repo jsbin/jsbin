@@ -253,9 +253,3 @@ if (jsbin.embed) {
     return false;
   });
 }
-
-$document.on('info', function (event, data) {
-  console.log.apply(console, [].slice.call(arguments));
-  $('#tip').html('<p>'+data+'</p><a class="dismiss" href="#">Dismiss x</a>');
-  $html.addClass('showtip');
-});

@@ -49,7 +49,7 @@
   });
 
   // Escape
-  $('body').keyup(function (event) {
+  $document.keydown(function (event) {
     if (event.which == 27) {
       removeTip();
     }

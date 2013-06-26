@@ -21,12 +21,17 @@
 </style>
 
 <script type="text/javascript">
-  window.addEventListener('load', function () {
+  window.onload = function () {
 
+    /**
+     * Live rendering, basic mode.
+     * Fallback - load the bin into a new iframe, and let it keep itself up
+     * to date using event stream.
+     */
     var iframe = document.createElement('iframe');
     document.body.appendChild(iframe);
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.src = window.name;
 
-  });
+  };
 </script>

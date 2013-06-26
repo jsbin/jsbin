@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>JS Bin Runner</title>
+
+<style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+  iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+  }
+</style>
+
+<script type="text/javascript">
+  window.addEventListener('load', function () {
+
+    var iframe = document.createElement('iframe');
+    document.body.appendChild(iframe);
+    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.src = window.name;
+
+  });
+</script>

@@ -123,15 +123,33 @@ function codeChangeLive(event, data) {
 
 $document.bind('codeChange.live', codeChangeLive);
 
-
 function two(s) {
   return (s+'').length < 2 ? '0' + s : s;
 }
 
 function renderLivePreview(withalerts) {
+
+  /**
+   * Live rendering, basic mode.
+   * IE7 fallback. See https://github.com/remy/jsbin/issues/651.
+   */
+  if ($live.find('iframe').length) return;
+  var iframe = document.createElement('iframe');
+  iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+  // TODO update this so that it's environment agnostic
+  iframe.src = "http://run.jsbin.dev:3003/runner";
+  $live.prepend(iframe);
+  iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
+
+  return;
+
+  /**
+   * =============================================================================
+   */
+
   var source = getPreparedCode(), //jsbin.panels.panels.console.visible),
       remove = $live.find('iframe').length > 0,
-      $frame = $live.prepend('<iframe class="stretch" frameBorder="0"></iframe>').find('iframe:first'),
+      $frame = $live.prepend('<iframe class="stretch" frameBorder="0" ></iframe>').find('iframe:first'),
       frame = $frame[0],
       doc = frame.contentDocument || frame.contentWindow.document,
       win = doc.defaultView || doc.parentWindow,
@@ -182,7 +200,7 @@ function renderLivePreview(withalerts) {
         }
 
         if (jsbinConsole) {
-          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) {window. jsbinWindow._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
+          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.jsbinWindow._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
 
           // doc.write('<script>(function () { var fakeConsole = ' + jsbinConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })(); window.onerror = function () { console.error.apply(console, arguments); }</script>');
         }

@@ -48,7 +48,7 @@
     return false;
   });
 
-
+  // Escape
   $('body').keyup(function (event) {
     if (event.which == 27) {
       removeTip();

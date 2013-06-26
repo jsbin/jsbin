@@ -24,36 +24,6 @@ var $live = $('#live'),
     restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>',
     liveScrollTop = null;
 
-var iframedelay = (function () {
-  var iframedelay = { active : false },
-      iframe = document.createElement('iframe'),
-      doc,
-      callbackName = '__callback' + (+new Date);
-
-  iframe.style.height = iframe.style.width = '1px';
-  iframe.style.visibility = 'hidden';
-  document.body.appendChild(iframe);
-  doc = iframe.contentDocument || iframe.contentWindow.document;
-
-  window[callbackName] = function (width) {
-    iframedelay.active = width === 0;
-    try {
-      iframe.parentNode.removeChild(iframe);
-      delete window[callbackName];
-    } catch (e){};
-  };
-
-  try {
-    doc.open();
-    doc.write('<script>window.parent.' + callbackName + '(window.innerWidth)</script>');
-    doc.close();
-  } catch (e) {
-    iframedelay.active = true;
-  }
-
-  return iframedelay;
-}());
-
 /**
  * Grab the doctype from a string.
  *
@@ -296,6 +266,7 @@ function renderLivePreview(withalerts) {
       }
     }
 
+    // Swap round the live panel's reference to the current document
     delete jsbin.panels.panels.live.doc;
     jsbin.panels.panels.live.doc = doc;
 
@@ -304,19 +275,9 @@ function renderLivePreview(withalerts) {
     if (remove) {
       $live.find('iframe:last').remove();
     }
-
-    // if (jsbin.panels.panels.console.visible) {
-    //   jsbin.panels.panels.console.render(); // now run the JS
-    // }
   };
 
-  // WebKit requires a wait time before actually writing to the iframe
-  // annoyingly it's not consistent (I suspect WebKit is the buggy one)
-  if (iframedelay.active) {
-    // this setTimeout allows the iframe to be rendered before our code
-    // runs - thus allowing us access to the innerWidth, et al
-    setTimeout(run, 0);
-  } else {
-    run();
-  }
+  // setTimeout allows the iframe to be rendered before our code runs, allowing
+  // us access to the calculated properties like innerWidth.
+  setTimeout(run, 0);
 }

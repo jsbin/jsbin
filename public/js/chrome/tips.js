@@ -2,7 +2,8 @@
 
   var $html = $(document.documentElement),
       $tip = $('#tip'),
-      $tipContent = $('p', $tip);
+      $tipContent = $('p', $tip),
+      tipTimeout;
 
   var removeTip = function (cb) {
     $html.removeClass('showtip');
@@ -13,9 +14,14 @@
   };
 
   var setTip = function (data) {
+    clearTimeout(tipTimeout);
     $tipContent.html(data.content);
     $tip.removeClass().addClass(data.type || 'info');
     $html.addClass('showtip');
+    if (!data.autohide) return;
+    tipTimeout = setTimeout(function () {
+      removeTip();
+    }, parseInt(data.autohide, 10) || 5 * 1000);
   };
 
   /**
@@ -25,7 +31,8 @@
    *
    *    $document.trigger('tip', {
    *      type: 'error',
-   *      content: 'Do you even Javascript?'
+   *      content: 'Do you even Javascript?',
+   *      autohide: 8000
    *    });
    */
   $document.on('tip', function (event, data) {

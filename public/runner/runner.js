@@ -61,6 +61,9 @@ var processor = (function () {
     };
   }());
 
+  /**
+   * Replace HTML characters with encoded equivatents for debug mode.
+   */
   processor.debug = function (source) {
     return '<pre>' + source.replace(/[<>&]/g, function (m) {
       if (m == '<') return '&lt;';
@@ -108,6 +111,7 @@ var processor = (function () {
       combinedSource.push(processor.blockingMethods.restore);
     }
 
+    // In debug mode return an escaped version
     if (options.debug) {
       return processor.debug(combinedSource.join('\n'));
     }

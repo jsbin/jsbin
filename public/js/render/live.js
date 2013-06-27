@@ -1,3 +1,53 @@
+/**
+ * Defer callable. Kinda tricky to explain. Basically:
+ *  "Don't make newFn callable until I tell you via this trigger callback."
+ *
+ * Example:
+
+      // Only start logging after 3 seconds
+      var log = function (str) { console.log(str); };
+      var deferredLog = deferCallable(log, function (done) {
+        setTimeout(done, 3000);
+      });
+
+      setInterval(function () {
+        deferredLog(Date.now(), 500);
+      });
+
+ */
+var deferCallable = function (newFn, trigger) {
+  var args,
+      pointerFn = function () {
+        // Initially, the pointer basically does nothing, waiting for the
+        // trigger to fire, but we save the arguments that wrapper was called
+        // with so that they can be passed to the newFn when it's ready.
+        args = [].slice.call(arguments);
+      };
+
+  // Immediately call the trigger so that the user can inform us of when
+  // the newFn is callable.
+  // When it is, swap round the pointers and, if the wrapper was aleady called,
+  // immediately call the pointerFn.
+  trigger(function () {
+    pointerFn = newFn;
+    if (args) {
+      pointerFn.apply(null, args);
+    }
+  });
+
+  // Wrapper the pointer function. This means we can swap pointerFn around
+  // without breaking external references.
+  return function wrapper() {
+    return pointerFn.apply(null, [].slice.call(arguments));
+  };
+};
+
+/**
+ * =============================================================================
+ * =============================================================================
+ * =============================================================================
+ */
+
 function tryToRender() {
   // TODO re-enable this code. It's been disabled for now because it
   // only works to detect infinite loops in very simple situations.
@@ -93,191 +143,59 @@ function codeChangeLive(event, data) {
 
 $document.bind('codeChange.live', codeChangeLive);
 
-function two(s) {
-  return (s+'').length < 2 ? '0' + s : s;
-}
+/**
+ * Live rendering.
+ * Comes in to tasty flavours. Basic mode, which is essentially an IE7
+ * fallback. Take a look at https://github.com/remy/jsbin/issues/651 for more.
+ * It uses the iframe's name and JS Bin's event-stream support to keep the
+ * page up-to-date.
+ * The second mode uses postMessage to inform the runner of changes to code,
+ * config and anything that affects rendering.
+ */
 
-function renderLivePreview(withalerts) {
+/**
+ * Render live preview.
+ * Create the runner iframe, and if postMe wait until the iframe is loaded to
+ * start postMessaging the runner.
+ */
+var renderLivePreview = (function () {
 
-  /**
-   * Live rendering, basic mode.
-   * IE7 fallback. See https://github.com/remy/jsbin/issues/651.
-   */
-  if ($live.find('iframe').length) return;
-  var iframe = document.createElement('iframe');
-  iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
-  // TODO update this so that it's environment agnostic
-  iframe.src = "http://run.jsbin.dev:3003/runner";
-  $live.prepend(iframe);
-  iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
+  // Runner iframe
+  var iframe,
+      runner;
 
-  return;
-
-  /**
-   * =============================================================================
-   */
-
-  var source = getPreparedCode(), //jsbin.panels.panels.console.visible),
-      remove = $live.find('iframe').length > 0,
-      $frame = $live.prepend('<iframe class="stretch" frameBorder="0" ></iframe>').find('iframe:first'),
-      frame = $frame[0],
-      doc = frame.contentDocument || frame.contentWindow.document,
-      win = doc.defaultView || doc.parentWindow,
-      d = new Date(),
-      combinedSource = [];
-
-  // if (!useCustomConsole) console.log('--- refreshing live preview @ ' + [two(d.getHours()),two(d.getMinutes()),two(d.getSeconds())].join(':') + ' ---');
-
-  if (withalerts !== true && jsbin.settings.includejs === false) {
-    source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-  } else if (withalerts) {
-    // send an update to the server that we ran the code
-    sendReload();
+  // Basic mode
+  // This adds the runner iframe to the page. It's only run once.
+  if (!$live.find('iframe').length) {
+    iframe = document.createElement('iframe');
+    // iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    // TODO update this so that it's environment agnostic
+    iframe.src = jsbin.root + '/runner';
+    $live.prepend(iframe);
+    runner = iframe.contentWindow;
+    runner.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
   }
 
-  // strip autofocus from the markup - prevents the focus switching out of the editable area
-  source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
+  // The big daddy that handles postmessaging the runner.
+  var renderLivePreview = function () {
+    // No postMessage? Don't render – the event-stream will handle it.
+    if (!window.postMessage) return;
 
-  var run = function () {
-    var jsbinConsole = jsbin.panels.panels.console.visible ? 'window.jsbinWindow._console' : false;
-
-    // we're wrapping the whole thing in a try/catch in case the doc.write breaks the
-    // execution and never reaches the point where it removes the previous iframe.
-    try {
-      doc.open();
-
-      if (jsbin.settings.debug) {
-        window._console.info('Rendering source in debug mode');
-        doc.write('<pre>' + source.replace(/[<>&]/g, function (m) {
-          if (m == '<') return '&lt;';
-          if (m == '>') return '&gt;';
-          if (m == '"') return '&quot;';
-        }) + '</pre>');
-      } else {
-
-        // Make sure the doctype is the first thing in the source
-        var doctypeObj = getDoctype(source),
-            doctype = doctypeObj.doctype;
-        source = doctypeObj.tail;
-        combinedSource.push(doctype);
-
-        // nullify the blocking functions
-        // IE requires that this is done in the script, rather than off the window object outside of the doc.write
-        if (withalerts !== true) {
-          combinedSource.push(killAlerts);
-        } else {
-          combinedSource.push(restoreAlerts);
-        }
-
-        if (jsbinConsole) {
-          combinedSource.push('<script>(function(){window.addEventListener && window.addEventListener("error", function (event) { window.jsbinWindow._console.error({ message: event.message }, event.filename + ":" + event.lineno);}, false);}());</script>');
-
-          // doc.write('<script>(function () { var fakeConsole = ' + jsbinConsole + '; if (console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })(); window.onerror = function () { console.error.apply(console, arguments); }</script>');
-        }
-
-        // almost jQuery Mobile specific - when the page renders
-        // it moves the focus over to the live preview - since
-        // we no longer have a "render" panel, our code loses
-        // focus which is damn annoying. So, I cancel the iframe
-        // focus event...because I can :)
-        var click = false;
-        win.onmousedown = function () {
-          click = true;
-          setTimeout(function () {
-            click = false;
-          }, 10);
-        };
-        win.onfocus = function (event) {
-          // allow the iframe to be clicked to create a fake focus
-          if (click) {
-            $('#live').focus();
-            // also close any open dropdowns
-            closedropdown();
-          }
-          return false;
-        };
-
-        win.onscroll = function () {
-          liveScrollTop = this.scrollY;
-        };
-
-        var size = $live.find('.size'),
-            timer = null;
-
-        var hide = throttle(function () {
-          size.fadeOut(200);
-        }, 2000);
-        $(win).on('resize', function () {
-          // clearTimeout(timer);
-          if (!jsbin.embed) {
-            size.show().html(this.innerWidth + 'px');
-            hide();
-          }
-        });
-
-        win.resizeJSBin = throttle(function () {
-          var height = ($body.outerHeight(true) - $frame.height()) + doc.documentElement.offsetHeight;
-          window.parent.postMessage({ height: height }, '*');
-        }, 20);
-
-        // ensures that the console from the iframe has access to the right context
-        win.jsbinWindow = window;
-
-        combinedSource.push(source);
-        combinedSource.push(restoreAlerts);
-        // Only one doc.write. Fixes IE crashing bug.
-        doc.write(combinedSource.join('\n'));
-
-        if (liveScrollTop !== null) {
-          win.scrollTo(0, liveScrollTop);
-        }
-      }
-      doc.close();
-
-      if (jsbin.embed) { // allow the iframe to be resized
-        if (!jsbin.settings.debug) {
-          win.resizeJSBin();
-        }
-
-        // super unknown code that allows the user to *sometimes, if they're lucky*
-        // resize the iframe by dragging the bottom of the frame. Mr Sharp, me thinks
-        // you're being too clever for your own good.
-        (function () {
-          var dragging = false,
-              height = false,
-              $window = $(win);
-          $(doc.documentElement).mousedown(function (event) {
-            if (event.pageY > $window.height() - 40) {
-              dragging = event.pageY;
-              height = $body.outerHeight();
-            }
-          }).mousemove(function (event) {
-            if (dragging !== false) {
-              window.parent.postMessage({ height: height + (event.pageY - dragging) }, '*');
-            }
-          }).mouseup(function () {
-            dragging = false;
-          });
-        })();
-      }
-    } catch (e) {
-      if (jsbinConsole) {
-        window._console.error({ message: e.message }, e.filename + ":" + e.lineno);
-      }
-    }
-
-    // Swap round the live panel's reference to the current document
-    delete jsbin.panels.panels.live.doc;
-    jsbin.panels.panels.live.doc = doc;
-
-    // by removing the previous iframe /after/ the newly created live iframe
-    // has run, it doesn't flicker - which fakes a smooth live update.
-    if (remove) {
-      $live.find('iframe:last').remove();
-    }
+    var source = getPreparedCode();
+    runner.postMessage({
+      type: 'render',
+      data: source
+    }, '*');
   };
 
-  // setTimeout allows the iframe to be rendered before our code runs, allowing
-  // us access to the calculated properties like innerWidth.
-  setTimeout(run, 0);
-}
+  // When the iframe loads, swap round the callbacks and immediately invoke
+  // if renderLivePreview was called already.
+  return deferCallable(renderLivePreview, function (done) {
+    iframe.onload = function () {
+      runner = iframe.contentWindow;
+      done();
+    };
+  });
+
+}());
+

@@ -158,6 +158,7 @@ var sandbox = (function () {
   sandbox.use = function (iframe, done) {
     if (!sandbox.target) throw new Error("Sandbox has no target element.");
     sandbox.old = sandbox.active;
+    var state = sandbox.saveState(sandbox.old);
     sandbox.active = iframe;
     prependChild(sandbox.target, iframe);
     // setTimeout allows the iframe to be rendered before other code runs,
@@ -165,10 +166,40 @@ var sandbox = (function () {
     setTimeout(done || '', 0);
     // Wait until the new iframe has loaded to remove the old one
     addEvent(iframe, 'load', function () {
-      if (sandbox.old && sandbox.old.parentNode) {
-        sandbox.old.parentNode.removeChild(sandbox.old);
+      if (sandbox.old) {
+        sandbox.restoreState(sandbox.active, state);
+        if (sandbox.old.parentNode) {
+          sandbox.old.parentNode.removeChild(sandbox.old);
+        }
       }
     });
+  };
+
+  /**
+   * Restore the state of a prvious iframe, like scroll position.
+   */
+  sandbox.restoreState = function (iframe, state) {
+    if (!iframe) return {};
+    var win = iframe.contentWindow;
+    if (!win) return {};
+    if (state.scroll) {
+      win.scrollTo(state.scroll.x, state.scroll.y);
+    }
+  };
+
+  /**
+   * Save the state of an iframe, like scroll position.
+   */
+  sandbox.saveState = function (iframe) {
+    if (!iframe) return {};
+    var win = iframe.contentWindow;
+    if (!win) return {};
+    return {
+      scroll: {
+        x: win.scrollX,
+        y: win.scrollY
+      }
+    };
   };
 
   return sandbox;

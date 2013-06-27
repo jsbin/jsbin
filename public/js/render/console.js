@@ -1061,7 +1061,8 @@ function upgradeConsolePanel(console) {
       }
     };
     // jsconsole.ready = true;
-    jsconsole.remote.flush();
+    // FIXME this line was causing errors in IE7
+    // jsconsole.remote.flush();
 
     $document.one('jsbinReady', function () {
       var hidebutton = function () {

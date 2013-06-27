@@ -70,28 +70,7 @@ function tryToRender() {
 var $live = $('#live'),
     showlive = $('#showlive')[0],
     throttledPreview = throttle(tryToRender, 200),
-    killAlerts = '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
-    restoreAlerts = '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>',
     liveScrollTop = null;
-
-/**
- * Grab the doctype from a string.
- *
- * Returns an object with doctype and tail keys.
- */
-var getDoctype = (function () {
-  // Cached regex
-  // [\s\S] matches multiline doctypes
-  var regex = /<!doctype [\s\S]*?>/i;
-  return function (str) {
-    var doctype = (str.match(regex) || [''])[0],
-        tail = str.substr(doctype.length);
-    return {
-      doctype: doctype,
-      tail: tail
-    };
-  };
-}());
 
 function sendReload() {
   if (saveChecksum) {
@@ -171,21 +150,27 @@ var renderLivePreview = (function () {
     iframe.setAttribute('class', 'stretch');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     // TODO update this so that it's environment agnostic
-    iframe.src = jsbin.root + '/runner';
+    iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
     runner = iframe.contentWindow;
     runner.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
   }
 
   // The big daddy that handles postmessaging the runner.
-  var renderLivePreview = function () {
+  var renderLivePreview = function (withAlerts) {
     // No postMessage? Don't render – the event-stream will handle it.
     if (!window.postMessage) return;
 
     var source = getPreparedCode();
     runner.postMessage({
       type: 'render',
-      data: source
+      data: {
+        source: source,
+        options: {
+          withAlerts: withAlerts,
+          debug: jsbin.settings.debug
+        }
+      }
     }, '*');
   };
 

@@ -168,7 +168,8 @@ var renderLivePreview = (function () {
   // This adds the runner iframe to the page. It's only run once.
   if (!$live.find('iframe').length) {
     iframe = document.createElement('iframe');
-    // iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('class', 'stretch');
+    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     // TODO update this so that it's environment agnostic
     iframe.src = jsbin.root + '/runner';
     $live.prepend(iframe);

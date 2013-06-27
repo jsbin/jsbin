@@ -82,7 +82,17 @@ var processor = (function () {
     source = source || '';
 
 
-    var combinedSource = [];
+    var combinedSource = [],
+        realtime = (options.requested !== true),
+        noRealtimeJs = (options.includeJsInRealtime === false);
+
+    /**
+     * If the render was realtime and we don't want javascript in realtime
+     * renders – Auto-run JS is unchecked – then strip out the Javascript
+     */
+    if (realtime && noRealtimeJs) {
+      source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+    }
 
     // Strip autofocus from the markup, preventing the focus switching out of
     // the editable area.
@@ -97,7 +107,7 @@ var processor = (function () {
     // Kill the blocking functions
     // IE requires that this is done in the script, rather than off the window
     // object outside of the doc.write.
-    if (options.withAlerts !== true) {
+    if (realtime && options.includeJsInRealtime) {
       combinedSource.push(processor.blockingMethods.kill);
     }
 
@@ -107,7 +117,7 @@ var processor = (function () {
     // Kill the blocking functions
     // IE requires that this is done in the script, rather than off the window
     // object outside of the doc.write.
-    if (options.withAlerts !== true) {
+    if (realtime && options.includeJsInRealtime) {
       combinedSource.push(processor.blockingMethods.restore);
     }
 

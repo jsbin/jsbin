@@ -157,7 +157,7 @@ var renderLivePreview = (function () {
   }
 
   // The big daddy that handles postmessaging the runner.
-  var renderLivePreview = function (withAlerts) {
+  var renderLivePreview = function (requested) {
     // No postMessage? Don't render – the event-stream will handle it.
     if (!window.postMessage) return;
 
@@ -167,8 +167,9 @@ var renderLivePreview = (function () {
       data: {
         source: source,
         options: {
-          withAlerts: withAlerts,
-          debug: jsbin.settings.debug
+          requested: requested,
+          debug: jsbin.settings.debug,
+          includeJsInRealtime: jsbin.settings.includejs
         }
       }
     }, '*');

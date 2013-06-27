@@ -86,10 +86,8 @@ var processor = (function () {
         realtime = (options.requested !== true),
         noRealtimeJs = (options.includeJsInRealtime === false);
 
-    /**
-     * If the render was realtime and we don't want javascript in realtime
-     * renders – Auto-run JS is unchecked – then strip out the Javascript
-     */
+    // If the render was realtime and we don't want javascript in realtime
+    // renders – Auto-run JS is unchecked – then strip out the Javascript
     if (realtime && noRealtimeJs) {
       source = source.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
     }

@@ -3,6 +3,16 @@
 
 var jsconsole = (function (window) {
 
+// Key-code library
+var keylib={left:37,up:38,right:39,down:40,space:32,
+            alt:18,ctrl:17,shift:16,tab:9,enter:13,webkitEnter:10,
+            escape:27,backspace:8,
+            zero:48,one:49, two:50,three:51,four:52,
+            five:53,six:57,seven:58,eight:59,nine:60,
+            a:65,b:66,c:67,d:68,e:69,f:70,g:71,h:72,i:73,j:74,k:75,
+            l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,
+            w:87,x:88,y:89,z:90};
+
 function sortci(a, b) {
   return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
 }
@@ -470,11 +480,6 @@ if (enableCC && iOSMobile) {
   exec.parentNode.appendChild(fakeInput);
 }
 
-// sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
-
-// tweaks to interface to allow focus
-// if (!('autofocus' in document.createElement('input'))) exec.focus();
-
 function whichKey(event) {
   var keys = {38:1, 40:1, Up:38, Down:40, Enter:10, 'U+0009':9, 'U+0008':8, 'U+0190':190, 'Right':39,
       // these two are ignored
@@ -495,22 +500,7 @@ function setCursorTo(str) {
     exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
   }
   cursor.focus();
-  // window.scrollTo(0,0);
 }
-
-// output.ontouchstart = output.onclick = function (event) {
-//   event = event || window.event;
-//   if (event.target.nodeName == 'A' && event.target.className == 'permalink') {
-//     var command = decodeURIComponent(event.target.search.substr(1));
-//     setCursorTo(command);
-
-//     if (liveHistory) {
-//       window.history.pushState(command, command, event.target.href);
-//     }
-
-//     return false;
-//   }
-// };
 
 exec.ontouchstart = function () {
   window.scrollTo(0,0);
@@ -554,75 +544,75 @@ exec.onkeydown = function (event) {
   event = event || window.event;
   var keys = {38:1, 40:1},
       wide = body.className == 'large',
-      which = whichKey(event);
+      which = whichKey(event),
+      enterDown = (which == keylib.enter || which == keylib.webkitEnter);
 
   if (typeof which == 'string') which = which.replace(/\/U\+/, '\\u');
+  // Is this a special key?
   if (keys[which]) {
-    if (event.shiftKey) {
-      // changeView(event);
-    } else if (!wide) { // history cycle
-      if (enableCC && window.getSelection) {
-        window.selObj = window.getSelection();
-        var selRange = selObj.getRangeAt(0);
+    if (event.shiftKey) return;
+    // History cycle
 
-        cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
-        var value = exec.value,
-            firstnl = value.indexOf('\n'),
-            lastnl = value.lastIndexOf('\n');
+    // Allow user to navigate multiline pieces of code
+    if (window.getSelection) {
+      window.selObj = window.getSelection();
+      var selRange = selObj.getRangeAt(0),
+          cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
 
-        if (firstnl !== -1) {
-          if (which == 38 && cursorPos > firstnl) {
-            return;
-          } else if (which == 40 && cursorPos < lastnl) {
-            return;
-          }
+      var value = exec.value,
+          firstNewLine = value.indexOf('\n');
+
+      if (firstNewLine !== -1) {
+        if (which == keylib.up && cursorPos > firstNewLine) {
+          return;
+        } else if (which == keylib.down) {
+          return;
         }
       }
-
-      if (which == 38) { // cycle up
-        pos--;
-        if (pos < 0) pos = 0; //history.length - 1;
-      } else if (which == 40) { // down
-        pos++;
-        if (pos >= history.length) pos = history.length; //0;
-      }
-      if (history[pos] != undefined && history[pos] !== '') {
-        removeSuggestion();
-        setCursorTo(history[pos])
-        return false;
-      } else if (pos == history.length) {
-        removeSuggestion();
-        setCursorTo('');
-        return false;
-      }
     }
-  } else if ((which == 13 || which == 10) && event.shiftKey == false) { // enter (what about the other one)
-    removeSuggestion();
-    if (event.shiftKey == true || event.metaKey || event.ctrlKey || !wide) {
-      var command = exec.textContent || exec.value;
-      if (command.length) post(command);
+
+    // Up
+    if (which == keylib.up) {
+      pos--;
+      // Don't go past the start
+      if (pos < 0) pos = 0; //history.length - 1;
+    }
+    // Down
+    if (which == keylib.down) {
+      pos++;
+      // Don't go past the end
+      if (pos >= history.length) pos = history.length; //0;
+    }
+    if (history[pos] != undefined && history[pos] !== '') {
+      setCursorTo(history[pos]);
+      return false;
+    } else if (pos == history.length) {
+      setCursorTo('');
       return false;
     }
-  } else if ((which == 13 || which == 10) && !enableCC && event.shiftKey == true) {
-    // manually expand the textarea when we don't have code completion turned on
+  }
+
+  // Execute the code
+  else if (enterDown && event.shiftKey == false) { // enter (what about the other one)
+    var command = exec.textContent || exec.value;
+    // ======================================================================
+    if (command.length) post(command);
+    // ======================================================================
+    return false;
+  }
+
+  // Expand the textarea
+  else if (enterDown && event.shiftKey == true) {
     var rows = exec.value.match(/\n/g);
     rows = rows != null ? rows.length + 2 : 2;
     exec.setAttribute('rows', rows);
-  } else if (which == 9 && wide) {
-    checkTab(event);
-  } else if (event.shiftKey && event.metaKey && which == 8) {
+  }
+
+  // Clear the console.
+  // Ctrl+L or Meta+Shift+Backspace
+  else if ((event.shiftKey && event.metaKey && which == keylib.backspace) ||
+           (event.ctrlKey && which == keylib.l)) {
     output.innerHTML = '';
-  } else if ((which == 39 || which == 35) && ccPosition !== false) { // complete code
-    completeCode();
-  } else if (event.ctrlKey && which == 76) {
-    output.innerHTML = '';
-  } else if (enableCC) { // try code completion
-    if (ccPosition !== false && which == 9) {
-      codeComplete(event); // cycles available completions
-      return false;
-    } else if (ccPosition !== false && cursor.nextSibling) {
-      removeSuggestion();
-    }
   }
 };
 
@@ -725,8 +715,6 @@ document.onkeydown = function (event) {
   } else if (event.target == output.parentNode && which == 32) { // space
     output.parentNode.scrollTop += 5 + output.parentNode.offsetHeight * (event.shiftKey ? -1 : 1);
   }
-
-  // return changeView(event);
 };
 
 exec.onclick = function () {

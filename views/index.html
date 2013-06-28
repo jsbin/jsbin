@@ -22,12 +22,12 @@
       {{/embed}}
       {{^embed}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a>
+          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <strong>Bins</strong></a>
           <div class="dropdown" id="actionmenu">
             <div class="dropdownmenu">
               <a id="createnew" class="button group" title="Create fresh bin" href="{{root}}">New</a>
               {{#home}}
-              <a href="#" class="button group homebtn">Open</a>
+              <a href="#" class="button group homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
               {{/home}}
               <hr>
               <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
@@ -74,9 +74,9 @@
         {{^embed}}
           {{#home}}
             <div class="menu">
-              <div class="group">
-                <a href="#" id="avatar" class="button homebtn">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}{{home}}</a><a href="#homemenu" class="button button-dropdown button-dropdown-arrow"><span class="icon icon-chevron-down"></span></a>
-              </div>
+              <!-- <div class="group"> -->
+                <a href="#homemenu" class="button button-dropdown avatar">{{#gravatar}}<img class="avatar" src="{{gravatar}}">{{/gravatar}}</a>
+              <!-- </div> -->
               <div class="dropdown dd-right" id="homemenu">
                 <div class="dropdowncontent">
                   <form class="login">
@@ -103,6 +103,10 @@
                     <button hidden>Logout</button>
                   </form>
 
+                    <hr>
+                    <div>
+                      <strong><a href="#" id="profile" class="homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a></strong>
+                    </div>
                 </div>
               </div>
             </div>

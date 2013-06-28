@@ -125,6 +125,11 @@ textarea:focus {
   /*border-right: 0;*/
 }
 
+.help strong a {
+  text-decoration: none;
+  display: block;
+}
+
 .starting, .help {
   z-index: 1;
   line-height: 25px;
@@ -1177,6 +1182,7 @@ form label {
   margin-left: 2px;
   line-height: 20px;
   font-weight: bold;
+  color: #777;
 }
 
 form input[type="text"],
@@ -1881,6 +1887,10 @@ a.active:hover {
   padding: 0;
 }
 
+.dropdown .meta {
+  color: #999;
+}
+
 .dropdownmenu,
 .dropdowncontent {
   margin: 3px 5px;
@@ -1923,6 +1933,11 @@ a.active:hover {
   display: inline-block;
   position: relative;
   padding: 6px 10px;
+}
+
+.help .menu > a.avatar {
+  padding: 0;
+  margin-top: -3px;
 }
 
 #panels {
@@ -2422,12 +2437,16 @@ a.active:hover {
   padding: 5px 30px 5px 15px;
 }
 
-.dropdownmenu hr {
+hr {
   border-style: solid;
   border-color: #DFDFDF;
   border-width: 1px;
   border-bottom: none;
   margin: 0;
+}
+
+form + hr {
+  margin: 12px 0;
 }
 
 #save {
@@ -2558,7 +2577,7 @@ pre .highlight:last-of-type {
 }
 
 .avatar {
-  margin-right: 7px;
+  /*margin-right: 7px;*/
   vertical-align: top;
   /*display: inline-block;*/
   border-radius: 1px;
@@ -2569,6 +2588,9 @@ pre .highlight:last-of-type {
   -o-box-shadow: 0 0 1px #999;
   -moz-box-shadow: 0 0 1px #999;
   box-shadow: 0 0 1px #999;
+  position: absolute;
+  right: 0;
+  /*top: 2px;*/
 }
 
 .brand {

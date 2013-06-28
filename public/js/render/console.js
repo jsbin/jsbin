@@ -111,38 +111,70 @@ function cleanse(s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 }
 
-function run(cmd) {
-  var rawoutput = null,
-      className = 'response',
-      internalCmd = internalCommand(cmd);
-  if (internalCmd) {
-    return ['info', internalCmd];
-  } else {
-    try {
-      rawoutput = sandboxframe.contentWindow.eval(cmd);
-    } catch (e) {
-      rawoutput = e.message;
-      className = 'error';
-    }
-    return [className, cleanse(stringify(rawoutput))];
-  }
-}
+/**
+ * =============================================================================
+ * TODO remove, temporary
+ * =============================================================================
+ */
+$document.on('console:run', function (event, cmd) {
+  $document.trigger('console:response', cmd);
+});
 
-function post(cmd, blind, response /* passed in when echoing from remote console */) {
+/**
+ * Run a console command.
+ * This sets up an event listener waiting for a response to the console:run
+ * event it emits. It will then call a response callback, but only once per
+ * posted command.
+ */
+var run = (function () {
+
+  var responseCb = null;
+
+  // When a response comes back from whatever ran the the console command
+  // call the response callback, but only once!
+  $document.on('console:response', function (event, data) {
+    if (!responseCb) return;
+    var cb = responseCb;
+    responseCb = null;
+    cb.call(null, ['response', data]);
+  });
+
+  return function (cmd, cb) {
+    var internalCmd = internalCommand(cmd);
+    if (internalCmd) {
+      return cb(['info', internalCmd]);
+    }
+    responseCb = cb;
+    $document.trigger('console:run', cmd);
+  };
+}());
+
+/**
+ * Run and show response to a command fired from the console
+ */
+var post = function (cmd, blind, response) {
   cmd = trim(cmd);
 
-  if (blind === undefined) {
+  // Add the command to the user's history – unless this was blind
+  if (!blind) {
     history.push(cmd);
     setHistory(history);
   }
 
-  if ((cmd.match(commandPresent) || []).length > 1) {
-    // split the command up in to blocks and internal commands and run sequentially
-  } else {
-
-  }
-
+  // Show the user what they typed
   echo(cmd);
+
+  // If we were handed a response, show the response straight away – otherwise
+  // runs it and pass showResponse as a callback
+  if (response) return showResponse(response);
+  run(cmd, showResponse);
+
+};
+
+/**
+ * Display the result of a command to the user
+ */
+var showResponse = function (response) {
 
   // order so it appears at the top
   var el = document.createElement('div'),
@@ -150,56 +182,36 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  if (!internalCommand(cmd)) {
+  pos = history.length;
 
-    // Fix console not having iframe
-    if (!(sandboxframe && sandboxframe.contentWindow)) {
-      // Boo. There must be a nice way to do this.
-      sandboxframe = $live.find('iframe')[0];
-      // Only force it to render if there's no live iframe
-      if (!(sandboxframe && sandboxframe.contentWindow)) {
-        renderLivePreview(false);
-        sandboxframe = $live.find('iframe')[0];
+  if (typeof response === 'undefined') return;
+
+  el.className = 'response';
+  span.innerHTML = response[1];
+
+  if (response[0] != 'info') prettyPrint([span]);
+  el.appendChild(span);
+
+  li.className = response[0];
+  li.innerHTML = '<span class="gutter"></span>';
+  li.appendChild(el);
+
+  appendLog(li);
+
+  exec.value = '';
+  if (enableCC) {
+    try {
+      if (jsbin.panels.focused.id === 'console') {
+        if (!jsbin.embed) {
+          cursor.focus();
+        }
+        document.execCommand('selectAll', false, null);
+        document.execCommand('delete', false, null);
       }
-      jsconsole.setSandbox(sandboxframe);
-    }
+    } catch (e) {}
   }
 
-  // In a setTimeout so that renderLivePreview has time for the iframe to load
-  setTimeout(function () {
-    response = response || run(cmd);
-
-    if (response !== undefined) {
-      el.className = 'response';
-      span.innerHTML = response[1];
-
-      if (response[0] != 'info') prettyPrint([span]);
-      el.appendChild(span);
-
-      li.className = response[0];
-      li.innerHTML = '<span class="gutter"></span>';
-      li.appendChild(el);
-
-      appendLog(li);
-
-      exec.value = '';
-      if (enableCC) {
-        try {
-          // document.getElementsByTagName('a')[0].focus();
-          if (jsbin.panels.focused.id === 'console') {
-            if (!jsbin.embed) {
-              cursor.focus();
-            }
-            document.execCommand('selectAll', false, null);
-            document.execCommand('delete', false, null);
-          }
-        } catch (e) {}
-      }
-    }
-    pos = history.length;
-  }, 0);
-
-}
+};
 
 function log(msg, className) {
   var li = document.createElement('li'),

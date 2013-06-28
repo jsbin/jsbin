@@ -226,6 +226,11 @@ var sandbox = (function () {
       });
     });
 
+    // Notify the parent of a focus
+    addEvent(childWindow, 'focus', function () {
+      runner.postMessage('focus');
+    });
+
   };
 
   return sandbox;

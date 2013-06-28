@@ -200,6 +200,15 @@ var renderer = (function () {
     };
   }());
 
+  /**
+   * When the iframe focuses, simulate that here
+   */
+  renderer.focus = function () {
+    $('#live').focus();
+    // also close any open dropdowns
+    closedropdown();
+  };
+
   return renderer;
 
 }());

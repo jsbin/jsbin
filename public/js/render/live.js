@@ -122,15 +122,100 @@ function codeChangeLive(event, data) {
 
 $document.bind('codeChange.live', codeChangeLive);
 
-/**
+/** ============================================================================
+ * JS Bin Renderer
+ * Messages to and from the runner.
+ * ========================================================================== */
+
+var renderer = (function () {
+
+  var renderer = {};
+
+  /**
+   * Store what runner origin *should* be
+   * TODO this should allow anything if x-origin protection should be disabled
+   */
+  renderer.runner = {};
+  renderer.runner.origin = jsbin.root.replace('jsbin', 'run.jsbin');
+
+  /**
+   * Setup the renderer
+   */
+  renderer.setup = function (runner) {
+    renderer.runner.window = runner;
+  };
+
+  /**
+   * Log error messages, indicating that it's from the renderer.
+   */
+  renderer.error = function () {
+    window.console.error.apply(console, ['Renderer:'].concat([].slice.call(arguments)));
+  };
+
+  /**
+   * Handle all incoming postMessages to the renderer
+   */
+  renderer.handleMessage = function (event) {
+    if (event.origin !== renderer.runner.origin) {
+      return renderer.error('Message disallowed, incorrect origin:', event.origin);
+    }
+    if (typeof renderer[event.data.type] !== 'function') {
+      return renderer.error('No matching event handler:', event.data.type);
+    }
+    try {
+      renderer[event.data.type](event.data.data);
+    } catch (e) {
+      renderer.error(e.message);
+    }
+  };
+
+  /**
+   * Send message to the runner window
+   */
+  renderer.postMessage = function (type, data) {
+    if (!renderer.runner.window) {
+      return renderer.error('No connection to runner window.');
+    }
+    renderer.runner.window.postMessage({
+      type: type,
+      data: data
+    }, renderer.runner.origin);
+  };
+
+  /**
+   * When the iframe resizes, update the size text
+   */
+  renderer.resize = (function () {
+    var size = $live.find('.size');
+
+    var hide = throttle(function () {
+      size.fadeOut(200);
+    }, 2000);
+
+    return function (data) {
+      if (!jsbin.embed) {
+        size.show().html(data.width + 'px');
+        hide();
+      }
+    };
+  }());
+
+  return renderer;
+
+}());
+
+/** ============================================================================
  * Live rendering.
+ *
  * Comes in to tasty flavours. Basic mode, which is essentially an IE7
  * fallback. Take a look at https://github.com/remy/jsbin/issues/651 for more.
  * It uses the iframe's name and JS Bin's event-stream support to keep the
  * page up-to-date.
+ *
  * The second mode uses postMessage to inform the runner of changes to code,
- * config and anything that affects rendering.
- */
+ * config and anything that affects rendering, and also listens for messages
+ * coming back to update the JS Bin UI.
+ * ========================================================================== */
 
 /**
  * Render live preview.
@@ -140,8 +225,7 @@ $document.bind('codeChange.live', codeChangeLive);
 var renderLivePreview = (function () {
 
   // Runner iframe
-  var iframe,
-      runner;
+  var iframe;
 
   // Basic mode
   // This adds the runner iframe to the page. It's only run once.
@@ -152,8 +236,7 @@ var renderLivePreview = (function () {
     // TODO update this so that it's environment agnostic
     iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
-    runner = iframe.contentWindow;
-    runner.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
+    iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
   }
 
   // The big daddy that handles postmessaging the runner.
@@ -162,24 +245,25 @@ var renderLivePreview = (function () {
     if (!window.postMessage) return;
 
     var source = getPreparedCode();
-    runner.postMessage({
-      type: 'render',
-      data: {
-        source: source,
-        options: {
-          requested: requested,
-          debug: jsbin.settings.debug,
-          includeJsInRealtime: jsbin.settings.includejs
-        }
+    renderer.postMessage('render', {
+      source: source,
+      options: {
+        requested: requested,
+        debug: jsbin.settings.debug,
+        includeJsInRealtime: jsbin.settings.includejs
       }
-    }, '*');
+    });
   };
 
   // When the iframe loads, swap round the callbacks and immediately invoke
   // if renderLivePreview was called already.
   return deferCallable(renderLivePreview, function (done) {
     iframe.onload = function () {
-      runner = iframe.contentWindow;
+      if (window.postMessage) {
+        // Setup postMessage listening to the runner
+        window.addEventListener('message', renderer.handleMessage, false);
+        renderer.setup(iframe.contentWindow);
+      }
       done();
     };
   });

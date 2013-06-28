@@ -210,6 +210,24 @@ var sandbox = (function () {
     };
   };
 
+  /**
+   * Attach event listeners and rpevent some default behaviour on the new
+   * window during live rendering.
+   */
+  sandbox.wrap = function (childWindow, options) {
+    if (!childWindow) return;
+    options = options || {};
+
+    // Notify the parent of resize events
+    addEvent(childWindow, 'resize', function () {
+      runner.postMessage('resize', {
+        width: childWindow.innerWidth,
+        height: childWindow.innerHeight
+      });
+    });
+
+  };
+
   return sandbox;
 
 }());
@@ -227,7 +245,9 @@ var runner = (function () {
    * Store what parent origin *should* be
    * TODO this should allow anything if x-origin protection should be disabled
    */
-  runner.parentOrigin = window.location.origin.replace('run.', '');
+  runner.parent = {};
+  runner.parent.origin = window.location.origin.replace('run.', '');
+
 
   /**
    * Log error messages, indicating that it's from the runner.
@@ -241,12 +261,13 @@ var runner = (function () {
    * Handle all incoming postMessages to the runner
    */
   runner.handleMessage = function (event) {
-    if (event.origin !== runner.parentOrigin) {
+    if (event.origin !== runner.parent.origin) {
       return runner.error('Message disallowed, incorrect origin:', event.origin);
     }
     if (typeof runner[event.data.type] !== 'function') {
       return runner.error('No matching event handler:', event.data.type);
     }
+    runner.parent.source = event.source;
     try {
       runner[event.data.type](event.data.data);
     } catch (e) {
@@ -255,19 +276,34 @@ var runner = (function () {
   };
 
   /**
+   * Send message to the parent window
+   */
+  runner.postMessage = function (type, data) {
+    if (!runner.parent.source) {
+      return runner.error('No postMessage connection to parent window.');
+    }
+    runner.parent.source.postMessage({
+      type: type,
+      data: data
+    }, runner.parent.origin);
+  };
+
+  /**
    * Render a new preview iframe using the posted source
    */
   runner.render = function (data) {
     var iframe = sandbox.create(data.options);
     sandbox.use(iframe, function () {
-      var doc = iframe.contentDocument || iframe.contentWindow.document;
-          win = doc.defaultView || doc.parentWindow;
+      var childDoc = iframe.contentDocument || iframe.contentWindow.document;
+          childWindow = childDoc.defaultView || childDoc.parentWindow;
       // Process the source according to the options passed in
       var source = processor.render(data.source, data.options);
-      doc.open();
-      // Only one doc.write. IE crashes if you have lots.
-      doc.write(source);
-      doc.close();
+      childDoc.open();
+      // Only one childDoc.write. IE crashes if you have lots.
+      childDoc.write(source);
+      childDoc.close();
+      // Attach event listeners and prevent unwanted focus to the new window
+      sandbox.wrap(childWindow, data.options);
     });
   };
 

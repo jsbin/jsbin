@@ -1,3 +1,5 @@
+(function (window, document, undefined) {
+
 /** =========================================================================
  * JS Bin Runner
  * ========================================================================== */
@@ -84,11 +86,13 @@ var proxyconsole = (function () {
         args: JSON.stringify(args)
       });
       // If the browser has the console, use it too
-      if (supportsConsole) {
-        console[method].apply(console, originalArgs);
-      }
+      // if (supportsConsole) {
+      //   console[method].apply(console, originalArgs);
+      // }
     };
   });
+
+  window.proxyconsole = proxyconsole;
 
   return proxyconsole;
 
@@ -284,10 +288,12 @@ var sandbox = (function () {
     if (!childWindow) return;
     options = options || {};
 
-    // Notify the parent of resize events
+    // Notify the parent of resize events (and send one straight away)
     addEvent(childWindow, 'resize', throttle(function () {
       runner.postMessage('resize', sandbox.getSizeProperties(childWindow));
-    }, 10));
+    }, 25));
+
+    runner.postMessage('resize', sandbox.getSizeProperties(childWindow));
 
     // Notify the parent of a focus
     addEvent(childWindow, 'focus', function () {
@@ -372,15 +378,16 @@ var runner = (function () {
     sandbox.use(iframe, function () {
       var childDoc = iframe.contentDocument || iframe.contentWindow.document;
           childWindow = childDoc.defaultView || childDoc.parentWindow;
+      // Give the child a reference to this window
+      childWindow.runnerWindow = window;
       // Process the source according to the options passed in
       var source = processor.render(data.source, data.options);
       childDoc.open();
       // Only one childDoc.write. IE crashes if you have lots.
       childDoc.write(source);
       childDoc.close();
-      // Attach event listeners and prevent unwanted focus to the new window
+      // Setup the new window
       sandbox.wrap(childWindow, data.options);
-      runner.postMessage('resize', sandbox.getSizeProperties(childWindow));
     });
   };
 
@@ -412,3 +419,5 @@ window.onload = function () {
   // Hook into postMessage
   window.onmessage = runner.handleMessage;
 };
+
+}(window, document));

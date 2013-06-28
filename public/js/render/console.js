@@ -419,7 +419,6 @@ var exec = document.getElementById('exec'),
     sandboxframe = null,
     sandbox = null,
     history = getHistory(),
-    codeCompleteTimer = null,
     fakeConsole = 'window.parent._console',
     libraries = {
         jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
@@ -506,29 +505,6 @@ exec.ontouchstart = function () {
   window.scrollTo(0,0);
 };
 
-exec.onkeyup = function (event) {
-  var which = whichKey(event);
-
-  if (enableCC && which != 9 && which != 16) {
-    clearTimeout(codeCompleteTimer);
-    codeCompleteTimer = setTimeout(function () {
-      codeComplete(event);
-    }, 200);
-  }
-};
-
-if (enableCC) {
-  // disabled for now
-  cursor.__onpaste = function (event) {
-    setTimeout(function () {
-      // this causes the field to lose focus - I'll leave it here for a while, see how we get on.
-      // what I need to do is rip out the contenteditable and replace it with something entirely different
-      cursor.innerHTML = cursor.innerText;
-      // setCursorTo(cursor.innerText);
-    }, 10);
-  };
-}
-
 function findNode(list, node) {
   var pos = 0;
   for (var i = 0; i < list.length; i++) {
@@ -540,6 +516,9 @@ function findNode(list, node) {
   return -1;
 };
 
+/**
+ * Handle keydown events in the console - the money shot.
+ */
 exec.onkeydown = function (event) {
   event = event || window.event;
   var keys = {38:1, 40:1},
@@ -560,12 +539,13 @@ exec.onkeydown = function (event) {
           cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
 
       var value = exec.value,
-          firstNewLine = value.indexOf('\n');
+          firstNewLine = value.indexOf('\n'),
+          lastNewLine = value.lastIndexOf('\n');
 
       if (firstNewLine !== -1) {
         if (which == keylib.up && cursorPos > firstNewLine) {
           return;
-        } else if (which == keylib.down) {
+        } else if (which == keylib.down && cursorPos < value.length) {
           return;
         }
       }
@@ -618,89 +598,21 @@ exec.onkeydown = function (event) {
 
 if (enableCC && iOSMobile) {
   fakeInput.onkeydown = function (event) {
-    removeSuggestion();
-    var which = whichKey(event);
+    var which = whichKey(event),
+        enterDown = (which == keylib.enter || which == keylib.webkitEnter)
 
-    if (which == 13 || which == 10) {
+    if (enterDown) {
       post(this.value);
       this.value = '';
       cursor.innerHTML = '';
       return false;
     }
   };
-
-  fakeInput.onkeyup = function (event) {
-    cursor.innerHTML = cleanse(this.value);
-    var which = whichKey(event);
-    if (enableCC && which != 9 && which != 16) {
-      clearTimeout(codeCompleteTimer);
-      codeCompleteTimer = setTimeout(function () {
-        codeComplete(event);
-      }, 200);
-    }
-  };
-
-  var fakeInputFocused = false;
-
-  var dblTapTimer = null,
-      taps = 0;
-
-  form.addEventListener('touchstart', function (event) {
-    // window.scrollTo(0,0);
-    if (ccPosition !== false) {
-      event.preventDefault();
-      clearTimeout(dblTapTimer);
-      taps++;
-
-      if (taps === 2) {
-        completeCode();
-        fakeInput.value = cursor.textContent;
-        removeSuggestion();
-        fakeInput.focus();
-      } else {
-        dblTapTimer = setTimeout(function () {
-          taps = 0;
-          codeComplete({ which: 9 });
-        }, 200);
-      }
-    }
-
-    return false;
-  });
-}
-
-function completeCode(focus) {
-  var tmp = exec.textContent, l = tmp.length;
-  removeSuggestion();
-
-  cursor.innerHTML = tmp;
-  ccPosition = false;
-
-  // daft hack to move the focus elsewhere, then back on to the cursor to
-  // move the cursor to the end of the text.
-  document.getElementsByTagName('a')[0].focus();
-  cursor.focus();
-
-  var range, selection;
-  if (document.createRange) {//Firefox, Chrome, Opera, Safari, IE 9+
-    range = document.createRange();//Create a range (a range is a like the selection but invisible)
-    range.selectNodeContents(cursor);//Select the entire contents of the element with the range
-    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-    selection = window.getSelection();//get the selection object (allows you to change selection)
-    selection.removeAllRanges();//remove any selections already made
-    selection.addRange(range);//make the range you have just created the visible selection
-  } else if (document.selection) {//IE 8 and lower
-    range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
-    range.moveToElementText(cursor);//Select the entire contents of the element with the range
-    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-    range.select();//Select the range (make it the visible selection
-  }
 }
 
 form.onsubmit = function (event) {
   event = event || window.event;
   event.preventDefault && event.preventDefault();
-  removeSuggestion();
   post(exec.textContent || exec.value);
   return false;
 };
@@ -719,7 +631,7 @@ document.onkeydown = function (event) {
 
 exec.onclick = function () {
   cursor.focus();
-}
+};
 
 function getProps(cmd, filter) {
   var surpress = {}, props = [];
@@ -759,75 +671,6 @@ function getProps(cmd, filter) {
   }
 
   return props;
-}
-
-function codeComplete(event) {
-  var cmd = cursor.textContent.split(/[;\s]+/g).pop(),
-      parts = cmd.split('.'),
-      which = whichKey(event),
-      cc,
-      props = [];
-
-  if (cmd) {
-    // get the command without the dot to allow us to introspect
-    if (cmd.substr(-1) == '.') {
-      // get the command without the '.' so we can eval it and lookup the properties
-      cmd = cmd.substr(0, cmd.length - 1);
-
-      // returns an array of all the properties from the command
-      props = getProps(cmd);
-    } else {
-      props = getProps(parts.slice(0, parts.length - 1).join('.') || 'window', parts[parts.length - 1]);
-    }
-    if (props.length) {
-      if (which == 9) { // tabbing cycles through the code completion
-        // however if there's only one selection, it'll auto complete
-        if (props.length === 1) {
-          ccPosition = false;
-        } else {
-          if (event.shiftKey) {
-            // backwards
-            ccPosition = ccPosition == 0 ? props.length - 1 : ccPosition-1;
-          } else {
-            ccPosition = ccPosition == props.length - 1 ? 0 : ccPosition+1;
-          }
-        }
-      } else {
-        ccPosition = 0;
-      }
-
-      if (ccPosition === false) {
-        completeCode();
-      } else {
-        // position the code completion next to the cursor
-        if (!cursor.nextSibling) {
-          cc = document.createElement('span');
-          cc.className = 'suggest';
-          exec.appendChild(cc);
-        }
-
-        cursor.nextSibling.innerHTML = props[ccPosition];
-        exec.value = exec.textContent;
-      }
-
-      if (which == 9) return false;
-    } else {
-      ccPosition = false;
-    }
-  } else {
-    ccPosition = false;
-  }
-
-  if (ccPosition === false && cursor.nextSibling) {
-    removeSuggestion();
-  }
-
-  exec.value = exec.textContent;
-}
-
-function removeSuggestion() {
-  if (!enableCC) exec.setAttribute('rows', 1);
-  if (enableCC && cursor.nextSibling) cursor.parentNode.removeChild(cursor.nextSibling);
 }
 
 var jsconsole = {

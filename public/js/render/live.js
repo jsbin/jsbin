@@ -263,9 +263,8 @@ var renderLivePreview = (function () {
     var source = getPreparedCode(),
         includeJsInRealtime = jsbin.settings.includejs;
     // Inform other pages event streaming render to reload
-    if (requested && includeJsInRealtime) {
-      sendReload();
-    }
+    if (requested) sendReload();
+
     // Tell the iframe to reload
     renderer.postMessage('render', {
       source: source,

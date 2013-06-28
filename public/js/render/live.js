@@ -260,7 +260,13 @@ var renderLivePreview = (function () {
     // No postMessage? Don't render – the event-stream will handle it.
     if (!window.postMessage) return;
 
-    var source = getPreparedCode();
+    var source = getPreparedCode(),
+        includeJsInRealtime = jsbin.settings.includejs;
+    // Inform other pages event streaming render to reload
+    if (requested && includeJsInRealtime) {
+      sendReload();
+    }
+    // Tell the iframe to reload
     renderer.postMessage('render', {
       source: source,
       options: {

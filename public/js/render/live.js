@@ -141,8 +141,9 @@ var renderer = (function () {
   /**
    * Setup the renderer
    */
-  renderer.setup = function (runner) {
-    renderer.runner.window = runner;
+  renderer.setup = function (runnerFrame) {
+    renderer.runner.window = runnerFrame.contentWindow;
+    renderer.runner.iframe = runnerFrame;
   };
 
   /**
@@ -194,8 +195,14 @@ var renderer = (function () {
 
     return function (data) {
       if (!jsbin.embed) {
+        // Display the iframe size in px in the JS Bin UI
         size.show().html(data.width + 'px');
         hide();
+      }
+      if (jsbin.embed) {
+        // Inform the outer page of a size change
+        var height = ($body.outerHeight(true) - $(renderer.runner.iframe).height()) + data.offsetHeight;
+        window.parent.postMessage({ height: height }, '*');
       }
     };
   }());
@@ -271,7 +278,7 @@ var renderLivePreview = (function () {
       if (window.postMessage) {
         // Setup postMessage listening to the runner
         window.addEventListener('message', renderer.handleMessage, false);
-        renderer.setup(iframe.contentWindow);
+        renderer.setup(iframe);
       }
       done();
     };

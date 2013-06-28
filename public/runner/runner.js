@@ -3,7 +3,7 @@
  * ========================================================================== */
 
 /**
- * Polyfills
+ * Utilities & polyfills
  */
 
 var prependChild = function(elem, child) { elem.insertBefore(child, elem.firstChild); };
@@ -27,6 +27,22 @@ try {
     error: function () {}
   };
 }
+var throttle = function (fn, delay) {
+  var timer = null;
+  var throttled = function () {
+    var context = this, args = arguments;
+    throttled.cancel();
+    throttled.timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+
+  throttled.cancel = function () {
+    clearTimeout(throttled.timer);
+  };
+
+  return throttled;
+};
 
 /** =========================================================================
  * Processor
@@ -219,18 +235,24 @@ var sandbox = (function () {
     options = options || {};
 
     // Notify the parent of resize events
-    addEvent(childWindow, 'resize', function () {
-      runner.postMessage('resize', {
-        width: childWindow.innerWidth,
-        height: childWindow.innerHeight
-      });
-    });
+    addEvent(childWindow, 'resize', throttle(function () {
+      runner.postMessage('resize', sandbox.getSizeProperties(childWindow));
+    }, 10));
 
     // Notify the parent of a focus
     addEvent(childWindow, 'focus', function () {
       runner.postMessage('focus');
     });
 
+  };
+
+  sandbox.getSizeProperties = function (childWindow) {
+    return {
+      width: childWindow.innerWidth,
+      height: childWindow.innerHeight,
+      offsetWidth: childWindow.document.documentElement.offsetWidth,
+      offsetHeight: childWindow.document.documentElement.offsetHeight
+    };
   };
 
   return sandbox;
@@ -309,6 +331,7 @@ var runner = (function () {
       childDoc.close();
       // Attach event listeners and prevent unwanted focus to the new window
       sandbox.wrap(childWindow, data.options);
+      runner.postMessage('resize', sandbox.getSizeProperties(childWindow));
     });
   };
 

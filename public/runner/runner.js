@@ -21,11 +21,7 @@ if (!window.location.origin) window.location.origin = window.location.protocol+"
 try {
   console.log('runner');
 } catch (e) {
-  window.console = {
-    log: function () {},
-    info: function () {},
-    error: function () {}
-  };
+
 }
 var throttle = function (fn, delay) {
   var timer = null;
@@ -43,6 +39,60 @@ var throttle = function (fn, delay) {
 
   return throttled;
 };
+
+/** =========================================================================
+ * Console
+ * Proxy console.logs out to the parent window
+ * ========================================================================== */
+
+var proxyconsole = (function () {
+
+  var supportsConsole = true;
+  try { window.console.log('runner'); } catch (e) { supportsConsole = false; }
+
+  var proxyconsole = {};
+
+  /**
+   * Replace circular/un-parsable objects from an array for proxying
+   */
+  proxyconsole.replaceBadArgs = function (args) {
+    var newArgs = [];
+    args.forEach(function (arg) {
+      var newArg = arg;
+      try {
+        JSON.parse(JSON.stringify(arg));
+      } catch(e) {
+        newArg = arg.toString();
+      }
+      newArgs.push(newArg);
+    });
+    return newArgs;
+  };
+
+  // Create each of these methods on the proxy, and postMessage up to JS Bin
+  // when one is called.
+  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir'];
+  methods.forEach(function (method) {
+    // Create console method
+    proxyconsole[method] = function () {
+      // Replace args that can't be sent through postMessage
+      var originalArgs = [].slice.call(arguments),
+          args = proxyconsole.replaceBadArgs(originalArgs);
+      // Post up with method and the arguments
+      runner.postMessage('console', {
+        method: method,
+        args: JSON.stringify(args)
+      });
+      // If the browser has the console, use it too
+      if (supportsConsole) {
+        console[method].apply(console, originalArgs);
+      }
+    };
+  });
+
+  return proxyconsole;
+
+}());
 
 /** =========================================================================
  * Processor
@@ -278,10 +328,9 @@ var runner = (function () {
 
   /**
    * Log error messages, indicating that it's from the runner.
-   * TODO proxy these up to the parent
    */
   runner.error = function () {
-    window.console.error.apply(console, ['Runner:'].concat([].slice.call(arguments)));
+    console.error.apply(console, ['Runner:'].concat([].slice.call(arguments)));
   };
 
   /**
@@ -362,5 +411,4 @@ window.onload = function () {
   sandbox.target = document.getElementById('sandbox-wrapper');
   // Hook into postMessage
   window.onmessage = runner.handleMessage;
-
 };

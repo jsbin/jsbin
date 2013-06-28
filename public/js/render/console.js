@@ -364,7 +364,7 @@ window._console = {
     return props;
   },
   error: function (err) {
-    log(err.message, 'error');
+    log(err.message || err, 'error');
     window.console.error.apply(window.console, arguments);
   }
 };

@@ -216,6 +216,22 @@ var renderer = (function () {
     closedropdown();
   };
 
+  /**
+   * Proxy console logging to JS Bin's console
+   */
+  renderer.console = function (data) {
+    var method = data.method,
+        args = [];
+    try {
+      args = JSON.parse(data.args);
+    } catch (e) {
+      method = 'error';
+      args = ['Console arguments from the runner could not be parsed.'];
+    }
+    if (window._console && !window._console[method]) method = 'log';
+    window._console[method].apply(window._console, args);
+  };
+
   return renderer;
 
 }());

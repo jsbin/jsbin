@@ -28,5 +28,6 @@
   "setForgotToken": "INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES (?, ?, ?, ?)",
   "deleteExpiredForgotToken": "DELETE FROM `forgot_tokens` WHERE `expires` <= ? OR `token`=? OR `owner_name`=?",
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
-  "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1"
+  "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
+  "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?"
 }

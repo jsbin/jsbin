@@ -350,6 +350,10 @@ var libraries = [
         "label": "Processing 1.4.1"
     },
     {
+        "url": "http://d3js.org/d3.v3.min.js",
+        "label": "D3 3.x"
+    },
+    {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js",
         "label": "Rapha&euml;l 2.1.0"
     },

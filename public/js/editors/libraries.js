@@ -349,6 +349,10 @@ var libraries = [
         "url": "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js",
         "label": "Processing 1.4.1"
     },
+        {
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/d3/3.2.2/d3.v3.min.js",
+        "label": "D3.js 3.2.2"
+    },
     {
         "url": "http://d3js.org/d3.v3.min.js",
         "label": "D3 3.x"

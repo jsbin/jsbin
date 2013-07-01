@@ -289,7 +289,6 @@ var renderLivePreview = (function () {
     iframe = document.createElement('iframe');
     iframe.setAttribute('class', 'stretch');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
-    // TODO update this so that it's environment agnostic
     iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
     iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;

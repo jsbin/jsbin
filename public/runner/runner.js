@@ -377,7 +377,6 @@ var runner = (function () {
 
   /**
    * Store what parent origin *should* be
-   * TODO this should allow anything if x-origin protection should be disabled
    */
   runner.parent = {};
   runner.parent.origin = window.location.origin.replace('run.', '');

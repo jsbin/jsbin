@@ -42,6 +42,10 @@ var throttle = function (fn, delay) {
   return throttled;
 };
 
+var cleanse = function (s) {
+  return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
+};
+
 /** =========================================================================
  * Console
  * Proxy console.logs out to the parent window
@@ -55,18 +59,12 @@ var proxyconsole = (function () {
   var proxyconsole = {};
 
   /**
-   * Replace circular/un-parsable objects from an array for proxying
+   * Stringify all of the console objects from an array for proxying
    */
   proxyconsole.replaceBadArgs = function (args) {
     var newArgs = [];
     args.forEach(function (arg) {
-      var newArg = arg;
-      try {
-        JSON.parse(JSON.stringify(arg));
-      } catch(e) {
-        newArg = arg.toString();
-      }
-      newArgs.push(newArg);
+      newArgs.push(cleanse(stringify(arg)));
     });
     return newArgs;
   };
@@ -85,10 +83,6 @@ var proxyconsole = (function () {
         method: method,
         args: JSON.stringify(args)
       });
-      // If the browser has the console, use it too
-      // if (supportsConsole) {
-      //   console[method].apply(console, originalArgs);
-      // }
     };
   });
 
@@ -311,6 +305,24 @@ var sandbox = (function () {
     };
   };
 
+  /**
+   * Evaluate a command against the active iframe, then use the proxy console
+   * to fire information up to the parent
+   */
+  sandbox.eval = function (cmd) {
+    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    var childWindow = sandbox.active.contentWindow;
+    var output = null,
+        type = 'log';
+    try {
+      output = childWindow.eval(cmd);
+    } catch (e) {
+      output = e.message;
+      type = 'error';
+    }
+    return proxyconsole[type](output);
+  };
+
   return sandbox;
 
 }());
@@ -389,6 +401,13 @@ var runner = (function () {
       // Setup the new window
       sandbox.wrap(childWindow, data.options);
     });
+  };
+
+  /**
+   * Run console commands against the iframe's scope
+   */
+  runner['console:run'] = function (cmd) {
+    sandbox.eval(cmd);
   };
 
   return runner;

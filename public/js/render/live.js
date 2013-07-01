@@ -292,6 +292,11 @@ var renderLivePreview = (function () {
     });
   };
 
+  // Listen for console input and post it to the iframe
+  $document.on('console:run', function (event, cmd) {
+    renderer.postMessage('console:run', cmd);
+  });
+
   // When the iframe loads, swap round the callbacks and immediately invoke
   // if renderLivePreview was called already.
   return deferCallable(renderLivePreview, function (done) {

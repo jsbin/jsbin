@@ -13,141 +13,20 @@ var keylib={left:37,up:38,right:39,down:40,space:32,
             l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,
             w:87,x:88,y:89,z:90};
 
-function sortci(a, b) {
-  return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
-}
-
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-// custom because I want to be able to introspect native browser objects *and* functions
-function stringify(o, simple, visited) {
-  var json = '', i, vi, type = '', parts = [], names = [], circular = false;
-  visited = visited || [];
-
-  try {
-    type = ({}).toString.call(o);
-  } catch (e) { // only happens when typeof is protected (...randomly)
-    type = '[object Object]';
-  }
-
-  // check for circular references
-  for (vi = 0; vi < visited.length; vi++) {
-    if (o === visited[vi]) {
-      circular = true;
-      break;
-    }
-  }
-
-  if (circular) {
-    json = '[circular ' + type.slice(1);
-    if (o.outerHTML) {
-      json += ":\n" + htmlEntities(o.outerHTML);
-    }
-  } else if (type == '[object String]') {
-    json = '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
-  } else if (type == '[object Array]') {
-    visited.push(o);
-
-    json = '[';
-    for (i = 0; i < o.length; i++) {
-      parts.push(stringify(o[i], simple, visited));
-    }
-    json += parts.join(', ') + ']';
-  } else if (type == '[object Object]') {
-    visited.push(o);
-
-    json = '{';
-    for (i in o) {
-      names.push(i);
-    }
-    names.sort(sortci);
-    for (i = 0; i < names.length; i++) {
-      parts.push( stringify(names[i], undefined, visited) + ': ' + stringify(o[ names[i] ], simple, visited) );
-    }
-    json += parts.join(', ') + '}';
-  } else if (type == '[object Number]') {
-    json = o+'';
-  } else if (type == '[object Boolean]') {
-    json = o ? 'true' : 'false';
-  } else if (type == '[object Function]') {
-    json = o.toString();
-  } else if (o === null) {
-    json = 'null';
-  } else if (o === undefined) {
-    json = 'undefined';
-  } else if (simple === undefined) {
-    visited.push(o);
-
-    json = type + '{\n';
-    for (i in o) {
-      names.push(i);
-    }
-    names.sort(sortci);
-    for (i = 0; i < names.length; i++) {
-      try {
-        parts.push(names[i] + ': ' + stringify(o[names[i]], true, visited)); // safety from max stack
-      } catch (e) {
-        if (e.name == 'NS_ERROR_NOT_IMPLEMENTED') {
-          // do nothing - not sure it's useful to show this error when the variable is protected
-          // parts.push(names[i] + ': NS_ERROR_NOT_IMPLEMENTED');
-        }
-      }
-    }
-    json += parts.join(',\n') + '\n}';
-  } else {
-    visited.push(o);
-    try {
-      json = stringify(o, true, visited)+''; // should look like an object
-    } catch (e) {
-
-    }
-  }
-  return json;
-}
-
 function cleanse(s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 }
 
 /**
- * =============================================================================
- * TODO remove, temporary
- * =============================================================================
- */
-$document.on('console:run', function (event, cmd) {
-  $document.trigger('console:response', cmd);
-});
-
-/**
  * Run a console command.
- * This sets up an event listener waiting for a response to the console:run
- * event it emits. It will then call a response callback, but only once per
- * posted command.
  */
-var run = (function () {
-
-  var responseCb = null;
-
-  // When a response comes back from whatever ran the the console command
-  // call the response callback, but only once!
-  $document.on('console:response', function (event, data) {
-    if (!responseCb) return;
-    var cb = responseCb;
-    responseCb = null;
-    cb.call(null, ['response', data]);
-  });
-
-  return function (cmd, cb) {
-    var internalCmd = internalCommand(cmd);
-    if (internalCmd) {
-      return cb(['info', internalCmd]);
-    }
-    responseCb = cb;
-    $document.trigger('console:run', cmd);
-  };
-}());
+var run = function (cmd, cb) {
+  var internalCmd = internalCommand(cmd);
+  if (internalCmd) {
+    return cb(['info', internalCmd]);
+  }
+  $document.trigger('console:run', cmd);
+};
 
 /**
  * Run and show response to a command fired from the console
@@ -165,7 +44,7 @@ var post = function (cmd, blind, response) {
   echo(cmd);
 
   // If we were handed a response, show the response straight away – otherwise
-  // runs it and pass showResponse as a callback
+  // runs it
   if (response) return showResponse(response);
   run(cmd, showResponse);
 
@@ -366,14 +245,14 @@ window._console = {
   log: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
-      log(stringify(arguments[i], true));
+      log(''+arguments[i], true);
     }
     window.console.log.apply(window.console, arguments);
   },
   dir: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
-      log(stringify(arguments[i]));
+      log(arguments[i]);
     }
     window.console.dir.apply(window.console, arguments);
   },
@@ -751,13 +630,6 @@ var jsconsole = {
     // closure scope
     sandboxframe = $live.find('iframe')[0]; //document.createElement('iframe');
 
-    // var oldsandbox = document.getElementById('jsconsole-sandbox');
-    // if (oldsandbox) {
-    //   body.removeChild(oldsandbox);
-    // }
-
-    // body.appendChild(sandboxframe);
-    // sandboxframe.setAttribute('id', 'jsconsole-sandbox');
     if (sandboxframe) this.setSandbox(sandboxframe);
 
     if (nohelp === undefined) post(':help', true);
@@ -772,8 +644,7 @@ var jsconsole = {
       echo(data.cmd);
       log(data.response, 'response');
     }
-  },
-  stringify: stringify
+  }
 };
 
 return jsconsole;
@@ -783,95 +654,10 @@ return jsconsole;
 var msgType = '';
 
 jsconsole.init(document.getElementById('output'));
-jsconsole.queue = [];
-jsconsole.remote = {
-  log: function () {
-    // window.console.log('remote call');
-    var cmd = 'console.log';
-    try {
-      throw new Error();
-    } catch (e) {
-      // var trace = printStackTrace({ error: e }),
-      //     code = jsbin.panels.panels.javascript.getCode().split('\n'),
-      //     allcode = getPreparedCode().split('\n'),
-      //     parts = [],
-      //     line,
-      //     n;
-
-      // for (var i = 0; i < trace.length; i++) {
-      //   if (trace[i].indexOf(window.location.toString()) !== -1) {
-      //     parts = trace[i].split(':');
-      //     n = parts.pop();
-      //     if (isNaN(parseInt(n, 10))) {
-      //       n = parts.pop();
-      //     }
-      //     line = n - 2;
-      //     if (code[line] && code[line].indexOf('console.') !== -1) {
-      //       cmd = $.trim(code[line]);
-      //       console.log(cmd);
-      //       break;
-      //     }
-      //   }
-      // }
-    }
-
-    var argsObj = jsconsole.stringify(arguments.length == 1 ? arguments[0] : [].slice.call(arguments, 0));
-    var response = [];
-    [].forEach.call(arguments, function (args) {
-      response.push(jsconsole.stringify(args, true));
-    });
-
-    var msg = { response: response, cmd: cmd, type: msgType };
-
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-
-    msgType = '';
-  },
-  info: function () {
-    msgType = 'info';
-    remote.log.apply(this, arguments);
-  },
-  echo: function () {
-    var args = [].slice.call(arguments, 0),
-        plain = args.pop(),
-        cmd = args.pop(),
-        response = args;
-
-    var argsObj = jsconsole.stringify(response, plain),
-        msg = { response: argsObj, cmd: cmd };
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-  },
-  error: function (error, cmd) {
-    var msg = { response: error.message, cmd: cmd, type: 'error' };
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-  },
-  flush: function () {
-    for (var i = 0; i < jsconsole.queue.length; i++) {
-      jsconsole.rawMessage(jsconsole.queue[i]);
-    }
-  }
-};
-
-// just for extra support
-jsconsole.remote.debug = jsconsole.remote.dir = jsconsole.remote.log;
-jsconsole.remote.warn = jsconsole.remote.info;
 
 // window.top._console = jsconsole.remote;
 
 function upgradeConsolePanel(console) {
-  // console.init = function () {
     console.$el.click(function () {
       jsconsole.focus();
     });
@@ -903,9 +689,6 @@ function upgradeConsolePanel(console) {
         // $live.find('iframe').remove();
       }
     };
-    // jsconsole.ready = true;
-    // FIXME this line was causing errors in IE7
-    // jsconsole.remote.flush();
 
     $document.one('jsbinReady', function () {
       var hidebutton = function () {
@@ -919,8 +702,4 @@ function upgradeConsolePanel(console) {
       }
 
     });
-    // editors.console.fakeConsole = window._console
-  // };
-
-  // console.init();
 }

@@ -71,7 +71,7 @@ var proxyconsole = (function () {
 
   // Create each of these methods on the proxy, and postMessage up to JS Bin
   // when one is called.
-  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir'];
+  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir', 'props'];
   methods.forEach(function (method) {
     // Create console method
     proxyconsole[method] = function () {
@@ -83,6 +83,11 @@ var proxyconsole = (function () {
         method: method,
         args: JSON.stringify(args)
       });
+      // If the browner supports it, use the browser console
+      if (window.console) {
+        if (!console[method]) method = 'log';
+        console[method].apply(console, originalArgs);
+      }
     };
   });
 

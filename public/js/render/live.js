@@ -228,8 +228,32 @@ var renderer = (function () {
       method = 'error';
       args = ['Console arguments from the runner could not be parsed.'];
     }
-    if (window._console && !window._console[method]) method = 'log';
+    if (!window._console) return;
+    if (!window._console[method]) method = 'log';
     window._console[method].apply(window._console, args);
+  };
+
+  /**
+   * Load scripts into rendered iframe
+   */
+  renderer['console:load:script:success'] = function (url) {
+    $document.trigger('console:load:script:success', url);
+  };
+
+  renderer['console:load:script:error'] = function (err) {
+    $document.trigger('console:load:script:error', err);
+  };
+
+  /**
+   * Load DOME into rendered iframe
+   * TODO abstract these so that they are automatically triggered
+   */
+  renderer['console:load:dom:success'] = function (url) {
+    $document.trigger('console:load:dom:success', url);
+  };
+
+  renderer['console:load:dom:error'] = function (err) {
+    $document.trigger('console:load:dom:error', err);
   };
 
   return renderer;
@@ -292,9 +316,21 @@ var renderLivePreview = (function () {
     });
   };
 
+  /**
+   * Events
+   */
+
   // Listen for console input and post it to the iframe
   $document.on('console:run', function (event, cmd) {
     renderer.postMessage('console:run', cmd);
+  });
+
+  $document.on('console:load:script', function (event, url) {
+    renderer.postMessage('console:load:script', url);
+  });
+
+  $document.on('console:load:dom', function (event, html) {
+    renderer.postMessage('console:load:dom', html);
   });
 
   // When the iframe loads, swap round the callbacks and immediately invoke

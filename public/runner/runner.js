@@ -328,6 +328,40 @@ var sandbox = (function () {
     return proxyconsole[type](output);
   };
 
+  /**
+   * Inject a script via a URL into the page
+   */
+  sandbox.injectScript = function (url, cb) {
+    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    var childWindow = sandbox.active.contentWindow,
+        childDocument = childWindow.document;
+    var script = childDocument.createElement('script');
+    script.src = url;
+    script.onload = function () {
+      cb();
+    };
+    script.onerror = function () {
+      cb('Failed to load "' + url + '"');
+    };
+    childDocument.body.appendChild(script);
+  };
+
+  /**
+   * Inject full DOM into the page
+   */
+  sandbox.injectDOM = function (html, cb) {
+    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    var childWindow = sandbox.active.contentWindow,
+        childDocument = childWindow.document;
+        debugger;
+    try {
+      childDocument.body.innerHTML = html;
+    } catch (e) {
+      cb("Failed to load DOM.");
+    }
+    cb();
+  };
+
   return sandbox;
 
 }());
@@ -413,6 +447,26 @@ var runner = (function () {
    */
   runner['console:run'] = function (cmd) {
     sandbox.eval(cmd);
+  };
+
+  /**
+   * Load script into the apge
+   */
+  runner['console:load:script'] = function (url) {
+    sandbox.injectScript(url, function (err) {
+      if (err) return runner.postMessage('console:load:script:error', err);
+      runner.postMessage('console:load:script:success', url);
+    });
+  };
+
+  /**
+   * Load DOM into the apge
+   */
+  runner['console:load:dom'] = function (html) {
+    sandbox.injectDOM(html, function (err) {
+      if (err) return runner.postMessage('console:load:dom:error', err);
+      runner.postMessage('console:load:dom:success');
+    });
   };
 
   return runner;

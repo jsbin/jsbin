@@ -175,40 +175,48 @@ function showhelp() {
   return commands.join('\n');
 }
 
-function load(url) {
-  if (navigator.onLine) {
-    if (arguments.length > 1 || libraries[url] || url.indexOf('.js') !== -1) {
-      return loadScript.apply(this, arguments);
+var load = (function () {
+
+  $document.on('console:load:script:error', function (event, err) {
+    showResponse(['error', err]);
+  });
+
+  $document.on('console:load:script:success', function (event, url) {
+    showResponse(['response', 'Loaded "' + url + '"']);
+  });
+
+  $document.on('console:load:dom:error', function (event, err) {
+    showResponse(['error', err]);
+  });
+
+  $document.on('console:load:dom:success', function (event, url) {
+    showResponse(['response', 'Loaded DOM.']);
+  });
+
+  return function (url) {
+    if (navigator.onLine) {
+      if (arguments.length > 1 || libraries[url] || url.indexOf('.js') !== -1) {
+        return loadScript.apply(this, arguments);
+      } else {
+        return loadDOM(url);
+      }
     } else {
-      return loadDOM(url);
+      return "You need to be online to use :load";
     }
-  } else {
-    return "You need to be online to use :load";
   }
-}
+}());
 
 function loadScript() {
-  var doc = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
   for (var i = 0; i < arguments.length; i++) {
     (function (url) {
-      var script = document.createElement('script');
-      script.src = url;
-      script.onload = function () {
-        window.top.info('Loaded ' + url, 'http://' + window.location.hostname);
-        if (url == libraries.coffeescript) window.top.info('Now you can type CoffeeScript instead of plain old JS!');
-      };
-      script.onerror = function () {
-        log('Failed to load ' + url, 'error');
-      };
-      doc.body.appendChild(script);
+      $document.trigger('console:load:script', url);
     })(libraries[arguments[i]] || arguments[i]);
   }
   return "Loading script...";
 }
 
 function loadDOM(url) {
-  var doc = sandboxframe.contentWindow.document,
-      script = document.createElement('script'),
+  var script = document.createElement('script'),
       cb = 'loadDOM' + +new Date;
 
   script.src = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22' + encodeURIComponent(url) + '%22&format=xml&callback=' + cb;
@@ -217,8 +225,7 @@ function loadDOM(url) {
     if (yql.results.length) {
       var html = yql.results[0].replace(/type="text\/javascript"/ig,'type="x"').replace(/<body.*?>/, '').replace(/<\/body>/, '');
 
-      doc.body.innerHTML = html;
-      window.top.info('DOM load complete');
+      $document.trigger('console:load:dom', html);
     } else {
       log('Failed to load DOM', 'error');
     }
@@ -231,7 +238,7 @@ function loadDOM(url) {
 
   document.body.appendChild(script);
 
-  return "Loading url into DOM...";
+  return "Loading URL into DOM...";
 }
 
 function trim(s) {

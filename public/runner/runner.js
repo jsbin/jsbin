@@ -9,6 +9,7 @@
  */
 
 var prependChild = function(elem, child) { elem.insertBefore(child, elem.firstChild); };
+
 var addEvent = function(elem, event, fn) {
   if (elem.addEventListener) {
     elem.addEventListener(event, fn, false);
@@ -19,12 +20,9 @@ var addEvent = function(elem, event, fn) {
     });
   }
 };
-if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
-try {
-  console.log('runner');
-} catch (e) {
 
-}
+if (!window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host;
+
 var throttle = function (fn, delay) {
   var timer = null;
   var throttled = function () {
@@ -90,8 +88,6 @@ var proxyconsole = (function () {
       }
     };
   });
-
-  window.proxyconsole = proxyconsole;
 
   return proxyconsole;
 
@@ -491,10 +487,14 @@ window.onload = function () {
   /**
    * Live rendering, postMessage style.
    */
+
   // Set the sandbox target
   sandbox.target = document.getElementById('sandbox-wrapper');
+  // Attach the proxyconsole
+  window.proxyconsole = proxyconsole;
   // Hook into postMessage
   window.onmessage = runner.handleMessage;
+
 };
 
 }(window, document));

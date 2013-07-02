@@ -82,7 +82,7 @@ var showResponse = function (response) {
     try {
       if (jsbin.panels.focused.id === 'console') {
         if (!jsbin.embed) {
-          cursor.focus();
+          getCursor().focus();
         }
         document.execCommand('selectAll', false, null);
         document.execCommand('delete', false, null);
@@ -313,8 +313,6 @@ function showHistory() {
 var exec = document.getElementById('exec'),
     form = exec.form || {},
     output = null,
-    sandboxframe = null,
-    sandbox = null,
     history = getHistory(),
     fakeConsole = 'window.parent._console',
     libraries = {
@@ -352,7 +350,13 @@ var exec = document.getElementById('exec'),
       }
     },
     fakeInput = null,
-    cursor = document.getElementById('cursor'),
+    getCursor = (function () {
+      var cursor;
+      return function () {
+        if (cursor) return cursor;
+        return document.getElementById('cursor');
+      };
+    }()),
     // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
     iOSMobile = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') !== -1,
     // FIXME Remy, seriously, don't sniff the agent like this, it'll bite you in the arse.
@@ -362,7 +366,6 @@ if (enableCC) {
   var autofocus = jsbin.embed ? '' : 'autofocus';
   exec.parentNode.innerHTML = '<div ' + autofocus + ' id="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
   exec = document.getElementById('exec');
-  cursor = document.getElementById('cursor');
 } else {
   $('#console').addClass('plain');
 }
@@ -395,7 +398,7 @@ function setCursorTo(str) {
     var rows = str.match(/\n/g);
     exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
   }
-  cursor.focus();
+  getCursor().focus();
 }
 
 exec.ontouchstart = function () {
@@ -501,7 +504,7 @@ if (enableCC && iOSMobile) {
     if (enterDown) {
       post(this.value);
       this.value = '';
-      cursor.innerHTML = '';
+      getCursor().innerHTML = '';
       return false;
     }
   };
@@ -520,55 +523,15 @@ document.onkeydown = function (event) {
 
   if (event.shiftKey && event.metaKey && which == 8) {
     output.innerHTML = '';
-    cursor.focus();
+    getCursor().focus();
   } else if (event.target == output.parentNode && which == 32) { // space
     output.parentNode.scrollTop += 5 + output.parentNode.offsetHeight * (event.shiftKey ? -1 : 1);
   }
 };
 
 exec.onclick = function () {
-  cursor.focus();
+  getCursor().focus();
 };
-
-function getProps(cmd, filter) {
-  var surpress = {}, props = [];
-
-  if (!ccCache[cmd]) {
-    try {
-      // surpress alert boxes because they'll actually do something when we're looking
-      // up properties inside of the command we're running
-      surpress.alert = sandboxframe.contentWindow.alert;
-      sandboxframe.contentWindow.alert = function () {};
-
-      // loop through all of the properties available on the command (that's evaled)
-      ccCache[cmd] = sandboxframe.contentWindow.eval('console.props(' + cmd + ')').sort();
-
-      // return alert back to it's former self
-      delete sandboxframe.contentWindow.alert;
-    } catch (e) {
-      ccCache[cmd] = [];
-    }
-
-    // if the return value is undefined, then it means there's no props, so we'll
-    // empty the code completion
-    if (ccCache[cmd][0] == 'undefined') ccOptions[cmd] = [];
-    ccPosition = 0;
-    props = ccCache[cmd];
-  } else if (filter) {
-    // console.log('>>' + filter, cmd);
-    for (var i = 0, p; i < ccCache[cmd].length, p = ccCache[cmd][i]; i++) {
-      if (p.indexOf(filter) === 0) {
-        if (p != filter) {
-          props.push(p.substr(filter.length, p.length));
-        }
-      }
-    }
-  } else {
-    props = ccCache[cmd];
-  }
-
-  return props;
-}
 
 var jsconsole = {
   run: post,
@@ -578,44 +541,12 @@ var jsconsole = {
   },
   focus: function () {
     if (enableCC) {
-      cursor.focus();
+      getCursor().focus();
     } else {
       $(exec).focus();
     }
   },
   echo: echo,
-  setSandbox: function (newSandbox) {
-    // sandboxframe.parentNode.removeChild(sandboxframe);
-    sandboxframe = newSandbox;
-
-    sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
-    // sandbox.open();
-    // stupid jumping through hoops if Firebug is open, since overwriting console throws error
-    // sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
-    // sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-    // sandbox.open();
-    // sandbox.write(getPreparedCode(true));
-    sandboxframe.contentWindow.eval('(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();');
-
-    // sandbox.close();
-
-    this.sandboxframe = sandboxframe;
-
-    if (sandbox.readyState !== 'complete') {
-      this.ready = false;
-    } else {
-      jsconsole.onload();
-    }
-
-    sandbox.onreadystatechange = function () {
-      if (sandbox.readyState === 'complete') {
-        jsconsole.ready = true;
-        jsconsole.onload();
-      }
-    };
-
-    getProps('window'); // cache
-  },
   _onloadQueue: [],
   onload: function (fn) {
     var i = 0, length = this._onloadQueue.length;
@@ -633,10 +564,8 @@ var jsconsole = {
   init: function (outputElement, nohelp) {
     output = outputElement;
 
-    // closure scope
-    sandboxframe = $live.find('iframe')[0]; //document.createElement('iframe');
-
-    if (sandboxframe) this.setSandbox(sandboxframe);
+    jsconsole.ready = true;
+    jsconsole.onload();
 
     if (nohelp === undefined) post(':help', true);
   },
@@ -661,8 +590,6 @@ var msgType = '';
 
 jsconsole.init(document.getElementById('output'));
 
-// window.top._console = jsconsole.remote;
-
 function upgradeConsolePanel(console) {
     console.$el.click(function () {
       jsconsole.focus();
@@ -684,7 +611,6 @@ function upgradeConsolePanel(console) {
       // renderLivePreview(true);
       // setTimeout because the renderLivePreview creates the iframe after a timeout
       setTimeout(function () {
-        // jsconsole.setSandbox($live.find('iframe')[0]);
         if (editors.console.ready && !jsbin.embed) jsconsole.focus();
       }, 0);
     };

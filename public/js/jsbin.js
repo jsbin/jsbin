@@ -152,13 +152,13 @@ function objectValue(path, context) {
 }
 
 
-var $body = $('body'),
+var $window = $(window),
+    $body = $('body'),
     $document = $(document),
     debug = jsbin.settings.debug === undefined ? false : jsbin.settings.debug,
     documentTitle = 'JS Bin',
     $bin = $('#bin'),
     loadGist,
-    $document = $(document),
     // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
       // sessionStorage.setItem('javascript', editors.javascript.getCode());
@@ -171,7 +171,7 @@ var $body = $('body'),
           sessionStorage.setItem('character', 0);
         }
       }
-      
+
       sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
@@ -183,7 +183,7 @@ var $body = $('body'),
       if (panel) sessionStorage.setItem('panel', panel.id);
     };
 
-$(window).unload(unload);
+$window.unload(unload);
 
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {
@@ -248,7 +248,7 @@ if (false) { //window.top !== window && location.pathname.indexOf('/embed') === 
 }
 
 if (jsbin.embed) {
-  $(window).on('focus', function () {
+  $window.on('focus', function () {
     return false;
   });
 }

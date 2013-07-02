@@ -1,5 +1,6 @@
 /**
- * Custom stringify that's able to inspect native browser objects and functions
+ * Stringify.
+ * Inspect native browser objects and functions.
  */
 var stringify = (function () {
 
@@ -8,91 +9,102 @@ var stringify = (function () {
   };
 
   var htmlEntities = function (str) {
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   };
 
-  return function (o, simple, visited) {
-    var json = '', i, vi, type = '', parts = [], names = [], circular = false;
+  /**
+   * Recursively stringify an object. Keeps track of which objects it has
+   * visited to avoid hitting circular references, and a buffer for indentation.
+   * Goes 2 levels deep.
+   */
+  return function stringify(o, visited, buffer) {
+    var i, vi, type = '', parts = [], circular = false;
+    buffer = buffer || '';
     visited = visited || [];
 
+    // Get out fast with primitives that don't like toString
+    if (o === null) {
+      return 'null';
+    }
+    if (typeof o === 'undefined') {
+      return 'undefined';
+    }
+
+    // Determine the type
     try {
       type = ({}).toString.call(o);
     } catch (e) { // only happens when typeof is protected (...randomly)
       type = '[object Object]';
     }
 
-    // check for circular references
+    // Handle the primitive types
+    if (type == '[object Number]') {
+      return o+'';
+    }
+    if (type == '[object Boolean]') {
+      return o ? 'true' : 'false';
+    }
+    if (type == '[object Function]') {
+      return o.toString().split('\n  ').join('\n' + buffer);
+    }
+    if (type == '[object String]') {
+      return '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
+    }
+
+    // Check for circular references
     for (vi = 0; vi < visited.length; vi++) {
       if (o === visited[vi]) {
-        circular = true;
-        break;
+        // Notify the user that a circular object was found and, if available,
+        // show the object's outerHTML (for body and elements)
+        return '[circular ' + type.slice(1) +
+          ('outerHTML' in o ? ' :\n' + htmlEntities(o.outerHTML).split('\n').join('\n' + buffer) : '')
       }
     }
 
-    if (circular) {
-      json = '[circular ' + type.slice(1);
-      if (o.outerHTML) {
-        json += ":\n" + htmlEntities(o.outerHTML);
-      }
-    } else if (type == '[object String]') {
-      json = '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
-    } else if (type == '[object Array]') {
-      visited.push(o);
+    // Remember that we visited this object
+    visited.push(o);
 
-      json = '[';
+    // Stringify each member of the array
+    if (type == '[object Array]') {
       for (i = 0; i < o.length; i++) {
-        parts.push(stringify(o[i], simple, visited));
+        if (!o[i]) continue;
+        parts.push(stringify(o[i], visited));
       }
-      json += parts.join(', ') + ']';
-    } else if (type == '[object Object]') {
-      visited.push(o);
+      return '[' + parts.join(', ') + ']';
+    }
 
-      json = '{';
-      for (i in o) {
-        names.push(i);
-      }
-      names.sort(sortci);
-      for (i = 0; i < names.length; i++) {
-        parts.push( stringify(names[i], undefined, visited) + ': ' + stringify(o[ names[i] ], simple, visited) );
-      }
-      json += parts.join(', ') + '}';
-    } else if (type == '[object Number]') {
-      json = o+'';
-    } else if (type == '[object Boolean]') {
-      json = o ? 'true' : 'false';
-    } else if (type == '[object Function]') {
-      json = o.toString();
-    } else if (o === null) {
-      json = 'null';
-    } else if (o === undefined) {
-      json = 'undefined';
-    } else if (simple === undefined) {
-      visited.push(o);
+    // Fake array – very tricksy, get out quickly
+    if (type.match(/Array/)) {
+      return type;
+    }
 
-      json = type + '{\n';
-      for (i in o) {
-        names.push(i);
-      }
+    var typeStr = type + ' ',
+        newBuffer = buffer + '  ';
+
+    // Dive down if we're less than 2 levels deep
+    if (buffer.length / 2 < 2) {
+
+      var names = [];
+      // Some objects don't like 'in', so just skip them
+      try {
+        for (i in o) {
+          names.push(i);
+        }
+      } catch (e) {}
+
       names.sort(sortci);
       for (i = 0; i < names.length; i++) {
         try {
-          parts.push(names[i] + ': ' + stringify(o[names[i]], true, visited)); // safety from max stack
-        } catch (e) {
-          if (e.name == 'NS_ERROR_NOT_IMPLEMENTED') {
-            // do nothing - not sure it's useful to show this error when the variable is protected
-            // parts.push(names[i] + ': NS_ERROR_NOT_IMPLEMENTED');
-          }
-        }
+          parts.push(newBuffer + names[i] + ': ' + stringify(o[names[i]], visited, newBuffer));
+        } catch (e) {}
       }
-      json += parts.join(',\n') + '\n}';
-    } else {
-      visited.push(o);
-      try {
-        json = stringify(o, true, visited)+''; // should look like an object
-      } catch (e) {
 
-      }
     }
-    return json;
+
+    // If nothing was gathered, return empty object
+    if (!parts.length) return typeStr + '{ ... }';
+
+    // Return the indented object with new lines
+    return typeStr + '{\n' + parts.join(',\n') + '\n' + buffer + '}';
   };
 }());

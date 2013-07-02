@@ -59,11 +59,19 @@ var proxyconsole = (function () {
   /**
    * Stringify all of the console objects from an array for proxying
    */
-  proxyconsole.replaceBadArgs = function (args) {
+  proxyconsole.stringifyArgs = function (args) {
     var newArgs = [];
-    args.forEach(function (arg) {
-      newArgs.push(cleanse(stringify(arg)));
-    });
+    // TODO this was forEach but when the array is [undefined] it wouldn't
+    // iterate over them
+    var i = 0, length = args.length, arg;
+    for(; i < length; i++) {
+      arg = args[i];
+      if (typeof arg === 'undefined') {
+        newArgs.push('undefined');
+      } else {
+        newArgs.push(cleanse(stringify(arg)));
+      }
+    };
     return newArgs;
   };
 
@@ -75,11 +83,11 @@ var proxyconsole = (function () {
     proxyconsole[method] = function () {
       // Replace args that can't be sent through postMessage
       var originalArgs = [].slice.call(arguments),
-          args = proxyconsole.replaceBadArgs(originalArgs);
+          args = proxyconsole.stringifyArgs(originalArgs);
       // Post up with method and the arguments
       runner.postMessage('console', {
         method: method,
-        args: JSON.stringify(args)
+        args: args
       });
       // If the browner supports it, use the browser console
       if (window.console) {
@@ -299,8 +307,8 @@ var sandbox = (function () {
 
   sandbox.getSizeProperties = function (childWindow) {
     return {
-      width: childWindow.innerWidth,
-      height: childWindow.innerHeight,
+      width: childWindow.innerWidth || childWindow.document.documentElement.clientWidth,
+      height: childWindow.innerHeight || childWindow.document.documentElement.clientHeight,
       offsetWidth: childWindow.document.documentElement.offsetWidth,
       offsetHeight: childWindow.document.documentElement.offsetHeight
     };
@@ -349,7 +357,6 @@ var sandbox = (function () {
     if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
     var childWindow = sandbox.active.contentWindow,
         childDocument = childWindow.document;
-        debugger;
     try {
       childDocument.body.innerHTML = html;
     } catch (e) {
@@ -377,27 +384,35 @@ var runner = (function () {
   runner.parent = {};
   runner.parent.origin = window.location.origin.replace('run.', '');
 
-
   /**
    * Log error messages, indicating that it's from the runner.
    */
   runner.error = function () {
-    console.error.apply(console, ['Runner:'].concat([].slice.call(arguments)));
+    var args = ['Runner:'].concat([].slice.call(arguments));
+    if (!('console' in window)) return alert(args.join(' '));
+    window.console.error.apply(console, args);
   };
 
   /**
    * Handle all incoming postMessages to the runner
    */
   runner.handleMessage = function (event) {
+    if (!event.origin) return;
     if (event.origin !== runner.parent.origin) {
       return runner.error('Message disallowed, incorrect origin:', event.origin);
     }
-    if (typeof runner[event.data.type] !== 'function') {
-      return runner.error('No matching event handler:', event.data.type);
+    var data = event.data;
+    try {
+      data = JSON.parse(event.data);
+    } catch (e) {
+      return runner.error('Error parsing event data:', e.message);
+    }
+    if (typeof runner[data.type] !== 'function') {
+      return runner.error('No matching event handler:', data.type);
     }
     runner.parent.source = event.source;
     try {
-      runner[event.data.type](event.data.data);
+      runner[data.type](data.data);
     } catch (e) {
       runner.error(e.message);
     }
@@ -410,10 +425,10 @@ var runner = (function () {
     if (!runner.parent.source) {
       return runner.error('No postMessage connection to parent window.');
     }
-    runner.parent.source.postMessage({
+    runner.parent.source.postMessage(JSON.stringify({
       type: type,
       data: data
-    }, runner.parent.origin);
+    }), runner.parent.origin);
   };
 
   /**
@@ -493,7 +508,7 @@ window.onload = function () {
   // Attach the proxyconsole
   window.proxyconsole = proxyconsole;
   // Hook into postMessage
-  window.onmessage = runner.handleMessage;
+  addEvent(window, 'message', runner.handleMessage);
 
 };
 

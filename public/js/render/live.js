@@ -157,14 +157,21 @@ var renderer = (function () {
    * Handle all incoming postMessages to the renderer
    */
   renderer.handleMessage = function (event) {
+    if (!event.origin) return;
     if (event.origin !== renderer.runner.origin) {
       return renderer.error('Message disallowed, incorrect origin:', event.origin);
     }
-    if (typeof renderer[event.data.type] !== 'function') {
-      return renderer.error('No matching event handler:', event.data.type);
+    var data = event.data;
+    try {
+      data = JSON.parse(event.data);
+    } catch (e) {
+      return renderer.error('Error parsing event data:', e.message);
+    }
+    if (typeof renderer[data.type] !== 'function') {
+      return renderer.error('No matching event handler:', data.type);
     }
     try {
-      renderer[event.data.type](event.data.data);
+      renderer[data.type](data.data);
     } catch (e) {
       renderer.error(e.message);
     }
@@ -177,10 +184,10 @@ var renderer = (function () {
     if (!renderer.runner.window) {
       return renderer.error('No connection to runner window.');
     }
-    renderer.runner.window.postMessage({
+    renderer.runner.window.postMessage(JSON.stringify({
       type: type,
       data: data
-    }, renderer.runner.origin);
+    }), renderer.runner.origin);
   };
 
   /**
@@ -221,13 +228,7 @@ var renderer = (function () {
    */
   renderer.console = function (data) {
     var method = data.method,
-        args = [];
-    try {
-      args = JSON.parse(data.args);
-    } catch (e) {
-      method = 'error';
-      args = ['Console arguments from the runner could not be parsed.'];
-    }
+        args = data.args;
     if (!window._console) return;
     if (!window._console[method]) method = 'log';
     window._console[method].apply(window._console, args);
@@ -289,6 +290,7 @@ var renderLivePreview = (function () {
     iframe = document.createElement('iframe');
     iframe.setAttribute('class', 'stretch');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('frameBorder', '0');
     iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
     iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
@@ -338,7 +340,9 @@ var renderLivePreview = (function () {
     iframe.onload = function () {
       if (window.postMessage) {
         // Setup postMessage listening to the runner
-        window.addEventListener('message', renderer.handleMessage, false);
+        $window.on('message', function (event) {
+          renderer.handleMessage(event.originalEvent);
+        });
         renderer.setup(iframe);
       }
       done();

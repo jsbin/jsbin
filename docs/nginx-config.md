@@ -7,7 +7,7 @@ The config also needs to be set:
 ```json
 {
   "url": {
-    "host": "jsbin.dev",
+    "host": "jsbin.com",
     "prefix": "/",
     "ssl": true
   }
@@ -53,15 +53,15 @@ http {
     # Redirect port 80 traffic to 443
     server {
         listen         80;
-        server_name    jsbin.dev, static.jsbin.dev;
+        server_name    jsbin.com, static.jsbin.com, run.jsbin.com;
         rewrite        ^ https://$server_name$request_uri? permanent;
     }
 
     # HTTPS server
     server {
         listen       443;
-        server_name  jsbin.dev;
-        access_log  /PATH/TO/log/jsbin/jsbin.dev.log;
+        server_name  jsbin.com;
+        access_log  /PATH/TO/log/jsbin/jsbin.com.log;
 
         ssl                  on;
         ssl_certificate      /PATH/TO/CERTIFICATES/jsbin.com.cert;
@@ -100,13 +100,13 @@ http {
     # Static server
     server {
         listen       443;
-        server_name  static.jsbin.dev;
+        server_name  static.jsbin.com, run.jsbin.com;
         root /PATH/TO/jsbin/public/;
-        access_log  /PATH/TO/log/jsbin/static.jsbin.dev.log;
+        access_log  /PATH/TO/log/jsbin/static.jsbin.com.log;
 
         ssl                  on;
-        ssl_certificate      /PATH/TO/CERTIFICATES/static.jsbin.com.cert;
-        ssl_certificate_key  /PATH/TO/CERTIFICATES/static.jsbin.com.key;
+        ssl_certificate      /PATH/TO/CERTIFICATES/jsbin.com.cert;
+        ssl_certificate_key  /PATH/TO/CERTIFICATES/jsbin.com.key;
 
         ssl_session_timeout  5m;
 

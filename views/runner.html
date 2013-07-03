@@ -22,6 +22,13 @@
 
 <div id="sandbox-wrapper"></div>
 
-<script src="/js/vendor/polyfills.js"></script>
-<script src="/js/vendor/stringify.js"></script>
-<script src="/runner/runner.js"></script>
+{{^settings.is_production}}
+  {{#scripts}}
+    <script src="{{static}}{{.}}"></script>
+  {{/scripts}}
+{{/settings.is_production}}
+
+{{#settings.is_production}}
+  <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
+  {{{analytics}}}
+{{/settings.is_production}}

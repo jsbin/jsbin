@@ -80,14 +80,14 @@ http {
     # Static server
     server {
         listen       443;
-        server_name  static.jsbin.dev run.jsbin.dev;
-        root         /Users/tom/dev/jsbin/public/;
+        server_name  static.jsbin.com run.jsbin.com;
+        root         /PATH/TO/jsbin/public/;
         index        index.html;
-        access_log   /Users/tom/dev/log/jsbin/static.jsbin.dev.log;
+        access_log   /PATH/TO/log/jsbin/static.jsbin.com.log;
 
         ssl                  on;
-        ssl_certificate      /Users/tom/dev/https-test/localhost.cert;
-        ssl_certificate_key  /Users/tom/dev/https-test/localhost.key;
+        ssl_certificate      /PATH/TO/CERTS/localhost.cert;
+        ssl_certificate_key  /PATH/TO/CERTS/localhost.key;
 
         ssl_session_timeout  5m;
 
@@ -141,12 +141,12 @@ http {
     # HTTPS server
     server {
         listen      443;
-        server_name jsbin.dev;
-        access_log  /Users/tom/dev/log/jsbin/jsbin.dev.log;
+        server_name jsbin.com;
+        access_log  /PATH/TO/log/jsbin/jsbin.com.log;
 
         ssl                  on;
-        ssl_certificate      /Users/tom/dev/https-test/localhost.cert;
-        ssl_certificate_key  /Users/tom/dev/https-test/localhost.key;
+        ssl_certificate      /PATH/TO/CERTS/localhost.cert;
+        ssl_certificate_key  /PATH/TO/CERTS/localhost.key;
 
         ssl_session_timeout  5m;
 
@@ -156,7 +156,7 @@ http {
 
         location / {
             # Pass the request on to Varnish.
-            proxy_pass  http://jsbin.dev:3003;
+            proxy_pass  http://jsbin.com:PORT;
 
             # Pass a bunch of headers to the downstream server, so they'll know what's going on.
             proxy_set_header Host $host;

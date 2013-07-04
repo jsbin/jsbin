@@ -3,136 +3,57 @@
 
 var jsconsole = (function (window) {
 
-function sortci(a, b) {
-  return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
-}
-
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-// custom because I want to be able to introspect native browser objects *and* functions
-function stringify(o, simple, visited) {
-  var json = '', i, vi, type = '', parts = [], names = [], circular = false;
-  visited = visited || [];
-
-  try {
-    type = ({}).toString.call(o);
-  } catch (e) { // only happens when typeof is protected (...randomly)
-    type = '[object Object]';
-  }
-
-  // check for circular references
-  for (vi = 0; vi < visited.length; vi++) {
-    if (o === visited[vi]) {
-      circular = true;
-      break;
-    }
-  }
-
-  if (circular) {
-    json = '[circular ' + type.slice(1);
-    if (o.outerHTML) {
-      json += ":\n" + htmlEntities(o.outerHTML);
-    }
-  } else if (type == '[object String]') {
-    json = '"' + htmlEntities(o.replace(/"/g, '\\"')) + '"';
-  } else if (type == '[object Array]') {
-    visited.push(o);
-
-    json = '[';
-    for (i = 0; i < o.length; i++) {
-      parts.push(stringify(o[i], simple, visited));
-    }
-    json += parts.join(', ') + ']';
-  } else if (type == '[object Object]') {
-    visited.push(o);
-
-    json = '{';
-    for (i in o) {
-      names.push(i);
-    }
-    names.sort(sortci);
-    for (i = 0; i < names.length; i++) {
-      parts.push( stringify(names[i], undefined, visited) + ': ' + stringify(o[ names[i] ], simple, visited) );
-    }
-    json += parts.join(', ') + '}';
-  } else if (type == '[object Number]') {
-    json = o+'';
-  } else if (type == '[object Boolean]') {
-    json = o ? 'true' : 'false';
-  } else if (type == '[object Function]') {
-    json = o.toString();
-  } else if (o === null) {
-    json = 'null';
-  } else if (o === undefined) {
-    json = 'undefined';
-  } else if (simple === undefined) {
-    visited.push(o);
-
-    json = type + '{\n';
-    for (i in o) {
-      names.push(i);
-    }
-    names.sort(sortci);
-    for (i = 0; i < names.length; i++) {
-      try {
-        parts.push(names[i] + ': ' + stringify(o[names[i]], true, visited)); // safety from max stack
-      } catch (e) {
-        if (e.name == 'NS_ERROR_NOT_IMPLEMENTED') {
-          // do nothing - not sure it's useful to show this error when the variable is protected
-          // parts.push(names[i] + ': NS_ERROR_NOT_IMPLEMENTED');
-        }
-      }
-    }
-    json += parts.join(',\n') + '\n}';
-  } else {
-    visited.push(o);
-    try {
-      json = stringify(o, true, visited)+''; // should look like an object
-    } catch (e) {
-
-    }
-  }
-  return json;
-}
+// Key-code library
+var keylib={left:37,up:38,right:39,down:40,space:32,
+            alt:18,ctrl:17,shift:16,tab:9,enter:13,webkitEnter:10,
+            escape:27,backspace:8,
+            zero:48,one:49, two:50,three:51,four:52,
+            five:53,six:57,seven:58,eight:59,nine:60,
+            a:65,b:66,c:67,d:68,e:69,f:70,g:71,h:72,i:73,j:74,k:75,
+            l:76,m:77,n:78,o:79,p:80,q:81,r:82,s:83,t:84,u:85,v:86,
+            w:87,x:88,y:89,z:90};
 
 function cleanse(s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 }
 
-function run(cmd) {
-  var rawoutput = null,
-      className = 'response',
-      internalCmd = internalCommand(cmd);
+/**
+ * Run a console command.
+ */
+var run = function (cmd, cb) {
+  var internalCmd = internalCommand(cmd);
   if (internalCmd) {
-    return ['info', internalCmd];
-  } else {
-    try {
-      rawoutput = sandboxframe.contentWindow.eval(cmd);
-    } catch (e) {
-      rawoutput = e.message;
-      className = 'error';
-    }
-    return [className, cleanse(stringify(rawoutput))];
+    return cb(['info', internalCmd]);
   }
-}
+  $document.trigger('console:run', cmd);
+};
 
-function post(cmd, blind, response /* passed in when echoing from remote console */) {
+/**
+ * Run and show response to a command fired from the console
+ */
+var post = function (cmd, blind, response) {
   cmd = trim(cmd);
 
-  if (blind === undefined) {
+  // Add the command to the user's history – unless this was blind
+  if (!blind) {
     history.push(cmd);
     setHistory(history);
   }
 
-  if ((cmd.match(commandPresent) || []).length > 1) {
-    // split the command up in to blocks and internal commands and run sequentially
-  } else {
-
-  }
-
+  // Show the user what they typed
   echo(cmd);
+
+  // If we were handed a response, show the response straight away – otherwise
+  // runs it
+  if (response) return showResponse(response);
+  run(cmd, showResponse);
+
+};
+
+/**
+ * Display the result of a command to the user
+ */
+var showResponse = function (response) {
 
   // order so it appears at the top
   var el = document.createElement('div'),
@@ -140,56 +61,36 @@ function post(cmd, blind, response /* passed in when echoing from remote console
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  if (!internalCommand(cmd)) {
+  pos = history.length;
 
-    // Fix console not having iframe
-    if (!(sandboxframe && sandboxframe.contentWindow)) {
-      // Boo. There must be a nice way to do this.
-      sandboxframe = $live.find('iframe')[0];
-      // Only force it to render if there's no live iframe
-      if (!(sandboxframe && sandboxframe.contentWindow)) {
-        renderLivePreview(false);
-        sandboxframe = $live.find('iframe')[0];
+  if (typeof response === 'undefined') return;
+
+  el.className = 'response';
+  span.innerHTML = response[1];
+
+  if (response[0] != 'info') prettyPrint([span]);
+  el.appendChild(span);
+
+  li.className = response[0];
+  li.innerHTML = '<span class="gutter"></span>';
+  li.appendChild(el);
+
+  appendLog(li);
+
+  exec.value = '';
+  if (enableCC) {
+    try {
+      if (jsbin.panels.focused.id === 'console') {
+        if (!jsbin.embed) {
+          getCursor().focus();
+        }
+        document.execCommand('selectAll', false, null);
+        document.execCommand('delete', false, null);
       }
-      jsconsole.setSandbox(sandboxframe);
-    }
+    } catch (e) {}
   }
 
-  // In a setTimeout so that renderLivePreview has time for the iframe to load
-  setTimeout(function () {
-    response = response || run(cmd);
-
-    if (response !== undefined) {
-      el.className = 'response';
-      span.innerHTML = response[1];
-
-      if (response[0] != 'info') prettyPrint([span]);
-      el.appendChild(span);
-
-      li.className = response[0];
-      li.innerHTML = '<span class="gutter"></span>';
-      li.appendChild(el);
-
-      appendLog(li);
-
-      exec.value = '';
-      if (enableCC) {
-        try {
-          // document.getElementsByTagName('a')[0].focus();
-          if (jsbin.panels.focused.id === 'console') {
-            if (!jsbin.embed) {
-              cursor.focus();
-            }
-            document.execCommand('selectAll', false, null);
-            document.execCommand('delete', false, null);
-          }
-        } catch (e) {}
-      }
-    }
-    pos = history.length;
-  }, 0);
-
-}
+};
 
 function log(msg, className) {
   var li = document.createElement('li'),
@@ -274,40 +175,51 @@ function showhelp() {
   return commands.join('\n');
 }
 
-function load(url) {
-  if (navigator.onLine) {
-    if (arguments.length > 1 || libraries[url] || url.indexOf('.js') !== -1) {
-      return loadScript.apply(this, arguments);
+/**
+ * Handle loading scripts and DOM into dynamic iframe with event listeners
+ */
+var load = (function () {
+
+  $document.on('console:load:script:error', function (event, err) {
+    showResponse(['error', err]);
+  });
+
+  $document.on('console:load:script:success', function (event, url) {
+    showResponse(['response', 'Loaded "' + url + '"']);
+  });
+
+  $document.on('console:load:dom:error', function (event, err) {
+    showResponse(['error', err]);
+  });
+
+  $document.on('console:load:dom:success', function (event, url) {
+    showResponse(['response', 'Loaded DOM.']);
+  });
+
+  return function (url) {
+    if (navigator.onLine) {
+      if (arguments.length > 1 || libraries[url] || url.indexOf('.js') !== -1) {
+        return loadScript.apply(this, arguments);
+      } else {
+        return loadDOM(url);
+      }
     } else {
-      return loadDOM(url);
+      return "You need to be online to use :load";
     }
-  } else {
-    return "You need to be online to use :load";
   }
-}
+}());
 
 function loadScript() {
-  var doc = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
   for (var i = 0; i < arguments.length; i++) {
     (function (url) {
-      var script = document.createElement('script');
-      script.src = url;
-      script.onload = function () {
-        window.top.info('Loaded ' + url, 'http://' + window.location.hostname);
-        if (url == libraries.coffeescript) window.top.info('Now you can type CoffeeScript instead of plain old JS!');
-      };
-      script.onerror = function () {
-        log('Failed to load ' + url, 'error');
-      };
-      doc.body.appendChild(script);
+      $document.trigger('console:load:script', url);
     })(libraries[arguments[i]] || arguments[i]);
   }
   return "Loading script...";
 }
 
 function loadDOM(url) {
-  var doc = sandboxframe.contentWindow.document,
-      script = document.createElement('script'),
+  var script = document.createElement('script'),
       cb = 'loadDOM' + +new Date;
 
   script.src = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22' + encodeURIComponent(url) + '%22&format=xml&callback=' + cb;
@@ -316,8 +228,7 @@ function loadDOM(url) {
     if (yql.results.length) {
       var html = yql.results[0].replace(/type="text\/javascript"/ig,'type="x"').replace(/<body.*?>/, '').replace(/<\/body>/, '');
 
-      doc.body.innerHTML = html;
-      window.top.info('DOM load complete');
+      $document.trigger('console:load:dom', html);
     } else {
       log('Failed to load DOM', 'error');
     }
@@ -330,7 +241,7 @@ function loadDOM(url) {
 
   document.body.appendChild(script);
 
-  return "Loading url into DOM...";
+  return "Loading URL into DOM...";
 }
 
 function trim(s) {
@@ -344,30 +255,29 @@ window._console = {
   log: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
-      log(stringify(arguments[i], true));
+      log(''+arguments[i], true);
     }
-    window.console.log.apply(window.console, arguments);
   },
   dir: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {
-      log(stringify(arguments[i]));
+      log(arguments[i]);
     }
-    window.console.dir.apply(window.console, arguments);
   },
   props: function (obj) {
     var props = [], realObj;
     try {
       for (var p in obj) props.push(p);
     } catch (e) {}
-    window.console.props.apply(window.console, arguments);
     return props;
   },
   error: function (err) {
-    log(err.message, 'error');
-    window.console.error.apply(window.console, arguments);
+    log(err.message || err, 'error');
   }
 };
+
+// give info support too
+window._console.info = window._console.log;
 
 function about() {
   return 'Ported to JS Bin from <a target="_new" href="http://jsconsole.com">jsconsole.com</a>';
@@ -403,10 +313,7 @@ function showHistory() {
 var exec = document.getElementById('exec'),
     form = exec.form || {},
     output = null,
-    sandboxframe = null,
-    sandbox = null,
     history = getHistory(),
-    codeCompleteTimer = null,
     fakeConsole = 'window.parent._console',
     libraries = {
         jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
@@ -443,7 +350,13 @@ var exec = document.getElementById('exec'),
       }
     },
     fakeInput = null,
-    cursor = document.getElementById('cursor'),
+    getCursor = (function () {
+      var cursor;
+      return function () {
+        if (cursor) return cursor;
+        return document.getElementById('cursor');
+      };
+    }()),
     // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
     iOSMobile = navigator.userAgent.indexOf('AppleWebKit') !== -1 && navigator.userAgent.indexOf('Mobile') !== -1,
     // FIXME Remy, seriously, don't sniff the agent like this, it'll bite you in the arse.
@@ -453,7 +366,6 @@ if (enableCC) {
   var autofocus = jsbin.embed ? '' : 'autofocus';
   exec.parentNode.innerHTML = '<div ' + autofocus + ' id="exec" autocapitalize="off" spellcheck="false"><span id="cursor" spellcheck="false" autocapitalize="off" autocorrect="off"' + (iOSMobile ? '' : ' contenteditable') + '></span></div>';
   exec = document.getElementById('exec');
-  cursor = document.getElementById('cursor');
 } else {
   $('#console').addClass('plain');
 }
@@ -466,11 +378,6 @@ if (enableCC && iOSMobile) {
   fakeInput.setAttribute('autocapitalize', 'off');
   exec.parentNode.appendChild(fakeInput);
 }
-
-// sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
-
-// tweaks to interface to allow focus
-// if (!('autofocus' in document.createElement('input'))) exec.focus();
 
 function whichKey(event) {
   var keys = {38:1, 40:1, Up:38, Down:40, Enter:10, 'U+0009':9, 'U+0008':8, 'U+0190':190, 'Right':39,
@@ -491,50 +398,12 @@ function setCursorTo(str) {
     var rows = str.match(/\n/g);
     exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
   }
-  cursor.focus();
-  // window.scrollTo(0,0);
+  getCursor().focus();
 }
-
-// output.ontouchstart = output.onclick = function (event) {
-//   event = event || window.event;
-//   if (event.target.nodeName == 'A' && event.target.className == 'permalink') {
-//     var command = decodeURIComponent(event.target.search.substr(1));
-//     setCursorTo(command);
-
-//     if (liveHistory) {
-//       window.history.pushState(command, command, event.target.href);
-//     }
-
-//     return false;
-//   }
-// };
 
 exec.ontouchstart = function () {
   window.scrollTo(0,0);
 };
-
-exec.onkeyup = function (event) {
-  var which = whichKey(event);
-
-  if (enableCC && which != 9 && which != 16) {
-    clearTimeout(codeCompleteTimer);
-    codeCompleteTimer = setTimeout(function () {
-      codeComplete(event);
-    }, 200);
-  }
-};
-
-if (enableCC) {
-  // disabled for now
-  cursor.__onpaste = function (event) {
-    setTimeout(function () {
-      // this causes the field to lose focus - I'll leave it here for a while, see how we get on.
-      // what I need to do is rip out the contenteditable and replace it with something entirely different
-      cursor.innerHTML = cursor.innerText;
-      // setCursorTo(cursor.innerText);
-    }, 10);
-  };
-}
 
 function findNode(list, node) {
   var pos = 0;
@@ -547,167 +416,103 @@ function findNode(list, node) {
   return -1;
 };
 
+/**
+ * Handle keydown events in the console - the money shot.
+ */
 exec.onkeydown = function (event) {
   event = event || window.event;
   var keys = {38:1, 40:1},
       wide = body.className == 'large',
-      which = whichKey(event);
+      which = whichKey(event),
+      enterDown = (which == keylib.enter || which == keylib.webkitEnter);
 
   if (typeof which == 'string') which = which.replace(/\/U\+/, '\\u');
+  // Is this a special key?
   if (keys[which]) {
-    if (event.shiftKey) {
-      // changeView(event);
-    } else if (!wide) { // history cycle
-      if (enableCC && window.getSelection) {
-        window.selObj = window.getSelection();
-        var selRange = selObj.getRangeAt(0);
+    if (event.shiftKey) return;
+    // History cycle
 
-        cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
-        var value = exec.value,
-            firstnl = value.indexOf('\n'),
-            lastnl = value.lastIndexOf('\n');
+    // Allow user to navigate multiline pieces of code
+    if (window.getSelection) {
+      window.selObj = window.getSelection();
+      var selRange = selObj.getRangeAt(0),
+          cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
 
-        if (firstnl !== -1) {
-          if (which == 38 && cursorPos > firstnl) {
-            return;
-          } else if (which == 40 && cursorPos < lastnl) {
-            return;
-          }
+      var value = exec.value,
+          firstNewLine = value.indexOf('\n'),
+          lastNewLine = value.lastIndexOf('\n');
+
+      if (firstNewLine !== -1) {
+        if (which == keylib.up && cursorPos > firstNewLine) {
+          return;
+        } else if (which == keylib.down && cursorPos < value.length) {
+          return;
         }
       }
-
-      if (which == 38) { // cycle up
-        pos--;
-        if (pos < 0) pos = 0; //history.length - 1;
-      } else if (which == 40) { // down
-        pos++;
-        if (pos >= history.length) pos = history.length; //0;
-      }
-      if (history[pos] != undefined && history[pos] !== '') {
-        removeSuggestion();
-        setCursorTo(history[pos])
-        return false;
-      } else if (pos == history.length) {
-        removeSuggestion();
-        setCursorTo('');
-        return false;
-      }
     }
-  } else if ((which == 13 || which == 10) && event.shiftKey == false) { // enter (what about the other one)
-    removeSuggestion();
-    if (event.shiftKey == true || event.metaKey || event.ctrlKey || !wide) {
-      var command = exec.textContent || exec.value;
-      if (command.length) post(command);
+
+    // Up
+    if (which == keylib.up) {
+      pos--;
+      // Don't go past the start
+      if (pos < 0) pos = 0; //history.length - 1;
+    }
+    // Down
+    if (which == keylib.down) {
+      pos++;
+      // Don't go past the end
+      if (pos >= history.length) pos = history.length; //0;
+    }
+    if (history[pos] != undefined && history[pos] !== '') {
+      setCursorTo(history[pos]);
+      return false;
+    } else if (pos == history.length) {
+      setCursorTo('');
       return false;
     }
-  } else if ((which == 13 || which == 10) && !enableCC && event.shiftKey == true) {
-    // manually expand the textarea when we don't have code completion turned on
+  }
+
+  // Execute the code
+  else if (enterDown && event.shiftKey == false) { // enter (what about the other one)
+    var command = exec.textContent || exec.value;
+    // ======================================================================
+    if (command.length) post(command);
+    // ======================================================================
+    return false;
+  }
+
+  // Expand the textarea
+  else if (enterDown && event.shiftKey == true) {
     var rows = exec.value.match(/\n/g);
     rows = rows != null ? rows.length + 2 : 2;
     exec.setAttribute('rows', rows);
-  } else if (which == 9 && wide) {
-    checkTab(event);
-  } else if (event.shiftKey && event.metaKey && which == 8) {
+  }
+
+  // Clear the console.
+  // Ctrl+L or Meta+Shift+Backspace
+  else if ((event.shiftKey && event.metaKey && which == keylib.backspace) ||
+           (event.ctrlKey && which == keylib.l)) {
     output.innerHTML = '';
-  } else if ((which == 39 || which == 35) && ccPosition !== false) { // complete code
-    completeCode();
-  } else if (event.ctrlKey && which == 76) {
-    output.innerHTML = '';
-  } else if (enableCC) { // try code completion
-    if (ccPosition !== false && which == 9) {
-      codeComplete(event); // cycles available completions
-      return false;
-    } else if (ccPosition !== false && cursor.nextSibling) {
-      removeSuggestion();
-    }
   }
 };
 
 if (enableCC && iOSMobile) {
   fakeInput.onkeydown = function (event) {
-    removeSuggestion();
-    var which = whichKey(event);
+    var which = whichKey(event),
+        enterDown = (which == keylib.enter || which == keylib.webkitEnter)
 
-    if (which == 13 || which == 10) {
+    if (enterDown) {
       post(this.value);
       this.value = '';
-      cursor.innerHTML = '';
+      getCursor().innerHTML = '';
       return false;
     }
   };
-
-  fakeInput.onkeyup = function (event) {
-    cursor.innerHTML = cleanse(this.value);
-    var which = whichKey(event);
-    if (enableCC && which != 9 && which != 16) {
-      clearTimeout(codeCompleteTimer);
-      codeCompleteTimer = setTimeout(function () {
-        codeComplete(event);
-      }, 200);
-    }
-  };
-
-  var fakeInputFocused = false;
-
-  var dblTapTimer = null,
-      taps = 0;
-
-  form.addEventListener('touchstart', function (event) {
-    // window.scrollTo(0,0);
-    if (ccPosition !== false) {
-      event.preventDefault();
-      clearTimeout(dblTapTimer);
-      taps++;
-
-      if (taps === 2) {
-        completeCode();
-        fakeInput.value = cursor.textContent;
-        removeSuggestion();
-        fakeInput.focus();
-      } else {
-        dblTapTimer = setTimeout(function () {
-          taps = 0;
-          codeComplete({ which: 9 });
-        }, 200);
-      }
-    }
-
-    return false;
-  });
-}
-
-function completeCode(focus) {
-  var tmp = exec.textContent, l = tmp.length;
-  removeSuggestion();
-
-  cursor.innerHTML = tmp;
-  ccPosition = false;
-
-  // daft hack to move the focus elsewhere, then back on to the cursor to
-  // move the cursor to the end of the text.
-  document.getElementsByTagName('a')[0].focus();
-  cursor.focus();
-
-  var range, selection;
-  if (document.createRange) {//Firefox, Chrome, Opera, Safari, IE 9+
-    range = document.createRange();//Create a range (a range is a like the selection but invisible)
-    range.selectNodeContents(cursor);//Select the entire contents of the element with the range
-    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-    selection = window.getSelection();//get the selection object (allows you to change selection)
-    selection.removeAllRanges();//remove any selections already made
-    selection.addRange(range);//make the range you have just created the visible selection
-  } else if (document.selection) {//IE 8 and lower
-    range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
-    range.moveToElementText(cursor);//Select the entire contents of the element with the range
-    range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-    range.select();//Select the range (make it the visible selection
-  }
 }
 
 form.onsubmit = function (event) {
   event = event || window.event;
   event.preventDefault && event.preventDefault();
-  removeSuggestion();
   post(exec.textContent || exec.value);
   return false;
 };
@@ -718,126 +523,15 @@ document.onkeydown = function (event) {
 
   if (event.shiftKey && event.metaKey && which == 8) {
     output.innerHTML = '';
-    cursor.focus();
+    getCursor().focus();
   } else if (event.target == output.parentNode && which == 32) { // space
     output.parentNode.scrollTop += 5 + output.parentNode.offsetHeight * (event.shiftKey ? -1 : 1);
   }
-
-  // return changeView(event);
 };
 
 exec.onclick = function () {
-  cursor.focus();
-}
-
-function getProps(cmd, filter) {
-  var surpress = {}, props = [];
-
-  if (!ccCache[cmd]) {
-    try {
-      // surpress alert boxes because they'll actually do something when we're looking
-      // up properties inside of the command we're running
-      surpress.alert = sandboxframe.contentWindow.alert;
-      sandboxframe.contentWindow.alert = function () {};
-
-      // loop through all of the properties available on the command (that's evaled)
-      ccCache[cmd] = sandboxframe.contentWindow.eval('console.props(' + cmd + ')').sort();
-
-      // return alert back to it's former self
-      delete sandboxframe.contentWindow.alert;
-    } catch (e) {
-      ccCache[cmd] = [];
-    }
-
-    // if the return value is undefined, then it means there's no props, so we'll
-    // empty the code completion
-    if (ccCache[cmd][0] == 'undefined') ccOptions[cmd] = [];
-    ccPosition = 0;
-    props = ccCache[cmd];
-  } else if (filter) {
-    // console.log('>>' + filter, cmd);
-    for (var i = 0, p; i < ccCache[cmd].length, p = ccCache[cmd][i]; i++) {
-      if (p.indexOf(filter) === 0) {
-        if (p != filter) {
-          props.push(p.substr(filter.length, p.length));
-        }
-      }
-    }
-  } else {
-    props = ccCache[cmd];
-  }
-
-  return props;
-}
-
-function codeComplete(event) {
-  var cmd = cursor.textContent.split(/[;\s]+/g).pop(),
-      parts = cmd.split('.'),
-      which = whichKey(event),
-      cc,
-      props = [];
-
-  if (cmd) {
-    // get the command without the dot to allow us to introspect
-    if (cmd.substr(-1) == '.') {
-      // get the command without the '.' so we can eval it and lookup the properties
-      cmd = cmd.substr(0, cmd.length - 1);
-
-      // returns an array of all the properties from the command
-      props = getProps(cmd);
-    } else {
-      props = getProps(parts.slice(0, parts.length - 1).join('.') || 'window', parts[parts.length - 1]);
-    }
-    if (props.length) {
-      if (which == 9) { // tabbing cycles through the code completion
-        // however if there's only one selection, it'll auto complete
-        if (props.length === 1) {
-          ccPosition = false;
-        } else {
-          if (event.shiftKey) {
-            // backwards
-            ccPosition = ccPosition == 0 ? props.length - 1 : ccPosition-1;
-          } else {
-            ccPosition = ccPosition == props.length - 1 ? 0 : ccPosition+1;
-          }
-        }
-      } else {
-        ccPosition = 0;
-      }
-
-      if (ccPosition === false) {
-        completeCode();
-      } else {
-        // position the code completion next to the cursor
-        if (!cursor.nextSibling) {
-          cc = document.createElement('span');
-          cc.className = 'suggest';
-          exec.appendChild(cc);
-        }
-
-        cursor.nextSibling.innerHTML = props[ccPosition];
-        exec.value = exec.textContent;
-      }
-
-      if (which == 9) return false;
-    } else {
-      ccPosition = false;
-    }
-  } else {
-    ccPosition = false;
-  }
-
-  if (ccPosition === false && cursor.nextSibling) {
-    removeSuggestion();
-  }
-
-  exec.value = exec.textContent;
-}
-
-function removeSuggestion() {
-  if (!enableCC) exec.setAttribute('rows', 1);
-  if (enableCC && cursor.nextSibling) cursor.parentNode.removeChild(cursor.nextSibling);
-}
+  getCursor().focus();
+};
 
 var jsconsole = {
   run: post,
@@ -847,44 +541,12 @@ var jsconsole = {
   },
   focus: function () {
     if (enableCC) {
-      cursor.focus();
+      getCursor().focus();
     } else {
       $(exec).focus();
     }
   },
   echo: echo,
-  setSandbox: function (newSandbox) {
-    // sandboxframe.parentNode.removeChild(sandboxframe);
-    sandboxframe = newSandbox;
-
-    sandbox = sandboxframe.contentDocument || sandboxframe.contentWindow.document;
-    // sandbox.open();
-    // stupid jumping through hoops if Firebug is open, since overwriting console throws error
-    // sandbox.write('<script>(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();</script>');
-    // sandbox.write('<script>window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};</script>');
-    // sandbox.open();
-    // sandbox.write(getPreparedCode(true));
-    sandboxframe.contentWindow.eval('(function () { var fakeConsole = ' + fakeConsole + '; if (window.console != undefined) { for (var k in fakeConsole) { console[k] = fakeConsole[k]; } } else { console = fakeConsole; } })();');
-
-    // sandbox.close();
-
-    this.sandboxframe = sandboxframe;
-
-    if (sandbox.readyState !== 'complete') {
-      this.ready = false;
-    } else {
-      jsconsole.onload();
-    }
-
-    sandbox.onreadystatechange = function () {
-      if (sandbox.readyState === 'complete') {
-        jsconsole.ready = true;
-        jsconsole.onload();
-      }
-    };
-
-    getProps('window'); // cache
-  },
   _onloadQueue: [],
   onload: function (fn) {
     var i = 0, length = this._onloadQueue.length;
@@ -902,17 +564,8 @@ var jsconsole = {
   init: function (outputElement, nohelp) {
     output = outputElement;
 
-    // closure scope
-    sandboxframe = $live.find('iframe')[0]; //document.createElement('iframe');
-
-    // var oldsandbox = document.getElementById('jsconsole-sandbox');
-    // if (oldsandbox) {
-    //   body.removeChild(oldsandbox);
-    // }
-
-    // body.appendChild(sandboxframe);
-    // sandboxframe.setAttribute('id', 'jsconsole-sandbox');
-    if (sandboxframe) this.setSandbox(sandboxframe);
+    jsconsole.ready = true;
+    jsconsole.onload();
 
     if (nohelp === undefined) post(':help', true);
   },
@@ -926,8 +579,7 @@ var jsconsole = {
       echo(data.cmd);
       log(data.response, 'response');
     }
-  },
-  stringify: stringify
+  }
 };
 
 return jsconsole;
@@ -937,95 +589,8 @@ return jsconsole;
 var msgType = '';
 
 jsconsole.init(document.getElementById('output'));
-jsconsole.queue = [];
-jsconsole.remote = {
-  log: function () {
-    // window.console.log('remote call');
-    var cmd = 'console.log';
-    try {
-      throw new Error();
-    } catch (e) {
-      // var trace = printStackTrace({ error: e }),
-      //     code = jsbin.panels.panels.javascript.getCode().split('\n'),
-      //     allcode = getPreparedCode().split('\n'),
-      //     parts = [],
-      //     line,
-      //     n;
-
-      // for (var i = 0; i < trace.length; i++) {
-      //   if (trace[i].indexOf(window.location.toString()) !== -1) {
-      //     parts = trace[i].split(':');
-      //     n = parts.pop();
-      //     if (isNaN(parseInt(n, 10))) {
-      //       n = parts.pop();
-      //     }
-      //     line = n - 2;
-      //     if (code[line] && code[line].indexOf('console.') !== -1) {
-      //       cmd = $.trim(code[line]);
-      //       console.log(cmd);
-      //       break;
-      //     }
-      //   }
-      // }
-    }
-
-    var argsObj = jsconsole.stringify(arguments.length == 1 ? arguments[0] : [].slice.call(arguments, 0));
-    var response = [];
-    [].forEach.call(arguments, function (args) {
-      response.push(jsconsole.stringify(args, true));
-    });
-
-    var msg = { response: response, cmd: cmd, type: msgType };
-
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-
-    msgType = '';
-  },
-  info: function () {
-    msgType = 'info';
-    remote.log.apply(this, arguments);
-  },
-  echo: function () {
-    var args = [].slice.call(arguments, 0),
-        plain = args.pop(),
-        cmd = args.pop(),
-        response = args;
-
-    var argsObj = jsconsole.stringify(response, plain),
-        msg = { response: argsObj, cmd: cmd };
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-  },
-  error: function (error, cmd) {
-    var msg = { response: error.message, cmd: cmd, type: 'error' };
-    if (jsconsole.ready) {
-      jsconsole.rawMessage(msg);
-    } else {
-      jsconsole.queue.push(msg);
-    }
-  },
-  flush: function () {
-    for (var i = 0; i < jsconsole.queue.length; i++) {
-      jsconsole.rawMessage(jsconsole.queue[i]);
-    }
-  }
-};
-
-// just for extra support
-jsconsole.remote.debug = jsconsole.remote.dir = jsconsole.remote.log;
-jsconsole.remote.warn = jsconsole.remote.info;
-
-// window.top._console = jsconsole.remote;
 
 function upgradeConsolePanel(console) {
-  // console.init = function () {
     console.$el.click(function () {
       jsconsole.focus();
     });
@@ -1046,7 +611,6 @@ function upgradeConsolePanel(console) {
       // renderLivePreview(true);
       // setTimeout because the renderLivePreview creates the iframe after a timeout
       setTimeout(function () {
-        // jsconsole.setSandbox($live.find('iframe')[0]);
         if (editors.console.ready && !jsbin.embed) jsconsole.focus();
       }, 0);
     };
@@ -1057,8 +621,6 @@ function upgradeConsolePanel(console) {
         // $live.find('iframe').remove();
       }
     };
-    // jsconsole.ready = true;
-    jsconsole.remote.flush();
 
     $document.one('jsbinReady', function () {
       var hidebutton = function () {
@@ -1072,8 +634,4 @@ function upgradeConsolePanel(console) {
       }
 
     });
-    // editors.console.fakeConsole = window._console
-  // };
-
-  // console.init();
 }

@@ -9,13 +9,16 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
   "repository": {
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
     "express": "3.0.x",
@@ -42,7 +45,9 @@
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-uglify": "~0.2.2"
+    "grunt-contrib-uglify": "~0.2.2",
+    "should": "~1.2.2",
+    "mocha": "~1.11.0"
   },
   "optionalDependencies": {},
   "licenses": [

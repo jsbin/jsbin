@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
+<html id="jsbin" lang="en" class="{{#flash_tip}}showtip{{/flash_tip}}{{#embed}} embed{{/embed}}">
 <head>
-<meta charset=utf-8 />
-<title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="icon" href="{{static}}/images/favicon.png">
-<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
-{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
-<!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
+  <meta charset=utf-8>
+  <title>JS Bin - Collaborative JavaScript Debugging</title>
+  <link rel="icon" href="{{static}}/images/favicon.png">
+  <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
+  {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/custom_css}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
 </head>
-<!--[if lt IE 7 ]><body class="source ie ie6"><![endif]-->
-<!--[if lt IE 8 ]><body class="source ie ie7"><![endif]-->
-<!--[if gte IE 8 ]><body class="source ie"><![endif]-->
-<!--[if !IE]><!--><body class="source"><!--<![endif]-->
+<!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
+<!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
+<!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
+<!--[if !IE]><!--> <body class="source">    <!--<![endif]-->
 <div id="control">
   <div class="control">
     <div class="buttons">
@@ -33,6 +33,9 @@
               <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
               <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
               <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+              <a id="export-as-gist"
+                  title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin"
+                  class="button group" href="#">Export as gist</a>
               <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
               <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
             </div>
@@ -96,10 +99,16 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
+                    {{^user.github_token}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                    </div>
+                    {{/user.github_token}}
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
-                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <input type="hidden" name="_csrf" value="{{token}}">
                     <button hidden>Logout</button>
                   </form>
 
@@ -142,6 +151,10 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -165,6 +178,10 @@
                       </div>
                       <div>
                         <input type=submit value="Register">
+                      </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                       </div>
                     </form>
                   </div>
@@ -212,7 +229,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
@@ -229,7 +246,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
@@ -244,7 +261,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
@@ -255,7 +272,7 @@
         </span>
       </div>
       <div id="console" class="stretch"><ul id="output"></ul><form>
-          <textarea id="exec" spellcheck="false" autocapitalize="off" rows="1" autocorrect="off"></textarea>
+          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
       </form></div>
     </div>
     <div id="live" class="stretch live panel">
@@ -272,17 +289,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </div>
   </div>
   <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
-    <input type="hidden" name="method" />
-    <input type="hidden" name="_csrf" value="{{token}}" />
+    <input type="hidden" name="method">
+    <input type="hidden" name="_csrf" value="{{token}}">
   </form>
 </div>
-<div id="tip">
-  {{#flash_info}}
-    <p>{{flash_info}}</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
-  {{^flash_info}}
-    <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
+<div id="tip" class="{{#flash_tip_type}}{{flash_tip_type}}{{/flash_tip_type}}{{^flash_tip_type}} notification{{/flash_tip_type}}">
+  <p>
+    {{#flash_tip}}{{flash_tip}}{{/flash_tip}}
+    {{^flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_tip}}
+  </p>
+  <a class="dismiss" href="#">Dismiss x</a>
 </div>
 <div id="keyboardHelp" class="modal">
   <div>
@@ -304,7 +320,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
         </tr>
         <!--<tr>
-          <td>ctrl + §<br />(or `)</td>
+          <td>ctrl + §<br>(or `)</td>
           <td>Hide focused panel</td>
         </tr>-->
         <tr>

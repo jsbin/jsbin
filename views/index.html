@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html id="jsbin" lang="en" class="{{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
 <head>
-<meta charset=utf-8 />
-<title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="icon" href="{{static}}/images/favicon.png">
-<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
-{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
-<!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
+  <meta charset=utf-8>
+  <title>JS Bin - Collaborative JavaScript Debugging</title>
+  <link rel="icon" href="{{static}}/images/favicon.png">
+  <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
+  {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/custom_css}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
 </head>
-<!--[if lt IE 7 ]><body class="source ie ie6"><![endif]-->
-<!--[if lt IE 8 ]><body class="source ie ie7"><![endif]-->
-<!--[if gte IE 8 ]><body class="source ie"><![endif]-->
-<!--[if !IE]><!--><body class="source"><!--<![endif]-->
+<!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
+<!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
+<!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
+<!--[if !IE]><!--> <body class="source">    <!--<![endif]-->
 <div id="control">
   <div class="control">
     <div class="buttons">
@@ -99,7 +99,7 @@
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
-                    <input type="hidden" name="_csrf" value="{{token}}" />
+                    <input type="hidden" name="_csrf" value="{{token}}">
                     <button hidden>Logout</button>
                   </form>
 
@@ -208,7 +208,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="html"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
@@ -225,7 +225,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="javascript"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
@@ -240,7 +240,7 @@
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="off" autocorrect="off" id="css"></textarea>
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
@@ -251,7 +251,7 @@
         </span>
       </div>
       <div id="console" class="stretch"><ul id="output"></ul><form>
-          <textarea id="exec" spellcheck="false" autocapitalize="off" rows="1" autocorrect="off"></textarea>
+          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
       </form></div>
     </div>
     <div id="live" class="stretch live panel">
@@ -268,8 +268,8 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </div>
   </div>
   <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
-    <input type="hidden" name="method" />
-    <input type="hidden" name="_csrf" value="{{token}}" />
+    <input type="hidden" name="method">
+    <input type="hidden" name="_csrf" value="{{token}}">
   </form>
 </div>
 <div id="tip">
@@ -300,7 +300,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
         </tr>
         <!--<tr>
-          <td>ctrl + §<br />(or `)</td>
+          <td>ctrl + §<br>(or `)</td>
           <td>Hide focused panel</td>
         </tr>-->
         <tr>

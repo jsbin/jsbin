@@ -75,7 +75,11 @@ function stringify(o, simple) {
 
 function addEvent(type, fn) {
   window.addEventListener ? window.addEventListener(type, fn, false) : window.attachEvent('on' + type, fn);
-};
+}
+
+function cleanPath(str) {
+  return (''+str).replace(/[^a-z0-9\/]/g, '');
+}
 
 function error(error, cmd) {
   var msg = JSON.stringify({ response: error.message, cmd: cmd, type: 'error' });
@@ -86,42 +90,73 @@ function error(error, cmd) {
   }
 }
 
-function restore() {
-  var data = {},
-      rawData = useSS ? sessionStorage.spike : window.name,
-      scroll;
-
-  if ((!useSS && window.name == 1) || !rawData) return;
-
+/**
+ * Session storage with window.name fallback for the spike.
+ */
+var store = (function () {
+  var useSS;
+  // Check to see if sessionStorage is available
   try {
-    // sketchy I know, but doesn't rely on native json support which might be a problem in old mobiles
-    eval('data = ' + rawData);
-
-    addEvent('load', function () {
-      //console.log('scrolling to', data.y);
-      window.scrollTo(data.x, data.y);
-    });
+    sessionStorage.getItem('foo');
+    useSS = true;
   } catch (e) {}
-}
-
-function reload() {
-  var data = stringify({ y: window.scrollY, x: window.scrollX });
-
-  try {
-    // trigger load
-    if (useSS) {
-      sessionStorage.spike = data;
-    } else {
-      window.name = data;
+  return {
+    /**
+     * Save data to SS or window.name
+     */
+    set: function (rawData) {
+      var data = stringify(rawData);
+      if (useSS) {
+        sessionStorage.spike = data;
+      } else {
+        window.name = data;
+      }
+      return data;
+    },
+    /**
+     * Get data back from SS or window.name
+     */
+    get: function () {
+      var rawData = useSS ? sessionStorage.spike : window.name, data;
+      if ((!useSS && window.name == 1) || !rawData) return data;
+      try {
+        // sketchy, but doesn't rely on native json support which might be a
+        // problem in old mobiles
+        eval('data = ' + rawData);
+      } catch (e) {}
+      return data;
     }
-    window.location.reload();
-  } catch (e) {}
+  };
+}());
+
+/**
+ * Restore data from sessionStorage or the window.name when page is reloaded.
+ */
+function restore() {
+  var data = store.get() || {};
+  addEvent('load', function () {
+    //console.log('scrolling to', data.y);
+    window.scrollTo(data.x, data.y);
+  });
 }
 
+// Save (scroll) data about the current state of the page, and reload it.
+function reload(event) {
+  store.set({
+    y: window.scrollY,
+    x: window.scrollX
+  });
+  window.location.reload();
+}
+
+/**
+ * Manage the render stream. Wait for processed versions of the author's code,
+ * and either reload of inject the new code (CSS).
+ */
 function renderStream() {
   es.addEventListener('css:processed', function (event) {
+    // Inject the CSS
     var style = document.getElementById('jsbin-css');
-
     if (style.styleSheet) {
       style.styleSheet.cssText = event.data;
     } else {
@@ -130,42 +165,52 @@ function renderStream() {
   });
 
   es.addEventListener('reload', reload);
-  es.addEventListener('javascript:processed', reload);
-  es.addEventListener('html:processed', function (event) {
-    // if the contents of the head has changed, reload,
-    // if it's the body, inject
-    // document.getElementById('jsbin-css').innerHTML = event.data;
-    reload();
+  // Update the url when the revision is bumped
+  es.addEventListener('bump-revision', function (event) {
+    window.location.pathname = cleanPath(event.data);
   });
+  // Javascript and HTML cause a reload. Would be nice to make it possible to
+  // inject HTML changes in future.
+  es.addEventListener('javascript:processed', reload);
+  es.addEventListener('html:processed', reload);
 }
 
+/**
+ * Manage the codecasting stream. Wait for code events (for each panel) then
+ * update the appropriate panel
+ */
 function codecastStream() {
+  if (!(jsbin && jsbin.panels && jsbin.panels.panels)) return;
   var editors = jsbin.panels.panels;
 
   function setCode(event) {
     var panelId = event.type;
+    if (!editors[panelId]) return;
     editors[panelId].setCode(event.data);
-
-    if (panelId !== 'javascript') {
-
-    }
   }
 
+  // Update the url when the revision is bumped
+  es.addEventListener('bump-revision', function (event) {
+    window.location.pathname = cleanPath(event.data) + '/watch';
+  });
   // on data, update the panels, which will cause an automatic render
   es.addEventListener('css', setCode);
   es.addEventListener('javascript', setCode);
   es.addEventListener('html', setCode);
-
-
 }
 
-var id = location.pathname.replace(/\/preview.*$/, '').replace(/\/edit.*$/, '').replace(/\/watch.*$/, ''),
+/**
+ * Spike
+ */
+
+var id = location.pathname.replace(/\/(preview|edit|watch).*$/, ''),
     codecasting = location.pathname.indexOf('/watch') !== -1;
     queue = [],
     msgType = '',
     useSS = false,
     es = null;
 
+// Wait for a bit, then set up the EventSource stream
 setTimeout(function () {
   es = new EventSource(id + '?' + Math.random());
   if (codecasting) {
@@ -173,14 +218,13 @@ setTimeout(function () {
   } else {
     renderStream();
   }
+  es.addEventListener('stats', function () {
+    // Could handle stats events here
+  });
 }, 500);
 
-try {
-  sessionStorage.getItem('foo');
-  useSS = true;
-} catch (e) {}
-
-
+// If this is the render stream, restore data from before the last reload if
+// it's there.
 if (!codecasting) {
   addEvent('error', function (event) {
     error({ message: event.message }, event.filename + ':' + event.lineno);

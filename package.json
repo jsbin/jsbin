@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git://github.com/remy/jsbin.git"
   },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
   "dependencies": {
     "express": "3.0.x",
     "asyncjs": "0.0.7",
@@ -40,7 +43,9 @@
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
-    "grunt-contrib-uglify": "~0.2.2"
+    "grunt-contrib-uglify": "~0.2.2",
+    "should": "~1.2.2",
+    "mocha": "~1.11.0"
   },
   "optionalDependencies": {},
   "licenses": [

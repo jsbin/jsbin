@@ -82,7 +82,7 @@ JS Bin assumes that a PostgreSQL database is set up when using Heroku.  As you s
 
 ```
 $ heroku config:add HOST=[your-app-id].herokuapp.com # the URL to the app that is running, required
-$ heroku config:add JSBIN_SSL=true # if you want to enable or disable SSL, specify here
+$ heroku config:add JSBIN_SSL=false # if you want to enable SSL, please consider [issues relating to same origin policies](https://github.com/remy/jsbin/pull/607#issuecomment-20466197)
 $ heroku config:add NODE_ENV=production # if you specify production, minified JS files will be used
 
 # optional environment variables

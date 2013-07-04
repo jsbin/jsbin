@@ -38,10 +38,13 @@ $('.logout').click(function (event) {
 $('.homebtn').click(function () {
   if (this.id === 'avatar') {
     analytics.openFromAvatar();
+  } else if (this.id === 'profile') {
+    analytics.openFromAvatar();
+    $(this).closest('.open').removeClass('open');
   } else {
     analytics.open();
   }
-  
+
   jsbin.panels.hideAll();
   return false;
 });
@@ -221,7 +224,7 @@ $('#createnew').click(function () {
       sessionStorage.removeItem(key);
     }
   }
- 
+
   jsbin.panels.saveOnExit = true;
 
   // first try to restore their default panels

@@ -37,7 +37,9 @@
     "async": "~0.1.22",
     "lynx": "0.0.11",
     "file-db": "0.0.2",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "passport": "~0.1.17",
+    "passport-github": "~0.1.5"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

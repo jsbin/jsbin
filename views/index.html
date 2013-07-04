@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
+<html id="jsbin" lang="en" class="{{#flash_tip}}showtip{{/flash_tip}}{{#embed}} embed{{/embed}}">
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
@@ -33,6 +33,9 @@
               <a id="addmeta" title="Add meta data to bin" class="button group" href="#">Add description</a>
               <a title="Create milestone" class="button save group" href="{{root}}/save">Create milestone</a>
               <a id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
+              <a id="export-as-gist"
+                  title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin"
+                  class="button group" href="#">Export as gist</a>
               <a id="clone" title="Create a new copy" class="button clone group{{^code_id}} disabled{{/code_id}}" href="/clone">Clone</a>
               <a id="download" title="Save to local drive" class="button download group{{^code_id}} disabled{{/code_id}}" href="{{root}}/download">Download</a>
             </div>
@@ -96,6 +99,12 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
+                    {{^user.github_token}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                    </div>
+                    {{/user.github_token}}
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
@@ -138,6 +147,10 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -161,6 +174,10 @@
                       </div>
                       <div>
                         <input type=submit value="Register">
+                      </div>
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                       </div>
                     </form>
                   </div>
@@ -272,13 +289,12 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     <input type="hidden" name="_csrf" value="{{token}}">
   </form>
 </div>
-<div id="tip">
-  {{#flash_info}}
-    <p>{{flash_info}}</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
-  {{^flash_info}}
-    <p>You can jump to the latest bin by adding <code>/latest</code> to your URL</p><a class="dismiss" href="#">Dismiss x</a>
-  {{/flash_info}}
+<div id="tip" class="{{#flash_tip_type}}{{flash_tip_type}}{{/flash_tip_type}}{{^flash_tip_type}} notification{{/flash_tip_type}}">
+  <p>
+    {{#flash_tip}}{{flash_tip}}{{/flash_tip}}
+    {{^flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_tip}}
+  </p>
+  <a class="dismiss" href="#">Dismiss x</a>
 </div>
 <div id="keyboardHelp" class="modal">
   <div>

@@ -83,4 +83,24 @@ $ jsbin
 
 Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.
 
+## Installing on Heroku
+
+JS Bin assumes that a PostgreSQL database is set up when using Heroku.  As you should not commit sensitive data to your repository, adding your own config.local.json in the root is not advised.  Instead, please set up the following environment variables:
+
+```
+$ heroku config:add HOST=[your-app-id].herokuapp.com # the URL to the app that is running, required
+$ heroku config:add JSBIN_SSL=true # if you want to enable or disable SSL, specify here
+$ heroku config:add NODE_ENV=production # if you specify production, minified JS files will be used
+
+# now set up the database (run these commands in your jsbin root folder)
+$ heroku addons:add heroku-postgresql:dev # if you don't already have a DB set up on your app
+$ heroku config --app jsbin-test | grep HEROKU_POSTGRESQL # take note of your DB name
+$ heroku pg:psql [your-db-name-from-previous-command] < build/full-db-v3.postgre.sql
+
+# now deploy
+$ git push heroku
+```
+
+Now visit your Heroku app's URL and you should have a working JSBin running on Heroku
+
 

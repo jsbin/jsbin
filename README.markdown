@@ -92,6 +92,12 @@ $ heroku config:add HOST=[your-app-id].herokuapp.com # the URL to the app that i
 $ heroku config:add JSBIN_SSL=true # if you want to enable or disable SSL, specify here
 $ heroku config:add NODE_ENV=production # if you specify production, minified JS files will be used
 
+# optional environment variables
+$ heroku config:add ALLOW_CLIENT_USER=true # turn off if you want to disable user logins
+$ heroku config:add API_ALLOW_ANONYMOUS=false # if you want to allow anonymous (users without an API key) access to the API set this to true
+$ heroku config:add API_REQUIRE_SSL=true # enforces SSL for all API requests
+$ heroku config:add DATABASE_URL=[your-db-url] # allows you to specify a non-default PostgreSQL database URL
+
 # now set up the database (run these commands in your jsbin root folder)
 $ heroku addons:add heroku-postgresql:dev # if you don't already have a DB set up on your app
 $ heroku config --app jsbin-test | grep HEROKU_POSTGRESQL # take note of your DB name

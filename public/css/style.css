@@ -54,13 +54,50 @@ textarea:focus {
   outline: none;
 }
 
+.btn-github {
+  font-size: 1em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 1px 2px #eee;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 6px 10px 5px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+}
+.btn-github:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+
+.btn-github img {
+  vertical-align: middle;
+  top: -1px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.login .btn-github {
+  display: block;
+  width: 100%;
+}
+
+.login-splitter {
+  display: block;
+  font-style: italic;
+  text-align: center;
+}
+
 [hidden],
 .hidden {
   display: none !important;
 }
 
 #control {
-  z-index: 199999;
+  z-index: 10000;
   min-width: 760px;
   height: 35px;
   position: absolute;
@@ -123,6 +160,11 @@ textarea:focus {
 .help a {
   outline: 0;
   /*border-right: 0;*/
+}
+
+.help strong a {
+  text-decoration: none;
+  display: block;
 }
 
 .starting, .help {
@@ -969,17 +1011,63 @@ ie6, li {
 }
 
 #tip {
-  z-index: 10;
+  z-index: 100;
   display: none;
   border-top: 1px solid #ccc;
   position: absolute;
   bottom: 0;
-  font-size: 12px;
-  line-height: 20px;
+  font-size: 14px;
+  line-height: 22px;
   background: #fdfece;
   left: 0;
   right: 0;
-  padding: 2px 10px 2px 20px;
+  padding: 2px 10px 2px 10px;
+  -webkit-animation: tip-flash 100ms linear 4 alternate;
+  -moz-animation: tip-flash 100ms linear 4 alternate;
+  -ms-animation: tip-flash 100ms linear 4 alternate;
+  -o-animation: tip-flash 100ms linear 4 alternate;
+  animation: tip-flash 100ms linear 4 alternate;
+
+  -webkit-transition: bottom 100ms linear;
+  transition: bottom 100ms linear;
+}
+
+@-webkit-keyframes tip-flash {
+  to {
+    background: white;
+  }
+}
+@-moz-keyframes tip-flash {
+  to {
+    background: white;
+  }
+}
+@-ms-keyframes tip-flash {
+  to {
+    background: white;
+  }
+}
+@-o-keyframes tip-flash {
+  to {
+    background: white;
+  }
+}
+@keyframes tip-flash {
+  to {
+    background: white;
+  }
+}
+
+#tip.error {
+  background: #ff5555;
+}
+
+#tip.notification,
+#tip.error {
+  bottom: auto;
+  top: 34px;
+  line-height: 28px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
 }
 
 #tip p {
@@ -992,6 +1080,7 @@ ie6, li {
   right: 20px;
   top: 2px;
   text-decoration: none;
+  text-shadow: none;
 }
 
 .showtip #tip {
@@ -1054,7 +1143,7 @@ details li, .details li {
   bottom: 0;
   height: 100%;
   width: 100%;
-  z-index: 199999; /* gosh that's a stupid number */
+  z-index: 1000; /* gosh that's a stupid number */
 
   /*background: #000;*/
   /*background: rgba(0,0,0,0.85);*/
@@ -1177,6 +1266,7 @@ form label {
   margin-left: 2px;
   line-height: 20px;
   font-weight: bold;
+  color: #777;
 }
 
 form input[type="text"],
@@ -1881,6 +1971,10 @@ a.active:hover {
   padding: 0;
 }
 
+.dropdown .meta {
+  color: #999;
+}
+
 .dropdownmenu,
 .dropdowncontent {
   margin: 3px 5px;
@@ -1923,6 +2017,11 @@ a.active:hover {
   display: inline-block;
   position: relative;
   padding: 6px 10px;
+}
+
+.help .menu > a.avatar {
+  padding: 0;
+  margin-top: -3px;
 }
 
 #panels {
@@ -2422,12 +2521,16 @@ a.active:hover {
   padding: 5px 30px 5px 15px;
 }
 
-.dropdownmenu hr {
+hr {
   border-style: solid;
   border-color: #DFDFDF;
   border-width: 1px;
   border-bottom: none;
   margin: 0;
+}
+
+form + hr {
+  margin: 12px 0;
 }
 
 #save {
@@ -2558,7 +2661,7 @@ pre .highlight:last-of-type {
 }
 
 .avatar {
-  margin-right: 7px;
+  /*margin-right: 7px;*/
   vertical-align: top;
   /*display: inline-block;*/
   border-radius: 1px;
@@ -2569,6 +2672,9 @@ pre .highlight:last-of-type {
   -o-box-shadow: 0 0 1px #999;
   -moz-box-shadow: 0 0 1px #999;
   box-shadow: 0 0 1px #999;
+  position: absolute;
+  right: 0;
+  /*top: 2px;*/
 }
 
 .brand {

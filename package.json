@@ -39,15 +39,18 @@
     "async": "~0.1.22",
     "lynx": "0.0.11",
     "file-db": "0.0.2",
-    "underscore": "~1.4.4"
-  },
-  "devDependencies": {
+    "underscore": "~1.4.4",
+    "grunt-cli": "~0.1.9",
     "grunt": "~0.4.1",
     "grunt-contrib-concat": "~0.1.2",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-uglify": "~0.2.2"
   },
+  "devDependencies": {},
   "optionalDependencies": {},
+  "scripts": {
+    "postinstall": "./node_modules/.bin/grunt build"
+  },
   "licenses": [
     {
       "type": "MIT",

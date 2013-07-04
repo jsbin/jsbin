@@ -136,7 +136,7 @@ var renderer = (function () {
    * TODO this should allow anything if x-origin protection should be disabled
    */
   renderer.runner = {};
-  renderer.runner.origin = jsbin.root.replace('jsbin', 'run.jsbin');
+  renderer.runner.origin = '*';
 
   /**
    * Setup the renderer
@@ -158,9 +158,6 @@ var renderer = (function () {
    */
   renderer.handleMessage = function (event) {
     if (!event.origin) return;
-    if (event.origin !== renderer.runner.origin) {
-      return renderer.error('Message disallowed, incorrect origin:', event.origin);
-    }
     var data = event.data;
     try {
       data = JSON.parse(event.data);

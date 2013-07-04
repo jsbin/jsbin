@@ -382,7 +382,7 @@ var runner = (function () {
    * Store what parent origin *should* be
    */
   runner.parent = {};
-  runner.parent.origin = window.location.origin.replace('run.', '');
+  runner.parent.origin = '*';
 
   /**
    * Log error messages, indicating that it's from the runner.
@@ -398,9 +398,6 @@ var runner = (function () {
    */
   runner.handleMessage = function (event) {
     if (!event.origin) return;
-    if (event.origin !== runner.parent.origin) {
-      return runner.error('Message disallowed, incorrect origin:', event.origin);
-    }
     var data = event.data;
     try {
       data = JSON.parse(event.data);

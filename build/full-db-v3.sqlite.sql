@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `ownership` (
   `email` VARCHAR(255) NOT NULL DEFAULT '',
   `api_key` VARCHAR(255) NULL,
   `github_token` VARCHAR(255) NULL,
+  `github_id` INTEGER NULL,
   `last_login` DATETIME NOT NULL,
   `created` DATETIME NOT NULL,
   `updated` DATETIME NOT NULL

@@ -3,7 +3,8 @@ module.exports = function (grunt) {
   var fs = require('fs'),
       path = require('path'),
       exec = require('child_process').exec,
-      lint = require('./jshint');
+      lint = require('./jshint'),
+      scripts = require('./scripts.json');
 
   // Runs JSBin with local config file.
   //
@@ -50,12 +51,16 @@ module.exports = function (grunt) {
   var distpaths = {
     script: 'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.js',
     map:    'public/js/prod/<%= pkg.name %>.map.json', // don't version this so we overwrite
-    min:    'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.min.js'
+    min:    'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.min.js',
+    runner: 'public/js/prod/runner-<%= pkg.version %>.min.js'
   };
 
   var config = {
     pkg: pkg,
-    scriptsRelative: require('./scripts.json').map(function (script) {
+    scriptsRelative: scripts.app.map(function (script) {
+      return 'public' + script;
+    }),
+    runnerScripts: scripts.runner.map(function (script) {
       return 'public' + script;
     }),
     jshint: {
@@ -98,6 +103,11 @@ module.exports = function (grunt) {
         },
         src: '<%= scriptsRelative %>',
         dest: distpaths.min
+      },
+      runner: {
+        options: {},
+        src: '<%= runnerScripts %>',
+        dest: distpaths.runner
       }
     },
     watch: {

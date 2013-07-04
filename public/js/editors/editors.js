@@ -10,8 +10,6 @@
 
 var panels = {};
 
-var $window = $(window);
-
 panels.getVisible = function () {
   var panels = this.panels,
       visible = [];
@@ -283,7 +281,7 @@ panels.hide = function (panelId) {
   if (panels[panelId].visible) {
     panels[panelId].hide();
   }
-  
+
   var visible = jsbin.panels.getVisible();
   if (visible.length) {
     jsbin.panels.focused = visible[0];
@@ -412,13 +410,13 @@ editors.live.settings.render = function (showAlerts) {
 
 
 // Panel.prototype._show = Panel.prototype.show;
-// Panel.prototype.show = function () { 
+// Panel.prototype.show = function () {
 //   this._show.apply(this, arguments);
 //   panels.update();
 // }
 
 // Panel.prototype._hide = Panel.prototype.hide;
-// Panel.prototype.hide = function () { 
+// Panel.prototype.hide = function () {
 //   this._hide.apply(this, arguments);
 //   panels.update();
 // }
@@ -444,7 +442,7 @@ panels.focus(panels.getVisible()[0] || null);
   var panelsEl = document.getElementById('panels'),
       moving = null;
 
-  panelsEl.ondragstart = function (e) { 
+  panelsEl.ondragstart = function (e) {
     if (e.target.nodeName == 'A') {
       moving = e.target;
     } else {
@@ -452,13 +450,13 @@ panels.focus(panels.getVisible()[0] || null);
     }
   };
 
-  panelsEl.ondragover = function (e) { 
-    return false; 
+  panelsEl.ondragover = function (e) {
+    return false;
   };
 
-  panelsEl.ondragend = function () { 
+  panelsEl.ondragend = function () {
     moving = false;
-    return false; 
+    return false;
   };
 
   panelsEl.ondrop = function (e) {

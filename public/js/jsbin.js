@@ -107,7 +107,8 @@ if (jsbin.settings.editor.theme) {
 // malicious form submissions from other domains.
 jQuery.ajaxPrefilter(function (options, original, xhr) {
   var skip = {head: 1, get: 1};
-  if (!skip[options.type.toLowerCase()]) {
+  if (!skip[options.type.toLowerCase()] &&
+      !options.url.match(/^https:\/\/api.github.com/)) {
     xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
   }
 });

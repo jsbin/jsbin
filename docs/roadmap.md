@@ -16,3 +16,6 @@
   - Timestamped comments
   - Timestamped audio comments
 - Notification system for local installs to know when an update is available
+- Export bins as zip file
+- Additional panels (like a readme, or other processors allowing to pipe one panel in to others, and dynamic documentation panel)
+- Collections (pre-curated bins)

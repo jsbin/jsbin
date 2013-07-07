@@ -85,26 +85,49 @@ Then open your browser to [http://localhost:3000](http://localhost:3000) and you
 
 ## Installing on Heroku
 
-JS Bin assumes that a PostgreSQL database is set up when using Heroku.  As you should not commit sensitive data to your repository, adding your own config.local.json in the root is not advised.  Instead, please set up the following environment variables:
+JS Bin assumes that a PostgreSQL database is set up when using Heroku.  As you should not commit sensitive data to your repository, adding your own config.local.json in the root is not advised.  Instead, please use environment variables once you have created your app on Heroku.  Any environment variable set in your default.config can be set using the format JSBIN\_[KEY]\_[KEY].  For example the following config setting:
 
 ```
-$ heroku config:add HOST=[your-app-id].herokuapp.com # the URL to the app that is running, required
-$ heroku config:add JSBIN_SSL=false # if you want to enable SSL, please consider [issues relating to same origin policies](https://github.com/remy/jsbin/pull/607#issuecomment-20466197)
-$ heroku config:add NODE_ENV=production # if you specify production, minified JS files will be used
+{
+  "session": {
+    "secret": "d41d8cd98f00b204e9800998ecf8427e"
+  }
+}
+```
 
-# optional environment variables
-$ heroku config:add ALLOW_CLIENT_USER=true # turn off if you want to disable user logins
-$ heroku config:add API_ALLOW_ANONYMOUS=false # if you want to allow anonymous (users without an API key) access to the API set this to true
-$ heroku config:add API_REQUIRE_SSL=true # enforces SSL for all API requests
-$ heroku config:add DATABASE_URL=[your-db-url] # allows you to specify a non-default PostgreSQL database URL
+can be overriden with the following environment variable set:
+<br>
+`JSBIN_SESSION_SECRET=my-hidden-session-secret`
 
-# now set up the database (run these commands in your jsbin root folder)
+### Required Heroku environment variables
+
+```
+$ heroku config:add HOST=[your-app-id].herokuapp.com # the URL to the app that is running
+$ heroku config:add JSBIN_URL_SSL=false # set to true if you want to enable SSL
+$ heroku config:add NODE_ENV=production # development mode won't serve minified JS
+```
+
+If you wish to use SSL, please consider [the issues relating to same origin policies](https://github.com/remy/jsbin/pull/607#issuecomment-20466197)
+
+### Frequently used environment variables
+
+```
+$ heroku config:add JSBIN_API_ALLOWANONYMOUSREAD=true # set false to disable anonymous read API requests
+$ heroku config:add JSBIN_API_ALLOWANONYMOUSREADWRITE=true # false to disable anonymous r/w API requests
+$ heroku config:add JSBIN_API_REQUIRESSL=true # enforces SSL for all API requests
+$ heroku config:add DATABASE_URL=[your-db-url] # allows you to specify a custom PostgreSQL database
+```
+
+### Steps to finalise your Heroku installation
+
+Remember to run these commands in your JSBin folder after you have set up a Heroku app for this repository and the environment variables above have been set.
+
+```
 $ heroku addons:add heroku-postgresql:dev # if you don't already have a DB set up on your app
 $ heroku config --app jsbin-test | grep HEROKU_POSTGRESQL # take note of your DB name
 $ heroku pg:psql [your-db-name-from-previous-command] < build/full-db-v3.postgre.sql
 
-# now deploy
-$ git push heroku
+$ git push heroku # deploy
 ```
 
 Now visit your Heroku app's URL and you should have a working JSBin running on Heroku

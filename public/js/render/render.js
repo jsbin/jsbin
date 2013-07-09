@@ -71,7 +71,8 @@ function getPreparedCode(nojs) {
       hasHTML = false,
       hasCSS = false,
       hasJS = false,
-      date = new Date();
+      date = new Date(),
+      scriptTarget = undefined;
 
   try {
     source = editors.html.render();
@@ -84,6 +85,7 @@ function getPreparedCode(nojs) {
   if (!nojs) {
     try {
       js = editors.javascript.render();
+      scriptTarget = editors.javascript.processor.target || jsbin.panels.panels.javascript.type;
 
       if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
     } catch (e) {
@@ -128,7 +130,7 @@ function getPreparedCode(nojs) {
 
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // js = "window.onload = function(){" + js + "\n}\n";
-    var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
+    var type = scriptTarget ? ' type="application/' + scriptTarget + '"' : '';
     source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
   }
 

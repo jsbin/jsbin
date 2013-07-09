@@ -331,7 +331,13 @@ var processors = jsbin.processors = (function () {
           return msg + ProjectWriter.write(res);
         }
       });
-    }())
+    }()),
+    
+    'es-harmony': createProcessor({
+      id: 'javascript-1.7',
+      extensions: ['js'],
+      target: 'javascript;version=1.7'
+    })
 
   };
 

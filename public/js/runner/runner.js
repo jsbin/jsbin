@@ -145,6 +145,68 @@ var processor = (function () {
     }) + '</pre>';
   };
 
+  // used in the loop detection
+  processor.counters = {};
+
+  /**
+   * Look for for, while and do loops, and inserts *just* at the start
+   * of the loop, a check function. If the check function is called
+   * many many times, then it throws an exception suspecting this might
+   * be an infinite loop.
+   */
+  processor.rewriteLoops = function (code, offset) {
+    var recompiled = [],
+        lines = code.split('\n'),
+        re = /for\b|while\b|do\b/;
+
+    // reset the counters
+    processor.counters = {};
+
+    var counter = 'window.runnerWindow.protect';
+
+    lines.forEach(function (line, i) {
+      var index = 0, lineNum = i - offset;
+      if (re.test(line) && line.indexOf('jsbin') === -1) {
+        // try to insert the tracker after the openning brace (like while (true) { ^here^ )
+        index = line.indexOf('{');
+        if (index !== -1) {
+          line = line.substring(0, index + 1) + ';\nif (' + counter + '({ line: ' + lineNum + ' })) break;';
+        } else {
+          index = line.indexOf(')');
+          if (index !== -1) {
+            // look for a one liner
+            var colonIndex = line.substring(index).indexOf(';');
+            if (colonIndex !== -1) {
+              // in which case, rewrite the loop to add braces
+              colonIndex += index;
+              line = line.substring(0, index + 1) + '{\nif (' + counter + '({ line: ' + lineNum + ' })) break;\n' + line.substring(index + 1) + '\n}\n'; // extra new lines ensure we clear comment lines
+            }
+          }
+        }
+        processor.counters[lineNum] = { count: 0 };
+      }
+      recompiled.push(line);
+    });
+
+    return recompiled.join('\n');
+  };
+
+  /**
+   * Injected code in to user's code to **try** to protect against infinite loops
+   * cropping up in the code, and killing the browser. This will throw an exception
+   * when a loop has hit over X number of times.
+   */
+  processor.protect = function (state) {
+    var line = processor.counters[state.line];
+    line.count++;
+    if (line.count > 100000) {
+      // we've done a ton of loops, then let's say it smells like an infinite loop
+      console.error("Suspicious loop detected at line " + state.line);
+      return true;
+    }
+    return false;
+  };
+
   /**
    * Render – build the final source code to be written to the iframe. Takes
    * the original source and an options object.
@@ -168,6 +230,13 @@ var processor = (function () {
     // Strip autofocus from the markup, preventing the focus switching out of
     // the editable area.
     source = source.replace(/(<.*?\s)(autofocus)/g, '$1');
+
+
+    // since we're running in real time, let's try hook in some loop protection
+    // basically if a loop runs for many, many times, it's probably an infinite loop
+    // so we'll throw an exception. This is done by rewriting the for/while/do
+    // loops to call our check at the start of each.
+    source = processor.rewriteLoops(source, options.scriptOffset);
 
     // Make sure the doctype is the first thing in the source
     var doctypeObj = processor.getDoctype(source),
@@ -504,6 +573,7 @@ window.onload = function () {
   sandbox.target = document.getElementById('sandbox-wrapper');
   // Attach the proxyconsole
   window.proxyconsole = proxyconsole;
+  window.protect = processor.protect;
   // Hook into postMessage
   addEvent(window, 'message', runner.handleMessage);
 

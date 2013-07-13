@@ -289,6 +289,7 @@ var sandbox = (function () {
   sandbox.target = null;
   sandbox.old = null;
   sandbox.active = null;
+  sandbox.guid = +new Date(); // id used to keep track of which iframe is active
 
   /**
    * Create a new sandboxed iframe.
@@ -297,6 +298,7 @@ var sandbox = (function () {
     var iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
+    iframe.id = sandbox.guid++;
     return iframe;
   };
 
@@ -314,12 +316,18 @@ var sandbox = (function () {
     // setTimeout allows the iframe to be rendered before other code runs,
     // allowing us access to the calculated properties like innerWidth.
     setTimeout(done || '', 0);
-    // Wait until the new iframe has loaded to remove the old one
+    // Wait until the new iframe has loaded then remove *all* the iframes,
+    // baring the active one
     addEvent(iframe, 'load', function () {
-      if (sandbox.old) {
-        sandbox.restoreState(sandbox.active, state);
-        if (sandbox.old.parentNode) {
-          sandbox.old.parentNode.removeChild(sandbox.old);
+      var iframes = sandbox.target.getElementsByTagName('iframe'),
+          length = iframes.length,
+          i = 0,
+          id = sandbox.active.id,
+          iframe;
+
+      for (; iframe = iframes[i], i < length; i++) {
+        if (iframe.id !== id) {
+          iframe.parentNode.removeChild(iframe);
         }
       }
     });

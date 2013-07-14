@@ -51,8 +51,8 @@
     "report": []
   },
   "api": {
-    "allowAnonymous": false,
-    "allowReadOnly": true,
+    "allowAnonymousReadWrite": false,
+    "allowAnonymousRead": true,
     "requireSSL": false
   },
   "blacklist": {

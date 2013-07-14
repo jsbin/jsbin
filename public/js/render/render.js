@@ -71,7 +71,8 @@ function getPreparedCode(nojs) {
       hasHTML = false,
       hasCSS = false,
       hasJS = false,
-      date = new Date();
+      date = new Date(),
+      scriptOffset = 0;
 
   try {
     source = editors.html.render();
@@ -116,6 +117,7 @@ function getPreparedCode(nojs) {
   } else if (re.code.test(source)) {
     parts = source.split('%code%');
     source = parts[0] + js + parts[1];
+    scriptOffset = parts[0].split('\n').length;
   } else if (hasJS) {
     close = '';
     if (source.indexOf('</body>') !== -1) {
@@ -129,6 +131,8 @@ function getPreparedCode(nojs) {
     // RS: not sure why I ran this in closure, but it means the expected globals are no longer so
     // js = "window.onload = function(){" + js + "\n}\n";
     var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
+
+    scriptOffset = source.split('\n').length - 1;
     source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
   }
 
@@ -164,6 +168,7 @@ function getPreparedCode(nojs) {
       close = parts.length == 2 && parts[1] ? parts[1] : '';
     }
     source += '<style>\n' + css + '\n</style>\n' + close;
+    scriptOffset += (2 + css.split('\n').length);
   }
 
   // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
@@ -193,5 +198,5 @@ function getPreparedCode(nojs) {
     document.title = documentTitle + ' - ' + 'JS Bin';
   }
 
-  return source;
+  return { source: source, scriptOffset: scriptOffset };
 }

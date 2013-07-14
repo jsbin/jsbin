@@ -261,7 +261,7 @@ var renderer = (function () {
 /** ============================================================================
  * Live rendering.
  *
- * Comes in to tasty flavours. Basic mode, which is essentially an IE7
+ * Comes in two tasty flavours. Basic mode, which is essentially an IE7
  * fallback. Take a look at https://github.com/remy/jsbin/issues/651 for more.
  * It uses the iframe's name and JS Bin's event-stream support to keep the
  * page up-to-date.
@@ -298,7 +298,9 @@ var renderLivePreview = (function () {
     // No postMessage? Don't render – the event-stream will handle it.
     if (!window.postMessage) return;
 
-    var source = getPreparedCode(),
+    var sourceData = getPreparedCode(),
+        source = sourceData.source,
+        scriptOffset = sourceData.scriptOffset,
         includeJsInRealtime = jsbin.settings.includejs;
     // Inform other pages event streaming render to reload
     if (requested) sendReload();
@@ -307,6 +309,7 @@ var renderLivePreview = (function () {
     renderer.postMessage('render', {
       source: source,
       options: {
+        scriptOffset: scriptOffset,
         requested: requested,
         debug: jsbin.settings.debug,
         includeJsInRealtime: jsbin.settings.includejs

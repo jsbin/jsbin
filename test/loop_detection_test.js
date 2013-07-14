@@ -1,10 +1,11 @@
-var jsbin = {};
-global.jsbin = jsbin; // let loopDetect hook jsbin
-
 var assert = require('assert');
 var sinon = require('sinon');
-var loopDetect = require('../public/js/render/infinite-loop-test');
-jsbin.LOOPCOUNT = loopDetect.detect;
+var processor = require('../public/js/runner/processor');
+
+// expose a window object for processor compatibility
+global.window = {
+  runnerWindow: processor
+};
 
 var code = {
   simple: 'return "remy";',
@@ -14,6 +15,7 @@ var code = {
   onelinewhile: 'var i = 0; while (i < 100) i += 10;\nreturn i;',
   whiletrue: 'var i = 0;\nwhile(true) {\ni++;\n}\nreturn i;',
   irl1: 'var nums = [0,1];\n var total = 8;\n for(i = 0; i <= total; i++){\n var newest = nums[i--]\n nums.push(newest);\n }\n return (nums);',
+  irl2: 'var a = 0;\n for(var j=1;j<=2;j++){\n for(var i=1;i<=60000;i++) {\n a += 1;\n }\n }\n return a;',
 };
 
 
@@ -30,25 +32,25 @@ describe('loop', function () {
 
 
   it('should leave none loop code alone', function () {
-    assert(loopDetect.convert(code.simple) === code.simple);
+    assert(processor.rewriteLoops(code.simple) === code.simple);
   });
 
   it('should rewrite for loops', function () {
-    var compiled = loopDetect.convert(code.simplefor);
+    var compiled = processor.rewriteLoops(code.simplefor);
     assert(compiled !== code);
     var result = run(compiled);
     assert(result === 9);
   });
 
   it('should rewrite one line for loops', function () {
-    var compiled = loopDetect.convert(code.onelinefor);
+    var compiled = processor.rewriteLoops(code.onelinefor);
     assert(compiled !== code);
     var result = run(compiled);
     assert(result === 10);
   });
 
   it('should throw on infinite while', function () {
-    var compiled = loopDetect.convert(code.whiletrue);
+    var compiled = processor.rewriteLoops(code.whiletrue);
 
     try { spy(compiled); } catch (e) {}
 
@@ -56,9 +58,15 @@ describe('loop', function () {
   });
 
   it('should throw on infinite for', function () {
-    var compiled = loopDetect.convert(code.irl1);
+    var compiled = processor.rewriteLoops(code.irl1);
     try { spy(compiled); } catch (e) {}
     assert(spy.threw);
   });
+
+  it('should should allow nested loops to run', function () {
+    var compiled = processor.rewriteLoops(code.irl2);
+    assert(run(compiled) === 120000);
+  });
+
 
 });

@@ -50,6 +50,11 @@
   "runner": [
     "/js/vendor/polyfills.js",
     "/js/vendor/stringify.js",
-    "/js/runner/runner.js"
+    "/js/runner/utils.js",
+    "/js/runner/proxyconsole.js",
+    "/js/runner/processor.js",
+    "/js/runner/sandbox.js",
+    "/js/runner/runner.js",
+    "/js/runner/index.js"
   ]
 }

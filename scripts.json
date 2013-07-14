@@ -38,7 +38,6 @@
     "/js/editors/libraries.js",
     "/js/editors/library.js",
     "/js/render/saved-history-preview.js",
-    "/js/render/infinite-loop-test.js",
     "/js/chrome/esc.js",
     "/js/chrome/download.js",
     "/js/chrome/login.js",

@@ -296,9 +296,10 @@ var libraries = [
     {
         "url": [
             "http://ajax.googleapis.com/ajax/libs/jquery/1.9/jquery.min.js",
-            "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.4/ember.min.js"
+            "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
+            "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.6/ember.min.js"
         ],
-        "label": "Ember.js 1.0.0-rc.4"
+        "label": "Ember.js 1.0.0-rc.6"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js",
@@ -322,8 +323,8 @@ var libraries = [
         "label": "Foundation 4.1.6"
     },
     {
-        "url": "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js",
-        "label": "Handlebars.js 1.0.0"
+        "url": "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
+        "label": "Handlebars.js 1.0.0-rc.3"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js",

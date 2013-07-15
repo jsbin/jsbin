@@ -39,7 +39,7 @@ var stringify = (function () {
 
     // Handle the primitive types
     if (type == '[object Number]') {
-      return o+'';
+      return ''+o;
     }
     if (type == '[object Boolean]') {
       return o ? 'true' : 'false';
@@ -67,7 +67,6 @@ var stringify = (function () {
     // Stringify each member of the array
     if (type == '[object Array]') {
       for (i = 0; i < o.length; i++) {
-        if (!o[i]) continue;
         parts.push(stringify(o[i], visited));
       }
       return '[' + parts.join(', ') + ']';

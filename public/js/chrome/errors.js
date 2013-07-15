@@ -1,11 +1,9 @@
-// (function () {
-  // return
+/*globals $:true, JSHINT:true, editors:true, $document:true, escapeHTML:true, jsbin:true, throttle:true */
 
-//= require "../vendor/jshint/jshint"
 var jshint = function () {
   var source = editors.javascript.editor.getCode();
   var ok = JSHINT(source);
-  
+
   return ok ? true : JSHINT.data();
 };
 
@@ -26,7 +24,7 @@ $error.find('.summary').click(function () {
   // trigger a resize after the click has completed and the details is close
   setTimeout(function () {
     $document.trigger('sizeeditors');
-  }, 10); 
+  }, 10);
 });
 
 if (!detailsSupport) {
@@ -62,7 +60,7 @@ $error.delegate('li', 'click', function () {
     var i = $error.find('li').index(this);
     if (errors[i].reason) {
       editors.javascript.editor.setSelection({ line: errors[i].line - 1, ch: 0 }, { line: errors[i].line - 1 });
-      editors.javascript.editor.focus();      
+      editors.javascript.editor.focus();
     }
     // var line = editors.javascript.nthLine(errors[0].line);
     // editors.javascript.jumpToLine(line);
@@ -84,24 +82,24 @@ var checkForErrors = function () {
     $error.hide();
     $document.trigger('sizeeditors');
   } else if (jshintErrors.errors.length) {
-    var html = ['<ol>'],
-        errors = jshintErrors.errors;
+    var html = ['<ol>'];
+    errors = jshintErrors.errors;
     for (var i = 0; i < errors.length; i++) {
-      if (typeof errors[i] == 'string') {
+      if (typeof errors[i] === 'string') {
         html.push(escapeHTML(errors[i]));
       } else {
         html.push('Line ' + errors[i].line + ': ' + escapeHTML(errors[i].evidence) + ' --- ' + escapeHTML(errors[i].reason));
       }
     }
-    
+
     html = html.join('<li>') + '</ol>';
 
-    $error.find('.summary').text(jshintErrors.errors.length == 1 ? '1 warning' : jshintErrors.errors.length + ' warnings');
+    $error.find('.summary').text(jshintErrors.errors.length === 1 ? '1 warning' : jshintErrors.errors.length + ' warnings');
     $error.find('ol').remove();
 
-    if (!detailsSupport && $error[0].open == false) html = $(html).hide();
-    
-    $error.append(html).show();    
+    if (!detailsSupport && $error[0].open === false) html = $(html).hide();
+
+    $error.append(html).show();
     $document.trigger('sizeeditors');
   }
 };
@@ -109,6 +107,6 @@ var checkForErrors = function () {
 if (jsbin.settings.jshint === true || jsbin.settings.jshint === undefined) {
   $(document).bind('codeChange', throttle(checkForErrors, 1000));
   $(document).bind('jsbinReady', checkForErrors);
-} 
+}
 
 // })();

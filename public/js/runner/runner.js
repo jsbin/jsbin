@@ -88,6 +88,9 @@ var runner = (function () {
         protect: loopProtect.protect
       };
 
+      // Reset the loop protection before rendering
+      loopProtect.reset();
+
       // Write the source out. IE crashes if you have lots of these, so that's
       // why the source is rendered above (processor.render) – it should be one
       // string. IE's a sensitive soul.

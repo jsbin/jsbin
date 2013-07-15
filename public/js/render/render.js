@@ -66,6 +66,11 @@ var getPreparedCode = (function () {
 
     hasCSS = !!$.trim(css);
 
+    // Rewrite loops to detect infiniteness.
+    // This is done by rewriting the for/while/do loops to perform a check at
+    // the start of each iteration.
+    js = loopProtect.rewriteLoops(js);
+
     // escape any script tags in the JS code, because that'll break the mushing together
     js = js.replace(re.script, '<\\/script');
 
@@ -102,7 +107,7 @@ var getPreparedCode = (function () {
 
     // redirect console logged to our custom log while debugging
     if (re.console.test(source)) {
-      var replaceWith = 'window.runnerWindow.proxyconsole.';
+      var replaceWith = 'window.runnerWindow.proxyConsole.';
       // yes, this code looks stupid, but in fact what it does is look for
       // 'console.' and then checks the position of the code. If it's inside
       // an openning script tag, it'll change it to window.top._console,
@@ -143,8 +148,9 @@ var getPreparedCode = (function () {
     // }
 
     // Add defer to all inline script tags in IE.
-    // This is because IE runs scripts as it loads them, so variables that scripts like jQuery add to the
-    // global scope are undefined. See http://jsbin.com/ijapom/5
+    // This is because IE runs scripts as it loads them, so variables that
+    // scripts like jQuery add to the global scope are undefined.
+    // See http://jsbin.com/ijapom/5
     if (jsbin.ie && re.scriptopen.test(source)) {
       source = source.replace(/<script(.*?)>/gi, function (all, match) {
         if (match.indexOf('src') !== -1) {

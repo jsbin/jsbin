@@ -130,7 +130,7 @@ var sandbox = (function () {
       output = e.message;
       type = 'error';
     }
-    return proxyconsole[type](output);
+    return proxyConsole[type](output);
   };
 
   /**

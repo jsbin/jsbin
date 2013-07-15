@@ -18,7 +18,7 @@
     "url": "git://github.com/remy/jsbin.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "mocha"
   },
   "dependencies": {
     "express": "3.0.x",

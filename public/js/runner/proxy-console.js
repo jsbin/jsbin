@@ -3,17 +3,17 @@
  * Proxy console.logs out to the parent window
  * ========================================================================== */
 
-var proxyconsole = (function () {
+var proxyConsole = (function () {
 
   var supportsConsole = true;
   try { window.console.log('runner'); } catch (e) { supportsConsole = false; }
 
-  var proxyconsole = {};
+  var proxyConsole = {};
 
   /**
    * Stringify all of the console objects from an array for proxying
    */
-  proxyconsole.stringifyArgs = function (args) {
+  proxyConsole.stringifyArgs = function (args) {
     var newArgs = [];
     // TODO this was forEach but when the array is [undefined] it wouldn't
     // iterate over them
@@ -34,10 +34,10 @@ var proxyconsole = (function () {
   var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir', 'props'];
   methods.forEach(function (method) {
     // Create console method
-    proxyconsole[method] = function () {
+    proxyConsole[method] = function () {
       // Replace args that can't be sent through postMessage
       var originalArgs = [].slice.call(arguments),
-          args = proxyconsole.stringifyArgs(originalArgs);
+          args = proxyConsole.stringifyArgs(originalArgs);
       // Post up with method and the arguments
       runner.postMessage('console', {
         method: method,
@@ -51,6 +51,6 @@ var proxyconsole = (function () {
     };
   });
 
-  return proxyconsole;
+  return proxyConsole;
 
 }());

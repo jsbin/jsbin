@@ -84,8 +84,8 @@ var runner = (function () {
       // that the user's code (that runs as a result of the following
       // childDoc.write) can access the objects.
       childWindow.runnerWindow = {
-        proxyconsole: proxyconsole,
-        protect: processor.protect
+        proxyConsole: proxyConsole,
+        protect: loopProtect.protect
       };
 
       // Write the source out. IE crashes if you have lots of these, so that's

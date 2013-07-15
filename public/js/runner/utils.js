@@ -37,3 +37,7 @@ var throttle = function (fn, delay) {
 var cleanse = function (s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 };
+
+var getIframeWindow = function (iframeElement) {
+    return iframeElement.contentWindow || iframeElement.contentDocument.parentWindow;
+};

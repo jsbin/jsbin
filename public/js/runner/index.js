@@ -24,9 +24,6 @@ window.onload = function () {
 
   // Set the sandbox target
   sandbox.target = document.getElementById('sandbox-wrapper');
-  // Attach the proxyconsole
-  window.proxyconsole = proxyconsole;
-  window.protect = processor.protect;
   // Hook into postMessage
   addEvent(window, 'message', runner.handleMessage);
 

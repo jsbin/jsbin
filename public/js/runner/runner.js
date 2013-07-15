@@ -63,16 +63,39 @@ var runner = (function () {
   runner.render = function (data) {
     var iframe = sandbox.create(data.options);
     sandbox.use(iframe, function () {
-      var childDoc = iframe.contentDocument || iframe.contentWindow.document;
-          childWindow = childDoc.defaultView || childDoc.parentWindow;
-      // Give the child a reference to this window
-      childWindow.runnerWindow = window;
+      var childDoc = iframe.contentDocument,
+          childWindow = getIframeWindow(iframe);
+      if (!childDoc) childDoc = childWindow.document;
+
       // Process the source according to the options passed in
       var source = processor.render(data.source, data.options);
+
+      // Start writing the page. This will clear any existing document.
       childDoc.open();
-      // Only one childDoc.write. IE crashes if you have lots.
+
+      // We need to write a blank line first – Firefox blows away things you add
+      // to the child window when you do the fist document.write.
+      // Note that each document.write fires a DOMContentLoaded in Firefox.
+      // This method exhibits synchronous and asynchronous behaviour, depending
+      // on the browser. Urg.
+      childDoc.write('');
+
+      // Give the child a reference to things it needs. This has to go here so
+      // that the user's code (that runs as a result of the following
+      // childDoc.write) can access the objects.
+      childWindow.runnerWindow = {
+        proxyconsole: proxyconsole,
+        protect: processor.protect
+      };
+
+      // Write the source out. IE crashes if you have lots of these, so that's
+      // why the source is rendered above (processor.render) – it should be one
+      // string. IE's a sensitive soul.
       childDoc.write(source);
+
+      // Close the document. This will fire another DOMContentLoaded.
       childDoc.close();
+
       // Setup the new window
       sandbox.wrap(childWindow, data.options);
     });

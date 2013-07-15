@@ -62,7 +62,7 @@ var sandbox = (function () {
    */
   sandbox.restoreState = function (iframe, state) {
     if (!iframe) return {};
-    var win = iframe.contentWindow;
+    var win = getIframeWindow(iframe);
     if (!win) return {};
     if (state.scroll) {
       win.scrollTo(state.scroll.x, state.scroll.y);
@@ -74,7 +74,7 @@ var sandbox = (function () {
    */
   sandbox.saveState = function (iframe) {
     if (!iframe) return {};
-    var win = iframe.contentWindow;
+    var win = getIframeWindow(iframe);
     if (!win) return {};
     return {
       scroll: {

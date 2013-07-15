@@ -161,9 +161,7 @@ var processor = (function () {
     // Push the source, split from the doctype above.
     combinedSource.push(source);
 
-    // Kill the blocking functions
-    // IE requires that this is done in the script, rather than off the window
-    // object outside of the doc.write.
+    // Restore the blocking functions
     if (realtime && options.includeJsInRealtime) {
       combinedSource.push(processor.blockingMethods.restore);
     }

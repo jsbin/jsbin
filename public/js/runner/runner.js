@@ -76,7 +76,7 @@ var runner = (function () {
       // We need to write a blank line first – Firefox blows away things you add
       // to the child window when you do the fist document.write.
       // Note that each document.write fires a DOMContentLoaded in Firefox.
-      // This method exhibits synchronous and asynchronous behavious, depending
+      // This method exhibits synchronous and asynchronous behaviour, depending
       // on the browser. Urg.
       childDoc.write('');
 

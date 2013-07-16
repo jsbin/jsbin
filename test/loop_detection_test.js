@@ -16,6 +16,9 @@ var code = {
   whiletrue: 'var i = 0;\nwhile(true) {\ni++;\n}\nreturn i;',
   irl1: 'var nums = [0,1];\n var total = 8;\n for(var i = 0; i <= total; i++){\n var newest = nums[i--]\n nums.push(newest);\n }\n return (nums);',
   irl2: 'var a = 0;\n for(var j=1;j<=2;j++){\n for(var i=1;i<=60000;i++) {\n a += 1;\n }\n }\n return a;',
+  notloops: 'console.log("do");\nconsole.log("while");\nconsole.log(" foo do bar ");\nconsole.log(" foo while bar ");\n',
+  notprops: "var foo = { 'do': 'bar' }; return foo['do'] && foo.do",
+  notcomments: "var foo = {}; // do the awesome-ness!\nreturn true",
 };
 
 
@@ -63,10 +66,27 @@ describe('loop', function () {
     assert(spy.threw);
   });
 
-  it('should should allow nested loops to run', function () {
+  it('should allow nested loops to run', function () {
     var compiled = loopProtect.rewriteLoops(code.irl2);
     assert(run(compiled) === 120000);
   });
 
+  it('should not rewrite "do" in strings', function () {
+    var compiled = loopProtect.rewriteLoops(code.notloops);
+    assert(compiled === code.notloops);
+  });
+
+
+  it('should not rewrite "do" in object properties', function () {
+    var compiled = loopProtect.rewriteLoops(code.notprops);
+    console.log(compiled);
+    assert(compiled === code.notprops);
+  });
+
+  it('should not rewrite "do" in comments', function () {
+    var compiled = loopProtect.rewriteLoops(code.notcomments);
+    // console.log(compiled);
+    assert(compiled === code.notcomments);
+  });
 
 });

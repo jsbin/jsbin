@@ -18,7 +18,7 @@ var loopProtect = (function () {
   loopProtect.rewriteLoops = function (code, offset) {
     var recompiled = [],
         lines = code.split('\n'),
-        re = /for\b|while\b|do\b/;
+        re = /(for|while|do)\b/;
 
     if (!offset) offset = 0;
 
@@ -26,28 +26,54 @@ var loopProtect = (function () {
 
     lines.forEach(function (line, i) {
       var index = 0,
-          lineNum = i - offset;
+          lineNum = i - offset,
+          character = '',
+          cont = true,
+          match = (line.match(re) || [,''])[1];
 
-      if (re.test(line) && line.indexOf('jsbin') === -1) {
-        // try to insert the tracker after the openning brace (like while (true) { ^here^ )
-        index = line.indexOf('{');
-        if (index !== -1) {
-          line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
-        } else {
-          index = line.indexOf(')');
-          if (index !== -1) {
-            // look for a one liner
-            var colonIndex = line.substring(index).indexOf(';');
-            if (colonIndex !== -1) {
-              // in which case, rewrite the loop to add braces
-              colonIndex += index;
-              line = line.substring(0, index + 1) + '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + line.substring(index + 1) + '\n}\n'; // extra new lines ensure we clear comment lines
+      if (match && line.indexOf('jsbin') === -1) {
+        // make sure this is an actual loop command by searching backwards
+        // to ensure it's not a string, comment or object property
+        index = line.indexOf(match);
+        while (--index > -1) {
+          character = line.substr(index, 1);
+          if (character === '"' || character === "'" || character === '.') {
+            cont = false;
+            break;
+          }
+          if (character === '/' || character === '*') {
+            // looks like a comment, go back one to confirm or not
+            --index;
+            if (character === '/') {
+              cont = false;
+              break;
             }
           }
         }
 
-        line = ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
-        loopProtect.counters[lineNum] = {};
+        // we are good to continue the rewrite
+        if (cont === true) {
+          // try to insert the tracker after the openning brace (like while (true) { ^here^ )
+          index = line.indexOf('{');
+          if (index !== -1) {
+            line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
+          } else {
+            index = line.indexOf(')');
+            if (index !== -1) {
+              // look for a one liner
+              var colonIndex = line.substring(index).indexOf(';');
+              if (colonIndex !== -1) {
+                // in which case, rewrite the loop to add braces
+                colonIndex += index;
+                line = line.substring(0, index + 1) + '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + line.substring(index + 1) + '\n}\n'; // extra new lines ensure we clear comment lines
+              }
+            }
+          }
+
+          line = ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
+          loopProtect.counters[lineNum] = {};
+
+        }
       }
       recompiled.push(line);
     });

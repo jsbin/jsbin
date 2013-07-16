@@ -7,6 +7,7 @@ var getPreparedCode = (function () {
         console: /(^.|\b)console\.(\S+)/g,
         script: /<\/script/ig,
         code: /%code%/,
+        csscode: /%css%/,
         title: /<title>(.*)<\/title>/i,
         winLoad: /window\.onload\s*=/,
         scriptopen: /<script/gi
@@ -23,6 +24,7 @@ var getPreparedCode = (function () {
     re.console.lastIndex = 0;
     re.script.lastIndex = 0;
     re.code.lastIndex = 0;
+    re.csscode.lastIndex = 0;
     re.title.lastIndex = 0;
     re.winLoad.lastIndex = 0;
     re.scriptopen.lastIndex = 0;
@@ -35,8 +37,7 @@ var getPreparedCode = (function () {
         hasHTML = false,
         hasCSS = false,
         hasJS = false,
-        date = new Date(),
-        scriptOffset = 0;
+        date = new Date();
 
     try {
       source = editors.html.render();
@@ -86,7 +87,6 @@ var getPreparedCode = (function () {
     } else if (re.code.test(source)) {
       parts = source.split('%code%');
       source = parts[0] + js + parts[1];
-      scriptOffset = parts[0].split('\n').length;
     } else if (hasJS) {
       close = '';
       if (source.indexOf('</body>') !== -1) {
@@ -101,7 +101,6 @@ var getPreparedCode = (function () {
       // js = "window.onload = function(){" + js + "\n}\n";
       var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
-      scriptOffset = source.split('\n').length - 1;
       source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
     }
 
@@ -126,6 +125,9 @@ var getPreparedCode = (function () {
 
     if (!hasHTML && !hasJS && hasCSS) {
       source = "<pre>\n" + css + "</pre>";
+    } else if (re.csscode.test(source)) {
+      parts = source.split('%css%');
+      source = parts[0] + css + parts[1];
     } else if (css && hasHTML) {
       parts = [];
       close = '';
@@ -137,7 +139,6 @@ var getPreparedCode = (function () {
         close = parts.length == 2 && parts[1] ? parts[1] : '';
       }
       source += '<style>\n' + css + '\n</style>\n' + close;
-      scriptOffset += (2 + css.split('\n').length);
     }
 
     // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
@@ -168,7 +169,7 @@ var getPreparedCode = (function () {
       document.title = documentTitle + ' - ' + 'JS Bin';
     }
 
-    return { source: source, scriptOffset: scriptOffset };
+    return source;
   }
 
 }());

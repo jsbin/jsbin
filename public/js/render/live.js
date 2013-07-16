@@ -298,9 +298,7 @@ var renderLivePreview = (function () {
     // No postMessage? Don't render – the event-stream will handle it.
     if (!window.postMessage) return;
 
-    var sourceData = getPreparedCode(),
-        source = sourceData.source,
-        scriptOffset = sourceData.scriptOffset,
+    var source = getPreparedCode(),
         includeJsInRealtime = jsbin.settings.includejs;
     // Inform other pages event streaming render to reload
     if (requested) sendReload();
@@ -309,7 +307,6 @@ var renderLivePreview = (function () {
     renderer.postMessage('render', {
       source: source,
       options: {
-        scriptOffset: scriptOffset,
         requested: requested,
         debug: jsbin.settings.debug,
         includeJsInRealtime: jsbin.settings.includejs

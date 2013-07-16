@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
   {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/custom_css}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
+  {{#is_production}}
+  {{{analytics}}}
+  {{/is_production}}
 </head>
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
@@ -441,7 +444,6 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{/is_production}}
 {{#is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-{{{analytics}}}
 {{/is_production}}
 {{#live}}
 <script src="{{static}}/js/spike.js"></script>

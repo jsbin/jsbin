@@ -18,64 +18,122 @@ var loopProtect = (function () {
   loopProtect.rewriteLoops = function (code, offset) {
     var recompiled = [],
         lines = code.split('\n'),
-        re = /(for|while|do)\b/;
+        re = /\b(for|while|do)\b/;
 
     if (!offset) offset = 0;
 
     var method = 'window.runnerWindow.protect';
+    var ignore = {};
+
+    var insertReset = function (lineNum, line) {
+      return ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
+    };
 
     lines.forEach(function (line, i) {
-      var index = 0,
+      var next = line,
+          index = 0,
           lineNum = i - offset,
           character = '',
           cont = true,
-          match = (line.match(re) || [,''])[1];
+          oneliner = false,
+          terminator = false,
+          match = (line.match(re) || [null,''])[1];
+
+      if (ignore[i]) return;
+
 
       if (match && line.indexOf('jsbin') === -1) {
         // make sure this is an actual loop command by searching backwards
         // to ensure it's not a string, comment or object property
         index = line.indexOf(match);
+
+        // first we need to walk backwards to ensure that our match isn't part
+        // of a string or part of a comment
         while (--index > -1) {
           character = line.substr(index, 1);
           if (character === '"' || character === "'" || character === '.') {
-            cont = false;
-            break;
+            // our loop keyword was actually either in a string or a property, so let's exit and ignore this line
+            recompiled.push(line);
+            return;
           }
           if (character === '/' || character === '*') {
             // looks like a comment, go back one to confirm or not
             --index;
             if (character === '/') {
-              cont = false;
-              break;
+              // we've found a comment, so let's exit and ignore this line
+              recompiled.push(line);
+              return;
             }
           }
         }
 
-        // we are good to continue the rewrite
-        if (cont === true) {
-          // try to insert the tracker after the openning brace (like while (true) { ^here^ )
-          index = line.indexOf('{');
-          if (index !== -1) {
+        // now work our way forward to look for '{'
+        index = line.indexOf(match) + match.length;
+
+        while (++index < line.length) {
+          character = line.substr(index, 1);
+          if (character === ')') {
+            terminator = index;
+          }
+
+          if (terminator !== false && character === ';') {
+            // this is the end of a oneliner
+            oneliner = true;
+
+            // insert the loop protection extra new lines ensure we clear any comments on the original line
+            line = line.substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + line.substring(terminator + 1) + '\n}\n';
+            recompiled.push(insertReset(lineNum, line));
+            return;
+          }
+
+          if (character === '{') {
+            // we've found the start of the loop, so insert the loop protection
             line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
-          } else {
-            index = line.indexOf(')');
-            if (index !== -1) {
-              // look for a one liner
-              var colonIndex = line.substring(index).indexOf(';');
-              if (colonIndex !== -1) {
-                // in which case, rewrite the loop to add braces
-                colonIndex += index;
-                line = line.substring(0, index + 1) + '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + line.substring(index + 1) + '\n}\n'; // extra new lines ensure we clear comment lines
-              }
+            recompiled.push(insertReset(lineNum, line));
+            return;
+          }
+        }
+
+        // if we didn't find the start of the loop program,
+        // then move on to the next line to work out whether
+        // this is a one liner or if there's a new line to
+        // get to the the curly.
+        next = lines[i+1];
+
+        // reset the index to the start of the line and work forwards
+        index = 0;
+        do {
+          character = next.substr(index, 1);
+
+          if (character === '{' || character === ';') {
+
+            // we found a curly, so we need to insert: `if (...)\n { dostuff();\n}`
+            if (character === '{') {
+              // we've found the start of the loop, so insert the loop protection
+              next = next.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
             }
+
+            // this is the end of a mutliline one-liner: `if (...)\n dostuff();`
+            if (character === ';') {
+              // insert the loop protection extra new lines ensure we clear any comments on the original line
+              next = '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + next + '\n}\n';
+            }
+
+            recompiled.push(insertReset(lineNum, line));
+            recompiled.push(next);
+            ignore[i + 1] = true;
+            return;
           }
 
-          line = ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
-          loopProtect.counters[lineNum] = {};
+        } while (++index < next.length);
 
-        }
+
+        // just in case...but really we shouldn't get here.
+        recompiled.push(line);
+      } else {
+        // else we're a regular line, and we shouldn't be touched
+        recompiled.push(line);
       }
-      recompiled.push(line);
     });
 
     return recompiled.join('\n');

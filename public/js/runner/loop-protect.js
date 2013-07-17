@@ -32,7 +32,7 @@ var loopProtect = (function () {
     lines.forEach(function (line, i) {
       var next = line,
           index = 0,
-          lineNum = i - offset,
+          lineNum = i - offset + 1, // +1 since we're humans and don't read lines numbers from zero
           character = '',
           cont = true,
           oneliner = false,
@@ -152,7 +152,7 @@ var loopProtect = (function () {
     }
     if ((+new Date - line.time) > 100) {
       // We've spent over 100ms on this loop... smells infinite.
-      var msg = "Suspicious loop detected at line " + state.line;
+      var msg = "Exiting suspicious and potentially infinite loop at line " + state.line;
       if (window.proxyConsole) {
         window.proxyConsole.error(msg);
       } else console.error(msg);

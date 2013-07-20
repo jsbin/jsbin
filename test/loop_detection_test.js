@@ -23,7 +23,8 @@ var code = {
   notcomments: "var foo = {}; // do the awesome-ness!\nreturn true;",
   dirtybraces: "var a = 0; for(var i=1;i<=120000; i++)\n {\n a += 1;\n }\nreturn a;",
   onelinenewliner: "var b=0;\n function f(){b+=1;}\n for(var j=1;j<120000; j++)\n f();\nreturn j;",
-  irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });"
+  irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });",
+  brackets: 'var NUM=103, i, sqrt;\nfor(i=2; i<=Math.sqrt(NUM); i+=1){\n if(NUM % i === 0){\n  console.log(NUM + " can be divided by " + i + ".");\n  break;\n }\n}\nreturn i;',
 };
 
 
@@ -136,4 +137,10 @@ describe('loop', function () {
     assert(spy(compiled) === 120000);
   });
 
+  it('should handle brackets inside of loop conditionals', function () {
+    var c = code.brackets;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+    assert(spy(compiled) === 11);
+  });
 });

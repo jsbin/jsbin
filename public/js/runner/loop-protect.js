@@ -37,7 +37,8 @@ var loopProtect = (function () {
           cont = true,
           oneliner = false,
           terminator = false,
-          match = (line.match(re) || [null,''])[1];
+          match = (line.match(re) || [null,''])[1],
+          openBrackets = 0;
 
       if (ignore[i]) return;
 
@@ -70,10 +71,19 @@ var loopProtect = (function () {
         // now work our way forward to look for '{'
         index = line.indexOf(match) + match.length;
 
-        while (++index < line.length) {
+        while (index < line.length) {
           character = line.substr(index, 1);
+
+          if (character === '(') {
+            openBrackets++;
+          }
+
           if (character === ')') {
-            terminator = index;
+            openBrackets--;
+
+            if (openBrackets === 0) {
+              terminator = index;
+            }
           }
 
           if (terminator !== false && character === ';') {
@@ -86,12 +96,14 @@ var loopProtect = (function () {
             return;
           }
 
-          if (character === '{') {
+          if (openBrackets === 0 && character === '{') {
             // we've found the start of the loop, so insert the loop protection
             line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
             recompiled.push(insertReset(lineNum, line));
             return;
           }
+
+          index++;
         }
 
         // if we didn't find the start of the loop program,

@@ -29,10 +29,11 @@ var loopProtect = (function () {
       return ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
     };
 
-    lines.forEach(function (line, i) {
+    lines.forEach(function (line, lineNum) {
       var next = line,
           index = 0,
-          lineNum = i - offset + 1, // +1 since we're humans and don't read lines numbers from zero
+          originalLineNum = lineNum,
+          printLineNumber = lineNum - offset + 1, // +1 since we're humans and don't read lines numbers from zero
           character = '',
           cont = true,
           oneliner = false,
@@ -40,7 +41,7 @@ var loopProtect = (function () {
           match = (line.match(re) || [null,''])[1],
           openBrackets = 0;
 
-      if (ignore[i]) return;
+      if (ignore[lineNum]) return;
 
 
       if (match && line.indexOf('jsbin') === -1) {
@@ -73,6 +74,7 @@ var loopProtect = (function () {
 
         while (index < line.length) {
           character = line.substr(index, 1);
+          // console.log(character, index);
 
           if (character === '(') {
             openBrackets++;
@@ -81,67 +83,51 @@ var loopProtect = (function () {
           if (character === ')') {
             openBrackets--;
 
-            if (openBrackets === 0) {
+            if (openBrackets === 0 && terminator === false) {
               terminator = index;
             }
           }
 
-          if (terminator !== false && character === ';') {
-            // this is the end of a oneliner
-            oneliner = true;
+          if (openBrackets === 0 && (character === ';' || character === '{')) {
 
-            // insert the loop protection extra new lines ensure we clear any comments on the original line
-            line = line.substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + line.substring(terminator + 1) + '\n}\n';
-            recompiled.push(insertReset(lineNum, line));
-            return;
-          }
+            // if we're a non-curlies loop, then convert to curlies to get our code inserted
+            if (character === ';') {
+              if (lineNum !== originalLineNum) {
+                // affect the compiled line
+                recompiled[originalLineNum] = recompiled[originalLineNum].substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n';
+                line += '\n}\n';
+              } else {
+                // simpler
+                line = line.substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n' + line.substring(terminator + 1) + '\n}\n';
+              }
 
-          if (openBrackets === 0 && character === '{') {
-            // we've found the start of the loop, so insert the loop protection
-            line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
-            recompiled.push(insertReset(lineNum, line));
+            } else if (character === '{') {
+              line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + printLineNumber + ' })) break;';
+            }
+
+            // work out where to put the reset
+            if (lineNum === originalLineNum) {
+              line = insertReset(printLineNumber, line);
+            } else {
+              // insert the reset above the originalLineNum
+              recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum]);
+            }
+
+            recompiled.push(line);
             return;
           }
 
           index++;
-        }
 
-        // if we didn't find the start of the loop program,
-        // then move on to the next line to work out whether
-        // this is a one liner or if there's a new line to
-        // get to the the curly.
-        next = lines[i+1];
-
-        // reset the index to the start of the line and work forwards
-        index = 0;
-        do {
-          character = next.substr(index, 1);
-
-          if (character === '{' || character === ';') {
-
-            // we found a curly, so we need to insert: `if (...)\n { dostuff();\n}`
-            if (character === '{') {
-              // we've found the start of the loop, so insert the loop protection
-              next = next.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + lineNum + ' })) break;';
-            }
-
-            // this is the end of a mutliline one-liner: `if (...)\n dostuff();`
-            if (character === ';') {
-              // insert the loop protection extra new lines ensure we clear any comments on the original line
-              next = '{\nif (' + method + '({ line: ' + lineNum + ' })) break;\n' + next + '\n}\n';
-            }
-
-            recompiled.push(insertReset(lineNum, line));
-            recompiled.push(next);
-            ignore[i + 1] = true;
-            return;
+          if (index === line.length && lineNum < (lines.length-1)) {
+            // move to the next line
+            recompiled.push(line);
+            lineNum++;
+            line = lines[lineNum];
+            ignore[lineNum] = true;
+            index = 0;
           }
-
-        } while (++index < next.length);
-
-
-        // just in case...but really we shouldn't get here.
-        recompiled.push(line);
+        }
       } else {
         // else we're a regular line, and we shouldn't be touched
         recompiled.push(line);

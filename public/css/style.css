@@ -361,8 +361,7 @@ iframe.javascript {
   color: #999;
 }
 
-
-a..button:focus { /* , .button:active */
+a.button:focus { /* , .button:active */
   -moz-box-shadow: #C8C8C8 0 0 3px;
   -webkit-box-shadow: #C8C8C8 0 0 3px;
   box-shadow: #C8C8C8 0 0 3px;
@@ -1259,7 +1258,7 @@ form {
 }
 
 form div {
-  margin-top: 5px;
+  padding-top: 5px;
 }
 
 form div:first-child {
@@ -1804,8 +1803,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .button-dropdown-arrow:empty:after,
 .fake-dropdown:empty:after { padding-left: 0; }
 
-/*.open .fake-dropdown { 
-  border: 1px solid #ccc; 
+/*.open .fake-dropdown {
+  border: 1px solid #ccc;
   box-shadow: 1px 4px 7px rgba(0, 0, 0, 0.2);
   padding-left: 0px;
   position: absolute;
@@ -1998,6 +1997,31 @@ a.active:hover {
   height: auto;
   /* border-radius: 5px; */
   text-align: left;
+}
+
+.label.open .dropdownmenu {
+  margin-left: 2px;
+}
+
+.label.open {
+  padding: 9px 100px 0px 0px;
+}
+
+.label.open .name {
+  position: relative;
+  padding: 4px;
+  z-index: 1;
+  padding-left: 2px;
+}
+
+.label.open .name > strong {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  padding-top: 5px;
+  /* box-shadow: 1px 4px 7px rgba(0,0,0,0.2); */
+  padding-bottom: 6px;
+  border-bottom: 0;
 }
 
 .open .dropdown {
@@ -2702,7 +2726,7 @@ pre .highlight:last-of-type {
   -ms-box-shadow: 0 0 1px #999;
   -o-box-shadow: 0 0 1px #999;
   -moz-box-shadow: 0 0 1px #999;
-  box-shadow: 0 0 1px #999;  
+  box-shadow: 0 0 1px #999;
   background: #fff;
 }
 
@@ -2717,7 +2741,7 @@ pre .highlight:last-of-type {
   -ms-box-shadow: none;
   -o-box-shadow: none;
   -moz-box-shadow: none;
-  box-shadow: none;  
+  box-shadow: none;
 }
 
 .brand {
@@ -2801,6 +2825,59 @@ pre .highlight:last-of-type {
 
 .embed #live iframe {
   padding-top: 0;
+}
+
+
+#menuinfo {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: 9;
+  display: none;
+}
+
+.menuinfo #menuinfo {
+  display: block;
+}
+
+#menuinfo p {
+  font-size: 18px;
+  line-height: 30px;
+  margin: 0 auto;
+  margin-top: 2px;
+  width: 75%;
+  background: rgba(212, 250, 11, 0);
+  border-radius: 10px;
+  border: rgba(245, 245, 200, 1);
+}
+
+/* when the a menu is selected, only show the menu that's open */
+.control .menu,
+#panels {
+/*  -moz-transition: opacity 50ms;
+  -webkit-transition: opacity 50ms;
+  -ms-transition: opacity 50ms;
+  -o-transition: opacity 50ms;
+  transition: opacity 50ms;
+  opacity: 1;
+*/}
+
+.menuinfo .control .menu,
+.menuinfo #panels {
+  /*opacity: 0;*/
+  visibility: hidden !important;
+}
+
+.menuinfo .control .menu.open {
+  /*opacity: 1 !important;*/
+  visibility: visible !important;
+  background: white;
+  z-index: 10;
+}
+
+.menuinfo .control {
+  z-index: 11;
 }
 
 

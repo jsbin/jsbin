@@ -44,7 +44,6 @@
     "/js/chrome/login.js",
     "/js/chrome/tips.js",
     "/js/chrome/save.js",
-    "/js/chrome/menu.js",
     "/js/chrome/file-drop.js",
     "/js/chrome/gist.js",
     "/js/chrome/app.js"

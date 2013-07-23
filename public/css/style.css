@@ -78,6 +78,7 @@ textarea:focus {
   top: -1px;
   position: relative;
   margin-right: 5px;
+  border: none;
 }
 
 .login .btn-github {
@@ -2012,6 +2013,7 @@ a.active:hover {
   padding: 4px;
   z-index: 1;
   padding-left: 2px;
+  padding-bottom: 3px;
 }
 
 .label.open .name > strong {
@@ -2591,8 +2593,9 @@ form + hr {
 }
 
 .code .name {
-  display: inline-block;
-  overflow: hidden;
+  display: block;
+
+  /* overflow: hidden; */
   position: relative;
   width: 165px;
   /* allow a black theme but for the text to still be readable */

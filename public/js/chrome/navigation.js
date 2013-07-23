@@ -75,6 +75,7 @@ function opendropdown(el) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
+    // $body.addClass('menuinfo');
     var input = menu.find(':text:visible:first').focus()[0];
     if (input) setTimeout(function () {
       input.select();
@@ -87,6 +88,7 @@ function closedropdown() {
   menuDown = false;
   if (dropdownOpen) {
     dropdownButtons.closest('.menu').removeClass('open').trigger('close');
+    // $body.removeClass('menuinfo');
     dropdownOpen = false;
     onhover = false;
   }

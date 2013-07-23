@@ -1,4 +1,13 @@
-# Features I want to see in JS Bin
+# Roadmap
+
+Priority features
+
+- Validation of email address (user to confirm their email before they can publish full bins) [security]
+- Email evil bit checking [security]
+
+# Features
+
+In no specific order
 
 - Static uploading via zip file: the assets are available via `jsbin.com/static/rem/foo.gif` etc, and dir listing on `jsbin.com/static/rem/` - note that assets should only be requestable from jsbin.com
 - Offline support: deliver index.html and the dynamic content through a JSON request, need to make the UI a bit more dynamic (around login/reg). Questions: can you support a) saving, b) opening old bins?
@@ -19,3 +28,4 @@
 - Export bins as zip file
 - Additional panels (like a readme, or other processors allowing to pipe one panel in to others, and dynamic documentation panel)
 - Collections (pre-curated bins)
+- Full preview for that bin owner, does not contain injected content, otherwise top/tail with jsbin

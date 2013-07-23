@@ -14,6 +14,7 @@ var code = {
   onelinefor: 'var i = 0, j = 0;\nfor (; i < 10; i++) j = i * 10;\nreturn i;',
   simplewhile: 'var i = 0; while (i < 100) {\ni += 10;\n}\nreturn i;',
   onelinewhile: 'var i = 0; while (i < 100) i += 10;\nreturn i;',
+  onelinewhile2: 'function noop(){}; while (1) noop("Ha.");',
   whiletrue: 'var i = 0;\nwhile(true) {\ni++;\n}\nreturn true;',
   irl1: 'var nums = [0,1];\n var total = 8;\n for(var i = 0; i <= total; i++){\n var newest = nums[i--]\n nums.push(newest);\n }\n return i;',
   irl2: 'var a = 0;\n for(var j=1;j<=2;j++){\n for(var i=1;i<=60000;i++) {\n a += 1;\n }\n }\n return a;',
@@ -22,7 +23,9 @@ var code = {
   notcomments: "var foo = {}; // do the awesome-ness!\nreturn true;",
   dirtybraces: "var a = 0; for(var i=1;i<=120000; i++)\n {\n a += 1;\n }\nreturn a;",
   onelinenewliner: "var b=0;\n function f(){b+=1;}\n for(var j=1;j<120000; j++)\n f();\nreturn j;",
-  irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });"
+  irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });",
+  brackets: 'var NUM=103, i, sqrt;\nfor(i=2; i<=Math.sqrt(NUM); i+=1){\n if(NUM % i === 0){\n  console.log(NUM + " can be divided by " + i + ".");\n  break;\n }\n}\nreturn i;',
+  lotolines: 'var LIMIT = 10;\nvar num, lastNum, tmp;\nfor(num = 1, lastNum = 0;\n  num < LIMIT;\n  lastNum = num, num = tmp){\n\n    tmp = num + lastNum;\n}\nreturn lastNum;',
 };
 
 
@@ -63,6 +66,15 @@ describe('loop', function () {
     assert(compiled !== c);
     var result = run(compiled);
     assert(result === 10);
+  });
+
+  it('should rewrite one line while loops', function () {
+    var c = code.onelinewhile2;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+    // console.log('\n---------\n' + c + '\n---------\n' + compiled);
+    var result = run(compiled);
+    assert(result === undefined);
   });
 
   it('should protect infinite while', function () {
@@ -122,8 +134,25 @@ describe('loop', function () {
   it('should find one liners on multiple lines', function () {
     var c = code.onelinenewliner;
     var compiled = loopProtect.rewriteLoops(c);
+    // console.log('\n----------');
+    // console.log(c);
+    // console.log('\n----------');
+    // console.log(compiled);
     assert(compiled !== c);
     assert(spy(compiled) === 120000);
   });
 
+  it('should handle brackets inside of loop conditionals', function () {
+    var c = code.brackets;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+    assert(spy(compiled) === 11);
+  });
+
+  it('should not corrupt multi-line (on more than one line) loops', function () {
+    var c = code.lotolines;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+    assert(spy(compiled) === 8);
+  });
 });

@@ -58,6 +58,21 @@ if (window.jsbinified !== undefined) return;
     })
 });
 
+function getQuery(querystring) {
+  var query = {};
+
+  querystring.replace(/\b([^&=]*)=([^&=]*)\b/g, function (m, a, d) {
+    if (typeof query[a] != 'undefined') {
+      query[a] += ',' + d;
+    } else {
+      query[a] = d;
+    }
+  });
+
+  return query;
+}
+
+
 // ---- here begins the jsbin embed - based on the embedding doc: https://github.com/remy/jsbin/blob/master/docs/embedding.md
 
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
@@ -176,8 +191,13 @@ function embed(link) {
   iframe.className = link.className; // inherit all the classes from the link
   iframe.id = link.id; // also inherit, giving more style control to the user
   iframe.style.border = '1px solid #aaa';
-  iframe.style.width = '100%';
-  iframe.style.minHeight = '300px';
+
+  var query = getQuery(link.search);
+  iframe.style.width = query.width || '100%';
+  iframe.style.minHeight = query.height || '300px';
+  if (query.height) {
+    iframe.style.maxHeight = query.height;
+  }
   link.parentNode.replaceChild(iframe, link);
 
   var onmessage = function (event) {

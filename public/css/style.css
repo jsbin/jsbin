@@ -78,6 +78,7 @@ textarea:focus {
   top: -1px;
   position: relative;
   margin-right: 5px;
+  border: none;
 }
 
 .login .btn-github {
@@ -105,13 +106,13 @@ textarea:focus {
   left: 0;
   right: 0;
   border-bottom: 1px solid #aaa;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0)), color-stop(50%,rgba(0,0,0,0.15))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%); /* Chrome10+,Safari5.1+ */
-  background:    -moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%); /* FF3.6+ */
-  background:      -o-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%); /* Opera 11.10+ */
-  background:         linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 50%); /* W3C */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.15))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 100%); /* Chrome10+,Safari5.1+ */
+  background:    -moz-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 100%); /* FF3.6+ */
+  background:      -o-linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 100%); /* Opera 11.10+ */
+  background:         linear-gradient(top, rgba(0,0,0,0) 0, rgba(0,0,0,0.15) 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#26000000',GradientType=0 ); /* IE6-9 */
-  background-color: #fff;
+  background-color: #FFF;
 
 }
 
@@ -297,6 +298,7 @@ iframe.javascript {
   border: 1px solid transparent;
   border-top: 0;
   border-bottom: 0;
+
   height: 23px;
   line-height: 25px;
   padding: 6px 10px;
@@ -361,8 +363,8 @@ iframe.javascript {
   color: #999;
 }
 
-
-a.button:active, .button:focus {
+a.button:focus { /* , .button:active */
+  -moz-box-shadow: #C8C8C8 0 0 3px;
   -webkit-box-shadow: #C8C8C8 0 0 3px;
      -moz-box-shadow: #C8C8C8 0 0 3px;
           box-shadow: #C8C8C8 0 0 3px;
@@ -428,13 +430,18 @@ body.preview a.preview {
 div.menu {
   margin-left: -1px;
   /*border-left: 1px solid #ccc;*/
-  /*float: left;*/
   display: inline-block;
   /*width: 104px;*/
   position: relative;
   z-index: 20;
   padding: 0;
   /*overflow: hidden;*/
+  float: left;
+  top: 0;
+}
+
+.help .menu {
+  /* float: left; */
 }
 
 span.menu {
@@ -445,7 +452,7 @@ span.menu {
 
 .code .menu {
   margin-left: 0;
-  padding: 10px 10px 0 10px;
+  padding: 10px 100px 0 10px;
   display: block;
 }
 
@@ -1233,7 +1240,7 @@ form {
 }
 
 form div {
-  margin-top: 5px;
+  padding-top: 5px;
 }
 
 form div:first-child {
@@ -1739,6 +1746,14 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .button-dropdown-arrow:empty:after,
 .fake-dropdown:empty:after { padding-left: 0; }
 
+/*.open .fake-dropdown {
+  border: 1px solid #ccc;
+  box-shadow: 1px 4px 7px rgba(0, 0, 0, 0.2);
+  padding-left: 0px;
+  position: absolute;
+  z-index: 1;
+}*/
+
 
 /*.code .fake-dropdown:after {
   display: none;
@@ -1918,13 +1933,39 @@ a.active:hover {
 
 .dropdownmenu,
 .dropdowncontent {
-  margin: 3px 5px;
+  /* margin: 3px 5px; */
   background: white;
-  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
   border: 1px solid #CCC;
   height: auto;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   text-align: left;
+}
+
+.label.open .dropdownmenu {
+  margin-left: 2px;
+}
+
+.label.open {
+  padding: 9px 100px 0px 0px;
+}
+
+.label.open .name {
+  position: relative;
+  padding: 4px;
+  z-index: 1;
+  padding-left: 2px;
+  padding-bottom: 3px;
+}
+
+.label.open .name > strong {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  padding-top: 5px;
+  /* box-shadow: 1px 4px 7px rgba(0,0,0,0.2); */
+  padding-bottom: 6px;
+  border-bottom: 0;
 }
 
 .open .dropdown {
@@ -1957,8 +1998,14 @@ a.active:hover {
 }
 
 .help .menu > a.avatar {
-  padding: 0;
-  margin-top: -3px;
+  padding: 7px;
+  margin-top: -4px;
+  line-height: 0;
+  height: 24px;
+}
+
+.help .open.menu > a.avatar {
+  height: 24px;
 }
 
 #panels {
@@ -1976,6 +2023,7 @@ a.active:hover {
   width: 100%;
   /*z-index: 99;*/
   padding-top: 2px;
+  padding-bottom: 1px;
 }
 
 #panels a {
@@ -1988,7 +2036,8 @@ a.active:hover {
 .open .button-dropdown:hover,
 .open .button-open,
 .open .button-open:hover {
-  background: #eee;
+  background: #fff;
+  z-index: 1;
 }
 
 .code .open .button-dropdown {
@@ -2410,7 +2459,7 @@ a.active:hover {
 
 #actionmenu {
   top: 100%;
-  left: -10px;
+  /* left: -10px; */
 }
 
 #share {
@@ -2442,16 +2491,17 @@ a.active:hover {
 }
 
 .dropdownmenu {
-  margin: 3px 5px;
+  /* margin: 3px 5px; */
 }
 
 .dropdownmenu a {
-  padding: 5px 30px 5px 15px;
+  padding: 6px 100px 6px 10px;
+  /* font-weight: bold; */
 }
 
 hr {
   border-style: solid;
-  border-color: #DFDFDF;
+  border-color: #D5D5D5;
   border-width: 1px;
   border-bottom: none;
   margin: 0;
@@ -2472,8 +2522,9 @@ form + hr {
 }
 
 .code .name {
-  display: inline-block;
-  overflow: hidden;
+  display: block;
+
+  /* overflow: hidden; */
   position: relative;
   width: 165px;
   /* allow a black theme but for the text to still be readable */
@@ -2550,9 +2601,10 @@ pre .highlight:last-of-type {
 }
 
 .dropdown {
-  margin-top: 8px;
+  margin-top: -1px;
 }
 
+/*
 .dropdown > div:after, .dropdown > div:before {
   bottom: 100%;
   border: solid transparent;
@@ -2586,21 +2638,45 @@ pre .highlight:last-of-type {
 .dd-right.dropdown > div:before {
   left: 83%;
 }
-
+*/
 .avatar {
   /*margin-right: 7px;*/
   vertical-align: top;
   /*display: inline-block;*/
-  border-radius: 1px;
   margin-top: -2px;
+  /* position: absolute; */
+  right: 0;
+  /*top: 2px;*/
+  padding: 8px;
+}
+
+.avatar img {
+  border-radius: 1px;
   border: 1px solid #fff;
   -webkit-box-shadow: 0 0 1px #999;
      -moz-box-shadow: 0 0 1px #999;
        -o-box-shadow: 0 0 1px #999;
           box-shadow: 0 0 1px #999;
-  position: absolute;
-  right: 0;
-  /*top: 2px;*/
+  /*position: absolute;*/
+  /*right: 0;*/
+  /* top: 0px; */
+
+  box-shadow: 0 0 1px #999;
+  background: #fff;
+}
+
+.open .avatar {
+  background: #fff;
+  padding: 2px;
+}
+
+.open .avatar img {
+  border: 1px solid #fff;
+  -webkit-box-shadow: none;
+  -ms-box-shadow: none;
+  -o-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 
 .brand {
@@ -2682,6 +2758,59 @@ pre .highlight:last-of-type {
 
 .embed #live iframe {
   padding-top: 0;
+}
+
+
+#menuinfo {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: 9;
+  display: none;
+}
+
+.menuinfo #menuinfo {
+  display: block;
+}
+
+#menuinfo p {
+  font-size: 18px;
+  line-height: 30px;
+  margin: 0 auto;
+  margin-top: 2px;
+  width: 75%;
+  background: rgba(212, 250, 11, 0);
+  border-radius: 10px;
+  border: rgba(245, 245, 200, 1);
+}
+
+/* when the a menu is selected, only show the menu that's open */
+.control .menu,
+#panels {
+/*  -moz-transition: opacity 50ms;
+  -webkit-transition: opacity 50ms;
+  -ms-transition: opacity 50ms;
+  -o-transition: opacity 50ms;
+  transition: opacity 50ms;
+  opacity: 1;
+*/}
+
+.menuinfo .control .menu,
+.menuinfo #panels {
+  /*opacity: 0;*/
+  visibility: hidden !important;
+}
+
+.menuinfo .control .menu.open {
+  /*opacity: 1 !important;*/
+  visibility: visible !important;
+  background: white;
+  z-index: 10;
+}
+
+.menuinfo .control {
+  z-index: 11;
 }
 
 

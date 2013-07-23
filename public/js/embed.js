@@ -169,10 +169,12 @@ function scoop(link) {
 
 function embed(link) {
   var iframe = document.createElement('iframe'),
-      resize = document.createElement('div');
-  iframe.src = link.href;
-  iframe._src = link.href; // support for google slide embed
-  iframe.className = 'jsbin-embed';
+      resize = document.createElement('div'),
+      url = link.href.replace(/edit/, 'embed');
+  iframe.src = url;
+  iframe._src = url; // support for google slide embed
+  iframe.className = link.className; // inherit all the classes from the link
+  iframe.id = link.id; // also inherit, giving more style control to the user
   iframe.style.border = '1px solid #aaa';
   iframe.style.width = '100%';
   iframe.style.minHeight = '300px';

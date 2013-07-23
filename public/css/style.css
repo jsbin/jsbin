@@ -1992,7 +1992,7 @@ a.active:hover {
 .dropdowncontent {
   /* margin: 3px 5px; */
   background: white;
-  box-shadow: 1px 4px 7px rgba(0,0,0,0.2);
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
   border: 1px solid #CCC;
   height: auto;
   /* border-radius: 5px; */
@@ -2564,14 +2564,14 @@ a.active:hover {
 }
 
 .dropdownmenu a {
-  padding: 7px 100px 7px 10px;
-  font-weight: bold;
+  padding: 6px 100px 6px 10px;
+  /* font-weight: bold; */
 }
 
 hr {
   border-style: solid;
   border-color: #D5D5D5;
-  border-width: 2px;
+  border-width: 1px;
   border-bottom: none;
   margin: 0;
 }

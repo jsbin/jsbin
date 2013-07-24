@@ -437,9 +437,14 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
 {{^is_production}}
-{{#scripts}}
+  {{#concat}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+  {{/concat}}
+  {{^concat}}
+    {{#scripts}}
 <script src="{{static}}{{.}}"></script>
-{{/scripts}}
+    {{/scripts}}
+  {{/concat}}
 {{/is_production}}
 {{#is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>

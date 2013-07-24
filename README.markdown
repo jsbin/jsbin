@@ -33,6 +33,25 @@ The original idea spawned from a conversation with another developer in trying t
 
 [Version 1](http://1.jsbin.com) of [JS Bin](http://www.flickr.com/photos/remysharp/4284906136) took me the best part of 4 hours to develop [back in 2008](http://remysharp.com/2008/10/06/js-bin-for-collaborative-javascript-debugging/), but [version 2](http://2.jsbin.com) was been rewritten from the ground up and is completely [open source](http://github.com/remy/jsbin).
 
+## Build Process
+
+JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
+
+Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour is no longer supported, however everything else [released in v3.0.0](https://github.com/remy/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. Your PHP mileage may vary!
+
+For detailed instructions on how to build JS Bin please see the [running your own JS Bin document](/docs/running-your-own-jsbin.md).
+
+If you install [Node.js](http://nodejs.org) installation is easy:
+
+    $ npm install -g jsbin
+    $ jsbin
+
+Optionally point JS Bin to your config:
+
+    $ JSBIN_CONFIG=~/conifg.local.json jsbin
+
+Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.
+
 ## API
 
 A simple REST based API exists for anonymous users if it is enabled in your config.*.json, or can be restricted to registered users with a key specified in `ownership.ownership_api_key`
@@ -50,30 +69,3 @@ End points are:
 - `GET /api/:bin/:rev` - Retrieve the specific version of the bin with the specified ID and revision
 - `POST /api/save` - Create a new bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
 - `POST /api/:bin/save` - Create a new revision for the specified bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
-
-## Build Process
-
-JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
-
-There's two installation paths: Node (recommended) and PHP.
-
-Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour does not support the following:
-
-- Remote rendering
-- CodeCasting
-- Processors
-
-However, everything else [released in v3.0.0](https://github.com/remy/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. PHP mileage may vary!
-
-For detailed instructions on how to build JS Bin in either environment see the [running your own JS Bin document](/docs/running-your-own-jsbin.md).
-
-If you install [Node.js](http://nodejs.org) installation is easy:
-
-```
-$ npm install -g jsbin
-$ jsbin
-```
-
-Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.
-
-

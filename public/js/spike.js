@@ -14,6 +14,8 @@
 6. Report errors via spike (to where?)
 7. Create server that allows a spike to be sent to specific id
 
+To test: curl --header "Accept: text/event-stream" <jsbinurl>
+
 */
 
 ;(function () {

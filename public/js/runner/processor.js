@@ -9,7 +9,10 @@ var processor = (function () {
 
   processor.blockingMethods = {
     kill: '<script>try{window.open=function(){};window.print=function(){};window.alert=function(){};window.prompt=function(){};window.confirm=function(){};}catch(e){}</script>',
-    restore: '<script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>'
+    // RS: the empty comment in the end of the harness, ensures any
+    // open comments are closed, and will ensure the harness is hidden
+    // from the user.
+    restore: '<!--jsbin live harness--><script>try{delete window.print;delete window.alert;delete window.prompt;delete window.confirm;delete window.open;}catch(e){}</script>'
   };
 
   /**

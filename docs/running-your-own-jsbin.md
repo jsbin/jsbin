@@ -1,6 +1,6 @@
 # Running a local copy of JS Bin
 
-JS Bin v3 comes in two flavours: Node and PHP. Though PHP development has now ceased, everything in JS Bin 3.0 (with the exception of code casting and remote rendering) is available.
+JS Bin v3 is a [Node](http://nodejs.org) project, and local installation is very simple.
 
 Installation requires a number of simple steps:
 
@@ -8,11 +8,15 @@ Installation requires a number of simple steps:
 2. Configuration
 3. Database
 
-For the simplest install process we recommend using Node with SQLite. However, if you already have a PHP based environment and want to run JS Bin out of a subdirectory, this is also relatively straight forward to achieve.
+For the simplest install process we recommend using Node with SQLite.
+
+Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **PHP is no longer supported**. If you want to install JS Bin using PHP, I'm afraid you're on your own. There are some old docs that can help, but the project has long surpassed PHP's functionality.  If you want to risk the PHP version, grab [v3.0.0 here](https://github.com/remy/jsbin/releases), warts an all.
 
 ## Installing
 
 ### Node
+
+Install the [latest stable version](http://nodejs.org/) of Node first which will give you the `node` and `npm` programs.
 
 You can (and should) install Node directly from `npm` using the following command:
 
@@ -20,9 +24,13 @@ You can (and should) install Node directly from `npm` using the following comman
 
 This will automatically install all the dependancies.
 
-### PHP
+If you're installing JS Bin for development (and hopefully contribution), clone the project from github:
 
-Download the source code for JS Bin either by [cloning this project]() or downloading a zip file and decompressing in to a directory (such as `web/public/jsbin`).
+    $ git clone git@github.com:remy/jsbin.git
+    $ cd jsbin
+    $ npm install
+
+If you plan to build and test for production, see the section at the end.
 
 ## Configuration
 
@@ -69,6 +77,28 @@ So to proxy jsbin.com to a localhost:8000 (using something like nginx to do the 
 
 Note that in the above config, `jsbin.com` is what is used in the HTML and JavaScript, so this is the *client facing url*. Next, running JS Bin behind a proxy is as simple as:
 
-    $ PORT=8000 JSBIN_CONFIG=~/config.local.json jsbin 
+    $ PORT=8000 JSBIN_CONFIG=~/config.local.json jsbin
 
 Now the `jsbin` node process is listening on port 8000, but the client facing urls are all port 80.
+
+### Building for production
+
+JS Bin's build process uses Grunt, so assuming you've cloned a copy, you will need the dev dependancies and the grunt cli:
+
+    $ npm install -g grunt-cli
+    $ npm install --dev
+    $ grunt build
+
+This will generate the `public/js/prod/` directory and read the version in the `package.json` file to generate to build a number of files:
+
+1. jsbin-<version>.js - the uncompressed, concatted version of all the scripts from `/scripts.json`
+2. jsbin-<version>.min.js - the production compressed version of jsbin, used in the editor
+3. jsbin.map.json - the sourcemaps file (useful for debugging in live)
+4. runner-<version>.js - the runner script, used to generate the output of the user's code in an iframe
+5. runner-<version>.min.js - the production version of the runner
+
+Finally, ensure either the config.local.json's `env` property is set to "production" or you can run JS Bin in production via the envinoment:
+
+    $ NODE_ENV=production node .
+
+And that's it.

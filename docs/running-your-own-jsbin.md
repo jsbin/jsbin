@@ -51,14 +51,3 @@ To start JS Bin with a config file from another location, set the `JSBIN_CONFIG`
 
     $ JSBIN_CONFIG=~/jsbin.json jsbin
 
-## Running from a subdirectory
-
-## Building for production
-
-
-
-
-
-
-
-

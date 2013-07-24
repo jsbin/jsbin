@@ -1,13 +1,3 @@
-//= require "codemirror"
-//= require "mobileCodeMirror"
-//= require "library"
-//= require "unsaved"
-//= require "panel"
-//= require "../render/live"
-//= require "../render/console"
-//= require "keycontrol"
-//= require "../processors/processor"
-
 var panels = {};
 
 panels.getVisible = function () {
@@ -52,7 +42,7 @@ panels.restore = function () {
       location = window.location,
       search = location.search.substring(1),
       hash = location.hash.substring(1),
-      toopen = search || hash ? (search || hash).split(',') : jsbin.settings.panels || [],
+      toopen = [],
       state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
       hasContent = {
         javascript: editors.javascript.getCode().length,
@@ -71,6 +61,27 @@ panels.restore = function () {
 
   if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
     history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
+  }
+
+  if (search || hash) {
+    // RS July 23, 2013 - I'm not mad on this change and
+    // would welcome a refactor to all the editor.js code
+    // because it's damn hard to navigate and work out
+    // what's happening.
+    // This change is mostly to create consistency between
+    // the panel name of 'output' and the shortcut 'live'.
+    // it also strips out prop=value& to avoid bashing the
+    // panel name
+    toopen = (search || hash).replace(/\b([^&=]*)=([^&=]*)\b/g, '').replace(/&/g, '').split(',');
+
+    if (toopen.indexOf('output') !== -1) {
+      toopen.push('live');
+    }
+    if (toopen.indexOf('js') !== -1) {
+      toopen.push('javascript');
+    }
+  } else {
+    toopen = jsbin.settings.panels || [];
   }
 
   if (toopen.length === 0 && state === null) {

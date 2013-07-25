@@ -1,64 +1,38 @@
 // shows this is run through jsbin & you can edit
 function jsbinShowEdit(options) {
   if (window.location.hash == '#noedit') return;
-  var ie = (!+"\v1");
 
-  function hide() {
-    if (over === false) el.style.top = '-60px';
+  var path = window.location.pathname,
+      moveTimer, active;
+
+  function show() {
+    if (active) return;
+    clearTimeout(moveTimer);
+    btn.style.top = '0';
+    moveTimer = setTimeout(hide, 2000);
+    active = true;
   }
 
-  var el = document.createElement('a'),
-      over = false;
+  function hide() {
+    btn.style.top = '-60px';
+    active = false;
+  }
 
-  el.id = 'edit-with-js-bin';
-  el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
+  // Add edit button:
+  var btn = document.createElement('a');
+  btn.id = 'edit-with-js-bin';
+  btn.href = path + (path.slice(-1) === '/' ? '' : '/') + 'edit';
+  btn.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png" width="16" height="16">';
+  document.body.appendChild(btn);
 
-  el.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png" width="16" height="16">';
-
-  var over;
-  el.onmouseover = function () {
-    over = true;
-    this.style.top = 0;
-  };
-
-  el.onmouseout = function () {
-    over = false;
-    hide();
-  };
-
+  // Styles for edit button:
   var style = document.createElement('link');
   style.setAttribute('rel', 'stylesheet');
   style.setAttribute('href', options.root + '/css/edit.css');
+  document.getElementsByTagName('head')[0].appendChild(style);
 
-  var moveTimer = null;
-  setTimeout(function () {
-    try {
-      document.getElementsByTagName('head')[0].appendChild(style);
-      document.body.appendChild(el);
-      setTimeout(hide, 2000);
-
-      if (document.addEventListener) {
-        document.addEventListener('mousemove', show, false);
-        document.addEventListener('mouseout', function () {
-          over = false;
-        }, false);
-      } else {
-        document.attachEvent('onmousemove', show);
-        document.attachEvent('onmouseout', function () {
-          over = false;
-        }, false);
-      }
-    } catch (e) {}
-  }, 100);
-
-  function show() {
-    // if (!ie && (el.style.top*1) == 0) { // TODO IE compat
-      el.style.top = 0;
-    // } else if (ie) {
-      // el.style.top = 1;
-      // el.style.display = 'block';
-    // }
-    clearTimeout(moveTimer);
-    moveTimer = setTimeout(hide, 2000);
-  }
+  // hide / show edit button
+  moveTimer = setTimeout(hide, 2000);
+  if (document.addEventListener) document.addEventListener('mousemove', show, false);
+  else document.attachEvent('onmousemove', show);
 }

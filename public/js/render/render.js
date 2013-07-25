@@ -124,7 +124,11 @@ var getPreparedCode = (function () {
     }
 
     if (!hasHTML && !hasJS && hasCSS) {
-      source = "<pre>\n" + css + "</pre>";
+      source = "<pre>\n" + css.replace(/[<>&]/g, function (m) {
+            if (m == '<') return '&lt;';
+            if (m == '>') return '&gt;';
+            if (m == '"') return '&quot;';
+          }) + "</pre>";
     } else if (re.csscode.test(source)) {
       parts = source.split('%css%');
       source = parts[0] + css + parts[1];

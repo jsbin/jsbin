@@ -1,6 +1,3 @@
-//= require "../vendor/prettyprint"
-//= require "../vendor/stacktrace"
-
 var jsconsole = (function (window) {
 
 // Key-code library
@@ -80,7 +77,7 @@ var showResponse = function (response) {
   exec.value = '';
   if (enableCC) {
     try {
-      if (jsbin.panels.focused.id === 'console') {
+      if (jsbin.panels && jsbin.panels.focused.id === 'console') {
         if (!jsbin.embed) {
           getCursor().focus();
         }

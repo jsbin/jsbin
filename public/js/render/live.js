@@ -290,7 +290,14 @@ var renderLivePreview = (function () {
     iframe.setAttribute('frameBorder', '0');
     iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
-    iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
+    try {
+      iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
+    } catch (e) {
+      // ^- this shouldn't really fail, but if we're honest, it's a fucking mystery as to why it even works.
+      // problem is: if this throws (because iframe.contentWindow is undefined), then the execution exits
+      // and `var renderLivePreview` is set to undefined. The knock on effect is that the calls to renderLivePreview
+      // then fail, and jsbin doesn't boot up. Tears all round, so we catch.
+    }
   }
 
   // The big daddy that handles postmessaging the runner.

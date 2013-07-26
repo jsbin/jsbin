@@ -110,7 +110,8 @@ var loopProtect = (function () {
               }
 
             } else if (character === '{') {
-              line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + printLineNumber + ' })) break;';
+              debug('- multiline with braces');
+              line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n' + line.substring(index + 1);
             }
 
             // work out where to put the reset

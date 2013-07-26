@@ -203,6 +203,7 @@ function embed(link) {
   var onmessage = function (event) {
     event || (event = window.event);
     iframe.style.height = event.data.height + 'px';
+    iframe.style.width = event.data.width + '%';
   };
 
   if (window.addEventListener) {

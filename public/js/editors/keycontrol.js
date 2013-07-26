@@ -111,9 +111,11 @@ function keycontrol(event) {
           hasRun = true;
           // editors.console.render();
           $('#runconsole').click();
-        }
-        if (editors.live.visible) {
+        } else if (editors.live.visible) {
           // editors.live.render(true);
+          $('#runwithalerts').click();
+          hasRun = true;
+        } else {
           $('#runwithalerts').click();
           hasRun = true;
         }

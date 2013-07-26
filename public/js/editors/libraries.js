@@ -2,8 +2,8 @@
 
 var libraries = [
     {
-        "url": "http://code.jquery.com/jquery-git.js",
-        "label": "jQuery WIP (via git)",
+        "url": "http://code.jquery.com/jquery-git2.js",
+        "label": "jQuery 2.x WIP (via git)",
         "group": "jQuery"
     },
     {
@@ -12,7 +12,7 @@ var libraries = [
         "group": "jQuery"
     },
     {
-        "url": "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
+        "url": "http://code.jquery.com/jquery-latest.js",
         "label": "jQuery 1.latest",
         "group": "jQuery"
     },

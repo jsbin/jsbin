@@ -12,6 +12,7 @@ var code = {
   simplefor: 'var mul = 1; for (var i = 0; i < 10; i++) {\nmul = i;\n}\nreturn i',
   simplefor2: 'for (var i = 0; i < 10; i++) {\nmul = i;\n}\nreturn i',
   onelinefor: 'var i = 0, j = 0;\nfor (; i < 10; i++) j = i * 10;\nreturn i;',
+  onelinefor2: 'var i=0;\nfor(i=0; i<10; ++i){ break; }\nreturn i;',
   simplewhile: 'var i = 0; while (i < 100) {\ni += 10;\n}\nreturn i;',
   onelinewhile: 'var i = 0; while (i < 100) i += 10;\nreturn i;',
   onelinewhile2: 'function noop(){}; while (1) noop("Ha.");',
@@ -26,6 +27,7 @@ var code = {
   irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });",
   brackets: 'var NUM=103, i, sqrt;\nfor(i=2; i<=Math.sqrt(NUM); i+=1){\n if(NUM % i === 0){\n  console.log(NUM + " can be divided by " + i + ".");\n  break;\n }\n}\nreturn i;',
   lotolines: 'var LIMIT = 10;\nvar num, lastNum, tmp;\nfor(num = 1, lastNum = 0;\n  num < LIMIT;\n  lastNum = num, num = tmp){\n\n    tmp = num + lastNum;\n}\nreturn lastNum;',
+
 };
 
 
@@ -66,6 +68,15 @@ describe('loop', function () {
     assert(compiled !== c);
     var result = run(compiled);
     assert(result === 10);
+
+    c = code.onelinefor2;
+    compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+
+    // console.log('\n---------\n' + c + '\n---------\n' + compiled);
+
+    result = run(compiled);
+    assert(result === 0);
   });
 
   it('should rewrite one line while loops', function () {

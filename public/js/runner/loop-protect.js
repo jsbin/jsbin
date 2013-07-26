@@ -6,6 +6,10 @@
  */
 var loopProtect = (function () {
 
+  var debug = false ? function () {
+    console.log.apply(console, [].slice.apply(arguments));
+  } : function () {};
+
   var loopProtect = {};
 
   // used in the loop detection
@@ -43,8 +47,9 @@ var loopProtect = (function () {
 
       if (ignore[lineNum]) return;
 
-
       if (match && line.indexOf('jsbin') === -1) {
+        debug('\n');
+
         // make sure this is an actual loop command by searching backwards
         // to ensure it's not a string, comment or object property
         index = line.indexOf(match);
@@ -55,6 +60,7 @@ var loopProtect = (function () {
           character = line.substr(index, 1);
           if (character === '"' || character === "'" || character === '.') {
             // our loop keyword was actually either in a string or a property, so let's exit and ignore this line
+            debug('- exit: matched inside a string or property key');
             recompiled.push(line);
             return;
           }
@@ -63,6 +69,7 @@ var loopProtect = (function () {
             --index;
             if (character === '/') {
               // we've found a comment, so let's exit and ignore this line
+              debug('- exit: part of a comment');
               recompiled.push(line);
               return;
             }
@@ -74,7 +81,7 @@ var loopProtect = (function () {
 
         while (index < line.length) {
           character = line.substr(index, 1);
-          // console.log(character, index);
+          debug(character, index);
 
           if (character === '(') {
             openBrackets++;
@@ -89,15 +96,16 @@ var loopProtect = (function () {
           }
 
           if (openBrackets === 0 && (character === ';' || character === '{')) {
-
             // if we're a non-curlies loop, then convert to curlies to get our code inserted
             if (character === ';') {
               if (lineNum !== originalLineNum) {
+                debug('- multiline inline loop');
                 // affect the compiled line
                 recompiled[originalLineNum] = recompiled[originalLineNum].substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n';
                 line += '\n}\n';
               } else {
                 // simpler
+                debug('- single line inline loop');
                 line = line.substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n' + line.substring(terminator + 1) + '\n}\n';
               }
 
@@ -107,9 +115,11 @@ var loopProtect = (function () {
 
             // work out where to put the reset
             if (lineNum === originalLineNum) {
+              debug('- simple reset insert');
               line = insertReset(printLineNumber, line);
             } else {
               // insert the reset above the originalLineNum
+              debug('- reset inserted above original line');
               recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum]);
             }
 
@@ -121,6 +131,7 @@ var loopProtect = (function () {
 
           if (index === line.length && lineNum < (lines.length-1)) {
             // move to the next line
+            debug('- moving to next line');
             recompiled.push(line);
             lineNum++;
             line = lines[lineNum];

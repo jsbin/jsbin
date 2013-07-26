@@ -61,13 +61,24 @@ if (window.jsbinified !== undefined) return;
 function getQuery(querystring) {
   var query = {};
 
-  querystring.replace(/\b([^&=]*)=([^&=]*)\b/g, function (m, a, d) {
-    if (typeof query[a] != 'undefined') {
-      query[a] += ',' + d;
+  var pairs = querystring.split('&'),
+      length = pairs.length,
+      keyval = [],
+      i = 0;
+
+  for (; i < length; i++) {
+    keyval = pairs[i].split('=', 2);
+    try {
+      keyval[0] = decodeURIComponent(keyval[0]); // key
+      keyval[1] = decodeURIComponent(keyval[1]); // value
+    } catch (e) {}
+
+    if (query[keyval[0]] === undefined) {
+      query[keyval[0]] = keyval[1];
     } else {
-      query[a] = d;
+      query[keyval[0]] += ',' + keyval[1];
     }
-  });
+  }
 
   return query;
 }

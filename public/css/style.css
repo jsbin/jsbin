@@ -2813,6 +2813,15 @@ pre .highlight:last-of-type {
   z-index: 11;
 }
 
+.keyshortcut {
+  position: absolute;
+  right: 10px;
+  /*font-weight: bold;*/
+}
+
+.dd-right .keyshortcut {
+  right: 20px;
+}
 
 /** CodeMirror Themes **/
 /* Default theme is higher in the style sheet with codemirror's own code */

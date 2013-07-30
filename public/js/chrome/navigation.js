@@ -278,6 +278,24 @@ if (window.location.hash) {
   $('a[href$="' + window.location.hash + '"]').mousedown();
 }
 
+var ismac = navigator.userAgent.indexOf(' Mac ') !== -1,
+    mackeys = {
+      'ctrl': '⌘',
+      'shift': '⇧'
+    };
+
+$('#control').find('a[data-shortcut]').each(function () {
+  var $this = $(this),
+      data = $this.data();
+
+  var key = data.shortcut;
+  if (ismac) {
+    key = key.replace(/ctrl/i, mackeys.ctrl).replace(/shift/, mackeys.shift).replace(/\+/g, '').toUpperCase();
+  }
+
+  $this.append('<span class="keyshortcut">' + key + '</span>');
+});
+
 (function () {
 
 var re = {

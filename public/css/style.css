@@ -2171,20 +2171,20 @@ a.active:hover {
 
 .panelsVisible #history {
   display: none;
-  top: 2000px; /* :( can't do 100% */
+  /*top: 2000px;  :( can't do 100% */
 }
 
 .panelsVisible #history .preview {
-  right: -1000px;
+  /*right: -1000px;*/
 }
 
 #history {
   z-index: 0;
   /*position: absolute;*/
   /*top: 31px;*/
-  -webkit-transition: top ease-out 200ms;
-     -moz-transition: top ease-out 200ms;
-       -o-transition: top ease-out 200ms;
+  /*-webkit-transition: top ease-out 200ms;*/
+     /*-moz-transition: top ease-out 200ms;*/
+       /*-o-transition: top ease-out 200ms;*/
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   text-shadow: none;
   /*-webkit-transition-delay: 100ms;*/

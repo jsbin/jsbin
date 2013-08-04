@@ -27,7 +27,7 @@ var code = {
   irl3: "Todos.Todo = DS.Model.extend({\n title: DS.attr('string'),\n isCompleted: DS.attr('boolean')\n });",
   brackets: 'var NUM=103, i, sqrt;\nfor(i=2; i<=Math.sqrt(NUM); i+=1){\n if(NUM % i === 0){\n  console.log(NUM + " can be divided by " + i + ".");\n  break;\n }\n}\nreturn i;',
   lotolines: 'var LIMIT = 10;\nvar num, lastNum, tmp;\nfor(num = 1, lastNum = 0;\n  num < LIMIT;\n  lastNum = num, num = tmp){\n\n    tmp = num + lastNum;\n}\nreturn lastNum;',
-
+  ignorecomments: '\n/**\n * This function handles the click for every button.\n *\n * Using the same function reduces code duplication and makes the\n */\nreturn true;',
 };
 
 
@@ -43,6 +43,14 @@ describe('loop', function () {
     spy = sinon.spy(run);
   });
 
+  it('should ignore comments', function () {
+    var c = code.ignorecomments;
+    var compiled = loopProtect.rewriteLoops(c);
+    // console.log('\n---------\n' + c + '\n---------\n' + compiled);
+    assert(compiled === c);
+    var result = run(compiled);
+    assert(result === true);
+  });
 
   it('should leave none loop code alone', function () {
     assert(loopProtect.rewriteLoops(code.simple) === code.simple);

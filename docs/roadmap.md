@@ -29,3 +29,6 @@ In no specific order
 - Additional panels (like a readme, or other processors allowing to pipe one panel in to others, and dynamic documentation panel)
 - Collections (pre-curated bins)
 - Full preview for that bin owner, does not contain injected content, otherwise top/tail with jsbin
+- Reverse code casting: give someone a url and watch their code changes
+- Show all revisions and forks for a particular bin
+- Show all my revisions of a particular bin

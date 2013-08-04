@@ -76,6 +76,37 @@ var loopProtect = (function () {
           }
         }
 
+        // it's quite possible we're in the middle of a multiline
+        // comment, so we'll cycle up looking for an opening comment,
+        // and if there's one (and not a closing `*/`), then we'll
+        // ignore this line as a comment
+        if (lineNum > 0) {
+          var j = lineNum,
+              closeCommentTags = 1, // let's assume we're inside a comment
+              closePos = -1,
+              openPos = -1;
+          do {
+            j -= 1;
+            debug('looking backwards ' + lines[j]);
+            closePos = lines[j].indexOf('*/');
+            openPos = lines[j].indexOf('/*');
+
+            if (closePos !== -1) {
+              closeCommentTags++;
+            }
+
+            if (openPos !== -1) {
+              closeCommentTags--;
+
+              if (closeCommentTags === 0) {
+                debug('- exit: part of a multiline comment');
+                recompiled.push(line);
+                return;
+              }
+            }
+          } while (j !== 0);
+        }
+
         // now work our way forward to look for '{'
         index = line.indexOf(match) + match.length;
 

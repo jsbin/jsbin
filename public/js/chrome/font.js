@@ -24,6 +24,8 @@ var font = (function (document) {
 
   if (Object.defineProperty) {
     Object.defineProperty(jsbin.settings, 'font', {
+      configurable: true,
+      enumerable: true,
       get: function () {
         return size;
       },

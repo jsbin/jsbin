@@ -71,17 +71,7 @@ var processors = jsbin.processors = (function () {
 
       if (url) {
         // Load the processor's script
-        var script = document.createElement('script');
-        script.src = url;
-        script.onreadystatechange = script.onload = function() {
-          var state = script.readyState;
-          if (!scriptCB.done && (!state || /loaded|complete/.test(state))) {
-            scriptCB.done = true;
-            scriptCB();
-            script.parentNode.removeChild(script);
-          }
-        };
-        document.body.appendChild(script);
+        $.getScript(url, scriptCB);
       } else {
         // No url, go straight on
         init(function () {

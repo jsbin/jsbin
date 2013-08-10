@@ -51,7 +51,7 @@ var getPreparedCode = (function () {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
 
-        if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
+        if (js.trim()) js += '\n\n//# sourceURL=jsbin-' + two(date.getHours()) + two(date.getMinutes()) + two(date.getSeconds()) + '.js';
       } catch (e) {
         window.console && window.console.error(e.message);
       }

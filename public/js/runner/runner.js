@@ -92,11 +92,11 @@ var runner = (function () {
       loopProtect.reset();
 
       // if there's a parse error this will fire
-      childWindow.onerror = function (msg, url, line) {
+      childWindow.onerror = function (msg, url, line, col, error) {
         // show an error on the jsbin console, but not the browser console
         // (i.e. use _raw), because the browser will throw the native error
         // which (hopefully) includes a link to the JavaScript VM at that time.
-        proxyConsole._raw('error', msg + ' (line ' + line + ')');
+        proxyConsole._raw('error', error && error.stack ? error.stack : msg + ' (line ' + line + ')');
       };
 
       // Write the source out. IE crashes if you have lots of these, so that's

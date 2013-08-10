@@ -1,3 +1,6 @@
+var $live = $('#live'),
+    showlive = $('#showlive')[0];
+
 /**
  * Defer callable. Kinda tricky to explain. Basically:
  *  "Don't make newFn callable until I tell you via this trigger callback."
@@ -48,11 +51,6 @@ var deferCallable = function (newFn, trigger) {
  * =============================================================================
  */
 
-var $live = $('#live'),
-    showlive = $('#showlive')[0],
-    throttledPreview = throttle(renderLivePreview, 200),
-    liveScrollTop = null;
-
 function sendReload() {
   if (saveChecksum) {
     $.ajax({
@@ -66,8 +64,6 @@ function sendReload() {
     });
   }
 }
-
-var deferredLiveRender = null;
 
 function codeChangeLive(event, data) {
   clearTimeout(deferredLiveRender);
@@ -100,8 +96,6 @@ function codeChangeLive(event, data) {
     }
   }
 }
-
-$document.bind('codeChange.live', codeChangeLive);
 
 /** ============================================================================
  * JS Bin Renderer
@@ -336,3 +330,14 @@ var renderLivePreview = (function () {
 
 }());
 
+
+// this needs to be after renderLivePreview is set (as it's defined using
+// var instead of a first class function).
+var throttledPreview = throttle(renderLivePreview, 200),
+    liveScrollTop = null;
+
+// timer value: used in the delayed render (because iframes don't have
+// innerHeight/Width) in Chrome & WebKit
+var deferredLiveRender = null;
+
+$document.bind('codeChange.live', codeChangeLive);

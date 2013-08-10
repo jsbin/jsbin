@@ -21,7 +21,7 @@ If you would like to work with Remy and his company, [Left Logic](http://leftlog
 
 UX was kindly donated by [Danny Hope](http://yandleblog.com) who also tweets as [@yandle](http://twitter.com/yandle).
 
-The vast majority of the port from PHP to Node was done by [Aron Carroll](http://aroncarroll.com/) who also plays in github as [@aron](http://github.com/aron).
+The vast majority of the port from PHP to Node in June 2012 was done by [Aron Carroll](http://aroncarroll.com/) who also plays in github as [@aron](http://github.com/aron).
 
 ## A short history
 

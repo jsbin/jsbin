@@ -91,6 +91,14 @@ var runner = (function () {
       // Reset the loop protection before rendering
       loopProtect.reset();
 
+      // if there's a parse error this will fire
+      childWindow.onerror = function (msg, url, line) {
+        // show an error on the jsbin console, but not the browser console
+        // (i.e. use _raw), because the browser will throw the native error
+        // which (hopefully) includes a link to the JavaScript VM at that time.
+        proxyConsole._raw('error', msg + ' (line ' + line + ')');
+      };
+
       // Write the source out. IE crashes if you have lots of these, so that's
       // why the source is rendered above (processor.render) – it should be one
       // string. IE's a sensitive soul.

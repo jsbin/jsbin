@@ -48,7 +48,7 @@ var getPreparedCode = (function () {
     hasHTML = !!$.trim(source);
 
     if (!nojs) {
-      try {
+      try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
 
         if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
@@ -57,14 +57,14 @@ var getPreparedCode = (function () {
       }
     }
 
-    hasJS = !!js.trim();
-
     try {
       css = editors.css.render();
     } catch (e) {
       window.console && window.console.error(e.message);
     }
 
+    // set the flags *before* we tweak the code with loop protection, etc.
+    hasJS = !!js.trim();
     hasCSS = !!$.trim(css);
 
     // Rewrite loops to detect infiniteness.
@@ -101,8 +101,10 @@ var getPreparedCode = (function () {
       // js = "window.onload = function(){" + js + "\n}\n";
       var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
-      source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
+      source += "<script" + type + ">" + js + "\n</script>\n" + close;
     }
+
+
 
     // redirect console logged to our custom log while debugging
     if (re.console.test(source)) {
@@ -144,13 +146,6 @@ var getPreparedCode = (function () {
       }
       source += '<style>\n' + css + '\n</style>\n' + close;
     }
-
-    // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
-    // if (re.docReady.test(source)) {
-    //   source = source.replace(re.docReady, 'window.onload = ');
-    // } else if (re.shortDocReady.test(source)) {
-    //   source = source.replace(re.shortDocReady, 'window.onload = (function');
-    // }
 
     // Add defer to all inline script tags in IE.
     // This is because IE runs scripts as it loads them, so variables that

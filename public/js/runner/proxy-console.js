@@ -23,7 +23,7 @@ var proxyConsole = (function () {
       if (typeof arg === 'undefined') {
         newArgs.push('undefined');
       } else {
-        newArgs.push(cleanse(stringify(arg)));
+        newArgs.push(stringify(arg));
       }
     };
     return newArgs;

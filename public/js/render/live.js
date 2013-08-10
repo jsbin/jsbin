@@ -48,28 +48,9 @@ var deferCallable = function (newFn, trigger) {
  * =============================================================================
  */
 
-function tryToRender() {
-  // TODO re-enable this code. It's been disabled for now because it
-  // only works to detect infinite loops in very simple situations.
-  // what it needs is a few polyfills in the worker for DOM API
-  // and probably canvas API.
-  if (false && window.Worker) {
-    // this code creates a web worker, and if it doesn't complete the
-    // execution inside of 100ms, it'll return false suggesting there may
-    // be an infinite loop
-    testForHang(function (ok) {
-      if (ok) {
-        renderLivePreview();
-      }
-    });
-  } else {
-    renderLivePreview();
-  }
-}
-
 var $live = $('#live'),
     showlive = $('#showlive')[0],
-    throttledPreview = throttle(tryToRender, 200),
+    throttledPreview = throttle(renderLivePreview, 200),
     liveScrollTop = null;
 
 function sendReload() {

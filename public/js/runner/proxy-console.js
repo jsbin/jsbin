@@ -23,7 +23,7 @@ var proxyConsole = (function () {
       if (typeof arg === 'undefined') {
         newArgs.push('undefined');
       } else {
-        newArgs.push(cleanse(stringify(arg)));
+        newArgs.push(stringify(arg));
       }
     };
     return newArgs;
@@ -31,20 +31,23 @@ var proxyConsole = (function () {
 
   // Create each of these methods on the proxy, and postMessage up to JS Bin
   // when one is called.
-  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir', 'props'];
+  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw'];
   methods.forEach(function (method) {
     // Create console method
     proxyConsole[method] = function () {
       // Replace args that can't be sent through postMessage
       var originalArgs = [].slice.call(arguments),
           args = proxyConsole.stringifyArgs(originalArgs);
+
       // Post up with method and the arguments
       runner.postMessage('console', {
-        method: method,
-        args: args
+        method: method === '_raw' ? originalArgs.shift() : method,
+        args: method === '_raw' ? args.slice(1) : args
       });
-      // If the browner supports it, use the browser console
-      if (window.console) {
+
+      // If the browner supports it, use the browser console but ignore _raw,
+      // as _raw should only go to the proxy console.
+      if (window.console && method !== '_raw') {
         if (!console[method]) method = 'log';
         console[method].apply(console, originalArgs);
       }

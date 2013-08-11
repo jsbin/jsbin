@@ -1,3 +1,6 @@
+var $live = $('#live'),
+    showlive = $('#showlive')[0];
+
 /**
  * Defer callable. Kinda tricky to explain. Basically:
  *  "Don't make newFn callable until I tell you via this trigger callback."
@@ -48,30 +51,6 @@ var deferCallable = function (newFn, trigger) {
  * =============================================================================
  */
 
-function tryToRender() {
-  // TODO re-enable this code. It's been disabled for now because it
-  // only works to detect infinite loops in very simple situations.
-  // what it needs is a few polyfills in the worker for DOM API
-  // and probably canvas API.
-  if (false && window.Worker) {
-    // this code creates a web worker, and if it doesn't complete the
-    // execution inside of 100ms, it'll return false suggesting there may
-    // be an infinite loop
-    testForHang(function (ok) {
-      if (ok) {
-        renderLivePreview();
-      }
-    });
-  } else {
-    renderLivePreview();
-  }
-}
-
-var $live = $('#live'),
-    showlive = $('#showlive')[0],
-    throttledPreview = throttle(tryToRender, 200),
-    liveScrollTop = null;
-
 function sendReload() {
   if (saveChecksum) {
     $.ajax({
@@ -85,8 +64,6 @@ function sendReload() {
     });
   }
 }
-
-var deferredLiveRender = null;
 
 function codeChangeLive(event, data) {
   clearTimeout(deferredLiveRender);
@@ -119,8 +96,6 @@ function codeChangeLive(event, data) {
     }
   }
 }
-
-$document.bind('codeChange.live', codeChangeLive);
 
 /** ============================================================================
  * JS Bin Renderer
@@ -179,7 +154,7 @@ var renderer = (function () {
    */
   renderer.postMessage = function (type, data) {
     if (!renderer.runner.window) {
-      return renderer.error('No connection to runner window.');
+      return renderer.error('postMessage: No connection to runner window.');
     }
     renderer.runner.window.postMessage(JSON.stringify({
       type: type,
@@ -355,3 +330,14 @@ var renderLivePreview = (function () {
 
 }());
 
+
+// this needs to be after renderLivePreview is set (as it's defined using
+// var instead of a first class function).
+var throttledPreview = throttle(renderLivePreview, 200),
+    liveScrollTop = null;
+
+// timer value: used in the delayed render (because iframes don't have
+// innerHeight/Width) in Chrome & WebKit
+var deferredLiveRender = null;
+
+$document.bind('codeChange.live', codeChangeLive);

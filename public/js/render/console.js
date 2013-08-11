@@ -29,16 +29,26 @@ var run = function (cmd, cb) {
  * Run and show response to a command fired from the console
  */
 var post = function (cmd, blind, response) {
+  var toecho = '';
+  if (typeof cmd !== 'string') {
+    toecho = cmd.echo;
+    blind = cmd.blind;
+    response = cmd.response;
+    cmd = cmd.cmd;
+  } else {
+    toecho = cmd;
+  }
+
   cmd = trim(cmd);
 
   // Add the command to the user's history – unless this was blind
   if (!blind) {
-    history.push(cmd);
+    history.push(cmd.trim());
     setHistory(history);
   }
 
   // Show the user what they typed
-  echo(cmd);
+  echo(toecho.trim());
 
   // If we were handed a response, show the response straight away – otherwise
   // runs it
@@ -597,8 +607,20 @@ function upgradeConsolePanel(console) {
     console.settings.render = function (withAlerts) {
       var html = editors.html.render().trim();
       if (html === "") {
-        var code = editors.javascript.render().trim();
-        jsconsole.run(code);
+        var echo = editors.javascript.render().trim();
+        var code = getPreparedCode().replace(/<pre>/, '').replace(/<\/pre>/, '');
+
+        // Tell the iframe to reload
+        renderer.postMessage('render', {
+          source: '<html>'
+        });
+
+        setTimeout(function() {
+          jsconsole.run({
+            echo: echo,
+            cmd: code
+          });
+        }, 0);
       } else {
         renderLivePreview(withAlerts || false);
       }

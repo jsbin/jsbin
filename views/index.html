@@ -56,11 +56,11 @@
               <form>
                 <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><input type="button" title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="lockrevision" value="Lock revision #{{revision}}"> <small>from further changes.</small></div>
                 <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
+                <div data-desc="The url to this bin with the JS Bin editor">
+                  <strong><a class="link" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Code &amp; Preview</a></strong><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                </div>
                 <div data-desc="This bin's full output without the JS Bin editor">
                   <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Live &amp; Full Preview</a></strong><br><input data-path="/" class="link" value="{{root}}{{code_id_path}}/" type="text">
-                </div>
-                <div data-desc="The url to this bin with the JS Bin editor">
-                  <strong><a class="link" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Code View</a></strong><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                 </div>
                 <div data-desc="Embed this bin with the live output on your site">
                   <strong>Embed</strong><br><textarea data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>

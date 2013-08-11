@@ -185,7 +185,7 @@ $('#runwithalerts').click(function () {
 });
 
 $('#runconsole').click(function () {
-  editors.console.render();
+  editors.console.render(true);
   return false;
 });
 

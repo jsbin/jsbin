@@ -75,6 +75,18 @@ var getPreparedCode = (function () {
     // escape any script tags in the JS code, because that'll break the mushing together
     js = js.replace(re.script, '<\\/script');
 
+    // redirect console logged to our custom log while debugging
+    if (re.console.test(js)) {
+      var replaceWith = 'window.runnerWindow.proxyConsole.';
+      // yes, this code looks stupid, but in fact what it does is look for
+      // 'console.' and then checks the position of the code. If it's inside
+      // an openning script tag, it'll change it to window.top._console,
+      // otherwise it'll leave it.
+      js = js.replace(re.console, function (all, str, arg, pos) {
+        return replaceWith + arg;
+      });
+    }
+
     // note that I'm using split and reconcat instead of replace, because if the js var
     // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
     // gets around the problem.
@@ -104,9 +116,7 @@ var getPreparedCode = (function () {
       source += "<script" + type + ">" + js + "\n</script>\n" + close;
     }
 
-
-
-    // redirect console logged to our custom log while debugging
+    // reapply the same proxyConsole - but to all the source code, since
     if (re.console.test(source)) {
       var replaceWith = 'window.runnerWindow.proxyConsole.';
       // yes, this code looks stupid, but in fact what it does is look for

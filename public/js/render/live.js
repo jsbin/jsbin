@@ -154,7 +154,7 @@ var renderer = (function () {
    */
   renderer.postMessage = function (type, data) {
     if (!renderer.runner.window) {
-      return renderer.error('No connection to runner window.');
+      return renderer.error('postMessage: No connection to runner window.');
     }
     renderer.runner.window.postMessage(JSON.stringify({
       type: type,

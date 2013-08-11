@@ -174,8 +174,12 @@ var getPreparedCode = (function () {
     // read the element out of the source code and plug it in to our document.title
     var newDocTitle = source.match(re.title);
     if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
-      documentTitle = newDocTitle[1];
-      document.title = documentTitle + ' - ' + 'JS Bin';
+      documentTitle = newDocTitle[1].trim();
+      if (documentTitle) {
+        document.title = documentTitle + ' - ' + 'JS Bin';
+      } else {
+        document.title = 'JS Bin';
+      }
     }
 
     return source;

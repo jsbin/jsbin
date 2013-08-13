@@ -1999,13 +1999,13 @@ a.active:hover {
 
 .help .menu > a.avatar {
   padding: 7px;
-  margin-top: -4px;
+  margin-top: -5px;
   line-height: 0;
-  height: 24px;
+  height: 26px;
 }
 
 .help .open.menu > a.avatar {
-  height: 24px;
+  height: 26px;
 }
 
 #panels {

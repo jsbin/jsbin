@@ -81,16 +81,14 @@
         {{^embed}}
           {{#home}}
             <div class="menu">
-              <!-- <div class="group"> -->
-                <a href="#homemenu" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
-              <!-- </div> -->
+              <a title="@{{home}}" href="#homemenu" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
               <div class="dropdown dd-right" id="homemenu">
                 <div class="dropdowncontent">
                   <form class="login">
                     <p class="loginFeedback"></p>
-                    <!-- <div>
-                      <label>Username<br><input value="{{home}}" name="username" type="text"></label>
-                    </div> -->
+                    <div>
+                      <span class="input" id="username" readonyl>@{{home}}</span>
+                    </div>
                     <div>
                       <label>Email<br>
                       <input name="email" type="email" value="{{email}}"></label>
@@ -115,11 +113,11 @@
                     <input type="hidden" name="_csrf" value="{{token}}">
                     <button hidden>Logout</button>
                   </form>
-
+<!--
                     <hr>
                     <div>
                       <strong><a href="#" id="profile" class="homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a></strong>
-                    </div>
+                    </div>-->
                 </div>
               </div>
             </div>
@@ -157,7 +155,7 @@
                       </div>
                       <div>
                         <span class="login-splitter">or</span>
-                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
                       </div>
                     </form>
                   </div>

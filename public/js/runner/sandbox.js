@@ -43,7 +43,7 @@ var sandbox = (function () {
     // Wait until the new iframe has loaded then remove *all* the iframes,
     // baring the active one
     addEvent(iframe, 'load', function () {
-      var iframes = sandbox.target.getElementsByTagName('iframe'),
+      var iframes = [].slice.call(sandbox.target.getElementsByTagName('iframe'), 0),
           length = iframes.length,
           i = 0,
           id = sandbox.active.id,

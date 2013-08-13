@@ -32,3 +32,4 @@ In no specific order
 - Reverse code casting: give someone a url and watch their code changes
 - Show all revisions and forks for a particular bin
 - Show all my revisions of a particular bin
+- Link training accounts/vanity urls to drive custom template from github repo

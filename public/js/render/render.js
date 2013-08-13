@@ -1,3 +1,5 @@
+var sourceURLctr = 1;
+
 var getPreparedCode = (function () {
 
   var consoleTest = /(^.|\b)console\./,
@@ -50,8 +52,9 @@ var getPreparedCode = (function () {
     if (!nojs) {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
-        var sourceURL = 'sourceURL=jsbin-' + two(date.getHours()) + two(date.getMinutes()) + two(date.getSeconds()) + '.js';
+        var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
         if (js.trim()) js += '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
+        sourceURLctr++;
       } catch (e) {
         window.console && window.console.error(e.message);
       }

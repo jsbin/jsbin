@@ -39,6 +39,12 @@
       }
     }
   },
+  "security": {
+    "//": "preview is set to a domain that the rendered output is inside of"
+    "preview": false,
+    "validateEmail": false,
+    "quietRegisteredOnly": false
+  },
   "server": {
     "logger": "default"
   },

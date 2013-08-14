@@ -42,6 +42,12 @@ CREATE TABLE IF NOT EXISTS `sandbox` (
   `settings` TEXT NOT NULL DEFAULT ''
 );
 
+CREATE TABLE IF NOT EXISTS `assignments` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `url` VARCHAR(255) NOT NULL,
+  `revision` INTEGER NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS `forgot_tokens` (
   `owner_name` VARCHAR(255) NOT NULL,
   `token` VARCHAR(255) NOT NULL,

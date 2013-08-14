@@ -1259,10 +1259,22 @@ form label {
 form input[type="text"],
 form input[type="password"],
 form input[type="email"],
-textarea {
+textarea,
+.input {
   border: 2px solid #b7dffd;
   width: 95%;
   font-size: 18px;
+}
+
+.input {
+  display: block;
+  font-weight: normal;
+  border: 0;
+  color: #000;
+}
+
+[readonly] {
+  border: 0 !important;
 }
 
 #sharemenu textarea {
@@ -1999,13 +2011,13 @@ a.active:hover {
 
 .help .menu > a.avatar {
   padding: 7px;
-  margin-top: -4px;
+  margin-top: -5px;
   line-height: 0;
-  height: 24px;
+  height: 26px;
 }
 
 .help .open.menu > a.avatar {
-  height: 24px;
+  height: 26px;
 }
 
 #panels {

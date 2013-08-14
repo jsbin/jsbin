@@ -43,7 +43,7 @@ var sandbox = (function () {
     // Wait until the new iframe has loaded then remove *all* the iframes,
     // baring the active one
     addEvent(iframe, 'load', function () {
-      var iframes = sandbox.target.getElementsByTagName('iframe'),
+      var iframes = [].slice.call(sandbox.target.getElementsByTagName('iframe'), 0),
           length = iframes.length,
           i = 0,
           id = sandbox.active.id,
@@ -120,7 +120,7 @@ var sandbox = (function () {
    * to fire information up to the parent
    */
   sandbox.eval = function (cmd) {
-    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    if (!sandbox.active) throw new Error("sandbox.eval: has no active iframe.");
     var childWindow = sandbox.active.contentWindow;
     var output = null,
         type = 'log';
@@ -130,6 +130,7 @@ var sandbox = (function () {
       output = e.message;
       type = 'error';
     }
+
     return proxyConsole[type](output);
   };
 
@@ -137,7 +138,7 @@ var sandbox = (function () {
    * Inject a script via a URL into the page
    */
   sandbox.injectScript = function (url, cb) {
-    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    if (!sandbox.active) throw new Error("sandbox.injectScript: has no active iframe.");
     var childWindow = sandbox.active.contentWindow,
         childDocument = childWindow.document;
     var script = childDocument.createElement('script');
@@ -155,7 +156,7 @@ var sandbox = (function () {
    * Inject full DOM into the page
    */
   sandbox.injectDOM = function (html, cb) {
-    if (!sandbox.active) throw new Error("Sandbox has no active iframe.");
+    if (!sandbox.active) throw new Error("sandbox.injectDOM: has no active iframe.");
     var childWindow = sandbox.active.contentWindow,
         childDocument = childWindow.document;
     try {

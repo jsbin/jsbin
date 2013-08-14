@@ -1,3 +1,5 @@
+var sourceURLctr = 1;
+
 var getPreparedCode = (function () {
 
   var consoleTest = /(^.|\b)console\./,
@@ -48,16 +50,15 @@ var getPreparedCode = (function () {
     hasHTML = !!$.trim(source);
 
     if (!nojs) {
-      try {
+      try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
-
-        if (js.trim()) js += '\n\n// created @ ' + two(date.getHours()) + ':' + two(date.getMinutes()) + ':' + two(date.getSeconds());
+        var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
+        if (js.trim()) js += '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
+        sourceURLctr++;
       } catch (e) {
         window.console && window.console.error(e.message);
       }
     }
-
-    hasJS = !!js.trim();
 
     try {
       css = editors.css.render();
@@ -65,6 +66,8 @@ var getPreparedCode = (function () {
       window.console && window.console.error(e.message);
     }
 
+    // set the flags *before* we tweak the code with loop protection, etc.
+    hasJS = !!js.trim();
     hasCSS = !!$.trim(css);
 
     // Rewrite loops to detect infiniteness.
@@ -75,15 +78,28 @@ var getPreparedCode = (function () {
     // escape any script tags in the JS code, because that'll break the mushing together
     js = js.replace(re.script, '<\\/script');
 
+    // redirect console logged to our custom log while debugging
+    if (re.console.test(js)) {
+      var replaceWith = 'window.runnerWindow.proxyConsole.';
+      // yes, this code looks stupid, but in fact what it does is look for
+      // 'console.' and then checks the position of the code. If it's inside
+      // an openning script tag, it'll change it to window.top._console,
+      // otherwise it'll leave it.
+      js = js.replace(re.console, function (all, str, arg, pos) {
+        return replaceWith + arg;
+      });
+    }
+
     // note that I'm using split and reconcat instead of replace, because if the js var
     // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
     // gets around the problem.
     if (!hasHTML && hasJS) {
       source = "<pre>\n" + js.replace(/[<>&]/g, function (m) {
-            if (m == '<') return '&lt;';
-            if (m == '>') return '&gt;';
-            if (m == '"') return '&quot;';
-          }) + "</pre>";
+        if (m == '<') return '&lt;';
+        if (m == '>') return '&gt;';
+        // if (m == '"') return '&quot;';
+        if (m == '&') return '&amp;';
+      }) + "</pre>";
     } else if (re.code.test(source)) {
       parts = source.split('%code%');
       source = parts[0] + js + parts[1];
@@ -101,10 +117,10 @@ var getPreparedCode = (function () {
       // js = "window.onload = function(){" + js + "\n}\n";
       var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
-      source += "<script" + type + ">\n" + js + "\n</script>\n" + close;
+      source += "<script" + type + ">" + js + "\n</script>\n" + close;
     }
 
-    // redirect console logged to our custom log while debugging
+    // reapply the same proxyConsole - but to all the source code, since
     if (re.console.test(source)) {
       var replaceWith = 'window.runnerWindow.proxyConsole.';
       // yes, this code looks stupid, but in fact what it does is look for
@@ -145,13 +161,6 @@ var getPreparedCode = (function () {
       source += '<style>\n' + css + '\n</style>\n' + close;
     }
 
-    // specific change for rendering $(document).ready() because iframes doesn't trigger ready (TODO - really test in IE, may have been fixed...)
-    // if (re.docReady.test(source)) {
-    //   source = source.replace(re.docReady, 'window.onload = ');
-    // } else if (re.shortDocReady.test(source)) {
-    //   source = source.replace(re.shortDocReady, 'window.onload = (function');
-    // }
-
     // Add defer to all inline script tags in IE.
     // This is because IE runs scripts as it loads them, so variables that
     // scripts like jQuery add to the global scope are undefined.
@@ -169,8 +178,12 @@ var getPreparedCode = (function () {
     // read the element out of the source code and plug it in to our document.title
     var newDocTitle = source.match(re.title);
     if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
-      documentTitle = newDocTitle[1];
-      document.title = documentTitle + ' - ' + 'JS Bin';
+      documentTitle = newDocTitle[1].trim();
+      if (documentTitle) {
+        document.title = documentTitle + ' - ' + 'JS Bin';
+      } else {
+        document.title = 'JS Bin';
+      }
     }
 
     return source;

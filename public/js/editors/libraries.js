@@ -101,11 +101,20 @@ var libraries = [
     {
     "url": [
             "http://code.jquery.com/jquery.min.js",
-            "http://twitter.github.io/bootstrap/assets/css/bootstrap.css",
-            "http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css",
-            "http://twitter.github.io/bootstrap/assets/js/bootstrap.js"
+            "http://getbootstrap.com/dist/css/bootstrap.css",
+            "http://getbootstrap.com/dist/js/bootstrap.js"
         ],
-        "label": "Bootstrap latest",
+        "label": "Bootstrap Latest",
+        "group": "Bootstrap"
+    },
+    {
+    "url": [
+            "http://code.jquery.com/jquery.min.js",
+            "http://getbootstrap.com/2.3.2/assets/css/bootstrap.css",
+            "http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css",
+            "http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"
+        ],
+        "label": "Bootstrap 2.3.3",
         "group": "Bootstrap"
     },
     {

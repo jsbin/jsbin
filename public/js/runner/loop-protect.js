@@ -22,37 +22,76 @@ var loopProtect = (function () {
   loopProtect.rewriteLoops = function (code, offset) {
     var recompiled = [],
         lines = code.split('\n'),
-        re = /\b(for|while|do)\b/;
+        re = /\b(for|while|do)\b/g;
 
     if (!offset) offset = 0;
 
-    var method = 'window.runnerWindow.protect';
-    var ignore = {};
+    var disableLoopProtection = false;
 
-    var insertReset = function (lineNum, line) {
-      return ';' + method + '({ line: ' + lineNum + ', reset: true });\n' + line;
+    var method = 'window.runnerWindow.protect';
+    var ignore = {},
+        pushonly = {};
+
+    var insertReset = function (lineNum, line, matchPosition) {
+      // recompile the line with the reset **just** before the actual loop
+      // so that we insert in to the correct location (instead of possibly
+      // outside the logic
+      return line.slice(0, matchPosition) + ';' + method + '({ line: ' + lineNum + ', reset: true }); ' + line.slice(matchPosition);
     };
 
     lines.forEach(function (line, lineNum) {
+      // reset our regexp each time.
+      re.lastIndex = 0;
+
+      if (disableLoopProtection) {
+        return;
+      }
+
+      if (line.toLowerCase().indexOf('noprotect') !== -1) {
+        disableLoopProtection = true;
+      }
+
       var next = line,
-          index = 0,
+          index = -1,
+          matchPosition = -1,
           originalLineNum = lineNum,
           printLineNumber = lineNum - offset + 1, // +1 since we're humans and don't read lines numbers from zero
           character = '',
+          dofound = false, // special case for `do` loops, as they're tailed with `while`
+          findwhile = false,
           cont = true,
           oneliner = false,
           terminator = false,
-          match = (line.match(re) || [null,''])[1],
-          openBrackets = 0;
+          matches = line.match(re) || [],
+          match = matches.length ? matches[0] : '',
+          openBrackets = 0,
+          openBraces = 0;
 
-      if (ignore[lineNum]) return;
+      if (ignore[lineNum]) {
+        debug(' -exit: ignoring line ' + lineNum +': ' + line);
+        return;
+      }
 
-      if (match && line.indexOf('jsbin') === -1) {
-        debug('\n');
+      if (pushonly[lineNum]) {
+        debug('- exit: ignoring, but adding line ' + lineNum + ': ' + line);
+        recompiled.push(line);
+        return;
+      }
+
+      // if there's more than one match, we just ignore this kind of loop
+      // otherwise I'm going to be writing a full JavaScript lexer...and god
+      // knows I've got better things to be doing.
+      if (match && matches.length === 1 && line.indexOf('jsbin') === -1) {
+        debug('match on ' + match + '\n');
+
+        // there's a special case for protecting `do` loops, we need to first
+        // prtect the `do`, but then ignore the closing `while` statement, so
+        // we reset the search state for this special case.
+        dofound = match === 'do';
 
         // make sure this is an actual loop command by searching backwards
         // to ensure it's not a string, comment or object property
-        index = line.indexOf(match);
+        matchPosition = index = line.indexOf(match);
 
         // first we need to walk backwards to ensure that our match isn't part
         // of a string or part of a comment
@@ -110,6 +149,19 @@ var loopProtect = (function () {
         // now work our way forward to look for '{'
         index = line.indexOf(match) + match.length;
 
+        if (index === line.length) {
+          if (index === line.length && lineNum < (lines.length-1)) {
+            // move to the next line
+            debug('- moving to next line');
+            recompiled.push(line);
+            lineNum++;
+            line = lines[lineNum];
+            ignore[lineNum] = true;
+            index = 0;
+          }
+
+        }
+
         while (index < line.length) {
           character = line.substr(index, 1);
           debug(character, index);
@@ -124,6 +176,14 @@ var loopProtect = (function () {
             if (openBrackets === 0 && terminator === false) {
               terminator = index;
             }
+          }
+
+          if (character === '{') {
+            openBraces++;
+          }
+
+          if (character === '}') {
+            openBraces--;
           }
 
           if (openBrackets === 0 && (character === ';' || character === '{')) {
@@ -142,21 +202,72 @@ var loopProtect = (function () {
 
             } else if (character === '{') {
               debug('- multiline with braces');
-              line = line.substring(0, index + 1) + ';\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n' + line.substring(index + 1);
+              var insert = ';\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n';
+              line = line.substring(0, index + 1) + insert + line.substring(index + 1);
+
+              index += insert.length;
             }
 
             // work out where to put the reset
             if (lineNum === originalLineNum) {
               debug('- simple reset insert');
-              line = insertReset(printLineNumber, line);
+              line = insertReset(printLineNumber, line, matchPosition);
+              index += (';' + method + '({ line: ' + lineNum + ', reset: true }); ').length;
             } else {
               // insert the reset above the originalLineNum
               debug('- reset inserted above original line');
-              recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum]);
+              recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum], matchPosition);
             }
 
             recompiled.push(line);
-            return;
+
+            if (!dofound) {
+              return;
+            } else {
+              debug('searching for closing `while` statement for: ' + line);
+              // cycle forward until we find the close brace, after which should
+              // be our while statement to ignore
+              var findwhile = false;
+              while (index < line.length) {
+                character = line.substr(index, 1);
+
+                if (character === '{') {
+                  openBraces++;
+                }
+
+                if (character === '}') {
+                  openBraces--;
+                }
+
+                debug(character, openBraces);
+
+                if (openBraces === 0) {
+                  findwhile = true;
+                } else {
+                  findwhile = false;
+                }
+
+                if (openBraces === 0) {
+                  debug('outside of closure, looking for `while` statement: ' + line);
+                }
+
+                if (findwhile && line.indexOf('while') !== -1) {
+                  debug('- exit as we found `while`: ' + line)
+                  pushonly[lineNum] = true;
+                  return;
+                }
+
+                index++;
+
+                if (index === line.length && lineNum < (lines.length-1)) {
+                  lineNum++;
+                  line = lines[lineNum];
+                  debug(line);
+                  index = 0;
+                }
+              }
+              return;
+            }
           }
 
           index++;
@@ -173,11 +284,12 @@ var loopProtect = (function () {
         }
       } else {
         // else we're a regular line, and we shouldn't be touched
+        debug('regular line ' + line);
         recompiled.push(line);
       }
     });
 
-    return recompiled.join('\n');
+    return disableLoopProtection ? code : recompiled.join('\n');
   };
 
   /**
@@ -193,7 +305,7 @@ var loopProtect = (function () {
     }
     if ((+new Date - line.time) > 100) {
       // We've spent over 100ms on this loop... smells infinite.
-      var msg = "Exiting suspicious and potentially infinite loop at line " + state.line;
+      var msg = 'Exiting suspicious and potentially infinite loop at line ' + state.line + '\nTo disable loop protection, add "noprotect" to your code in a comment';
       if (window.proxyConsole) {
         window.proxyConsole.error(msg);
       } else console.error(msg);

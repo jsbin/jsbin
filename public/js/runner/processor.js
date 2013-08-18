@@ -38,7 +38,7 @@ var processor = (function () {
    * Replace HTML characters with encoded equivatents for debug mode.
    */
   processor.debug = function (source) {
-    return '<pre>' + source.replace(/[<>&"]/g, function (m) {
+    return '<pre>' + source.replace(/[<>&]/g, function (m) {
       if (m == '<') return '&lt;';
       if (m == '>') return '&gt;';
       if (m == '&') return '&amp;';

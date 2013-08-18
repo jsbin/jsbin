@@ -28,6 +28,9 @@ var code = {
   brackets: 'var NUM=103, i, sqrt;\nfor(i=2; i<=Math.sqrt(NUM); i+=1){\n if(NUM % i === 0){\n  console.log(NUM + " can be divided by " + i + ".");\n  break;\n }\n}\nreturn i;',
   lotolines: 'var LIMIT = 10;\nvar num, lastNum, tmp;\nfor(num = 1, lastNum = 0;\n  num < LIMIT;\n  lastNum = num, num = tmp){\n\n    tmp = num + lastNum;\n}\nreturn lastNum;',
   ignorecomments: '\n/**\n * This function handles the click for every button.\n *\n * Using the same function reduces code duplication and makes the\n */\nreturn true;',
+  dowhile: 'var x=0;\ndo\n {\n x++;\n } while (x < 3);\nreturn x;',
+  dowhilenested: 'var x=0;\n do\n {\n x++;\n var b = 0;\n do {\n b++; \n } while (b < 3);\n } while (x < 3);\nreturn x;',
+  disabled: '// noprotect\nvar x=0;\ndo\n {\n x++;\n } while (x < 3);\nreturn x;',
 };
 
 
@@ -173,5 +176,29 @@ describe('loop', function () {
     var compiled = loopProtect.rewriteLoops(c);
     assert(compiled !== c);
     assert(spy(compiled) === 8);
+  });
+
+  it('should ignore when loop protect is disabled', function () {
+    var c = code.disabled;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled === c);
+    assert(spy(compiled) === 3);
+  });
+
+  it('should protect do loops', function () {
+    var c = code.dowhile;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(compiled !== c);
+    assert(spy(compiled) === 3);
+
+    var c = code.dowhilenested;
+    var compiled = loopProtect.rewriteLoops(c);
+    // console.log('\n----------');
+    // console.log(c);
+    // console.log('\n----------');
+    // console.log(compiled);
+    assert(compiled !== c);
+    assert(spy(compiled) === 3);
+
   });
 });

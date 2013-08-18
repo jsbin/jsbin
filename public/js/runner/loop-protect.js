@@ -305,7 +305,7 @@ var loopProtect = (function () {
     }
     if ((+new Date - line.time) > 100) {
       // We've spent over 100ms on this loop... smells infinite.
-      var msg = 'Exiting suspicious and potentially infinite loop at line ' + state.line + '\nTo disable loop protection, add "noprotect" to your code in a comment';
+      var msg = 'Exiting potential infinite loop at line ' + state.line + '. To disable loop protection: add "// noprotect" to your code';
       if (window.proxyConsole) {
         window.proxyConsole.error(msg);
       } else console.error(msg);

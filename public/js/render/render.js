@@ -53,7 +53,7 @@ var getPreparedCode = (function () {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
         var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
-        if (js.trim()) js = '//# ' + sourceURL + '\n//@ ' + sourceURL + '\n\n' + js;
+        if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
         sourceURLctr++;
       } catch (e) {
         window.console && window.console.error(e.message);

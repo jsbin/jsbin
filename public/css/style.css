@@ -2835,6 +2835,35 @@ pre .highlight:last-of-type {
   right: 20px;
 }
 
+#share {
+  width: 320px;
+}
+
+.inline {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  overflow: hidden;
+}
+.inline li {
+  float: left;
+  list-style: none;
+}
+
+#share .inline label {
+  font-weight: normal;
+  margin: 0;
+  margin-right: 10px;
+  color: #333;
+  cursor: pointer;
+}
+
+#share .inline input {
+  margin: 0;
+  cursor: pointer !important;
+  border: 0;
+}
+
 /** CodeMirror Themes **/
 /* Default theme is higher in the style sheet with codemirror's own code */
 

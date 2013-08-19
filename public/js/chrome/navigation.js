@@ -62,9 +62,16 @@ $document.on('saved', function () {
   });
 });
 
+var $panelCheckboxes = $('#sharepanels input').on('change click', updateSavedState);
 $('#sharemenu').bind('open', function () {
   analytics.openShare();
   $lockrevision.removeClass('disabled').removeAttr('disabled');
+
+  $panelCheckboxes.attr('checked', false);
+  jsbin.panels.getVisible().forEach(function (panel) {
+    $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();
+  });
+
 });
 
 var dropdownOpen = false,

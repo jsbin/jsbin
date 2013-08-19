@@ -28,16 +28,28 @@ function onSaveError(jqXHR) {
   }
 }
 
+$panelCheckboxes = $('#sharemenu #sharepanels input');
+
 function updateSavedState() {
+  var mapping = {
+    live: 'output',
+    javascript: 'js',
+    css: 'css',
+    html: 'html',
+    console: 'console'
+  };
+  var query = $panelCheckboxes.filter(':checked').map(function () {
+    return mapping[this.getAttribute('data-panel')];
+  }).get().join(',');
   $shareLinks.each(function () {
-    var url = jsbin.getURL() + this.getAttribute('data-path'),
+    var url = jsbin.getURL() + this.getAttribute('data-path') + (query ? '?' + query : ''),
         nodeName = this.nodeName;
     if (nodeName === 'A') {
       this.href = url;
     } else if (nodeName === 'INPUT') {
       this.value = url;
     } else if (nodeName === 'TEXTAREA') {
-      this.value = ('<a class="jsbin-embed" href="' + url + '?live">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      this.value = ('<a class="jsbin-embed" href="' + url + '>' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
           return {
             '<': '&lt;',
             '>': '&gt;',

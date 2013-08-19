@@ -34,7 +34,6 @@
     "/js/render/console.js",
     "/js/chrome/errors.js",
     "/js/processors/processor.js",
-    "/js/chrome/navigation.js",
     "/js/editors/panel.js",
     "/js/editors/editors.js",
     "/js/editors/libraries.js",
@@ -45,6 +44,7 @@
     "/js/chrome/login.js",
     "/js/chrome/tips.js",
     "/js/chrome/save.js",
+    "/js/chrome/navigation.js",
     "/js/chrome/file-drop.js",
     "/js/chrome/gist.js",
     "/js/chrome/app.js"

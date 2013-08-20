@@ -55,7 +55,10 @@ var $lockrevision = $('.lockrevision').click(function (event) {
   $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
   $lockrevision.html('<span>This bin is now locked from further changes</span>');
   saveChecksum = false;
-  $document.trigger('lcoked');
+  $document.trigger('locked');
+  return false;
+}).on('mouseup', function () {
+  return false;
 });
 
 $document.on('saved', function () {
@@ -101,17 +104,6 @@ function closedropdown() {
     onhover = false;
   }
 }
-
-// RS: dupe?
-// $('.button-open').mousedown(function (e) {
-//   if (dropdownOpen && dropdownOpen !== this) closedropdown();
-//   if (!dropdownOpen) {
-//     menuDown = true;
-//     opendropdown(this);
-//   }
-//   e.preventDefault();
-//   return false;
-// });
 
 var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e) {
   $dropdownLinks.removeClass('hover');

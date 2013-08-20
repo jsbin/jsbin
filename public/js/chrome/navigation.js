@@ -52,20 +52,21 @@ $('.homebtn').click(function () {
 var $lockrevision = $('.lockrevision').click(function (event) {
   event.preventDefault();
   analytics.lock();
-  $lockrevision.addClass('disabled').attr('disabled', true);
+  $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
+  $lockrevision.html('<span>This bin is now locked from further changes</span>');
   saveChecksum = false;
+  $document.trigger('lcoked');
 });
 
 $document.on('saved', function () {
-  $lockrevision.val(function (i, val) {
-    return val.replace(/#\d+$/, '#' + jsbin.state.revision);
-  });
+  $lockrevision.removeClass('icon-lock').addClass('icon-unlocked');
+  $lockrevision.html('<span>Click to lock and prevent further changes</span>');
 });
 
 var $panelCheckboxes = $('#sharepanels input').on('change click', updateSavedState);
 $('#sharemenu').bind('open', function () {
   analytics.openShare();
-  $lockrevision.removeClass('disabled').removeAttr('disabled');
+  // $lockrevision.removeClass('icon-unlock').addClass('icon-lock');
 
   $panelCheckboxes.attr('checked', false);
   jsbin.panels.getVisible().forEach(function (panel) {

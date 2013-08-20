@@ -22,18 +22,22 @@ var font = (function (document) {
     head.appendChild(el);
   }
 
-  if (Object.defineProperty) {
-    Object.defineProperty(jsbin.settings, 'font', {
-      configurable: true,
-      enumerable: true,
-      get: function () {
-        return size;
-      },
-      set: function (val) {
-        size = val * 1;
-        font(size);
-      }
-    });
+  if (Object.defineProperty && jsbin.settings) {
+    try {
+      Object.defineProperty(jsbin.settings, 'font', {
+        configurable: true,
+        enumerable: true,
+        get: function () {
+          return size;
+        },
+        set: function (val) {
+          size = val * 1;
+          font(size);
+        }
+      });
+    } catch (e) {
+      // IE8 seems to attempt the code above, but it totally fails
+    }
   }
 
   font(size);

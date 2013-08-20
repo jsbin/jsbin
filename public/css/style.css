@@ -2480,10 +2480,14 @@ a.active:hover {
 }
 
 #share .lockoption {
-  margin: -10px;
+  margin: 10px -10px -10px;
   cursor: pointer;
   padding: 10px;
-  background: #E6E6E6;
+  background: #F4FAFF;
+}
+
+#share .lockoption:hover {
+  background: #e9f3fe;
 }
 
 #sharemenu.hidden {
@@ -2855,6 +2859,7 @@ pre .highlight:last-of-type {
   padding: 0;
   font-size: 13px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .inline li {
   float: left;
@@ -2864,15 +2869,18 @@ pre .highlight:last-of-type {
 #share .inline label {
   font-weight: normal;
   margin: 0;
-  margin-right: 10px;
+  margin-right: 8px;
   color: #333;
   cursor: pointer;
 }
 
+#share .inline li:last-of-type {
+  margin-right: 0;
+}
+
 #share .inline input {
-  margin: 0;
+  margin-left: 0;
   cursor: pointer !important;
-  border: 0;
 }
 
 /** CodeMirror Themes **/

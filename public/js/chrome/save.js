@@ -10,9 +10,6 @@ $('a.save').click(function (event) {
 });
 
 var $shareLinks = $('#share .link');
-$document.one('saved', function () {
-  $shareLinks.removeClass('disabled').unbind('click mousedown mouseup');
-});
 
 function onSaveError(jqXHR) {
   if (jqXHR.status === 413) {
@@ -42,7 +39,7 @@ function updateSavedState() {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
-    var url = jsbin.getURL() + this.getAttribute('data-path') + (query ? '?' + query : ''),
+    var url = jsbin.getURL() + this.getAttribute('data-path') + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     if (nodeName === 'A') {
       this.href = url;
@@ -84,6 +81,10 @@ if (saveChecksum) {
     $('a.save').click();
   });
 }
+
+$document.one('saved', function () {
+  $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
+});
 
 // TODO decide whether to expose this code, it disables live saving for IE users
 // until they refresh - via a great big yellow button. For now this is hidden
@@ -131,13 +132,6 @@ if (!jsbin.saveDisabled) {
         'opacity': '0'
       }, 500);
     }, 500));
-
-    // TODO use sockets for streaming...or not?
-    // var stream = false;
-
-    // if (jsbin.state.stream && window.WebSocket) {
-    //   stream = new WebSocket('ws://' + window.location.origin + '/update');
-    // }
 
     $document.bind('codeChange', throttle(function (event, data) {
       if (!data.panelId) return;

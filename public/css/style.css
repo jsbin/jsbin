@@ -32,7 +32,8 @@ td small {
   font-size: 12px;
 }
 
-input {
+input,
+#sharemenu span /* stupid fix for IE9's custom font handling */ {
   font-family: "Helvetica Neue", Helvetica, Arial;
 }
 
@@ -2478,6 +2479,13 @@ a.active:hover {
   left: -10px;
 }
 
+#share .lockoption {
+  margin: -10px;
+  cursor: pointer;
+  padding: 10px;
+  background: #E6E6E6;
+}
+
 #sharemenu.hidden {
   top: -40px;
 }
@@ -2491,20 +2499,23 @@ a.active:hover {
   top: 0;
 }
 
-#sharemenu strong {
+#sharemenu strong,
+#sharemenu .dropdowncontent .heading {
   font-size: 15px;
   padding: 2px 0;
   display: inline-block;
   color: #000;
+  text-decoration: none;
 }
 
 #sharemenu strong a {
   text-decoration: none;
 }
 
-.dropdownmenu {
-  /* margin: 3px 5px; */
+#sharemenu hr {
+  margin: 10px -10px;
 }
+
 
 .dropdownmenu a {
   padding: 6px 100px 6px 10px;

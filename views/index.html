@@ -36,10 +36,9 @@
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" href="{{root}}/save">Create milestone</a>
+              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#">Export as gist</a>
+              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">Embed</a>
               <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
-              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist"
-                  title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin"
-                  class="button group" href="#">Export as gist</a>
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" href="/clone">Clone</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download">Download</a>
             </div>

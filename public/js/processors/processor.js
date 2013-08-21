@@ -250,7 +250,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.3.0.min.js',
+      url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
       init: function (ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/less/less.js', ready);
       },

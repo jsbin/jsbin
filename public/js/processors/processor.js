@@ -1,4 +1,11 @@
 var processors = jsbin.processors = (function () {
+  /*
+   * Debugging note: to emulate a slow connection, or a processor taking too
+   * long to load, find the processor in question, and change the `init` method
+   * to setTimeout(getScript, n seconds) - this will give you an idea of how
+   * jsbin behaves when the processor isn't ready and the user makes calls to it
+   */
+
 
   /**
    * Add properties to a function using underscore
@@ -63,7 +70,7 @@ var processors = jsbin.processors = (function () {
         init(function () {
           callback = handler;
           if (failed) {
-            return editors.console.render();
+            renderLivePreview();
           }
           ready();
         });

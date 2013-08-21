@@ -1,4 +1,11 @@
 var processors = jsbin.processors = (function () {
+  /*
+   * Debugging note: to emulate a slow connection, or a processor taking too
+   * long to load, find the processor in question, and change the `init` method
+   * to setTimeout(getScript, n seconds) - this will give you an idea of how
+   * jsbin behaves when the processor isn't ready and the user makes calls to it
+   */
+
 
   /**
    * Add properties to a function using underscore
@@ -63,7 +70,7 @@ var processors = jsbin.processors = (function () {
         init(function () {
           callback = handler;
           if (failed) {
-            return editors.console.render();
+            renderLivePreview();
           }
           ready();
         });
@@ -127,7 +134,7 @@ var processors = jsbin.processors = (function () {
             bare: true
           });
         } catch (e) {
-          console && console.error(e.message);
+          throw new Error(e);
         }
         return renderedCode;
       }
@@ -243,7 +250,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.3.0.min.js',
+      url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
       init: function (ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/less/less.js', ready);
       },
@@ -252,8 +259,7 @@ var processors = jsbin.processors = (function () {
 
         less.Parser().parse(source, function (err, result) {
           if (err) {
-            console && console.error(err);
-            return source;
+            throw new Error(err);
           }
           css = $.trim(result.toCSS());
         });
@@ -272,7 +278,7 @@ var processors = jsbin.processors = (function () {
 
         stylus(source).render(function (err, result) {
           if (err) {
-            console && console.error(err);
+            throw new Error(err);
             return;
           }
           css = $.trim(result);
@@ -306,7 +312,7 @@ var processors = jsbin.processors = (function () {
 
           var reporter = new ErrorReporter();
           reporter.reportMessageInternal = function(location, kind, format, args) {
-            window.console.error(ErrorReporter.format(location, format, args));
+            throw new Error(ErrorReporter.format(location, format, args));
           };
 
           var url = location.href;
@@ -317,7 +323,7 @@ var processors = jsbin.processors = (function () {
           project.addFile(sourceFile);
           var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
 
-          var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions. Eat me.\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
+          var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions.\n\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
           return msg + ProjectWriter.write(res);
         }
       });

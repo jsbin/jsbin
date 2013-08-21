@@ -44,6 +44,9 @@ var getPreparedCode = (function () {
     try {
       source = editors.html.render();
     } catch (e) {
+      if (editors.html.processor.id) {
+        window.console && window.console.warn(editors.html.processor.id + ' processor compilation failed');
+      }
       window.console && window.console.error(e.message);
     }
 
@@ -56,6 +59,10 @@ var getPreparedCode = (function () {
         if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
         sourceURLctr++;
       } catch (e) {
+        if (editors.javascript.processor.id) {
+          window.console && window.console.warn(editors.javascript.processor.id + ' processor compilation failed');
+        }
+
         window.console && window.console.error(e.message);
       }
     }
@@ -63,6 +70,10 @@ var getPreparedCode = (function () {
     try {
       css = editors.css.render();
     } catch (e) {
+      if (editors.css.processor.id) {
+        window.console && window.console.warn(editors.css.processor.id + ' processor compilation failed');
+      }
+
       window.console && window.console.error(e.message);
     }
 

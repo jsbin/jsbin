@@ -134,7 +134,7 @@ var processors = jsbin.processors = (function () {
             bare: true
           });
         } catch (e) {
-          console && console.error(e.message);
+          throw new Error(e);
         }
         return renderedCode;
       }
@@ -259,8 +259,7 @@ var processors = jsbin.processors = (function () {
 
         less.Parser().parse(source, function (err, result) {
           if (err) {
-            console && console.error(err);
-            return source;
+            throw new Error(err);
           }
           css = $.trim(result.toCSS());
         });
@@ -279,7 +278,7 @@ var processors = jsbin.processors = (function () {
 
         stylus(source).render(function (err, result) {
           if (err) {
-            console && console.error(err);
+            throw new Error(err);
             return;
           }
           css = $.trim(result);
@@ -313,7 +312,7 @@ var processors = jsbin.processors = (function () {
 
           var reporter = new ErrorReporter();
           reporter.reportMessageInternal = function(location, kind, format, args) {
-            window.console.error(ErrorReporter.format(location, format, args));
+            throw new Error(ErrorReporter.format(location, format, args));
           };
 
           var url = location.href;
@@ -324,7 +323,7 @@ var processors = jsbin.processors = (function () {
           project.addFile(sourceFile);
           var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
 
-          var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions. Eat me.\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
+          var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions.\n\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
           return msg + ProjectWriter.write(res);
         }
       });

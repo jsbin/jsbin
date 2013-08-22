@@ -2708,8 +2708,9 @@ pre .highlight:last-of-type {
 
 .brand {
   display: inline-block;
-  font-weight: bold;
+  /*font-weight: bold;*/
   padding: 10px;
+  margin-left: 5px;
 }
 
 .brand h1 {

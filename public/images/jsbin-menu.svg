@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16">
+<g>
+  <g id="lid" transform="translate(0, 5)">
+    <animateMotion from="0,0" to="0,-5" begin="1s" dur="100ms" fill="freeze"/>
+    <rect x="0" y="0" fill="#9EAAB2" width="12" height="3.115"/>
+  <rect x="0.937" y="3.115" fill="#213F48" width="10.125" height="5.116"/>
+  <circle fill-rule="evenodd" clip-rule="evenodd" fill="#51C3F1" cx="3.53" cy="5.542" r="1.436"/>
+  <circle fill-rule="evenodd" clip-rule="evenodd" fill="#51C3F1" cx="8.155" cy="5.542" r="1.436"/>
+  </g>
+  <rect x="0" y="8.231" fill="#9EAAB2" width="12" height="7.806"/>
+  <rect x="7.187" y="10.197" fill="#F5DD3E" width="3.875" height="3.875"/>
+</g>
+</svg>

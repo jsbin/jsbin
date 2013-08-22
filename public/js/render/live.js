@@ -263,8 +263,8 @@ var renderLivePreview = (function () {
     iframe.setAttribute('class', 'stretch');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
-    iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     $live.prepend(iframe);
+    iframe.src = jsbin.root.replace('jsbin', 'run.jsbin') + '/runner';
     try {
       iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
     } catch (e) {

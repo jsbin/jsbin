@@ -21,12 +21,12 @@
     <div class="buttons">
       {{#embed}}
         <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
         </span>
       {{/embed}}
       {{^embed}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group"><img src="{{static}}/images/favicon.png"> <strong>Bins</strong></a>
+          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
           <div class="dropdown" id="actionmenu">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}">New</a>

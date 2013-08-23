@@ -82,6 +82,9 @@
           $row = $this.parents('tr');
       // Instantly update this row and the page layout
       $row.toggleClass('archived');
+
+      analytics[this.pathname.indexOf('unarchive') === -1 ? 'archive' : 'unarchive'](jsbin.root + $row.data('url'));
+
       updateLayout($tbodys, $history.hasClass('archive_mode'));
       // Then send the update to the server
       $.ajax({
@@ -101,7 +104,9 @@
     // Handle toggling of archive view
     $toggle.change(function () {
       $history.toggleClass('archive_mode');
-      updateLayout($tbodys, $history.hasClass('archive_mode'));
+      var archive = $history.hasClass('archive_mode');
+      analytics.archiveView(archive);
+      updateLayout($tbodys, archive);
     });
 
 

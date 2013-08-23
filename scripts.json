@@ -40,6 +40,7 @@
     "/js/editors/library.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/esc.js",
+    "/js/chrome/issue.js",
     "/js/chrome/download.js",
     "/js/chrome/login.js",
     "/js/chrome/tips.js",

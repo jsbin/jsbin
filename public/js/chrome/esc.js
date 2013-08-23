@@ -13,16 +13,20 @@ function hideOpen() {
   if (urlHelpVisible) {
     $body.removeClass('urlHelp');
     urlHelpVisible = false;
+    analytics.closeMenu('help');
   } else if (keyboardHelpVisible) {
     $body.removeClass('keyboardHelp');
     keyboardHelpVisible = false;
+    analytics.closeMenu('keyboardHelp');
   } else if (dropdownOpen) {
-    $('.menu.open').removeClass('open');
+    var open = $('.menu.open').removeClass('open');
+    analytics.closeMenu(open.find('.button')[0].hash.substring(1));
     dropdownOpen = false;
   } else if (loginVisible) {
     $('#login').hide();
+    analytics.closeMenu('login');
     loginVisible = false;
-  } 
+  }
 }
 
 $document.delegate('.modal', 'click', function (event) {

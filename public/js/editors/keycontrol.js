@@ -44,7 +44,7 @@ if (!customKeys.disabled) $document.keydown(function (event) {
   if (event.ctrlKey) event.metaKey = true;
 
   if (event.metaKey && event.which == 79) { // open
-    $('.homebtn').click();
+    $('.homebtn').trigger('click', 'keyboard');
     event.preventDefault();
   } else if (event.metaKey && event.which == 83) { // save
     if (event.shiftKey == false) {
@@ -110,13 +110,13 @@ function keycontrol(event) {
         if (editors.console.visible && !editors.live.visible) {
           hasRun = true;
           // editors.console.render();
-          $('#runconsole').click();
+          $('#runconsole').trigger('click', 'keyboard');
         } else if (editors.live.visible) {
           // editors.live.render(true);
-          $('#runwithalerts').click();
+          $('#runwithalerts').trigger('click', 'keyboard');
           hasRun = true;
         } else {
-          $('#runwithalerts').click();
+          $('#runwithalerts').trigger('click', 'keyboard');
           hasRun = true;
         }
 
@@ -147,7 +147,7 @@ function keycontrol(event) {
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
       if (keyboardHelpVisible) {
-        analytics.help();
+        analytics.track('keyboard', 'select', 'help');
       }
       event.stop();
     } else if (event.which == 27 && keyboardHelpVisible) {

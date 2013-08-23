@@ -1,82 +1,118 @@
 var analytics = {
-  libraryMenu: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/open-library-menu']);
+  track: function (category, action, label, value) {
+    var data = ['_trackEvent', category, action];
+    if (label) {
+      data.push(label);
+    }
+    if (value) {
+      data.push(value);
+    }
+
+    // console.log(data, (new Error()).stack);
+    window._gaq && _gaq.push(data);
+  },
+  library: function (action, value) {
+    analytics.track('menu', action, 'library', value);
   },
   embed: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/embed/' + window.top.location.toString()]);
-  },
-  revert: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/revert' + window.location.pathname]);
+    analytics.track('state', 'embed');
+    try {
+      analytics.track('state', 'embed', window.top.location);
+    } catch (e) {};
   },
   milestone: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/milestone' + window.location.pathname]);
+    analytics.track('bin', 'save', window.location.pathname);
   },
   clone: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/clone' + window.location.pathname]);
+    analytics.track('bin', 'clone', window.location.pathname);
   },
   lock: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/lock-revision']);
+    analytics.track('bin', 'lock', window.location.pathname);
   },
   openShare: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/open-share']);
+    analytics.track('menu', 'open', 'share');
   },
   saveTemplate: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/save-template']);
+    analytics.track('menu', 'select', 'save-template');
   },
-  createNew: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/new']);
+  createNew: function (from) {
+    analytics.track(from || 'menu', 'select', 'new');
   },
-  startSaving: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/start-saving']);
-  },
-  open: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/open']);
+  open: function (from) {
+    analytics.track(from || 'menu', 'select', 'open');
   },
   openFromAvatar: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/open-from-avatar']);
+    analytics.track('menu', 'select', 'open via avatar');
   },
-  download: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/download' + window.location.pathname]);
+  openMenu: function (label) {
+    analytics.track('menu', 'open', label);
   },
-  showPanel: function (panelId) {
-    window._gaq && _gaq.push(['_trackPageview', '/action/panel/show/' + panelId]);
+  closeMenu: function (label) {
+    analytics.track('menu', 'close', label);
   },
-  hidePanel: function (panelId) {
-    window._gaq && _gaq.push(['_trackPageview', '/action/panel/hide/' + panelId]);
-  },
-  logout: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/logout']);
-  },
-  login: function (ok) {
-    if (window._gaq) {
-      if (ok === undefined) {
-        _gaq.push(['_trackPageview', '/action/login']);
-      } else {
-        _gaq.push(['_trackPageview', '/action/login/'  + ok ? 'success' : 'fail']);
-      }
+  selectMenu: function (item) {
+    if (item) {
+      analytics.track('menu', 'select', item);
     }
   },
-  help: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/help']);
+  share: function (action, label) {
+    analytics.track('share', action, label);
   },
-  urls: function () {
-    window._gaq && _gaq.push(['_trackPageview', '/action/urls']);
+  download: function (from) {
+    analytics.track(from || 'menu', 'select', 'download');
+  },
+  showPanel: function (panelId) {
+    analytics.track('panel', 'show', panelId);
+  },
+  hidePanel: function (panelId) {
+    analytics.track('panel', 'hide', panelId);
+  },
+  logout: function () {
+    analytics.track('menu', 'select', 'logout');
+  },
+  register: function (success) {
+    if (success === undefined) {
+      analytics.track('menu', 'open', 'login');
+    } else {
+      analytics.track('user', 'register', ok ? 'success' : 'fail');
+    }
+  },
+  login: function (ok) {
+    if (ok === undefined) {
+      analytics.track('menu', 'open', 'login');
+    } else {
+      analytics.track('user', 'login', ok ? 'success' : 'fail');
+    }
   },
   enableLiveJS: function (ok) {
-    window._gaq && _gaq.push(['_trackPageview', '/action/live-js/' + ok ? 'on' : 'off']);
+    analytics.track('button', 'auto-run js', ok ? 'on' : 'off');
+  },
+  archiveView: function (visible) {
+    analytics.track('button', 'view archive', visible ? 'on' : 'off');
+  },
+  archive: function (url) {
+    analytics.track('button', 'archive', url);
+  },
+  unarchive: function () {
+    analytics.track('button', 'unarchive', url);
   },
   loadGist: function (id) {
-    window._gaq && _gaq.push(['_trackPageview', '/action/gist/' + id]);
+    analytics.track('state', 'load gist', id);
   },
   layout: function (panelsVisible) {
     var layout = [], panel = '';
 
-    if (window._gaq) {
-      for (panel in panelsVisible) {
-        layout.push(panel + ':' + panelsVisible[panel]);
-      }
-      _gaq.push(['_trackPageview', '/action/layout/' + layout.join('/')]);
+    for (panel in panelsVisible) {
+      layout.push(panel.id);
     }
+
+    analytics.track('layout', 'update', layout.sort().join(',') || 'none');
+  },
+  run: function (from) {
+    analytics.track('run with js', from || 'button');
+  },
+  runconsole: function (from) {
+    analytics.track('run console', from || 'button');
   }
 };
 

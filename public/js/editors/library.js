@@ -53,9 +53,10 @@ $library.bind('change', function () {
       group = groups[selected[0]],
       library = group.libraries[selected[1]];
 
+  analytics.library('select', group.libraries[selected[1]].label);
   insertResources(library.url);
 }).on('click', function () {
-  analytics.libraryMenu();
+  analytics.library('open');
 });
 
 function insertResources(urls) {

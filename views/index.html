@@ -26,22 +26,22 @@
       {{/embed}}
       {{^embed}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#actionmenu" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
-          <div class="dropdown" id="actionmenu">
+          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
+          <div class="dropdown" id="bins">
             <div class="dropdownmenu">
-              <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}">New</a>
+              <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#home}}
-              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
+              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
               {{/home}}
               <hr data-desc="">
-              <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#">Add description</a>
-              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" href="/clone">Clone</a>
+              <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
+              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
+              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="/clone">Clone</a>
               <hr data-desc="">
-              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#">Export as gist</a>
-              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download">Download</a>
-              <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save">Save as template</a>
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
+              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
+              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
+              <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
             </div>
           </div>
         </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
@@ -72,7 +72,7 @@
                   <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                 </div>
                 <div data-desc="Embed this bin with the live output on your site">
-                  <span class="heading">Embed</span><br><textarea data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                  <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
                 </div>
                 <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
                   <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
@@ -91,8 +91,8 @@
         {{^embed}}
           {{#home}}
             <div class="menu">
-              <a title="@{{home}}" href="#homemenu" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
-              <div class="dropdown dd-right" id="homemenu">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
+              <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   <form class="login">
                     <p class="loginFeedback"></p>
@@ -203,8 +203,8 @@
           {{/home}}
         {{/embed}}
           <div class="menu">
-            <a href="#helpmenu" class="button button-dropdown">Help</a>
-            <div class="dropdown dd-right" id="helpmenu">
+            <a href="#help" class="button button-dropdown">Help</a>
+            <div class="dropdown dd-right" id="help">
               <div class="dropdownmenu">
                 <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
                 <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
@@ -213,7 +213,7 @@
                 <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
                 <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
                 <hr data-desc="">
-                <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
+                <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
                 <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
                 <a data-desc="Discover why, when and how JS Bin came about" target="_blank" href="http://jsbin.tumblr.com/about">About</a>
                 <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>

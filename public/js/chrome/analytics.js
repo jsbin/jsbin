@@ -109,10 +109,10 @@ var analytics = {
     analytics.track('layout', 'update', layout.sort().join(',') || 'none');
   },
   run: function (from) {
-    analytics.track('run with js', from || 'button');
+    analytics.track(from || 'button', 'run with js');
   },
   runconsole: function (from) {
-    analytics.track('run console', from || 'button');
+    analytics.track(from || 'button', 'run console');
   }
 };
 

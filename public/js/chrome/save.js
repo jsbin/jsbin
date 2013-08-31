@@ -46,7 +46,7 @@ function updateSavedState() {
     } else if (nodeName === 'INPUT') {
       this.value = url;
     } else if (nodeName === 'TEXTAREA') {
-      this.value = ('<a class="jsbin-embed" href="' + url + '>' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      this.value = ('<a class="jsbin-embed" href="' + url + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
           return {
             '<': '&lt;',
             '>': '&gt;',

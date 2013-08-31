@@ -4,9 +4,17 @@ var $startingpoint = $('#startingpoint').click(function (event) {
     analytics.saveTemplate();
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
     localStorage.setItem('saved-html', editors.html.getCode());
-    $startingpoint.addClass('saved');
-    $('#tip p').html('Default starting point now changed to current code');
-    $html.addClass('showtip');
+
+    $document.trigger('tip', {
+      type: 'notification',
+      content: 'Starting template updated and saved',
+      autohide: 3000
+    });
+  } else {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'Saving templates isn\'t supported in this browser I\'m afraid. Sorry'
+    });
   }
   return false;
 });

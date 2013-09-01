@@ -85,32 +85,34 @@ if (false) { // !saveChecksum && !history.pushState) {
   });
 }
 
+function onSaveError(jqXHR, panelId) {
+  if (jqXHR.status === 413) {
+    // Hijack the tip label to show an error message.
+    $('#tip p').html('Sorry this bin is too large for us to save');
+    $(document.documentElement).addClass('showtip');
+  } else {
+    if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
+    window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
+    // $document.trigger('tip', {
+    //   type: 'error',
+    //   content: 'Something went wrong while saving. Your most recent work is not saved.'
+    // });
+  }
+}
+
+
+
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {
+  $('.code.panel .label .name').append('<span>Saved</span>');
+
+  var savingLabels = {
+    html: $('.panel.html .name span'),
+    javascript: $('.panel.javascript .name span'),
+    css: $('.panel.css .name span')
+  };
+
   $document.bind('jsbinReady', function () {
-    $('.code.panel .label .name').append('<span>Saved</span>');
-
-    var savingLabels = {
-      html: $('.panel.html .name span'),
-      javascript: $('.panel.javascript .name span'),
-      css: $('.panel.css .name span')
-    };
-
-    function onSaveError(jqXHR, panelId) {
-      if (jqXHR.status === 413) {
-        // Hijack the tip label to show an error message.
-        $('#tip p').html('Sorry this bin is too large for us to save');
-        $(document.documentElement).addClass('showtip');
-      } else {
-        savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
-        window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-        // $document.trigger('tip', {
-        //   type: 'error',
-        //   content: 'Something went wrong while saving. Your most recent work is not saved.'
-        // });
-      }
-    }
-
     jsbin.panels.allEditors(function (panel) {
       panel.on('processor', function () {
         // if the url doesn't match the root - i.e. they've actually saved something then save on processor change
@@ -280,7 +282,9 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: onSaveError
+      error: function (jqXHR) {
+        onSaveError(jqXHR);
+      }
     });
   } else {
     $form.submit();

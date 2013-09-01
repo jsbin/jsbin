@@ -93,7 +93,7 @@ var analytics = {
   archive: function (url) {
     analytics.track('button', 'archive', url);
   },
-  unarchive: function () {
+  unarchive: function (url) {
     analytics.track('button', 'unarchive', url);
   },
   loadGist: function (id) {

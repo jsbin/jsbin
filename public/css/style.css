@@ -294,7 +294,8 @@ iframe.javascript {
   /*margin-right: 10px;*/
 }
 
-.dropdownmenu a, .button {
+.dropdownmenu a,
+.button {
   position: relative;
   border: 1px solid transparent;
   border-top: 0;
@@ -2521,7 +2522,9 @@ a.active:hover {
 }
 
 
-.dropdownmenu a {
+.dropdownmenu a,
+.dropdownmenu .button {
+  cursor: pointer;
   padding: 6px 100px 6px 10px;
   /* font-weight: bold; */
 }

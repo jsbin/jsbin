@@ -11,20 +11,6 @@ $('a.save').click(function (event) {
 
 var $shareLinks = $('#share .link');
 
-function onSaveError(jqXHR) {
-  if (jqXHR.status === 413) {
-    // Hijack the tip label to show an error message.
-    $('#tip p').html('Sorry this bin is too large for us to save');
-    $(document.documentElement).addClass('showtip');
-  } else {
-    window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-    $document.trigger('tip', {
-      type: 'error',
-      content: 'Something went wrong while saving. Your most recent work is not saved.'
-    });
-  }
-}
-
 $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 function updateSavedState() {
@@ -110,6 +96,21 @@ if (!jsbin.saveDisabled) {
       css: $('.panel.css .name span')
     };
 
+    function onSaveError(jqXHR, panelId) {
+      if (jqXHR.status === 413) {
+        // Hijack the tip label to show an error message.
+        $('#tip p').html('Sorry this bin is too large for us to save');
+        $(document.documentElement).addClass('showtip');
+      } else {
+        savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
+        window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
+        // $document.trigger('tip', {
+        //   type: 'error',
+        //   content: 'Something went wrong while saving. Your most recent work is not saved.'
+        // });
+      }
+    }
+
     jsbin.panels.allEditors(function (panel) {
       panel.on('processor', function () {
         // if the url doesn't match the root - i.e. they've actually saved something then save on processor change
@@ -128,9 +129,12 @@ if (!jsbin.saveDisabled) {
 
     $document.bind('saveComplete', throttle(function (event, data) {
       // show saved, then revert out animation
-      savingLabels[data.panelId].stop(true, true).animate({ 'opacity': 1 }, 100).delay(1200).animate({
-        'opacity': '0'
-      }, 500);
+      savingLabels[data.panelId]
+        .text('Saved')
+        .stop(true, true)
+        .animate({ opacity: 1 }, 100)
+        .delay(1200)
+        .animate({ opacity: 0 }, 500);
     }, 500));
 
     $document.bind('codeChange', throttle(function (event, data) {
@@ -169,7 +173,9 @@ if (!jsbin.saveDisabled) {
               });
             }
           },
-          error: onSaveError
+          error: function (jqXHR) {
+            onSaveError(jqXHR, data.panelId);
+          }
         });
       }
     }, 250));

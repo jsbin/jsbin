@@ -302,8 +302,11 @@ var loopProtect = (function () {
     var line = loopProtect.counters[state.line];
     if (state.reset) {
       line.time = +new Date;
+      line.hit = 0;
+      line.last = 0;
     }
-    if ((+new Date - line.time) > 100) {
+    line.hit++;
+    if ((+new Date - line.time) > 100) {//} && line.hit !== line.last+1) {
       // We've spent over 100ms on this loop... smells infinite.
       var msg = 'Exiting potential infinite loop at line ' + state.line + '. To disable loop protection: add "// noprotect" to your code';
       if (window.proxyConsole) {
@@ -312,6 +315,7 @@ var loopProtect = (function () {
       // Returning true prevents the loop running again
       return true;
     }
+    line.last++;
     return false;
   };
 

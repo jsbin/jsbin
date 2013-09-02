@@ -31,7 +31,7 @@ var proxyConsole = (function () {
 
   // Create each of these methods on the proxy, and postMessage up to JS Bin
   // when one is called.
-  var methods = ['debug', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw'];
+  var methods = ['debug', 'clear', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw'];
   methods.forEach(function (method) {
     // Create console method
     proxyConsole[method] = function () {

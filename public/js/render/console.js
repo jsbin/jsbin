@@ -259,6 +259,9 @@ var ccCache = {};
 var ccPosition = false;
 
 window._console = {
+  clear: function () {
+    output.innerHTML = '';
+  },
   log: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {

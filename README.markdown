@@ -54,9 +54,16 @@ Then open your browser to [http://localhost:3000](http://localhost:3000) and you
 
 ## API
 
-A simple REST based API exists for anonymous users if it is enabled in your config.*.json, or can be restricted to registered users with a key specified in `ownership.ownership_api_key`
+A simple REST based API exists for anonymous users if it is enabled in your config.*.json, or can be restricted to registered users with a key specified in `ownership.api_key`
 
-If authentication is required (`allowAnonymous = false`), then an auth_key must be provided as part of an token authorization header or as a querystring with the value `api_key`.  Curl examples:
+Authentication is required for all API requests unless one of the following api configuration options are set:
+
+- `api.allowAnonymousReadWrite` - if set to true allows GET and POST operations to the API anonymously (without an API key)
+- `api.allowAnonymousRead` - if set to true allows GET operations to the API anonymously (without an API key)
+
+By default, `config.default.json` has `api.allowAnonymousRead` set to true.
+
+Curl authentication examples:
 
 ```
 $ curl http://{{host}}/api/:bin -H "Authorization: token {{token_key}}"

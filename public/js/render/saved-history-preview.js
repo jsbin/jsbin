@@ -1,6 +1,18 @@
 ;(function () {
   var $body = $('body'),
-      loaded = false;
+      loaded = false,
+      $history; // set in hookUserHistory()
+
+  $document.on('history:open', function () {
+    if ($history && jsbin.panels.getVisible().length === 0) {
+      $history.appendTo('body');
+      $history = null;
+    }
+  }).on('history:close', function () {
+    if ($history === null) {
+      $history = $('#history').detach();
+    }
+  });
 
   var loadList = function () {
     if (loaded) return;
@@ -55,8 +67,8 @@
 
   var hookUserHistory = function () {
     // Loading the HTML from the server may have failed
-    var $history = $('#history');
-    if (!$history.length) return;
+    $history = $('#history').detach();
+    if (!$history.length) return $history;
 
     // Cache some useful elements
     var $iframe = $('iframe', $history),
@@ -142,6 +154,9 @@
       updateLayout($tbodys, false);
     }, 0);
 
+    $document.trigger('history:open');
+
+    return $history;
   };
 
   // inside a ready call because history DOM is rendered *after* our JS to improve load times.

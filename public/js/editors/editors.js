@@ -302,12 +302,16 @@ panels.hide = function (panelId) {
       jsbin.panels.focused.$el.focus();
     }
     jsbin.panels.focused.focus();
+  }
+
+  /*
   } else if ($history.length && !$body.hasClass('panelsVisible')) {
     $body.toggleClass('dave', $history.is(':visible'));
     $history.toggle(100);
   } else if ($history.length === 0) {
     // TODO load up the history
   }
+  */
 };
 
 panels.hideAll = function () {

@@ -49,16 +49,26 @@ This is an object controlling how URLs are generated in JS Bin. If you plan to r
 
 To start JS Bin with a config file from another location, set the `JSBIN_CONFIG` environment variable as a path to the custom file. The path should be absolute, or relative to your current working directory:
 
-    $ JSBIN_CONFIG=~/jsbin.json jsbin
+    $ JSBIN_CONFIG=~/config.local.json jsbin
 
-## Running from a subdirectory
+### Running behind a proxy
 
-## Building for production
+JS Bin will run behind a proxy, indeed our production version of JS Bin is behind a proxy.
 
+The `PORT` on the command line takes precedence over the config variable. This means in your config, you set the url to be the user facing port (typically port 80, so no port required), and then JS Bin will listen on the port you gave at the envinoment level.
 
+So to proxy jsbin.com to a localhost:8000 (using something like nginx to do the proxying), the config would look like (this snippet of `config.local.json`):
 
+```json
+  "url": {
+    "host": "jsbin.com",
+    "prefix": "/",
+    "ssl": false
+  },
+```
 
+Note that in the above config, `jsbin.com` is what is used in the HTML and JavaScript, so this is the *client facing url*. Next, running JS Bin behind a proxy is as simple as:
 
+    $ PORT=8000 JSBIN_CONFIG=~/config.local.json jsbin 
 
-
-
+Now the `jsbin` node process is listening on port 8000, but the client facing urls are all port 80.

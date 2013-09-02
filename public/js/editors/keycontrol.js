@@ -25,15 +25,15 @@ panelShortcuts.start = 48;
 
 // work out the browser platform
 var ua = navigator.userAgent;
-if (/macintosh|mac os x/.test(ua)) { 
-  $.browser.platform = 'mac'; 
-} else if (/windows|win32/.test(ua)) { 
-  $.browser.platform = 'win'; 
-} else if (/linux/.test(ua)) { 
-  $.browser.platform = 'linux'; 
-} else { 
-  $.browser.platform = ''; 
-} 
+if (/macintosh|mac os x/.test(ua)) {
+  $.browser.platform = 'mac';
+} else if (/windows|win32/.test(ua)) {
+  $.browser.platform = 'win';
+} else if (/linux/.test(ua)) {
+  $.browser.platform = 'linux';
+} else {
+  $.browser.platform = '';
+}
 
 // var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
@@ -43,10 +43,10 @@ if (!customKeys.disabled) $document.keydown(function (event) {
 
   if (event.ctrlKey) event.metaKey = true;
 
-  if (event.metaKey && event.which == 79) {
+  if (event.metaKey && event.which == 79) { // open
     $('.homebtn').click();
     event.preventDefault();
-  } else if (event.metaKey && event.which == 83) {
+  } else if (event.metaKey && event.which == 83) { // save
     if (event.shiftKey == false) {
       if (saveChecksum) {
         saveChecksum = false;
@@ -55,7 +55,7 @@ if (!customKeys.disabled) $document.keydown(function (event) {
         $('a.save:first').click();
       }
       event.preventDefault();
-    } else if (event.shiftKey == true) {
+    } else if (event.shiftKey == true) { // shift+s = clone
       $('.clone').click();
       event.preventDefault();
     }
@@ -131,7 +131,7 @@ function keycontrol(event) {
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
       if (jsbin.panels.focused.id === panelShortcuts[event.which]) {
-        // hide 
+        // hide
         jsbin.panels.hide(panelShortcuts[event.which]);
       } else {
         // show
@@ -165,7 +165,7 @@ function keycontrol(event) {
         token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
                          className: token.string == "." ? "js-property" : null};
       }
-    
+
       panel.replaceRange('</' + token.state.htmlState.context.tagName + '>', {line: cur.line, ch: token.end}, {line: cur.line, ch: token.end});
       event.stop();
     } else if (event.which == 188 && event.ctrlKey && event.shiftKey && codePanel) {
@@ -175,7 +175,7 @@ function keycontrol(event) {
     }
   }
   // return true;
-  
+
   if (event.stopping) {
     return false;
   }

@@ -59,20 +59,23 @@ $('.homebtn').click(function (event, data) {
   return false;
 });
 
-var $lockrevision = $('.lockrevision').one('click', function (event) {
+var $lockrevision = $('.lockrevision').on('click', function (event) {
   event.preventDefault();
-  analytics.lock();
-  $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
-  $lockrevision.html('<span>This bin is now locked from further changes</span>');
-  saveChecksum = false;
-  $document.trigger('locked');
+  if (!$lockrevision.data('lock')) {
+    analytics.lock();
+    $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
+    $lockrevision.html('<span>This bin is now locked from further changes</span>');
+    $lockrevision.data('locked', true);
+    saveChecksum = false;
+    $document.trigger('locked');
+  }
   return false;
 }).on('mouseup', function () {
   return false;
 });
 
 $document.on('saved', function () {
-  $lockrevision.removeClass('icon-lock').addClass('icon-unlocked');
+  $lockrevision.removeClass('icon-lock').addClass('icon-unlocked').data('locked', false);
   $lockrevision.html('<span>Click to lock and prevent further changes</span>');
 });
 

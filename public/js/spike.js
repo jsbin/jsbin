@@ -80,7 +80,7 @@ function addEvent(type, fn) {
 }
 
 function cleanPath(str) {
-  return (''+str).replace(/[^a-z0-9\/]/g, '');
+  return (''+str).replace(/[^a-z0-9\/]/gi, '');
 }
 
 function error(error, cmd) {

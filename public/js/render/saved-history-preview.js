@@ -6,7 +6,6 @@
   $document.on('history:open', function () {
     if ($history && jsbin.panels.getVisible().length === 0) {
       $history.appendTo('body');
-      $history = null;
     }
   }).on('history:close', function () {
     if ($history === null) {

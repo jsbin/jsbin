@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="https://rawgithub.com/emberjs/starter-kit/v1.0.0/css/normalize.css">
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <h2>Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    <ul>
+    {{#each item in model}}
+      <li>{{item}}</li>
+    {{/each}}
+    </ul>
+  </script>
+
+  <script src="https://rawgithub.com/emberjs/starter-kit/v1.0.0/js/libs/jquery-1.9.1.js"></script>
+  <script src="https://rawgithub.com/emberjs/starter-kit/v1.0.0/js/libs/handlebars-1.0.0.js"></script>
+  <script src="https://rawgithub.com/emberjs/starter-kit/v1.0.0/js/libs/ember-1.0.0.js"></script>
+
+</body>
+</html>

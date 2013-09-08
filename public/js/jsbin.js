@@ -86,8 +86,10 @@ jsbin.ie = (function(){
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
-  window.location = jsbin.root + '/welcome/edit?html,live'
-    + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
+  if (!jsbin.custom) {
+    window.location = jsbin.root + '/welcome/edit?html,live'
+      + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
+  }
 }
 
 if (!jsbin.settings.editor) {

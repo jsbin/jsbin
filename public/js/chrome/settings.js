@@ -37,37 +37,31 @@
         var theme = this.value;
         if (jsbin.settings.editor.theme) {
           root.removeClass('cm-s-' + jsbin.settings.editor.theme);
-          // lame
-          if (theme === 'solarized-light') {
-            root.removeClass('.cm-s-light');
-          }
         }
         jsbin.settings.editor.theme = theme;
         root.addClass('cm-s-' + theme);
-
-        if (theme.indexOf('solarized') === 0) {
-          if (theme.indexOf('light') !== 0) {
-            root.addClass('.cm-s-light');
-          }
-          theme = 'solarized';
-        }
-
-        head.find('link.theme').remove();
-
-        if (theme !== 'default') {
-          head.append('<link class="theme" rel="stylesheet" href="' + jsbin.static + '/js/vendor/codemirror3/theme/' + theme + '.css">');
-        }
 
         jsbin.panels.allEditors(function (panel) {
           panel.editor.setOption('theme', theme);
         });
 
+        head.find('link.theme').remove();
+
+        if (theme !== 'default') {
+          if (theme.indexOf('solarized') === 0) {
+            theme = 'solarized';
+          }
+
+          head.append('<link class="theme" rel="stylesheet" href="' + jsbin.static + '/js/vendor/codemirror3/theme/' + theme + '.css">');
+        }
       }
     }
 
-    jsbin.panels.allEditors(function (panel) {
-      panel.editor.refresh();
-    });
+    setTimeout(function () {
+      jsbin.panels.allEditors(function (panel) {
+        panel.editor.refresh();
+      });
+    }, 0);
   }).each(function () {
     var id = this.id;
     if (this.type === 'checkbox') {

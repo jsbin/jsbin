@@ -101,10 +101,6 @@ if (jsbin.settings.codemirror) {
   $.extend(jsbin.settings.editor, jsbin.settings.codemirror);
 }
 
-if (jsbin.settings.editor.theme) {
-  $(document.documentElement).addClass('cm-s-' + jsbin.settings.editor.theme);
-}
-
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent
 // malicious form submissions from other domains.
 jQuery.ajaxPrefilter(function (options, original, xhr) {

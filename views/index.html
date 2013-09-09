@@ -95,10 +95,57 @@
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
+                  <form class="userSettings">
+                    <h2>Settings</h2>
+                    <div>
+                      <label for="settings-lineNumbers">Line nums</label> <input type="checkbox" id="settings-lineNumbers">
+                    </div>
+                    <div>
+                      <label for="settings-lineWrapping">Line wrap</label> <input type="checkbox" id="settings-lineWrapping" checked>
+                    </div>
+                    <div>
+                      <label for="settings-font">Font size</label> <input type="number" id="settings-font" value="14">px
+                    </div>
+                    <div>
+                      <label for="settings-theme">Theme</label> <select id="settings-theme">
+                              <option selected>default</option>
+                              <option>jsbin</option>
+                              <option>3024-day</option>
+                              <option>3024-night</option>
+                              <option>ambiance</option>
+                              <option>base16-dark</option>
+                              <option>base16-light</option>
+                              <option>blackboard</option>
+                              <option>cobalt</option>
+                              <option>eclipse</option>
+                              <option>elegant</option>
+                              <option>erlang-dark</option>
+                              <option>lesser-dark</option>
+                              <option>midnight</option>
+                              <option>monokai</option>
+                              <option>neat</option>
+                              <option>night</option>
+                              <option>paraiso-dark</option>
+                              <option>paraiso-light</option>
+                              <option>rubyblue</option>
+                              <option value="solarized">solarized dark</option>
+                              <option value="solarized-light">solarized light</option>
+                              <option>the-matrix</option>
+                              <option>tomorrow-night-eighties</option>
+                              <option>twilight</option>
+                              <option>vibrant-ink</option>
+                              <option>xq-dark</option>
+                              <option>xq-light</option>
+                        </select>
+                    </div>
+                  </form>
                   <form class="login">
                     <p class="loginFeedback"></p>
+                    <h2>Account</h2>
                     <div>
                       <span class="input" id="username" readonyl>@{{home}}</span>
+                      {{#pro}}<span class="pro">pro</span>{{/pro}}
+                      {{^pro}}<span class="notpro">Not pro :( <a href="/pro">Upgrade?</a></span>{{/pro}}
                     </div>
                     <div>
                       <label>Email<br>

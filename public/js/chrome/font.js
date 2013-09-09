@@ -22,6 +22,8 @@ var font = (function (document) {
     head.appendChild(el);
   }
 
+  var ret = font;
+
   if (Object.defineProperty && jsbin.settings) {
     try {
       Object.defineProperty(jsbin.settings, 'font', {
@@ -35,6 +37,10 @@ var font = (function (document) {
           font(size);
         }
       });
+
+      ret = function (size) {
+        jsbin.settings.font = size;
+      };
     } catch (e) {
       // IE8 seems to attempt the code above, but it totally fails
     }
@@ -42,5 +48,5 @@ var font = (function (document) {
 
   font(size);
 
-  return font;
+  return ret;
 })(document);

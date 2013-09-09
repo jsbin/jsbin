@@ -48,6 +48,7 @@
     "/js/chrome/navigation.js",
     "/js/chrome/file-drop.js",
     "/js/chrome/gist.js",
+    "/js/chrome/settings.js",
     "/js/chrome/app.js"
   ],
   "runner": [

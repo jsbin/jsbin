@@ -5,7 +5,8 @@
     "host": "localhost:3000",
     "prefix": "/",
     "ssl": false,
-    "static": false
+    "static": false,
+    "runnerhost": false 
   },
   "max-request-size": "1MB",
   "store": {

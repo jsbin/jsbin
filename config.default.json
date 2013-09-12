@@ -6,7 +6,7 @@
     "prefix": "/",
     "ssl": false,
     "static": false,
-    "runnerhost": false 
+    "runner": false
   },
   "max-request-size": "1MB",
   "store": {

@@ -35,6 +35,7 @@ var exportToDropbox = $('#export-to-dropbox').on('click', function (e) {
     'href': jsbin.getURL() + '/download'
   });
 });
+$exportToDropbox.trigger('update');
 
 
 $('a.disabled').on('click mousedown mouseup', function (event) {

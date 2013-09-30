@@ -410,6 +410,16 @@ var libraries = [
             "http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"
         ],
         "label": "HTML5 shiv"
+    },
+    {
+        "url": [
+            "http://lungo.tapquo.com/demo/components/lungo/lungo.css",
+            "http://lungo.tapquo.com/demo/components/lungo/lungo.theme.css",
+            "http://lungo.tapquo.com/demo/components/lungo/lungo.icon.css",
+            "http://lungo.tapquo.com/demo/components/quojs/quo.js",
+            "http://lungo.tapquo.com/demo/components/lungo/lungo.js"
+        ],
+        "label": "Lungo"
     }
 ];
 

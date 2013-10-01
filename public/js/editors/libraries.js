@@ -305,10 +305,10 @@ var libraries = [
     {
         "url": [
             "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js",
-            "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-            "http://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.0-rc.6/ember.min.js"
+            "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js",
+            "http://builds.emberjs.com.s3.amazonaws.com/tags/v1.0.0/ember.js"
         ],
-        "label": "Ember.js 1.0.0-rc.6"
+        "label": "Ember.js 1.0.0"
     },
     {
         "url": "http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js",

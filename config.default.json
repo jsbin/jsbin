@@ -47,6 +47,10 @@
   "client": {
     "user": true
   },
+  "github": {
+    "id": "",
+    "secret": ""
+  },
   "notify": {
     "errors": [],
     "report": []

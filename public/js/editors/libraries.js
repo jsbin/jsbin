@@ -390,7 +390,7 @@ var libraries = [
   },
   {
     "url": "http://documentcloud.github.io/underscore/underscore-min.js",
-    "label": "underscore latest"
+    "label": "underscore"
   },
   {
     "url":[

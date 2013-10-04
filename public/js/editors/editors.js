@@ -57,7 +57,8 @@ panels.restore = function () {
       openWithSameDimensions = false,
       width = $window.width(),
       deferredCodeInsert = '',
-      focused = !!sessionStorage.getItem('panel');
+      focused = !!sessionStorage.getItem('panel'),
+      validPanels = 'live javascript html css console'.split(' ');
 
   if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
     history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
@@ -80,7 +81,17 @@ panels.restore = function () {
     if (toopen.indexOf('js') !== -1) {
       toopen.push('javascript');
     }
-  } else {
+  }
+
+  // strip out anything that wasn't recognised as a valid panel to open
+  for (i = 0; i < toopen.length; i++) {
+    if (validPanels.indexOf(toopen[i]) === -1) {
+      toopen.splice(i, 1);
+      i--;
+    }
+  }
+
+  if (toopen.length === 0) {
     toopen = jsbin.settings.panels || [];
   }
 
@@ -105,6 +116,7 @@ panels.restore = function () {
 
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query
+  i = 0;
   if (toopen.length) {
     for (name in state) {
       if (toopen.indexOf(name) !== -1) {

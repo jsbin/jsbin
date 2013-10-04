@@ -276,7 +276,7 @@ function saveCode(method, ajax, ajaxCallback) {
         $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
-          window.history.pushState(null, edit, edit);
+          updateURL(edit);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;
@@ -289,4 +289,61 @@ function saveCode(method, ajax, ajaxCallback) {
   } else {
     $form.submit();
   }
+}
+
+/**
+ * Returns the similar part of two strings
+ * @param  {String} a first string
+ * @param  {String} b second string
+ * @return {String}   common substring
+ */
+function sameStart(a, b) {
+  if (a == b) return a;
+
+  var tmp = b.slice(0, 1);
+  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
+    tmp = b.slice(0, tmp.length + 1);
+  }
+
+  return tmp;
+}
+
+// refresh the window when we popstate, because for now we don't do an xhr to
+// inject the panel content...yet.
+window.onpopstate = function onpopstate(event) {
+  // ignore the first popstate event, because that comes from the browser...
+  if (!onpopstate.first) window.location.reload();
+  else onpopstate.first = false;
+};
+
+onpopstate.first = true;
+
+function updateURL(path) {
+  var old = location.pathname,
+      back = true,
+      same = sameStart(old, path);
+      sameAt = same.length;
+
+  if (updateURL.timer) window.cancelAnimationFrame(updateURL.timer);
+
+  var run = function () {
+    if (location.pathname !== path) {
+      updateURL.timer = window.requestAnimationFrame(run);
+    }
+
+    if (location.pathname !== same) {
+      if (back) {
+        history.replaceState({ path: path }, '', location.pathname.slice(0, -1));
+      } else {
+        history.replaceState({ path: path }, '', path.slice(0, location.pathname.length + 1));
+      }
+    } else {
+      back = false;
+      history.replaceState({ path: path }, '', path.slice(0, sameAt + 2));
+    }
+  };
+
+  history.pushState({ path: path }, '', location.pathname.slice(0, -1));
+
+  run();
 }

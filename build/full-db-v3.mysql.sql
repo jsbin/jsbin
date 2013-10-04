@@ -64,7 +64,7 @@ DROP TABLE IF EXISTS `ownership`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ownership` (
-  `name` char(50) NOT NULL,
+  `name` char(255) NOT NULL,
   `key` char(255) NOT NULL,
   `email` varchar(255) NOT NULL DEFAULT '',
   `api_key` VARCHAR(255) NULL,

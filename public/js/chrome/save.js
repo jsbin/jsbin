@@ -301,7 +301,9 @@ function sameStart(a, b) {
   if (a == b) return a;
 
   var tmp = b.slice(0, 1);
-  while (a.indexOf((tmp = b.slice(0, tmp.length + 1)) + b.substr(tmp.length, 1)) === 0) {}
+  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
+    tmp = b.slice(0, tmp.length + 1);
+  }
 
   return tmp;
 }

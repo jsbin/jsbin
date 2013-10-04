@@ -298,14 +298,18 @@ function saveCode(method, ajax, ajaxCallback) {
  * @return {String}   common substring
  */
 function sameStart(a, b) {
-  if (a == b) return a;
-
-  var tmp = b.slice(0, 1);
-  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
-    tmp = b.slice(0, tmp.length + 1);
+  if (a === b) {
+    return a;
   }
-
-  return tmp;
+  
+  var length = Math.min(a.length, b.length);
+  for (var pos = 0; pos < length; pos++) {
+    if (a.charAt(pos) !== b.charAt(pos)) {
+      break;
+    }
+  }
+  
+  return a.slice(0, pos);
 }
 
 // refresh the window when we popstate, because for now we don't do an xhr to

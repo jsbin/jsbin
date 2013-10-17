@@ -277,7 +277,7 @@ function saveCode(method, ajax, ajaxCallback) {
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
-          window.history.pushState(null, '', jsbin.getURL());
+          window.history.pushState(null, '', jsbin.getURL() + '/edit');
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;

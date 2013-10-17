@@ -276,7 +276,8 @@ function saveCode(method, ajax, ajaxCallback) {
         $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
-          updateURL(edit);
+          // updateURL(edit);
+          window.pushState(null, '', jsbin.getURL());
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;
@@ -307,6 +308,8 @@ function sameStart(a, b) {
 
   return tmp;
 }
+
+/*
 
 // refresh the window when we popstate, because for now we don't do an xhr to
 // inject the panel content...yet.
@@ -347,3 +350,5 @@ function updateURL(path) {
 
   run();
 }
+
+*/

@@ -332,8 +332,8 @@ var libraries = [
     "label": "Foundation 4.1.6"
   },
   {
-    "url": "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
-    "label": "Handlebars.js 1.0.0-rc.3"
+    "url": "http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js",
+    "label": "Handlebars.js 1.0.0"
   },
   {
     "url": "http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js",

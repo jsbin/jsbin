@@ -132,7 +132,8 @@
         localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
 
         // wait until animations have completed!
-        setTimeout(function () {
+        if (moveSplitter.timer) clearTimeout(moveSplitter.timer);
+        moveSplitter.timer = setTimeout(function () {
           $document.trigger('sizeeditors');
         }, 120);
       }

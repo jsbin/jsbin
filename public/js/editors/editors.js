@@ -74,10 +74,7 @@ panels.restore = function () {
     // it also strips out prop=value& to avoid bashing the
     // panel name
     
-    // Calls decodeURIComponent twice to capture uses of %252C
-    search = decodeURIComponent(decodeURIComponent(search));
-    
-    toopen = (search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
+    toopen = decodeURIComponent(search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
 
     if (toopen.indexOf('output') !== -1) {
       toopen.push('live');

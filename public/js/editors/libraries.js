@@ -420,6 +420,10 @@ var libraries = [
       "http://lungo.tapquo.com/demo/components/lungo/lungo.js"
     ],
     "label": "Lungo"
+  },
+  {
+    "url": "//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20131010/polymer.min.js",
+    "label": "Polymer"
   }
 ];
 

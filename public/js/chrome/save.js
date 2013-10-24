@@ -1,3 +1,36 @@
+var saving = {
+  todo: {
+    html: false,
+    css: false,
+    javascript: false
+  },
+  _inprogress: false,
+  inprogress: function (inprogress) {
+    if (typeof inprogress === 'undefined') {
+      return saving._inprogress;
+    }
+
+    saving._inprogress = inprogress;
+    if (inprogress === false) {
+      var panels = ['html','css','javascript'],
+          todo;
+
+      var save = function () {
+        var todo = panels.pop();
+        if (todo && saving.todo[todo]) {
+          saving._inprogress = true;
+          updateCode(todo, save);
+          saving.todo[todo] = false;
+        } else if (todo) {
+          save();
+        }
+      };
+
+      save();
+    }
+  }
+};
+
 // to allow for download button to be introduced via beta feature
 $('a.save').click(function (event) {
   event.preventDefault();
@@ -142,45 +175,62 @@ if (!jsbin.saveDisabled) {
     $document.bind('codeChange', throttle(function (event, data) {
       if (!data.panelId) return;
 
-      var panelId = data.panelId,
-          panelSettings = {};
+      var panelId = data.panelId;
 
-      if (jsbin.state.processors) {
-        panelSettings.processors = jsbin.state.processors;
+      if (saving.inprogress()) {
+        // queue up the request and wait
+        saving.todo[panelId] = true;
+        return;
       }
+
+      saving.inprogress(true);
 
       if (!saveChecksum) {
         // create the bin and when the response comes back update the url
         saveCode('save', true);
       } else {
-        $.ajax({
-          url: jsbin.getURL() + '/save',
-          data: {
-            code: jsbin.state.code,
-            revision: jsbin.state.revision,
-            method: 'update',
-            panel: data.panelId,
-            content: editors[data.panelId].getCode(),
-            checksum: saveChecksum,
-            settings: JSON.stringify(panelSettings)
-          },
-          type: 'post',
-          dataType: 'json',
-          headers: {'Accept': 'application/json'},
-          success: function (data) {
-            $document.trigger('saveComplete', { panelId: panelId });
-            if (data.error) {
-              saveCode('save', true, function (data) {
-                // savedAlready = data.checksum;
-              });
-            }
-          },
-          error: function (jqXHR) {
-            onSaveError(jqXHR, data.panelId);
-          }
-        });
+        updateCode(panelId);
       }
     }, 250));
+  });
+}
+
+function updateCode(panelId, callback) {
+  var panelSettings = {};
+
+  if (jsbin.state.processors) {
+    panelSettings.processors = jsbin.state.processors;
+  }
+
+  $.ajax({
+    url: jsbin.getURL() + '/save',
+    data: {
+      code: jsbin.state.code,
+      revision: jsbin.state.revision,
+      method: 'update',
+      panel: panelId,
+      content: editors[panelId].getCode(),
+      checksum: saveChecksum,
+      settings: JSON.stringify(panelSettings)
+    },
+    type: 'post',
+    dataType: 'json',
+    headers: {'Accept': 'application/json'},
+    success: function (data) {
+      $document.trigger('saveComplete', { panelId: panelId });
+      if (data.error) {
+        saveCode('save', true, function (data) {
+          // savedAlready = data.checksum;
+        });
+      }
+    },
+    error: function (jqXHR) {
+      onSaveError(jqXHR, panelId);
+    },
+    complete: function () {
+      saving.inprogress(false);
+      callback && callback();
+    }
   });
 }
 
@@ -285,6 +335,9 @@ function saveCode(method, ajax, ajaxCallback) {
       },
       error: function (jqXHR) {
         onSaveError(jqXHR);
+      },
+      complete: function () {
+        saving.inprogress(false);
       }
     });
   } else {

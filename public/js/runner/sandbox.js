@@ -39,10 +39,11 @@ var sandbox = (function () {
     prependChild(sandbox.target, iframe);
     // setTimeout allows the iframe to be rendered before other code runs,
     // allowing us access to the calculated properties like innerWidth.
-    setTimeout(done || '', 0);
-    // Wait until the new iframe has loaded then remove *all* the iframes,
-    // baring the active one
-    addEvent(iframe, 'load', function () {
+    setTimeout(function () {
+      // call the code that renders the iframe source
+      if (done) done();
+
+      // remove *all* the iframes, baring the active one
       var iframes = sandbox.target.getElementsByTagName('iframe'),
           length = iframes.length,
           i = 0,
@@ -55,7 +56,7 @@ var sandbox = (function () {
           length--;
         }
       }
-    });
+    }, 0);
   };
 
   /**

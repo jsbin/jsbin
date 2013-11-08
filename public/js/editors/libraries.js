@@ -244,6 +244,14 @@ var libraries = [
     "group": "Testing"
   },
   {
+    "url" : [
+      "http://pivotal.github.io/jasmine/lib/jasmine-1.3.1/jasmine.css",
+      "http://pivotal.github.io/jasmine/lib/jasmine-1.3.1/jasmine.js"
+    ],
+    "label": "Jasmine 1.3.1",
+    "group": "Testing"
+  },
+  {
     "url": "http://zeptojs.com/zepto.min.js",
     "label": "Zepto latest",
     "group": "Zepto"

@@ -24,7 +24,6 @@
     "express": "3.0.x",
     "asyncjs": "0.0.7",
     "hogan.js": "2.0.0",
-    "mysql": "0.9.x",
     "sqlite3": "2.1.7",
     "bcrypt": "~0.7.6",
     "nodemailer": "0.3.20",
@@ -39,7 +38,8 @@
     "file-db": "0.0.2",
     "underscore": "~1.4.4",
     "passport": "~0.1.17",
-    "passport-github": "~0.1.5"
+    "passport-github": "~0.1.5",
+    "mysql": "~2.0.0-alpha9"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

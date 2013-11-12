@@ -159,7 +159,7 @@
   };
 
   // inside a ready call because history DOM is rendered *after* our JS to improve load times.
-  $(function ()  {
+  $(document).on('jsbinReady', function ()  {
     if (jsbin.embed) return;
 
     var $panelButtons = $('#panels a'),

@@ -36,7 +36,7 @@
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="/clone">Clone</a>
+              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
               <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
@@ -139,7 +139,7 @@
                 <a href="#login" class="button button-open" id="loginbtn">Log in</a>
                 <div class="dropdown dd-right" id="login">
                   <div class="dropdowncontent">
-                    <form class="forgot" action="/forgot" method="post">
+                    <form class="forgot" action="{{root}}/forgot" method="post">
                       <div>
                         <label>Email<br>
                         <input name="email" required type="email"></label>
@@ -210,7 +210,7 @@
                 <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
                 <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
                 <hr data-desc="">
-                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="/videos">Videos</a>
+                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="{{root}}/videos">Videos</a>
                 <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
                 <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
                 <hr data-desc="">

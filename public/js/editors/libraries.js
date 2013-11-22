@@ -114,7 +114,7 @@ var libraries = [
       "http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css",
       "http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"
     ],
-    "label": "Bootstrap 2.3.3",
+    "label": "Bootstrap 2.3.2",
     "group": "Bootstrap"
   },
   {

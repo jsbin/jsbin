@@ -295,6 +295,14 @@ var libraries = [
     "label": "Backbone latest"
   },
   {
+    "url": [
+      "http://documentcloud.github.io/underscore/underscore-min.js",
+      "http://documentcloud.github.io/backbone/backbone-min.js",
+      "http://marionettejs.com/downloads/backbone.marionette.min.js"
+    ],
+    "label": "MarionetteJS latest"
+  },
+  {
     "url": "http://cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",
     "label": "Bonsai 0.4.latest"
   },

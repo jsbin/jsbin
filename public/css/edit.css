@@ -30,6 +30,8 @@
 }
 
 #edit-with-js-bin img {
+  width: 16px;
+  height: 16px;
   vertical-align: top;
   border: 0;
   margin: -1px 0 0 3px;

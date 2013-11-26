@@ -13,7 +13,7 @@ function jsbinShowEdit(options) {
   el.id = 'edit-with-js-bin';
   el.href = window.location.pathname + (window.location.pathname.substr(-1) == '/' ? '' : '/') + 'edit';
 
-  el.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png" width="16" height="16">';
+  el.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png">';
 
   var over;
   el.onmouseover = function () {

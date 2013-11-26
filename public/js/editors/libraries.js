@@ -114,7 +114,7 @@ var libraries = [
       "http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css",
       "http://getbootstrap.com/2.3.2/assets/js/bootstrap.js"
     ],
-    "label": "Bootstrap 2.3.3",
+    "label": "Bootstrap 2.3.2",
     "group": "Bootstrap"
   },
   {
@@ -209,6 +209,20 @@ var libraries = [
   },
   {
     "url": [
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css",
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css",
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css",
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.min.css",
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.default.min.css",
+      "http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css",
+      "http://code.jquery.com/jquery-1.9.1.min.js",
+      "http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"
+    ],
+    "label": "Kendo UI Q3 2013",
+    "group": "Kendo UI"
+  },
+  {
+    "url": [
       "http://cdn.kendostatic.com/2013.2.716/styles/kendo.common.min.css",
       "http://cdn.kendostatic.com/2013.2.716/styles/kendo.rtl.min.css",
       "http://cdn.kendostatic.com/2013.2.716/styles/kendo.default.min.css",
@@ -219,20 +233,6 @@ var libraries = [
       "http://cdn.kendostatic.com/2013.2.716/js/kendo.all.min.js"
     ],
     "label": "Kendo UI Q2 2013",
-    "group": "Kendo UI"
-  },
-  {
-    "url": [
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.common.min.css",
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.rtl.min.css",
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.default.min.css",
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.dataviz.min.css",
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.dataviz.default.min.css",
-      "http://cdn.kendostatic.com/2013.1.319/styles/kendo.mobile.all.min.css",
-      "http://code.jquery.com/jquery-1.9.1.min.js",
-      "http://cdn.kendostatic.com/2013.1.319/js/kendo.all.min.js"
-    ],
-    "label": "Kendo UI Q1 2013",
     "group": "Kendo UI"
   },
   {
@@ -293,6 +293,14 @@ var libraries = [
       "http://documentcloud.github.io/backbone/backbone-min.js"
     ],
     "label": "Backbone latest"
+  },
+  {
+    "url": [
+      "http://documentcloud.github.io/underscore/underscore-min.js",
+      "http://documentcloud.github.io/backbone/backbone-min.js",
+      "http://marionettejs.com/downloads/backbone.marionette.min.js"
+    ],
+    "label": "MarionetteJS latest"
   },
   {
     "url": "http://cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js",

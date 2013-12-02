@@ -288,6 +288,22 @@ var libraries = [
     "group": "Enyo"
   },
   {
+    "url":[
+      "http://code.jquery.com/jquery.min.js",
+      "//canjs.com/release/2.0.3/can.jquery.min.js"
+    ],
+    "label": "CanJS 2.0.3",
+    "group": "Canjs"
+  },
+  {
+    "url":[
+      "http://code.jquery.com/jquery-1.9.1.min.js",
+      "//canjs.com/release/1.1.6/can.jquery.min.js"
+    ],
+    "label": "CanJS 1.9.1",
+    "group": "Canjs"
+  },
+  {
     "url": [
       "http://documentcloud.github.io/underscore/underscore-min.js",
       "http://documentcloud.github.io/backbone/backbone-min.js"
@@ -399,13 +415,6 @@ var libraries = [
   {
     "url": "http://documentcloud.github.io/underscore/underscore-min.js",
     "label": "underscore"
-  },
-  {
-    "url":[
-      "http://code.jquery.com/jquery-1.9.1.min.js",
-      "//canjs.com/release/1.1.6/can.jquery.js"
-    ],
-    "label": "CanJS for jQuery"
   },
   {
     "url":[

@@ -432,6 +432,10 @@ var libraries = [
   {
     "url": "//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20131010/polymer.min.js",
     "label": "Polymer"
+  },
+  {
+    "url": "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css",
+    "label": "Font Awesome 4.0.3"
   }
 ];
 

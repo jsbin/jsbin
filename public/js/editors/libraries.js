@@ -244,6 +244,14 @@ var libraries = [
     "group": "Testing"
   },
   {
+    "url" : [
+      "http://pivotal.github.io/jasmine/lib/jasmine-1.3.1/jasmine.css",
+      "http://pivotal.github.io/jasmine/lib/jasmine-1.3.1/jasmine.js"
+    ],
+    "label": "Jasmine 1.3.1",
+    "group": "Testing"
+  },
+  {
     "url": "http://zeptojs.com/zepto.min.js",
     "label": "Zepto latest",
     "group": "Zepto"
@@ -254,13 +262,13 @@ var libraries = [
     "group": "Zepto"
   },
   {
-    "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js",
-    "label": "Angular 1.1.5 Unstable",
+    "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js",
+    "label": "Angular 1.2.0 Stable",
     "group": "Angular"
   },
   {
-    "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js",
-    "label": "Angular 1.0.7 Stable",
+    "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js",
+    "label": "Angular 1.0.8 Stable",
     "group": "Angular"
   },
   {

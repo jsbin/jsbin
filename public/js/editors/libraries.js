@@ -407,10 +407,10 @@ var libraries = [
   },
   {
     "url":[
-      "http://code.jquery.com/jquery-1.9.1.min.js",
-      "//canjs.com/release/1.1.6/can.jquery.js"
+      "http://code.jquery.com/jquery.min.js",
+      "//canjs.com/release/2.0.3/can.jquery.min.js
     ],
-    "label": "CanJS for jQuery"
+    "label": "CanJS 2.0.3"
   },
   {
     "url":[

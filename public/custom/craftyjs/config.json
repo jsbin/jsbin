@@ -1,0 +1,7 @@
+{
+  "css": "custom/emberjs/crafty.css",
+  "settings": {
+    "panels": ["javascript", "live"]
+  },
+  "name": "Crafty.js"
+}

@@ -54,7 +54,7 @@ Then open your browser to [http://localhost:3000](http://localhost:3000) and you
 
 ## API
 
-A simple REST based API exists for anonymous users if it is enabled in your config.*.json, or can be restricted to registered users with a key specified in `ownership.api_key`
+A simple REST based API exists for anonymous users if it is enabled in your config.\*.json, or can be restricted to registered users with a key specified in `ownership.api_key`
 
 Authentication is required for all API requests unless one of the following api configuration options are set:
 

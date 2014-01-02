@@ -23,7 +23,7 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   // $startingpoint.append('')
 // }
 
-var exportToDropbox = $('#export-to-dropbox').on('click', function (e) {
+var $exportToDropbox = $('#export-to-dropbox').on('click', function (e) {
   e.preventDefault();
 
   Dropbox.save(this.href, this.getAttribute('data-filename'));

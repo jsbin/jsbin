@@ -47,6 +47,8 @@ var $shareLinks = $('#share .link');
 $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 function updateSavedState() {
+  $('#export-to-dropbox').trigger('update');
+
   var mapping = {
     live: 'output',
     javascript: 'js',

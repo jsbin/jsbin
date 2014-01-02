@@ -38,6 +38,7 @@
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
+              <a data-desc="Save the compiled output to your dropbox" id="export-to-dropbox" title="Save entire HTML to Dropbox" class="button group" href="#export-to-gist">Save to Dropbox</a>
               <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
@@ -458,6 +459,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{#is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{/is_production}}
+{{#features.saveToDropbox}}
+<script src="https://www.dropbox.com/static/api/1/dropins.js" id="dropboxjs" data-app-key="{{features.saveToDropbox.key}}"></script>
+{{/features.saveToDropbox}}
 {{#live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js?{{version}}"></script>

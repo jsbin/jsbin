@@ -23,6 +23,21 @@ var $startingpoint = $('#startingpoint').click(function (event) {
   // $startingpoint.append('')
 // }
 
+var $exportToDropbox = $('#export-to-dropbox').on('click', function (e) {
+  e.preventDefault();
+
+  Dropbox.save(this.href, this.getAttribute('data-filename'));
+
+  return false;
+}).on('update', function () {
+  $exportToDropbox.attr({
+    'data-filename': 'jsbin' + jsbin.getURL(true).replace(/\//g, '-') + '.html',
+    'href': jsbin.getURL() + '/download'
+  });
+});
+$exportToDropbox.trigger('update');
+
+
 $('a.disabled').on('click mousedown mouseup', function (event) {
   event.stopImmediatePropagation();
   return false;

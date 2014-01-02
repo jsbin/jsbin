@@ -119,16 +119,6 @@ var Panel = function (name, settings) {
     });
   }
 
-  if (jsbin.state.processors && jsbin.state.processors[name]) {
-    panelLanguage = jsbin.state.processors[name];
-    jsbin.processors.set(panel, jsbin.state.processors[name]);
-  } else if (settings.processor) { // FIXME is this even used?
-    panelLanguage = settings.processors[settings.processor];
-    jsbin.processors.set(panel, settings.processor);
-  } else {
-    panel.processor = function (str) { return str; };
-  }
-
   if (settings.editor) {
     cmSettings = {
       parserfile: [],
@@ -188,6 +178,16 @@ var Panel = function (name, settings) {
   } else {
     // create a fake splitter to let the rest of the code work
     panel.splitter = $();
+  }
+
+  if (jsbin.state.processors && jsbin.state.processors[name]) {
+    panelLanguage = jsbin.state.processors[name];
+    jsbin.processors.set(panel, jsbin.state.processors[name]);
+  } else if (settings.processor) { // FIXME is this even used?
+    panelLanguage = settings.processors[settings.processor];
+    jsbin.processors.set(panel, settings.processor);
+  } else {
+    panel.processor = function (str) { return str; };
   }
 
   if (settings.beforeRender) {

@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.8.10",
+  "version": "3.8.11",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -24,8 +24,7 @@
     "express": "3.0.x",
     "asyncjs": "0.0.7",
     "hogan.js": "2.0.0",
-    "sqlite3": "2.1.7",
-    "bcrypt": "~0.7.6",
+    "sqlite3": "~2.1.19",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
     "less": "~1.4.2",
@@ -39,7 +38,11 @@
     "underscore": "~1.4.4",
     "passport": "~0.1.17",
     "passport-github": "~0.1.5",
-    "mysql": "~2.0.0-alpha9"
+    "mysql": "~2.0.0-alpha9",
+    "bcrypt-nodejs": "0.0.3"
+  },
+  "//": {
+    "bcrypt": "~0.7.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

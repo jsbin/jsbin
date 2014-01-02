@@ -73,11 +73,11 @@ var libraries = [
   },
   {
     "url": [
-      "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css",
-      "http://code.jquery.com/jquery-1.8.2.min.js",
-      "http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"
+      "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css",
+      "http://code.jquery.com/jquery-1.9.1.min.js",
+      "http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"
     ],
-    "label": "jQuery Mobile 1.3.1",
+    "label": "jQuery Mobile 1.3.2",
     "group": "jQuery Mobile"
   },
   {
@@ -252,6 +252,11 @@ var libraries = [
     "url": "http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js",
     "label": "Zepto 1.0",
     "group": "Zepto"
+  },
+  {
+    "url": "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js",
+    "label": "Angular 1.2.1 Stable",
+    "group": "Angular"
   },
   {
     "url":"https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js",
@@ -432,6 +437,10 @@ var libraries = [
   {
     "url": "//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20131010/polymer.min.js",
     "label": "Polymer"
+  },
+  {
+    "url": "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css",
+    "label": "Font Awesome 4.0.3"
   }
 ];
 

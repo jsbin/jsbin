@@ -76,6 +76,7 @@ function insertResources(urls) {
       html = [],
       file = '',
       resource,
+      cssNeededAttr = 'rel="stylesheet" type="text/css"';
 
   for (i = 0; i < length; i++) {
     url = urls[i];
@@ -93,7 +94,7 @@ function insertResources(urls) {
     }
 
     if (isCssFile(url)) {
-      resource = '<' + 'link href="' + url + '" rel="stylesheet" type="text/css" />';
+      resource = '<' + 'link href="' + url + '"' + cssNeededAttr  + ' />';
     } else {
       resource = '<' + 'script src="' + url + '"><' + '/script>';
     }

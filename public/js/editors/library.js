@@ -107,10 +107,20 @@ function insertResources(urls) {
     state.add++;
   }
 
-  if (code.indexOf('<head') !== -1) {
-    code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
-  } else { // add to the start of the doc
-    code = html.join('\n') + code;
+  if (isJadeActive()) {
+    if (code.indexOf('head') !== -1) {
+      var headIndent = code.match(/([ ]*)head/)[1];
+      var newLine = "\n"+headIndent+headIndent; // double head indentto matc, and then to go further
+      code = code.replace(/head/, 'head'+ newLine + html.join(newLine));
+    } else {
+      code = 'head\n' + html.join('\n  ') + code;
+    }
+  } else {
+    if (code.indexOf('<head') !== -1) {
+      code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
+    } else { // add to the start of the doc
+      code = html.join('\n') + code;
+    }
   }
 
   editors.html.setCode(code);

@@ -4,6 +4,7 @@ var $startingpoint = $('#startingpoint').click(function (event) {
     analytics.saveTemplate();
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
     localStorage.setItem('saved-html', editors.html.getCode());
+    localStorage.setItem('saved-css', editors.css.getCode());
 
     $document.trigger('tip', {
       type: 'notification',

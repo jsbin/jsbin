@@ -25,51 +25,10 @@ function main(oldVersion) {
   console.log('[jsbin post-update] Testing if there is any migration from ' + oldVersion + ' -> ' + version);
 
   return getVersions(oldVersion, version);
-
-  fs.readdir(path.join(__dirname, 'upgrade'), function (err, files) {
-    files.forEach(function (file) {
-      var dir = path.join(__dirname, 'upgrade', file);
-      fs.stat(dir, function (err, stat) {
-        if (stat.isDirectory()) {
-          // test for semver
-          if (semver.valid(file) === file) {
-            if (semver.satisfies(file, '>=' + oldVersion + ' <' + version)) {
-              console.log('[jsbin post-update] Run everything for ' + file + ' migration:');
-              fs.readdir(dir, function (err, files) {
-                files.forEach(function (file) {
-                  console.log('  - ' + path.join(dir, file));
-                });
-              });
-            } else {
-              console.log('noop');
-            }
-          }
-        }
-      });
-    });
-  });
-}
-
-function readdir(upgradeDir) {
-  return new RSVP.Promise(function (resolve, reject) {
-    fs.readdir(upgradeDir, function (err, files) {
-      files.forEach(function (file) {
-        var dir = path.join(__dirname, 'upgrade', file);
-        fs.stat(dir, function (err, stat) {
-          if (stat.isDirectory()) {
-            // test for semver
-            if (semver.valid(file) === file) {
-              resolve(file);
-            }
-          }
-        });
-      });
-    });
-  });
 }
 
 function getVersionUpdate(file) {
-  return new RSVP.Promise(function (resolve, reject) {
+  return new RSVP.Promise(function (resolve) {
     var dir = path.join(__dirname, 'upgrade', file);
     fs.stat(dir, function (err, stat) {
       if (stat.isDirectory()) {

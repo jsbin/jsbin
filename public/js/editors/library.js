@@ -124,6 +124,13 @@ function createHTMLToJadeTagConverter(tagName, attribute, suffix){
   };
 }
 
+var htmlScriptToJade = createHTMLToJadeTagConverter("script", "src", "js");
+var htmlLinkToJade = createHTMLToJadeTagConverter("link", "href", "css");
+
+function isJadeActive(){
+  return jsbin.state.processors.html === "jade";
+}
+
 function isCssFile(url) {
   return (url.length - (url.lastIndexOf('.css') + 4) === 0);
 }

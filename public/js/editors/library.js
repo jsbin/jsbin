@@ -74,7 +74,8 @@ function insertResources(urls) {
         add: 0
       },
       html = [],
-      file = '';
+      file = '',
+      resource,
 
   for (i = 0; i < length; i++) {
     url = urls[i];
@@ -92,10 +93,12 @@ function insertResources(urls) {
     }
 
     if (isCssFile(url)) {
-      html.push('<' + 'link href="' + url + '" rel="stylesheet" type="text/css" />');
+      resource = '<' + 'link href="' + url + '" rel="stylesheet" type="text/css" />';
     } else {
-      html.push('<' + 'script src="' + url + '"><' + '/script>');
+      resource = '<' + 'script src="' + url + '"><' + '/script>';
     }
+
+    html.push(resource);
 
     state.add++;
   }

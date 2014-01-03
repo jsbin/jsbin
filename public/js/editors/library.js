@@ -98,6 +98,9 @@ function insertResources(urls) {
     } else {
       resource = '<' + 'script src="' + url + '"><' + '/script>';
     }
+    if(isJadeActive()){
+      resource = isCssFile(url) ? htmlLinkToJade(resource) : htmlScriptToJade(resource);
+    }
 
     html.push(resource);
 

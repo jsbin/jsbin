@@ -68,7 +68,7 @@ var Gist = (function () {
         ext = processor.extensions[0] || processor.name;
       }
       // Build a file name
-      var file = ['jsbin', jsbin.state.code, ext].join('.');
+      var file = ['jsbin', (jsbin.state.code || "untitled"), ext].join('.');
       gist.files[file] = {
         content: code
       };

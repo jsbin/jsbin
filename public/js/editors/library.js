@@ -114,6 +114,15 @@ function insertResources(urls) {
 
 }
 
+function createHTMLToJadeTagConverter(tagName, attribute, suffix){
+  var doubleOrSingleQuote = "('|" + '")';
+  var regExToGrabResource = new RegExp(attribute+"="+doubleOrSingleQuote+".+\."+suffix+doubleOrSingleQuote);
+  return function(html){
+    var resource = html.match(regExToGrabResource);
+    return tagName+"("+resource[0]+")";
+  };
+}
+
 function isCssFile(url) {
   return (url.length - (url.lastIndexOf('.css') + 4) === 0);
 }

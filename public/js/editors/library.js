@@ -76,7 +76,7 @@ function insertResources(urls) {
       html = [],
       file = '',
       resource,
-      cssNeededAttr = 'rel="stylesheet" type="text/css"';
+      cssNeededAttr = ' rel="stylesheet" type="text/css"';
 
   for (i = 0; i < length; i++) {
     url = urls[i];
@@ -128,7 +128,14 @@ function createHTMLToJadeTagConverter(tagName, attribute, suffix){
 }
 
 var htmlScriptToJade = createHTMLToJadeTagConverter("script", "src", "js");
-var htmlLinkToJade = createHTMLToJadeTagConverter("link", "href", "css");
+// Dirty, but good enough for now, parse the link and add commas between attributes;
+var htmlLinkToJade = (function(){
+  var parseLink = createHTMLToJadeTagConverter("link", "href", "css");
+  return function(html){
+    var jadeLink = parseLink(html);
+    return jadeLink.split('" ').join('",');
+  }
+}());
 
 function isJadeActive(){
   return jsbin.state.processors.html === "jade";

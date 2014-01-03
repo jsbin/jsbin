@@ -55,6 +55,8 @@ var post = function (cmd, blind, response) {
   if (response) return showResponse(response);
   run(cmd, showResponse);
 
+  emptyConsoleForm();
+
 };
 
 /**

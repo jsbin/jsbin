@@ -101,13 +101,6 @@ var showResponse = function (response) {
 
 };
 
-/**
- *  Empty console form;
- */
-var emptyConsoleForm = function(){
-  exec.firstChild.innerHTML = "";
-};
-
 function log(msg, className) {
   var li = document.createElement('li'),
       div = document.createElement('div');

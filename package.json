@@ -21,7 +21,7 @@
     "test": "mocha",
     "install": "build/install.js",
     "preupdate": "build/pre-update.js",
-    "postupdate": "build/post-update.js"
+    "postupdate": "build/post-update.js commit"
   },
   "dependencies": {
     "express": "3.0.x",

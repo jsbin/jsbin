@@ -1,11 +1,13 @@
+'use strict';
 var fs = require('fs'),
     path = require('path'),
     version = require('../package').version,
-    semver = require('semver');
+    semver = require('semver'),
+    script = process.argv[1];
 
 if (process.argv[2] && semver.valid(process.argv[2]) === process.argv[2]) {
   main(process.argv[2]);
-} else {
+} else if (process.argv[2] === 'commit') {
   fs.readFile(path.join(__dirname, 'pre-version'), 'utf8', function (err, v) {
     if (err) {
       // nothing to do
@@ -14,6 +16,8 @@ if (process.argv[2] && semver.valid(process.argv[2]) === process.argv[2]) {
     fs.unlink(path.join(__dirname, 'pre-version'));
     main(v.trim());
   });
+} else {
+  console.log('Either test with ' + script + ' <version> or ' + script + ' commit to run in live mode');
 }
 
 function main(oldVersion) {

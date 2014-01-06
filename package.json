@@ -44,7 +44,8 @@
     "mysql": "~2.0.0-alpha9",
     "bcrypt-nodejs": "0.0.3",
     "semver": "~2.1.0",
-    "rsvp": "~3.0.1"
+    "rsvp": "~3.0.1",
+    "stripe": "~2.3.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

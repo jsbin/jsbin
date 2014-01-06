@@ -49,7 +49,8 @@
     "hbs": "~2.4.0",
     "replify": "~1.2.0",
     "moment": "~2.5.1",
-    "memcached": "~0.2.6"
+    "memcached": "~0.2.6",
+    "stripe": "~2.3.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

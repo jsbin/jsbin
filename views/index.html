@@ -16,334 +16,337 @@
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
 <!--[if !IE]><!--> <body class="source">    <!--<![endif]-->
 <div id="control">
-  <div class="control">
-    <div id="menuinfo"><p></p></div>
-    <div class="buttons">
-      {{#embed}}
-        <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
-        </span>
-      {{/embed}}
-      {{^embed}}
-        <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
-          <div class="dropdown" id="bins">
-            <div class="dropdownmenu">
-              <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
-              {{#home}}
-              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
-              {{/home}}
-              <hr data-desc="">
-              <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
-              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="{{root}}/clone">Clone</a>
-              <hr data-desc="">
-              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
-              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
-              <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
-              <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
-            </div>
+<div class="control">
+  <div id="menuinfo"><p></p></div>
+  <div class="buttons">
+    {{#embed}}
+      <span class="menu">
+        <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+      </span>
+    {{/embed}}
+    {{^embed}}
+      <div class="menu">
+        <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
+        <div class="dropdown" id="bins">
+          <div class="dropdownmenu">
+            <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
+            {{#home}}
+            <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
+            {{/home}}
+            <hr data-desc="">
+            <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
+            <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
+            <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="{{root}}/clone">Clone</a>
+            <hr data-desc="">
+            <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
+            <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
+            <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+            <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
+            <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
+            {{#pro}}
+            <a data-desc="Pro only feature" target="_blank" title="You're a pro user" data-label="Pro!" class="button group" href="#">ProFeature!</a>
+            {{/pro}}
           </div>
-        </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
-     --><div class="menu">
-          <span class="button group">Add library
-          <select id="library"></select>
-          </span>
-        </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
-          <a href="#share" class="button button-dropdown group">Share</a>
-          <div class="dropdown" id="share">
-            <div class="dropdowncontent">
-              <form>
-                <div data-desc="This bin's full output without the JS Bin editor">
-                  <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
-                </div>
-                <hr>
-                <div id="sharepanels">
-                  <strong>Select panels to show:</strong>
-                  <ul class="inline">
-                    <li><label><input type="checkbox" data-panel="html">HTML</label></li>
-                    <li><label><input type="checkbox" data-panel="css">CSS</label></li>
-                    <li><label><input type="checkbox" data-panel="javascript">JS</label></li>
-                    <li><label><input type="checkbox" data-panel="console">Console</label></li>
-                    <li><label><input type="checkbox" data-panel="live">Output</label></li>
-                </div>
-                <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
-                <div data-desc="The url to this bin with the JS Bin editor">
-                  <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
-                </div>
-                <div data-desc="Embed this bin with the live output on your site">
-                  <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
-                </div>
-                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
-                  <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
-                </div>
-                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
-              </form>
-            </div>
-          </div>
-        </div><!-- intentional space -->
-        <div id="start-saving" class="menu">
-          <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
         </div>
-      {{/embed}}
-      <div id="panels"></div>
-      <div class="help">
-        {{^embed}}
-          {{#home}}
+      </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
+   --><div class="menu">
+        <span class="button group">Add library
+        <select id="library"></select>
+        </span>
+      </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
+        <a href="#share" class="button button-dropdown group">Share</a>
+        <div class="dropdown" id="share">
+          <div class="dropdowncontent">
+            <form>
+              <div data-desc="This bin's full output without the JS Bin editor">
+                <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
+              </div>
+              <hr>
+              <div id="sharepanels">
+                <strong>Select panels to show:</strong>
+                <ul class="inline">
+                  <li><label><input type="checkbox" data-panel="html">HTML</label></li>
+                  <li><label><input type="checkbox" data-panel="css">CSS</label></li>
+                  <li><label><input type="checkbox" data-panel="javascript">JS</label></li>
+                  <li><label><input type="checkbox" data-panel="console">Console</label></li>
+                  <li><label><input type="checkbox" data-panel="live">Output</label></li>
+              </div>
+              <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
+              <div data-desc="The url to this bin with the JS Bin editor">
+                <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+              </div>
+              <div data-desc="Embed this bin with the live output on your site">
+                <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+              </div>
+              <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
+                <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
+              </div>
+              <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
+            </form>
+          </div>
+        </div>
+      </div><!-- intentional space -->
+      <div id="start-saving" class="menu">
+        <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
+      </div>
+    {{/embed}}
+    <div id="panels"></div>
+    <div class="help">
+      {{^embed}}
+        {{#home}}
+          <div class="menu">
+            <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
+            <div class="dropdown dd-right" id="profile">
+              <div class="dropdowncontent">
+                <form class="login">
+                  <p class="loginFeedback"></p>
+                  <div>
+                    <span class="input" id="username" readonly>@{{home}}</span>{{#pro}} Pro! == {{pro}} {{/pro}}
+                  </div>
+                  <div>
+                    <label>Email<br>
+                    <input name="email" type="email" value="{{email}}"></label>
+                  </div>
+                  <div>
+                    <label>Password<br>
+                    <input name="password" type="password" value=""></label>
+                  </div>
+                  <div>
+                    <input type=submit value="Update account">
+                    <a class="logout" href="#logout">Logout</a>
+                  </div>
+                  {{^user.github_token}}
+                  <div>
+                    <span class="login-splitter">or</span>
+                    <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                  </div>
+                  {{/user.github_token}}
+                </form>
+
+                <form action="{{root}}/logout" method="POST" id="logout">
+                  <input type="hidden" name="_csrf" value="{{token}}">
+                  <button hidden>Logout</button>
+                </form>
+<!--
+                  <hr>
+                  <div>
+                    <strong><a href="#" id="profile" class="homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a></strong>
+                  </div>-->
+              </div>
+            </div>
+          </div>
+        {{/home}}
+        {{^home}}
+          {{#client.user}}
             <div class="menu">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
-              <div class="dropdown dd-right" id="profile">
+              <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+              <div class="dropdown dd-right" id="login">
                 <div class="dropdowncontent">
+                  <form class="forgot" action="{{root}}/forgot" method="post">
+                    <div>
+                      <label>Email<br>
+                      <input name="email" required type="email"></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Request password reset">
+                      <input type="hidden" name="_csrf" value="{{token}}">
+                      <input type="hidden" name="_redirect" value="home">
+                    </div>
+                  </form>
                   <form class="login">
                     <p class="loginFeedback"></p>
                     <div>
-                      <span class="input" id="username" readonly>@{{home}}</span>{{#pro}} Pro! == {{pro}} {{/pro}}
-                    </div>
-                    <div>
-                      <label>Email<br>
-                      <input name="email" type="email" value="{{email}}"></label>
+                      <label>Username or Email<br>
+                      <input name="username" type="text"></label>
                     </div>
                     <div>
                       <label>Password<br>
-                      <input name="password" type="password" value=""></label>
+                      <input name="password" type="password"></label>
                     </div>
                     <div>
-                      <input type=submit value="Update account">
-                      <a class="logout" href="#logout">Logout</a>
+                      <input type=submit value="Log in">
+                      <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                     </div>
-                    {{^user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
                     </div>
-                    {{/user.github_token}}
                   </form>
-
-                  <form action="{{root}}/logout" method="POST" id="logout">
-                    <input type="hidden" name="_csrf" value="{{token}}">
-                    <button hidden>Logout</button>
-                  </form>
-<!--
-                    <hr>
+                </div>
+              </div>
+            </div><div class="menu">
+              <a href="#register" class="button button-open" id="regbtn">Register</a>
+              <div class="dropdown dd-right" id="register">
+                <div class="dropdowncontent">
+                  <p>Registration allows you to retrieve your saved files.</p>
+                  <form class="login">
+                    <p class="loginFeedback"></p>
                     <div>
-                      <strong><a href="#" id="profile" class="homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a></strong>
-                    </div>-->
+                      <label>Username<br><input required name="username" type="text"></label>
+                    </div>
+                    <div>
+                      <label>Email<br>
+                      <input name="email" required type="email"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input required name="password" type="password"></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Register">
+                    </div>
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-          {{/home}}
-          {{^home}}
-            {{#client.user}}
-              <div class="menu">
-                <a href="#login" class="button button-open" id="loginbtn">Log in</a>
-                <div class="dropdown dd-right" id="login">
-                  <div class="dropdowncontent">
-                    <form class="forgot" action="{{root}}/forgot" method="post">
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Request password reset">
-                        <input type="hidden" name="_csrf" value="{{token}}">
-                        <input type="hidden" name="_redirect" value="home">
-                      </div>
-                    </form>
-                    <form class="login">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username or Email<br>
-                        <input name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Log in">
-                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
-                      </div>
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div><div class="menu">
-                <a href="#register" class="button button-open" id="regbtn">Register</a>
-                <div class="dropdown dd-right" id="register">
-                  <div class="dropdowncontent">
-                    <p>Registration allows you to retrieve your saved files.</p>
-                    <form class="login">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username<br><input required name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input required name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Register">
-                      </div>
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            {{/client.user}}
-          {{/home}}
-        {{/embed}}
-          <div class="menu">
-            <a href="#help" class="button button-dropdown">Help</a>
-            <div class="dropdown dd-right" id="help">
-              <div class="dropdownmenu">
-                <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
-                <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
-                <hr data-desc="">
-                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="{{root}}/videos">Videos</a>
-                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
-                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
-                <hr data-desc="">
-                <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
-                <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
-                <a data-desc="Discover why, when and how JS Bin came about" target="_blank" href="http://jsbin.tumblr.com/about">About</a>
-                <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
-              </div>
+          {{/client.user}}
+        {{/home}}
+      {{/embed}}
+        <div class="menu">
+          <a href="#help" class="button button-dropdown">Help</a>
+          <div class="dropdown dd-right" id="help">
+            <div class="dropdownmenu">
+              <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
+              <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
+              <hr data-desc="">
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="{{root}}/videos">Videos</a>
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
+              <hr data-desc="">
+              <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/remy/jsbin/issues/new">Send feedback &amp; file bugs</a>
+              <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/remy/jsbin/">Fork on Github</a>
+              <a data-desc="Discover why, when and how JS Bin came about" target="_blank" href="http://jsbin.tumblr.com/about">About</a>
+              <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
             </div>
           </div>
-      </div>
+        </div>
     </div>
   </div>
+</div>
 </div>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
-  <div id="source" class="binview stretch">
+<div id="source" class="binview stretch">
+</div>
+<div id="panelswaiting">
+  <div class="code stretch html panel">
+    <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
+        <div class="dropdownmenu processorSelector" data-type="html">
+          <a href="#html">HTML</a>
+          <a href="#markdown">Markdown</a>
+          <a href="#jade">Jade</a>
+          <a href="#convert">Convert to HTML</a>
+        </div>
+      </div>
+    </div>
+    <div class="editbox">
+      <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
+    </div>
   </div>
-  <div id="panelswaiting">
-    <div class="code stretch html panel">
-      <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
-          <div class="dropdownmenu processorSelector" data-type="html">
-            <a href="#html">HTML</a>
-            <a href="#markdown">Markdown</a>
-            <a href="#jade">Jade</a>
-            <a href="#convert">Convert to HTML</a>
-          </div>
+  <div class="code stretch javascript panel">
+    <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+      <div class="dropdown" id="javascriptprocessors">
+        <div class="dropdownmenu processorSelector" data-type="javascript">
+          <a href="#javascript">JavaScript</a>
+          <a href="#coffeescript">CoffeeScript</a>
+          <a href="#processing">Processing</a>
+          <a href="#traceur">Traceur</a>
+          <a href="#typescript">TypeScript</a>
+          <a href="#convert">Convert to JavaScript</a>
         </div>
       </div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
-      </div>
     </div>
-    <div class="code stretch javascript panel">
-      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
-        <div class="dropdown" id="javascriptprocessors">
-          <div class="dropdownmenu processorSelector" data-type="javascript">
-            <a href="#javascript">JavaScript</a>
-            <a href="#coffeescript">CoffeeScript</a>
-            <a href="#processing">Processing</a>
-            <a href="#traceur">Traceur</a>
-            <a href="#typescript">TypeScript</a>
-            <a href="#convert">Convert to JavaScript</a>
-          </div>
+    <div class="editbox">
+      <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
+    </div>
+  </div>
+  <div class="code stretch css panel">
+    <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+      <div class="dropdown" id="cssprocessors">
+        <div class="dropdownmenu processorSelector" data-type="css">
+          <a href="#css">CSS</a>
+          <a href="#less">LESS</a>
+          <!-- <a href="#stylus">Stylus</a> --><!-- Removed because of a crash bug in stylus https://twitter.com/phuunet/status/377735455670030336 -->
+          <a href="#convert">Convert to CSS</a>
         </div>
       </div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
-      </div>
     </div>
-    <div class="code stretch css panel">
-      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
-        <div class="dropdown" id="cssprocessors">
-          <div class="dropdownmenu processorSelector" data-type="css">
-            <a href="#css">CSS</a>
-            <a href="#less">LESS</a>
-            <!-- <a href="#stylus">Stylus</a> --><!-- Removed because of a crash bug in stylus https://twitter.com/phuunet/status/377735455670030336 -->
-            <a href="#convert">Convert to CSS</a>
-          </div>
-        </div>
-      </div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
-      </div>
+    <div class="editbox">
+      <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
     </div>
-    <div class="stretch console panel">
-      <div class="label">
-        <span class="name"><strong>Console</strong></span>
-        <span class="options">
-          <button id="runconsole" title="ctrl + enter">Run</button>
-        </span>
-      </div>
-      <div id="console" class="stretch"><ul id="output"></ul><form>
-          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
-      </form></div>
+  </div>
+  <div class="stretch console panel">
+    <div class="label">
+      <span class="name"><strong>Console</strong></span>
+      <span class="options">
+        <button id="runconsole" title="ctrl + enter">Run</button>
+      </span>
     </div>
-    <div id="live" class="stretch live panel">
-      <div class="label">
-        <span class="name"><strong>Output</strong></span>
-        <span class="options">
-          <button id="runwithalerts" title="ctrl + enter
+    <div id="console" class="stretch"><ul id="output"></ul><form>
+        <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
+    </form></div>
+  </div>
+  <div id="live" class="stretch live panel">
+    <div class="label">
+      <span class="name"><strong>Output</strong></span>
+      <span class="options">
+        <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with JS</button>
-          <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
-          <a target="_blank" title="Live preview" id="jsbinurl" class="{{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
-        </span>
-        <span class="size"></span>
-      </div>
+        <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
+        <a target="_blank" title="Live preview" id="jsbinurl" class="{{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+      </span>
+      <span class="size"></span>
     </div>
   </div>
-  <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
-    <input type="hidden" name="method">
-    <input type="hidden" name="_csrf" value="{{token}}">
-  </form>
+</div>
+<form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
+  <input type="hidden" name="method">
+  <input type="hidden" name="_csrf" value="{{token}}">
+</form>
 </div>
 <div id="tip" class="{{#flash_tip_type}}{{flash_tip_type}}{{/flash_tip_type}}{{^flash_tip_type}} notification{{/flash_tip_type}}">
-  <p>
-    {{#flash_tip}}{{flash_tip}}{{/flash_tip}}
-    {{^flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_tip}}
-  </p>
-  <a class="dismiss" href="#">Dismiss x</a>
+<p>
+  {{#flash_tip}}{{flash_tip}}{{/flash_tip}}
+  {{^flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_tip}}
+</p>
+<a class="dismiss" href="#">Dismiss x</a>
 </div>
 <div id="keyboardHelp" class="modal">
-  <div>
-    <h2>Keyboard Shortcuts</h2>
-    <table>
-      <thead>
-        <tr>
-          <th class="shortcut">Shortcut</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ctrl + [num]</td>
-          <td>Toggle nth panel</td>
-        </tr>
-        <tr>
-          <td>esc, ctrl + [num]</td>
-          <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
-        </tr>
-        <!--<tr>
-          <td>ctrl + §<br>(or `)</td>
-          <td>Hide focused panel</td>
-        </tr>-->
-        <tr>
-          <td>ctrl + enter</td>
-          <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
-        </tr>
-        <tr>
-          <td>Ctrl + l</td>
-          <td>Clear the console</td>
-        </tr>
-        <tr>
-          <td>ctrl + \</td>
+<div>
+  <h2>Keyboard Shortcuts</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="shortcut">Shortcut</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ctrl + [num]</td>
+        <td>Toggle nth panel</td>
+      </tr>
+      <tr>
+        <td>esc, ctrl + [num]</td>
+        <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
+      </tr>
+      <!--<tr>
+        <td>ctrl + §<br>(or `)</td>
+        <td>Hide focused panel</td>
+      </tr>-->
+      <tr>
+        <td>ctrl + enter</td>
+        <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
+      </tr>
+      <tr>
+        <td>Ctrl + l</td>
+        <td>Clear the console</td>
+      </tr>
+      <tr>
+        <td>ctrl + \</td>
           <td>Auto hide navigation bar</td>
         </tr>
         <tr>

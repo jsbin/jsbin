@@ -1,0 +1,5 @@
+{
+  "node_modules":false,
+  "pluginDir": "plugins",
+  "startPlugin": "initialize"
+}

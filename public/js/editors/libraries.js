@@ -435,7 +435,10 @@ var libraries = [
     "label": "Lungo"
   },
   {
-    "url": "//cdnjs.cloudflare.com/ajax/libs/polymer/0.0.20131010/polymer.min.js",
+    "url": [
+      "//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/platform.js",
+      "//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/polymer.js"
+    ],
     "label": "Polymer"
   },
   {

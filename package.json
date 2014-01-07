@@ -18,7 +18,7 @@
     "url": "git://github.com/remy/jsbin.git"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "node_modules/mocha/bin/_mocha --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit"

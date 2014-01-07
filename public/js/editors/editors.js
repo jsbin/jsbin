@@ -73,7 +73,8 @@ panels.restore = function () {
     // the panel name of 'output' and the shortcut 'live'.
     // it also strips out prop=value& to avoid bashing the
     // panel name
-    toopen = (search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
+    
+    toopen = decodeURIComponent(search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
 
     if (toopen.indexOf('output') !== -1) {
       toopen.push('live');

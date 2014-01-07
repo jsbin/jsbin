@@ -2,7 +2,7 @@ module.exports = function(options) {
 
   if (options.payment && options.payment.stripe) {
     return {
-      initialize: function setupRoutes(app) {
+      initialize: function setupRoutes(options, app) {
         require('./routes')(app, options.payment.stripe);
       }
     };

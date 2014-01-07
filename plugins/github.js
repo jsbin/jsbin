@@ -48,7 +48,7 @@ module.exports = function (options) {
   if (options.github && options.github.id) {
     setup(options);
     return {
-      initialize: function (app) {
+      initialize: function (options, app) {
         app.use(passport.initialize());
       }
     };

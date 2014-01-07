@@ -3,7 +3,6 @@ module.exports = function (grunt) {
   var fs = require('fs'),
       path = require('path'),
       exec = require('child_process').exec,
-      lint = require('./jshint'),
       scripts = require('./scripts.json');
 
   // Runs JSBin with local config file.

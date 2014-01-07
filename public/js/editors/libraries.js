@@ -408,7 +408,7 @@ var libraries = [
   {
     'url':[
       'http://code.jquery.com/jquery.min.js',
-      '//canjs.com/release/2.0.3/can.jquery.min.js
+      '//canjs.com/release/2.0.3/can.jquery.min.js'
     ],
     'label': 'CanJS 2.0.3'
   },

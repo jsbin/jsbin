@@ -18,7 +18,7 @@
     "url": "git://github.com/remy/jsbin.git"
   },
   "scripts": {
-    "test": "node_modules/mocha/bin/_mocha --ui bdd test/**/*.test.js",
+    "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit"
@@ -53,7 +53,8 @@
     "grunt-contrib-uglify": "~0.2.2",
     "should": "~1.2.2",
     "mocha": "~1.11.0",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "grunt-cli": "~0.1.11"
   },
   "optionalDependencies": {},
   "licenses": [

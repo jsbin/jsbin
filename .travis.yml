@@ -7,6 +7,8 @@ notifications:
   email:
     recipients:
       - jsbin@leftlogic.com
-  irc: "chat.freenode.net#jsbin"
+  irc:
+    channels:
+      - "chat.freenode.net#jsbin"
     on_success: change
     on_failure: always

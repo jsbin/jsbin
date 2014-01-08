@@ -1,4 +1,4 @@
-CREATE TABLE `customers` IF NOT EXIST (
+CREATE TABLE IF NOT EXISTS `customers` (
   `stripe_id` char(255) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `name` char(255) NOT NULL,

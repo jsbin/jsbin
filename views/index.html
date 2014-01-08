@@ -93,6 +93,18 @@
                 <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
               </form>
             </div>
+
+            <form action="/charge" method="POST">
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_wLNay9qUFwbDwmFBt5F718Qg11Ts0"
+                data-image="/square-image.png"
+                data-name="Demo Site"
+                data-description="2 widgets ($20.00)"
+                data-amount="2000">
+              </script>
+            </form>
+
           </div>
         </div><!-- intentional space -->
         <div id="start-saving" class="menu">

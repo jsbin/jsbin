@@ -7,22 +7,27 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js',
-    'label': 'jQuery 2.0.2',
+    'url': 'http://code.jquery.com/jquery-2.0.3.min.js',
+    'label': 'jQuery 2.0.3',
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-latest.js',
-    'label': 'jQuery 1.latest',
+    'url': 'http://code.jquery.com/jquery-git1.js',
+    'label': 'jQuery 1.x WIP (via git)',
     'group': 'jQuery'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
-    'label': 'jQuery 1.10.1',
+    'url': 'http://code.jquery.com/jquery-1.10.2.min.js',
+    'label': 'jQuery 1.10.2',
     'group': 'jQuery'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js',
+    'url': 'http://code.jquery.com/jquery-1.9.1.min.js',
+    'label': 'jQuery 1.9.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'http://code.jquery.com/jquery-1.8.3.min.jss',
     'label': 'jQuery 1.8.3',
     'group': 'jQuery'
   },
@@ -37,38 +42,38 @@ var libraries = [
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.min.css',
-      'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js'
-    ],
-    'label': 'jQuery UI latest',
-    'group': 'jQuery UI'
-  },
-  {
-    'url': [
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.min.css',
-      'http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js',
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'
+      'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css',
+      'http://code.jquery.com/jquery-1.10.1.min.js',
+      'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'
     ],
     'label': 'jQuery UI 1.10.3',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.min.css',
-      'http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-      'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js'
+      'http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css',
+      'http://code.jquery.com/jquery-1.8.3.min.js',
+      'http://code.jquery.com/ui/1.9.2/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.9.2',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/latest/jquery.mobile.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://code.jquery.com/mobile/latest/jquery.mobile.js'
+      'http://code.jquery.com/mobile/git/jquery.mobile-git.css',
+      'http://code.jquery.com/jquery-1.10.2.min.js',
+      'http://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
-    'label': 'jQuery Mobile Latest',
+    'label': 'jQuery Mobile WIP (via git)',
+    'group': 'jQuery Mobile'
+  },
+  {
+    'url': [
+      'http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css',
+      'http://code.jquery.com/jquery-1.10.2.min.js',
+      'http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js'
+    ],
+    'label': 'jQuery Mobile 1.4.0',
     'group': 'jQuery Mobile'
   },
   {

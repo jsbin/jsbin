@@ -1,4 +1,5 @@
-//= require "libraries"
+/*global $:true, editors:true, libraries:true, analytics:true */
+'use strict';
 
 var $library = $('#library'),
     groups = {};
@@ -17,7 +18,8 @@ $library.bind('init', function () {
   groups = {};
   $library.empty();
 
-  for (i = 0; i < libraries.length, library = libraries[i]; i++) {
+  for (i = 0; i < libraries.length; i++) {
+    library = libraries[i];
     groupLabel = library.group || 'Other';
     lcGroup = groupLabel.toLowerCase().replace(/[^a-z0-9]/ig, '');
     if (groupOrder.indexOf(lcGroup) === -1) {
@@ -37,7 +39,8 @@ $library.bind('init', function () {
     group = groups[groupOrder[i]];
     html.push('<option value="" data-group="' + group.label + '" class="heading">-------------</option>');
 
-    for (j = 0; j < group.libraries.length, library = group.libraries[j]; j++) {
+    for (j = 0; j < group.libraries.length; j++) {
+      library = group.libraries[j];
       html.push('<option value="' + group.key + ':' + j + '">' + library.label + '</option>');
     }
   }
@@ -47,7 +50,7 @@ $library.bind('init', function () {
 
 
 $library.bind('change', function () {
-  if (!this.value) return;
+  if (!this.value) { return; }
 
   var selected = this.value.split(':'),
       group = groups[selected[0]],
@@ -68,8 +71,7 @@ function insertResources(urls) {
       length = urls.length,
       url = '',
       code = editors.html.getCode(),
-      state = {
-        line: editors.html.editor.currentLine(),
+      state = { line: editors.html.editor.currentLine(),
         character: editors.html.editor.getCursor().ch,
         add: 0
       },

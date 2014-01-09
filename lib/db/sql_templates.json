@@ -38,10 +38,11 @@
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
-  "setCustomer" : "INSERT INTO `customers` (`stripe_id`, `user_id`, `user`, `expiry`, `active`) VALUES (?, ?, ?, ?, ?)",
+  "SetCustomer" : "INSERT INTO `customers` (`stripe_id`, `user_id`, `user`, `expiry`, `active`) VALUES (?, ?, ?, ?, ?)",
+  "GetCustomerByStripeId": "SELECT * FROM `customers` WHERE `stripe_id`=? LIMIT 1",
+  "getCustomerByUser": "SELECT * FROM `customers` WHERE `user`=? LIMIT 1",
   "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
   "getBinMetadata": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?",
-  "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
   "sandboxColumns": [
     "created",
     "last_viewed",

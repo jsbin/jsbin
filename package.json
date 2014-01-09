@@ -26,7 +26,6 @@
   "dependencies": {
     "express": "3.0.x",
     "asyncjs": "0.0.7",
-    "hogan.js": "2.0.0",
     "sqlite3": "~2.1.19",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
@@ -46,7 +45,8 @@
     "semver": "~2.1.0",
     "rsvp": "~3.0.1",
     "undefsafe": "0.0.1",
-    "feature-gateway": "0.0.1"
+    "feature-gateway": "0.0.1",
+    "hbs": "~2.4.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

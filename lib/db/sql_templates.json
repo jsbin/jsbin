@@ -35,7 +35,7 @@
   "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
-  "setCustomer" : "INSERT INTO `customers` (`stripe_id`, `user_id`, `user`) VALUES (?, ?, ?)",
+  "setCustomer" : "REPLACE INTO `customers` (`stripe_id`, `user_id`, `name`) VALUES (?, ?, ?)",
   "getCustomerByStripeId": "SELECT * FROM `customers` WHERE `stripe_id`=? LIMIT 1",
-  "getCustomerByUser": "SELECT * FROM `customers` WHERE `user`=? LIMIT 1"
+  "getCustomerByUser": "SELECT * FROM `customers` WHERE `name`=? LIMIT 1"
 }

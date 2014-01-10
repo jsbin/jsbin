@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#flash_tip}}showtip{{/flash_tip}}{{#embed}} embed{{/embed}}">
+<html id="jsbin" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}">
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
-  {{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/custom_css}}
+  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
-  {{#is_production}}
+  {{#if is_production}}
   {{{analytics}}}
-  {{/is_production}}
+  {{/if}}
 </head>
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
@@ -19,27 +19,26 @@
   <div class="control">
     <div id="menuinfo"><p></p></div>
     <div class="buttons">
-      {{#embed}}
+      {{#if embed}}
         <span class="menu">
           <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
         </span>
-      {{/embed}}
-      {{^embed}}
+      {{else}}
         <div class="menu">
           <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
           <div class="dropdown" id="bins">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
-              {{#home}}
-              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a>
-              {{/home}}
+              {{#if home}}
+              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
+              {{/if}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group{{^code_id}} {{/code_id}}" data-label="clone" href="{{root}}/clone">Clone</a>
+              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
-              <a data-desc="Export individual panels to Github's gist{{^user.github_token}} as an anonymous user{{/user.github_token}}" id="export-as-gist" title="Create a new {{^user.github_token}}anonymous {{/user.github_token}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
-              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group{{^code_id}} {{/code_id}}" href="{{root}}/download" data-label="download">Download</a>
+              <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" id="export-as-gist" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
+              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
               <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
               <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
@@ -50,7 +49,7 @@
           <span class="button group">Add library
           <select id="library"></select>
           </span>
-        </div><div id="sharemenu" class="menu {{^code_id}}hidden{{/code_id}}">
+        </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
           <a href="#share" class="button button-dropdown group">Share</a>
           <div class="dropdown" id="share">
             <div class="dropdowncontent">
@@ -86,13 +85,13 @@
         <div id="start-saving" class="menu">
           <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
         </div>
-      {{/embed}}
+      {{/if}}
       <div id="panels"></div>
       <div class="help">
-        {{^embed}}
-          {{#home}}
+        {{#unless embed}}
+          {{#if home}}
             <div class="menu">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#gravatar}}<img src="{{gravatar}}">{{/gravatar}}</a>
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   <form class="login">
@@ -112,29 +111,23 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
-                    {{^user.github_token}}
+                    {{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
                       <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
                     </div>
-                    {{/user.github_token}}
+                    {{/unless}}
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
                     <input type="hidden" name="_csrf" value="{{token}}">
                     <button hidden>Logout</button>
                   </form>
-<!--
-                    <hr>
-                    <div>
-                      <strong><a href="#" id="profile" class="homebtn">My Bins{{#bincount}} <span class="meta">({{bincount}})</span>{{/bincount}}</a></strong>
-                    </div>-->
                 </div>
               </div>
             </div>
-          {{/home}}
-          {{^home}}
-            {{#client.user}}
+          {{else}}
+            {{#if client.user}}
               <div class="menu">
                 <a href="#login" class="button button-open" id="loginbtn">Log in</a>
                 <div class="dropdown dd-right" id="login">
@@ -200,9 +193,9 @@
                   </div>
                 </div>
               </div>
-            {{/client.user}}
-          {{/home}}
-        {{/embed}}
+            {{/if}}
+          {{/if}}
+        {{/unless}}
           <div class="menu">
             <a href="#help" class="button button-dropdown">Help</a>
             <div class="dropdown dd-right" id="help">
@@ -293,21 +286,21 @@
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
-          <a target="_blank" title="Live preview" id="jsbinurl" class="{{^code_id}}hidden{{/code_id}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+          <a target="_blank" title="Live preview" id="jsbinurl" class="{{#unless code_id}}hidden{{/unless}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
         </span>
         <span class="size"></span>
       </div>
     </div>
   </div>
-  <form {{#embed}}target="_blank"{{/embed}} id="saveform" method="post" action="{{code_id_path}}/save">
+  <form {{#if embed}}target="_blank"{{/if}} id="saveform" method="post" action="{{code_id_path}}/save">
     <input type="hidden" name="method">
     <input type="hidden" name="_csrf" value="{{token}}">
   </form>
 </div>
-<div id="tip" class="{{#flash_tip_type}}{{flash_tip_type}}{{/flash_tip_type}}{{^flash_tip_type}} notification{{/flash_tip_type}}">
+<div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
   <p>
-    {{#flash_tip}}{{flash_tip}}{{/flash_tip}}
-    {{^flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/flash_tip}}
+    {{#if flash_tip}}{{flash_tip}}{{/if}}
+    {{#unless flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/unless}}
   </p>
   <a class="dismiss" href="#">Dismiss x</a>
 </div>
@@ -413,15 +406,15 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Load the very latest bin (/latest goes in place of the revision)</td>
         </tr>
         <tr>
-          <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last</td>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last</td>
           <td>View the last edited bin for this user</td>
         </tr>
         <tr>
-          <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/edit</td>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/edit</td>
           <td>Edit the last edited bin for this user</td>
         </tr>
         <tr>
-          <td>/{{#home}}{{home}}{{/home}}{{^home}}[username]{{/home}}/last/watch</td>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/watch</td>
           <td>Follow the Code Casting session for the latest bin for this user</td>
         </tr>
         <tr>
@@ -445,22 +438,18 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-{{^is_production}}
-  {{#concat}}
-<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
-  {{/concat}}
-  {{^concat}}
-    {{#scripts}}
-<script src="{{static}}{{.}}"></script>
-    {{/scripts}}
-  {{/concat}}
-{{/is_production}}
-{{#is_production}}
+{{#if is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-{{/is_production}}
-{{#live}}
+{{else}}
+  {{#if concat}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+  {{else}}
+    {{#scripts}}<script src="{{static}}{{.}}"></script>{{/scripts}}
+  {{/if}}
+{{/if}}
+{{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js?{{version}}"></script>
-{{/live}}
+{{/if}}
 </body>
 </html>

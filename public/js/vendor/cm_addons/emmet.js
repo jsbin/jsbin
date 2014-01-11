@@ -5714,15 +5714,6 @@ emmet.define('abbreviationUtils', function(require, _) {
     },
     
     /**
-     * Test if given node is a snippet
-     * @param {AbbreviationNode} node
-     * @return {Boolean}
-     */
-    isSnippet: function(node) {
-      return require('elements').is(node.matchedResource(), 'snippet');
-    },
-    
-    /**
      * This function tests if passed node content contains HTML tags. 
      * This function is mostly used for output formatting
      * @param {AbbreviationNode} node

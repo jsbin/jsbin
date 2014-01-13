@@ -1,1 +1,1 @@
-ALTER TABLE `owners` ADD COLUMN `private` INTEGER DEFAULT '0';
+ALTER TABLE `owners` ADD COLUMN `visibility` ENUM('public', 'unlisted', 'private') DEFAULT 'public';

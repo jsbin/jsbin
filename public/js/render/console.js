@@ -332,7 +332,7 @@ var exec = document.getElementById('exec'),
         prototype: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
         dojo: 'http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.xd.js',
         mootools: 'http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js',
-        underscore: 'http://documentcloud.github.com/underscore/underscore-min.js',
+        underscore: 'http://jashkenas.github.com/underscore/underscore-min.js',
         rightjs: 'http://rightjs.org/hotlink/right.js',
         coffeescript: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js',
         yui: 'http://yui.yahooapis.com/3.9.1/build/yui/yui-min.js'

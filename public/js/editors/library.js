@@ -1,5 +1,5 @@
 /*global $:true, editors:true, libraries:true, analytics:true */
-'use strict';
+// 'use strict'; // this causes bigger issues :-\
 
 var $library = $('#library'),
     groups = {};

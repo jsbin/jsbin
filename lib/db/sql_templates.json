@@ -34,5 +34,6 @@
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
   "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
-  "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?"
+  "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
+  "isPrivate": "SELECT * FROM `owners` WHERE `url`=? AND `revision`=?"
 }

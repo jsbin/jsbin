@@ -1,5 +1,4 @@
 /*global $:true, editors:true, libraries:true, analytics:true */
-'use strict';
 
 var $library = $('#library'),
     groups = {};

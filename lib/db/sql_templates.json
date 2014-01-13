@@ -36,4 +36,5 @@
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
   "isPrivate": "SELECT * FROM `owners` WHERE `url`=? AND `revision`=?"
+  "getBinOwner": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?"
 }

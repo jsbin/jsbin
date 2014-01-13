@@ -1,5 +1,3 @@
-'use strict';
-
 var libraries = [
   {
     'url': 'http://code.jquery.com/jquery-git2.js',

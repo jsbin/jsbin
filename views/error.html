@@ -142,6 +142,15 @@
         transform: rotate(1440deg) scale(1.2);
       }
 
+      pre {
+        background: #FFF;
+        color: #222;
+        overflow: auto;
+        padding: 10px;
+        text-shadow: none;
+        border-radius: 3px;
+      }
+
       @media screen and (max-width: 1200px) {
         .wrapper {
           width: 80%;
@@ -215,6 +224,13 @@
 -->
         {{/is_500}}
       </div>
+      {{#is_500}}
+        <details>
+          <summary>The error: {{err}}</summary>
+          <pre>{{request.method}} {{request.url}}
+{{stack}}</pre>
+        </details>
+      {{/is_500}}
     </div>
   </body>
 </html>

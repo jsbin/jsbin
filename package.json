@@ -46,7 +46,8 @@
     "rsvp": "~3.0.1",
     "undefsafe": "0.0.1",
     "feature-gateway": "0.0.1",
-    "hbs": "~2.4.0"
+    "hbs": "~2.4.0",
+    "replify": "~1.1.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

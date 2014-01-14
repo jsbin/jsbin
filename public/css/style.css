@@ -313,6 +313,11 @@ iframe.javascript {
   font-size: 13px;
 }
 
+body.private #control a#private,
+body.public #control a#public {
+  display:none;
+}
+
 #panels .button,
 .button:hover,
 .button:active,

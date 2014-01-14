@@ -1,0 +1,1 @@
+ALTER TABLE `owners` ADD COLUMN `visibility` VARCHAR(255) DEFAULT 'public' NOT NULL;

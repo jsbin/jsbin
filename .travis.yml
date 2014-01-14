@@ -4,9 +4,7 @@ node_js:
 before_script:
   - npm install
 notifications:
-  email:
-    recipients:
-      - jsbin@leftlogic.com
+  email: false
   irc:
     channels:
       - "chat.freenode.net#jsbin"

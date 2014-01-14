@@ -266,6 +266,26 @@ $('#createnew').click(function () {
   }, 0);
 });
 
+$('#makebinprivate').click(function(event) {
+  event.preventDefault();
+  console.log(jsbin.getURL());
+  $.ajax({
+    url: jsbin.getURL() + '/private',
+    data: {
+      code: jsbin.state.code,
+      revision: jsbin.state.revision,
+    },
+    type: 'post',
+    dataType: 'json',
+    headers: {'Accept': 'application/json'},
+    success: function (data) {
+      console.log('succes');
+      console.log(data);
+    }
+  });
+
+});
+
 $('form.login').closest('.menu').bind('close', function () {
   $(this).find('.loginFeedback').empty().hide();
   $('#login').removeClass('forgot');

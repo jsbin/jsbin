@@ -366,7 +366,7 @@ var exec = document.getElementById('exec'),
       var cursor;
       return function () {
         if (cursor) return cursor;
-        return document.getElementById('cursor');
+        return document.getElementById('cursor') || { focus: function () {} };
       };
     }()),
     // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
@@ -406,11 +406,11 @@ function setCursorTo(str) {
     document.execCommand('selectAll', false, null);
     document.execCommand('delete', false, null);
     document.execCommand('insertHTML', false, str);
+    getCursor().focus();
   } else {
     var rows = str.match(/\n/g);
     exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
   }
-  getCursor().focus();
 }
 
 exec.ontouchstart = function () {
@@ -443,25 +443,6 @@ exec.onkeydown = function (event) {
   if (keys[which]) {
     if (event.shiftKey) return;
     // History cycle
-
-    // Allow user to navigate multiline pieces of code
-    if (window.getSelection) {
-      window.selObj = window.getSelection();
-      var selRange = selObj.getRangeAt(0),
-          cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
-
-      var value = exec.value,
-          firstNewLine = value.indexOf('\n'),
-          lastNewLine = value.lastIndexOf('\n');
-
-      if (firstNewLine !== -1) {
-        if (which == keylib.up && cursorPos > firstNewLine) {
-          return;
-        } else if (which == keylib.down && cursorPos < value.length) {
-          return;
-        }
-      }
-    }
 
     // Up
     if (which == keylib.up) {

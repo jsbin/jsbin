@@ -266,24 +266,36 @@ $('#createnew').click(function () {
   }, 0);
 });
 
-$('#makebinprivate').click(function(event) {
+var $privateButton = $('#control a.visibilityToggle#private');
+var $publicButton = $('#control a.visibilityToggle#public');
+
+var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) {
   event.preventDefault();
-  console.log(jsbin.getURL());
+
+  var visibility = $(this).data('vis');
+  console.log(visibility);
+
   $.ajax({
-    url: jsbin.getURL() + '/private',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-    },
+    url: jsbin.getURL() + '/' + visibility,
     type: 'post',
-    dataType: 'json',
-    headers: {'Accept': 'application/json'},
     success: function (data) {
-      console.log('succes');
-      console.log(data);
+
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'This bin is now ' + visibility,
+        autohide: 6000
+      });
+
+      $visibilityButtons.hide();
+
+      if (visibility === 'public') {
+        $privateButton.show();
+      } else {
+        $publicButton.show();
+      }
+
     }
   });
-
 });
 
 $('form.login').closest('.menu').bind('close', function () {

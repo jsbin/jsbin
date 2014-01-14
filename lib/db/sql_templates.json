@@ -35,5 +35,6 @@
   "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "getVisibility": "SELECT * FROM `owners` WHERE `url`=? AND `revision`=?",
+  "setVisibilityGlobal": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
   "getBinOwner": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?"
 }

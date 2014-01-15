@@ -44,6 +44,13 @@ $('.logout').click(function (event) {
   // element in the form to look the same as the anchor. Ideally we would
   // remove that and just let the form submit itself...
   $(this.hash).submit();
+  // Clear session storage so private bins wont be cached.
+  for (i = 0; i < sessionStorage.length; i++) {
+    key = sessionStorage.key(i);
+    if (key.indexOf('jsbin.content.') === 0) {
+      sessionStorage.removeItem(key);
+    }
+  }
 });
 
 $('.homebtn').click(function (event, data) {

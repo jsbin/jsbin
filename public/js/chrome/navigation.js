@@ -44,6 +44,13 @@ $('.logout').click(function (event) {
   // element in the form to look the same as the anchor. Ideally we would
   // remove that and just let the form submit itself...
   $(this.hash).submit();
+  // Clear session storage so private bins wont be cached.
+  for (i = 0; i < sessionStorage.length; i++) {
+    key = sessionStorage.key(i);
+    if (key.indexOf('jsbin.content.') === 0) {
+      sessionStorage.removeItem(key);
+    }
+  }
 });
 
 $('.homebtn').click(function (event, data) {
@@ -264,6 +271,38 @@ $('#createnew').click(function () {
       jsbin.panels.panels.live.show();
     }
   }, 0);
+});
+
+var $privateButton = $('#control a.visibilityToggle#private');
+var $publicButton = $('#control a.visibilityToggle#public');
+
+var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) {
+  event.preventDefault();
+
+  var visibility = $(this).data('vis');
+  console.log(visibility);
+
+  $.ajax({
+    url: jsbin.getURL() + '/' + visibility,
+    type: 'post',
+    success: function (data) {
+
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'This bin is now ' + visibility,
+        autohide: 6000
+      });
+
+      $visibilityButtons.hide();
+
+      if (visibility === 'public') {
+        $privateButton.show();
+      } else {
+        $publicButton.show();
+      }
+
+    }
+  });
 });
 
 $('form.login').closest('.menu').bind('close', function () {

@@ -20,7 +20,7 @@
   "getOwnersBlock": "SELECT * FROM `owners` LIMIT ?, ?",
   "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
   "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 ORDER BY `last_updated` DESC LIMIT ?,1",
-  "setBinOwner": "INSERT INTO `owners` (`name`, `url`, `revision`, `last_updated`, `summary`, `html`, `css`, `javascript`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+  "setBinOwner": "INSERT INTO `owners` (`name`, `url`, `revision`, `last_updated`, `summary`, `html`, `css`, `javascript`, `visibility`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   "touchOwners": "UPDATE `owners` SET `last_updated`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `:panel`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "populateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `html`=?, `css`=?, `javascript`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
@@ -33,5 +33,8 @@
   "deleteExpiredForgotToken": "DELETE FROM `forgot_tokens` WHERE `expires` <= ? OR `token`=? OR `owner_name`=?",
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
   "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
-  "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?"
+  "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
+  "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
+  "getBinMetadata": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?",
+  "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?"
 }

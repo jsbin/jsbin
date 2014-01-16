@@ -25,7 +25,7 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-1.8.3.min.jss',
+    'url': 'http://code.jquery.com/jquery-1.8.3.min.js',
     'label': 'jQuery 1.8.3',
     'group': 'jQuery'
   },

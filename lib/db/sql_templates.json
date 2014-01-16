@@ -34,7 +34,6 @@
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
   "isOwnerOf": "SELECT name=? as `owner` FROM `owners` WHERE `url`=? AND `revision`=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
-  "getVisibility": "SELECT * FROM `owners` WHERE `url`=? AND `revision`=?",
   "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
   "getBinMetadata": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?"

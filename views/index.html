@@ -29,11 +29,10 @@
           <div class="dropdown" id="bins">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
-              <!--TODO -->
-              {{#if pro}}
+              {{#feature user "teamjsbin"}}
               <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
-              {{/if}}
+              {{/feature}}
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
@@ -102,7 +101,9 @@
                   <form class="login">
                     <p class="loginFeedback"></p>
                     <div>
-                      <span class="input" id="username" readonyl>@{{home}}</span>
+                      <span class="input" id="username" readonly>
+                        @{{home}}{{#feature user "teamjsbin"}}<sup class="pro">pro</sup>{{/feature}}
+                      </span>
                     </div>
                     <div>
                       <label>Email<br>

@@ -293,12 +293,12 @@ var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) 
         autohide: 6000
       });
 
-      $visibilityButtons.hide();
+      $visibilityButtons.css('display', 'none');
 
       if (visibility === 'public') {
-        $privateButton.show();
+        $privateButton.css('display', 'block');
       } else {
-        $publicButton.show();
+        $publicButton.css('display', 'block');
       }
 
     }

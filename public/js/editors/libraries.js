@@ -442,7 +442,13 @@ var libraries = [
       '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/platform.js',
       '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/polymer.js'
     ],
-    'label': 'Polymer'
+    'label': 'Polymer 0.1.1'
+  },
+  {
+    'url': [
+      '//fb.me/react-with-addons-0.8.0.js'
+    ],
+    'label': 'React 0.8.0'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',

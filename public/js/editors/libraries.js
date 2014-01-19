@@ -272,6 +272,16 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': '//fb.me/react-0.8.0.min.js',
+    'label': 'React 0.8.0',
+    'group': 'React'
+  },
+  {
+    'url': '//fb.me/react-0.8.0.min.js',
+    'label': 'React with Add-Ons 0.8.0',
+    'group': 'React'
+  },
+  {
     'url': [
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.css',
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.js',

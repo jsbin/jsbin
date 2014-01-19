@@ -277,7 +277,7 @@ var libraries = [
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-0.8.0.min.js',
+    'url': '//fb.me/react-with-addons-0.8.0.js',
     'label': 'React with Add-Ons 0.8.0',
     'group': 'React'
   },

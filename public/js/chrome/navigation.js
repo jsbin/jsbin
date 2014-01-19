@@ -434,7 +434,6 @@ $('#deletebin').on('click', function (e) {
           autohide: 5000,
         });
       }
-      console.log('error', xhr.status);
     }
   });
 });

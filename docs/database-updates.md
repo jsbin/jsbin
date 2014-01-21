@@ -16,3 +16,17 @@ Steps:
 
 When jsbin is released to npm, the version will be bumped and upon install, the
 user will be notified as to which migration scripts they need to run.
+
+# Manual Upgrades
+
+You'll find the sql scripts in the build/upgrades directory, you'll find the scripts in 
+folders named after a version number e.g. '3.8.11'
+
+To apply these to your database run
+```bash
+  mysql -u root jsbin < build/upgrades/3.8.11/nameOfScript.mysql.sql
+```
+Or for SQLite
+```bash
+  sqlite3 jsbin < build/upgrades/3.8.11/nameOfScript.sqlite.sql
+```

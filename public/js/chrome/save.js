@@ -342,6 +342,8 @@ function saveCode(method, ajax, ajaxCallback) {
         }
       },
       error: function (jqXHR) {
+        console.log('an error');
+        window.location = 'http://jsbin.dev:3000';
         onSaveError(jqXHR);
       },
       complete: function () {

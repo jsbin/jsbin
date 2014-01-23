@@ -428,6 +428,12 @@ $('#deletebin').on('click', function (e) {
       });
     },
     error: function (xhr) {
+      if (xhr.status === 403) {
+        $document.trigger('tip', {
+          content: 'You don\'t own this bin, so you can\'t delete it.',
+          autohide: 5000,
+        });
+      }
       console.log('error', xhr.status);
     }
   });

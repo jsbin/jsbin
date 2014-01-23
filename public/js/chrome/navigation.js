@@ -416,13 +416,16 @@ $('#addmeta').click(function () {
 });
 
 $('#deletebin').on('click', function (e) {
-  console.log('delete this bin!!!');
   e.preventDefault();
   $.ajax({
     type: 'post',
     url: jsbin.getURL() + '/delete',
     success: function () {
-      $document.trigger('tip', 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved');
+      jsbin.state.deleted = true;
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
+      });
     },
     error: function (xhr) {
       console.log('error', xhr.status);

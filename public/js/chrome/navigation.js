@@ -345,7 +345,8 @@ if (window.location.hash) {
 var ismac = navigator.userAgent.indexOf(' Mac ') !== -1,
     mackeys = {
       'ctrl': '⌘',
-      'shift': '⇧'
+      'shift': '⇧',
+      'del': '⌫'
     };
 
 $('#control').find('a[data-shortcut]').each(function () {
@@ -354,7 +355,7 @@ $('#control').find('a[data-shortcut]').each(function () {
 
   var key = data.shortcut;
   if (ismac) {
-    key = key.replace(/ctrl/i, mackeys.ctrl).replace(/shift/, mackeys.shift).replace(/\+/g, '').toUpperCase();
+    key = key.replace(/ctrl/i, mackeys.ctrl).replace(/shift/, mackeys.shift).replace(/del/, mackeys.del).replace(/\+/g, '').toUpperCase();
   }
 
   $this.append('<span class="keyshortcut">' + key + '</span>');
@@ -414,7 +415,30 @@ $('#addmeta').click(function () {
   return false;
 });
 
-// add navigation to insert meta data
+$('#deletebin').on('click', function (e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'post',
+    url: jsbin.getURL() + '/delete',
+    success: function () {
+      jsbin.state.deleted = true;
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
+      });
+    },
+    error: function (xhr) {
+      if (xhr.status === 403) {
+        $document.trigger('tip', {
+          content: 'You don\'t own this bin, so you can\'t delete it.',
+          autohide: 5000,
+        });
+      }
+      console.log('error', xhr.status);
+    }
+  });
+});
+
 
 
 }());

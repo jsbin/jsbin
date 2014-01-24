@@ -46,6 +46,9 @@ if (!customKeys.disabled) $document.keydown(function (event) {
   if (event.metaKey && event.which == 79) { // open
     $('.homebtn').trigger('click', 'keyboard');
     event.preventDefault();
+  } else if (event.metaKey && event.shiftKey && event.which == 8) { // cmd+shift+backspace
+    $('#deletebin').trigger('click', 'keyboard');
+    event.preventDefault();
   } else if (event.metaKey && event.which == 83) { // save
     if (event.shiftKey == false) {
       if (saveChecksum) {

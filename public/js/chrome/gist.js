@@ -19,7 +19,6 @@ var Gist = (function () {
       $.each(data.files, function (fileName, fileData) {
         console.log.apply(console, [].slice.call(arguments));
         var ext = fileName.split('.').slice(-1).join('');
-        console.log(ext);
         gist.code[ext] = fileData.content;
       });
       gist.setCode();

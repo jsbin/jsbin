@@ -105,19 +105,6 @@ $document.one('saved', function () {
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
 });
 
-// TODO decide whether to expose this code, it disables live saving for IE users
-// until they refresh - via a great big yellow button. For now this is hidden
-// in favour of the nasty hash hack.
-if (false) { // !saveChecksum && !history.pushState) {
-  jsbin.saveDisabled = true;
-
-  $document.bind('jsbinReady', function () {
-    $document.one('codeChange', function () {
-      $('#start-saving').css('display', 'inline-block');
-    });
-  });
-}
-
 function onSaveError(jqXHR, panelId) {
   if (jqXHR.status === 413) {
     // Hijack the tip label to show an error message.
@@ -173,7 +160,13 @@ if (!jsbin.saveDisabled) {
     }, 500));
 
     $document.bind('codeChange', throttle(function (event, data) {
-      if (!data.panelId) return;
+      if (!data.panelId) {
+        return;
+      }
+
+      if (jsbin.state.deleted) {
+        return;
+      }
 
       var panelId = data.panelId;
 

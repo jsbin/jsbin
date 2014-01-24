@@ -289,6 +289,12 @@ var renderLivePreview = (function () {
     if (requested) sendReload();
 
     // Tell the iframe to reload
+    var visiblePanels = jsbin.panels.getVisible();
+    var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
+    var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
+    if (!outputPanelOpen && !consolePanelOpen) {
+      return;
+    }
     renderer.postMessage('render', {
       source: source,
       options: {

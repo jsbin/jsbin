@@ -110,6 +110,14 @@ function onSaveError(jqXHR, panelId) {
     // Hijack the tip label to show an error message.
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
+  } else 
+  if (jqXHR.status === 403) { // Not authorise, session must have been removed;
+    location.reload(); 
+    // TODO egt tip showing after page reload - useless atm;
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'You\'ve been logged out please sign back in'
+    });
   } else {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
@@ -327,6 +335,8 @@ function saveCode(method, ajax, ajaxCallback) {
         }
       },
       error: function (jqXHR) {
+        console.log('an error');
+        window.location = 'http://jsbin.dev:3000';
         onSaveError(jqXHR);
       },
       complete: function () {

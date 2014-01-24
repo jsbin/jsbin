@@ -40,11 +40,11 @@ var libraries = [
   },
   {
     'url': [
-      'http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.min.css',
-      'http://code.jquery.com/jquery-1.10.1.min.js',
-      'http://code.jquery.com/ui/1.10.3/jquery-ui.min.js'
+      'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
+      'http://code.jquery.com/jquery-1.10.2.min.js',
+      'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
     ],
-    'label': 'jQuery UI 1.10.3',
+    'label': 'jQuery UI 1.10.4',
     'group': 'jQuery UI'
   },
   {

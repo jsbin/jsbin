@@ -297,15 +297,15 @@ var libraries = [
   },
   {
     'url': [
-      'http://documentcloud.github.io/underscore/underscore-min.js',
-      'http://documentcloud.github.io/backbone/backbone-min.js'
+      'http://jashkenas.github.io/underscore/underscore-min.js',
+      'http://jashkenas.github.io/backbone/backbone-min.js'
     ],
     'label': 'Backbone latest'
   },
   {
     'url': [
-      'http://documentcloud.github.io/underscore/underscore-min.js',
-      'http://documentcloud.github.io/backbone/backbone-min.js',
+      'http://jashkenas.github.io/underscore/underscore-min.js',
+      'http://jashkenas.github.io/backbone/backbone-min.js',
       'http://marionettejs.com/downloads/backbone.marionette.min.js'
     ],
     'label': 'MarionetteJS latest'
@@ -405,7 +405,7 @@ var libraries = [
     'label': 'TwitterLib'
   },
   {
-    'url': 'http://documentcloud.github.io/underscore/underscore-min.js',
+    'url': 'http://jashkenas.github.io/underscore/underscore-min.js',
     'label': 'underscore'
   },
   {

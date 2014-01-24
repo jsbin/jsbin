@@ -145,7 +145,10 @@ var processors = jsbin.processors = (function () {
       target: 'javascript',
       extensions: ['jsx'],
       url: jsbin.static + '/js/vendor/JSXTransformer.js',
-      init: passthrough,
+      init: function (ready) {
+        $('#library').val( $('#library').find(':contains("React")').val() ).trigger('change');
+        ready();
+      },
       handler: function (source) {
         var renderedCode = '';
         try {

@@ -1,3 +1,5 @@
+/*globals $:true, CodeMirror:true, jsbin:true, emmet:true */
+
 var $document = $(document),
     $source = $('#source');
 
@@ -25,8 +27,15 @@ if (!CodeMirror.commands) {
 }
 
 CodeMirror.commands.autocomplete = function(cm) {
-  return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+  if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
+    CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+  }
 };
+
+CodeMirror.commands.snippets = function (cm) {
+  CodeMirror.snippets(cm);
+};
+
 
 var foldFunc = {
   css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
@@ -143,6 +152,8 @@ var Panel = function (name, settings) {
     // the HTML panel too, but only when you were in JS scope
     if (name === 'javascript') {
       cmSettings.extraKeys.Tab = 'autocomplete';
+    } else {
+      cmSettings.extraKeys.Tab = 'snippets';
     }
 
     // cmSettings.extraKeys.Tab = 'snippets';

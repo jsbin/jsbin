@@ -1,18 +1,18 @@
 /*global jsbin:true, CodeMirror:true */
 (function() {
-  "use strict";
-  var snippets = jsbin.settings.snippets || {
-    cl: 'console.log("$0");',
-    fn: 'function $0() {\n\t\n}'
-  };
+  'use strict';
+  var defaults = {
+      cl: 'console.log("$0");',
+      fn: 'function $0() {\n\t\n}'
+    };
 
   CodeMirror.snippets = function(cm) {
     var pos = cm.getCursor(),
         tok = cm.getTokenAt(pos),
-        state = tok.state,
         targetCursorPos = -1,
         macro = '',
-        tagName = tok.string;
+        tagName = tok.string,
+        snippets = jsbin.settings.snippets || defaults;
 
     if (tok.end > pos.ch) {
       tagName = tagName.slice(0, tagName.length - tok.end + pos.ch);
@@ -29,6 +29,6 @@
       }
       return;
     }
-    throw CodeMirror.Pass;
+    return CodeMirror.Pass;
   };
 })();

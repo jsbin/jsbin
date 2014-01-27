@@ -1,0 +1,47 @@
+.form-container {
+  width:100%;
+  max-width:300px;
+  margin:0 auto;
+  background-color:rgba(112, 189, 259, 0.6);
+
+}
+
+.form-container .tabs {
+  
+}
+
+.form-container .tab {
+  float:left;
+  display:block;
+  width:50%;
+  height:40px;
+  background-color: rgb(72, 149, 219);
+  opacity:0.8;
+  text-decoration:none;
+  text-align:center;
+  line-height:40px;
+  text-shadow:none;
+  font-size:16px;
+}
+
+.form-container .tab-selected {
+  opacity:1;
+}
+
+.form-container form {
+  padding:50px 20px 40px;
+  
+}
+
+.form-container form input[type="submit"] {
+  width:50%;
+  -webkit-appearance:none;
+  border:none;
+  display:block;
+  float:left;
+  height:40px;
+  font-size:16px;
+  font-family: "Helvetica Neue", "Arial";
+  background:none;
+  background-color:rgb(72,149,219);
+}

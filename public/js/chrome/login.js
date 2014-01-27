@@ -8,7 +8,7 @@
   }
   
   // Cache refrence to the content container
-  var $body = $('#body');
+  var $formContainer = $('.form-container');
 
   function attachTabClickHandlers() {
 
@@ -25,7 +25,8 @@
         url: url,
         success: function(htmlData) {
           // Fill our content containe with new stuff
-          $body.html(htmlData);
+          var content = $('<div>').html(htmlData).find('.form-container').html();
+          $formContainer.html(content);
           // Reattach event handlers as we have partially new DOM
           attachTabClickHandlers();
           // Add to history

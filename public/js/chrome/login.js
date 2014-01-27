@@ -10,6 +10,8 @@
   // Cache refrence to the content container
   var $formContainer = $('.form-container');
   var cachedHtml = {};
+  // Cache initial GET request
+  cachedHtml[window.location.href] = $('#body').html();
 
   function renderNewHtml (url, htmlData) {
     cachedHtml[url] = htmlData;

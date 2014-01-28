@@ -1,70 +1,53 @@
 /* globals $ */
-(function () {
+(function (window) {
   'use strict';
-  // If browser doesn't support HTML5 History API
-  // We just let the anchor tag do its work
-  if (!window.history || !window.history.pushState) {
-    return;
-  }
-  
-  // Cache refrence to the content container
-  var $formContainer = $('.form-container');
-  var cachedHtml = {};
-  // Cache initial GET request
-  cachedHtml[window.location.href] = $('#body').html();
 
-  function pushState (url) {
-    console.log('state pushed');
+  var pushState = window.history.pushState ? function (url) {
+    console.log('pushstate')
     window.history.pushState(null, null, url);
-  }
+  } : false;
 
-  function renderNewHtml (url, htmlData) {
-    var $htmlData = $(htmlData);
-    if (!cachedHtml[url]) {
-      cachedHtml[url] = $htmlData;
-    }
-    // Fill our content container with new stuff
-    var content = $htmlData.siblings('.form-container').html();
-    $formContainer.html(content);
-    // Reattach event handlers as we have partially new DOM
-    attachTabClickHandlers();
+  var $forms = $('form');
+
+  function currentForm () {
+    return this.pathname === window.location.pathname;
   }
 
   function handlePopstateChanges() {
-    console.log(window.location.href);
-    var url = window.location.href;
-    renderNewHtml(url, cachedHtml[url]);
+    $tabs.filter(currentForm).trigger('click', [true]); 
   }
 
-  function attachTabClickHandlers() {
-
-    $('.tab').click(function (event) {
-      event.preventDefault();
-      var url = event.target.href;
-
-      // Don't bother loading content we already have
-      if (url === window.location.href) {
-        console.log("the same");
-        return;
-      }
-      // If we've already downloaded this html, use that
-      var cachedHtmlData = cachedHtml[url];
-      if (cachedHtmlData) {
-        renderNewHtml(url, cachedHtmlData);
-        return pushState(url);
-      }
-
-      // Otherwise load it from the server
-      $.ajax({
-        url: url,
-        success: renderNewHtml.bind(null, url),
-        complete: pushState.bind(null, url)
-      });
-
-    });
+  function matchActionAttrTo (path) {
+    return function(){
+      return $(this).attr('action') === path;
+    };
   }
 
+  var $tabs = $('.tab').click(function (event, fromPopstate) {
+    var path = event.target.pathname;
+
+    $forms
+      .hide()
+      .filter(matchActionAttrTo(path)) // One element now ↓
+      .show();
+
+    // fromPopstate is true when we call click in handlePopstateChanges
+    // If a user navigated back, to register, it would then set pushState
+    // to register, leaving teh user stuck on that page.
+    if (!fromPopstate && pushState) { 
+      event.preventDefault(); 
+      pushState(path);
+    }
+
+    $tabs
+      .removeClass('tab-selected')
+      .filter(currentForm)
+      .addClass('tab-selected');
+
+  });  
   // Kick it all off with initial event handlers
-  attachTabClickHandlers();
+
   window.addEventListener('popstate', handlePopstateChanges);
-}());
+  handlePopstateChanges();
+
+}(window));

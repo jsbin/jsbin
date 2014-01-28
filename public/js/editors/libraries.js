@@ -359,8 +359,8 @@ var libraries = [
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.min.js',
-    'label': 'lodash 1.2.1'
+    'url': 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js',
+    'label': 'Lo-Dash 2.4.1'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',

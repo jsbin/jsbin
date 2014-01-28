@@ -351,8 +351,8 @@ var libraries = [
     'label': 'Handlebars.js 1.0.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js',
-    'label': 'Knockout 2.2.1'
+    'url': 'http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js',
+    'label': 'Knockout 3.0.0'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js',

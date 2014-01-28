@@ -3,10 +3,8 @@
   'use strict';
 
   var pushState = window.history.pushState ? function (url) {
-    console.log('pushstate')
     window.history.pushState(null, null, url);
   } : false;
-
   var $forms = $('form');
 
   function currentForm () {
@@ -24,6 +22,9 @@
   }
 
   var $tabs = $('.tab').click(function (event, fromPopstate) {
+    if (!pushState && !fromPopstate) {
+      return;
+    }
     var path = event.target.pathname;
 
     $forms

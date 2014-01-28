@@ -5,35 +5,15 @@ html, body {
   color: #111111;
   font-family: 'helvetica neue', helvetica;
   font-weight: 200;
-  font-size: 18px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  display: block;
-  float: left;
-  margin: 0 10px;
-}
-
-li:first-child {
-  margin-left: 0;
-}
-
-li:last-child {
-  margin-right: 0;
-}
-
-li a {
-  display: block;
+#body {
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 header, article, footer {
-  max-width: 660px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 10px;
 }
@@ -55,12 +35,12 @@ header nav {
   display: inline;
 }
 
-#logo {
+#back {
   float: left;
   padding-top: 5px;
 }
 
-#logo img {
+#back img {
   vertical-align: middle;
   margin-right: 5px;
 }
@@ -121,25 +101,54 @@ footer .meta a:hover {
  footer page content
  */
 
-footer a {
+#footer {
+  margin-bottom: 150px;
+}
+
+#footer a {
   color: #999;
 }
 
-footer hr {
+#footer hr {
   margin-top: 100px;
   margin-bottom: 40px;
 }
 
-footer .notable {
+#footer .notable {
   float: left;
 }
 
-footer .meta {
+#footer .meta {
   float: right;
 }
 
-footer a:last-child {
+#footer a:last-child {
   padding-right: 0;
+}
+
+
+#footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#footer li {
+  display: block;
+  float: left;
+  margin: 0 10px;
+}
+
+#footer li:first-child {
+  margin-left: 0;
+}
+
+#footer li:last-child {
+  margin-right: 0;
+}
+
+#footer li a {
+  display: block;
 }
 
 
@@ -148,4 +157,3 @@ footer a:last-child {
     display: none;
   }
 }
-

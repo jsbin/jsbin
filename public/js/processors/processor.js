@@ -140,6 +140,25 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    livescript: createProcessor({
+      id: 'livescript',
+      target: 'javascript',
+      extensions: ['ls'],
+      url: jsbin.static + '/js/vendor/livescript.js',
+      init: passthrough,
+      handler: function (source) {
+        var renderedCode = '';
+        try {
+          renderedCode = LiveScript.compile(source, {
+            bare: true
+          });
+        } catch (e) {
+          throw new Error(e);
+        }
+        return renderedCode;
+      }
+    }),
+
     typescript: createProcessor({
       id: 'typescript',
       target: 'javascript',

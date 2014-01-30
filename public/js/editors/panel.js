@@ -10,6 +10,7 @@ var editorModes = {
   typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
+  livescript: 'livescript',
   less: 'less',
   processing: 'text/x-csrc'
 };

@@ -443,6 +443,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
+<script type="template" id="infocard">
+<div class="card">
+  <img src="{{avatar}}">
+  // <div class="viewers">10<span>viewers</span></div>
+  <div class="meta">
+    <div class="name">{{name}}{{pro?}}<span class="pro">pro</span>{{/pro}}</div>
+    <span class="when">Created: yesterday</span>
+  </div>
+</div>
+</script>
 <script>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};

@@ -3621,4 +3621,84 @@ THE SOFTWARE.
   #panels {
     display: none;
   }
+
+/* hover card styles */
+.card {
+  font-family: 'helvetica neue';
+  font-weight: 400;
+  background: #d1e6fa;
+  display: inline-block;
+  min-width: 320px;
+  box-sizing: border-box;
+  /* padding: 5px; */
+  margin: 10px;
+  border: 1px solid #fff;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  position: relative;
+  height: 49px;
+  font-size: 16px;
+}
+
+.card img,
+.card .meta {
+  margin: 5px;
+}
+
+.card.owner {
+  background: #fafafa;
+}
+
+.card .viewers {
+  float: right;
+  border-left: 1px solid #ccc;
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  padding-bottom: 39px;
+}
+
+.card .name {
+  white-space: nowrap;
+  padding-right: 170px;
+}
+
+.card .pro {
+  text-transform: uppercase;
+  font-size: 9.5px;
+  font-weight: bold;
+  vertical-align: super;
+}
+
+.card img {
+  padding: 3px;
+  float: left;
+  margin-right: 5px;
+  width: 30px;
+}
+
+.card .visibility {
+  margin-top: 13px;
+  margin-right: 20px;
+  border: 1px solid #337ae0;
+  color: #337ae0;
+  text-transform: uppercase;
+  border-radius: 2px;
+  float: right;
+  padding: 2px 15px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.card .when,
+.card .viewers span {
+  color: rgba(0,0,0,.4);
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.card .viewers span {
+  display: block;
 }

@@ -3623,46 +3623,102 @@ THE SOFTWARE.
   }
 
 /* hover card styles */
+body h2:first-child {
+  margin-top: 20px;
+}
+
+h2 {
+  margin: 20px 20px 0px 10px;
+  font-size: 16px;
+  clear: both;
+}
+
+.card div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .card {
+  z-index: 10;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  float: left;
   font-family: 'helvetica neue';
   font-weight: 400;
-  background: #d1e6fa;
+  background: #fafafa;
   display: inline-block;
-  min-width: 320px;
   box-sizing: border-box;
-  /* padding: 5px; */
   margin: 10px;
   border: 1px solid #fff;
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-  position: relative;
-  height: 49px;
   font-size: 16px;
+  /* min-width: 500px; */
 }
 
-.card img,
-.card .meta {
-  margin: 5px;
-}
-
-.card.owner {
+.card header {
+  cursor: pointer;
   background: #fafafa;
+  display: block;
+  /* min-width: 320px; */
+  box-sizing: border-box;
+  height: 48px;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: 100%;
 }
 
-.card .viewers {
-  float: right;
-  border-left: 1px solid #ccc;
-  display: inline-block;
-  height: 100%;
-  text-align: center;
-  padding: 10px;
-  font-size: 16px;
+.card .body {
+  display: none;
+  padding: 10px 20px;
+  border-top: 1px solid #ccc;
+  width: 100%;
   box-sizing: border-box;
-  padding-bottom: 39px;
+}
+
+.card.open .body {
+  display: block;
+}
+
+.card .body select {
+  margin: 0;
+}
+
+.card .body a {
+  color: #212121;
+  font-size: 14px;
+}
+
+.card .body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card .body li {
+  margin: 10px 0
+}
+
+.card.private {
+  border: 1px solid #fafafa;
+}
+
+.card.private header {
+  background: #d1e6fa;
+}
+
+.card .meta {
+  white-space: nowrap;
+  padding-right: 10px;
+}
+
+.card.author .meta {
+  padding-left: 5px;
 }
 
 .card .name {
-  white-space: nowrap;
-  padding-right: 170px;
+  margin-bottom: 2px;
 }
 
 .card .pro {
@@ -3673,23 +3729,41 @@ THE SOFTWARE.
 }
 
 .card img {
-  padding: 3px;
+  margin: 5px;
+  padding: 5px;
   float: left;
-  margin-right: 5px;
   width: 30px;
 }
 
 .card .visibility {
-  margin-top: 13px;
-  margin-right: 20px;
+  margin: 14px 20px;
   border: 1px solid #337ae0;
   color: #337ae0;
   text-transform: uppercase;
   border-radius: 2px;
-  float: right;
   padding: 2px 15px;
   font-size: 12px;
   font-weight: 500;
+  letter-spacing: 1px;
+  float: right;
+}
+
+.card .viewers {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  line-height: 16px;
+}
+
+.card.private .viewers {
+  border-right: 1px solid #ccc;
+}
+
+.card.meta .viewers {
+  border-left: 1px solid #ccc;
 }
 
 .card .when,
@@ -3697,8 +3771,5 @@ THE SOFTWARE.
   color: rgba(0,0,0,.4);
   font-weight: 800;
   font-size: 12px;
-}
-
-.card .viewers span {
   display: block;
 }

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*global $:true, jsbin:true*/
+  /*global $:true, jsbin:true, prettyDate:true*/
 
   var $template = $($('#infocard').html()); // donkey way of cloning from template
   var $header = $template.find('header');
@@ -14,12 +14,16 @@
 
   $header.find('time').html(prettyDate(meta.updated));
 
+  if (!jsbin.checksum) {
+    classes.push('meta');
+  }
+
   if (meta.pro) {
     classes.push('pro');
   }
 
   if (meta.name === jsbin.user.name) {
-    classes.push('owner');
+    classes.push('author');
   }
 
   $header.find('.visibility').text(meta.visibility);
@@ -30,5 +34,12 @@
     classes.push('public');
   } // TODO handle team
 
-  $template.addClass(classes.join(' ')).appendTo('body');
+  if (jsbin.state.code) {
+    $template.addClass(classes.join(' ')).appendTo('body');
+
+    $header.click(function (e) {
+      e.preventDefault();
+      $template.toggleClass('open');
+    });
+  }
 })();

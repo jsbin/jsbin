@@ -2584,7 +2584,7 @@ form + hr {
   text-decoration: none;
 }
 
-.name span {
+.label .name span {
   /*margin-left: -41px;*/
   padding-left: 4px;
   color: #999;
@@ -3649,11 +3649,35 @@ h2 {
   background: #fafafa;
   display: inline-block;
   box-sizing: border-box;
-  margin: 10px;
+  /*margin: 10px;*/
   border: 1px solid #fff;
   box-shadow: 0 1px 1px rgba(0,0,0,0.2);
   font-size: 16px;
   /* min-width: 500px; */
+}
+
+.card.owner header img {
+  display: none;
+}
+
+.card.author .meta .name,
+.card .meta .author,
+.card.author header img {
+  display: none;
+
+}
+
+.card.author .meta .author {
+  display: inline-block;
+}
+
+
+.card span {
+  opacity: 1;
+}
+
+.card b {
+  font-weight: inherit;
 }
 
 .card header {
@@ -3711,10 +3735,11 @@ h2 {
 .card .meta {
   white-space: nowrap;
   padding-right: 10px;
+  margin: 5px 0;
 }
 
 .card.author .meta {
-  padding-left: 5px;
+  padding-left: 10px;
 }
 
 .card .name {
@@ -3772,4 +3797,12 @@ h2 {
   font-weight: 800;
   font-size: 12px;
   display: block;
+}
+
+.card.viewers .viewers {
+  display: inline-block;
+}
+
+.card .viewers {
+  display: none;
 }

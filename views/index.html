@@ -443,16 +443,44 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
+{{#feature user "infocard"}}
 <script type="template" id="infocard">
-<div class="card">
-  <img src="{{avatar}}">
-  // <div class="viewers">10<span>viewers</span></div>
-  <div class="meta">
-    <div class="name">{{name}}{{pro?}}<span class="pro">pro</span>{{/pro}}</div>
-    <span class="when">Created: yesterday</span>
+  <div class="card">
+    <header><img>
+      <div class="visibility"></div>
+      <div class="meta">
+        <div class="name"><b></b><span class="pro">pro</span></div><span class="when">Modified <time>yesterday</time></span>
+      </div>
+      <div class="viewers">0<span>viewers</span>
+      </div>
+    </header>
+    <div class="body">
+      <ul>
+        {{#feature user "private"}}<li>
+          <select>
+            <option>Public</option>
+            <option>Private to me</option>
+            </option>
+          </select>
+        </li>
+        {{/feature}}
+        <li><a href="/clone">Clone</a>
+        </li>
+        <li><a href="/save-as-template">Save as template</a>
+        </li>
+        <li><a href="/export-gist">Export gist</a>
+        </li>
+        <li><a href="/down">Download</a>
+        </li>
+        <li><a href="/archive">Archive</a>
+        </li>
+        <li><a href="/delete">Delete</a>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 </script>
+{{/feature}}
 <script>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};

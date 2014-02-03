@@ -47,7 +47,8 @@
     "undefsafe": "0.0.2",
     "feature-gateway": "0.0.3",
     "hbs": "~2.4.0",
-    "replify": "~1.1.4"
+    "replify": "~1.1.4",
+    "traverse": "~0.6.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -3621,6 +3621,13 @@ h2 {
   font-family: 'helvetica neue';
   font-weight: 400;
   background: #fafafa;
+  background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#FBFBFB)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #FFF 0%,#FBFBFB 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF', endColorstr='#FBFBFB',GradientType=0 ); /* IE6-9 */
   display: inline-block;
   box-sizing: border-box;
   /*margin: 10px;*/
@@ -3655,10 +3662,17 @@ h2 {
 }
 
 .card header {
-  cursor: pointer;
   background: #fafafa;
+  background: -moz-linear-gradient(top,  #f1f1f1 0%, #fff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1f1f1), color-stop(100%,#fff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #f1f1f1 0%,#fff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#fff',GradientType=0 ); /* IE6-9 */
+
+  cursor: pointer;
   display: block;
-  /* min-width: 320px; */
   box-sizing: border-box;
   height: 48px;
   white-space: nowrap;
@@ -3724,6 +3738,7 @@ h2 {
   text-transform: uppercase;
   font-size: 9.5px;
   font-weight: bold;
+  color: rgba(0,0,0,.4);
   vertical-align: super;
 }
 
@@ -3745,6 +3760,10 @@ h2 {
   font-weight: 500;
   letter-spacing: 1px;
   float: right;
+}
+
+.card.public .visibility {
+  display: none;
 }
 
 .card .viewers {

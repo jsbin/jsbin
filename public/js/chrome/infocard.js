@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*global $:true, jsbin:true, prettyDate:true*/
+  /*global $:true, jsbin:true, prettyDate:true, EventSource:true, throttle:true*/
 
   var $template = $($('#infocard').html()); // donkey way of cloning from template
   var $header = $template.find('header');
@@ -41,5 +41,32 @@
       e.preventDefault();
       $template.toggleClass('open');
     });
+
+    var viewers = 0;
+
+    var es = new EventSource(jsbin.getURL() + '/stats');
+    es.addEventListener('stats', throttle(function (event) {
+      var data = JSON.parse(event.data);
+
+      if (data.connections > 0 && viewers === 0) {
+        $template.addClass('viewers');
+      }
+
+      if (viewers !== data.connections) {
+        var $b = $header.find('.viewers b').removeClass('up down').html('<b>' + data.connections + '<br>' + viewers + '<br>' + data.connections + '</b>'),
+            c = viewers > data.connections ? 'down' : 'up';
+        setTimeout(function () {
+          $b.addClass(c);
+        }, 0);
+      }
+
+      viewers = data.connections;
+
+      if (viewers === 0) {
+        setTimeout(function () {
+          $template.removeClass('viewers');
+        }, 250);
+      }
+    }, 1000));
   }
 })();

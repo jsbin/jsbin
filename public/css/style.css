@@ -3623,16 +3623,6 @@ THE SOFTWARE.
   }
 
 /* hover card styles */
-body h2:first-child {
-  margin-top: 20px;
-}
-
-h2 {
-  margin: 20px 20px 0px 10px;
-  font-size: 16px;
-  clear: both;
-}
-
 .card div {
   display: inline-block;
   vertical-align: middle;
@@ -3702,8 +3692,8 @@ h2 {
   box-sizing: border-box;
   height: 48px;
   white-space: nowrap;
-  overflow-y: hidden;
-  overflow-x: auto;
+  overflow: visible;
+  /*overflow-x: auto;*/
   width: 100%;
 }
 
@@ -3801,6 +3791,26 @@ h2 {
   box-sizing: border-box;
   line-height: 16px;
 }
+
+.card .viewers > b {
+  overflow: hidden;
+  height: 16px;
+}
+
+.card .viewers b {
+  display: inline-block;
+  margin-top: -16px;
+  -webkit-transition: margin-top ease-out 200ms;
+}
+
+.card .viewers b.up b {
+  margin-top: -32px;
+}
+
+.card .viewers b.down b {
+  margin-top: 0;
+}
+
 
 .card.private .viewers {
   border-right: 1px solid #ccc;

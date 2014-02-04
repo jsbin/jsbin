@@ -22,7 +22,7 @@
     classes.push('pro');
   }
 
-  if (meta.name === jsbin.user.name) {
+  if (jsbin.user && (meta.name === jsbin.user.name)) {
     classes.push('author');
   }
 

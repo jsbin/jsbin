@@ -213,7 +213,8 @@ function embed(link) {
 
   var onmessage = function (event) {
     event || (event = window.event);
-    iframe.style.height = event.data.height + 'px';
+    // * 1 to coerse to number, and + 2 to compensate for border
+    iframe.style.height = (event.data.height * 1 + 2) + 'px';
   };
 
   if (window.addEventListener) {

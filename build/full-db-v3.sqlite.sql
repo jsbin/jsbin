@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `html` INTEGER DEFAULT '0',
   `css` INTEGER DEFAULT '0',
   `javascript` INTEGER DEFAULT '0',
-  `archive` INTEGER DEFAULT '0'
+  `archive` INTEGER DEFAULT '0',
+  `visibility` VARCHAR(255) DEFAULT 'public' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `ownership` (

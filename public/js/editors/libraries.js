@@ -61,6 +61,7 @@ var libraries = [
       'http://code.jquery.com/mobile/git/jquery.mobile-git.css',
       'http://code.jquery.com/jquery-1.10.2.min.js',
       'http://code.jquery.com/mobile/git/jquery.mobile-git.js'
+    ],
     'label': 'jQuery Mobile WIP (via git)',
     'group': 'jQuery Mobile'
   },

@@ -477,18 +477,14 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           </select>
         </li>
         {{/feature}}
-        <li><a href="/clone">Clone</a>
-        </li>
-        <li><a href="/save-as-template">Save as template</a>
-        </li>
-        <li><a href="/export-gist">Export gist</a>
-        </li>
-        <li><a href="/down">Download</a>
-        </li>
-        <li><a href="/archive">Archive</a>
-        </li>
-        <li><a href="/delete">Delete</a>
-        </li>
+        <li><a href="/clone">Clone</a> </li>
+        <li><a href="/save-as-template">Save as template</a> </li>
+        <li><a href="/export-gist">Export gist</a> </li>
+        <li><a href="/download">Download</a> </li>
+        <li><a href="/archive">Archive</a> </li>
+        {{#feature user "delete"}}
+        <li><a class="deletebin" href="/delete">Delete</a></li>
+        {{/feature}}
       </ul>
     </div>
   </div>

@@ -415,7 +415,7 @@ $('#addmeta').click(function () {
   return false;
 });
 
-$('#deletebin').on('click', function (e) {
+$('.deletebin').on('click', function (e) {
   e.preventDefault();
   $.ajax({
     type: 'post',

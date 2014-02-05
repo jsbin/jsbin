@@ -10,7 +10,7 @@ Installation requires a number of simple steps:
 
 For the simplest install process we recommend using Node with SQLite.
 
-Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **PHP is no longer supported**. If you want to install JS Bin using PHP, I'm afraid you're on your own. There are some old docs that can help, but the project has long surpassed PHP's functionality.  If you want to risk the PHP version, grab [v3.0.0 here](https://github.com/remy/jsbin/releases), warts an all.
+Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **PHP is no longer supported**. If you want to install JS Bin using PHP, I'm afraid you're on your own. There are some old docs that can help, but the project has long surpassed PHP's functionality.  If you want to risk the PHP version, grab [v3.0.0 here](https://github.com/jsbin/jsbin/releases), warts an all.
 
 ## Installing
 

@@ -240,7 +240,7 @@ var renderer = (function () {
  * Live rendering.
  *
  * Comes in two tasty flavours. Basic mode, which is essentially an IE7
- * fallback. Take a look at https://github.com/remy/jsbin/issues/651 for more.
+ * fallback. Take a look at https://github.com/jsbin/jsbin/issues/651 for more.
  * It uses the iframe's name and JS Bin's event-stream support to keep the
  * page up-to-date.
  *

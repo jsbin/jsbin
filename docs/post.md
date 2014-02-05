@@ -19,13 +19,13 @@ This move to Node allows us to introduce two new super cool features:
 1. CodeCasting
 2. Live remote rendering
 
-Both these techniques use EventSource and a little technique that I called [The Spike](https://github.com/remy/jsbin/blob/feature/node/public/js/spike.js).
+Both these techniques use EventSource and a little technique that I called [The Spike](https://github.com/jsbin/jsbin/blob/feature/node/public/js/spike.js).
 
 The big key difference between old JS Bin and new JS Bin is that *as you type - JS Bin is saving*. So as soon as your first key stroke lands, you've got your own URL. You keep typing: it keeps saving. If you want to stop saving against that version, just create a milestone, and live saving will be applied to the new revision.
 
 ### CodeCasting
 
-CodeCasting is one of the original features I wanted to see in JS Bin. Say you're running a demonstration or a workshop, and you want all those people attending to see the code updated *as you type*. Not only that, but they can see the output of the JavaScript, CSS and HTML...*as you type*. 
+CodeCasting is one of the original features I wanted to see in JS Bin. Say you're running a demonstration or a workshop, and you want all those people attending to see the code updated *as you type*. Not only that, but they can see the output of the JavaScript, CSS and HTML...*as you type*.
 
 You don't have to be on the same connection. They can just visit the same URL as you, except that instead of ending the URL with "/edit" we add "/watch" and they become voyeurs to your live coding. I'd love to see this live at a conference.
 
@@ -63,7 +63,7 @@ Some of these features were always part of JS Bin, but hidden inside of the "bet
 - Console panel (after [@rwaldron's mockup](https://twitter.com/rwaldron/status/179568063660826624) he sent me via Twitter)
 - A load more libraries supported (including Bootstrap, Backbone, etc)
 - Native support in [Adobe Shadow](http://labs.adobe.com/technologies/shadow/) (that's right, point your browser to JS Bin and Adobe Shadow will render the live output automatically)
-- 
+-
 - Our badass robot mascot: Dave, the JS Bin Bot (stickers will be made!)
 
 ![Dave](http://3.jsbin.com/images/logo.png)

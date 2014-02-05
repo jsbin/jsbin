@@ -28,12 +28,12 @@ if (!CodeMirror.commands) {
 
 CodeMirror.commands.autocomplete = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
   }
 };
 
 CodeMirror.commands.snippets = function (cm) {
-  CodeMirror.snippets(cm);
+  return CodeMirror.snippets(cm);
 };
 
 

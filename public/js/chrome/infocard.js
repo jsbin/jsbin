@@ -1,11 +1,11 @@
 (function () {
   'use strict';
-  /*global $:true, jsbin:true, prettyDate:true, EventSource:true, throttle:true*/
-
+  /*global $:true, jsbin:true, prettyDate:true, EventSource:true, throttle:true, $document:true*/
   var $template = $($('#infocard').html()); // donkey way of cloning from template
   var $header = $template.find('header');
   var meta = jsbin.state.metadata || {};
   var classes = [];
+  var es = null;
 
   if (meta.name) {
     $header.find('.name b').html(meta.name);
@@ -44,7 +44,21 @@
 
     var viewers = 0;
 
-    var es = new EventSource(jsbin.getURL() + '/stats');
+    if (window.EventSource) {
+      listenStats();
+      var url = jsbin.getURL();
+      $document.on('saved', function () {
+        var newurl = window.location.toString();
+        if (url !== newurl) {
+          es.close();
+          listenStats();
+        }
+      });
+    }
+  }
+
+  function listenStats() {
+    es = new EventSource(jsbin.getURL() + '/stats');
     es.addEventListener('stats', throttle(function (event) {
       var data = JSON.parse(event.data);
 

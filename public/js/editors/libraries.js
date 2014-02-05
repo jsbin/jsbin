@@ -61,7 +61,6 @@ var libraries = [
       'http://code.jquery.com/mobile/git/jquery.mobile-git.css',
       'http://code.jquery.com/jquery-1.10.2.min.js',
       'http://code.jquery.com/mobile/git/jquery.mobile-git.js'
-    ],
     'label': 'jQuery Mobile WIP (via git)',
     'group': 'jQuery Mobile'
   },
@@ -365,6 +364,13 @@ var libraries = [
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
     'label': 'Modernizr 2.6.2'
+  },
+  {
+    'url': [
+      'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
+      'http://cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
+    ],
+    'label': 'Detectizr 1.5.0'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',

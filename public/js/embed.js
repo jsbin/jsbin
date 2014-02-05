@@ -84,7 +84,7 @@ function getQuery(querystring) {
 }
 
 
-// ---- here begins the jsbin embed - based on the embedding doc: https://github.com/remy/jsbin/blob/master/docs/embedding.md
+// ---- here begins the jsbin embed - based on the embedding doc: https://github.com/jsbin/jsbin/blob/master/docs/embedding.md
 
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
 

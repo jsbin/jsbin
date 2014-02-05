@@ -1,1 +1,1 @@
-document.getElementById("hello").innerHTML = "<strong>This URL does not have any code saved to it.</strong>";
+document.body.innerHTML = '<p><strong>This URL does not have any code saved to it.</strong></p>';

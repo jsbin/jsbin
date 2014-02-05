@@ -37,7 +37,7 @@ The original idea spawned from a conversation with another developer in trying t
 
 JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
 
-Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour is no longer supported, however everything else [released in v3.0.0](https://github.com/remy/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. Your PHP mileage may vary!
+Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour is no longer supported, however everything else [released in v3.0.0](https://github.com/jsbin/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. Your PHP mileage may vary!
 
 For detailed instructions on how to build JS Bin please see the [running your own JS Bin document](/docs/running-your-own-jsbin.md).
 

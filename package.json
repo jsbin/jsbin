@@ -15,7 +15,7 @@
   "bin": "./bin/jsbin",
   "repository": {
     "type": "git",
-    "url": "git://github.com/remy/jsbin.git"
+    "url": "git://github.com/jsbin/jsbin.git"
   },
   "scripts": {
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",

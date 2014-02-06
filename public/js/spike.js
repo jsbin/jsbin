@@ -220,9 +220,12 @@ setTimeout(function () {
   } else {
     renderStream();
   }
-  es.addEventListener('stats', function () {
-    // Could handle stats events here
-  });
+  if (window.jQuery) {
+    var $document = $(document);
+    es.addEventListener('stats', function (event) {
+      $document.trigger('stats', [event.data]);
+    });
+  }
 }, 500);
 
 // If this is the render stream, restore data from before the last reload if

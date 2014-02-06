@@ -6,13 +6,14 @@
   var meta = jsbin.state.metadata || {};
   var classes = [];
   var es = null;
+  var owner = false;
 
   if (meta.name) {
     $header.find('.name b').html(meta.name);
     $header.find('img').attr('src', meta.avatar);
   }
 
-  $header.find('time').html(prettyDate(meta.updated));
+  $header.find('time').html(prettyDate(meta.last_updated));
 
   if (!jsbin.checksum) {
     classes.push('meta');
@@ -23,6 +24,7 @@
   }
 
   if (jsbin.user && (meta.name === jsbin.user.name)) {
+    owner = true;
     classes.push('author');
   }
 
@@ -44,7 +46,7 @@
 
     var viewers = 0;
 
-    if (window.EventSource) {
+    if (window.EventSource && owner) {
       listenStats();
       var url = jsbin.getURL();
       $document.on('saved', function () {
@@ -54,33 +56,38 @@
           listenStats();
         }
       });
+    } else {
+      $document.on('stats', throttle(updateStats, 1000));
     }
+  }
+
+  function updateStats(event, _data) {
+    var data = _data ? JSON.parse(_data) : JSON.parse(event.data);
+
+    if (data.connections > 0 && viewers === 0) {
+      $template.addClass('viewers');
+    }
+
+    if (viewers !== data.connections) {
+      var $b = $header.find('.viewers b').removeClass('up down').html('<b>' + data.connections + '<br>' + viewers + '<br>' + data.connections + '</b>'),
+          c = viewers > data.connections ? 'down' : 'up';
+      setTimeout(function () {
+        $b.addClass(c);
+      }, 0);
+    }
+
+    viewers = data.connections;
+
+    if (viewers === 0) {
+      setTimeout(function () {
+        $template.removeClass('viewers');
+      }, 250);
+    }
+
   }
 
   function listenStats() {
     es = new EventSource(jsbin.getURL() + '/stats');
-    es.addEventListener('stats', throttle(function (event) {
-      var data = JSON.parse(event.data);
-
-      if (data.connections > 0 && viewers === 0) {
-        $template.addClass('viewers');
-      }
-
-      if (viewers !== data.connections) {
-        var $b = $header.find('.viewers b').removeClass('up down').html('<b>' + data.connections + '<br>' + viewers + '<br>' + data.connections + '</b>'),
-            c = viewers > data.connections ? 'down' : 'up';
-        setTimeout(function () {
-          $b.addClass(c);
-        }, 0);
-      }
-
-      viewers = data.connections;
-
-      if (viewers === 0) {
-        setTimeout(function () {
-          $template.removeClass('viewers');
-        }, 250);
-      }
-    }, 1000));
+    es.addEventListener('stats', throttle(updateStats, 1000));
   }
 })();

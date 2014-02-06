@@ -12,7 +12,11 @@ $('#enablealt').attr('checked', customKeys.useAlt ? true : false).change(functio
   jsbin.settings.keys.useAlt = this.checked;
 });
 
-if (!customKeys.disabled) $body.keydown(keycontrol);
+if (!customKeys.disabled) {
+  $body.keydown(keycontrol);
+} else {
+  $body.addClass('nokeyboardshortcuts');
+}
 
 var panelShortcuts = {}
 //   49: 'javascript', // 1
@@ -35,11 +39,10 @@ if (/macintosh|mac os x/.test(ua)) {
   $.browser.platform = '';
 }
 
-// var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
 if (!customKeys.disabled) $document.keydown(function (event) {
   var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
-      closekey = customKeys.closePanel ? customKeys.closePanel : 192;
+      closekey = customKeys.closePanel ? customKeys.closePanel : 48;
 
   if (event.ctrlKey) event.metaKey = true;
 
@@ -136,13 +139,18 @@ function keycontrol(event) {
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
       if (jsbin.panels.focused.id === panelShortcuts[event.which]) {
-        // hide
-        jsbin.panels.hide(panelShortcuts[event.which]);
+        // this has been disabled in favour of:
+        // if the panel is visible, and the user tries cmd+n - then the browser
+        // gets the key command.
+        if (includeAltKey) {
+          jsbin.panels.hide(panelShortcuts[event.which]);
+          event.stop();
+        }
       } else {
         // show
         jsbin.panels.show(panelShortcuts[event.which]);
+        event.stop();
       }
-      event.stop();
     }
 
     if (event.which == 191 && event.metaKey && event.shiftKey) {

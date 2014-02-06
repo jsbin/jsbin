@@ -175,16 +175,19 @@ var renderer = (function () {
       size.fadeOut(200);
     }, 2000);
 
+    var embedResizeDone = false;
+
     return function (data) {
       if (!jsbin.embed) {
         // Display the iframe size in px in the JS Bin UI
         size.show().html(data.width + 'px');
         hide();
       }
-      if (jsbin.embed) {
+      if (jsbin.embed && embedResizeDone === false) {
+        embedResizeDone = true;
         // Inform the outer page of a size change
         var height = ($body.outerHeight(true) - $(renderer.runner.iframe).height()) + data.offsetHeight;
-        window.parent.postMessage({ height: height }, '*');
+       window.parent.postMessage({ height: height }, '*');
       }
     };
   }());

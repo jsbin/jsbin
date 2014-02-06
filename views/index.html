@@ -326,7 +326,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
       <tbody>
         <tr>
           <td>ctrl + [num]</td>
-          <td>Toggle nth panel</td>
+          <td>Focus nth panel</td>
         </tr>
         <tr>
           <td colspan="2">
@@ -337,24 +337,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           </td>
         </tr>
         <tr>
-          <td>esc, ctrl + [num]</td>
-          <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
+          <td>ctrl + 0</td>
+          <td>Close focused panel</td>
         </tr>
-        <!--<tr>
-          <td>ctrl + §<br>(or `)</td>
-          <td>Hide focused panel</td>
-        </tr>-->
         <tr>
           <td>ctrl + enter</td>
-          <td>Re-render JavaScript.<br>If console visible: run JS in console</td>
+          <td>Re-render output.<br>If console visible: run JS in console</td>
         </tr>
         <tr>
           <td>Ctrl + l</td>
           <td>Clear the console</td>
-        </tr>
-        <tr>
-          <td>ctrl + \</td>
-          <td>Auto hide navigation bar</td>
         </tr>
         <tr>
           <td>ctrl + /</td>
@@ -378,12 +370,26 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         </tr>
         <tr>
           <td>ctrl + s</td>
-          <td>Freeze current Bin</td>
+          <td>Save &amp; lock current Bin from further changes</td>
         </tr>
         <tr>
           <td>ctrl + shift + s</td>
-          <td>Clone current Bin</td>
+          <td>Clone Bin</td>
         </tr>
+        <!-- too confusing, let's throw it away -->
+        <!--
+        <tr>
+          <td>ctrl + \</td>
+          <td>Hide navigation bar</td>
+        </tr>
+        <tr>
+          <td>esc, ctrl + [num]</td>
+          <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
+        </tr>
+        <tr>
+          <td>ctrl + §<br>(or `)</td>
+          <td>Hide focused panel</td>
+        </tr>-->
 
         <tr><td colspan="2"><small><br>JS Bin also supports <a href="http://docs.emmet.io/" target="_blank">Emmet/Zen Coding</a> shortcuts</small></td></tr>
       </tbody>

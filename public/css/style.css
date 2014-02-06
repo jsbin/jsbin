@@ -2869,6 +2869,10 @@ pre .highlight:last-of-type {
   /*font-weight: bold;*/
 }
 
+.nokeyboardshortcuts .keyshortcut {
+  display: none;
+}
+
 .dd-right .keyshortcut {
   right: 20px;
 }

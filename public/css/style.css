@@ -1014,7 +1014,7 @@ body.streaming #bin {
 }
 
 .showtip #bin {
-  bottom: 26px;
+  /*bottom: 26px;*/
 }
 
 #tip {

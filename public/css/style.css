@@ -1013,8 +1013,10 @@ body.streaming #bin {
   font-size: 13px;
 }
 
-.showtip #bin {
-  bottom: 26px;
+.showtip #bin,
+.showtip #history,
+.showtip #history .preview {
+  top: 69px;
 }
 
 #tip {
@@ -1024,11 +1026,15 @@ body.streaming #bin {
   position: absolute;
   bottom: 0;
   font-size: 14px;
-  line-height: 22px;
+  line-height: 28px;
   background: #fdfece;
+  top: 36px;
+  bottom: auto;
   left: 0;
   right: 0;
   padding: 2px 10px 2px 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+
   -webkit-animation: tip-flash 100ms linear 4 alternate;
   -moz-animation: tip-flash 100ms linear 4 alternate;
   -ms-animation: tip-flash 100ms linear 4 alternate;
@@ -1069,12 +1075,8 @@ body.streaming #bin {
   background: #ff5555;
 }
 
-#tip.notification,
-#tip.error {
-  bottom: auto;
-  top: 34px;
-  line-height: 28px;
-  box-shadow: 0 2px 4px rgba(0,0,0,.2);
+.hideheader.ready #tip {
+  top: 6px;
 }
 
 #tip p {
@@ -2472,6 +2474,12 @@ a.active:hover {
 .hideheader #history,
 .hideheader #history .preview {
   top: 6px;
+}
+
+.showtip .hideheader.ready #bin,
+.showtip .hideheader #history,
+.showtip .hideheader #history .preview {
+  top: 39px;
 }
 
 .hideheader #control:hover {

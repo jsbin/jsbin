@@ -139,68 +139,8 @@
             {{#if client.user}}
               <div class="menu">
                 <a href="/login" class="button" id="loginbtn">Log in</a>
-                <div class="dropdown dd-right" id="login">
-                  <div class="dropdowncontent">
-                    <form class="forgot" action="{{root}}/forgot" method="post">
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Request password reset">
-                        <input type="hidden" name="_csrf" value="{{token}}">
-                        <input type="hidden" name="_redirect" value="home">
-                      </div>
-                    </form>
-                    <form class="login">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username or Email<br>
-                        <input name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Log in">
-                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
-                      </div>
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
               </div><div class="menu">
                 <a href="/register" class="button" id="regbtn">Register</a>
-                <div class="dropdown dd-right" id="register">
-                  <div class="dropdowncontent">
-                    <p>Registration allows you to retrieve your saved files.</p>
-                    <form class="login">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username<br><input required name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input required name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Register">
-                      </div>
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
-                      </div>
-                    </form>
-                  </div>
-                </div>
               </div>
             {{/if}}
           {{/if}}

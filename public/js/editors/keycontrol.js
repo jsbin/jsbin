@@ -151,8 +151,11 @@ function keycontrol(event) {
         jsbin.panels.show(panelShortcuts[event.which]);
         event.stop();
 
-        if (!customKeys.useAlt && !jsbin.settings.keys.seenWarning) {
+        if (!customKeys.useAlt && (!jsbin.settings.keys || !jsbin.settings.keys.seenWarning)) {
           var cmd = $.browser.platform === 'mac' ? 'cmd' : 'ctrl';
+          if (!jsbin.settings.keys) {
+            jsbin.settings.keys = {};
+          }
           jsbin.settings.keys.seenWarning = true;
           $document.trigger('tip', {
             type: 'notification',

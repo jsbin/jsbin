@@ -8,15 +8,15 @@
   <form action="/register" method="post" class="register">
     <div>
       <label>Username<br>
-      <input name="username" type="text"></label>
+      <input name="username" type="text" required></label>
     </div>
     <div>
       <label>Email<br>
-      <input name="email" type="email"></label>
+      <input name="email" type="email" required></label>
     </div>
     <div>
       <label>Password<br>
-      <input name="key" type="password"></label>
+      <input name="key" type="password" required></label>
     </div>
     <div>
       <input type=submit value="Log in">
@@ -28,11 +28,11 @@
   <form action="/login" method="post" class="login">
     <div>
       <label>Username or Email<br>
-      <input name="username" type="text"></label>
+      <input name="username" type="text" required></label>
     </div>
     <div>
       <label>Password<br>
-      <input name="key" type="password"></label>
+      <input name="key" type="password" required></label>
     </div>
     <div>
       <input type=submit value="Log in">

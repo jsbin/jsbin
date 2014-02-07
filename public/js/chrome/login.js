@@ -5,7 +5,8 @@
   var pushState = window.history.pushState ? function (url) {
     window.history.pushState(null, null, url);
   } : false;
-  var $forms = $('form');
+  var $forms = $('.form-container form');
+  var $info = $('.form-container .info'); 
 
   function currentForm () {
     return this.pathname === window.location.pathname;
@@ -45,10 +46,35 @@
       .filter(currentForm)
       .addClass('tab-selected');
 
+    $info.empty();
+
   });  
   // Kick it all off with initial event handlers
 
   window.addEventListener('popstate', handlePopstateChanges);
   handlePopstateChanges();
+
+  $forms.on('submit', function(event) {
+    event.preventDefault();
+    var $form = $(event.target);
+
+    var data = $form.serializeArray().reduce(function(obj, item) {
+      return obj[item.name] = item.value, obj;
+    }, {});
+
+    $.ajax({
+      url:      'https://jsbin.dev' + $form.attr('action'),
+      type:     $form.attr('method'),
+      data:     data,
+      dataType: 'json',
+      success: function(res) {
+        window.location.href = res;
+      },
+      error: function(res) {
+        $info.text(res.responseText);
+      }
+    });
+
+  });
 
 }(window));

@@ -91,6 +91,9 @@ $document.on('saved', function () {
 
 var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
+// store it back on state
+jsbin.state.checksum = saveChecksum;
+
 if (saveChecksum) {
   // remove the disabled class, but also remove the cancelling event handlers
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
@@ -307,6 +310,7 @@ function saveCode(method, ajax, ajaxCallback) {
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
+        jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
 

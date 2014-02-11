@@ -466,7 +466,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{static}}{{.}}"></script>{{/scripts}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
 {{/if}}
 {{#if live}}

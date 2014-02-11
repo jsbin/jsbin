@@ -3743,7 +3743,8 @@ THE SOFTWARE.
   margin: 5px 0;
 }
 
-.card.author .meta {
+.card.author .meta,
+.card.anonymous .meta {
   padding-left: 10px;
 }
 

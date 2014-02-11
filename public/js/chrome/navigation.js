@@ -1,4 +1,4 @@
-var $startingpoint = $('#startingpoint').click(function (event) {
+var $startingpoint = $('a.startingpoint').click(function (event) {
   event.preventDefault();
   if (localStorage) {
     analytics.saveTemplate();
@@ -37,7 +37,7 @@ $('#loginbtn').click(function () {
   // return false;
 });
 
-$('.logout').click(function (event) {
+$('a.logout').click(function (event) {
   event.preventDefault();
 
   // We submit a form here because I can't work out how to style the button
@@ -415,7 +415,7 @@ $('#addmeta').click(function () {
   return false;
 });
 
-$('.deletebin').on('click', function (e) {
+$('a.deletebin').on('click', function (e) {
   e.preventDefault();
   $.ajax({
     type: 'post',

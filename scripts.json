@@ -49,6 +49,7 @@
     "/js/chrome/navigation.js",
     "/js/chrome/file-drop.js",
     "/js/chrome/gist.js",
+    "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
     "/js/chrome/app.js"
   ],

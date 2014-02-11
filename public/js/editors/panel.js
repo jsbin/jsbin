@@ -169,13 +169,11 @@ var Panel = function (name, settings) {
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     // Bind events using CM3 syntax
-    panel.editor.on('change', function (event) {
-      $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]);
+    panel.editor.on('change', function codeChange(cm, changeObj) {
+      $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       return true;
     });
-
     panel.editor.on('gutterClick', foldFunc[name]);
-
     panel.editor.on('focus', function () {
       panel.focus();
     });
@@ -381,7 +379,9 @@ Panel.prototype = {
   },
   setCode: function (content) {
     if (this.editor) {
-      if (content === undefined) content = '';
+      if (content === undefined) {
+        content = '';
+      }
       this.controlButton.toggleClass('hasContent', !!content.trim().length);
       this.codeSet = true;
       this.editor.setCode(content.replace(badChars, ''));

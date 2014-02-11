@@ -205,8 +205,22 @@ function codecastStream() {
  * Spike
  */
 
+function isCodeCasting() {
+  var pathname = location.pathname;
+  var edit = '/edit';
+  var watch = '/watch';
+
+  if (pathname.slice(edit.length * -1) === edit) {
+    return true;
+  } else if (pathname.slice(watch.length * -1) === watch) {
+    return true;
+  }
+
+  return false;
+}
+
 var id = location.pathname.replace(/\/(preview|edit|watch).*$/, ''),
-    codecasting = location.pathname.indexOf('/watch') !== -1;
+    codecasting = isCodeCasting();
     queue = [],
     msgType = '',
     useSS = false,

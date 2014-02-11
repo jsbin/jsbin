@@ -11,9 +11,23 @@
   if (meta.name) {
     $header.find('.name b').html(meta.name);
     $header.find('img').attr('src', meta.avatar);
+    classes.push(meta.name);
   }
 
-  $header.find('time').html(prettyDate(meta.last_updated));
+  if (jsbin.state.checksum) { //jsbin.user && (meta.name === jsbin.user.name)) {
+    owner = true;
+    classes.push('author');
+  }
+
+  if (!jsbin.state.streaming || owner === true) {
+    $header.find('time').html(prettyDate(meta.last_updated));
+  } else if (owner === false) {
+    var $time = $header.find('time').html('Streaming');
+
+    var s = spinner();
+    $(s.element).insertBefore($time);
+    s.start();
+  }
 
   if (!jsbin.checksum) {
     classes.push('meta');
@@ -21,11 +35,6 @@
 
   if (meta.pro) {
     classes.push('pro');
-  }
-
-  if (jsbin.user && (meta.name === jsbin.user.name)) {
-    owner = true;
-    classes.push('author');
   }
 
   $header.find('.visibility').text(meta.visibility);
@@ -56,7 +65,8 @@
           listenStats();
         }
       });
-    } else {
+    } else if (jsbin.saveDisabled === true) {
+      $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
       $document.on('stats', throttle(updateStats, 1000));
     }
   }

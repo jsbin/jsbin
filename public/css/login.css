@@ -1,47 +1,108 @@
+body {
+  background:#f9f9f9;
+}
 .form-container {
   width:100%;
   max-width:300px;
   margin:0 auto;
-  background-color:rgba(112, 189, 259, 0.6);
+  
 
+  margin-top: 50px;
 }
 
 .form-container .tabs {
-  
+  clear:both;
+  zoom: 1;
+  margin: 0;
+  height: 56px;
 }
 
 .form-container .tab {
   float:left;
   display:block;
-  width:50%;
-  height:40px;
-  background-color: rgb(72, 149, 219);
+  width:50%; 
+  background-color:transparent;
   opacity:0.8;
   text-decoration:none;
-  text-align:center;
-  line-height:40px;
   text-shadow:none;
-  font-size:16px;
+  font-size:1.1em;
+  color:#000;
+/*   border-bottom:1px solid rgba(0,0,0,0.5); */
+  padding:5px 30px;
+  margin-bottom:0px;
+  position: relative;
+  z-index: 1;
 }
-
+.form-container .tab span{
+  display:block;
+  font-size:0.7em;
+  color:rgba(0,0,0,0.5);
+  margin-bottom:0px;
+}
 .form-container .tab-selected {
   opacity:1;
+  background-color:#fff;
+  border:1px solid rgba(0,0,0,0.5);
+  position: relative;
+  box-shadow:2px 0px 1px -1px rgba(0,0,0,0.5);
+  z-index: 100;
+  border-bottom:none;¢
 }
 
 .form-container form {
-  padding:50px 20px 40px;
-  
+  position: relative;
+  z-index: 10;
+  padding: 20px 30px 40px;
+  border:1px solid rgba(0,0,0,0.5);
+  border-top:none;
+  box-shadow:1px 1px 1px rgba(0,0,0,0.5);
+  min-height: 290px;
+  background-color:#fff;
+  border-top:1px solid rgba(0,0,0,0.5);
 }
 
 .form-container form input[type="submit"] {
-  width:50%;
-  -webkit-appearance:none;
-  border:none;
-  display:block;
-  float:left;
-  height:40px;
-  font-size:16px;
+  width:60%;
+  margin:10px 20%;
   font-family: "Helvetica Neue", "Arial";
-  background:none;
-  background-color:rgb(72,149,219);
+  font-size: 0.75em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 3px 2px 0px #eee;
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 2px;
+  border-bottom:1px solid rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  font-weight:600;
+}
+.form-container form input[type="submit"]:hover {
+  background:linear-gradient(0deg, #e8e8e8, #f8f8f8)
+}
+.form-container form input {
+  width:100%;
+  font-size:1.1em;
+  margin:0px 0px 15px;
+}
+.form-container form label {
+  font-size:0.9em;
+}
+
+.form-container form a.lostpass {
+  text-align:center;
+  width:100%;
+  display:block;
+  color:#000;
+  margin-top:10px;
+}
+
+.form-container form a.lostpass span {
+  color:rgba(0,0,0,0.5);
+  font-weight:400;
+  font-size:0.9em;
 }

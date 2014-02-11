@@ -26,7 +26,8 @@
     if (!pushState && !fromPopstate) {
       return;
     }
-    var path = event.target.pathname;
+
+    var path = event.target.pathname || event.target.parentNode.pathname;
 
     $forms
       .hide()

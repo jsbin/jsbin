@@ -31,9 +31,9 @@ $('a.disabled').on('click mousedown mouseup', function (event) {
 
 $('#loginbtn').click(function () {
   analytics.login();
+  $(this).toggleClass('open');
   // $('#login').show();
   // loginVisible = true;
-  $username.focus();
   // return false;
 });
 

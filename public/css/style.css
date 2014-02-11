@@ -350,8 +350,8 @@ body.public #control a#public {
 .button:hover,
 .button:active,
 .open > .button {
- /* border-left: 1px solid #ccc; */
- /* border-right: 1px solid #ccc; */
+ border-left: 1px solid #ccc;
+ border-right: 1px solid #ccc;
 }
 
 #panels .button {
@@ -2096,7 +2096,7 @@ left: 50%;
 .open .button-dropdown:hover,
 .open .button-open,
 .open .button-open:hover {
-  /* background: #fff; */
+  background: #fff;
   z-index: 1;
 }
 

@@ -140,7 +140,7 @@ var renderer = (function () {
 
     // specific change to handle reveal embedding
     try {
-      if (event.data === 'slide:stop' || event.data === 'jsbin:refresh') {
+      if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
         jsbin.panels.restore();
         return;
       }

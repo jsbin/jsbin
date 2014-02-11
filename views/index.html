@@ -98,53 +98,38 @@
         {{#unless embed}}
           {{#if home}}
             <div class="menu">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
-              <div class="dropdown dd-right" id="profile">
-                <div class="dropdowncontent">
-                  <form class="login">
-                    <p class="loginFeedback"></p>
-                    <div>
-                      <span class="input" id="username" readonly>
-                        @{{home}}{{#feature user "teamjsbin"}}<sup class="pro">pro</sup>{{/feature}}
-                      </span>
-                    </div>
-                    <div>
-                      <label>Email<br>
-                      <input name="email" type="email" value="{{email}}"></label>
-                    </div>
-                    <div>
-                      <label>Password<br>
-                      <input name="password" type="password" value=""></label>
-                    </div>
-                    <div>
-                      <input type=submit value="Update account">
-                      <a class="logout" href="#logout">Logout</a>
-                    </div>
-                    {{#unless user.github_token}}
-                    <div>
-                      <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
-                    </div>
-                    {{/unless}}
-                  </form>
-
-                  <form action="{{root}}/logout" method="POST" id="logout">
-                    <input type="hidden" name="_csrf" value="{{token}}">
-                    <button hidden>Logout</button>
-                  </form>
-                </div>
-              </div>
+              <a href="/account" class="button" id="accountBtn">Account</a>
             </div>
           {{else}}
             {{#if client.user}}
               <div class="menu">
-                <a href="/login" class="button" id="loginbtn">Log in</a>
-              </div><div class="menu">
-                <a href="/register" class="button" id="regbtn">Register</a>
+                <a href="#login" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                <div class="dropdown login" id="registerLogin">
+                <div class="pointer"></div>
+                  <div class="dropdowncontent">
+                    <a class="btn-github" href="/auth/github">
+                      <img src="http://static.jsbin.com/images/github-32.png"> 
+                      Register/Login via GitHub 
+                    </a>
+                    <span class="login-group"> 
+                      Or 
+                      <a class="btn-login" href="/login">
+                        <span>use your email address</span>
+                      </a> 
+                    </span>
+                  </div>
+                </div>
               </div>
             {{/if}}
           {{/if}}
         {{/unless}}
+        <div class="menu">
+          <a href="http://learn.jsbin.com/blog" class="button"> Blog </a>
+        </div>
+        <div class="menu">
+          <a href="http://learn.jsbin.com/help" class="button"> Help </a>
+        </div>
+        <!--
           <div class="menu">
             <a href="#help" class="button button-dropdown">Help</a>
             <div class="dropdown dd-right" id="help">
@@ -163,6 +148,7 @@
               </div>
             </div>
           </div>
+        -->
       </div>
     </div>
   </div>

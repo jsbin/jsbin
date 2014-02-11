@@ -69,19 +69,21 @@ textarea:focus {
 }
 
 .btn-github {
-  font-size: 1em;
+  font-size: 1.4em;
+  font-weight: 200;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
-  box-shadow: 0 1px 2px #eee;
+  box-shadow: 0px 1px 1px #eee;
   border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 6px 10px 5px;
+  border-radius: 2px;
+  padding: 10px 12px;
   cursor: pointer;
   display: inline;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   text-decoration: none;
+  border-bottom: 2px solid #aaa;
 }
 .btn-github:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
@@ -89,10 +91,11 @@ textarea:focus {
 
 .btn-github img {
   vertical-align: middle;
-  top: -1px;
+  top: -2px;
   position: relative;
-  margin-right: 5px;
+  margin-right: 2px;
   border: none;
+  width: 10%;
 }
 
 .login .btn-github {
@@ -171,7 +174,18 @@ textarea:focus {
   top: 0;
   z-index: 0;
 }
-
+.help .login-group {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  color: #aaa;
+  font-size: 1.1em;
+}
+.btn-login span {
+  color: #aaa;
+  /* font-size: 1em; */
+}
 .help a {
   outline: 0;
   /*border-right: 0;*/
@@ -336,8 +350,8 @@ body.public #control a#public {
 .button:hover,
 .button:active,
 .open > .button {
- border-left: 1px solid #ccc;
- border-right: 1px solid #ccc;
+ /* border-left: 1px solid #ccc; */
+ /* border-right: 1px solid #ccc; */
 }
 
 #panels .button {
@@ -1241,8 +1255,8 @@ details li, .details li {
 
 .dropdowncontent {
   /*background: #e0e0e0;*/
-  padding: 10px;
-  min-width: 220px;
+  padding: 30px;
+  min-width: 250px;
 }
 
 #register p {
@@ -2005,6 +2019,19 @@ a.active:hover {
   display: block;
 }
 
+.dropdown.login {
+  right:-96px;
+}
+.open .dropdown.login .pointer {
+border: 9px solid rgba(0,0,0,0);
+border-bottom: 7px solid #fff;
+width: 0px;
+height: 0px;
+position: absolute;
+top: -15px;
+left: 50%;
+}
+
 .dropdownmenu > a {
   display: block;
   float: none;
@@ -2069,7 +2096,7 @@ a.active:hover {
 .open .button-dropdown:hover,
 .open .button-open,
 .open .button-open:hover {
-  background: #fff;
+  /* background: #fff; */
   z-index: 1;
 }
 
@@ -2635,6 +2662,7 @@ pre .highlight:last-of-type {
 .dd-right {
   right: -10px;
 }
+
 
 #jsbinurl.hidden {
   position: absolute;

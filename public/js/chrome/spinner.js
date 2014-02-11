@@ -1,6 +1,6 @@
-function spinner() {
+function spinner(element) {
   'use strict';
-  var c = document.createElement('canvas');
+  var c = element || document.createElement('canvas');
   var ctx = c.getContext('2d');
 
   var rafID = null;

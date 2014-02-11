@@ -554,7 +554,7 @@ function populateEditor(editor, panel) {
 
     // if we clone the bin, there will be a checksum on the state object
     // which means we happily have write access to the bin
-    if (sessionURL !== template.url && !jsbin.state.checksum) {
+    if (sessionURL !== jsbin.getURL() && !jsbin.state.checksum) {
       // nuke the live saving checksum
       sessionStorage.removeItem('checksum');
       saveChecksum = false;
@@ -562,7 +562,7 @@ function populateEditor(editor, panel) {
 
     if (template && cached == template[panel]) { // restored from original saved
       editor.setCode(cached);
-    } else if (cached && sessionURL == template.url) { // try to restore the session first - only if it matches this url
+    } else if (cached && sessionURL == jsbin.getURL()) { // try to restore the session first - only if it matches this url
       editor.setCode(cached);
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload

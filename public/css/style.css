@@ -3788,10 +3788,11 @@ THE SOFTWARE.
   font-weight: 500;
   letter-spacing: 1px;
   float: right;
+  display: none;
 }
 
-.card.public .visibility {
-  display: none;
+.card.private .visibility {
+  display: inline-block;
 }
 
 .card .viewers {
@@ -3853,8 +3854,12 @@ THE SOFTWARE.
 }
 
 .card canvas {
-  display: inline;
+  display: none;
   margin-right: 2px;
+}
+
+.card.streaming canvas {
+  display: inline;
 }
 
 .card li.owner {

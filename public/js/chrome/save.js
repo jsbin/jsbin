@@ -176,13 +176,15 @@ if (!jsbin.saveDisabled) {
         return;
       }
 
-      saving.inprogress(true);
+      if (!jsbin.saveDisabled) {
+        saving.inprogress(true);
 
-      if (!saveChecksum) {
-        // create the bin and when the response comes back update the url
-        saveCode('save', true);
-      } else {
-        updateCode(panelId);
+        if (!saveChecksum) {
+          // create the bin and when the response comes back update the url
+          saveCode('save', true);
+        } else {
+          updateCode(panelId);
+        }
       }
     }, 250));
   });
@@ -210,6 +212,7 @@ function updateCode(panelId, callback) {
     dataType: 'json',
     headers: {'Accept': 'application/json'},
     success: function (data) {
+      $document.trigger('updateSaved', { panelId: panelId });
       $document.trigger('saveComplete', { panelId: panelId });
       if (data.error) {
         saveCode('save', true, function (data) {

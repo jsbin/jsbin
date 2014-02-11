@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   /*global $:true, jsbin:true, prettyDate:true, EventSource:true, throttle:true, $document:true*/
-  var $template = $($('#infocard').html()); // donkey way of cloning from template
+  var $template = $('#infocard'); // donkey way of cloning from template
   var $header = $template.find('header');
   var meta = jsbin.state.metadata || {};
   var classes = [];
@@ -46,7 +46,7 @@
   } // TODO handle team
 
   if (jsbin.state.code) {
-    $template.addClass(classes.join(' ')).appendTo('body');
+    $template.addClass(classes.join(' ')).parent().removeAttr('hidden');
 
     $header.click(function (e) {
       e.preventDefault();

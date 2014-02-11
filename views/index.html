@@ -457,8 +457,8 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{#feature user "infocard"}}
-<script type="template" id="infocard">
-  <div class="card">
+<div hidden>
+  <div class="card" id="infocard">
     <header><img>
       <div class="visibility"></div>
       <div class="meta">
@@ -479,7 +479,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         {{/feature}}
         <li><a href="/clone">Clone</a> </li>
         <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
-        <li><a href="/export-gist">Export gist</a> </li>
+        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
         <li class="owner"><a href="/download">Download</a> </li>
         <li class="owner"><a href="/archive">Archive</a> </li>
         {{#feature user "delete"}}
@@ -488,7 +488,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
       </ul>
     </div>
   </div>
-</script>
+</div>
 {{/feature}}
 <script>
   var template = {{{json_template}}};
@@ -500,7 +500,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{static}}{{.}}"></script>{{/scripts}}
+    {{#each scripts}}<script src="{{static}}{{.}}"></script>{{/each}}
   {{/if}}
 {{/if}}
 </body>

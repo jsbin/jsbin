@@ -280,7 +280,6 @@ var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) 
   event.preventDefault();
 
   var visibility = $(this).data('vis');
-  console.log(visibility);
 
   $.ajax({
     url: jsbin.getURL() + '/' + visibility,

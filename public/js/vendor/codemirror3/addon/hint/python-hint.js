@@ -31,19 +31,17 @@
 
     var completionList = getCompletions(token, context);
     completionList = completionList.sort();
-    //prevent autocomplete for last word, instead show dropdown with one word
-    if(completionList.length == 1) {
-      completionList.push(" ");
-    }
 
     return {list: completionList,
             from: CodeMirror.Pos(cur.line, token.start),
             to: CodeMirror.Pos(cur.line, token.end)};
   }
 
-  CodeMirror.pythonHint = function(editor) {
+  function pythonHint(editor) {
     return scriptHint(editor, pythonKeywordsU, function (e, cur) {return e.getTokenAt(cur);});
-  };
+  }
+  CodeMirror.pythonHint = pythonHint; // deprecated
+  CodeMirror.registerHelper("hint", "python", pythonHint);
 
   var pythonKeywords = "and del from not while as elif global or with assert else if pass yield"
 + "break except import print class exec in raise continue finally is return def for lambda try";
@@ -64,7 +62,7 @@
   function getCompletions(token, context) {
     var found = [], start = token.string;
     function maybeAdd(str) {
-      if (str.indexOf(start) == 0 && !arrayContains(found, str)) found.push(str);
+      if (str.lastIndexOf(start, 0) == 0 && !arrayContains(found, str)) found.push(str);
     }
 
     function gatherCompletions(_obj) {

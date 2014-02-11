@@ -12,28 +12,34 @@
   CodeMirror.defineOption("styleActiveLine", false, function(cm, val, old) {
     var prev = old && old != CodeMirror.Init;
     if (val && !prev) {
-      updateActiveLine(cm);
-      cm.on("cursorActivity", updateActiveLine);
+      updateActiveLine(cm, cm.getCursor().line);
+      cm.on("beforeSelectionChange", selectionChange);
     } else if (!val && prev) {
-      cm.off("cursorActivity", updateActiveLine);
+      cm.off("beforeSelectionChange", selectionChange);
       clearActiveLine(cm);
-      delete cm._activeLine;
+      delete cm.state.activeLine;
     }
   });
-  
+
   function clearActiveLine(cm) {
-    if ("_activeLine" in cm) {
-      cm.removeLineClass(cm._activeLine, "wrap", WRAP_CLASS);
-      cm.removeLineClass(cm._activeLine, "background", BACK_CLASS);
+    if ("activeLine" in cm.state) {
+      cm.removeLineClass(cm.state.activeLine, "wrap", WRAP_CLASS);
+      cm.removeLineClass(cm.state.activeLine, "background", BACK_CLASS);
     }
   }
 
-  function updateActiveLine(cm) {
-    var line = cm.getLineHandle(cm.getCursor().line);
-    if (cm._activeLine == line) return;
-    clearActiveLine(cm);
-    cm.addLineClass(line, "wrap", WRAP_CLASS);
-    cm.addLineClass(line, "background", BACK_CLASS);
-    cm._activeLine = line;
+  function updateActiveLine(cm, selectedLine) {
+    var line = cm.getLineHandleVisualStart(selectedLine);
+    if (cm.state.activeLine == line) return;
+    cm.operation(function() {
+      clearActiveLine(cm);
+      cm.addLineClass(line, "wrap", WRAP_CLASS);
+      cm.addLineClass(line, "background", BACK_CLASS);
+      cm.state.activeLine = line;
+    });
+  }
+
+  function selectionChange(cm, sel) {
+    updateActiveLine(cm, sel.head.line);
   }
 })();

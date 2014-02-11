@@ -42,10 +42,9 @@
       pushState(path);
     }
 
-    $tabs
-      .removeClass('tab-selected')
-      .filter(currentForm)
-      .addClass('tab-selected');
+    $('.form-container')
+      .removeClass('register login')
+      .addClass($tabs.filter(currentForm)[0].classList[1]);
 
     $info.empty();
 

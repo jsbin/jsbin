@@ -1,0 +1,99 @@
+
+{{> account_sidebar}}
+<link href="/js/vendor/codemirror3/lib/codemirror.css" rel="stylesheet" type="text/css">
+<link href="/css/codemirror.css" rel="stylesheet" type="text/css">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/ambiance-mobile.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/ambiance.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/blackboard.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/cobalt.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/eclipse.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/elegant.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/erlang-dark.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/lesser-dark.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/monokai.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/neat.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/night.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/rubyblue.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/solarized.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/twilight.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/vibrant-ink.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/xq-dark.css" rel="stylesheet" type="text/css">
+
+
+<form>
+	<label> Font size
+		<input type="number">
+	</label>
+	<label Font
+		<input type="dropdown">
+	</label>
+	<label Theme
+		<select>
+			<option value="xq">
+        xq
+			</option>	
+			<option value="vibrant">
+        vibrant
+			</option>	
+			<option value="twilight">
+        twilight
+			</option>	
+			<option value="solarized">
+        solarized
+			</option>	
+			<option value="rubyblue">
+        rubyblue
+			</option>	
+			<option value="night">
+        night
+			</option>	
+			<option value="neat">
+        neat
+			</option>	
+			<option value="monokai">
+        monokai
+			</option>	
+			<option value="lesser">
+        lesser
+			</option>	
+			<option value="erlang">
+        erlang
+			</option>	
+			<option value="elegant">
+        elegant
+			</option>	
+			<option value="eclipse">
+        eclipse
+			</option>	
+			<option value="cobalt">
+        cobalt
+			</option>	
+			<option value="blackboard">
+        blackboard
+			</option>	
+			<option value="ambiance">
+        ambiance
+			</option>	
+		</select>
+	</label>
+	<label> Tab size
+		<input type="number">
+	</label>
+	<label> Wrap lines
+		<input type="checkbox">
+	</label>
+	<label> VIM mode
+		<input type="checkbox">
+	</label>
+</form>
+
+<textarea id="editor-settings-example">
+
+</textarea>
+
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/codemirror3/lib/codemirror.js"></script>
+<script src="/js/vendor/codemirror3/mode/javascript/javascript.js"></script>
+<script src="/js/editor-settings.js"></script>
+

@@ -137,6 +137,15 @@ var renderer = (function () {
   renderer.handleMessage = function (event) {
     if (!event.origin) return;
     var data = event.data;
+
+    // specific change to handle reveal embedding
+    try {
+      if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
+        jsbin.panels.restore();
+        return;
+      }
+    } catch (e) {}
+
     try {
       data = JSON.parse(event.data);
     } catch (e) {
@@ -187,7 +196,7 @@ var renderer = (function () {
         embedResizeDone = true;
         // Inform the outer page of a size change
         var height = ($body.outerHeight(true) - $(renderer.runner.iframe).height()) + data.offsetHeight;
-       window.parent.postMessage({ height: height }, '*');
+        window.parent.postMessage({ height: height }, '*');
       }
     };
   }());
@@ -207,8 +216,9 @@ var renderer = (function () {
   renderer.console = function (data) {
     var method = data.method,
         args = data.args;
-    if (!window._console) return;
-    if (!window._console[method]) method = 'log';
+
+    if (!window._console) {return;}
+    if (!window._console[method]) {method = 'log';}
     window._console[method].apply(window._console, args);
   };
 

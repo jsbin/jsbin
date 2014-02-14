@@ -251,6 +251,7 @@
           <div class="dropdownmenu processorSelector" data-type="javascript">
             <a href="#javascript">JavaScript</a>
             <a href="#coffeescript">CoffeeScript</a>
+            <a href="#jsx">JSX (React)</a>
             <a href="#processing">Processing</a>
             <a href="#traceur">Traceur</a>
             <a href="#typescript">TypeScript</a>
@@ -500,7 +501,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#each scripts}}<script src="{{static}}{{.}}"></script>{{/each}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
 {{/if}}
 </body>

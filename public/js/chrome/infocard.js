@@ -24,7 +24,7 @@
       classes.push(meta.name);
     }
 
-    if (jsbin.state.checksum) { //jsbin.user && (meta.name === jsbin.user.name)) {
+    if (jsbin.state.checksum || (jsbin.user && (meta.name === jsbin.user.name))) {
       owner = true;
       classes.push('author');
     }

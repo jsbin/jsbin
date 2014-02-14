@@ -140,6 +140,28 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    jsx: createProcessor({
+      id: 'jsx',
+      target: 'javascript',
+      extensions: ['jsx'],
+      url: jsbin.static + '/js/vendor/JSXTransformer.js',
+      init: function (ready) {
+        $('#library').val( $('#library').find(':contains("React")').val() ).trigger('change');
+        ready();
+      },
+      handler: function (source) {
+        var renderedCode = '';
+        try {
+          renderedCode = JSXTransformer.transform(source).code;
+        } catch (e) {
+          if (console) {
+            console.error(e.message);
+          }
+        }
+        return renderedCode;
+      }
+    }),
+
     typescript: createProcessor({
       id: 'typescript',
       target: 'javascript',

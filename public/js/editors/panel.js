@@ -170,13 +170,11 @@ var Panel = function (name, settings) {
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     // Bind events using CM3 syntax
-    panel.editor.on('change', function (event) {
-      $document.trigger('codeChange', [{ panelId: panel.id, revert: true }]);
+    panel.editor.on('change', function codeChange(cm, changeObj) {
+      $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       return true;
     });
-
     panel.editor.on('gutterClick', foldFunc[name]);
-
     panel.editor.on('focus', function () {
       panel.focus();
     });
@@ -382,7 +380,9 @@ Panel.prototype = {
   },
   setCode: function (content) {
     if (this.editor) {
-      if (content === undefined) content = '';
+      if (content === undefined) {
+        content = '';
+      }
       this.controlButton.toggleClass('hasContent', !!content.trim().length);
       this.codeSet = true;
       this.editor.setCode(content.replace(badChars, ''));
@@ -555,7 +555,7 @@ function populateEditor(editor, panel) {
 
     // if we clone the bin, there will be a checksum on the state object
     // which means we happily have write access to the bin
-    if (sessionURL !== template.url && !jsbin.state.checksum) {
+    if (sessionURL !== jsbin.getURL() && !jsbin.state.checksum) {
       // nuke the live saving checksum
       sessionStorage.removeItem('checksum');
       saveChecksum = false;
@@ -563,7 +563,7 @@ function populateEditor(editor, panel) {
 
     if (template && cached == template[panel]) { // restored from original saved
       editor.setCode(cached);
-    } else if (cached && sessionURL == template.url) { // try to restore the session first - only if it matches this url
+    } else if (cached && sessionURL == jsbin.getURL()) { // try to restore the session first - only if it matches this url
       editor.setCode(cached);
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload

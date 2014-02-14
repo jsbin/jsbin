@@ -14,6 +14,8 @@ function cleanse(s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 }
 
+var historyPosition = -1;
+
 /**
  * Run a console command.
  */
@@ -70,7 +72,7 @@ var showResponse = function (response) {
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  pos = history.length;
+  historyPosition = history.length;
 
   if (typeof response === 'undefined') return;
 
@@ -296,6 +298,7 @@ function about() {
 }
 
 function setHistory(history) {
+  historyPosition = history.length;
   if (typeof JSON == 'undefined') return;
 
   try {
@@ -413,10 +416,6 @@ function setCursorTo(str) {
   }
 }
 
-exec.ontouchstart = function () {
-  window.scrollTo(0,0);
-};
-
 function findNode(list, node) {
   var pos = 0;
   for (var i = 0; i < list.length; i++) {
@@ -446,20 +445,20 @@ exec.onkeydown = function (event) {
 
     // Up
     if (which == keylib.up) {
-      pos--;
+      historyPosition--;
       // Don't go past the start
-      if (pos < 0) pos = 0; //history.length - 1;
+      if (historyPosition < 0) historyPosition = 0; //history.length - 1;
     }
     // Down
     if (which == keylib.down) {
-      pos++;
+      historyPosition++;
       // Don't go past the end
-      if (pos >= history.length) pos = history.length; //0;
+      if (historyPosition >= history.length) historyPosition = history.length; //0;
     }
-    if (history[pos] != undefined && history[pos] !== '') {
-      setCursorTo(history[pos]);
+    if (history[historyPosition] != undefined && history[historyPosition] !== '') {
+      setCursorTo(history[historyPosition]);
       return false;
-    } else if (pos == history.length) {
+    } else if (historyPosition == history.length) {
       setCursorTo('');
       return false;
     }

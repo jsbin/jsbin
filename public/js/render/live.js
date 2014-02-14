@@ -216,8 +216,9 @@ var renderer = (function () {
   renderer.console = function (data) {
     var method = data.method,
         args = data.args;
-    if (!window._console) return;
-    if (!window._console[method]) method = 'log';
+
+    if (!window._console) {return;}
+    if (!window._console[method]) {method = 'log';}
     window._console[method].apply(window._console, args);
   };
 

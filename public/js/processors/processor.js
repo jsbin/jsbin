@@ -140,6 +140,28 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    jsx: createProcessor({
+      id: 'jsx',
+      target: 'javascript',
+      extensions: ['jsx'],
+      url: jsbin.static + '/js/vendor/JSXTransformer.js',
+      init: function (ready) {
+        $('#library').val( $('#library').find(':contains("React")').val() ).trigger('change');
+        ready();
+      },
+      handler: function (source) {
+        var renderedCode = '';
+        try {
+          renderedCode = JSXTransformer.transform(source).code;
+        } catch (e) {
+          if (console) {
+            console.error(e.message);
+          }
+        }
+        return renderedCode;
+      }
+    }),
+
     typescript: createProcessor({
       id: 'typescript',
       target: 'javascript',
@@ -388,6 +410,11 @@ var processors = jsbin.processors = (function () {
 
     var cmMode = processorName ? editorModes[processorName] || editorModes[panelId] : editorModes[panelId];
 
+    // For JSX, use the plain JavaScript mode but disable smart indentation
+    // because it doesn't work properly
+    var smartIndent = cmMode !== 'jsx';
+    cmMode = cmMode === 'jsx' ? 'javascript' : cmMode;
+
     if (!panel) return;
 
     panel.trigger('processor', processorName || 'none');
@@ -396,12 +423,14 @@ var processors = jsbin.processors = (function () {
       panel.processor = processors[processorName](function () {
         // processor is ready
         panel.editor.setOption('mode', cmMode);
+        panel.editor.setOption('smartIndent', smartIndent);
         $processorSelectors.find('a').trigger('select', [processorName]);
         if (callback) callback();
       });
     } else {
       // remove the preprocessor
       panel.editor.setOption('mode', cmMode);
+      panel.editor.setOption('smartIndent', smartIndent);
 
       panel.processor = defaultProcessor;
       delete jsbin.state.processors[panelId];

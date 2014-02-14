@@ -123,6 +123,16 @@ var sandbox = (function () {
    */
   sandbox.eval = function (cmd) {
     if (!sandbox.active) throw new Error("sandbox.eval: has no active iframe.");
+
+    var re = /(^.|\b)console\.(\S+)/g;
+
+    if (re.test(cmd)) {
+      var replaceWith = 'window.runnerWindow.proxyConsole.';
+      cmd = cmd.replace(re, function (all, str, arg) {
+        return replaceWith + arg;
+      });
+    }
+
     var childWindow = sandbox.active.contentWindow;
     var output = null,
         type = 'log';

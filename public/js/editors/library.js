@@ -111,13 +111,9 @@ function insertResources(urls) {
   }
 
   if (isJadeActive()) {
-    if (code.indexOf('head') !== -1) {
-      var headIndent = code.match(/([ ]*)head/)[1];
-      var newLine = "\n"+headIndent+headIndent; // double head indentto matc, and then to go further
-      code = code.replace(/head/, 'head'+ newLine + html.join(newLine));
-    } else {
-      code = 'head\n' + html.join('\n  ') + code;
-    }
+    // always append Jade at the end, it's just easier that way...okay?
+    var indent = (code.match(/html.*\n(\s*)\S?/i) || [,])[1];
+    code = code.trim() + '\n' + indent + html.join('\n' + indent).trim();
   } else {
     if (code.indexOf('<head') !== -1) {
       code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
@@ -132,26 +128,25 @@ function insertResources(urls) {
 }
 
 function createHTMLToJadeTagConverter(tagName, attribute, suffix){
-  var doubleOrSingleQuote = "('|" + '")';
-  var regExToGrabResource = new RegExp(attribute+"="+doubleOrSingleQuote+".+\."+suffix+doubleOrSingleQuote);
+  var regExToGrabResource = new RegExp(attribute+'=(\'|").+.'+suffix+'\\1');
   return function(html){
     var resource = html.match(regExToGrabResource);
-    return tagName+"("+resource[0]+")";
+    return tagName+'('+resource[0]+')';
   };
 }
 
-var htmlScriptToJade = createHTMLToJadeTagConverter("script", "src", "js");
+var htmlScriptToJade = createHTMLToJadeTagConverter('script', 'src', 'js');
 // Dirty, but good enough for now, parse the link and add commas between attributes;
 var htmlLinkToJade = (function(){
-  var parseLink = createHTMLToJadeTagConverter("link", "href", "css");
+  var parseLink = createHTMLToJadeTagConverter('link', 'href', 'css');
   return function(html){
     var jadeLink = parseLink(html);
     return jadeLink.split('" ').join('",');
-  }
+  };
 }());
 
 function isJadeActive(){
-  return jsbin.state.processors.html === "jade";
+  return jsbin.state.processors.html === 'jade';
 }
 
 function isCssFile(url) {

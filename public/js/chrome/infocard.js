@@ -12,6 +12,10 @@
   var canvas = $header.find('canvas')[0];
   var s = spinner(canvas);
 
+  if ($template.length === 0) {
+    return;
+  }
+
   function updateInfoCard(event) {
     var meta = jsbin.state.metadata || {};
     var classes = [];

@@ -9,7 +9,7 @@
      "foo_bar_hello");
 
   MT("emStrongUnderscore",
-     "[strong __][emstrong _foo__][em _] bar");
+     "[strong __][em&strong _foo__][em _] bar");
 
   MT("fencedCodeBlocks",
      "[comment ```]",
@@ -24,6 +24,34 @@
      "",
      "[comment ```]",
      "bar");
+
+  MT("taskListAsterisk",
+     "[variable-2 * []] foo]", // Invalid; must have space or x between []
+     "[variable-2 * [ ]]bar]", // Invalid; must have space after ]
+     "[variable-2 * [x]]hello]", // Invalid; must have space after ]
+     "[variable-2 * ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "    [variable-3 * ][property [x]]][variable-3  foo]"); // Valid; can be nested
+
+  MT("taskListPlus",
+     "[variable-2 + []] foo]", // Invalid; must have space or x between []
+     "[variable-2 + [ ]]bar]", // Invalid; must have space after ]
+     "[variable-2 + [x]]hello]", // Invalid; must have space after ]
+     "[variable-2 + ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "    [variable-3 + ][property [x]]][variable-3  foo]"); // Valid; can be nested
+
+  MT("taskListDash",
+     "[variable-2 - []] foo]", // Invalid; must have space or x between []
+     "[variable-2 - [ ]]bar]", // Invalid; must have space after ]
+     "[variable-2 - [x]]hello]", // Invalid; must have space after ]
+     "[variable-2 - ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "    [variable-3 - ][property [x]]][variable-3  foo]"); // Valid; can be nested
+
+  MT("taskListNumber",
+     "[variable-2 1. []] foo]", // Invalid; must have space or x between []
+     "[variable-2 2. [ ]]bar]", // Invalid; must have space after ]
+     "[variable-2 3. [x]]hello]", // Invalid; must have space after ]
+     "[variable-2 4. ][meta [ ]]][variable-2  [world]]]", // Valid; tests reference style links
+     "    [variable-3 1. ][property [x]]][variable-3  foo]"); // Valid; can be nested
 
   MT("SHA",
      "foo [link be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2] bar");

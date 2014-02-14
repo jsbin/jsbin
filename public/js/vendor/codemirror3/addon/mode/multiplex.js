@@ -61,7 +61,7 @@ CodeMirror.multiplexingMode = function(outer /*, others */) {
         return innerToken;
       }
     },
-    
+
     indent: function(state, textAfter) {
       var mode = state.innerActive ? state.innerActive.mode : outer;
       if (!mode.indent) return CodeMirror.Pass;
@@ -81,7 +81,7 @@ CodeMirror.multiplexingMode = function(outer /*, others */) {
             state.inner = CodeMirror.startState(other.mode, mode.indent ? mode.indent(state.outer, "") : 0);
           }
         }
-      } else if (mode.close === "\n") {
+      } else if (state.innerActive.close === "\n") {
         state.innerActive = state.inner = null;
       }
     },

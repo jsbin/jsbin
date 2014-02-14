@@ -471,7 +471,8 @@ span.menu {
   display: inline-block;
 }
 
-.code .menu {
+.code .menu,
+#live .menu {
   margin-left: 0;
   padding: 10px 100px 0 10px;
   display: block;

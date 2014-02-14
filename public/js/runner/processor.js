@@ -26,7 +26,7 @@ var processor = (function () {
     var regex = /<!doctype [\s\S]*?>/i;
     return function (str) {
       var doctype = (str.match(regex) || [''])[0],
-          tail = str.substr(doctype.length);
+          tail = str.substr(doctype.length).trim();
       return {
         doctype: doctype,
         tail: tail
@@ -77,7 +77,7 @@ var processor = (function () {
     // Kill the blocking functions
     // IE requires that this is done in the script, rather than off the window
     // object outside of the doc.write.
-    if (realtime && options.includeJsInRealtime) {
+    if (realtime && options.includeJsInRealtime && !options.debug) {
       combinedSource.push(processor.blockingMethods.kill);
     }
 
@@ -85,7 +85,7 @@ var processor = (function () {
     combinedSource.push(source);
 
     // Restore the blocking functions
-    if (realtime && options.includeJsInRealtime) {
+    if (realtime && options.includeJsInRealtime && !options.debug) {
       combinedSource.push(processor.blockingMethods.restore);
     }
 

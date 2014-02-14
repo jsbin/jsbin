@@ -137,6 +137,15 @@ var renderer = (function () {
   renderer.handleMessage = function (event) {
     if (!event.origin) return;
     var data = event.data;
+
+    // specific change to handle reveal embedding
+    try {
+      if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
+        jsbin.panels.restore();
+        return;
+      }
+    } catch (e) {}
+
     try {
       data = JSON.parse(event.data);
     } catch (e) {
@@ -175,13 +184,16 @@ var renderer = (function () {
       size.fadeOut(200);
     }, 2000);
 
+    var embedResizeDone = false;
+
     return function (data) {
       if (!jsbin.embed) {
         // Display the iframe size in px in the JS Bin UI
         size.show().html(data.width + 'px');
         hide();
       }
-      if (jsbin.embed) {
+      if (jsbin.embed && embedResizeDone === false) {
+        embedResizeDone = true;
         // Inform the outer page of a size change
         var height = ($body.outerHeight(true) - $(renderer.runner.iframe).height()) + data.offsetHeight;
         window.parent.postMessage({ height: height }, '*');
@@ -240,7 +252,7 @@ var renderer = (function () {
  * Live rendering.
  *
  * Comes in two tasty flavours. Basic mode, which is essentially an IE7
- * fallback. Take a look at https://github.com/remy/jsbin/issues/651 for more.
+ * fallback. Take a look at https://github.com/jsbin/jsbin/issues/651 for more.
  * It uses the iframe's name and JS Bin's event-stream support to keep the
  * page up-to-date.
  *
@@ -289,6 +301,12 @@ var renderLivePreview = (function () {
     if (requested) sendReload();
 
     // Tell the iframe to reload
+    var visiblePanels = jsbin.panels.getVisible();
+    var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
+    var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
+    if (!outputPanelOpen && !consolePanelOpen) {
+      return;
+    }
     renderer.postMessage('render', {
       source: source,
       options: {

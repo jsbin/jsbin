@@ -10,7 +10,7 @@ Installation requires a number of simple steps:
 
 For the simplest install process we recommend using Node with SQLite.
 
-Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **PHP is no longer supported**. If you want to install JS Bin using PHP, I'm afraid you're on your own. There are some old docs that can help, but the project has long surpassed PHP's functionality.  If you want to risk the PHP version, grab [v3.0.0 here](https://github.com/remy/jsbin/releases), warts an all.
+Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **PHP is no longer supported**. If you want to install JS Bin using PHP, I'm afraid you're on your own. There are some old docs that can help, but the project has long surpassed PHP's functionality.  If you want to risk the PHP version, grab [v3.0.0 here](https://github.com/jsbin/jsbin/releases), warts an all.
 
 ## Installing
 
@@ -36,6 +36,7 @@ If you plan to build and test for production, see the section at the end.
 
 JS Bin comes with a default config file. You can either edit this directly, or we recommend copying and modifying your own copy that should be named `config.local.json`:
 
+    cd /usr/local/lib/node-modules/jsbin    # Kubuntu 13.10 example; YMMV
     cp config.default.json config.local.json
 
 There are a number of options that you can change to configure JS Bin to your needs. The property names, meaning and possible values have been listed below:
@@ -51,7 +52,7 @@ This is an object controlling how URLs are generated in JS Bin. If you plan to r
 * url.host: The host you will access JS Bin on, eg. `jsbin.dev` is what we use offline. If you want to include a port number here you should do, eg. `jsbin.dev:8000` will request JS Bin over port 8000.
 * url.prefix: `/` or your subdirectory that JS Bin should be accessed from. For instance, if you run JS Bin under `http://remysharp.com/jsbin` the `url.prefix` value must be `/jsbin/`.
 * url.ssl: `false` or `true` whether you want to run JS Bin over SSL.
-* url.static: `false` or a url, such as `http://static.jsbin.dev:8000/jsbin/`. This will control where static assets are served from. If the value is `false`, they will be served from the same path as dyanmic content.
+* url.static: `false` or a url, such as `http://static.jsbin.dev:8000/jsbin/`. This will control where static assets are served from. If the value is `false`, they will be served from the same path as dynamic content.
 
 ### Custom config file location
 

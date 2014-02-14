@@ -84,7 +84,7 @@ function getQuery(querystring) {
 }
 
 
-// ---- here begins the jsbin embed - based on the embedding doc: https://github.com/remy/jsbin/blob/master/docs/embedding.md
+// ---- here begins the jsbin embed - based on the embedding doc: https://github.com/jsbin/jsbin/blob/master/docs/embedding.md
 
 var innerText = document.createElement('i').innerText === undefined ? 'textContent' : 'innerText';
 
@@ -213,7 +213,8 @@ function embed(link) {
 
   var onmessage = function (event) {
     event || (event = window.event);
-    iframe.style.height = event.data.height + 'px';
+    // * 1 to coerse to number, and + 2 to compensate for border
+    iframe.style.height = (event.data.height * 1 + 2) + 'px';
   };
 
   if (window.addEventListener) {

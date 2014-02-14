@@ -7,12 +7,25 @@ body {
   padding: 0;
   font-family: "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
-  min-width: 976px;
+  /*min-width: 976px;*/
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
   background: #fff url(../images/jsbin_animated.gif) no-repeat center;
   height: 100%;
 }
+
+/*
+ * Pro styling
+ */
+
+#username .pro {
+  font-size: 12px;
+  margin-left: 2px;
+  color: #aaa;
+}
+/*
+ *  End pro styling
+ */
 
 body.ready {
   background: #fff url(../images/jsbin_static.png) no-repeat center;
@@ -100,7 +113,7 @@ textarea:focus {
 
 #control {
   z-index: 10000;
-  min-width: 760px;
+  /*min-width: 760px;*/
   height: 35px;
   position: absolute;
 /*  width: 100%;*/
@@ -116,6 +129,7 @@ textarea:focus {
   background-color: #FFF;
 
 }
+
 
 #control, .label {
   -webkit-user-select: none;
@@ -311,6 +325,11 @@ iframe.javascript {
   /*background: #fff;*/
   /*background: rgba(255, 255, 255, 0.3);*/
   font-size: 13px;
+}
+
+body.private #control a#private,
+body.public #control a#public {
+  display:none;
 }
 
 #panels .button,
@@ -995,7 +1014,7 @@ body.streaming #bin {
 }
 
 .showtip #bin {
-  bottom: 26px;
+  /*bottom: 26px;*/
 }
 
 #tip {
@@ -2850,6 +2869,10 @@ pre .highlight:last-of-type {
   /*font-weight: bold;*/
 }
 
+.nokeyboardshortcuts .keyshortcut {
+  display: none;
+}
+
 .dd-right .keyshortcut {
   right: 20px;
 }
@@ -3576,4 +3599,26 @@ THE SOFTWARE.
 
 .CodeMirror-focused .cm-matchhighlight {
   outline: 1px solid #666;
+}
+
+@media only screen and (max-width: 700px) {
+  .help .menu {
+    display: none;
+  }
+
+  #panels {
+    right: 0;
+    width: inherit;
+    margin-right: 5px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .help .menu {
+    display: none;
+  }
+
+  #panels {
+    display: none;
+  }
 }

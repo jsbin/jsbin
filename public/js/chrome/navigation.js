@@ -4,6 +4,7 @@ var $startingpoint = $('#startingpoint').click(function (event) {
     analytics.saveTemplate();
     localStorage.setItem('saved-javascript', editors.javascript.getCode());
     localStorage.setItem('saved-html', editors.html.getCode());
+    localStorage.setItem('saved-css', editors.css.getCode());
 
     $document.trigger('tip', {
       type: 'notification',
@@ -43,6 +44,13 @@ $('.logout').click(function (event) {
   // element in the form to look the same as the anchor. Ideally we would
   // remove that and just let the form submit itself...
   $(this.hash).submit();
+  // Clear session storage so private bins wont be cached.
+  for (i = 0; i < sessionStorage.length; i++) {
+    key = sessionStorage.key(i);
+    if (key.indexOf('jsbin.content.') === 0) {
+      sessionStorage.removeItem(key);
+    }
+  }
 });
 
 $('.homebtn').click(function (event, data) {
@@ -265,6 +273,38 @@ $('#createnew').click(function () {
   }, 0);
 });
 
+var $privateButton = $('#control a.visibilityToggle#private');
+var $publicButton = $('#control a.visibilityToggle#public');
+
+var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) {
+  event.preventDefault();
+
+  var visibility = $(this).data('vis');
+  console.log(visibility);
+
+  $.ajax({
+    url: jsbin.getURL() + '/' + visibility,
+    type: 'post',
+    success: function (data) {
+
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'This bin is now ' + visibility,
+        autohide: 6000
+      });
+
+      $visibilityButtons.css('display', 'none');
+
+      if (visibility === 'public') {
+        $privateButton.css('display', 'block');
+      } else {
+        $publicButton.css('display', 'block');
+      }
+
+    }
+  });
+});
+
 $('form.login').closest('.menu').bind('close', function () {
   $(this).find('.loginFeedback').empty().hide();
   $('#login').removeClass('forgot');
@@ -305,7 +345,8 @@ if (window.location.hash) {
 var ismac = navigator.userAgent.indexOf(' Mac ') !== -1,
     mackeys = {
       'ctrl': '⌘',
-      'shift': '⇧'
+      'shift': '⇧',
+      'del': '⌫'
     };
 
 $('#control').find('a[data-shortcut]').each(function () {
@@ -314,7 +355,7 @@ $('#control').find('a[data-shortcut]').each(function () {
 
   var key = data.shortcut;
   if (ismac) {
-    key = key.replace(/ctrl/i, mackeys.ctrl).replace(/shift/, mackeys.shift).replace(/\+/g, '').toUpperCase();
+    key = key.replace(/ctrl/i, mackeys.ctrl).replace(/shift/, mackeys.shift).replace(/del/, mackeys.del).replace(/\+/g, '').toUpperCase();
   }
 
   $this.append('<span class="keyshortcut">' + key + '</span>');
@@ -374,7 +415,30 @@ $('#addmeta').click(function () {
   return false;
 });
 
-// add navigation to insert meta data
+$('#deletebin').on('click', function (e) {
+  e.preventDefault();
+  $.ajax({
+    type: 'post',
+    url: jsbin.getURL() + '/delete',
+    success: function () {
+      jsbin.state.deleted = true;
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
+      });
+    },
+    error: function (xhr) {
+      if (xhr.status === 403) {
+        $document.trigger('tip', {
+          content: 'You don\'t own this bin, so you can\'t delete it.',
+          autohide: 5000,
+        });
+      }
+      console.log('error', xhr.status);
+    }
+  });
+});
+
 
 
 }());

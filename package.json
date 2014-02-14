@@ -9,21 +9,23 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.8.11",
+  "version": "3.10.7",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
   "repository": {
     "type": "git",
-    "url": "git://github.com/remy/jsbin.git"
+    "url": "git://github.com/jsbin/jsbin.git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
+    ":install": "build/install.js",
+    "preupdate": "node build/pre-update.js",
+    "postupdate": "node build/post-update.js commit"
   },
   "dependencies": {
     "express": "3.0.x",
     "asyncjs": "0.0.7",
-    "hogan.js": "2.0.0",
     "sqlite3": "~2.1.19",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
@@ -39,10 +41,13 @@
     "passport": "~0.1.17",
     "passport-github": "~0.1.5",
     "mysql": "~2.0.0-alpha9",
-    "bcrypt-nodejs": "0.0.3"
-  },
-  "//": {
-    "bcrypt": "~0.7.6"
+    "bcrypt-nodejs": "0.0.3",
+    "semver": "~2.1.0",
+    "rsvp": "~3.0.1",
+    "undefsafe": "0.0.2",
+    "feature-gateway": "0.0.3",
+    "hbs": "~2.4.0",
+    "replify": "~1.1.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -51,7 +56,8 @@
     "grunt-contrib-uglify": "~0.2.2",
     "should": "~1.2.2",
     "mocha": "~1.11.0",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "grunt-cli": "~0.1.11"
   },
   "optionalDependencies": {},
   "licenses": [

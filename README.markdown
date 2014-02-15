@@ -48,7 +48,7 @@ If you install [Node.js](http://nodejs.org) installation is easy:
 
 Optionally point JS Bin to your config:
 
-    $ JSBIN_CONFIG=~/conifg.local.json jsbin
+    $ JSBIN_CONFIG=~/config.local.json jsbin
 
 Then open your browser to [http://localhost:3000](http://localhost:3000) and you have a fully working version of JS Bin running locally.
 

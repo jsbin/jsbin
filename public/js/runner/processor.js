@@ -38,10 +38,11 @@ var processor = (function () {
    * Replace HTML characters with encoded equivatents for debug mode.
    */
   processor.debug = function (source) {
-    return '<pre>' + source.replace(/[<>&]/g, function (m) {
-      if (m == '<') return '&lt;';
-      if (m == '>') return '&gt;';
-      if (m == '&') return '&amp;';
+    return '<body id="runner"><style>pre { font-family: Menlo, Monaco, consolas, monospace; font-size: 14px; line-height: 18px;}</style><pre>' +
+        source.replace(/[<>&]/g, function (m) {
+      if (m === '<') { return '&lt;'; }
+      if (m === '>') { return '&gt;'; }
+      if (m === '&') { return '&amp;'; }
     }) + '</pre>';
   };
 

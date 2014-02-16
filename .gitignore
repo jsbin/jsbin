@@ -9,3 +9,4 @@ statsd.js
 .allow-devtools-edit
 jsbin.sqlite
 node_modules
+tmp/*

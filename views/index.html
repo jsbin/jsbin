@@ -120,12 +120,12 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
-                    {{#unless user.github_token}}
+                    {{#feature user "github"}}{{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
                       <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
                     </div>
-                    {{/unless}}
+                    {{/unless}}{{/feature}}
                   </form>
 
                   <form action="{{root}}/logout" method="POST" id="logout">
@@ -166,10 +166,12 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
+                      {{#feature user "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
                       </div>
+                      {{/feature}}
                     </form>
                   </div>
                 </div>
@@ -194,10 +196,12 @@
                       <div>
                         <input type=submit value="Register">
                       </div>
+                      {{#feature user "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                       </div>
+                      {{/feature}}
                     </form>
                   </div>
                 </div>

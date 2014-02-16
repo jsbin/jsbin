@@ -56,9 +56,9 @@ var getPreparedCode = (function () {
     if (!nojs) {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
-        var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
-        if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
-        sourceURLctr++;
+        // var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
+        // if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
+        // sourceURLctr++;
       } catch (e) {
         if (editors.javascript.processor.id) {
           window.console && window.console.warn(editors.javascript.processor.id + ' processor compilation failed');

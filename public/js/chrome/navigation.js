@@ -441,3 +441,9 @@ $('a.deletebin').on('click', function (e) {
 
 
 }());
+
+$('#outputprocessors a').click(function (event) {
+  event.preventDefault();
+  jsbin.settings.debug = this.hash === '#source';
+  renderLivePreview();
+});

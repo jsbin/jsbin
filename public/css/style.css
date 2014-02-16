@@ -472,10 +472,14 @@ span.menu {
 }
 
 .code .menu,
-#live .menu {
+.live .menu {
   margin-left: 0;
   padding: 10px 100px 0 10px;
   display: block;
+}
+
+#live .menu {
+  padding-right: 10px;
 }
 
 #control div.group > * {
@@ -1625,7 +1629,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 /* codemirror JS Bin custom styles */
 
-.editbox .CodeMirror {
+.editbox .CodeMirror,
+#runner pre {
   height: 100%;
   top: 0;
   bottom: 0;
@@ -2572,7 +2577,7 @@ form + hr {
   padding-left: 10px;
 }
 
-.code .name {
+.label .name {
   display: block;
 
   /* overflow: hidden; */
@@ -2582,7 +2587,11 @@ form + hr {
   /*text-shadow: -2px 0 10px white, 2px 0 10px white, 0 2px 10px white, 0 -2px 10px white;*/
 }
 
-.code .name a {
+#live .name {
+  width: auto;
+}
+
+.label .name a {
   text-decoration: none;
 }
 
@@ -3869,4 +3878,13 @@ THE SOFTWARE.
 
 .card.author li.owner {
   display: block;
+}
+
+#runner {
+  background: none;
+}
+
+#runner pre {
+  padding: 4px 10px;
+  font-size: 18px;
 }

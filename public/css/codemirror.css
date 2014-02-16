@@ -13,8 +13,8 @@
 .editbox {
   margin: .4em;
   padding: 0;
-  font-family: MenschRegular, Menlo, Monaco, consolas, monospace;
-  font-size: 14pt;
+  font-family: "MenschRegular", Menlo, Monaco, consolas, monospace;
+  font-size: 14px;
   color: black;
 }
 

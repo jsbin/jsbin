@@ -59,7 +59,8 @@
     var $form = $(event.target);
 
     var data = $form.serializeArray().reduce(function(obj, item) {
-      return obj[item.name] = item.value, obj;
+      obj[item.name] = item.value; 
+      return obj;
     }, {});
 
     $.ajax({

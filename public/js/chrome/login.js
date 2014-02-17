@@ -16,9 +16,9 @@ var $loginForm = $('form.login').submit(function (event) {
   $loginFeedback.show().text('Checking...');
 
   $.ajax({
-    url: form.attr('action'),
-    data: { name: name, key: key, email: email },
-    type: 'post',
+    url: 'http://' + window.location.host + form.attr('action'),
+    data: { username: name, key: key, email: email },
+    type: 'POST',
     dataType: 'json',
     complete: function (jqXHR) {
       var data = $.parseJSON(jqXHR.responseText) || {};

@@ -98,41 +98,157 @@
       <div class="help">
         {{#unless embed}}
           {{#if home}}
+            {{#feature user "accountPages"}}
             <div class="menu">
               <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
             </div>
+            {{else}}
+            <div class="menu">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
+              <div class="dropdown dd-right" id="profile">
+                <div class="dropdowncontent">
+                  <form class="login">
+                    <p class="loginFeedback"></p>
+                    <div>
+                      <span class="input" id="username" readonly>
+                        @{{home}}{{#feature user "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                      </span>
+                    </div>
+                    <div>
+                      <label>Email<br>
+                      <input name="email" type="email" value="{{email}}"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input name="password" type="password" value=""></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Update account">
+                      <a class="logout" href="#logout">Logout</a>
+                    </div>
+                    {{#feature user "github"}}{{#unless user.github_token}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                    </div>
+                    {{/unless}}{{/feature}}
+                  </form>
+
+                  <form action="{{root}}/logout" method="POST" id="logout">
+                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <button hidden>Logout</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/feature}}
           {{else}}
             {{#if client.user}}
-              <div class="menu">
-                {{#feature user "github"}}
-                <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
-                <div class="dropdown login" id="registerLogin">
-                <div class="pointer"></div>
-                  <div class="dropdowncontent">
-                    <a class="btn-github" href="/auth/github">
-                      <img src="{{static}}/images/github-32.png">
-                      Register/Login via GitHub
-                    </a>
-                    <span class="login-group">
-                      Or
-                      <a class="btn-login" href="/login">
-                        <span>use your email address</span>
+              {{#feature user "accountPages"}}
+                <div class="menu">
+                  {{#feature user "github"}}
+                  <a href="/login" class="button button-dropdown" id="loginbtn">Login &amp; Register</a>
+                  <div class="dropdown login" id="registerLogin">
+                  <div class="pointer"></div>
+                    <div class="dropdowncontent">
+                      <a class="btn-github" href="/auth/github">
+                        <img src="{{static}}/images/github-32.png">
+                        Login &amp; Register via GitHub
                       </a>
-                    </span>
+                      <span class="login-group">
+                        Or
+                        <a class="btn-login" href="/login">
+                          <span>use your email address</span>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  {{else}}
+                  <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                  {{/feature}}
+                </div>
+              {{else}}
+              <div class="menu">
+                <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+                <div class="dropdown dd-right" id="login">
+                  <div class="dropdowncontent">
+                    <form class="forgot" action="{{root}}/forgot" method="post">
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Request password reset">
+                        <input type="hidden" name="_csrf" value="{{token}}">
+                        <input type="hidden" name="_redirect" value="home">
+                      </div>
+                    </form>
+                    <form class="login">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username or Email<br>
+                        <input name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Log in">
+                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+                      </div>
+                      {{#feature user "github"}}
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      </div>
+                      {{/feature}}
+                    </form>
                   </div>
                 </div>
-                {{else}}
-                <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
-                {{/feature}}
+              </div><div class="menu">
+                <a href="#register" class="button button-open" id="regbtn">Register</a>
+                <div class="dropdown dd-right" id="register">
+                  <div class="dropdowncontent">
+                    <p>Registration allows you to retrieve your saved files.</p>
+                    <form class="login">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username<br><input required name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input required name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Register">
+                      </div>
+                      {{#feature user "github"}}
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                      </div>
+                      {{/feature}}
+                    </form>
+                  </div>
+                </div>
               </div>
+              {{/feature}}
             {{/if}}
           {{/if}}
         {{/unless}}
+
+        {{#if settings.ui.showblog}}
         <div class="menu">
-          <a href="http://learn.jsbin.com/blog" class="button"> Blog </a>
+          <a href="http://learn.jsbin.com/blog" class="button">Blog</a>
         </div>
+        {{/if}}
         <div class="menu">
-          <a href="http://learn.jsbin.com/help" class="button"> Help </a>
+          <a href="http://learn.jsbin.com/help" class="button">Help</a>
         </div>
         <!--
           <div class="menu">

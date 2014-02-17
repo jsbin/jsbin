@@ -27,6 +27,7 @@
     "id": null,
     "render-id": null
   },
+  "ui": {},
   "mail": {
     "adapter": "sendmail",
     "sendmail": {},

@@ -1256,7 +1256,7 @@ details li, .details li {
 
 .dropdowncontent {
   /*background: #e0e0e0;*/
-  padding: 30px;
+  padding: 10px;
   min-width: 250px;
 }
 
@@ -2059,9 +2059,9 @@ left: 50%;
 }
 
 .help .menu > a.avatar {
-  padding: 7px;
-  margin-top: -5px;
-  line-height: 0;
+  padding: 3px 7px;
+  margin-top: 0;
+  line-height: 32px;
   height: 26px;
   line-height: 33px;
 }

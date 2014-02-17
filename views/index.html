@@ -107,7 +107,7 @@
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  <form action="post" class="login">
+                  <form method="post" class="login">
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
@@ -144,7 +144,7 @@
             {{/feature}}
           {{else}}
             {{#if client.user}}
-              {{#feature user "accountPages"}}
+              {{#feature user "sslLogin"}}
                 <div class="menu">
                   {{#feature user "github"}}
                   <a href="/login" class="button button-dropdown" id="loginbtn">Login &amp; Register</a>
@@ -183,7 +183,7 @@
                         <input type="hidden" name="_redirect" value="home">
                       </div>
                     </form>
-                    <form class="login">
+                    <form class="login" action="{{root}}/login" method="post">
                       <p class="loginFeedback"></p>
                       <div>
                         <label>Username or Email<br>
@@ -211,7 +211,7 @@
                 <div class="dropdown dd-right" id="register">
                   <div class="dropdowncontent">
                     <p>Registration allows you to retrieve your saved files.</p>
-                    <form class="login">
+                    <form class="login" action="{{root}}/register" method="post">
                       <p class="loginFeedback"></p>
                       <div>
                         <label>Username<br><input required name="username" type="text"></label>

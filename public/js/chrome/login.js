@@ -16,7 +16,7 @@ var $loginForm = $('form.login').submit(function (event) {
   $loginFeedback.show().text('Checking...');
 
   $.ajax({
-    url: jsbin.root + '/sethome',
+    url: form.attr('action'),
     data: { name: name, key: key, email: email },
     type: 'post',
     dataType: 'json',

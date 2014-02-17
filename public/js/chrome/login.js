@@ -23,8 +23,8 @@ var $loginForm = $('form.login').submit(function (event) {
     complete: function (jqXHR) {
       var data = $.parseJSON(jqXHR.responseText) || {};
       // cookie is required to share with the server so we can do a redirect on new bin
-      if (data.ok) {
-        if (data.avatar) {
+      if (jqXHR.status === 200) {
+        if (data.user.avatar) {
           $('#avatar').find('img').remove().end().prepend('<img class="avatar" src="' + data.avatar + '">');
         }
         if (data.message) {

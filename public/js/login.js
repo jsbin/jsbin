@@ -64,9 +64,9 @@
     }, {});
 
     $.ajax({
-      url:      window.location.origin + $form.attr('action'),
-      type:     $form.attr('method'),
-      data:     data,
+      url: window.location.origin + $form.attr('action'),
+      type: $form.attr('method'),
+      data: data,
       dataType: 'json',
       success: function(res) {
         window.location.href = res;

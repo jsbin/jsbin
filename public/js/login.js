@@ -5,8 +5,8 @@
   var pushState = window.history.pushState ? function (url) {
     window.history.pushState(null, null, url);
   } : false;
-  var $forms = $('.form-container form');
-  var $info = $('.form-container .info'); 
+  var $forms = $('#login-register-page.form-container form');
+  var $info = $('#login-register-page.form-container .info'); 
 
   function currentForm () {
     return this.pathname === window.location.pathname;
@@ -21,8 +21,8 @@
       return $(this).attr('action') === path;
     };
   }
-
-  var $tabs = $('.tab').click(function (event, fromPopstate) {
+  var $formcontainer = $('#login-register-page.form-container');
+  var $tabs = $('#login-register-page .tab').click(function (event, fromPopstate) {
     if (!pushState && !fromPopstate) {
       return;
     }
@@ -42,7 +42,7 @@
       pushState(path);
     }
 
-    $('.form-container')
+    $formcontainer
       .removeClass('register login')
       .addClass($tabs.filter(currentForm)[0].classList[1]);
 
@@ -63,7 +63,7 @@
     }, {});
 
     $.ajax({
-      url:      'https://jsbin.dev' + $form.attr('action'),
+      url:      window.location.origin + $form.attr('action'),
       type:     $form.attr('method'),
       data:     data,
       dataType: 'json',

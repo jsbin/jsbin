@@ -9,9 +9,11 @@
 /* nav */
 #control,
 .control {
+ background: rgb(237, 237, 237);
  background: hsl(0, 0%, 93%);
+ border-bottom: rgb(191, 191, 191) solid 1px;
  border-bottom: hsl(0, 0%, 75%) solid 1px;
- }
+}
 #control *,
 .control * {
  text-shadow: none;
@@ -38,6 +40,7 @@
 
 /*panel backgrounds*/  
 .panel {
+ background: rgb(247, 247, 247);
  background: hsl(0, 0%, 97%);
  }
 .panel.focus {
@@ -45,6 +48,7 @@
  }
 /*panel borders*/
 .stretch.panelwrapper {
+ border-left-color: rgb(230, 230, 230) !important;
  border-left-color: hsl(60, 0%, 90%) !important;
  background: white !important;
  }
@@ -59,6 +63,7 @@
 
 /* panel menus */
 .label.menu span strong a {
+ color: rgb(0, 170, 255);		
  color: hsla(200, 100%, 50%, 1);
  font-weight: normal;
  }

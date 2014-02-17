@@ -107,7 +107,7 @@
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  <form class="login">
+                  <form action="post" class="login">
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
@@ -242,7 +242,7 @@
           {{/if}}
         {{/unless}}
 
-        {{#if settings.ui.showblog}}
+        {{#if settings.[ui showblog]}}
         <div class="menu">
           <a href="http://learn.jsbin.com/blog" class="button">Blog</a>
         </div>

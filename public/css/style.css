@@ -1092,8 +1092,9 @@ body.streaming #bin {
 }
 
 #tip p {
-  margin: 0;
+  margin: 5px 25px 5px 0;
   padding: 0 65px 0 0;
+  line-height: 1.3;
 }
 
 #tip a.dismiss {
@@ -2611,7 +2612,7 @@ form + hr {
   text-decoration: none;
 }
 
-.name span {
+.label .name span {
   /*margin-left: -41px;*/
   padding-left: 4px;
   color: #999;
@@ -3649,4 +3650,250 @@ THE SOFTWARE.
   #panels {
     display: none;
   }
+}
+
+/* hover card styles */
+.card div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.card {
+  z-index: 10;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  float: left;
+  font-family: 'helvetica neue';
+  font-weight: 400;
+  background: #fafafa;
+  background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#FBFBFB)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #FFF 0%,#FBFBFB 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF', endColorstr='#FBFBFB',GradientType=0 ); /* IE6-9 */
+  display: inline-block;
+  box-sizing: border-box;
+  /*margin: 10px;*/
+  border: 1px solid #fff;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  font-size: 16px;
+  /* min-width: 500px; */
+}
+
+.card.owner header img {
+  display: none;
+}
+
+.card.author .meta .name,
+.card .meta .author,
+.card.author header img {
+  display: none;
+
+}
+
+.card.author .meta .author {
+  display: inline-block;
+}
+
+
+.card span {
+  opacity: 1;
+}
+
+.card b {
+  font-weight: inherit;
+}
+
+.card header {
+  background: #fafafa;
+  background: -moz-linear-gradient(top,  #f1f1f1 0%, #fff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1f1f1), color-stop(100%,#fff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #f1f1f1 0%,#fff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#fff',GradientType=0 ); /* IE6-9 */
+
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  height: 48px;
+  white-space: nowrap;
+  overflow: visible;
+  /*overflow-x: auto;*/
+  width: 100%;
+}
+
+.card .body {
+  display: none;
+  padding: 10px 20px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card.open .body {
+  display: block;
+}
+
+.card .body select {
+  margin: 0;
+}
+
+.card .body a {
+  color: #212121;
+  font-size: 14px;
+}
+
+.card .body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card .body li {
+  margin: 10px 0
+}
+
+.card.private {
+  border: 1px solid #fafafa;
+}
+
+.card.private header {
+  background: #d1e6fa;
+}
+
+.card .meta {
+  white-space: nowrap;
+  padding-right: 10px;
+  margin: 5px 0;
+}
+
+.card.author .meta,
+.card.anonymous .meta {
+  padding-left: 10px;
+}
+
+.card .name {
+  margin-bottom: 2px;
+}
+
+.card.pro .pro {
+  display: inline-block;
+}
+
+.card .pro {
+  display: none;
+  text-transform: uppercase;
+  font-size: 9.5px;
+  font-weight: bold;
+  color: rgba(0,0,0,.4);
+  vertical-align: super;
+}
+
+.card img {
+  margin: 5px;
+  padding: 5px;
+  float: left;
+  width: 30px;
+}
+
+.card.anonymous header img {
+  display: none;
+}
+
+.card .visibility {
+  margin: 14px 20px;
+  border: 1px solid #337ae0;
+  color: #337ae0;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 2px 15px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  float: right;
+  display: none;
+}
+
+.card.private .visibility {
+  display: inline-block;
+}
+
+.card .viewers {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  line-height: 16px;
+}
+
+.card .viewers > b {
+  overflow: hidden;
+  height: 16px;
+}
+
+.card .viewers b {
+  display: inline-block;
+  margin-top: -16px;
+  -webkit-transition: margin-top ease-out 200ms;
+}
+
+.card .viewers b.up b {
+  margin-top: -32px;
+}
+
+.card .viewers b.down b {
+  margin-top: 0;
+}
+
+
+.card.private .viewers {
+  border-right: 1px solid #ccc;
+}
+
+.card.meta .viewers {
+  border-left: 1px solid #ccc;
+}
+
+.card .when,
+.card .viewers span {
+  color: rgba(0,0,0,.4);
+  font-weight: 800;
+  font-size: 12px;
+  display: block;
+}
+
+.card.viewers .viewers {
+  display: inline-block;
+}
+
+.card .streaming {
+  display: none;
+}
+
+.card .viewers {
+  display: none;
+}
+
+.card canvas {
+  display: none;
+  margin-right: 2px;
+}
+
+.card.streaming canvas {
+  display: inline;
+}
+
+.card li.owner {
+  display: none;
+}
+
+.card.author li.owner {
+  display: block;
 }

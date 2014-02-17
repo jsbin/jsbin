@@ -34,7 +34,7 @@
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
               {{/feature}}
               {{#feature user "delete"}}
-              <a id="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              <a class="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
@@ -46,7 +46,7 @@
               <hr data-desc="">
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" id="export-as-gist" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
-              <a data-desc="Use content from this bin when creating new bins" id="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+              <a data-desc="Use content from this bin when creating new bins" class="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
               <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
               <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
             </div>
@@ -98,27 +98,31 @@
         {{#unless embed}}
           {{#if home}}
             <div class="menu">
-              <a href="/account" class="button" id="accountBtn">Account</a>
+              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
             </div>
           {{else}}
             {{#if client.user}}
               <div class="menu">
-                <a href="#" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                {{#feature user "github"}}
+                <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
                 <div class="dropdown login" id="registerLogin">
                 <div class="pointer"></div>
                   <div class="dropdowncontent">
                     <a class="btn-github" href="/auth/github">
-                      <img src="http://static.jsbin.com/images/github-32.png"> 
-                      Register/Login via GitHub 
+                      <img src="{{static}}/images/github-32.png">
+                      Register/Login via GitHub
                     </a>
-                    <span class="login-group"> 
-                      Or 
+                    <span class="login-group">
+                      Or
                       <a class="btn-login" href="/login">
                         <span>use your email address</span>
-                      </a> 
+                      </a>
                     </span>
                   </div>
                 </div>
+                {{else}}
+                <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                {{/feature}}
               </div>
             {{/if}}
           {{/if}}
@@ -177,6 +181,7 @@
           <div class="dropdownmenu processorSelector" data-type="javascript">
             <a href="#javascript">JavaScript</a>
             <a href="#coffeescript">CoffeeScript</a>
+            <a href="#jsx">JSX (React)</a>
             <a href="#processing">Processing</a>
             <a href="#traceur">Traceur</a>
             <a href="#typescript">TypeScript</a>
@@ -382,6 +387,40 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
+{{#feature user "infocard"}}
+<div hidden>
+  <div class="card" id="infocard">
+    <header><img>
+      <div class="visibility"></div>
+      <div class="meta">
+        <div class="author">Bin info</div>
+        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
+      </div>
+      <div class="viewers"><b>0</b><span>viewers</span></div>
+    </header>
+    <div class="body">
+      <ul>
+        {{#feature user "private"}}<!-- <li>
+          <select>
+            <option>Public</option>
+            <option>Private to me</option>
+            </option>
+          </select>
+        </li> -->
+        {{/feature}}
+        <li><a href="/clone">Clone</a> </li>
+        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
+        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
+        <li class="owner"><a href="/download">Download</a> </li>
+        <!-- <li class="owner"><a href="/archive">Archive</a> </li> -->
+        {{#feature user "delete"}}
+        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
+        {{/feature}}
+      </ul>
+    </div>
+  </div>
+</div>
+{{/feature}}
 <script>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
@@ -392,12 +431,8 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{static}}{{.}}"></script>{{/scripts}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
-{{/if}}
-{{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
-<script src="{{static}}/js/spike.js?{{version}}"></script>
 {{/if}}
 </body>
 </html>

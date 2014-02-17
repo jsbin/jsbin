@@ -23,9 +23,6 @@
       "collate": "utf8mb4_unicode_ci"
     }
   },
-  "session": {
-    "secret": "d41d8cd98f00b204e9800998ecf8427e"
-  },
   "analytics": {
     "id": null,
     "render-id": null
@@ -91,6 +88,7 @@
     "collection",
     "collections",
     "css",
+    "delete",
     "devices",
     "download",
     "downloads",

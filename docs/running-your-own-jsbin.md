@@ -64,7 +64,7 @@ To start JS Bin with a config file from another location, set the `JSBIN_CONFIG`
 
 JS Bin will run behind a proxy, indeed our production version of JS Bin is behind a proxy.
 
-The `PORT` on the command line takes precedence over the config variable. This means in your config, you set the url to be the user facing port (typically port 80, so no port required), and then JS Bin will listen on the port you gave at the envinoment level.
+The `PORT` on the command line takes precedence over the config variable. This means in your config, you set the url to be the user facing port (typically port 80, so no port required), and then JS Bin will listen on the port you gave at the environment level.
 
 So to proxy jsbin.com to a localhost:8000 (using something like nginx to do the proxying), the config would look like (this snippet of `config.local.json`):
 
@@ -98,7 +98,7 @@ This will generate the `public/js/prod/` directory and read the version in the `
 4. runner-<version>.js - the runner script, used to generate the output of the user's code in an iframe
 5. runner-<version>.min.js - the production version of the runner
 
-Finally, ensure either the config.local.json's `env` property is set to "production" or you can run JS Bin in production via the envinoment:
+Finally, ensure either the config.local.json's `env` property is set to "production" or you can run JS Bin in production via the environment:
 
     $ NODE_ENV=production node .
 

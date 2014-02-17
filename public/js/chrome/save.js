@@ -91,6 +91,9 @@ $document.on('saved', function () {
 
 var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
+// store it back on state
+jsbin.state.checksum = saveChecksum;
+
 if (saveChecksum) {
   // remove the disabled class, but also remove the cancelling event handlers
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
@@ -185,6 +188,24 @@ if (!jsbin.saveDisabled) {
         updateCode(panelId);
       }
     }, 250));
+  });
+} else {
+  $document.one('jsbinReady', function () {
+    var shown = false;
+    $document.on('codeChange', function (event, data) {
+      if (!data.onload && !shown && data.origin !== 'setValue') {
+        shown = true;
+        var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;
+        var cmd = ismac ? '⌘' : 'ctrl';
+        var shift = ismac ? '⇧' : 'shift';
+        var plus = ismac ? '' : '+';
+
+        $document.trigger('tip', {
+          type: 'notification',
+          content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+        });
+      }
+    });
   });
 }
 
@@ -307,6 +328,7 @@ function saveCode(method, ajax, ajaxCallback) {
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
+        jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
 

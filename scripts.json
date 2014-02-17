@@ -2,6 +2,7 @@
   "app": [
     "/js/chrome/hashbang-jump.js",
     "/js/vendor/jquery.js",
+    "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",
     "/js/vendor/jshint/jshint.js",
@@ -49,6 +50,8 @@
     "/js/chrome/navigation.js",
     "/js/chrome/file-drop.js",
     "/js/chrome/gist.js",
+    "/js/chrome/spinner.js",
+    "/js/chrome/infocard.js",
     "/js/chrome/app.js"
   ],
   "runner": [

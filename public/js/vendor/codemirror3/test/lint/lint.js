@@ -8,9 +8,21 @@
   - missing semicolons and trailing commas
   - variables or properties that are reserved words
   - assigning to a variable you didn't declare
+  - access to non-whitelisted globals
+    (use a '// declare global: foo, bar' comment to declare extra
+    globals in a file)
 
  [1]: https://github.com/marijnh/acorn/
 */
+
+var topAllowedGlobals = Object.create(null);
+("Error RegExp Number String Array Function Object Math Date undefined " +
+ "parseInt parseFloat Infinity NaN isNaN " +
+ "window document navigator prompt alert confirm console " +
+ "FileReader Worker postMessage importScripts " +
+ "setInterval clearInterval setTimeout clearTimeout " +
+ "CodeMirror test")
+  .split(" ").forEach(function(n) { topAllowedGlobals[n] = true; });
 
 var fs = require("fs"), acorn = require("./acorn.js"), walk = require("./walk.js");
 
@@ -19,11 +31,17 @@ var scopePasser = walk.make({
 });
 
 function checkFile(fileName) {
-  var file = fs.readFileSync(fileName, "utf8");
-  var badChar = file.match(/[\x00-\x08\x0b\x0c\x0e-\x19\uFEFF]/);
-  if (badChar)
-    fail("Undesirable character " + badChar[0].charCodeAt(0) + " at position " + badChar.index,
-         {source: fileName});
+  var file = fs.readFileSync(fileName, "utf8"), notAllowed;
+  if (notAllowed = file.match(/[\x00-\x08\x0b\x0c\x0e-\x19\uFEFF\t]|[ \t]\n/)) {
+    var msg;
+    if (notAllowed[0] == "\t") msg = "Found tab character";
+    else if (notAllowed[0].indexOf("\n") > -1) msg = "Trailing whitespace";
+    else msg = "Undesirable character " + notAllowed[0].charCodeAt(0);
+    var info = acorn.getLineInfo(file, notAllowed.index);
+    fail(msg + " at line " + info.line + ", column " + info.column, {source: fileName});
+  }
+  
+  var globalsSeen = Object.create(null);
 
   try {
     var parsed = acorn.parse(file, {
@@ -66,17 +84,30 @@ function checkFile(fileName) {
     UpdateExpression: function(node, scope) {checkLHS(node.argument, scope);},
     AssignmentExpression: function(node, scope) {checkLHS(node.left, scope);},
     Identifier: function(node, scope) {
+      if (node.name == "arguments") return;
       // Mark used identifiers
       for (var cur = scope; cur; cur = cur.prev)
         if (node.name in cur.vars) {
           cur.vars[node.name].used = true;
           return;
         }
+      globalsSeen[node.name] = node.loc;
     },
     FunctionExpression: function(node) {
       if (node.id) fail("Named function expression", node.loc);
     }
   }, scopePasser);
+
+  if (!globalsSeen.exports) {
+    var allowedGlobals = Object.create(topAllowedGlobals), m;
+    if (m = file.match(/\/\/ declare global:\s+(.*)/))
+      m[1].split(/,\s*/g).forEach(function(n) { allowedGlobals[n] = true; });
+    for (var glob in globalsSeen)
+      if (!(glob in allowedGlobals))
+        fail("Access to global variable " + glob + ". Add a '// declare global: " + glob +
+             "' comment or add this variable in test/lint/lint.js.", globalsSeen[glob]);
+  }
+
 
   for (var i = 0; i < scopes.length; ++i) {
     var scope = scopes[i];
@@ -91,7 +122,7 @@ function checkFile(fileName) {
 var failed = false;
 function fail(msg, pos) {
   if (pos.start) msg += " (" + pos.start.line + ":" + pos.start.column + ")";
-  console.log(pos.source.match(/[^\/]+$/)[0] + ": " + msg);
+  console.log(pos.source + ": " + msg);
   failed = true;
 }
 
@@ -99,7 +130,7 @@ function checkDir(dir) {
   fs.readdirSync(dir).forEach(function(file) {
     var fname = dir + "/" + file;
     if (/\.js$/.test(file)) checkFile(fname);
-    else if (fs.lstatSync(fname).isDirectory()) checkDir(fname);
+    else if (file != "dep" && fs.lstatSync(fname).isDirectory()) checkDir(fname);
   });
 }
 

@@ -25,16 +25,17 @@ var proxyConsole = (function () {
       } else {
         newArgs.push(stringify(arg));
       }
-    };
+    }
     return newArgs;
   };
 
   // Create each of these methods on the proxy, and postMessage up to JS Bin
   // when one is called.
   var methods = [
-    'debug', 'clear', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw', 'group', 'groupEnd',
-    'dirxml', 'table', 'trace', 'assert', 'count', 'markTimeline', 'profile', 'profileEnd', 'time',
-    'timeEnd', 'timeStamp', 'groupCollapsed'
+    'debug', 'clear', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw',
+    'group', 'groupEnd', 'dirxml', 'table', 'trace', 'assert', 'count',
+    'markTimeline', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp',
+    'groupCollapsed'
   ];
   methods.forEach(function (method) {
     // Create console method
@@ -52,7 +53,7 @@ var proxyConsole = (function () {
       // If the browner supports it, use the browser console but ignore _raw,
       // as _raw should only go to the proxy console.
       if (window.console && method !== '_raw') {
-        if (!console[method]) method = 'log';
+        if (!console[method]) { method = 'log'; }
         console[method].apply(console, originalArgs);
       }
     };

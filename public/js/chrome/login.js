@@ -1,8 +1,7 @@
-var $username = $('#username'),
-    $password = $('#password'),
-    $email = $('#email');
+/* global $ */
 
-var $loginForm = $('form.login').submit(function (event) {
+$('form.login').submit(function (event) {
+  'use strict';
   event.preventDefault();
 
   var form = $(this),
@@ -39,8 +38,3 @@ var $loginForm = $('form.login').submit(function (event) {
     }
   });
 });
-
-// if ($('#homebtn').length) {
-//   jsbin.settings.home = document.cookie.split('home=')[1].split(';')[0];
-//   document.title = jsbin.settings.home + '@' + document.title;
-// }

@@ -11,7 +11,7 @@
       Login
     </a>
   </div>
-  <div class="info"></div>
+  <div class="info"><p></p></div>
   <form action="{{root}}/register" method="post" class="register">
     <div>
       <label for="username">Username</label>
@@ -26,7 +26,7 @@
       <input name="key" id="key" type="password" required>
     </div>
     <div>
-      <input type=submit value="Log in">
+      <input type="submit" value="Register">
       <input type="hidden" name="_csrf" value="{{token}}">
       <input type="hidden" name="referrer" value="{{referrer}}">
     </div>
@@ -41,7 +41,7 @@
       <input name="key" id="key" type="password" required>
     </div>
     <div>
-      <input type=submit value="Log in">
+      <input type="submit" value="Log in">
       <input type="hidden" name="_csrf" value="{{token}}">
       <input type="hidden" name="referrer" value="{{referrer}}">
       <a class="lostpass" href="{{root}}/forgot"><span><strong>I've forgotton my password</strong></span></a>

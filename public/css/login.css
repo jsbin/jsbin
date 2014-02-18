@@ -1,5 +1,6 @@
 body {
   background:#f9f9f9;
+  font-size: 16px;
 }
 .form-container {
   width: 100%;
@@ -9,6 +10,14 @@ body {
 }
 .form-container.login {
  box-shadow: 2px 2px 1px -2px rgba(0,0,0,0.5);
+}
+
+.form-container.login form.register {
+  display: none;
+}
+
+.form-container.register form.login {
+  display: none;
 }
 
 .form-container .tabs {
@@ -38,7 +47,7 @@ body {
 .form-container .tab span{
   display:block;
   font-size:0.7em;
-  color:rgba(0,0,0,0.5);
+  color: #9B9B9B;
   margin-bottom:0px;
 }
 .form-container.login .tab.login,
@@ -58,7 +67,7 @@ body {
   position: relative;
   z-index: 10;
   padding: 20px 30px 40px;
-  border:1px solid rgba(0,0,0,0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
   border-top:none;
   min-height: 292px;
   background-color:#fff;
@@ -112,4 +121,23 @@ body {
   color:rgba(0,0,0,0.5);
   font-weight:400;
   font-size:0.9em;
+}
+
+.info {
+  background: white;
+  display: none;
+  padding: 20px 20px 0 20px;
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.info p {
+  padding: 3px;
+  background: #EFF3B6;
+  background: rgba(255, 253, 0, 0.2);
+  border: 1px solid rgb(219, 225, 45);
+  margin: 0;
+  white-space: normal;
+  line-height: 18px;
+  padding: 10px;
 }

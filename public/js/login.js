@@ -44,6 +44,8 @@
       .filter(matchActionAttrTo(path)) // One element now ↓
       .show();
 
+    $info.hide();
+
     // fromPopstate is true when we call click in handlePopstateChanges
     // If a user navigated back, to register, it would then set pushState
     // to register, leaving teh user stuck on that page.
@@ -55,8 +57,6 @@
     $formcontainer
       .removeClass('register login')
       .addClass(path.slice(1));
-
-    $info.empty();
   });
   // Kick it all off with initial event handlers
 
@@ -78,10 +78,10 @@
       data: data,
       dataType: 'json',
       success: function(res) {
-        window.location.href = res.referrer
+        window.location.href = res.referrer + 'login';
       },
       error: function(res) {
-        $info.text(res.responseJSON.message);
+        $info.show().find('p').text(res.responseJSON.message);
       }
     });
 

@@ -69,10 +69,10 @@
       data: data,
       dataType: 'json',
       success: function(res) {
-        window.location.href = res;
+        window.location.href = res.referrer
       },
       error: function(res) {
-        $info.text(res.responseText);
+        $info.text(res.responseJSON.message);
       }
     });
 

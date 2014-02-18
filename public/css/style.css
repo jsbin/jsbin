@@ -2059,10 +2059,10 @@ left: 50%;
 }
 
 .help .menu > a.avatar {
-  padding: 3px 7px;
+  padding: 2px 7px 3px 7px;
   margin-top: 0;
   line-height: 32px;
-  height: 26px;
+  height: 30px;
   line-height: 38px;
 }
 

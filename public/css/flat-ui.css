@@ -73,10 +73,13 @@
 
 /* avatar */
 .avatar img {
- box-shadow: none;
- }
+  box-shadow: none;
+}
+ 
+.open .avatar img,
 .avatar:hover img {
- -webkit-filter:
-   brightness(125%)
-   saturate(125%);
- }
+  -webkit-filter: brightness(125%) saturate(125%);
+  -moz-filter: brightness(125%) saturate(125%);
+  -ms-filter: brightness(125%) saturate(125%);
+  filter: brightness(125%) saturate(125%);
+}

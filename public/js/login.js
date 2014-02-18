@@ -78,7 +78,7 @@
       data: data,
       dataType: 'json',
       success: function(res) {
-        window.location.href = res.referrer + 'login';
+        window.location.href = res.referrer;
       },
       error: function(res) {
         $info.show().find('p').text(res.responseJSON.message);

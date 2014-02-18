@@ -30,11 +30,11 @@
           <div class="dropdown" id="bins">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
-              {{#feature user "private"}}
+              {{#feature request "private"}}
               <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
               {{/feature}}
-              {{#feature user "delete"}}
+              {{#feature request "delete"}}
               <a class="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
               {{#if home}}
@@ -98,7 +98,7 @@
       <div class="help">
         {{#unless embed}}
           {{#if home}}
-            {{#feature user "accountPages"}}
+            {{#feature request "accountPages"}}
             <div class="menu">
               <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
             </div>
@@ -111,7 +111,7 @@
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#feature user "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                       </span>
                     </div>
                     <div>
@@ -126,7 +126,7 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
-                    {{#feature user "github"}}{{#unless user.github_token}}
+                    {{#feature request "github"}}{{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
                       <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
@@ -144,9 +144,9 @@
             {{/feature}}
           {{else}}
             {{#if client.user}}
-              {{#feature user "sslLogin"}}
+              {{#feature request "sslLogin"}}
                 <div class="menu">
-                  {{#feature user "github"}}
+                  {{#feature request "github"}}
                   <a href="/login" class="button button-dropdown" id="loginbtn">Login &amp; Register</a>
                   <div class="dropdown login" id="registerLogin">
                     <div class="dropdowncontent">
@@ -196,7 +196,7 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
-                      {{#feature user "github"}}
+                      {{#feature request "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
@@ -226,7 +226,7 @@
                       <div>
                         <input type=submit value="Register">
                       </div>
-                      {{#feature user "github"}}
+                      {{#feature request "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
@@ -503,7 +503,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
-{{#feature user "infocard"}}
+{{#feature request "infocard"}}
 <div hidden>
   <div class="card" id="infocard">
     <header><img>
@@ -516,7 +516,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </header>
     <div class="body">
       <ul>
-        {{#feature user "private"}}<!-- <li>
+        {{#feature request "private"}}<!-- <li>
           <select>
             <option>Public</option>
             <option>Private to me</option>
@@ -529,7 +529,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
         <li class="owner"><a href="/download">Download</a> </li>
         <!-- <li class="owner"><a href="/archive">Archive</a> </li> -->
-        {{#feature user "delete"}}
+        {{#feature request "delete"}}
         <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
         {{/feature}}
       </ul>

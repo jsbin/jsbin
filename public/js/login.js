@@ -6,28 +6,38 @@
     window.history.pushState(null, null, url);
   } : false;
   var $forms = $('#login-register-page.form-container form');
-  var $info = $('#login-register-page.form-container .info'); 
+  var $info = $('#login-register-page.form-container .info');
+  var currentPath = null;
 
-  function currentForm () {
-    return this.pathname === window.location.pathname;
+  function currentForm() {
+    return this.pathname === window.location.pathname; // jshint ignore:line
   }
 
   function handlePopstateChanges() {
-    $tabs.filter(currentForm).trigger('click', [true]); 
+    $tabs.filter(currentForm).trigger('click', [true]);
   }
 
-  function matchActionAttrTo (path) {
+  function matchActionAttrTo(path) {
     return function(){
-      return $(this).attr('action') === path;
+      return this.getAttribute('action').indexOf(path) !== -1;
     };
   }
   var $formcontainer = $('#login-register-page.form-container');
   var $tabs = $('#login-register-page .tab').click(function (event, fromPopstate) {
+    var path = event.target.pathname || event.target.parentNode.pathname;
+
+    // if pushState isn't supported, then follow the link through:
+    // Progressive Enhancement FTW.
     if (!pushState && !fromPopstate) {
       return;
     }
 
-    var path = event.target.pathname || event.target.parentNode.pathname;
+    // do nothing if we're already on this tab
+    if (currentPath === path) {
+      return false;
+    }
+
+    currentPath = path;
 
     $forms
       .hide()
@@ -37,18 +47,17 @@
     // fromPopstate is true when we call click in handlePopstateChanges
     // If a user navigated back, to register, it would then set pushState
     // to register, leaving teh user stuck on that page.
-    if (!fromPopstate && pushState) { 
-      event.preventDefault(); 
+    if (!fromPopstate && pushState) {
+      event.preventDefault();
       pushState(path);
     }
 
     $formcontainer
       .removeClass('register login')
-      .addClass($tabs.filter(currentForm)[0].classList[1]);
+      .addClass(path.slice(1));
 
     $info.empty();
-
-  });  
+  });
   // Kick it all off with initial event handlers
 
   window.addEventListener('popstate', handlePopstateChanges);
@@ -59,12 +68,12 @@
     var $form = $(event.target);
 
     var data = $form.serializeArray().reduce(function(obj, item) {
-      obj[item.name] = item.value; 
+      obj[item.name] = item.value;
       return obj;
     }, {});
 
     $.ajax({
-      url: window.location.origin + $form.attr('action'),
+      url: $form.attr('action'),
       type: $form.attr('method'),
       data: data,
       dataType: 'json',

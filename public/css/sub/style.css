@@ -76,7 +76,7 @@ pre code {
   font-size: 16px;
   line-height: 1.6;
   position: relative;
-  /* background: white; */
+  background: white;
   /* pushes any margins down */
   border-top: 1px solid #fff;
   padding-bottom: 50px;
@@ -93,8 +93,7 @@ pre code {
 .inner, #body {
   max-width: 1024px;
   margin: 0 auto;
-  padding:  20px; /* ensures the shadow is still visible */
-  /* margin-top: 30px; */
+  padding: 0 20px; /* ensures the shadow is still visible */
 }
 
 #body > article p,
@@ -106,6 +105,16 @@ pre code {
   max-width: 660px;
   margin-left: auto;
   margin-right: auto;
+}
+
+#body > article h1 {
+  font-size: 32px;
+}
+
+#body > article li {
+  padding-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 #body > article pre {
@@ -350,7 +359,7 @@ border-radius: 2px;
 
   #footer .legal {
     float: left;
-  
+
     margin-top: 10px;
 }
 
@@ -420,7 +429,7 @@ border-radius: 2px;
 
 .edit {
   position: absolute;
-  right: 20px;
+  right: 40px;
   margin-top: 5px;
   text-decoration: none;
   font-weight: 400;

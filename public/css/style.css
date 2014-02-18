@@ -95,7 +95,9 @@ textarea:focus {
   position: relative;
   margin-right: 2px;
   border: none;
-  width: 10%;
+  width: 22px;
+  /* display: inline-block; */
+  /* float: left; */
 }
 
 .login .btn-github {
@@ -181,6 +183,7 @@ textarea:focus {
   font-weight: 400;
   color: #aaa;
   font-size: 1.1em;
+  margin-top: 15px;
 }
 .btn-login span {
   color: #aaa;
@@ -1990,6 +1993,10 @@ a.active:hover {
   text-align: left;
 }
 
+#registerLogin .dropdowncontent {
+  padding: 20px;
+}
+
 .label.open .dropdownmenu {
   margin-left: 2px;
 }
@@ -2021,7 +2028,7 @@ a.active:hover {
 }
 
 .dropdown.login {
-  right:-96px;
+  right: 0;
 }
 .open .dropdown.login .pointer {
 border: 9px solid rgba(0,0,0,0);

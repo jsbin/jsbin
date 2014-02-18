@@ -96,6 +96,8 @@ body {
 }
 .form-container form label {
   font-size:0.9em;
+  display: block;
+  padding: 0.4em 0 0.4em;
 }
 
 .form-container form a.lostpass {

@@ -181,7 +181,8 @@ if (!jsbin.saveDisabled) {
 
       saving.inprogress(true);
 
-      if (!saveChecksum) {
+      // We force a full save if there's no checksum OR if there's no bin code/url
+      if (!saveChecksum || !jsbin.state.code) {
         // create the bin and when the response comes back update the url
         saveCode('save', true);
       } else {

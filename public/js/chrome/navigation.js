@@ -259,6 +259,9 @@ $('#createnew').click(function () {
     }
   }
 
+  // clear out the write checksum too
+  sessionStorage.removeItem('checksum');
+
   jsbin.panels.saveOnExit = true;
 
   // first try to restore their default panels

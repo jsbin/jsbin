@@ -81,6 +81,8 @@
     "archive",
     "auth",
     "badges",
+    "bin",
+    "bins",
     "blog",
     "bugs",
     "business",
@@ -121,8 +123,11 @@
     "logout",
     "me",
     "messages",
+    "new",
     "notifications",
     "nudge",
+    "null",
+    "open",
     "oauth",
     "pro",
     "profile",
@@ -150,7 +155,6 @@
     "tutorials",
     "video",
     "videos",
-    "-",
-    "null"
+    "-"
   ]
 }

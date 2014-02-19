@@ -192,20 +192,22 @@ if (!jsbin.saveDisabled) {
 } else {
   $document.one('jsbinReady', function () {
     var shown = false;
-    $document.on('codeChange', function (event, data) {
-      if (!data.onload && !shown && data.origin !== 'setValue') {
-        shown = true;
-        var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;
-        var cmd = ismac ? '⌘' : 'ctrl';
-        var shift = ismac ? '⇧' : 'shift';
-        var plus = ismac ? '' : '+';
+    if (!jsbin.embed && !jsbin.sandbox) {
+      $document.on('codeChange', function (event, data) {
+        if (!data.onload && !shown && data.origin !== 'setValue') {
+          shown = true;
+          var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;
+          var cmd = ismac ? '⌘' : 'ctrl';
+          var shift = ismac ? '⇧' : 'shift';
+          var plus = ismac ? '' : '+';
 
-        $document.trigger('tip', {
-          type: 'notification',
-          content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
-        });
-      }
-    });
+          $document.trigger('tip', {
+            type: 'notification',
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+          });
+        }
+      });
+    }
   });
 }
 

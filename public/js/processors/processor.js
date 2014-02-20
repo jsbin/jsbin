@@ -146,7 +146,12 @@ var processors = jsbin.processors = (function () {
       extensions: ['jsx'],
       url: jsbin.static + '/js/vendor/JSXTransformer.js',
       init: function (ready) {
-        $('#library').val( $('#library').find(':contains("React")').val() ).trigger('change');
+        // Don't add React if the code already contains a script whose name
+        // starts with 'react', to avoid duplicate copies.
+        var code = editors.html.getCode();
+        if (!(/<script[^>]*src=\S*\breact\b/i).test(code)) {
+          $('#library').val( $('#library').find(':contains("React with Add-Ons")').val() ).trigger('change');
+        }
         ready();
       },
       handler: function (source) {

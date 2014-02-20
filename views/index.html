@@ -4,11 +4,11 @@
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
   <link rel="icon" href="{{static}}/images/favicon.png">
-  <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
-  <link rel="stylesheet" href="{{static}}/css/flat-ui.css?{{version}}">
-  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/if}}
-  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
-  {{#if is_production}}
+  <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
+  <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
+  {{#if isProduction}}
   {{{analytics}}}
   {{/if}}
 </head>
@@ -541,7 +541,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-{{#if is_production}}
+{{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}
   {{#if concat}}

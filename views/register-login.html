@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="{{static}}/css/login.css">
+
+<div id="login-register-page" class="form-container {{show}}">
+  <div class="tabs register">
+    <a class="tab register" href="{{root}}/register">
+      <span>New to JS Bin</span>
+      Register
+    </a>
+    <a class="tab login" href="{{root}}/login">
+      <span>Existing users</span>
+      Login
+    </a>
+  </div>
+  <div class="info"><p></p></div>
+  <form action="{{root}}/register" method="post" class="register">
+    <div>
+      <label for="username">Username</label>
+      <input id="username" name="username"type="text" required>
+    </div>
+    <div>
+      <label for="email">Email address</label>
+      <input name="email" id="email" type="email" required>
+    </div>
+    <div>
+      <label for="key">Password</label>
+      <input name="key" id="key" type="password" required>
+    </div>
+    <div>
+      <input type="submit" value="Register">
+      <input type="hidden" name="_csrf" value="{{token}}">
+      <input type="hidden" name="referrer" value="{{referrer}}">
+    </div>
+  </form>
+  <form action="{{root}}/login" method="post" class="login">
+    <div>
+      <label for="username">Email address or username</label>
+      <input name="username" id="username" type="text" required>
+    </div>
+    <div>
+      <label for="key">Password</label>
+      <input name="key" id="key" type="password" required>
+    </div>
+    <div>
+      <input type="submit" value="Log in">
+      <input type="hidden" name="_csrf" value="{{token}}">
+      <input type="hidden" name="referrer" value="{{referrer}}">
+      <a class="lostpass" href="{{root}}/forgot"><span><strong>I've forgotton my password</strong></span></a>
+    </div>
+    </form>
+
+</div>
+
+
+<script src="{{static}}/js/vendor/jquery.js"></script>
+<script src="{{static}}/js/login.js"></script>

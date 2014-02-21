@@ -48,7 +48,7 @@ if (!customKeys.disabled) {
     if (event.ctrlKey) { event.metaKey = true; }
 
     if (event.metaKey && event.which === 79) { // open
-      $('.homebtn').trigger('click', 'keyboard');
+      $('a.homebtn').trigger('click', 'keyboard');
       event.preventDefault();
     } else if (event.metaKey && event.shiftKey && event.which === 8) { // cmd+shift+backspace
       $('a.deletebin').trigger('click', 'keyboard');
@@ -63,7 +63,7 @@ if (!customKeys.disabled) {
         }
         event.preventDefault();
       } else if (event.shiftKey === true) { // shift+s = clone
-        $('.clone').click();
+        $('a.clone').click();
         event.preventDefault();
       }
     } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {

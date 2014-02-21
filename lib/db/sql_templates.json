@@ -11,6 +11,7 @@
   "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`, `github_token`, `github_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   "touchLogin": "UPDATE `ownership` SET `last_login`=? WHERE `name`=?",
   "updateUserKey": "UPDATE ownership SET `key`=?, `updated`=? WHERE `name`=?",
+  "updateUserSettings": "UPDATE ownership SET `settings`=? WHERE `name`=?",
   "upgradeUserKey": "UPDATE ownership SET `key`=?, `created`=?, `updated`=? WHERE `name`=?",
   "DATELIMITgetBinsByUser": "SELECT SUBSTR(s.html, 1, 200) as html, SUBSTR(s.javascript, 1, 100) as javascript, SUBSTR(s.css, 1, 100) as css, o.archive, o.last_updated, o.url, o.revision FROM `owners` as o, `sandbox` s WHERE o.url=s.url and o.revision=s.revision and o.last_updated>DATE_SUB(NOW(), INTERVAL 6 MONTH) AND o.name=?",
   "getBinsByUser": "select summary as html, summary as javascript, summary as css, archive, last_updated, url, revision from `owners` where name=?",

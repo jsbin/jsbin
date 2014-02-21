@@ -196,7 +196,7 @@ var renderer = (function () {
         embedResizeDone = true;
         // Inform the outer page of a size change
         var height = ($body.outerHeight(true) - $(renderer.runner.iframe).height()) + data.offsetHeight;
-        window.parent.postMessage({ height: height }, '*');
+       window.parent.postMessage({ height: height }, '*');
       }
     };
   }());

@@ -37,7 +37,6 @@ CodeMirror.commands.snippets = function (cm) {
   return CodeMirror.snippets(cm);
 };
 
-
 var foldFunc = {
   css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
   javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),

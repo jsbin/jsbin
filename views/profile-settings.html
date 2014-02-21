@@ -1,0 +1,17 @@
+{{> account_sidebar}}
+<link href="/css/profile-settings.css" rel="stylesheet" type="text/css">
+<section id="content">
+	<form>
+		<label>
+			<input name="username" type="text" value="{{user.name}}" disabled>
+		</label>
+		<label> 
+			<input name="email" type="text" placeholder="{{user.email}}">
+		</label>
+		<input type="hidden" name="csrf" value="{{csrf}}">
+		<input type="submit">
+	</form>
+</section>
+
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/account-settings.js"></script>

@@ -10,7 +10,7 @@ body {
   /*min-width: 976px;*/
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
-  background: #fff url(../images/jsbin_animated.gif) no-repeat center;
+  /* background: #fff url(../images/jsbin_animated.gif) no-repeat center; */
   height: 100%;
 }
 
@@ -69,19 +69,21 @@ textarea:focus {
 }
 
 .btn-github {
-  font-size: 1em;
+  font-size: 1.4em;
+  font-weight: 200;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
-  box-shadow: 0 1px 2px #eee;
+  box-shadow: 0px 1px 1px #eee;
   border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 6px 10px 5px;
+  border-radius: 2px;
+  padding: 10px 12px;
   cursor: pointer;
   display: inline;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   text-decoration: none;
+  border-bottom: 2px solid #aaa;
 }
 .btn-github:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
@@ -89,10 +91,13 @@ textarea:focus {
 
 .btn-github img {
   vertical-align: middle;
-  top: -1px;
+  top: -2px;
   position: relative;
-  margin-right: 5px;
+  margin-right: 2px;
   border: none;
+  width: 22px;
+  /* display: inline-block; */
+  /* float: left; */
 }
 
 .login .btn-github {
@@ -171,7 +176,19 @@ textarea:focus {
   top: 0;
   z-index: 0;
 }
-
+.help .login-group {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  color: #aaa;
+  font-size: 1.1em;
+  margin-top: 15px;
+}
+.btn-login span {
+  color: #aaa;
+  /* font-size: 1em; */
+}
 .help a {
   outline: 0;
   /*border-right: 0;*/
@@ -1243,7 +1260,7 @@ details li, .details li {
 .dropdowncontent {
   /*background: #e0e0e0;*/
   padding: 10px;
-  min-width: 220px;
+  min-width: 250px;
 }
 
 #register p {
@@ -1976,6 +1993,10 @@ a.active:hover {
   text-align: left;
 }
 
+#registerLogin .dropdowncontent {
+  padding: 20px;
+}
+
 .label.open .dropdownmenu {
   margin-left: 2px;
 }
@@ -2006,6 +2027,19 @@ a.active:hover {
   display: block;
 }
 
+.dropdown.login {
+  right: 0;
+}
+.open .dropdown.login .pointer {
+border: 9px solid rgba(0,0,0,0);
+border-bottom: 7px solid #fff;
+width: 0px;
+height: 0px;
+position: absolute;
+top: -15px;
+left: 50%;
+}
+
 .dropdownmenu > a {
   display: block;
   float: none;
@@ -2034,8 +2068,9 @@ a.active:hover {
 .help .menu > a.avatar {
   padding: 7px;
   margin-top: -5px;
-  line-height: 0;
+  line-height: 32px;
   height: 26px;
+  line-height: 0;
 }
 
 .help .open.menu > a.avatar {
@@ -2636,6 +2671,7 @@ pre .highlight:last-of-type {
 .dd-right {
   right: -10px;
 }
+
 
 #jsbinurl.hidden {
   position: absolute;
@@ -3397,6 +3433,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 }
 .cm-s-solarized .cm-strong { color: #eee; }
 .cm-s-solarized .cm-tab:before {
+  position:absolute;
   content: "➤";   /*visualize tab character*/
   color: #586e75;
 }

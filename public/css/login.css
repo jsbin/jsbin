@@ -1,0 +1,143 @@
+body {
+  background:#f9f9f9;
+  font-size: 16px;
+}
+.form-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.form-container.login {
+ box-shadow: 2px 2px 1px -2px rgba(0,0,0,0.5);
+}
+
+.form-container.login form.register {
+  display: none;
+}
+
+.form-container.register form.login {
+  display: none;
+}
+
+.form-container .tabs {
+  clear:both;
+  zoom: 1;
+  margin: 0;
+  display: table;
+  width: 100%;
+}
+
+.form-container .tab {
+  display: table-cell;
+  width: 50%;
+  background-color: transparent;
+  opacity: 0.8;
+  text-decoration: none;
+  text-shadow: none;
+  font-size: 1.1em;
+  color: #000;
+  border-bottom: 1px solid rgba(0,0,0,0.5);
+  padding: 5px 30px;
+  margin-bottom: 0px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+.form-container .tab span{
+  display:block;
+  font-size:0.7em;
+  color: #9B9B9B;
+  margin-bottom:0px;
+}
+.form-container.login .tab.login,
+.form-container.register .tab.register {
+  opacity: 1;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 100;
+  border-bottom: none;
+}
+.form-container.register .tab.register {
+ box-shadow: 2px 0px 2px -2px rgba(0,0,0,0.5);
+}
+
+.form-container form {
+  position: relative;
+  z-index: 10;
+  padding: 20px 30px 40px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-top:none;
+  min-height: 292px;
+  background-color:#fff;
+}
+.form-container.register form {
+ box-shadow: 2px 2px 1px -2px rgba(0,0,0,0.5);
+}
+.form-container form input[type="submit"] {
+  width:60%;
+  margin:10px 20%;
+  font-family: "Helvetica Neue", "Arial";
+  font-size: 0.75em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 3px 2px 0px #eee;
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 2px;
+  border-bottom:1px solid rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  font-weight:600;
+}
+.form-container form input[type="submit"]:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+.form-container form input {
+  width:100%;
+  font-size:1.1em;
+  margin:0px 0px 15px;
+}
+.form-container form label {
+  font-size:0.9em;
+  display: block;
+  padding: 0.4em 0 0.4em;
+}
+
+.form-container form a.lostpass {
+  text-align:center;
+  width:100%;
+  display:block;
+  color:#000;
+  margin-top:10px;
+}
+
+.form-container form a.lostpass span {
+  color:rgba(0,0,0,0.5);
+  font-weight:400;
+  font-size:0.9em;
+}
+
+.info {
+  background: white;
+  display: none;
+  padding: 20px 20px 0 20px;
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.info p {
+  padding: 3px;
+  background: #EFF3B6;
+  background: rgba(255, 253, 0, 0.2);
+  border: 1px solid rgb(219, 225, 45);
+  margin: 0;
+  white-space: normal;
+  line-height: 18px;
+  padding: 10px;
+}

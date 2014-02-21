@@ -4,11 +4,10 @@
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
   <link rel="icon" href="{{static}}/images/favicon.png">
-  <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
-  <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
-  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
-  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
-  {{#if isProduction}}
+  <link rel="stylesheet" href="{{static}}/css/style.css?{{version}}">
+  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}">{{/if}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}"><![endif]-->
+  {{#if is_production}}
   {{{analytics}}}
   {{/if}}
 </head>
@@ -30,11 +29,11 @@
           <div class="dropdown" id="bins">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
-              {{#feature request "private"}}
+              {{#feature user "pro"}}
               <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
               {{/feature}}
-              {{#feature request "delete"}}
+              {{#feature user "delete"}}
               <a class="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
               {{#if home}}
@@ -49,7 +48,7 @@
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" class="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
               <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
+              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/task/how-can-i-embed-jsbin">How to embed</a>
             </div>
           </div>
         </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
@@ -98,20 +97,15 @@
       <div class="help">
         {{#unless embed}}
           {{#if home}}
-            {{#feature request "accountPages"}}
-            <div class="menu">
-              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
-            </div>
-            {{else}}
             <div class="menu">
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  <form method="post" class="login" action="{{root}}/sethome">
+                  <form class="login">
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                        @{{home}}{{#feature user "pro"}}<sup class="pro">pro</sup>{{/feature}}
                       </span>
                     </div>
                     <div>
@@ -126,7 +120,7 @@
                       <input type=submit value="Update account">
                       <a class="logout" href="#logout">Logout</a>
                     </div>
-                    {{#feature request "github"}}{{#unless user.github_token}}
+                    {{#feature user "github"}}{{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
                       <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
@@ -141,32 +135,8 @@
                 </div>
               </div>
             </div>
-            {{/feature}}
           {{else}}
             {{#if client.user}}
-              {{#feature request "sslLogin"}}
-                <div class="menu">
-                  {{#feature request "github"}}
-                  <a href="/login" class="button button-dropdown" id="loginbtn">Login or Register</a>
-                  <div class="dropdown login" id="registerLogin">
-                    <div class="dropdowncontent">
-                      <a class="btn-github" href="/auth/github">
-                        <img src="{{static}}/images/github-32.png">
-                        Login or Register via GitHub
-                      </a>
-                      <span class="login-group">
-                        Or
-                        <a class="btn-login" href="/login">
-                          <span>use your email address</span>
-                        </a>
-                      </span>
-                    </div>
-                  </div>
-                  {{else}}
-                  <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
-                  {{/feature}}
-                </div>
-              {{else}}
               <div class="menu">
                 <a href="#login" class="button button-open" id="loginbtn">Log in</a>
                 <div class="dropdown dd-right" id="login">
@@ -182,7 +152,7 @@
                         <input type="hidden" name="_redirect" value="home">
                       </div>
                     </form>
-                    <form class="login" action="{{root}}/login" method="post">
+                    <form class="login">
                       <p class="loginFeedback"></p>
                       <div>
                         <label>Username or Email<br>
@@ -196,7 +166,7 @@
                         <input type=submit value="Log in">
                         <a id="lostpass" href="{{root}}/forgot">Reset password</a>
                       </div>
-                      {{#feature request "github"}}
+                      {{#feature user "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
@@ -210,7 +180,7 @@
                 <div class="dropdown dd-right" id="register">
                   <div class="dropdowncontent">
                     <p>Registration allows you to retrieve your saved files.</p>
-                    <form class="login" action="{{root}}/register" method="post">
+                    <form class="login">
                       <p class="loginFeedback"></p>
                       <div>
                         <label>Username<br><input required name="username" type="text"></label>
@@ -226,7 +196,7 @@
                       <div>
                         <input type=submit value="Register">
                       </div>
-                      {{#feature request "github"}}
+                      {{#feature user "github"}}
                       <div>
                         <span class="login-splitter">or</span>
                         <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
@@ -236,31 +206,27 @@
                   </div>
                 </div>
               </div>
-              {{/feature}}
             {{/if}}
           {{/if}}
         {{/unless}}
-
-        {{#if settings.[ui showblog]}}
-        <div class="menu">
-          <a href="http://learn.jsbin.com/blog" class="button">Blog</a>
-        </div>
-        {{/if}}
-        <div class="menu">
-          <a href="#help" class="button button-dropdown">Help</a>
-          <div class="dropdown dd-right" id="help">
-            <div class="dropdownmenu">
-              <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
-              <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
-              <hr data-desc="">
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://learn.jsbin.com/help">Help topics</a>
-              <hr data-desc="">
-              <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
-              <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
-              <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+          <div class="menu">
+            <a href="#help" class="button button-dropdown">Help</a>
+            <div class="dropdown dd-right" id="help">
+              <div class="dropdownmenu">
+                <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
+                <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
+                <hr data-desc="">
+                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="{{root}}/videos">Videos</a>
+                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com">Tutorials</a>
+                <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.tumblr.com/faq">FAQ</a>
+                <hr data-desc="">
+                <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
+                <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
+                <a data-desc="Discover why, when and how JS Bin came about" target="_blank" href="http://jsbin.tumblr.com/about">About</a>
+                <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+              </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -495,7 +461,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
-{{#feature request "infocard"}}
+{{#feature user "infocard"}}
 <div hidden>
   <div class="card" id="infocard">
     <header><img>
@@ -508,7 +474,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </header>
     <div class="body">
       <ul>
-        {{#feature request "private"}}<!-- <li>
+        {{#feature user "private"}}<!-- <li>
           <select>
             <option>Public</option>
             <option>Private to me</option>
@@ -521,7 +487,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
         <li class="owner"><a href="/download">Download</a> </li>
         <!-- <li class="owner"><a href="/archive">Archive</a> </li> -->
-        {{#feature request "delete"}}
+        {{#feature user "delete"}}
         <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
         {{/feature}}
       </ul>
@@ -533,7 +499,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-{{#if isProduction}}
+{{#if is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}
   {{#if concat}}

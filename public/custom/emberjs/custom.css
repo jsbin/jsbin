@@ -1,4 +1,4 @@
-#control {
+#control, .control {
   background: url('/custom/emberjs/navigation_background.png') repeat-x;
   border-bottom: 1px solid #AA412F;
   -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;

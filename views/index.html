@@ -542,10 +542,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
 {{/if}}
-{{^feature request "infocard"}}{{#if live}}
+{{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
-{{/if}}{{/feature}}
+{{/if}}
 </body>
 </html>
 

@@ -79,7 +79,7 @@
             listenStats();
           }
         });
-      } else if (jsbin.saveDisabled === true) {
+      } else if (jsbin.saveDisabled === true && window.location.pathname.slice(-5) === '/edit') {
         $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
         $document.on('stats', throttle(updateStats, 1000));
       }

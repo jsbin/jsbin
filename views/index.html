@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html id="jsbin" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}">
+<head>
+  <meta charset=utf-8>
+  <title>JS Bin - Collaborative JavaScript Debugging</title>
+  <link rel="icon" href="{{static}}/images/favicon.png">
+  <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
+  <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
+  {{#if isProduction}}
+  {{{analytics}}}
+  {{/if}}
+</head>
+<!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
+<!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
+<!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
+  <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
+<div id="control">
+  <div class="control">
+    <div id="menuinfo"><p></p></div>
+    <div class="buttons">
+      {{#if embed}}
+        <span class="menu">
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+        </span>
+      {{else}}
+        <div class="menu">
+          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
+          <div class="dropdown" id="bins">
+            <div class="dropdownmenu">
+              <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
+              {{#feature request "private"}}
+              <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
+              <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
+              {{/feature}}
+              {{#feature request "delete"}}
+              <a class="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              {{/feature}}
+              {{#if home}}
+              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
+              {{/if}}
+              <hr data-desc="">
+              <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
+              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
+              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
+              <hr data-desc="">
+              <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" id="export-as-gist" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
+              <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
+              <a data-desc="Use content from this bin when creating new bins" class="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+              <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
+              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
+            </div>
+          </div>
+        </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
+     --><div class="menu">
+          <span class="button group">Add library
+          <select id="library"></select>
+          </span>
+        </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
+          <a href="#share" class="button button-dropdown group">Share</a>
+          <div class="dropdown" id="share">
+            <div class="dropdowncontent">
+              <form>
+                <div data-desc="This bin's full output without the JS Bin editor">
+                  <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
+                </div>
+                <hr>
+                <div id="sharepanels">
+                  <strong>Select panels to show:</strong>
+                  <ul class="inline">
+                    <li><label><input type="checkbox" data-panel="html">HTML</label></li>
+                    <li><label><input type="checkbox" data-panel="css">CSS</label></li>
+                    <li><label><input type="checkbox" data-panel="javascript">JS</label></li>
+                    <li><label><input type="checkbox" data-panel="console">Console</label></li>
+                    <li><label><input type="checkbox" data-panel="live">Output</label></li>
+                </div>
+                <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
+                <div data-desc="The url to this bin with the JS Bin editor">
+                  <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                </div>
+                <div data-desc="Embed this bin with the live output on your site">
+                  <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                </div>
+                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
+                  <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
+                </div>
+                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
+              </form>
+            </div>
+          </div>
+        </div><!-- intentional space -->
+        <div id="start-saving" class="menu">
+          <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
+        </div>
+      {{/if}}
+      <div id="panels"></div>
+      <div class="help">
+        {{#unless embed}}
+          {{#if home}}
+            {{#feature request "accountPages"}}
+            <div class="menu">
+              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+            </div>
+            {{else}}
+            <div class="menu">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
+              <div class="dropdown dd-right" id="profile">
+                <div class="dropdowncontent">
+                  <form method="post" class="login" action="{{root}}/sethome">
+                    <p class="loginFeedback"></p>
+                    <div>
+                      <span class="input" id="username" readonly>
+                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                      </span>
+                    </div>
+                    <div>
+                      <label>Email<br>
+                      <input name="email" type="email" value="{{email}}"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input name="password" type="password" value=""></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Update account">
+                      <a class="logout" href="#logout">Logout</a>
+                    </div>
+                    {{#feature request "github"}}{{#unless user.github_token}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                    </div>
+                    {{/unless}}{{/feature}}
+                  </form>
+
+                  <form action="{{root}}/logout" method="POST" id="logout">
+                    <input type="hidden" name="_csrf" value="{{token}}">
+                    <button hidden>Logout</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/feature}}
+          {{else}}
+            {{#if client.user}}
+              {{#feature request "sslLogin"}}
+                <div class="menu">
+                  {{#feature request "github"}}
+                  <a href="/login" class="button button-dropdown" id="loginbtn">Login or Register</a>
+                  <div class="dropdown login" id="registerLogin">
+                    <div class="dropdowncontent">
+                      <a class="btn-github" href="/auth/github">
+                        <img src="{{static}}/images/github-32.png">
+                        Login or Register via GitHub
+                      </a>
+                      <span class="login-group">
+                        Or
+                        <a class="btn-login" href="/login">
+                          <span>use your email address</span>
+                        </a>
+                      </span>
+                    </div>
+                  </div>
+                  {{else}}
+                  <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                  {{/feature}}
+                </div>
+              {{else}}
+              <div class="menu">
+                <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+                <div class="dropdown dd-right" id="login">
+                  <div class="dropdowncontent">
+                    <form class="forgot" action="{{root}}/forgot" method="post">
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Request password reset">
+                        <input type="hidden" name="_csrf" value="{{token}}">
+                        <input type="hidden" name="_redirect" value="home">
+                      </div>
+                    </form>
+                    <form class="login" action="{{root}}/login" method="post">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username or Email<br>
+                        <input name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Log in">
+                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+                      </div>
+                      {{#feature request "github"}}
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      </div>
+                      {{/feature}}
+                    </form>
+                  </div>
+                </div>
+              </div><div class="menu">
+                <a href="#register" class="button button-open" id="regbtn">Register</a>
+                <div class="dropdown dd-right" id="register">
+                  <div class="dropdowncontent">
+                    <p>Registration allows you to retrieve your saved files.</p>
+                    <form class="login" action="{{root}}/register" method="post">
+                      <p class="loginFeedback"></p>
+                      <div>
+                        <label>Username<br><input required name="username" type="text"></label>
+                      </div>
+                      <div>
+                        <label>Email<br>
+                        <input name="email" required type="email"></label>
+                      </div>
+                      <div>
+                        <label>Password<br>
+                        <input required name="password" type="password"></label>
+                      </div>
+                      <div>
+                        <input type=submit value="Register">
+                      </div>
+                      {{#feature request "github"}}
+                      <div>
+                        <span class="login-splitter">or</span>
+                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                      </div>
+                      {{/feature}}
+                    </form>
+                  </div>
+                </div>
+              </div>
+              {{/feature}}
+            {{/if}}
+          {{/if}}
+        {{/unless}}
+
+        {{#if settings.[ui showblog]}}
+        <div class="menu">
+          <a href="http://learn.jsbin.com/blog" class="button">Blog</a>
+        </div>
+        {{/if}}
+        <div class="menu">
+          <a href="#help" class="button button-dropdown">Help</a>
+          <div class="dropdown dd-right" id="help">
+            <div class="dropdownmenu">
+              <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
+              <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
+              <hr data-desc="">
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://learn.jsbin.com/help">Help topics</a>
+              <hr data-desc="">
+              <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
+              <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
+              <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
+  <div id="source" class="binview stretch">
+  </div>
+  <div id="panelswaiting">
+    <div class="code stretch html panel">
+      <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
+          <div class="dropdownmenu processorSelector" data-type="html">
+            <a href="#html">HTML</a>
+            <a href="#markdown">Markdown</a>
+            <a href="#jade">Jade</a>
+            <a href="#convert">Convert to HTML</a>
+          </div>
+        </div>
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
+      </div>
+    </div>
+    <div class="code stretch javascript panel">
+      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+        <div class="dropdown" id="javascriptprocessors">
+          <div class="dropdownmenu processorSelector" data-type="javascript">
+            <a href="#javascript">JavaScript</a>
+            <a href="#coffeescript">CoffeeScript</a>
+            <a href="#jsx">JSX (React)</a>
+            <a href="#processing">Processing</a>
+            <a href="#traceur">Traceur</a>
+            <a href="#typescript">TypeScript</a>
+            <a href="#convert">Convert to JavaScript</a>
+          </div>
+        </div>
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
+      </div>
+    </div>
+    <div class="code stretch css panel">
+      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+        <div class="dropdown" id="cssprocessors">
+          <div class="dropdownmenu processorSelector" data-type="css">
+            <a href="#css">CSS</a>
+            <a href="#less">LESS</a>
+            <!-- <a href="#stylus">Stylus</a> --><!-- Removed because of a crash bug in stylus https://twitter.com/phuunet/status/377735455670030336 -->
+            <a href="#convert">Convert to CSS</a>
+          </div>
+        </div>
+      </div>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
+      </div>
+    </div>
+    <div class="stretch console panel">
+      <div class="label">
+        <span class="name"><strong>Console</strong></span>
+        <span class="options">
+          <button id="runconsole" title="ctrl + enter">Run</button>
+        </span>
+      </div>
+      <div id="console" class="stretch"><ul id="output"></ul><form>
+          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
+      </form></div>
+    </div>
+    <div id="live" class="stretch live panel">
+      <div class="label">
+        <span class="name"><strong>Output</strong></span>
+        <span class="options">
+          <button id="runwithalerts" title="ctrl + enter
+Include alerts, prompts &amp; confirm boxes">Run with JS</button>
+          <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
+          <a target="_blank" title="Live preview" id="jsbinurl" class="{{#unless code_id}}hidden{{/unless}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+        </span>
+        <span class="size"></span>
+      </div>
+    </div>
+  </div>
+  <form {{#if embed}}target="_blank"{{/if}} id="saveform" method="post" action="{{code_id_path}}/save">
+    <input type="hidden" name="method">
+    <input type="hidden" name="_csrf" value="{{token}}">
+  </form>
+</div>
+<div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
+  <p>
+    {{#if flash_tip}}{{flash_tip}}{{/if}}
+    {{#unless flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/unless}}
+  </p>
+  <a class="dismiss" href="#">Dismiss x</a>
+</div>
+<div id="keyboardHelp" class="modal">
+  <div>
+    <h2>Keyboard Shortcuts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="shortcut">Shortcut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ctrl + [num]</td>
+          <td>Toggle nth panel</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <small>
+              <input type="checkbox" id="enablealt" class="enablealt">
+              <label for="enablealt">Require alt key, leaving cmd+1, 2 etc for tab switching.</label>
+            </small>
+          </td>
+        </tr>
+        <tr>
+          <td>ctrl + 0</td>
+          <td>Close focused panel</td>
+        </tr>
+        <tr>
+          <td>ctrl + enter</td>
+          <td>Re-render output.<br>If console visible: run JS in console</td>
+        </tr>
+        <tr>
+          <td>Ctrl + l</td>
+          <td>Clear the console</td>
+        </tr>
+        <tr>
+          <td>ctrl + /</td>
+          <td>Toggle comment on selected lines</td>
+        </tr>
+        <!-- <tr>
+          <td>ctrl + alt + .</td>
+          <td>Close current HTML element</td>
+        </tr> -->
+        <tr>
+          <td>cmd + [</td>
+          <td>Indents selected lines</td>
+        </tr>
+        <tr>
+          <td>cmd + ]</td>
+          <td>Unindents selected lines</td>
+        </tr>
+        <tr>
+          <td>tab</td>
+          <td>Code complete (JavaScript only) &amp; Emmet expand</td>
+        </tr>
+        <tr>
+          <td>ctrl + s</td>
+          <td>Save &amp; lock current Bin from further changes</td>
+        </tr>
+        <tr>
+          <td>ctrl + shift + s</td>
+          <td>Clone Bin</td>
+        </tr>
+        <!-- too confusing, let's throw it away -->
+        <!--
+        <tr>
+          <td>ctrl + \</td>
+          <td>Hide navigation bar</td>
+        </tr>
+        <tr>
+          <td>esc, ctrl + [num]</td>
+          <td>JS Bin ignores this sequence, and returns control to browser shortcuts</td>
+        </tr>
+        <tr>
+          <td>ctrl + §<br>(or `)</td>
+          <td>Hide focused panel</td>
+        </tr>-->
+
+        <tr><td colspan="2"><small><br>JS Bin also supports <a href="http://docs.emmet.io/" target="_blank">Emmet/Zen Coding</a> shortcuts</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div id="urlHelp" class="modal">
+  <div>
+    <h2>JS Bin URLs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th class="shortcut">URL</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/</td>
+          <td>Show the full rendered output.<br><small>This content will update in real time as it's updated from the /edit url.</small></td>
+        </tr>
+        <tr>
+          <td>/edit</td>
+          <td>Edit the current bin</td>
+        </tr>
+        <tr>
+          <td>/watch</td>
+          <td>Follow a Code Casting session</td>
+        </tr>
+        <tr>
+          <td>/embed</td>
+          <td>Create an embeddable version of the bin</td>
+        </tr>
+        <tr>
+          <td>/latest</td>
+          <td>Load the very latest bin (/latest goes in place of the revision)</td>
+        </tr>
+        <tr>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last</td>
+          <td>View the last edited bin for this user</td>
+        </tr>
+        <tr>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/edit</td>
+          <td>Edit the last edited bin for this user</td>
+        </tr>
+        <tr>
+          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/watch</td>
+          <td>Follow the Code Casting session for the latest bin for this user</td>
+        </tr>
+        <tr>
+          <td>/quiet</td>
+          <td>Remove analytics and edit button from rendered output</td>
+        </tr>
+        <tr>
+          <td>.js</td>
+          <td>Load only the JavaScript for a bin</td>
+        </tr>
+        <tr>
+          <td>.css</td>
+          <td>Load only the CSS for a bin</td>
+        </tr>
+        <tr><td colspan="2"><br><small>Except for username prefixed urls, the url may start with http://jsbin.com/abc and the url fragments can be added to the url to view it differently.</small></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{{#feature request "infocard"}}
+<div hidden>
+  <div class="card" id="infocard">
+    <header><img>
+      <div class="visibility"></div>
+      <div class="meta">
+        <div class="author">Bin info</div>
+        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
+      </div>
+      <div class="viewers"><b>0</b><span>viewers</span></div>
+    </header>
+    <div class="body">
+      <ul>
+        {{#feature request "private"}}<!-- <li>
+          <select>
+            <option>Public</option>
+            <option>Private to me</option>
+            </option>
+          </select>
+        </li> -->
+        {{/feature}}
+        <li><a href="/clone">Clone</a> </li>
+        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
+        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
+        <li class="owner"><a href="/download">Download</a> </li>
+        <!-- <li class="owner"><a href="/archive">Archive</a> </li> -->
+        {{#feature request "delete"}}
+        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
+        {{/feature}}
+      </ul>
+    </div>
+  </div>
+</div>
+{{/feature}}
+<script>
+  var template = {{{json_template}}};
+  var jsbin = {{{jsbin}}}; tips  = {{tips}};
+</script>
+{{#if isProduction}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
+{{else}}
+  {{#if concat}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+  {{else}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
+  {{/if}}
+{{/if}}
+{{#if live}}
+<script src="{{static}}/js/vendor/eventsource.js"></script>
+<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{/if}}
+</body>
+</html>
+

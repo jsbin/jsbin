@@ -1,3 +1,12 @@
 logs
 logs/*
-config.php
+config.*.json
+public/js/jsbin*.js
+public/js/prod/*
+.nodemonignore
+!config.default.json
+statsd.js
+.allow-devtools-edit
+jsbin.sqlite
+node_modules
+tmp/*

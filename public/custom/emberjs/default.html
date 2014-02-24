@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ember Starter Kit</title>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.2.1.js"></script>
+  <script src="http://builds.emberjs.com/tags/v1.4.0/ember.js"></script>
+</head>
+<body>
+
+  <script type="text/x-handlebars">
+    <h2> Welcome to Ember.js</h2>
+
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+    <ul>
+    {{#each item in model}}
+      <li>{{item}}</li>
+    {{/each}}
+    </ul>
+  </script>
+</body>
+</html>

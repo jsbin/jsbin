@@ -1,0 +1,58 @@
+#control, .control {
+  background: url('/custom/emberjs/navigation_background.png') repeat-x;
+  border-bottom: 1px solid #AA412F;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
+  -moz-box-shadow: rgba(0,0,0,0.3) 0 0 3px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
+}
+
+.menu > .button:hover,
+.menu > .button:active,
+.menu.open > .button {
+  border-left: 1px solid rgba(0,0,0,0);
+  border-right: 1px solid rgba(0,0,0,0);
+}
+
+#control .button {
+  font-weight: 400;
+  color: #FAF2EE;
+  text-shadow: rgba(0, 0, 0, 0.4) 0 1px 0;
+  text-decoration: none;
+}
+
+#control .button:hover {
+  color: #fff;
+}
+
+#panels .button:hover {
+  background: none;
+}
+
+#control .menu.open .button {
+  color: #000;
+  text-shadow: none;
+}
+
+#panels .button,
+#panels .button:first-child {
+  border: 0;
+  margin-left: 10px;
+  color: #FAF2EE;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+#panels .button.active {
+  color: #331915;
+  text-shadow: rgba(255, 255, 255, 0.2) 0 1px 0;
+  background-color: #BF4737;
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #923C2E;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0,inset rgba(0, 0, 0, 0.17) 0 1px 1px;
+  -moz-box-shadow: rgba(255,255,255,0.15) 0 1px 0,inset rgba(0,0,0,0.17) 0 1px 1px;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0,inset rgba(0, 0, 0, 0.17) 0 1px 1px;
+}

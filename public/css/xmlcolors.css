@@ -1,0 +1,63 @@
+/* Font via http://robey.lag.net/2010/06/21/mensch-font.html */
+@font-face {
+  font-family: 'MenschRegular';
+  src: url('../font/mensch-webfont.eot');
+  src: url('../font/mensch-webfont.eot?#iefix') format('eot'),
+       url('../font/mensch-webfont.woff') format('woff'),
+       url('../font/mensch-webfont.ttf') format('truetype'),
+       url('../font/mensch-webfont.svg#webfont0UwCC656') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.editbox {
+  margin: .4em;
+  padding: 0;
+  font-family: MenschRegular, Monaco, consolas, monospace;
+  font-size: 10pt;
+  color: black;
+}
+
+.editbox p {
+  margin: 0;
+}
+
+span.xml-tagname {
+  color: #A0B;
+}
+
+span.xml-attribute {
+  color: #281;
+}
+
+span.xml-punctuation {
+  color: black;
+}
+
+span.xml-attname {
+  color: #00F;
+}
+
+span.xml-comment {
+  color: #A70;
+}
+
+span.xml-cdata {
+  color: #48A;
+}
+
+span.xml-processing {
+  color: #999;
+}
+
+span.xml-entity {
+  color: #A22;
+}
+
+span.xml-error {
+  color: #F00;
+}
+
+span.xml-text {
+  color: black;
+}

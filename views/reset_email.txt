@@ -1,0 +1,13 @@
+Hi there,
+
+Looks like you've requested an email to reset your {{domain}} password. Just
+click the following link and you'll be logged into JSBin, from there you
+can change your password from the account menu.
+
+{{link}}
+
+This link will expire in 24 hours so don't wait around.
+
+Cheers,
+
+Dave.

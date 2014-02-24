@@ -1,0 +1,21 @@
+div {
+  zoom: 1;
+}
+
+#library {
+  filter: alpha(opacity=0);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+
+#control, .control, .help {
+  z-index: auto !important;
+}
+
+/**
+*  Overwrite unicode character with image
+**/
+
+.button-dropdown-arrow:after,
+.fake-dropdown:after {
+  content: url(/images/down-arrow.png); 
+}

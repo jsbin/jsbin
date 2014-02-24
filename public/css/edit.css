@@ -1,0 +1,38 @@
+#edit-with-js-bin {
+  /* position */
+  position: fixed;
+  top: 0;
+  right: 5px;
+
+  /* box-model */
+  display: inline-block;
+  padding: 7px 5px 8px 9px;
+  border: 1px solid #999;
+  border-top: 0;
+
+  /* typography & style */
+  color: #777;
+  text-shadow: white 0 1px 1px;
+  text-decoration: none;
+  font: normal 12px 'Helvetica Neue', Arial, Helvetica;
+  white-space: nowrap;
+  background: #ddd;
+
+  /* slide in/out transition */
+  -webkit-transition: top ease-out 100ms;
+     -moz-transition: top ease-out 100ms;
+       -o-transition: top ease-out 100ms;
+          transition: top ease-out 100ms;
+}
+
+#edit-with-js-bin:hover {
+  color: #333;
+}
+
+#edit-with-js-bin img {
+  width: 16px;
+  height: 16px;
+  vertical-align: top;
+  border: 0;
+  margin: -1px 0 0 3px;
+}

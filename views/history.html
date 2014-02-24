@@ -1,0 +1,39 @@
+<div id="history">
+  <div class="header">
+    <h2>Open previously saved <em>bins</em>{{by_user}}:</h2>
+    <div class="menu">
+      <input type="checkbox" name="toggle_archive" id="toggleArchive" class="toggle_archive"> <label for="toggleArchive">Archive view</label>
+    </div>
+  </div>
+  <table>
+    {{#bins}}
+    <tbody>
+      {{#.}}
+      <tr class="{{#if archive}}archived{{/if}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
+        <td class="url">
+          <a href="{{edit_url}}">
+            <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
+          </a>
+        </td>
+        <td class="last_updated">
+          <a pubdate="{{last_updated}}" href="{{edit_url}}">{{pretty_last_updated}}</a>
+        </td>
+        <td class="archive_action">
+          <a href="{{url}}/archive" class="archive"><span>Archive</span> x</a>
+          <a href="{{url}}/unarchive" class="unarchive"><span>Un-archive</span></a>
+        </td>
+        <td class="title">
+          <a href="{{edit_url}}">{{summary}}</a>
+        </td>
+      </tr>
+      {{/.}}
+      <tr class="spacer"><td colspan="4"></td></tr>
+    </tbody>
+    {{/bins}}
+  </table>
+  <div class="preview">
+    <h2>Preview</h2>
+    <p id="viewing"></p>
+    <iframe id="iframe" hidden></iframe>
+  </div>
+</div>

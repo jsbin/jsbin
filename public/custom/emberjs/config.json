@@ -1,0 +1,7 @@
+{
+  "css": "custom/emberjs/custom.css",
+  "settings": {
+    "panels": ["javascript", "live"]
+  },
+  "name": "Ember.js"
+}

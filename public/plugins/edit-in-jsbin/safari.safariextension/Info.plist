@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Author</key>
+	<string>Remy Sharp</string>
+	<key>Builder Version</key>
+	<string>7536.25</string>
+	<key>CFBundleDisplayName</key>
+	<string>Edit in JS Bin</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.jsbin.edit-in-jsbin</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>Chrome</key>
+	<dict>
+		<key>Context Menu Items</key>
+		<array>
+			<dict>
+				<key>Command</key>
+				<string>edit-in-jsbin</string>
+				<key>Identifier</key>
+				<string>edit-in-jsbin</string>
+				<key>Title</key>
+				<string>Edit in JS Bin</string>
+			</dict>
+		</array>
+		<key>Global Page</key>
+		<string>background.html</string>
+	</dict>
+	<key>Content</key>
+	<dict>
+		<key>Scripts</key>
+		<dict>
+			<key>Start</key>
+			<array>
+				<string>app.js</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>Adds menu item to test code found on the page in JS Bin</string>
+	<key>ExtensionInfoDictionaryVersion</key>
+	<string>1.0</string>
+	<key>Permissions</key>
+	<dict>
+		<key>Website Access</key>
+		<dict>
+			<key>Level</key>
+			<string>All</string>
+		</dict>
+	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://jsbin.com/plugins/edit-in-jsbin/safari.plist</string>
+	<key>Website</key>
+	<string>http://jsbin.com</string>
+</dict>
+</plist>

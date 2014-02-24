@@ -1,0 +1,12 @@
+/php
+/build/build.php
+/build/compiler.jar
+/vendor/*
+*.php
+TODO.md
+/node_modules
+.git*
+.htaccess
+config.*.json
+Makefile
+!config.default.json

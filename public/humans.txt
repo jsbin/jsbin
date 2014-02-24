@@ -1,0 +1,55 @@
+# Main Contributions
+
+Remy Sharp
+@rem
+Founder / Lead developer
+
+Danny Hope
+@yandle
+UX design
+
+# Developers:
+
+Fabien O'Carroll
+@allouis_
+
+# Alumni:
+
+Aron Carroll
+@aroncarroll
+
+Tom Ashworth
+@phuunet
+
+Jon Linklater
+@binarytales
+
+
+# A bit of history
+
+JS Bin is a webapp specifically designed to help JavaScript and CSS folk test
+snippets of code, within some context, and debug the code collaboratively.
+
+The original idea spawned from a conversation with another developer in trying to
+help him debug an Ajax issue. Pastebins didn't exist with the live output
+so Remy decided to build one.
+
+Version 1 of JS Bin took the best part of 4 hours to develop back in October 2008,
+version 2 released in October 2009 was been rewritten from the ground up and was
+completely open source, and version 3 was released in June 2012 with live
+rendering, codecasting and remote rendering.
+
+# An open source project made on Left Logic time
+
+ttttttttt
+tt     tt
+tt     tt
+ttttttttt
+         1ttttttt.
+         11     tttt.
+         11     ttttttt.
+         :1111111ttttttttt.
+           :1111111ttttttttt.
+              :11111111tttttt
+                 :1111111tttt
+                    :111111tt

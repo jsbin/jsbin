@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset=utf-8 />
+<title>JS Bin Help - FAQ</title>
+<style>
+body { font: 13px/1.3em "helvetica neue";}
+</style>
+</head>
+<body>
+  <h1>FAQ</h1>
+
+  <h2>When I change the url to a different JS Bin, it still has the old code</h2>
+
+  <p>Click the <strong>revert</strong> button and it will reload the code from the database based on the url you requested.</p>
+
+  <h2>Can I run a Gist in JS Bin?</h2>
+
+  <p>Funny you ask! Absolutely you can - just save the <a href="http://gist.github.com" title="Gist">gist</a> in Github, and either using the <a href="javascript:(function(){window.location='http://jsbin.com/gist'+window.location.pathname})()">gist to JS Bin</a> bookmarklet, or change the url from <a href="http://gist.github.com/271333">http://gist.github.com/<strong>271333</strong></a> to <a href="http://jsbin.com/gist/271333">http://jsbin.com/<strong>gist/271333</strong></a></p>
+
+  <h2>I didn't insert the JavaScript and it still runs</h2>
+
+  <p>When you tab to the output panel, JS Bin automatically inserts your JavaScript on the fly, so you don't need to worry about it.</p>
+
+  <h2>How does the error checking work?</h2>
+
+  <p>Error checking is provided by the <a href="http://jshint.com/">JSHint</a> project. Like JSLint, but maintained and a lovely API so I could plug it in to JS Bin.</p>
+
+  <h2>Can I just show the HTML panel?</h2>
+
+  <p>Yes. Append <code>#html</code> to the end of the url when sending a saved JS Bin and when the link is opened, only the HTML tab will be shown.</p>
+
+  <h2>Can I just show the JavaScript panel?</h2>
+
+  <p>Yes. Just like the HTML method, append <code>#javascript</code> to the end of the url when sending a saved JS Bin and when the link is opened, only the JavaScript tab will be shown.</p>
+
+  <h2>I need my JavaScript inserted in a specific position</h2>
+
+  <p>Either insert the JavaScript directly in to the HTML panel, or you can use the special <code>%code%</code> command.  Add <code>&lt;script&gt;%code%&lt;/script&gt;</code> to your HTML and the contents of the JavaScript panel will be inserted at that point.</p>
+
+  <h2>How do I re-run or re-render the code</h2>
+
+  <p>Just click the 'Preview' button, and your entire code will re-run.</p>
+
+  <h2>Can JS Bin respond to Ajax requests?</h2>
+
+  <p>Yes. See the Ajax debugging video (in the top of the navigation) for a demo. Or, it's as simple as removing the HTML output, saving the code, then requesting the URL via a new snippet. JS Bin will respond to Ajax requests appropriately.</p>
+
+  <h2>IE6?</h2>
+
+  <p>I'm afraid not, but the application is open source, so if you think you can get it working - please go ahead: <a href="http://github.com/remy/jsbin">http://github.com/remy/jsbin</a></p>
+
+  <h2>My question isn't answered</h2>
+
+  <p>Feel free to <a href="http://github.com/jsbin/jsbin/issues">get in touch</a> and if appropriate I'll add it to the FAQ.</p>
+</body>
+</html>

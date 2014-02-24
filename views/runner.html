@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>JS Bin Runner</title>
+
+<style type="text/css">
+  body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+  iframe {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+  }
+</style>
+
+<div id="sandbox-wrapper"></div>
+{{^settings.is_production}}
+  {{#scripts}}
+    <script src="{{static}}{{.}}"></script>
+  {{/scripts}}
+{{/settings.is_production}}
+
+{{#settings.is_production}}
+  <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
+  {{{analytics}}}
+{{/settings.is_production}}

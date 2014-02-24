@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Uh-oh Something Went Wrong</title>
+    <link rel="stylesheet" type="text/css" href="{{static}}/css/static-page.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <img id="dave" src="{{static}}/images/logo.png" alt="Dave, the JS Bin bot">
+      <div id="welcome">
+        {{#is_404}}
+          <h1>This page ain't here :(</h1>
+          <div class="bubble">
+            <p>How about heading back to the <a href="{{root}}">homepage</a>
+            instead? It's nice there and there are lots of things to click on.</p>
+            <p>If you think there is supposed to be something here that isn't
+            let us know via the <a href="http://github.com/jsbin/jsbin/issues">Issues page</a>.</p>
+          </div>
+        {{/is_404}}
+        {{#is_500}}<h1>Oh no!<br />Something went wrong!</h1>
+          <p class="bubble">But don't worry we're probably on the case. In the
+          meantime you could try refreshing the page, if that doesn't work
+          let us know by creating an issue on the <a href="http://github.com/jsbin/jsbin/issues">Issues page</a>.</p>
+<!--
+{{err}}
+
+{{stack}}
+-->
+        {{/is_500}}
+      </div>
+      {{#is_500}}
+        <details>
+          <summary>The error: {{err}}</summary>
+          <pre>{{request.method}} {{request.url}}
+{{stack}}</pre>
+        </details>
+      {{/is_500}}
+    </div>
+  </body>
+</html>

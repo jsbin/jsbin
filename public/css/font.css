@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'MesloLGMDZ';
+  src: url('../font/meslolgm-dz-regular-webfont.eot');
+  src: url('../font/meslolgm-dz-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../font/meslolgm-dz-regular-webfont.woff') format('woff'),
+       url('../font/meslolgm-dz-regular-webfont.ttf') format('truetype'),
+       url('../font/meslolgm-dz-regular-webfont.svg#meslolgm-dz-regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'SourceCodeProRegular';
+    src: url('../font/SourceCodePro-Regular-webfont.eot');
+    src: url('../font/SourceCodePro-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/SourceCodePro-Regular-webfont.woff') format('woff'),
+         url('../font/SourceCodePro-Regular-webfont.ttf') format('truetype'),
+         url('../font/SourceCodePro-Regular-webfont.svg#SourceCodeProRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'icons';
+  src:url('fonts/icons.eot');
+}
+@font-face {
+  font-family: 'icons';
+  src: url(data:application/font-woff;charset=utf-8;base64,d09GRk9UVE8AAAXIAAsAAAAACSwAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABDRkYgAAABCAAAAqwAAAR6gYtJc0ZGVE0AAAO0AAAAGgAAABxl+23oR0RFRgAAA9AAAAAcAAAAIAAyAARPUy8yAAAD7AAAAEsAAABgL9zcQGNtYXAAAAQ4AAAAPQAAAVLgFPLNaGVhZAAABHgAAAAuAAAANv2RP3NoaGVhAAAEqAAAAB4AAAAkBBD/5GhtdHgAAATIAAAADgAAABAEAAAAbWF4cAAABNgAAAAGAAAABgAFUABuYW1lAAAE4AAAANwAAAFuDTOJ1nBvc3QAAAW8AAAADAAAACAAAwAAeJy1U09IFHEUfuP+G9dtXG1XFLdZKdJA8U+7lwwKIkvyEKFQiQQVmLJhh7YkLYoyzX7dnIN1EAK3gjp0ioqQDoWBKyUF4SZUYlAslFa6Qyu83ptZpyXy2OX7fe/NvO993/yRwG4HSZKcnUdPdJ0EKQck2KYHc/Qym15sFx6b8NhVN5Q0F6IQFvG4RETX9KgjACI/AOANgFYQAE/A9qMQnKwhQz4UwTpYDxWnujp31dbW0tFgHXXmsdnYaq4GkAakK9KgdBUcrJADHkhIMds+RehR+7Kmay4l9SSl+RHWhMII7ngccTEUQvwenwym+1wG4VbY6sfV9KjT6od4aJLHQ8EU3c8k01rpq0NJJ0L4WxtCpXc0A1SqE9ltfEMMJ7yjwUpXZTrqL3MnU1F/khQLYiriQiyIoLTOIn5t/ag2Ofmc5baaASppUtF9eov/37JNWWKqJTa7qtiQ678+lVTbKo8l7VsOU3xF35nyUZSq6gTChqlyxJnqYcTXUx0Erz5xmSCoKeVeeQZmjJvpKlTVlAYFgn3vCAK0BojVE8DteWJlICNuOn8OIfJ0h4MyR+sR53/2IiZHHiEu3RxE/BK5LGRWrWDV6T+q7GiYHVUwdHA5Te+mSOuldb7Du3m+kR6vGGfNHhnh7YVLvKmPNuEBr7GfWGzO8GR6lLNymmCU2dkTf+e0eiq77Rfs/iFC7qHTZiLIz+s3cp5F1LaPOSj9nTrE9AcgdvAdsedzNJS+f8RE8nRro9Eltv8lsfdjhvuLK/OKeMGq45yzkTd1c+4eISu65hP+ax43/a9r+dfvpk/B14vQcP0GzcnHIgiOZ8UEfSU0d3ecUruXBki94N4ecksASvMD+vAsWFi5wKVKDhdzz5jzuNSyhTWPI/7a+lk2N+Hj9nZH3m8Plkc4eJxjYGBgZACCk535hiD6nMX/aBgNAESVBrQAAHicY2BkYGDgA2IJBhBgYmAEQhYwBvEYAAR2ADd4nGNgZmJgnMDAysDB6MOYxsDA4A6lvzJIMrQwMDAxsDIzwIEAgskQkOaawuDwgOEDA+OD/w8Y9BgfMCg0MDAwwhUoACEjABBCDB8AeJxjYGBgZoBgGQZGBhDwAfIYwXwWBgMgzQGETCCJB0wfGP7/B7MYICwFJgFGqC4wYGRjQOaOSAAAy6gIsAAAAHicY2BkYGAAYhfbRz7x/DZfGbiZGEDgnMX/aAT9/wETA+MDIJeDASwNACnTCuoAAHicY2BkYGB88P8Bgx4TAwPDPwYgCRRBAcwAbecD9gAAeJxjYoAAJigNAABAAAUAAAAAUAAABQAAeJxtjjFOAzEQRd8mu0EBREFB7VBG2pXXNFFKihyAIn0UWauVorXkJPegoqLiGByAA3Ai/jqWKMCSNe+P/8w3cMsbBeMpqKQuPOGKx8xTFgyZS3neM1fc8Jl5JvUtZ1HO1blOUyNPuOM+85RnlplLeV4zVzzwkXmm/hc9e4Iyj9Dvw6DygqfjzIEdUdJ358NOsEm+U6pRDo/B0WBV17q/my7a6aVmpTtSy5NWhOG0CbHzxjXWrE1KVHW2XtXOtrL8/c9WSVG6T32jTWMmWx+PfRhM29h/pn4AnVIydXicY2BmwAsAAH0ABA==) format('woff'),
+     url(data:application/x-font-ttf;charset=utf-8;base64,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) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  font-family: 'icons';
+  content: attr(data-icon);
+  speak: none;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+/*
+Instead of a list of all class selectors,
+you can use the generic selector below, but it's slower:
+[class*="icon-"] {
+*/
+.icon-lock, .icon-unlocked, .icon-share {
+  font-family: 'icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+.icon-lock:before {
+  content: "\e000";
+  margin-right: 3px;
+}
+.icon-unlocked:before {
+  content: "\e001";
+  margin-right: 3px;
+}
+.icon-share:before {
+  content: "\e002";
+  margin-right: 3px;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html id="jsbin" lang="en" class="public-listing {{#flash_info}}showtip{{/flash_info}}{{#embed}} embed{{/embed}}">
+<head>
+<meta charset=utf-8 />
+<title>JS Bin - Collaborative JavaScript Debugging</title>
+<link rel="icon" href="{{static}}/images/favicon.png">
+<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
+{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
+<!--[if lte IE 8 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
+</head>
+<!--[if lt IE 7 ]><body class="source ie ie6 ready"><![endif]-->
+<!--[if lt IE 8 ]><body class="source ie ie7 ready"><![endif]-->
+<!--[if gte IE 8 ]><body class="source ie ready"><![endif]-->
+<!--[if !IE]><!--><body id="listpage" class="source ready"><!--<![endif]-->
+<script>
+  var jsbin = {{{jsbin}}};
+</script>
+{{^is_production}}
+{{#scripts}}
+<script src="{{static}}{{.}}"></script>
+{{/scripts}}
+{{/is_production}}
+{{#is_production}}
+<script src="{{static}}/js/jsbin-{{version}}.min.js"></script>
+{{{analytics}}}
+{{/is_production}}
+{{{list_history}}}
+</body>
+</html>

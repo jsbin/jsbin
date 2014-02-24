@@ -1,0 +1,9 @@
+// feel free to add tips to this file to help other users - just append to the end
+[
+'Use ctrl+shift+? to show the keyboard shortcuts',
+'Make sure you check out the help and tutorials - a blog of screencasts',
+'To only show the HTML panel use ?html on the end of the url, such as http://jsbin.com/?html',
+'Refreshing the window will not lose your changes.',
+'Use console.log to display debug information. If a web console is present, then the logging goes there, otherwise it will show in a custom console window.',
+'To view only the JavaScript append .js to the url, i.e. http://jsbin.com/ujayi.js - useful for Ajax testing'
+]

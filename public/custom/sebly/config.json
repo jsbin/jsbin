@@ -1,0 +1,14 @@
+{
+  "css": "custom/sebly/custom.css",
+  "settings": {
+    "codemirror": {
+      "indentWithTabs": true,
+      "indentUnit": 4,
+      "smartIndent": false,
+      "electricChars": false,
+      "tabSize": 4
+    },
+    "panels": ["javascript", "live"]
+  },
+  "name": "Seb Lee-Delise"
+}

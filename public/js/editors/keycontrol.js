@@ -51,7 +51,7 @@ if (!customKeys.disabled) {
       $('a.homebtn').trigger('click', 'keyboard');
       event.preventDefault();
     } else if (event.metaKey && event.shiftKey && event.which === 8) { // cmd+shift+backspace
-      $('a.deletebin').trigger('click', 'keyboard');
+      $('a.deletebin:first').trigger('click', 'keyboard');
       event.preventDefault();
     } else if (event.metaKey && event.which === 83) { // save
       if (event.shiftKey === false) {

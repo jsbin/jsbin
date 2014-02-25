@@ -419,9 +419,11 @@ $('#addmeta').click(function () {
 
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
+  analytics.delete();
   $.ajax({
     type: 'post',
     url: jsbin.getURL() + '/delete',
+    data: { checksum: jsbin.state.checksum },
     success: function () {
       jsbin.state.deleted = true;
       $document.trigger('tip', {

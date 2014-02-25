@@ -1,4 +1,4 @@
-var Gist = (function () {
+var Gist = (function () { // jshint ignore:line
   /*global $:true, jsbin:true, processors:true, $document*/
   'use strict';
 
@@ -48,7 +48,7 @@ var Gist = (function () {
 
   $('a.export-as-gist').click(function () {
     var gist = {
-      'public': true,
+      public: true,
       files: {}
     };
     var panels = [

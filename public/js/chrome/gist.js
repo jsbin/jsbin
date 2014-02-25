@@ -46,7 +46,7 @@ var Gist = (function () { // jshint ignore:line
    * Export as gist
    */
 
-  $('a.export-as-gist').click(function () {
+  $('a#export-as-gist').click(function () {
     var gist = {
       public: true,
       files: {}

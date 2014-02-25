@@ -83,3 +83,98 @@
   -ms-filter: brightness(125%) saturate(125%);
   filter: brightness(125%) saturate(125%);
 }
+
+
+/* custom for KENDO */
+@font-face {
+  font-family: "MetricWeb-Semibold";
+  src: url("http://www.telerik-web-assets.com/telerik/fonts/MetricWeb-Semibold.eot");
+  src: url("http://www.telerik-web-assets.com/telerik/fonts/MetricWeb-Semibold.eot?") format("embedded-opentype"),url("http://www.telerik-web-assets.com/telerik/fonts/MetricWeb-Semibold.woff") format("woff"),url("http://www.telerik-web-assets.com/telerik/fonts/MetricWeb-Semibold.ttf") format("truetype"),url("http://www.telerik-web-assets.com/telerik/fonts/MetricWeb-Semibold.svg#MetricWeb-Semibold") format("svg");
+}
+.brand img {
+  display: none;
+}
+
+.brand:before {
+  background: transparent none no-repeat scroll 0 0;
+  content: "";
+  display: inline-block;
+  height: 15px;
+  margin-top: 5px;
+  vertical-align: top;
+  width: 16px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAYAAADtc08vAAABGElEQVR42p1RPYvCQBB9QRG08S+JlYVtQBNLCxWu9mpBsLFW4bQTQa2sRQsr4crjKq9xN/orRGdC9MZkDepAYJf3se9NgP+xHIWuq9HjMwzjeOgQZ2RPkQhjFgsrB5z5cz18hUgWi2+4xviG80GKDSTLiHuY2D9IgYlS5GgM5P0umcaM8P71TnUWcBU+A8dh7IsiEe/KN6Bafo2yRl4uLrdGkgQ7IT7aCmm5tNIeBdOiwb0o5tyQYFn8RgZx44uplxD1yKwt7quHJgxIcdDPr3XdU2Cysf+QjRgQyRGkvSRxMlryr8AbxhShl7Zswsk4eijZ4yGTD2lyJ1Zo4ZmhxdUjf4HS4ZUpK1Sp9yl4uYl3hoQuVajFcS4UZgOXDtGBJgAAAABJRU5ErkJggg==);
+}
+
+#control, .control {
+  background: #25272c; 
+  background: rgba(37,39,44,0.94);
+  border-bottom: 4px solid #2db245;
+}
+
+.menu > .button {
+  border-left: 0 none;
+  border-right: 1px solid #37393d;
+  color: #FFF;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition-property: background-color,color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+  font: 13px/25px normal "MetricWeb-Semibold","Arial Bold",Gadget,sans-serif;
+}
+
+.menu > .button:hover,
+.menu > .button:active,
+.menu.open > .button {
+  background: #4f5757;
+  background: rgba(255,255,255,0.15);
+  border-left: 0 none;
+}
+
+.button-dropdown-arrow:hover:after, .fake-dropdown:hover:after,
+.button-dropdown-arrow:active:after, .fake-dropdown:active:after {
+  color: #a9a9a9;
+}
+
+#panels .button,
+#panels .button:first-child {
+  color: #FFF;
+  border-color: #37393d;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font: 13px/19px normal "MetricWeb-Semibold","Arial Bold",Gadget,sans-serif;
+}
+
+#panels .button.active {
+  background-color: #4f5757;
+  background-color: rgba(255,255,255,0.15);
+}
+
+.help .button {
+  background: #434851;
+  background: rgba(67,72,81,0.5);
+  text-transform: none;
+}
+
+/* CodeMirror */
+.cm-s-kendo span.cm-keyword {color: #ff3399;}
+.cm-s-kendo span.cm-atom {color: #ff3399;}
+.cm-s-kendo span.cm-number {color: #0099ff;}
+.cm-s-kendo span.cm-def {color: #00f;}
+.cm-s-kendo span.cm-variable {color: black;}
+.cm-s-kendo span.cm-variable-2 {color: #05a;}
+.cm-s-kendo span.cm-variable-3 {color: #0a5;}
+.cm-s-kendo span.cm-property {color: black;}
+.cm-s-kendo span.cm-operator {color: black;}
+.cm-s-kendo span.cm-comment {color: #9933cc;}
+.cm-s-kendo span.cm-string {color: #2db245;}
+.cm-s-kendo span.cm-meta {color: #555;}
+.cm-s-kendo span.cm-error {color: #f00;}
+.cm-s-kendo span.cm-qualifier {color: #555;}
+.cm-s-kendo span.cm-builtin {color: #9933cc;}
+.cm-s-kendo span.cm-bracket {color: #cc7;}
+.cm-s-kendo span.cm-tag {color: #3e526b;}
+.cm-s-kendo span.cm-attribute {color: #2db245;}

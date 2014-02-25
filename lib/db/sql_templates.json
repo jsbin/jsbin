@@ -33,7 +33,8 @@
   "setForgotToken": "INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES (?, ?, ?, ?)",
   "deleteExpiredForgotToken": "DELETE FROM `forgot_tokens` WHERE `expires` <= ? OR `token`=? OR `owner_name`=?",
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
-  "updateBin": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
+  "updateBinData": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
+  "updateOwnersData": "UPDATE `owners` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
@@ -53,5 +54,17 @@
     "//protected revision",
     "css",
     "settings"
+  ],
+  "ownersColumns": [
+    "name",
+    "// protected url",
+    "//protected revision",
+    "last_updated",
+    "summary",
+    "html",
+    "css",
+    "javascript",
+    "archive",
+    "visibility"
   ]
 }

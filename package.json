@@ -26,7 +26,7 @@
   "dependencies": {
     "express": "3.0.x",
     "asyncjs": "0.0.7",
-    "sqlite3": "~2.1.19",
+    "sqlite3": "~2.2.0",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
     "less": "~1.4.2",
@@ -47,7 +47,7 @@
     "undefsafe": "0.0.2",
     "feature-gateway": "0.0.3",
     "hbs": "~2.4.0",
-    "replify": "~1.1.4",
+    "replify": "~1.2.0",
     "moment": "~2.5.1"
   },
   "devDependencies": {

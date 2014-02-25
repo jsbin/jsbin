@@ -1101,6 +1101,7 @@ body.streaming #bin {
 }
 
 #tip a.dismiss {
+  line-height: 28px;
   position: absolute;
   right: 20px;
   top: 2px;

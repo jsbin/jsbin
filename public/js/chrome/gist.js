@@ -1,4 +1,4 @@
-var Gist = (function () {
+var Gist = (function () { // jshint ignore:line
   /*global $:true, jsbin:true, processors:true, $document*/
   'use strict';
 

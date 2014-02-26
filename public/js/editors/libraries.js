@@ -389,6 +389,10 @@ var libraries = [
     'label': 'D3 3.x'
   },
   {
+    'url': '//code.highcharts.com/highcharts.js',
+    'label': 'Highcharts latest'
+  },
+  {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js',
     'label': 'Rapha&euml;l 2.1.0'
   },

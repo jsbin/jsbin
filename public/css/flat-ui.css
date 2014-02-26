@@ -138,6 +138,11 @@
   color: #a9a9a9;
 }
 
+.menu > .dropdown .dropdowncontent,
+.menu > .dropdown .dropdownmenu {
+  border-color: #37393d;
+}
+
 #panels .button,
 #panels .button:first-child {
   color: #FFF;
@@ -156,7 +161,11 @@
 .help .button {
   background: #434851;
   background: rgba(67,72,81,0.5);
+  border-right: 0 none;
   text-transform: none;
+}
+.help .menu:first-child .button {
+  margin-right: 2px;
 }
 
 /* CodeMirror */

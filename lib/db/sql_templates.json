@@ -43,7 +43,7 @@
   "sandboxColumns": [
     "created",
     "last_viewed",
-    "//protected url",
+    "url",
     "active",
     "reported",
     "streaming",
@@ -57,7 +57,7 @@
   ],
   "ownersColumns": [
     "name",
-    "// protected url",
+    "url",
     "//protected revision",
     "last_updated",
     "summary",

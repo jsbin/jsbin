@@ -138,8 +138,8 @@
   color: #a9a9a9;
 }
 
-.menu > .dropdown .dropdowncontent,
-.menu > .dropdown .dropdownmenu {
+#control .dropdown .dropdowncontent,
+#control .dropdown .dropdownmenu {
   border-color: #37393d;
 }
 
@@ -167,6 +167,61 @@
 .help .menu:first-child .button {
   margin-right: 2px;
 }
+
+.label.menu span strong a {
+  border-bottom: 2px solid #2db245;
+  color: #2db245;
+}
+
+.fakeInput:before, #exec:before {
+  color: #2db245;
+}
+
+.resize:hover + .stretch.panelwrapper {
+  border-left-color: #2db245 !important;
+}
+
+/* Theme switcher */
+.tc-theme-container {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tc-theme-container a {
+  padding-right: 20px;
+}
+.tc-theme-container strong {
+  display: inline-block;
+  font-weight: normal;
+  width: 100px;
+  vertical-align: middle;
+}
+.tc-theme-container span {
+  width: 23px;
+  height: 23px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(255,255,255,.1);
+  display: inline-block;
+  vertical-align: middle;
+}
+#theme-selected {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 0 0.5em;
+  width: 85px;
+}
+.tc-theme-default { background: #f35800; color: #FFF; }
+.tc-theme-blueopal { background: #13688c; color: #FFF; }
+.tc-theme-bootstrap { background: #428bca; color: #FFF; }
+.tc-theme-silver { background: #1984c8; color: #FFF; }
+.tc-theme-uniform { background: #eee; color: #454545; }
+.tc-theme-metro { background: #7ea700; color: #FFF; }
+.tc-theme-black { background: #06c; color: #FFF; }
+.tc-theme-metroblack { background: #008886; color: #FFF; }
+.tc-theme-highcontrast { background: #870074; color: #FFF; }
+.tc-theme-moonlight { background: #f4af03; color: #171e28; }
+.tc-theme-flat { background: #10c4b2; color: #FFF; }
 
 /* CodeMirror */
 .cm-s-kendo span.cm-keyword {color: #ff3399;}

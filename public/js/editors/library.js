@@ -152,3 +152,138 @@ function isJadeActive(){
 function isCssFile(url) {
   return (url.length - (url.lastIndexOf('.css') + 4) === 0);
 }
+
+/* Kendo UI */
+(function loadThemes() {
+  var themes = {
+    'default': {
+      name: 'Default',
+      colors: ['#ef6f1c', '#e24b17', '#5a4b43', '#ededed']
+    },
+    'blueopal': {
+      name: 'Blue Opal',
+      colors: ['#076186', '#7ed3f6', '#94c0d2', '#daecf4']
+    },
+    'bootstrap': {
+      name: 'Bootstrap',
+      colors: ['#3276b1', '#67afe9', '#ebebeb', '#ffffff']
+    },
+    'silver': {
+      name: 'Silver',
+      colors: ['#298bc8', '#515967', '#bfc6d0', '#eaeaec']
+    },
+    'uniform': {
+      name: 'Uniform',
+      colors: ['#666666', '#cccccc', '#e7e7e7', '#ffffff']
+    },
+    'metro': {
+      name: 'Metro',
+      colors: ['#8ebc00', '#787878', '#e5e5e5', '#ffffff']
+    },
+    'black': {
+      name: 'Black',
+      colors: ['#0167cc', '#4698e9', '#272727', '#000000']
+    },
+    'metroblack': {
+      name: 'Metro Black',
+      colors: ['#00aba9', '#0e0e0e', '#333333', '#565656']
+    },
+    'highcontrast': {
+      name: 'High Contrast',
+      colors: ['#b11e9c', '#880275', '#664e62', '#1b141a']
+    },
+    'moonlight': {
+      name: 'Moonlight',
+      colors: ['#ee9f05', '#40444f', '#2f3640', '#212a33']
+    },
+    'flat': {
+      name: 'Flat',
+      colors: ['#363940', '#2eb3a6', '#10c4b2', '#ffffff']
+    }
+  };
+  var assetUrl = 'http://cdn.kendostatic.com/2013.3.1324/styles/';
+  var assetPrefix = 'kendo.';
+  var assetSuffix = '.min.css';
+  var $themeSelected;
+  var $themeLinks;
+  var menu = '';
+  var reg = [];
+  var foundArray;
+  var found = '';
+
+  menu += '<ul class="tc-theme-container js-theme">';
+  for (var prop in themes) {
+    if (themes.hasOwnProperty(prop)) {
+      reg.push(prop);
+      menu += '<li><a href="#' + prop + '">';
+      menu += '<strong>' + themes[prop].name + '</strong>';
+      for (var m = 0; m < themes[prop].colors.length; m++) {
+        menu += '<span style="background:' + themes[prop].colors[m] + '"></span>';
+      }
+      menu += '</a></li>';
+    }
+  }
+  menu += '</ul>';
+
+  menu = '<div class="menu">' +
+          '<a href="#themes" target="_blank" class="button button-dropdown group button-dropdown-arrow">' +
+          'Theme: <span id="theme-selected" class="tc-theme-default">Default</span></a>' +
+          '<div class="dropdown" id="themes">' +
+          '<div class="dropdownmenu">' +
+          menu +
+          '</div></div></div>';
+
+  $('#sharemenu').before(menu);
+
+  $themeSelected = $('#theme-selected');
+
+  $themeLinks = $('.js-theme a');
+  $themeLinks.bind('click', function(e) {
+    e.preventDefault();
+    var val = $(this).attr('href').replace('#', '');
+    changeTheme(val);
+    $themeSelected.html(themes[val].name).attr('class', 'tc-theme-' + val);
+  });
+
+  // check for existing theme
+  reg = reg.join('|');
+  reg = assetUrl + assetPrefix + '(' + reg + ')' + assetSuffix;
+  reg = new RegExp(reg, 'gi');
+  while ((foundArray = reg.exec(template.html)) !== null) {
+    found = foundArray[1];
+  }
+  if (found) {
+    $themeSelected.html(themes[found].name).attr('class', 'tc-theme-' + found);
+  }
+
+  function changeTheme(theme) {
+    var code = editors.html.getCode();
+    var state = { 
+      line: editors.html.editor.currentLine(),
+        character: editors.html.editor.getCursor().ch,
+        add: 0
+    };
+    var resource;
+    var cssNeededAttr = ' rel="stylesheet" type="text/css"';
+    var file;
+    var url = assetUrl + assetPrefix + theme + assetSuffix;
+    for (var prop in themes) {
+      if (themes.hasOwnProperty(prop)) {
+        file = assetPrefix + prop + assetSuffix;
+        if (code.indexOf(file + '"')) {
+          code = code.replace(new RegExp('<link.*href=".*?/' + file + '".*?/>\n?'), '');
+        }
+      }
+    }
+    resource = '<' + 'link href="' + url + '"' + cssNeededAttr  + ' />';
+    if (code.indexOf('</head') !== -1) {
+      code = code.replace(/<\/head>/i, resource + '\n</head>');
+    }
+    else {
+      code = resource + code;
+    }
+
+    editors.html.setCode(code);
+    editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
+  }
+})();

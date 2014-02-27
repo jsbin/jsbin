@@ -2898,6 +2898,20 @@ input {
   line-height: 18px;
 }
 
+/*@media (max-height: 770px) {*/
+.hideheader.ready #control {
+  border-bottom: 6px solid #AAA;
+  -webkit-transition: top ease-out 100ms, border-bottom ease-out 100ms;
+     -moz-transition: top ease-out 100ms, border-bottom ease-out 100ms;
+       -o-transition: top ease-out 100ms, border-bottom ease-out 100ms;
+          transition: top ease-out 100ms, border-bottom ease-out 100ms;
+  -webkit-transition-delay: 1s;
+     -moz-transition-delay: 1s;
+       -o-transition-delay: 1s;
+          transition-delay: 1s;
+  top: -35px;
+}
+
 /*#loginFeedback:empty {
   display: none;
 }
@@ -4694,4 +4708,36 @@ html * {
 #profile .large-gravatar {
   float: left;
   margin-right: 10px;
+}
+
+#toppanel {
+  height: 250px;
+  background: #0074D9;
+  position: relative;
+  z-index: 100000;
+  margin-top: -250px;
+  -webkit-transition: margin-top ease-out 100ms;
+     -moz-transition: margin-top ease-out 100ms;
+       -o-transition: margin-top ease-out 100ms;
+          transition: margin-top ease-out 100ms;
+
+}
+
+.toppanel #toppanel {
+  margin-top: 0;
+}
+
+#bin {
+  -webkit-transition: top ease-out 100ms;
+     -moz-transition: top ease-out 100ms;
+       -o-transition: top ease-out 100ms;
+          transition: top ease-out 100ms;
+}
+
+.toppanel #bin {
+  top: 286px;
+}
+
+body.ready.toppanel {
+  background: white;
 }

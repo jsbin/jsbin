@@ -78,10 +78,20 @@ function insertResources(urls) {
       html = [],
       file = '',
       resource,
+      scriptAttrs = '',
       cssNeededAttr = ' rel="stylesheet" type="text/css"';
 
   for (i = 0; i < length; i++) {
     url = urls[i];
+
+    if ($.isPlainObject(url)) {
+      for (var attr in url) {
+        if (attr !== 'src' ) {
+          scriptAttrs += ' ' + attr + '="' + url[attr] + '"';
+        }
+      }
+      url = url.src;
+    }
 
     file = url.split('/').pop();
 
@@ -98,7 +108,7 @@ function insertResources(urls) {
     if (isCssFile(url)) {
       resource = '<' + 'link href="' + url + '"' + cssNeededAttr  + ' />';
     } else {
-      resource = '<' + 'script src="' + url + '"><' + '/script>';
+      resource = '<' + 'script src="' + url + '"' + scriptAttrs + '><' + '/script>';
     }
 
     if (isJadeActive()) {

@@ -456,6 +456,15 @@ var libraries = [
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
     'label': 'Font Awesome 4.0.3'
+  },
+  {
+    'url': {
+      'src': 'https://openui5.hana.ondemand.com/resources/sap-ui-core.js',
+      'data-sap-ui-theme': 'sap_bluecrystal',
+      'data-sap-ui-libs': 'sap.m'
+    },
+    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal',
+    'group': 'OpenUI5'
   }
 ];
 

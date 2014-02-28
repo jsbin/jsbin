@@ -105,8 +105,6 @@ function insertResources(urls) {
       attrList += ' ' + attr + '="' + attrs[attr] + '"';
     }
 
-    if (isCssFile(file))
-
     if (file && code.indexOf(file + '"')) {
       // attempt to lift out similar scripts
       if (isCssFile(file)) {

@@ -6,7 +6,7 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
-  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  {{#if custom_css}}<link rel="stylesheet" href="{{custom_css}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if isProduction}}
   {{{analytics}}}
@@ -546,6 +546,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+{{#if custom_js}}<script src="{{custom_js}}"></script>{{/if}}
 </body>
 </html>
 

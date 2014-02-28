@@ -19,15 +19,15 @@
     width: 100%;
   }
 </style>
-
+<script>
+var jsbin = { 'static': '{{static}}' };
+</script>
 <div id="sandbox-wrapper"></div>
-{{^settings.is_production}}
-  {{#scripts}}
-    <script src="{{static}}{{.}}"></script>
-  {{/scripts}}
-{{/settings.is_production}}
-
-{{#settings.is_production}}
+{{#if settings.is_production}}
   <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
   {{{analytics}}}
-{{/settings.is_production}}
+{{else}}
+  {{#each scripts}}
+    <script src="{{../static}}{{.}}"></script>
+  {{/each}}
+{{/if}}

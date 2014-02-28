@@ -39,7 +39,8 @@ var getPreparedCode = (function () {
         hasHTML = false,
         hasCSS = false,
         hasJS = false,
-        date = new Date();
+        date = new Date(),
+        debug = jsbin.settings.debug;
 
     try {
       source = editors.html.render();
@@ -55,9 +56,9 @@ var getPreparedCode = (function () {
     if (!nojs) {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
-        var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
-        if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
-        sourceURLctr++;
+        // var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
+        // if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
+        // sourceURLctr++;
       } catch (e) {
         if (editors.javascript.processor.id) {
           window.console && window.console.warn(editors.javascript.processor.id + ' processor compilation failed');
@@ -90,7 +91,7 @@ var getPreparedCode = (function () {
     js = js.replace(re.script, '<\\/script');
 
     // redirect console logged to our custom log while debugging
-    if (re.console.test(js)) {
+    if (re.console.test(js) && !debug) {
       var replaceWith = 'window.runnerWindow.proxyConsole.';
       // yes, this code looks stupid, but in fact what it does is look for
       // 'console.' and then checks the position of the code. If it's inside
@@ -132,7 +133,7 @@ var getPreparedCode = (function () {
     }
 
     // reapply the same proxyConsole - but to all the source code, since
-    if (re.console.test(source)) {
+    if (re.console.test(source) && !debug) {
       var replaceWith = 'window.runnerWindow.proxyConsole.';
       // yes, this code looks stupid, but in fact what it does is look for
       // 'console.' and then checks the position of the code. If it's inside

@@ -180,25 +180,27 @@ var Panel = function (name, settings) {
     });
 
     // Tern
-    var tagManagerIdeTernServer;
-    function initTern(defs){
-      var keyMap = {
-        "Ctrl-I": function(cm) { tagManagerIdeTernServer.showType(cm); },
-        "Ctrl-Space": function(cm) { tagManagerIdeTernServer.complete(cm); }
-      };
-      tagManagerIdeTernServer = new CodeMirror.TernServer({
-        defs: defs,
-        useWorker: false,
-        //tooltipType: 'output', // output | balloon
-        cm: panel.editor
-      });
-      panel.editor.addKeyMap(keyMap);
-      panel.editor.on("cursorActivity", function(cm) { tagManagerIdeTernServer.updateArgHints(cm); });
+    if (name === 'javascript') {
+      var tagManagerIdeTernServer;
+      function initTern(defs){
+        var keyMap = {
+          "Ctrl-I": function(cm) { tagManagerIdeTernServer.showType(cm); },
+          "Ctrl-Space": function(cm) { tagManagerIdeTernServer.complete(cm); }
+        };
+        tagManagerIdeTernServer = new CodeMirror.TernServer({
+          defs: defs,
+          useWorker: false,
+          //tooltipType: 'output', // output | balloon
+          cm: panel.editor
+        });
+        panel.editor.addKeyMap(keyMap);
+        panel.editor.on("cursorActivity", function(cm) { tagManagerIdeTernServer.updateArgHints(cm); });
+      }
+      if (typeof defs == "undefined") {
+        defs = [];
+      }
+      initTern(defs);
     }
-    if (typeof defs == "undefined") {
-      defs = [];
-    }
-    initTern(defs);
 
     panel._setupEditor(panel.editor, name);
   }

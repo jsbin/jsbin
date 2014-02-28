@@ -1846,6 +1846,23 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   padding-left: 0;
 }
 
+.CodeMirror-Tern-tooltip,
+.CodeMirror-hints {
+  border: 1px solid #aaa;
+  border: 1px solid rgb(191, 191, 191);
+  border: 1px solid hsl(0, 0%, 75%);
+  border-radius: 0;
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+  /*font-family: inherit;*/
+  font-size: 100%;
+}
+.CodeMirror-hint {
+  font-size: 1.1em;
+  line-height: 1.4em;
+}
+
 /* END CODEMIRROR CSS */
 
 .ready #bin {

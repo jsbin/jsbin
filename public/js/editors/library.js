@@ -99,7 +99,7 @@ function insertResources(urls) {
     file = url.split('/').pop();
 
     // Introduce any default attrs and flatten into a list for insertion
-    attrs = $.extend(isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs, attrs);
+    attrs = $.extend({}, (isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs), attrs);
     attrList = '';
     for (var attr in attrs) {
       attrList += ' ' + attr + '="' + attrs[attr] + '"';

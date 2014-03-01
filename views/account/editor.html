@@ -1,0 +1,129 @@
+
+{{> account_sidebar}}
+<link rel="stylesheet" href="{{static}}/css/font.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/lib/codemirror.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/3024-day.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/3024-night.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/ambiance.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/base16-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/base16-light.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/blackboard.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/cobalt.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/eclipse.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/elegant.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/erlang-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/lesser-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/mbo.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/mdn-like.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/midnight.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/monokai.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/neat.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/night.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/paraiso-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/paraiso-light.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/pastel-on-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/rubyblue.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/solarized.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/the-matrix.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/tomorrow-night-eighties.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/twilight.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/vibrant-ink.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/xq-dark.css">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror3/theme/xq-light.css">
+
+<h1>Customise your JS Bin editor</h1>
+
+<section id="content">
+  <form id="editor-settings">
+    <div>
+    	<label for="font-size">Font size</label>
+  		<input name="font" id="font-size" type="number">
+    </div>
+    <div>
+    	<label for="theme">Theme</label>
+  		<select id="theme" name="theme">
+        <option selected>jsbin</option>
+		    <option value="default">CodeMirror default</option>
+        <option>3024-day</option>
+        <option>3024-night</option>
+        <option>ambiance</option>
+        <option>base16-dark</option>
+        <option>base16-light</option>
+        <option>blackboard</option>
+        <option>cobalt</option>
+        <option>eclipse</option>
+        <option>elegant</option>
+        <option>erlang-dark</option>
+        <option>lesser-dark</option>
+        <option>mbo</option>
+        <option>mdn-like</option>
+        <option>midnight</option>
+        <option>monokai</option>
+        <option>neat</option>
+        <option>night</option>
+        <option>paraiso-dark</option>
+        <option>paraiso-light</option>
+        <option>pastel-on-dark</option>
+        <option>rubyblue</option>
+        <option>solarized dark</option>
+        <option>solarized light</option>
+        <option>the-matrix</option>
+        <option>tomorrow-night-eighties</option>
+        <option>twilight</option>
+        <option>vibrant-ink</option>
+        <option>xq-dark</option>
+        <option>xq-light</option>
+      </select>
+  	</div>
+    <div>
+    	<span class="label">Spacing</span>
+      <label><input type="radio" id="indentWithTabs" value="tabs" name="spacing"> tabs</label>
+      <label><input type="radio" id="indentWithSpaces" value="spaces" name="spacing"> spaces</label>
+  	</div>
+    <div>
+    	<label for="tabSize">Indent width</label>
+  		<input id="tabSize" name="tabSize" min="1" type="number">
+  	</div>
+    <div>
+      <label for="lineWrapping">Wrap lines</label>
+      <input id="lineWrapping" name="lineWrapping" type="checkbox">
+    </div>
+    <div>
+      <label for="lineNumbers">Line nums</label>
+      <input id="lineNumbers" name="lineNumbers" type="checkbox">
+    </div>
+  	<div>
+      <label for="vimMode">VIM mode</label>
+  		<input id="vimMode" name="vimMode" type="checkbox">
+  	</div>
+  	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+  </form>
+
+  <h2>Editor Preview</h2>
+  <textarea id="editor-settings-example"><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+  <script>
+    function Name (param) {
+      this.name = param || 'string';
+      return this;
+    }
+    var object = new Object();
+    var longVariableNameToDemonstrateLineWrappingInCodeMirror = 'line wrapping is on by default'.split(' ').map(String.prototype.toUpperCase.bind(String.prototype)).join('/n');
+
+  </script>
+</body>
+</html></textarea>
+</section>
+<script src="{{static}}/js/vendor/jquery.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/lib/codemirror.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/mode/xml/xml.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/mode/htmlmixed/htmlmixed.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/mode/javascript/javascript.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/keymap/vim.js"></script>
+<script src="{{static}}/js/editor-settings.js"></script>
+

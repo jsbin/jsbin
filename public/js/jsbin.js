@@ -67,6 +67,7 @@ if (storedSettings === "undefined") {
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 if (jsbin.user) {
   $.extend(window.jsbin.settings.editor, jsbin.user.settings);
+  window.jsbin.settings.font = jsbin.user.settings.font;
 }
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
@@ -104,7 +105,12 @@ if (jsbin.settings.codemirror) {
 }
 
 if (jsbin.settings.editor.theme) {
-  $(document.documentElement).addClass('cm-s-' + jsbin.settings.editor.theme);
+  $(document.documentElement).addClass('cm-s-' + jsbin.settings.editor.theme.split(' ')[0]);
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = jsbin['static'] + '/js/vendor/codemirror3/theme/' + jsbin.settings.editor.theme.split(' ')[0] + '.css?' + jsbin.version;
+  document.getElementsByTagName('head')[0].appendChild(link);
+
 }
 
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent
@@ -190,6 +196,14 @@ var $window = $(window),
 
 $window.unload(unload);
 
+window.addEventListener('storage', function (e) {
+  if (e.storageArea === localStorage && e.key === 'settings') {
+    console.log('updating from storage');
+    console.log(JSON.parse(localStorage.settings).editor);
+    jsbin.settings = JSON.parse(localStorage.settings);
+  }
+});
+
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {
   setInterval(unload, 500);
@@ -232,25 +246,6 @@ if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
   var el = $('#keyboardHelp')[0];
   el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd').replace(/Ctrl/g, 'ctrl');
 })();
-
-if (false) { //window.top !== window && location.pathname.indexOf('/embed') === -1) {
-  // we're framed, to switch in to embed mode
-  jsbin.embed = true;
-  jsbin.saveDisabled = true;
-  $('#saveform').attr('target', '_blank');
-  $('html').addClass('embed');
-  // remove elements that we don't need
-  $('#homemenu').closest('.menu').remove();
-  $('#login').closest('.menu').remove();
-  $('#register').closest('.menu').remove();
-  $('#library').closest('.menu').remove();
-  $('#sharemenu').remove();
-  $('a.brand').removeClass('button-dropdown').click(function (event) {
-    this.hash = '';
-    event.stopImmediatePropagation();
-    return true;
-  }).after('<a href="' + jsbin.getURL() + '/save" target="_blank" class="button save">Save</a>');
-}
 
 if (jsbin.embed) {
   $window.on('focus', function () {

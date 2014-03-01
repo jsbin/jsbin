@@ -1,7 +1,7 @@
 #sidebar {
   width:200px;
   float:left;
-  margin-right: 60px;
+  margin-right: 0px;
   margin-top: 40px;
 }
 
@@ -38,7 +38,8 @@
 
 #content, h1 {
 /*   float:left; */
-  margin-left: 260px;
+  
+margin-left: 230px;
   max-width: 100%;
 }
 
@@ -81,6 +82,7 @@ input[type="number"] {
 
 select {
   font-size: 16px;
+  min-width: 120px;
 }
 
 form > div {
@@ -92,11 +94,14 @@ form > div {
 form label[for],
 form .label {
 /*   font-size:1em; */
-/*   font-weight: 200; */
+  font-weight: bold;
+  color: #666;
   display: block;
   float: left;
 
-width: 120px;
+width: 180px;
+text-align: right;
+margin-right: 20px;
 }
 
 #indentWithSpaces:checked:focus:after {

@@ -1,4 +1,6 @@
+/*globals jsbin, _, $, RSVP*/
 var processors = jsbin.processors = (function () {
+  'use strict';
   /*
    * Debugging note: to emulate a slow connection, or a processor taking too
    * long to load, find the processor in question, and change the `init` method
@@ -15,8 +17,8 @@ var processors = jsbin.processors = (function () {
   };
 
   var passthrough = function (ready) { return ready(); };
-  var defaultProcessor = function (source) {
-    return source;
+  var defaultProcessor = function (source, resolve) {
+    resolve(source);
   };
 
   /**
@@ -89,12 +91,29 @@ var processors = jsbin.processors = (function () {
 
       // Create a proxy function that holds the handler in scope so that, when
       // the callbacks are swapped, rendering still works.
-      var proxyCallback = function () {
-        return callback.apply(this, arguments);
+      var cache = {
+        source: '',
+        result: ''
+      };
+      var proxyCallback = function (source) {
+        return new RSVP.Promise(function (resolve, reject) {
+          source = source.trim();
+          if (source === cache.source) {
+            console.log('return cache for ' + opts.id);
+            resolve(cache.result);
+          } else {
+            callback(source, function (result) {
+              console.log('compiled ' + opts.id);
+              cache.source = source;
+              cache.result = result;
+              resolve(result);
+            }, reject);
+          }
+        });
       };
 
       // Return the method that will be used to render
-      return extendFn(proxyCallback, processorData);;
+      return extendFn(proxyCallback, processorData);
     };
 
     // Processor fucntion also has the important data on it
@@ -127,16 +146,16 @@ var processors = jsbin.processors = (function () {
       init: function (ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
       },
-      handler: function (source) {
+      handler: function (source, resolve, reject) {
         var renderedCode = '';
         try {
           renderedCode = CoffeeScript.compile(source, {
             bare: true
           });
+          resolve(renderedCode);
         } catch (e) {
-          throw new Error(e);
+          reject(e);
         }
-        return renderedCode;
       }
     }),
 
@@ -154,16 +173,14 @@ var processors = jsbin.processors = (function () {
         }
         ready();
       },
-      handler: function (source) {
+      handler: function (source, resolve, reject) {
         var renderedCode = '';
         try {
           renderedCode = JSXTransformer.transform(source).code;
+          resolve(renderedCode);
         } catch (e) {
-          if (console) {
-            console.error(e.message);
-          }
+          reject(e);
         }
-        return renderedCode;
       }
     }),
 
@@ -173,15 +190,15 @@ var processors = jsbin.processors = (function () {
       extensions: ['ts'],
       url: jsbin.static + '/js/vendor/typescript.min.js',
       init: passthrough,
-      handler: function (source) {
+      handler: function (source, resolve, reject) {
         var noop = function () {};
         var outfile = {
-          source: "",
+          source: '',
           Write: function (s) {
             this.source += s;
           },
           WriteLine: function (s) {
-            this.source += s + "\n";
+            this.source += s + '\n';
           },
           Close: noop
         };
@@ -212,7 +229,11 @@ var processors = jsbin.processors = (function () {
           console.log('Error Length: ' + parseErrors[i].len);
         }
 
-        return outfile.source;
+        if (parseErrors.length) {
+          reject();
+        } else {
+          resolve(outfile.source);
+        }
       }
     }),
 
@@ -224,8 +245,12 @@ var processors = jsbin.processors = (function () {
       init: function (ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
       },
-      handler: function (source) {
-        return markdown.toHTML(source);
+      handler: function (source, resolve, reject) {
+        try {
+          resolve(markdown.toHTML(source));
+        } catch (e) {
+          reject(e);
+        }
       }
     }),
 
@@ -239,22 +264,25 @@ var processors = jsbin.processors = (function () {
         // init and expose jade
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
       },
-      handler: function (source) {
-        source = [
-          '(function(){',
-          '  var canvas = document.querySelector("canvas");',
-          '  if (!canvas) {',
-          '    canvas = document.createElement("canvas");',
-          '    (document.body || document.documentElement).appendChild(canvas);',
-          '  }',
-          '  canvas.width = window.innerWidth;',
-          '  canvas.height = window.innerHeight;',
-          '  var sketchProc = ' + Processing.compile(source).sourceCode + ';',
-          '  var p = new Processing(canvas, sketchProc);',
-          '})();'
-        ].join('\n');
-
-        return source;
+      handler: function (source, resolve, reject) {
+        try {
+          var sketch = Processing.compile(source).sourceCode;
+          resolve([
+            '(function(){',
+            '  var canvas = document.querySelector("canvas");',
+            '  if (!canvas) {',
+            '    canvas = document.createElement("canvas");',
+            '    (document.body || document.documentElement).appendChild(canvas);',
+            '  }',
+            '  canvas.width = window.innerWidth;',
+            '  canvas.height = window.innerHeight;',
+            '  var sketchProc = ' + sketch + ';',
+            '  var p = new Processing(canvas, sketchProc);',
+            '})();'
+          ].join('\n'));
+        } catch (e) {
+          reject(e);
+        }
       }
     }),
 
@@ -268,8 +296,12 @@ var processors = jsbin.processors = (function () {
         window.jade = require('jade');
         ready();
       },
-      handler: function (source) {
-        return jade.compile(source, { pretty: true })();
+      handler: function (source, resolve, reject) {
+        try {
+          resolve(jade.compile(source, { pretty: true })());
+        } catch (e) {
+          reject(e);
+        }
       }
     }),
 
@@ -282,16 +314,35 @@ var processors = jsbin.processors = (function () {
         // In CodeMirror 4, less is now included in the css mode, so no files to load
         ready();
       },
-      handler: function (source) {
-        var css = '';
-
+      handler: function (source, resolve, reject) {
         less.Parser().parse(source, function (err, result) {
           if (err) {
-            throw new Error(err);
+            return reject(err);
           }
-          css = $.trim(result.toCSS());
+          resolve(result.toCSS().trim());
         });
-        return css;
+      }
+    }),
+
+    scss: createProcessor({
+      id: 'scss',
+      target: 'scss',
+      extensions: ['scss'],
+      url: jsbin.static + '/js/vendor/sass/dist/sass.worker.js',
+      init: function (ready) {
+        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
+          Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
+          ready();
+        });
+      },
+      handler: function (source, resolve, reject) {
+        Sass.compile(source, function (result) {
+          if (typeof result !== 'string') {
+            reject(new Error('Error on line ' + result.line + ':\n' + result.message));
+          } else {
+            resolve(result.trim());
+          }
+        });
       }
     }),
 
@@ -301,17 +352,14 @@ var processors = jsbin.processors = (function () {
       extensions: ['styl'],
       url: jsbin.static + '/js/vendor/stylus.js',
       init: passthrough,
-      handler: function (source) {
-        var css = '';
-
+      handler: function (source, resolve, reject) {
         stylus(source).render(function (err, result) {
           if (err) {
-            throw new Error(err);
-            return;
+            return reject(err);
           }
-          css = $.trim(result);
+
+          resolve(result.trim());
         });
-        return css;
       }
     }),
 
@@ -335,12 +383,12 @@ var processors = jsbin.processors = (function () {
           ErrorReporter = traceur.util.ErrorReporter;
           ready();
         },
-        handler: function (source) {
+        handler: function (source, resolve, reject) {
           hasError = false;
 
           var reporter = new ErrorReporter();
           reporter.reportMessageInternal = function(location, kind, format, args) {
-            throw new Error(ErrorReporter.format(location, format, args));
+            reject(new Error(ErrorReporter.format(location, format, args)));
           };
 
           var url = location.href;
@@ -352,7 +400,7 @@ var processors = jsbin.processors = (function () {
           var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
 
           var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions.\n\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
-          return msg + ProjectWriter.write(res);
+          resolve(msg + ProjectWriter.write(res));
         }
       });
     }())
@@ -388,8 +436,10 @@ var processors = jsbin.processors = (function () {
         }
       } else {
         $label.text(originalLabel);
-        panel.setCode(panel.render());
-        jsbin.processors.reset(panelId);
+        panel.render().then(function (source) {
+          jsbin.processors.reset(panelId);
+          panel.setCode(source);
+        });
       }
     }).bind('select', function (event, value) {
       if (value === this.hash.substring(1)) {
@@ -426,7 +476,7 @@ var processors = jsbin.processors = (function () {
       cmMode = 'text/x-less';
     }
 
-    if (!panel) return;
+    if (!panel) { return; }
 
     panel.trigger('processor', processorName || 'none');
     if (processorName && processors[processorName]) {
@@ -436,7 +486,7 @@ var processors = jsbin.processors = (function () {
         panel.editor.setOption('mode', cmMode);
         panel.editor.setOption('smartIndent', smartIndent);
         $processorSelectors.find('a').trigger('select', [processorName]);
-        if (callback) callback();
+        if (callback) { callback(); }
       });
     } else {
       // remove the preprocessor

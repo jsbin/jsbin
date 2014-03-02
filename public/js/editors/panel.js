@@ -1,4 +1,4 @@
-/*globals $, CodeMirror, jsbin, jshintEnabled */
+/*globals $, CodeMirror, jsbin, jshintEnabled, RSVP */
 
 var $document = $(document),
     $source = $('#source');
@@ -7,6 +7,7 @@ var editorModes = {
   html: 'htmlmixed',
   javascript: 'javascript',
   css: 'css',
+  sass: 'sass',
   typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
@@ -154,7 +155,11 @@ var Panel = function (name, settings) {
     panelLanguage = settings.processors[settings.processor];
     jsbin.processors.set(panel, settings.processor);
   } else {
-    panel.processor = function (str) { return str; };
+    panel.processor = function (str) {
+      return new RSVP.Promise(function (resolve) {
+        resolve(str);
+      });
+    };
   }
 
   if (settings.beforeRender) {
@@ -299,7 +304,7 @@ Panel.prototype = {
     //   panel.$el.hide();
     // }
     if (panel.editor) {
-      panel.controlButton.toggleClass('hasContent', !!$.trim(this.getCode()).length);
+      panel.controlButton.toggleClass('hasContent', !!this.getCode().trim().length);
     }
 
     panel.controlButton.removeClass('active');
@@ -357,15 +362,18 @@ Panel.prototype = {
     jsbin.panels.focus(this);
   },
   render: function () {
-    var panel = this,
-        ret = null;
-    if (panel.editor) {
-      return panel.processor(panel.getCode());
-    } else if (this.visible && this.settings.render) {
-      if (jsbin.panels.ready) {
-        this.settings.render.apply(this, arguments);
+    'use strict';
+    var panel = this;
+    return new RSVP.Promise(function (resolve, reject) {
+      if (panel.editor) {
+        panel.processor(panel.getCode()).then(resolve, reject);
+      } else if (panel.visible && panel.settings.render) {
+        if (jsbin.panels.ready) {
+          panel.settings.render.apply(panel, arguments);
+        }
+        resolve();
       }
-    }
+    });
   },
   init: function () {
     if (this.settings.init) this.settings.init.call(this);

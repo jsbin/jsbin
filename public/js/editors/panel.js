@@ -277,9 +277,10 @@ Panel.prototype = {
       if (panel.editor) {
         // populate the panel for the first time
         if (panel.virgin) {
-          var top = panel.$el.find('.label').outerHeight();
-          top += 8;
-          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
+          panel.$el.find('.panel-options').appendTo(panel.$el.find('.CodeMirror-scroll')).on('mousedown', function () { return false; });
+          // var top = panel.$el.find('.label').outerHeight();
+          // top += 8;
+          // $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
 
           populateEditor(panel, panel.name);
         }
@@ -452,19 +453,19 @@ Panel.prototype = {
     editor.win = editor.getWrapperElement();
     editor.scroller = $(editor.getScrollerElement());
 
-    var $label = panel.$el.find('.label');
-    if (document.body.className.indexOf('ie6') === -1 && $label.length) {
-      editor.on('scroll', function (event) {
-        var scrollInfo = editor.getScrollInfo();
-        if (scrollInfo.top > 10) {
-          $label.stop().animate({ opacity: 0 }, 20, function () {
-            $(this).hide();
-          });
-        } else {
-          $label.show().stop().animate({ opacity: 1 }, 150);
-        }
-      });
-    }
+    // var $label = panel.$el.find('.label');
+    // if (document.body.className.indexOf('ie6') === -1 && $label.length) {
+    //   editor.on('scroll', function (event) {
+    //     var scrollInfo = editor.getScrollInfo();
+    //     if (scrollInfo.top > 10) {
+    //       $label.stop().animate({ opacity: 0 }, 20, function () {
+    //         $(this).hide();
+    //       });
+    //     } else {
+    //       $label.show().stop().animate({ opacity: 1 }, 150);
+    //     }
+    //   });
+    // }
 
     var $error = null;
     $document.bind('sizeeditors', function () {

@@ -1711,7 +1711,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .panel .label {
   display: block;
-  position: relative;
+  /* position: relative; */
   /*background: #FAFAFA;*/
   /*border-bottom: 1px solid #ededed;*/
 }
@@ -1762,7 +1762,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   padding: 0;
   margin: 0;
   padding-right: 0;
-  position: absolute;
+  /* position: absolute; */
   z-index: 11;
 }
 
@@ -2181,6 +2181,7 @@ left: 50%;
 .label .options {
   float: right;
   display: block;
+  padding-left: 4px;
 }
 
 .label .options > * {
@@ -2621,15 +2622,19 @@ form + hr {
   text-decoration: none;
 }
 
-.label .name span {
+span.feedback {
   /*margin-left: -41px;*/
   padding-left: 4px;
   color: #999;
   opacity: 0;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 14px;
 }
 
 /* these versions of IE don't support the history API anyway */
-.ie .name span {
+.ie span.feedback {
   display: none;
 }
 
@@ -3906,4 +3911,36 @@ THE SOFTWARE.
 
 .card.author li.owner {
   display: block;
+}
+
+.panel-options {
+  opacity: 0.5;
+  border: 1px solid #ccc;
+  margin: 10px 40px;
+  padding: 20px;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 16px;
+  line-height: 18px
+}
+
+.panel-options:hover {
+  opacity: 1;
+}
+
+.panel-options .label {
+  display: inline;
+  padding: 0;
+  /* vertical-align: middle; */
+}
+
+.panel-options label {
+  margin-left: 15px;
+  color: #0AF;
+  /* vertical-align: middle; */
+}
+
+.panel-options input[type="radio"] {
+  margin: 0;
+  margin-right: 3px;
+  vertical-align: baseline;
 }

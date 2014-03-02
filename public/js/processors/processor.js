@@ -364,21 +364,25 @@ var processors = jsbin.processors = (function () {
     }
   };
 
-  var $processorSelectors = $('div.processorSelector').each(function () {
+  var $processorSelectors = $('.panel-options').each(function () {
     var panelId = this.getAttribute('data-type'),
         $el = $(this),
         $label = $el.closest('.label').find('strong a'),
         originalLabel = $label.text();
 
-    $el.find('a').click(function (e) {
+    $el.find('label').click(function (e) {
+      e.stopPropagation();
+    });
+
+    $el.find('.processorSelector').click(function (e) {
       var panel = jsbin.panels.panels[panelId];
 
-      e.preventDefault();
-      var target = this.hash.substring(1),
-          label = $(this).text(),
+      e.stopPropagation();
+      var target = this.value,
+          // label = $(this).text(),
           code;
       if (target !== 'convert') {
-        $label.text(label);
+        // $label.text(label);
         if (target === panelId) {
           jsbin.processors.reset(panelId);
           render();
@@ -386,13 +390,8 @@ var processors = jsbin.processors = (function () {
           jsbin.processors.set(panelId, target, render);
         }
       } else {
-        $label.text(originalLabel);
         panel.setCode(panel.render());
         jsbin.processors.reset(panelId);
-      }
-    }).bind('select', function (event, value) {
-      if (value === this.hash.substring(1)) {
-        $label.text($(this).text());
       }
     });
   });
@@ -429,7 +428,7 @@ var processors = jsbin.processors = (function () {
         // processor is ready
         panel.editor.setOption('mode', cmMode);
         panel.editor.setOption('smartIndent', smartIndent);
-        $processorSelectors.find('a').trigger('select', [processorName]);
+        // $processorSelectors.find('.processorSelector').trigger('select', [processorName]);
         if (callback) callback();
       });
     } else {

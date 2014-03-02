@@ -302,7 +302,16 @@
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+      <div class="editbox">
+        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
+      </div>
+      <div class="panel-options">
+        <span class="label">Language:</span>
+        <label><input type="radio" name="css-processor" class="processorSelector" value="css" data-type="css" checked> CSS</label>
+        <label><input type="radio" name="css-processor" class="processorSelector" value="less" data-type="css"> Less</label>
+        <label><input type="radio" name="css-processor" class="processorSelector" value="stylus" data-type="css"> Stylus</label>
+      </div>
+      <!-- <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
         <div class="dropdown" id="cssprocessors">
           <div class="dropdownmenu processorSelector" data-type="css">
             <a href="#css">CSS</a>
@@ -311,10 +320,7 @@
             <a href="#convert">Convert to CSS</a>
           </div>
         </div>
-      </div>
-      <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
-      </div>
+      </div> -->
     </div>
     <div class="stretch console panel">
       <div class="label">

@@ -127,12 +127,12 @@ function onSaveError(jqXHR, panelId) {
 
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {
-  $('.code.panel .label .name').append('<span>Saved</span>');
+  $('.code.panel').append('<span class="feedback">Saved</span>');
 
   var savingLabels = {
-    html: $('.panel.html .name span'),
-    javascript: $('.panel.javascript .name span'),
-    css: $('.panel.css .name span')
+    html: $('.panel.html span.feedback'),
+    javascript: $('.panel.javascript span.feedback'),
+    css: $('.panel.css span.feedback')
   };
 
   $document.bind('jsbinReady', function () {

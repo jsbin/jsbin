@@ -17,8 +17,10 @@ var processors = jsbin.processors = (function () {
   };
 
   var passthrough = function (ready) { return ready(); };
-  var defaultProcessor = function (source, resolve) {
-    resolve(source);
+  var defaultProcessor = function (source) {
+    return new RSVP.Promise(function (resolve) {
+      resolve(source);
+    });
   };
 
   /**
@@ -99,11 +101,9 @@ var processors = jsbin.processors = (function () {
         return new RSVP.Promise(function (resolve, reject) {
           source = source.trim();
           if (source === cache.source) {
-            console.log('return cache for ' + opts.id);
             resolve(cache.result);
           } else {
             callback(source, function (result) {
-              console.log('compiled ' + opts.id);
               cache.source = source;
               cache.result = result;
               resolve(result);
@@ -413,6 +413,8 @@ var processors = jsbin.processors = (function () {
     }
   };
 
+  var $panelButtons = $('#panels');
+
   var $processorSelectors = $('div.processorSelector').each(function () {
     var panelId = this.getAttribute('data-type'),
         $el = $(this),
@@ -421,12 +423,14 @@ var processors = jsbin.processors = (function () {
 
     $el.find('a').click(function (e) {
       var panel = jsbin.panels.panels[panelId];
+      var $panelButton = $panelButtons.find('a[href$="' + panelId + '"]');
 
       e.preventDefault();
       var target = this.hash.substring(1),
           label = $(this).text(),
           code;
       if (target !== 'convert') {
+        $panelButton.html(label);
         $label.text(label);
         if (target === panelId) {
           jsbin.processors.reset(panelId);
@@ -436,6 +440,7 @@ var processors = jsbin.processors = (function () {
         }
       } else {
         $label.text(originalLabel);
+        $panelButton.html(originalLabel);
         panel.render().then(function (source) {
           jsbin.processors.reset(panelId);
           panel.setCode(source);
@@ -443,7 +448,9 @@ var processors = jsbin.processors = (function () {
       }
     }).bind('select', function (event, value) {
       if (value === this.hash.substring(1)) {
+        var $panelButton = $panelButtons.find('a[href$="' + panelId + '"]');
         $label.text($(this).text());
+        $panelButton.html($(this).text());
       }
     });
   });

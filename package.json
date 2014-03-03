@@ -31,7 +31,6 @@
     "commander": "1.0.0",
     "less": "~1.4.2",
     "jade": "0.26.3",
-    "stylus": "0.28.2",
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
     "async": "~0.1.22",
@@ -54,7 +53,8 @@
     "express-cookie-blacklist": "~2.0.0",
     "passport-dropbox-oauth2": "~0.1.5",
     "handlebars": "~2.0.0-alpha.2",
-    "dropbox": "~0.10.2"
+    "dropbox": "~0.10.2",
+    "stylus": "~0.42.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

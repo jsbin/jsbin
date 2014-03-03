@@ -6,7 +6,14 @@
 var iframe = '<!--prevents injected from being hidden--><iframe style="display:block !important;border:0;width:100% !important;height:36px !important;" src="{{code_id_path}}/output-header"><'+'/iframe>';
 
 document.write(iframe);
+
 var frame = document.body.lastChild;
+if (frame.addEventListener) frame.addEventListener('DOMNodeRemoved', function () {
+  setTimeout(function () {
+    document.body.insertBefore(frame, document.body.firstChild);
+  }, 100);
+});
+
 frame.contentWindow.onmessage = function (event) {
   if (event.origin === location.origin && event.data === 'hide') {
     var path = window.location.pathname;
@@ -15,12 +22,6 @@ frame.contentWindow.onmessage = function (event) {
     window.location.reload();
   }
 }
-frame.addEventListener('DOMNodeRemoved', function () {
-  // console.log('removed');
-  setTimeout(function () {
-    document.body.insertBefore(frame, document.body.firstChild);
-  }, 100);
-})
 
 })();
 </script>

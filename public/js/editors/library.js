@@ -58,6 +58,7 @@ $library.bind('change', function () {
 
   analytics.library('select', group.libraries[selected[1]].label);
   insertResources(library.url);
+  searchTernDefinition();
 }).on('click', function () {
   analytics.library('open');
 });

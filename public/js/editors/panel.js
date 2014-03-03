@@ -82,6 +82,106 @@ emmet.require('actions').add('toggle_comment', function(editor) {
   }
 });
 
+// Tern
+var ternServer;
+var ternSetting = true;
+var ternDefinitions = [
+  {
+    name: 'jquery',
+    type: 'def',
+    file: '/js/vendor/tern/defs/jquery.json',
+    match:  /jquery.*?\.js/i
+  },
+  {
+    name: 'underscore',
+    type: 'def',
+    file: '/js/vendor/tern/defs/underscore.json',
+    match:  /underscore.*?\.js/i
+  },
+  {
+    name: 'kendo',
+    type: 'file',
+    file: '/js/vendor/tern/defs/kendo.all.min.js',
+    match:  /kendo.*?\.js/i
+  }
+];
+var ternLoaded = {};
+var initTern = function(editor){
+  var keyMap = {
+    'Ctrl-I': function(cm) { ternServer.showType(cm); },
+    'Ctrl-Space': function(cm) { ternServer.complete(cm); }
+  };
+  ternServer = new CodeMirror.TernServer({
+    defs: [],
+    useWorker: false,
+    cm: editor
+  });
+  editor.addKeyMap(keyMap);
+  editor.on('cursorActivity', function(cm) { ternServer.updateArgHints(cm); });
+};
+var addTernDefinition = function(def) {
+  if (typeof ternServer === 'object') {
+    ternServer.options.defs.push(def);
+    ternServer = new CodeMirror.TernServer({
+      defs: ternServer.options.defs,
+      useWorker: ternServer.options.useWorker,
+      tooltipType: ternServer.options.tooltipType,
+      cm: ternServer.options.cm
+    });
+  }
+};
+// Load the json defition of the library
+var loadTernDefinition = function(name, file) {
+  if (!ternLoaded[name]) {
+    $.ajax({
+      url: file,
+      dataType: 'json',
+      success: function(data) {
+        addTernDefinition(data);
+        ternLoaded[name] = true;
+      }
+    });
+  }
+};
+// Load the actual js library
+var loadTernFile = function(name, file) {
+  if (!ternLoaded[name]) {
+    $.ajax({
+      url: file,
+      dataType: 'script',
+      success: function(data) {
+        ternServer.server.addFile(name, data);
+        ternLoaded[name] = true;
+      }
+    });
+  }
+};
+var loadTern = function(editor) {
+  // load library files
+  // ...
+  initTern(editor);
+  // load default definitions files
+  var files = [{ name: 'ecma5', file: '/js/vendor/tern/defs/ecma5.json' },
+              { name: 'browser', file: '/js/vendor/tern/defs/browser.json' }];
+  for (var i = 0; i < files.length; i++) {
+    loadTernDefinition(files[i].name, files[i].file);
+  }
+};
+var searchTernDefinition = function() {
+  if (ternSetting === true) {
+    var htmlCode = editors.html.getCode();
+    for (var i = 0; i < ternDefinitions.length; i++) {
+      if (ternDefinitions[i].match.test(htmlCode)) {
+        if (ternDefinitions[i].type === 'def') {
+          loadTernDefinition(ternDefinitions[i].name, ternDefinitions[i].file);
+        }
+        else {
+          loadTernFile(ternDefinitions[i].name, ternDefinitions[i].file);
+        }
+      }
+    }
+  }
+};
 
 
 var Panel = function (name, settings) {
@@ -180,26 +280,8 @@ var Panel = function (name, settings) {
     });
 
     // Tern
-    if (name === 'javascript') {
-      var tagManagerIdeTernServer;
-      function initTern(defs){
-        var keyMap = {
-          "Ctrl-I": function(cm) { tagManagerIdeTernServer.showType(cm); },
-          "Ctrl-Space": function(cm) { tagManagerIdeTernServer.complete(cm); }
-        };
-        tagManagerIdeTernServer = new CodeMirror.TernServer({
-          defs: defs,
-          useWorker: false,
-          //tooltipType: 'output', // output | balloon
-          cm: panel.editor
-        });
-        panel.editor.addKeyMap(keyMap);
-        panel.editor.on("cursorActivity", function(cm) { tagManagerIdeTernServer.updateArgHints(cm); });
-      }
-      if (typeof defs == "undefined") {
-        defs = [];
-      }
-      initTern(defs);
+    if (name === 'javascript' && ternSetting === true) {
+      loadTern(panel.editor);
     }
 
     panel._setupEditor(panel.editor, name);

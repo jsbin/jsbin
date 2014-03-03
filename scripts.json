@@ -30,7 +30,7 @@
     "/js/vendor/tern/lib/def.js",
     "/js/vendor/tern/lib/comment.js",
     "/js/vendor/tern/lib/infer.js",
-    "/js/editors/defs.js",
+    "/js/vendor/tern/plugin/doc_comment.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
     "/js/vendor/prettyprint.js",

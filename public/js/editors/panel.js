@@ -89,19 +89,19 @@ var ternDefinitions = [
   {
     name: 'jquery',
     type: 'def',
-    file: '/js/vendor/tern/defs/jquery.json',
+    file: jsbin.static + '/js/vendor/tern/defs/jquery.json',
     match:  /jquery.*?\.js/i
   },
   {
     name: 'underscore',
     type: 'def',
-    file: '/js/vendor/tern/defs/underscore.json',
+    file: jsbin.static + '/js/vendor/tern/defs/underscore.json',
     match:  /underscore.*?\.js/i
   },
   {
     name: 'kendo',
     type: 'file',
-    file: '/js/vendor/tern/defs/kendo.all.min.js',
+    file: jsbin.static + '/js/vendor/tern/defs/kendo.all.min.js',
     match:  /kendo.*?\.js/i
   }
 ];
@@ -161,8 +161,10 @@ var loadTern = function(editor) {
   // ...
   initTern(editor);
   // load default definitions files
-  var files = [{ name: 'ecma5', file: '/js/vendor/tern/defs/ecma5.json' },
-              { name: 'browser', file: '/js/vendor/tern/defs/browser.json' }];
+  var files = [
+    { name: 'ecma5', file: jsbin.static + '/js/vendor/tern/defs/ecma5.json' },
+    { name: 'browser', file: jsbin.static + '/js/vendor/tern/defs/browser.json' }
+  ];
   for (var i = 0; i < files.length; i++) {
     loadTernDefinition(files[i].name, files[i].file);
   }

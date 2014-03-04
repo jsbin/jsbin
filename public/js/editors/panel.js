@@ -29,7 +29,15 @@ if (!CodeMirror.commands) {
 
 CodeMirror.commands.autocomplete = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+    var pos = cm.getCursor(),
+        tok = cm.getTokenAt(pos);
+    if (tok.string === ';') {
+      return CodeMirror.Pass;
+    }
+    if (tok.string.trim() !== '') {
+      return ternServer.complete(cm);
+    }
+    return CodeMirror.Pass;
   }
 };
 

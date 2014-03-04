@@ -30,14 +30,21 @@ if (!CodeMirror.commands) {
 CodeMirror.commands.autocomplete = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
     var pos = cm.getCursor(),
-        tok = cm.getTokenAt(pos);
-    if (tok.string === ';') {
+      tok = cm.getTokenAt(pos);
+    if (ternSetting === true) {
+      
+      if (tok.string === ';') {
+        return CodeMirror.Pass;
+      }
+      if (tok.string.trim() !== '') {
+        return ternServer.complete(cm);
+      }
       return CodeMirror.Pass;
     }
-    if (tok.string.trim() !== '') {
-      return ternServer.complete(cm);
+    else {
+      return CodeMirror.Pass;
+      // cm.replaceRange('\t', pos);
     }
-    return CodeMirror.Pass;
   }
 };
 

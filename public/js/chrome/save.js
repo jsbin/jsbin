@@ -113,6 +113,11 @@ function onSaveError(jqXHR, panelId) {
     // Hijack the tip label to show an error message.
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
+  } else if (jqXHR.status === 403) {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
+    });
   } else {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});

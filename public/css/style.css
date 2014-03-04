@@ -1083,7 +1083,13 @@ body.streaming #bin {
 }
 
 #tip.error {
-  background: #ff5555;
+  background: #FF4136;
+  color: #fff;
+}
+
+.error a {
+  color: #fff;
+  text-shadow: none;
 }
 
 #tip.notification,
@@ -3906,4 +3912,30 @@ THE SOFTWARE.
 
 .card.author li.owner {
   display: block;
+}
+
+.menu > a.focusbtn {
+  background-color: #FFDC00;
+  padding: 2px 7px;
+  border-radius: 0px;
+  margin: 4px 3px;
+  color: #111;
+  font-weight: 500;
+}
+
+.menu.open a.focusbtn,
+.menu.open a.focusbtn:hover {
+  background-color: #fff;
+  padding: 6px 10px;
+  border-radius: 0;
+  margin: 0;
+}
+
+.menu > a.focusbtn:hover {
+  border-color: transparent;
+}
+
+.menu.open a.focusbtn:hover {
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
 }

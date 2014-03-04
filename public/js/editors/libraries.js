@@ -464,8 +464,7 @@ var libraries = [
       'data-sap-ui-theme': 'sap_bluecrystal',
       'data-sap-ui-libs': 'sap.m'
     },
-    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal',
-    'group': 'OpenUI5'
+    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal'
   }
 ];
 

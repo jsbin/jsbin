@@ -20,7 +20,7 @@
   "getAllOwners": "SELECT * FROM `owners`",
   "getOwnersBlock": "SELECT * FROM `owners` LIMIT ?, ?",
   "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
-  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 ORDER BY `last_updated` DESC LIMIT ?,1",
+  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 AND `archive` = 0 ORDER BY `last_updated` DESC LIMIT ?,1",
   "setBinOwner": "INSERT INTO `owners` (`name`, `url`, `revision`, `last_updated`, `summary`, `html`, `css`, `javascript`, `visibility`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   "touchOwners": "UPDATE `owners` SET `last_updated`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `:panel`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
@@ -43,7 +43,7 @@
   "sandboxColumns": [
     "created",
     "last_viewed",
-    "//protected url",
+    "url",
     "active",
     "reported",
     "streaming",
@@ -57,7 +57,7 @@
   ],
   "ownersColumns": [
     "name",
-    "// protected url",
+    "url",
     "//protected revision",
     "last_updated",
     "summary",

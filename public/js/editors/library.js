@@ -78,12 +78,32 @@ function insertResources(urls) {
       html = [],
       file = '',
       resource,
-      cssNeededAttr = ' rel="stylesheet" type="text/css"';
+      attrList,
+      attrs,
+      scriptDefaultAttrs = {},
+      cssDefaultAttrs = { 'rel': 'stylesheet', 'type': 'text/css' };
 
   for (i = 0; i < length; i++) {
     url = urls[i];
 
+    // URLs can be objects carrying desired attributes
+    // The main resource (src, href) property is always 'url'
+    if ($.isPlainObject(url)) {
+      attrs = url;
+      url = url.url;
+      delete attrs.url;
+    } else {
+      attrs = {};
+    }
+
     file = url.split('/').pop();
+
+    // Introduce any default attrs and flatten into a list for insertion
+    attrs = $.extend({}, (isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs), attrs);
+    attrList = '';
+    for (var attr in attrs) {
+      attrList += ' ' + attr + '="' + attrs[attr] + '"';
+    }
 
     if (file && code.indexOf(file + '"')) {
       // attempt to lift out similar scripts
@@ -96,9 +116,9 @@ function insertResources(urls) {
     }
 
     if (isCssFile(url)) {
-      resource = '<' + 'link href="' + url + '"' + cssNeededAttr  + ' />';
+      resource = '<' + 'link href="' + url + '"' + attrList  + ' />';
     } else {
-      resource = '<' + 'script src="' + url + '"><' + '/script>';
+      resource = '<' + 'script src="' + url + '"' + attrList + '><' + '/script>';
     }
 
     if (isJadeActive()) {

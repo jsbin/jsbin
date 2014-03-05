@@ -111,7 +111,7 @@
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                        @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                       </span>
                     </div>
                     <div>

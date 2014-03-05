@@ -29,21 +29,26 @@ if (!CodeMirror.commands) {
 
 CodeMirror.commands.autocomplete = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    var pos = cm.getCursor(),
-      tok = cm.getTokenAt(pos);
+    var pos = cm.getCursor();
+    var tok = cm.getTokenAt(pos);
+    var indent = '';
+    if (cm.options.indentWithTabs) {
+      indent = '\t';
+    }
+    else {
+      indent = new Array(cm.options.indentUnit + 1).join(' ');
+    }
     if (ternSetting === true) {
-      
       if (tok.string === ';') {
-        return CodeMirror.Pass;
+        return cm.replaceRange(indent, pos);
       }
       if (tok.string.trim() !== '') {
         return ternServer.complete(cm);
       }
-      return CodeMirror.Pass;
+      return cm.replaceRange(indent, pos);
     }
     else {
-      return CodeMirror.Pass;
-      // cm.replaceRange('\t', pos);
+      return cm.replaceRange(indent, pos);
     }
   }
 };
@@ -299,6 +304,29 @@ var Panel = function (name, settings) {
     // Tern
     if (name === 'javascript' && ternSetting === true) {
       loadTern(panel.editor);
+    }
+
+    // Remove emmet keymaps from javascript panel
+    if (name === 'javascript') {
+      for (var k in CodeMirror.keyMap.default) {
+        if (CodeMirror.keyMap.default.hasOwnProperty(k)) {
+          if (CodeMirror.keyMap.default[k].indexOf('emmet') !== -1) {
+            var o = {};
+            o[k] = function(cm) {};
+            panel.editor.addKeyMap(o);
+          }
+        }
+      }
+      // Restore the keymaps that we need
+      panel.editor.addKeyMap({
+        'Tab': 'autocomplete'
+      });
+      panel.editor.addKeyMap({
+        'Enter': 'newlineAndIndent'
+      });
+      panel.editor.addKeyMap({
+        'Cmd-D': 'deleteLine'
+      });
     }
 
     panel._setupEditor(panel.editor, name);

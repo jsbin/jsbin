@@ -1855,12 +1855,19 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   -webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
-  /*font-family: inherit;*/
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 100%;
+}
+.CodeMirror-Tern-tooltip {
+  padding-top: 5px;
 }
 .CodeMirror-hint {
   font-size: 1.1em;
   line-height: 1.4em;
+}
+.CodeMirror-Tern-completion:before {
+  bottom: auto;
+  top: 1px;
 }
 
 /* END CODEMIRROR CSS */

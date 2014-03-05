@@ -20,6 +20,7 @@
     "/js/vendor/codemirror3/addon/search/searchcursor.js",
     "/js/vendor/codemirror3/addon/hint/show-hint.js",
     "/js/vendor/codemirror3/addon/dialog/dialog.js",
+    "/js/vendor/codemirror3/addon/comment/comment.js",
     "/js/vendor/codemirror3/addon/tern/tern.js",
     "/js/vendor/acorn/acorn.js",
     "/js/vendor/acorn/acorn_loose.js",

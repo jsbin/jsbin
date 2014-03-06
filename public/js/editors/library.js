@@ -76,12 +76,34 @@ function insertResources(urls) {
         add: 0
       },
       html = [],
-      file = '';
+      file = '',
+      resource,
+      attrList,
+      attrs,
+      scriptDefaultAttrs = {},
+      cssDefaultAttrs = { 'rel': 'stylesheet', 'type': 'text/css' };
 
   for (i = 0; i < length; i++) {
     url = urls[i];
 
+    // URLs can be objects carrying desired attributes
+    // The main resource (src, href) property is always 'url'
+    if ($.isPlainObject(url)) {
+      attrs = url;
+      url = url.url;
+      delete attrs.url;
+    } else {
+      attrs = {};
+    }
+
     file = url.split('/').pop();
+
+    // Introduce any default attrs and flatten into a list for insertion
+    attrs = $.extend({}, (isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs), attrs);
+    attrList = '';
+    for (var attr in attrs) {
+      attrList += ' ' + attr + '="' + attrs[attr] + '"';
+    }
 
     if (file && code.indexOf(file + '"')) {
       // attempt to lift out similar scripts
@@ -94,23 +116,57 @@ function insertResources(urls) {
     }
 
     if (isCssFile(url)) {
-      html.push('<' + 'link href="' + url + '" rel="stylesheet" type="text/css" />');
+      resource = '<' + 'link href="' + url + '"' + attrList  + ' />';
     } else {
-      html.push('<' + 'script src="' + url + '"><' + '/script>');
+      resource = '<' + 'script src="' + url + '"' + attrList + '><' + '/script>';
     }
+
+    if (isJadeActive()) {
+      resource = isCssFile(url) ? htmlLinkToJade(resource) : htmlScriptToJade(resource);
+    }
+
+    html.push(resource);
 
     state.add++;
   }
 
-  if (code.indexOf('<head') !== -1) {
-    code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
-  } else { // add to the start of the doc
-    code = html.join('\n') + code;
+  if (isJadeActive()) {
+    // always append Jade at the end, it's just easier that way...okay?
+    var indent = (code.match(/html.*\n(\s*)\S?/i) || [,])[1];
+    code = code.trim() + '\n' + indent + html.join('\n' + indent).trim();
+  } else {
+    if (code.indexOf('<head') !== -1) {
+      code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
+    } else { // add to the start of the doc
+      code = html.join('\n') + code;
+    }
   }
 
   editors.html.setCode(code);
   editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
 
+}
+
+function createHTMLToJadeTagConverter(tagName, attribute, suffix){
+  var regExToGrabResource = new RegExp(attribute+'=(\'|").+.'+suffix+'\\1');
+  return function(html){
+    var resource = html.match(regExToGrabResource);
+    return tagName+'('+resource[0]+')';
+  };
+}
+
+var htmlScriptToJade = createHTMLToJadeTagConverter('script', 'src', 'js');
+// Dirty, but good enough for now, parse the link and add commas between attributes;
+var htmlLinkToJade = (function(){
+  var parseLink = createHTMLToJadeTagConverter('link', 'href', 'css');
+  return function(html){
+    var jadeLink = parseLink(html);
+    return jadeLink.split('" ').join('",');
+  };
+}());
+
+function isJadeActive(){
+  return jsbin.state.processors.html === 'jade';
 }
 
 function isCssFile(url) {

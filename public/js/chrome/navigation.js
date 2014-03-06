@@ -1,4 +1,4 @@
-var $startingpoint = $('#startingpoint').click(function (event) {
+var $startingpoint = $('a.startingpoint').click(function (event) {
   event.preventDefault();
   if (localStorage) {
     analytics.saveTemplate();
@@ -31,13 +31,13 @@ $('a.disabled').on('click mousedown mouseup', function (event) {
 
 $('#loginbtn').click(function () {
   analytics.login();
+  $(this).toggleClass('open');
   // $('#login').show();
   // loginVisible = true;
-  $username.focus();
   // return false;
 });
 
-$('.logout').click(function (event) {
+$('a.logout').click(function (event) {
   event.preventDefault();
 
   // We submit a form here because I can't work out how to style the button
@@ -259,6 +259,9 @@ $('#createnew').click(function () {
     }
   }
 
+  // clear out the write checksum too
+  sessionStorage.removeItem('checksum');
+
   jsbin.panels.saveOnExit = true;
 
   // first try to restore their default panels
@@ -280,7 +283,6 @@ var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) 
   event.preventDefault();
 
   var visibility = $(this).data('vis');
-  console.log(visibility);
 
   $.ajax({
     url: jsbin.getURL() + '/' + visibility,
@@ -415,11 +417,13 @@ $('#addmeta').click(function () {
   return false;
 });
 
-$('#deletebin').on('click', function (e) {
+$('a.deletebin').on('click', function (e) {
   e.preventDefault();
+  analytics.delete();
   $.ajax({
     type: 'post',
     url: jsbin.getURL() + '/delete',
+    data: { checksum: jsbin.state.checksum },
     success: function () {
       jsbin.state.deleted = true;
       $document.trigger('tip', {
@@ -434,7 +438,6 @@ $('#deletebin').on('click', function (e) {
           autohide: 5000,
         });
       }
-      console.log('error', xhr.status);
     }
   });
 });

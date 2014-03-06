@@ -10,7 +10,7 @@ body {
   /*min-width: 976px;*/
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
-  background: #fff url(../images/jsbin_animated.gif) no-repeat center;
+  /* background: #fff url(../images/jsbin_animated.gif) no-repeat center; */
   height: 100%;
 }
 
@@ -69,19 +69,21 @@ textarea:focus {
 }
 
 .btn-github {
-  font-size: 1em;
+  font-size: 1.4em;
+  font-weight: 200;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
-  box-shadow: 0 1px 2px #eee;
+  box-shadow: 0px 1px 1px #eee;
   border: 1px solid #aaa;
-  border-radius: 4px;
-  padding: 6px 10px 5px;
+  border-radius: 2px;
+  padding: 10px 12px;
   cursor: pointer;
   display: inline;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   text-align: center;
   text-decoration: none;
+  border-bottom: 2px solid #aaa;
 }
 .btn-github:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
@@ -89,10 +91,13 @@ textarea:focus {
 
 .btn-github img {
   vertical-align: middle;
-  top: -1px;
+  top: -2px;
   position: relative;
-  margin-right: 5px;
+  margin-right: 2px;
   border: none;
+  width: 22px;
+  /* display: inline-block; */
+  /* float: left; */
 }
 
 .login .btn-github {
@@ -171,7 +176,19 @@ textarea:focus {
   top: 0;
   z-index: 0;
 }
-
+.help .login-group {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-weight: 400;
+  color: #aaa;
+  font-size: 1.1em;
+  margin-top: 15px;
+}
+.btn-login span {
+  color: #aaa;
+  /* font-size: 1em; */
+}
 .help a {
   outline: 0;
   /*border-right: 0;*/
@@ -1014,7 +1031,7 @@ body.streaming #bin {
 }
 
 .showtip #bin {
-  bottom: 26px;
+  /*bottom: 26px;*/
 }
 
 #tip {
@@ -1066,7 +1083,13 @@ body.streaming #bin {
 }
 
 #tip.error {
-  background: #ff5555;
+  background: #FF4136;
+  color: #fff;
+}
+
+.error a {
+  color: #fff;
+  text-shadow: none;
 }
 
 #tip.notification,
@@ -1078,11 +1101,13 @@ body.streaming #bin {
 }
 
 #tip p {
-  margin: 0;
+  margin: 5px 25px 5px 0;
   padding: 0 65px 0 0;
+  line-height: 1.3;
 }
 
 #tip a.dismiss {
+  line-height: 28px;
   position: absolute;
   right: 20px;
   top: 2px;
@@ -1242,7 +1267,7 @@ details li, .details li {
 .dropdowncontent {
   /*background: #e0e0e0;*/
   padding: 10px;
-  min-width: 220px;
+  min-width: 250px;
 }
 
 #register p {
@@ -1975,6 +2000,10 @@ a.active:hover {
   text-align: left;
 }
 
+#registerLogin .dropdowncontent {
+  padding: 20px;
+}
+
 .label.open .dropdownmenu {
   margin-left: 2px;
 }
@@ -2005,6 +2034,19 @@ a.active:hover {
   display: block;
 }
 
+.dropdown.login {
+  right: 0;
+}
+.open .dropdown.login .pointer {
+border: 9px solid rgba(0,0,0,0);
+border-bottom: 7px solid #fff;
+width: 0px;
+height: 0px;
+position: absolute;
+top: -15px;
+left: 50%;
+}
+
 .dropdownmenu > a {
   display: block;
   float: none;
@@ -2033,8 +2075,9 @@ a.active:hover {
 .help .menu > a.avatar {
   padding: 7px;
   margin-top: -5px;
-  line-height: 0;
+  line-height: 32px;
   height: 26px;
+  line-height: 0;
 }
 
 .help .open.menu > a.avatar {
@@ -2584,7 +2627,7 @@ form + hr {
   text-decoration: none;
 }
 
-.name span {
+.label .name span {
   /*margin-left: -41px;*/
   padding-left: 4px;
   color: #999;
@@ -2635,6 +2678,7 @@ pre .highlight:last-of-type {
 .dd-right {
   right: -10px;
 }
+
 
 #jsbinurl.hidden {
   position: absolute;
@@ -2867,6 +2911,10 @@ pre .highlight:last-of-type {
   position: absolute;
   right: 10px;
   /*font-weight: bold;*/
+}
+
+.nokeyboardshortcuts .keyshortcut {
+  display: none;
 }
 
 .dd-right .keyshortcut {
@@ -3392,6 +3440,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 }
 .cm-s-solarized .cm-strong { color: #eee; }
 .cm-s-solarized .cm-tab:before {
+  position:absolute;
   content: "➤";   /*visualize tab character*/
   color: #586e75;
 }
@@ -3617,4 +3666,276 @@ THE SOFTWARE.
   #panels {
     display: none;
   }
+}
+
+/* hover card styles */
+.card div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.card {
+  z-index: 10;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  float: left;
+  font-family: 'helvetica neue';
+  font-weight: 400;
+  background: #fafafa;
+  background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#FBFBFB)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #FFF 0%,#FBFBFB 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #FFF 0%,#FBFBFB 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFF', endColorstr='#FBFBFB',GradientType=0 ); /* IE6-9 */
+  display: inline-block;
+  box-sizing: border-box;
+  /*margin: 10px;*/
+  border: 1px solid #fff;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  font-size: 16px;
+  /* min-width: 500px; */
+}
+
+.card.owner header img {
+  display: none;
+}
+
+.card.author .meta .name,
+.card .meta .author,
+.card.author header img {
+  display: none;
+
+}
+
+.card.author .meta .author {
+  display: inline-block;
+}
+
+
+.card span {
+  opacity: 1;
+}
+
+.card b {
+  font-weight: inherit;
+}
+
+.card header {
+  background: #fafafa;
+  background: -moz-linear-gradient(top,  #f1f1f1 0%, #fff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f1f1f1), color-stop(100%,#fff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f1f1f1 0%,#fff 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  #f1f1f1 0%,#fff 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1f1f1', endColorstr='#fff',GradientType=0 ); /* IE6-9 */
+
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  height: 48px;
+  white-space: nowrap;
+  overflow: visible;
+  /*overflow-x: auto;*/
+  width: 100%;
+}
+
+.card .body {
+  display: none;
+  padding: 10px 20px;
+  border-top: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.card.open .body {
+  display: block;
+}
+
+.card .body select {
+  margin: 0;
+}
+
+.card .body a {
+  color: #212121;
+  font-size: 14px;
+}
+
+.card .body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card .body li {
+  margin: 10px 0
+}
+
+.card.private {
+  border: 1px solid #fafafa;
+}
+
+.card.private header {
+  background: #d1e6fa;
+}
+
+.card .meta {
+  white-space: nowrap;
+  padding-right: 10px;
+  margin: 5px 0;
+}
+
+.card.author .meta,
+.card.anonymous .meta {
+  padding-left: 10px;
+}
+
+.card .name {
+  margin-bottom: 2px;
+}
+
+.card.pro .pro {
+  display: inline-block;
+}
+
+.card .pro {
+  display: none;
+  text-transform: uppercase;
+  font-size: 9.5px;
+  font-weight: bold;
+  color: rgba(0,0,0,.4);
+  vertical-align: super;
+}
+
+.card img {
+  margin: 5px;
+  padding: 5px;
+  float: left;
+  width: 30px;
+}
+
+.card.anonymous header img {
+  display: none;
+}
+
+.card .visibility {
+  margin: 14px 20px;
+  border: 1px solid #337ae0;
+  color: #337ae0;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 2px 15px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  float: right;
+  display: none;
+}
+
+.card.private .visibility {
+  display: inline-block;
+}
+
+.card .viewers {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+  line-height: 16px;
+}
+
+.card .viewers > b {
+  overflow: hidden;
+  height: 16px;
+}
+
+.card .viewers b {
+  display: inline-block;
+  margin-top: -16px;
+  -webkit-transition: margin-top ease-out 200ms;
+}
+
+.card .viewers b.up b {
+  margin-top: -32px;
+}
+
+.card .viewers b.down b {
+  margin-top: 0;
+}
+
+
+.card.private .viewers {
+  border-right: 1px solid #ccc;
+}
+
+.card.meta .viewers {
+  border-left: 1px solid #ccc;
+}
+
+.card .when,
+.card .viewers span {
+  color: rgba(0,0,0,.4);
+  font-weight: 800;
+  font-size: 12px;
+  display: block;
+}
+
+.card.viewers .viewers {
+  display: inline-block;
+}
+
+.card .streaming {
+  display: none;
+}
+
+.card .viewers {
+  display: none;
+}
+
+.card canvas {
+  display: none;
+  margin-right: 2px;
+}
+
+.card.streaming canvas {
+  display: inline;
+}
+
+.card li.owner {
+  display: none;
+}
+
+.card.author li.owner {
+  display: block;
+}
+
+.menu > a.focusbtn {
+  background-color: #FFDC00;
+  padding: 2px 7px;
+  border-radius: 0px;
+  margin: 4px 3px;
+  color: #111;
+  font-weight: 500;
+}
+
+.menu.open a.focusbtn,
+.menu.open a.focusbtn:hover {
+  background-color: #fff;
+  padding: 6px 10px;
+  border-radius: 0;
+  margin: 0;
+}
+
+.menu > a.focusbtn:hover {
+  border-color: transparent;
+}
+
+.menu.open a.focusbtn:hover {
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
 }

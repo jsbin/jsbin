@@ -23,13 +23,11 @@
       "collate": "utf8mb4_unicode_ci"
     }
   },
-  "session": {
-    "secret": "d41d8cd98f00b204e9800998ecf8427e"
-  },
   "analytics": {
     "id": null,
     "render-id": null
   },
+  "ui": {},
   "mail": {
     "adapter": "sendmail",
     "sendmail": {},
@@ -84,6 +82,8 @@
     "archive",
     "auth",
     "badges",
+    "bin",
+    "bins",
     "blog",
     "bugs",
     "business",
@@ -91,6 +91,7 @@
     "collection",
     "collections",
     "css",
+    "delete",
     "devices",
     "download",
     "downloads",
@@ -123,8 +124,11 @@
     "logout",
     "me",
     "messages",
+    "new",
     "notifications",
     "nudge",
+    "null",
+    "open",
     "oauth",
     "pro",
     "profile",
@@ -151,6 +155,7 @@
     "widgets",
     "tutorials",
     "video",
-    "videos"
+    "videos",
+    "-"
   ]
 }

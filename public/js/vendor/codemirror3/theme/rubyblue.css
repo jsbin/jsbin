@@ -1,4 +1,4 @@
-.cm-s-rubyblue { font:13px/1.4em Trebuchet, Verdana, sans-serif; }	/* - customized editor font - */
+.cm-s-rubyblue { font-family: Trebuchet, Verdana, sans-serif; }	/* - customized editor font - */
 
 .cm-s-rubyblue.CodeMirror { background: #112435; color: white; }
 .cm-s-rubyblue div.CodeMirror-selected { background: #38566F !important; }
@@ -14,8 +14,10 @@
 .cm-s-rubyblue span.cm-meta { color: #F0F; }
 .cm-s-rubyblue span.cm-variable-2, .cm-s-rubyblue span.cm-tag { color: #7BD827; }
 .cm-s-rubyblue span.cm-variable-3, .cm-s-rubyblue span.cm-def { color: white; }
-.cm-s-rubyblue span.cm-error { color: #AF2018; }
 .cm-s-rubyblue span.cm-bracket { color: #F0F; }
 .cm-s-rubyblue span.cm-link { color: #F4C20B; }
 .cm-s-rubyblue span.CodeMirror-matchingbracket { color:#F0F !important; }
 .cm-s-rubyblue span.cm-builtin, .cm-s-rubyblue span.cm-special { color: #FF9D00; }
+.cm-s-rubyblue span.cm-error { color: #AF2018; }
+
+.cm-s-rubyblue .CodeMirror-activeline-background {background: #173047 !important;}

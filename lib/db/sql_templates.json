@@ -11,6 +11,7 @@
   "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`, `github_token`, `github_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
   "touchLogin": "UPDATE `ownership` SET `last_login`=? WHERE `name`=?",
   "updateUserKey": "UPDATE ownership SET `key`=?, `updated`=? WHERE `name`=?",
+  "updateUserSettings": "UPDATE ownership SET `settings`=? WHERE `name`=?",
   "upgradeUserKey": "UPDATE ownership SET `key`=?, `created`=?, `updated`=? WHERE `name`=?",
   "DATELIMITgetBinsByUser": "SELECT SUBSTR(s.html, 1, 200) as html, SUBSTR(s.javascript, 1, 100) as javascript, SUBSTR(s.css, 1, 100) as css, o.archive, o.last_updated, o.url, o.revision FROM `owners` as o, `sandbox` s WHERE o.url=s.url and o.revision=s.revision and o.last_updated>DATE_SUB(NOW(), INTERVAL 6 MONTH) AND o.name=?",
   "getBinsByUser": "select summary as html, summary as javascript, summary as css, archive, last_updated, url, revision from `owners` where name=?",
@@ -19,7 +20,7 @@
   "getAllOwners": "SELECT * FROM `owners`",
   "getOwnersBlock": "SELECT * FROM `owners` LIMIT ?, ?",
   "getBinByUrlAndRevision": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
-  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 ORDER BY `last_updated` DESC LIMIT ?,1",
+  "getLatestBinForUser": "SELECT `url`, `revision` FROM `owners` WHERE `name`=? AND `last_updated` != 0 AND `archive` = 0 ORDER BY `last_updated` DESC LIMIT ?,1",
   "setBinOwner": "INSERT INTO `owners` (`name`, `url`, `revision`, `last_updated`, `summary`, `html`, `css`, `javascript`, `visibility`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   "touchOwners": "UPDATE `owners` SET `last_updated`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
   "updateOwners": "UPDATE `owners` SET `last_updated`=?, `summary`=?, `:panel`=? WHERE `name`=? AND `url`=? AND `revision` = ?",
@@ -32,7 +33,8 @@
   "setForgotToken": "INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES (?, ?, ?, ?)",
   "deleteExpiredForgotToken": "DELETE FROM `forgot_tokens` WHERE `expires` <= ? OR `token`=? OR `owner_name`=?",
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
-  "updateBin": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
+  "updateBinData": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
+  "updateOwnersData": "UPDATE `owners` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
@@ -41,7 +43,7 @@
   "sandboxColumns": [
     "created",
     "last_viewed",
-    "//protected url",
+    "url",
     "active",
     "reported",
     "streaming",
@@ -52,5 +54,17 @@
     "//protected revision",
     "css",
     "settings"
+  ],
+  "ownersColumns": [
+    "name",
+    "url",
+    "//protected revision",
+    "last_updated",
+    "summary",
+    "html",
+    "css",
+    "javascript",
+    "archive",
+    "visibility"
   ]
 }

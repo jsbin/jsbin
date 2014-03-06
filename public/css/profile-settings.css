@@ -1,0 +1,31 @@
+form input[type="submit"] {
+  width:60%;
+  margin:10px 20%;
+  font-family: "Helvetica Neue", "Arial";
+  font-size: 0.75em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 3px 2px 0px #eee;
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 2px;
+  border-bottom:1px solid rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  font-weight:600;
+}
+form input[type="submit"]:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+form input {
+  width:100%;
+  font-size:1.1em;
+  margin:0px 0px 15px;
+}
+form label {
+  font-size:0.9em;
+}

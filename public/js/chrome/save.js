@@ -91,6 +91,9 @@ $document.on('saved', function () {
 
 var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
+// store it back on state
+jsbin.state.checksum = saveChecksum;
+
 if (saveChecksum) {
   // remove the disabled class, but also remove the cancelling event handlers
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
@@ -110,6 +113,11 @@ function onSaveError(jqXHR, panelId) {
     // Hijack the tip label to show an error message.
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
+  } else if (jqXHR.status === 403) {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
+    });
   } else {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
@@ -178,13 +186,34 @@ if (!jsbin.saveDisabled) {
 
       saving.inprogress(true);
 
-      if (!saveChecksum) {
+      // We force a full save if there's no checksum OR if there's no bin code/url
+      if (!saveChecksum || !jsbin.state.code) {
         // create the bin and when the response comes back update the url
         saveCode('save', true);
       } else {
         updateCode(panelId);
       }
     }, 250));
+  });
+} else {
+  $document.one('jsbinReady', function () {
+    var shown = false;
+    if (!jsbin.embed && !jsbin.sandbox) {
+      $document.on('codeChange', function (event, data) {
+        if (!data.onload && !shown && data.origin !== 'setValue') {
+          shown = true;
+          var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;
+          var cmd = ismac ? '⌘' : 'ctrl';
+          var shift = ismac ? '⇧' : 'shift';
+          var plus = ismac ? '' : '+';
+
+          $document.trigger('tip', {
+            type: 'notification',
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+          });
+        }
+      });
+    }
   });
 }
 
@@ -307,6 +336,7 @@ function saveCode(method, ajax, ajaxCallback) {
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
+        jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
 

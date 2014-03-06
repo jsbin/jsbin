@@ -1,8 +1,7 @@
-var $username = $('#username'),
-    $password = $('#password'),
-    $email = $('#email');
+/* global $ */
 
-var $loginForm = $('form.login').submit(function (event) {
+$('form.login').submit(function (event) {
+  'use strict';
   event.preventDefault();
 
   var form = $(this),
@@ -16,16 +15,16 @@ var $loginForm = $('form.login').submit(function (event) {
   $loginFeedback.show().text('Checking...');
 
   $.ajax({
-    url: jsbin.root + '/sethome',
-    data: { name: name, key: key, email: email },
-    type: 'post',
+    url: form.attr('action'),
+    data: { username: name, key: key, email: email },
+    type: 'POST',
     dataType: 'json',
     complete: function (jqXHR) {
       var data = $.parseJSON(jqXHR.responseText) || {};
       // cookie is required to share with the server so we can do a redirect on new bin
-      if (data.ok) {
+      if (jqXHR.status === 200) {
         if (data.avatar) {
-          $('#avatar').find('img').remove().end().prepend('<img class="avatar" src="' + data.avatar + '">');
+          $('a.avatar').find('img').remove().end().prepend('<img src="' + data.avatar + '">');
         }
         if (data.message) {
           $loginFeedback.text(data.message);
@@ -39,8 +38,3 @@ var $loginForm = $('form.login').submit(function (event) {
     }
   });
 });
-
-// if ($('#homebtn').length) {
-//   jsbin.settings.home = document.cookie.split('home=')[1].split(';')[0];
-//   document.title = jsbin.settings.home + '@' + document.title;
-// }

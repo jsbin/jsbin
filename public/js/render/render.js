@@ -2,6 +2,7 @@
 var sourceURLctr = 1;
 
 var getPreparedCode = (function () {
+  'use strict';
 
   var consoleTest = /(^.|\b)console\./,
   re = {
@@ -15,6 +16,15 @@ var getPreparedCode = (function () {
     winLoad: /window\.onload\s*=/,
     scriptopen: /<script/gi
   };
+
+  function processFail(type, error) {
+    if (window.console) {
+      if (editors[type].processor.id) {
+        window.console.warn(editors[type].processor.id + ' processor compilation failed');
+      }
+      window.console.error(error.message);
+    }
+  }
 
   return function (nojs) {
     // reset all the regexp positions for reuse
@@ -39,13 +49,8 @@ var getPreparedCode = (function () {
 
     try {
       source = editors.html.render();
-    } catch (e) {
-      if (window.console) {
-        if (editors.html.processor.id) {
-          window.console.warn(editors.html.processor.id + ' processor compilation failed');
-        }
-        window.console.error(e.message);
-      }
+    } catch (error) {
+      processFail('html', error);
     }
 
     hasHTML = !!source.trim();
@@ -56,25 +61,15 @@ var getPreparedCode = (function () {
         var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
         if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
         sourceURLctr++;
-      } catch (e) {
-        if (window.console) {
-          if (editors.javascript.processor.id) {
-            window.console.warn(editors.javascript.processor.id + ' processor compilation failed');
-          }
-          window.console.error(e.message);
-        }
+      } catch (error) {
+        processFail('javascript', error);
       }
     }
 
     try {
       css = editors.css.render();
-    } catch (e) {
-      if (window.console) {
-        if (editors.css.processor.id) {
-          window.console.warn(editors.css.processor.id + ' processor compilation failed');
-        }
-        window.console.error(e.message);
-      }
+    } catch (error) {
+      processFail('css', error);
     }
 
     // set the flags *before* we tweak the code with loop protection, etc.

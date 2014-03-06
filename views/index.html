@@ -548,6 +548,22 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+{{#feature request "tern"}}
+<script src="{{static}}/js/vendor/codemirror3/addon/hint/show-hint.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/addon/dialog/dialog.js"></script>
+<script src="{{static}}/js/vendor/codemirror3/addon/tern/tern.js"></script>
+<script src="{{static}}/js/vendor/acorn/acorn.js"></script>
+<script src="{{static}}/js/vendor/acorn/acorn_loose.js"></script>
+<script src="{{static}}/js/vendor/acorn/util/walk.js"></script>
+<script src="{{static}}/js/vendor/tern/lib/signal.js"></script>
+<script src="{{static}}/js/vendor/tern/lib/tern.js"></script>
+<script src="{{static}}/js/vendor/tern/lib/def.js"></script>
+<script src="{{static}}/js/vendor/tern/lib/comment.js"></script>
+<script src="{{static}}/js/vendor/tern/lib/infer.js"></script>
+<script src="{{static}}/js/vendor/tern/plugin/doc_comment.js"></script>
+<script src="{{static}}/js/editors/defs.js"></script>
+<script src="{{static}}/js/editors/tern.js"></script>
+{{/feature}}
 </body>
 </html>
 

@@ -90,15 +90,16 @@ var Panel = function (name, settings) {
       $panel = null,
       splitterSettings = {},
       cmSettings = {},
-      panelLanguage = name;
+      panelLanguage = name,
+      $panelwrapper = $('<div class="stretch panelwrapper"></div>');
 
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
   $panel = $('.panel.' + name);
   $panel.data('name', name);
   panel.$el = $panel.detach();
-  panel.$el.appendTo($source);
-  panel.$el.wrapAll('<div class="stretch panelwrapper">');
+  panel.$el.appendTo($panelwrapper);
+  $panelwrapper.appendTo($source);
   panel.$panel = panel.$el;
   panel.$el = panel.$el.parent().hide();
   panel.el = document.getElementById(name);

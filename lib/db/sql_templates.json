@@ -40,6 +40,10 @@
   "setBinVisibility": "UPDATE `owners` SET `visibility`=? WHERE `name`=? AND `url`=?",
   "getBinMetadata": "SELECT * FROM `owners` AS `o`, `ownership` AS `os` WHERE o.name=os.name AND o.url=? AND o.revision=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
+  "getCounter": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
+  "insertCounter": "INSERT INTO `counters` (:columns:) VALUES (:values:)",
+  "getCounter": "SELECT * FROM `counters` WHERE `username`=? AND `type`=?",
+  "getNextProCount": "SELECT value FROM counters WHERE `type`='pro' ORDER BY `id` DESC LIMIT 1",
   "sandboxColumns": [
     "created",
     "last_viewed",
@@ -66,5 +70,10 @@
     "javascript",
     "archive",
     "visibility"
+  ],
+  "countersColumns": [
+    "username",
+    "type",
+    "value"
   ]
 }

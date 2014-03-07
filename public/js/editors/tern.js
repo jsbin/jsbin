@@ -1,25 +1,5 @@
+// jsbin.settings.editor.tern = true
 var ternServer;
-var ternSetting = true;
-var ternDefinitions = [
-  {
-    name: 'jquery',
-    type: 'def',
-    file: jsbin.static + '/js/vendor/tern/defs/jquery.json',
-    match:  /jquery.*?\.js/i
-  },
-  {
-    name: 'underscore',
-    type: 'def',
-    file: jsbin.static + '/js/vendor/tern/defs/underscore.json',
-    match:  /underscore.*?\.js/i
-  },
-  {
-    name: 'kendo',
-    type: 'file',
-    file: jsbin.static + '/js/vendor/tern/defs/kendo.all.min.js',
-    match:  /kendo.*?\.js/i
-  }
-];
 var ternLoaded = {};
 
 var initTern = function(editor, defs){
@@ -86,7 +66,7 @@ var loadTern = function(editor) {
 };
 
 var searchTernDefinition = function(htmlCode) {
-  if (ternSetting === true) {
+  if (jsbin.settings.editor.tern === true) {
     for (var i = 0; i < ternDefinitions.length; i++) {
       if (ternDefinitions[i].match.test(htmlCode)) {
         if (ternDefinitions[i].type === 'def') {
@@ -112,7 +92,7 @@ CodeMirror.commands.autocomplete = function(cm) {
     else {
       indent = new Array(cm.options.indentUnit + 1).join(' ');
     }
-    if (ternSetting === true) {
+    if (jsbin.settings.editor.tern === true) {
       if (tok.string === ';') {
         return cm.replaceRange(indent, pos);
       }
@@ -127,7 +107,7 @@ CodeMirror.commands.autocomplete = function(cm) {
   }
 };
 
-if (ternSetting === true) {
+if (jsbin.settings.editor.tern === true) {
   loadTern(editors.javascript.editor);
   searchTernDefinition(template.html);
 

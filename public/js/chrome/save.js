@@ -37,7 +37,15 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  saveCode('save', jsbin.saveDisabled === true ? false : true);
+  // if it's connecting to a togetherjs session, save will not trigger a reload
+  var ajax = true;
+  if (jsbin.saveDisabled === true) {
+    ajax = false;
+  }
+  if (jsbin.togetherjs === true) {
+    ajax = true;
+  }
+  saveCode('save', ajax);
 
   return false;
 });

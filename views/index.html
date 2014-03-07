@@ -535,6 +535,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
+{{#feature request "togetherjs"}}
+<script src="{{static}}/js/chrome/togetherjs.js"></script>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+{{/feature}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}

@@ -1,5 +1,6 @@
 /*global module:false*/
 module.exports = function (grunt) {
+  'use strict';
   var fs = require('fs'),
       path = require('path'),
       exec = require('child_process').exec,
@@ -32,7 +33,7 @@ module.exports = function (grunt) {
       }
     }
 
-    child = exec(cmd, function (err, stdout, stderr) {
+    child = exec(cmd, function (err) {
       if (err) {
         grunt.log.writeln(err.message);
         process.exit(err.code);
@@ -52,7 +53,8 @@ module.exports = function (grunt) {
     map:       'public/js/prod/<%= pkg.name %>.map.json', // don't version this so we overwrite
     min:       'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.min.js',
     runner:    'public/js/prod/runner-<%= pkg.version %>.js',
-    runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js'
+    runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js',
+    css:       'public/css/prod/<%= pkg.name %>-<%= pkg.version %>.css'
   };
 
   var config = {
@@ -94,6 +96,10 @@ module.exports = function (grunt) {
           'public/js/outro.js'
         ],
         dest: distpaths.runner
+      },
+      css: {
+        src: 'public/css/src/*.css',
+        dest: distpaths.css
       }
     },
     uglify: {
@@ -131,6 +137,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-css');
 
   // Default task.
   grunt.registerTask('build', ['concat', 'uglify']);

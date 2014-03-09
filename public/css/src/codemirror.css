@@ -1,0 +1,16 @@
+.CodeMirror-completions {
+  position: absolute;
+  overflow: hidden;
+  border: 2px solid #DFE0B4;
+  z-index: 9999999999;
+}
+
+.CodeMirror-completions select {
+  margin: 0;
+  padding: 0;
+  outline: none !important;
+  background: #FFFFDB;
+  border: 0;
+  font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+  font-size: 13px;
+}

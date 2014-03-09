@@ -1,0 +1,325 @@
+/* history listings */
+#history .thumb {
+  border: 1px solid #ccc;
+  overflow: hidden;
+  height: 145px;
+  width: 193px;
+  margin: 10px 0;
+}
+
+#history iframe-dead {
+  -webkit-transform: scale(0.8);
+     -moz-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+       -o-transform: scale(0.8);
+          transform: scale(0.8);
+  /* IE8+ - must be on one line, unfortunately */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.8, M12=0, M21=0, M22=0.8, SizingMethod='auto expand')";
+
+  /* IE6 and 7 */
+  filter: progid:DXImageTransform.Microsoft.Matrix(
+           M11=0.8,
+           M12=0,
+           M21=0,
+           M22=0.8,
+           SizingMethod='auto expand');
+
+  -webkit-transform-origin: 0 0;
+     -moz-transform-origin: 0 0;
+      -ms-transform-origin: 0 0;
+       -o-transform-origin: 0 0;
+          transform-origin: 0 0;
+}
+
+#history iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  margin: 0 auto;
+  /*width: 90%;*/
+}
+
+.panelsVisible #history {
+  display: none;
+  /*top: 2000px;  :( can't do 100% */
+}
+
+.panelsVisible #history .preview {
+  /*right: -1000px;*/
+}
+
+#history {
+  z-index: 0;
+  /*position: absolute;*/
+  /*top: 31px;*/
+  /*-webkit-transition: top ease-out 200ms;*/
+     /*-moz-transition: top ease-out 200ms;*/
+       /*-o-transition: top ease-out 200ms;*/
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+  text-shadow: none;
+  /*-webkit-transition-delay: 100ms;*/
+  font-size: 14px;
+  padding: 0 0 10px 0;
+  position: absolute;
+  /*height: 100%;*/
+  top: 36px;
+  left: 0;
+  right: 0;
+  right: 30%;
+  bottom: 0;
+  overflow: auto;
+  background: #fff;
+  display: none;
+}
+
+.ready #history {
+  display: block;
+}
+
+#history .preview {
+  -webkit-transition: right ease-out 200ms;
+     -moz-transition: right ease-out 200ms;
+       -o-transition: right ease-out 200ms;
+
+  border-left: 1px solid #ccc;
+  position: fixed;
+  top: 31px;
+  width: 30%;
+  right: 0;
+  height: 100%;
+  padding-top: 10px;
+  background: #fff;
+}
+
+#history .header {
+  overflow: hidden;
+}
+#history .header h2 {
+  float: left;
+}
+
+#history h2 {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 13px;
+  padding: 10px 20px;
+}
+
+#history .header .menu {
+  float: right;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+}
+
+#history #bins h2 {
+  margin-bottom: 10px;
+}
+
+#history table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  position: relative;
+}
+
+#history tr {
+  cursor: pointer;
+  background: #fff;
+}
+
+#history td {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  width: 15%;
+}
+
+#history a {
+  font-weight: normal;
+  text-decoration: none;
+  color: #000;
+  text-shadow: none;
+}
+
+#history .url {
+  text-align: right;
+  width: 15%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#history .url a {
+  color: #0097fe;
+}
+
+#history .url a span {
+  color: #000;
+  visibility: hidden;
+}
+
+#history tr.first .url span {
+  visibility: visible;
+}
+
+#history .created {
+  width: 25%;
+}
+
+#history .created a {
+  color: #ccc;
+}
+
+#history .title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 50%;
+}
+
+#history tr:hover *,
+#history tr.hover *,
+#history tr:hover span,
+#history tr.hover span {
+  background: #61C0FF;
+  color: #fff;
+  cursor: pointer;
+}
+
+#history tr.selected *,
+#history tr.selected span {
+  background: #0097fe;
+  color: #fff;
+  cursor: pointer;
+}
+
+#history #viewing {
+  font-size: 10px;
+  margin: 0 10px 10px 20px;
+}
+
+#history.archive_mode tr.spacer,
+#history tr.spacer {
+  height: 10px;
+  display: table-row;
+}
+
+#history tr.spacer:hover * {
+  background: #fff;
+  cursor: default;
+}
+
+/* Archive */
+
+/* By default, don't show archived rows */
+#history tr.archived {
+  display: none;
+}
+
+/* In archive mode, don't show rows by default */
+#history.archive_mode tr {
+  display: none;
+}
+
+/* Show archived rows when in archive mode */
+#history.archive_mode tr.archived {
+  display: table-row;
+}
+
+/* By default, hide the unarchive button */
+#history .unarchive {
+  display: none;
+}
+
+/* Show the unarchive button and hide the archive button in archive_mode */
+#history.archive_mode .unarchive {
+  display: inline;
+}
+
+#history.archive_mode .archive {
+  display: none;
+}
+
+/* The archive buttons */
+
+#history .archive_action {
+  text-align: right;
+  padding-right: 10px;
+  width: 100px;
+}
+
+#history .archive_action span {
+  visibility: hidden;
+}
+#history .archived .archive_action span {
+  visibility: visible;
+}
+
+#history .archive_action a {
+  padding-left: 10%;
+}
+#history .archive_action a,
+#history .archive_action span {
+  color: #ccc !important;
+}
+
+#history .archive_action a:hover,
+#history .archive_action a:hover span {
+  color: black !important;
+}
+
+#history .archive_action a:hover span {
+  visibility: visible;
+}
+
+/* public history */
+.public-listing .menu,
+.public-listing .archive_action {
+  display: none;
+}
+
+.public-listing body {
+  overflow: auto;
+}
+
+.public-listing #history {
+  position: relative;
+  top: 0;
+}
+
+.public-listing #history .preview {
+  top: 0;
+}
+
+/*@media (max-height: 770px) {*/
+.hideheader.ready #control {
+  border-bottom: 6px solid #AAA;
+  -webkit-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+     -moz-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+       -o-transition: top ease-out 200ms, border-bottom ease-out 200ms;
+          transition: top ease-out 200ms, border-bottom ease-out 200ms;
+  -webkit-transition-delay: 1s;
+     -moz-transition-delay: 1s;
+       -o-transition-delay: 1s;
+          transition-delay: 1s;
+  top: -35px;
+}
+
+.hideheader.ready #bin,
+.hideheader #history,
+.hideheader #history .preview {
+  top: 6px;
+}
+
+.hideheader #control:hover {
+  top: 0;
+  -webkit-transition: top ease-out 10ms;
+     -moz-transition: top ease-out 10ms;
+       -o-transition: top ease-out 10ms;
+          transition: top ease-out 10ms;
+  -webkit-transition-delay: 100ms;
+     -moz-transition-delay: 100ms;
+       -o-transition-delay: 100ms;
+          transition-delay: 100ms;
+}

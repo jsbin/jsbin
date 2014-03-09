@@ -22,11 +22,12 @@
     <div class="buttons">
       {{#if embed}}
         <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png"> <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png">
+          <h1>JS Bin</h1></a><a href="{{code_id_path}}/save" target="_blank" class="button save">Save</a>
         </span>
       {{else}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.png"> Bins</a>
+          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/jsbin_16.png"> Bins</a>
           <div class="dropdown" id="bins">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
@@ -35,7 +36,7 @@
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
               {{/feature}}
               {{#feature request "delete"}}
-              <a class="deletebin" data-desc="Delete bin" class="button group" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
@@ -45,11 +46,11 @@
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
-              <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" class="button group" href="#export-to-gist">Export as gist</a>
+              <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
-              <a data-desc="Use content from this bin when creating new bins" class="startingpoint" title="Set as starting code" class="button group" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+              <a data-desc="Use content from this bin when creating new bins" class="startingpoint button group" title="Set as starting code" href="{{root}}/save" data-label="save-as-template">Save as template</a>
               <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://learn.jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
+              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
             </div>
           </div>
         </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?
@@ -74,6 +75,7 @@
                     <li><label><input type="checkbox" data-panel="javascript">JS</label></li>
                     <li><label><input type="checkbox" data-panel="console">Console</label></li>
                     <li><label><input type="checkbox" data-panel="live">Output</label></li>
+                  </ul>
                 </div>
                 <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
                 <div data-desc="The url to this bin with the JS Bin editor">
@@ -83,7 +85,7 @@
                   <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
                 </div>
                 <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
-                  <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a></br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
+                  <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
                 </div>
                 <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
               </form>
@@ -111,7 +113,7 @@
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                        @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                       </span>
                     </div>
                     <div>
@@ -147,7 +149,7 @@
               {{#feature request "sslLogin"}}
                 <div class="menu">
                   {{#feature request "github"}}
-                  <a href="/login" class="button button-dropdown" id="loginbtn">Login or Register</a>
+                  <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
                   <div class="dropdown login" id="registerLogin">
                     <div class="dropdowncontent">
                       <a class="btn-github" href="/auth/github">
@@ -163,7 +165,7 @@
                     </div>
                   </div>
                   {{else}}
-                  <a href="/login" class="button button-dropdown" id="loginbtn">Login/Register</a>
+                  <a href="/login" class="button" id="loginbtn">Login or Register</a>
                   {{/feature}}
                 </div>
               {{else}}
@@ -206,7 +208,7 @@
                   </div>
                 </div>
               </div><div class="menu">
-                <a href="#register" class="button button-open" id="regbtn">Register</a>
+                <a href="#register" class="button button-open focusbtn" id="regbtn">Register</a>
                 <div class="dropdown dd-right" id="register">
                   <div class="dropdowncontent">
                     <p>Registration allows you to retrieve your saved files.</p>
@@ -243,7 +245,7 @@
 
         {{#if settings.[ui showblog]}}
         <div class="menu">
-          <a href="http://learn.jsbin.com/blog" class="button">Blog</a>
+          <a href="http://jsbin.com/blog" class="button">Blog</a>
         </div>
         {{/if}}
         <div class="menu">
@@ -253,7 +255,7 @@
               <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
               <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
               <hr data-desc="">
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://learn.jsbin.com/help">Help topics</a>
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
               <hr data-desc="">
               <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
               <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>

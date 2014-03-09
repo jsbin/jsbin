@@ -22,6 +22,7 @@ var sandbox = (function () {
     var iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
+    iframe.setAttribute('name', 'JS Bin Output ');
     iframe.id = sandbox.guid++;
     return iframe;
   };

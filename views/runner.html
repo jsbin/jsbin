@@ -21,13 +21,11 @@
 </style>
 
 <div id="sandbox-wrapper"></div>
-{{^settings.is_production}}
-  {{#scripts}}
-    <script src="{{static}}{{.}}"></script>
-  {{/scripts}}
-{{/settings.is_production}}
-
-{{#settings.is_production}}
+{{#if settings.is_production}}
   <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
   {{{analytics}}}
-{{/settings.is_production}}
+{{else}}
+  {{#scripts}}<script src="{{static}}{{.}}"></script>
+  {{/scripts}}
+{{/if}}
+

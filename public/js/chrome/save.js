@@ -113,6 +113,11 @@ function onSaveError(jqXHR, panelId) {
     // Hijack the tip label to show an error message.
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
+  } else if (jqXHR.status === 403) {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
+    });
   } else {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
@@ -204,7 +209,7 @@ if (!jsbin.saveDisabled) {
 
           $document.trigger('tip', {
             type: 'notification',
-            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
           });
         }
       });
@@ -326,7 +331,9 @@ function saveCode(method, ajax, ajaxCallback) {
             edit;
 
         $form.attr('action', data.url + '/save');
-        ajaxCallback && ajaxCallback(data);
+        if (ajaxCallback) {
+          ajaxCallback(data);
+        }
 
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
@@ -336,10 +343,10 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.revision = data.revision;
 
         // getURL(true) gets the jsbin without the root attached
-        $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
-        edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
-        $binGroup.find('td.url a span.first').removeClass('first');
-        $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
+        // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
+        // edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
+        // $binGroup.find('td.url a span.first').removeClass('first');
+        // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
         $document.trigger('saved');
 
@@ -351,9 +358,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: function (jqXHR) {
-        onSaveError(jqXHR);
-      },
+      error: onSaveError,
       complete: function () {
         saving.inprogress(false);
       }

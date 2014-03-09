@@ -23,6 +23,7 @@
       "collate": "utf8mb4_unicode_ci"
     }
   },
+  "session": {},
   "analytics": {
     "id": null,
     "render-id": null

@@ -120,15 +120,18 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   }
 });
 
-jsbin.getURL = function (withoutRoot, share) {
-  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
-      state = jsbin.state;
+jsbin.getURL = function (options) {
+  if (!options) { options = {}; }
+
+  var withoutRoot = options.withoutRoot;
+  var url = withoutRoot ? '' : jsbin.root;
+  var state = jsbin.state;
 
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision && !state.latest) { //} && state.revision !== 1) {
-      url += '/' + state.revision;
+    if (!state.latest || options.revision) { //} && state.revision !== 1) {
+      url += '/' + (state.revision || 1);
     }
   }
   return url;

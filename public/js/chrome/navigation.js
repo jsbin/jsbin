@@ -67,35 +67,40 @@ $('.homebtn').click(function (event, data) {
   return false;
 });
 
-var $lockrevision = $('.lockrevision').on('click', function (event) {
+var $lockrevision = $('a.lockrevision').on('click', function (event) {
   event.preventDefault();
-  if (!$lockrevision.data('lock')) {
+  saveChecksum = false;
+  $document.trigger('locked');
+}).on('mouseup', function () {
+  return false;
+});
+
+$document.on('locked', function () {
+  if (!$lockrevision.data('locked')) {
     analytics.lock();
     $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
     $lockrevision.html('<span>This bin is now locked from further changes</span>');
     $lockrevision.data('locked', true);
-    saveChecksum = false;
-    $document.trigger('locked');
   }
-  return false;
-}).on('mouseup', function () {
-  return false;
 });
+
+// var $lockrevision = $('.lockrevision').on('click', function (event) {
+// });
 
 $document.on('saved', function () {
   $lockrevision.removeClass('icon-lock').addClass('icon-unlocked').data('locked', false);
   $lockrevision.html('<span>Click to lock and prevent further changes</span>');
 });
 
+// TODO decide whether to remove this, since it definitely doesn't work!
 $('#share input[type=text], #share textarea').on('beforecopy', function (event) {
   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
 });
 
-var $panelCheckboxes = $('#sharepanels input').on('change click', updateSavedState);
+var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
+  updateSavedState();
+});
 $('#sharemenu').bind('open', function () {
-  // analytics.openShare();
-  // $lockrevision.removeClass('icon-unlock').addClass('icon-lock');
-
   $panelCheckboxes.attr('checked', false);
   jsbin.panels.getVisible().forEach(function (panel) {
     $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();

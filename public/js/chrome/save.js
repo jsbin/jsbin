@@ -47,8 +47,7 @@ $('a.save').click(function (event) {
 });
 
 var $shareLinks = $('#share .link');
-
-$panelCheckboxes = $('#sharemenu #sharepanels input');
+var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 function updateSavedState() {
   var mapping = {
@@ -58,12 +57,14 @@ function updateSavedState() {
     html: 'html',
     console: 'console'
   };
+
+  var withRevision = $('#sharebintype input:checked').val() === 'snapshot';
+
   var query = $panelCheckboxes.filter(':checked').map(function () {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
-    var path = this.getAttribute('data-path');
-    var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var url = jsbin.getURL({ revision: withRevision }) + this.getAttribute('data-path') + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     if (nodeName === 'A') {
       this.href = url;
@@ -82,12 +83,20 @@ function updateSavedState() {
   });
 }
 
-$('#sharemenu').bind('open', function () {
+$('#sharemenu').bind('open', updateSavedState);
+$('#sharebintype input[type=radio]').on('click', function () {
+  if (this.value === 'snapshot') {
+    jsbin.state.checksum = false;
+    saveChecksum = false;
+  }
   updateSavedState();
 });
 
 $document.on('saved', function () {
   updateSavedState();
+
+  $('#sharebintype input[type=radio][value="realtime"]').prop('checked', true);
+
   $shareLinks.closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
@@ -346,6 +355,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.latest = data.latest;
 
         // getURL(true) gets the jsbin without the root attached
         // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');

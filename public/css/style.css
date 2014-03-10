@@ -2825,7 +2825,7 @@ textarea,
   font-family: "Helvetica Neue", Helvetica, Arial;
   resize: none;
   font-size: 14px;
-  height: 32px;
+  height: 90px;
 }
 
 #sharemenu textarea:focus {
@@ -4294,8 +4294,12 @@ pre .highlight:last-of-type {
 }
 
 #share .inline input {
-  margin-left: 0;
+  margin-left: 1px;
   cursor: pointer !important;
+}
+
+#share .inline input[type=radio] {
+  
 }
 
 /** CodeMirror Themes **/

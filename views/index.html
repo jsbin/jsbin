@@ -67,11 +67,11 @@
             <div class="dropdowncontent">
               <form>
                 {{#feature request "revisionless"}}
-                <div data-desc="Streaming state of the bin when it's shared">
+                <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
                   <strong>Share</strong>
                   <ul class="inline">
-                    <li><label>Latest &amp; live <input type="radio" name="realtime" checked value="yes"></label></li>
-                    <li><label>Snapshot <input type="radio" name="realtime" class="lockrevision" value="no"></label></li>
+                    <li><label><input type="radio" name="realtime" checked value="realtime"> Latest</label></li>
+                    <li><label><input type="radio" name="realtime" class="lockrevision" value="snapshot"> Snapshot</label></li>
                 </div>
                 {{/feature}}
                 <div data-desc="This bin's full output without the JS Bin editor">

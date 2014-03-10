@@ -1,5 +1,5 @@
 {
-  "getBin": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision`=? LIMIT 1",
+  "getBin": "SELECT * FROM `sandbox` WHERE `url`=? AND `revision` BETWEEN ? AND ? + 1 ORDER BY `revision`",
   "getLatestBin": "SELECT * FROM `sandbox` WHERE `url`=? ORDER BY `revision` DESC LIMIT 1",
   "setBin": "INSERT INTO `sandbox` (`javascript`, `css`, `html`, `created`, `last_viewed`, `url`, `revision`, `streaming_key`, `settings`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   "setBinPanel": "UPDATE `sandbox` SET `:panel`=?, `settings`=?, `created`=? WHERE `url`=? AND `revision`=? AND `streaming_key`=? AND `streaming_key`!='' AND `active`='y'",

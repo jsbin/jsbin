@@ -127,7 +127,7 @@ jsbin.getURL = function (withoutRoot, share) {
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision) { //} && state.revision !== 1) {
+    if (state.revision && !state.latest) { //} && state.revision !== 1) {
       url += '/' + state.revision;
     }
   }

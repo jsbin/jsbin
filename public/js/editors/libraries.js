@@ -252,13 +252,13 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js',
-    'label': 'Angular 1.2.1 Stable',
+    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
+    'label': 'Angular 1.3.0 beta 1 Unstable',
     'group': 'Angular'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js',
-    'label': 'Angular 1.1.5 Unstable',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
+    'label': 'Angular 1.2.14 Stable',
     'group': 'Angular'
   },
   {

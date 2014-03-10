@@ -465,7 +465,11 @@ var libraries = [
 
 window.libraries = libraries; // expose a command line API
 
-libraries.userSpecified = JSON.parse(localStorage.getItem('libraries') || '[]');
+try {
+  libraries.userSpecified = JSON.parse(localStorage.getItem('libraries') || '[]');
+} catch ( e ) {
+  libraries.userSpecified = [];
+}
 for (var i = 0; i < libraries.userSpecified.length; i++) {
   libraries.push(libraries.userSpecified[i]);
 }

@@ -4,7 +4,11 @@
       $body = $('body');
       // blockiframe = $blocker.find('iframe')[0];
 
-  var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
+  try {
+    var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
+  } catch ( e) {
+    splitterSettings = [];
+  }
   return this.each(function () {
     var $el = $(this),
         $originalContainer = $(this),
@@ -129,7 +133,11 @@
         $handle.css(css);
         settings[type] = pos;
         splitterSettings[guid] = settings;
-        localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
+        try {
+          localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
+        } catch ( e ) {
+          
+        }
 
         // wait until animations have completed!
         if (moveSplitter.timer) clearTimeout(moveSplitter.timer);

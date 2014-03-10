@@ -32,7 +32,11 @@ panels.save = function () {
     state[panel.name] = left;
   }
 
-  sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
+  try {
+    sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
+  } catch ( e ) {
+    
+  }
 }
 
 panels.restore = function () {
@@ -43,7 +47,6 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = [],
-      state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
       hasContent = {
         javascript: editors.javascript.getCode().length,
         css: editors.css.getCode().length,
@@ -57,8 +60,14 @@ panels.restore = function () {
       openWithSameDimensions = false,
       width = $window.width(),
       deferredCodeInsert = '',
-      focused = !!sessionStorage.getItem('panel'),
       validPanels = 'live javascript html css console'.split(' ');
+  try {
+      var state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null');
+      var focused = !!sessionStorage.getItem('panel');
+  } catch ( e ) {
+      state = null;
+      focused = false;
+  }
 
   if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
     history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));

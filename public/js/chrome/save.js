@@ -89,7 +89,11 @@ $document.on('saved', function () {
   $('#clone').removeClass('hidden');
 });
 
-var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
+try {
+  var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
+} catch ( e ) {
+  saveChecksum = false;
+}
 
 // store it back on state
 jsbin.state.checksum = saveChecksum;
@@ -335,7 +339,11 @@ function saveCode(method, ajax, ajaxCallback) {
           ajaxCallback(data);
         }
 
-        sessionStorage.setItem('checksum', data.checksum);
+        try {
+          sessionStorage.setItem('checksum', data.checksum);
+        } catch ( e ) {
+
+        }
         saveChecksum = data.checksum;
 
         jsbin.state.checksum = saveChecksum;
@@ -353,7 +361,11 @@ function saveCode(method, ajax, ajaxCallback) {
         if (window.history && window.history.pushState) {
           // updateURL(edit);
           window.history.pushState(null, '', jsbin.getURL() + '/edit');
-          sessionStorage.setItem('url', jsbin.getURL());
+          try {
+            sessionStorage.setItem('url', jsbin.getURL());
+          } catch ( e ) {
+            
+          }
         } else {
           window.location.hash = data.edit;
         }

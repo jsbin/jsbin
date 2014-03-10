@@ -411,8 +411,12 @@ Panel.prototype = {
     if (this.settings.init) this.settings.init.call(this);
   },
   _setupEditor: function () {
-    var focusedPanel = sessionStorage.getItem('panel'),
-        panel = this,
+    try {
+      var focusedPanel = sessionStorage.getItem('panel');
+    } catch ( e ) {
+
+    }
+    var panel = this,
         editor = panel.editor;
 
     // overhang from CodeMirror1
@@ -548,16 +552,24 @@ Panel.prototype = {
 function populateEditor(editor, panel) {
   if (!editor.codeSet) {
     // populate - should eventually use: session, saved data, local storage
-    var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
-        saved = localStorage.getItem('saved-' + panel), // user template
-        sessionURL = sessionStorage.getItem('url'),
-        changed = false;
+    try {
+      var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
+          saved = localStorage.getItem('saved-' + panel), // user template
+          sessionURL = sessionStorage.getItem('url');
+    } catch ( e ) {
+
+    }
+    var changed = false;
 
     // if we clone the bin, there will be a checksum on the state object
     // which means we happily have write access to the bin
     if (sessionURL !== jsbin.getURL() && !jsbin.state.checksum) {
       // nuke the live saving checksum
-      sessionStorage.removeItem('checksum');
+      try {
+        sessionStorage.removeItem('checksum');
+      } catch ( e ) {
+        
+      }
       saveChecksum = false;
     }
 

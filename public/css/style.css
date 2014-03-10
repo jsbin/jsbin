@@ -707,6 +707,21 @@ body.preview #source select {
   height: 100%;
 }
 
+.ie7 .editbox {
+  left: 0;
+}
+.ie7 #console {
+  left: 0;
+}
+.ie7 #live .label {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.ie7 #live .label .name {
+  float: left;
+}
+
 #javascript {
   margin-top: 26px;
 }

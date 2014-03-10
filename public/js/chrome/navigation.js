@@ -419,7 +419,7 @@ $('#addmeta').click(function () {
 
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
-  analytics.delete();
+  analytics['delete']();
   $.ajax({
     type: 'post',
     url: jsbin.getURL() + '/delete',
@@ -435,7 +435,7 @@ $('a.deletebin').on('click', function (e) {
       if (xhr.status === 403) {
         $document.trigger('tip', {
           content: 'You don\'t own this bin, so you can\'t delete it.',
-          autohide: 5000,
+          autohide: 5000
         });
       }
     }

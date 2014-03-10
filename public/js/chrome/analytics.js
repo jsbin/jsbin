@@ -26,7 +26,7 @@ var analytics = {
   clone: function () {
     analytics.track('bin', 'clone', window.location.pathname);
   },
-  delete: function () {
+  'delete': function () {
     analytics.track('bin', 'delete', window.location.pathname);
   },
   lock: function () {

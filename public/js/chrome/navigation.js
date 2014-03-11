@@ -247,7 +247,8 @@ $('.code.panel > .label > span.name').dblclick(function () {
   });
 });
 
-$('#createnew').click(function () {
+$('#createnew').click(function (event) {
+  event.preventDefault();
   var i, key;
   analytics.createNew();
   // FIXME this is out and out [cr]lazy....
@@ -257,6 +258,11 @@ $('#createnew').click(function () {
     if (key.indexOf('jsbin.content.') === 0) {
       sessionStorage.removeItem(key);
     }
+  }
+
+  if (jsbin.collaborating && TogetherJS) {
+    // this ends the session (but can also start it, so we check jsbin.collaborating)
+    TogetherJS();
   }
 
   // clear out the write checksum too
@@ -273,6 +279,7 @@ $('#createnew').click(function () {
       jsbin.panels.panels.html.show();
       jsbin.panels.panels.live.show();
     }
+    window.location = jsbin.root;
   }, 0);
 });
 

@@ -4,7 +4,8 @@ try {
   var console = {
     log: function () {
       // alert([].slice.call(arguments).join('\n'));
-    }
+    },
+    warn: function () {}
   };
 }
 

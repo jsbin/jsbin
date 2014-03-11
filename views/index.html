@@ -41,6 +41,9 @@
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
+              {{#feature request "togetherjs"}}
+              <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration" id="togetherjs-jsbin-button">Start Collaboration</a>
+              {{/feature}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
@@ -91,9 +94,7 @@
               </form>
             </div>
           </div>
-        </div>{{#feature request "togetherjs"}}<div class="menu">
-          <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration">Collaboration</a>
-        </div>{{/feature}}<!-- intentional space -->
+        </div><!-- intentional space -->
         <div id="start-saving" class="menu">
           <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
         </div>

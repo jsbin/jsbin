@@ -11,9 +11,11 @@
 
   TogetherJSConfig_getUserName = function () { return name; };
   TogetherJSConfig_getUserAvatar = function () { return avatar; };
-  // TogetherJSConfig_on_ready = function() {
-  //   console.log('togetherjs ready');
-  // };
+  TogetherJSConfig_on_ready = function() {
+    // console.log('togetherjs ready');
+    var $b = $('#togetherjs-jsbin-button');
+    $b.html( $b.attr('data-end-togetherjs-html') );
+  };
   TogetherJSConfig_on_close = function () {
     console.log('togetherjs close');
     window.location.reload();

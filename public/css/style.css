@@ -3699,18 +3699,18 @@ left: 50%;
   padding-right: 20px;
 }
 
-#history .url a {
+#history .url .snapshot {
   color: #0097fe;
 }
 
 #history .url a span {
   color: #000;
-  visibility: hidden;
+  /*visibility: hidden;*/
 }
 
-#history tr.first .url span {
-  visibility: visible;
-}
+/*#history .url a span.first {*/
+  /*visibility: visible;*/
+/*}*/
 
 #history .created {
   width: 25%;
@@ -3730,7 +3730,9 @@ left: 50%;
 #history tr:hover *,
 #history tr.hover *,
 #history tr:hover span,
-#history tr.hover span {
+#history tr.hover span,
+#history tr:hover .url .snapshot,
+#history tr.hover .url .snapshot {
   background: #61C0FF;
   color: #fff;
   cursor: pointer;
@@ -4299,7 +4301,7 @@ pre .highlight:last-of-type {
 }
 
 #share .inline input[type=radio] {
-  
+
 }
 
 /** CodeMirror Themes **/
@@ -4677,6 +4679,29 @@ html * {
   border-right: 1px solid #CCC;
 }
 
+.snapshot1 .url a span:before {
+  content: 'snapshot# ';
+}
+
+tbody:hover .snapshot1 .url a span:before {
+  content: '';
+}
+
+tbody:hover tr:hover.snapshot .url a span:before {
+  content: 'snapshot# ';
+}
+
+.snapshot td {
+  opacity: 0.3;
+}
+
+.snapshot td.url {
+  opacity: 0.5;
+}
+
+.snapshot:hover td {
+  opacity: 1;
+}
 .btn-login {
   color: #AAA;
 }

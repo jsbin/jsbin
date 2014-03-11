@@ -9,10 +9,14 @@
     {{#bins}}
     <tbody>
       {{#.}}
-      <tr class="{{#if archive}}archived{{/if}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
+      <tr class="{{#if archive}}archived{{/if}} {{#unless is_first}}snapshot snapshot{{@index}}{{/unless}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
         <td class="url">
           <a href="{{edit_url}}">
-            <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
+            {{#if is_first}}
+            <span class="first">{{code}}</span>
+            {{else}}
+            <span class="snapshot">{{revision}}</span>
+            {{/if}}
           </a>
         </td>
         <td class="last_updated">

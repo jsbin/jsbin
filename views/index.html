@@ -41,6 +41,9 @@
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
+              {{#feature request "togetherjs"}}
+              <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration" id="togetherjs-jsbin-button">Start Collaboration</a>
+              {{/feature}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
@@ -535,6 +538,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
+{{#feature request "togetherjs"}}
+<script src="{{static}}/js/chrome/togetherjs.js"></script>
+<script src="https://togetherjs.com/togetherjs-min.js"></script>
+{{/feature}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}

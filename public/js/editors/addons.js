@@ -8,6 +8,12 @@
         cm.setOption('autoCloseBrackets', true);
       }
     },
+    highlight: {
+      url: '/js/vendor/codemirror3/addon/search/match-highlighter.js',
+      done: function (cm) {
+        cm.setOption('highlightSelectionMatches', true);
+      }
+    },
     vim: {
       url: '/js/vendor/codemirror3/keymap/vim.js',
       done: function (cm) {
@@ -31,7 +37,11 @@
     }
 
     if (url.slice(-3) === '.js') {
-      return $.getScript(url);
+      return $.ajax({
+        url: url + '?' + jsbin.version, // manual cache busting
+        dataType: 'script',
+        cache: true
+      });
     } else if (url.slice(-4) === '.css') {
       $body.append('<link href="' + url + '">');
       var d = $.Deferred();

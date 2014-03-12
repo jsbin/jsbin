@@ -137,7 +137,6 @@ var Panel = function (name, settings) {
       mode: editorModes[panelLanguage],
       lineWrapping: true,
       styleActiveLine: true,
-      highlightSelectionMatches: true,
       theme: jsbin.settings.theme || 'jsbin'
     };
 

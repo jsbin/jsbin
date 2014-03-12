@@ -22,6 +22,10 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
       $(document).trigger('codeChange', { panelId: el.id });
     }, 200));
 
+    $(this.textarea).keyup(throttle(function () {
+      $(document).trigger('codeChange', { panelId: el.id });
+    }, 200));
+
     options.initCallback && $(options.initCallback);
   };
 

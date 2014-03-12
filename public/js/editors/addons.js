@@ -7,6 +7,13 @@
       done: function (cm) {
         cm.setOption('autoCloseBrackets', true);
       }
+    },
+    vim: {
+      url: '/js/vendor/codemirror3/keymap/vim.js',
+      done: function (cm) {
+        cm.setOption('vimMode', true);
+        cm.setOption('showCursorWhenSelecting', true);
+      }
     }
   };
 

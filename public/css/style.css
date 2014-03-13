@@ -3640,7 +3640,15 @@ THE SOFTWARE.
 .focus .CodeMirror-activeline .CodeMirror-linenumber,
 .focus .CodeMirror-activeline-background {
   background: #e8f2ff !important;
+}
+
+.code-fold .focus .CodeMirror-activeline .CodeMirror-linenumber,
+.code-fold .focus .CodeMirror-activeline-background {
   border-right: 0.89rem solid #E8F2FF;
+}
+
+.code-fold .CodeMirror pre {
+  padding: 0;
 }
 
 .CodeMirror-focused .cm-matchhighlight {

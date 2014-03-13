@@ -47,6 +47,7 @@
         '/js/vendor/codemirror3/addon/fold/comment-fold.js'
       ],
       done: function (cm) {
+        $body.addClass('code-fold');
         cm.setOption('extraKeys', {'Ctrl-Q': function (cm) {
           cm.foldCode(cm.getCursor());
         }});

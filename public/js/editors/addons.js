@@ -1,6 +1,21 @@
 (function () {
   'use strict';
   /*globals $, jsbin*/
+
+  var defaults = {
+    closebrackets: true,
+    highlight: false,
+    vim: false,
+    emacs: false,
+    trailingspace: false,
+    fold: false
+  };
+
+  if (!jsbin.settings.addons) {
+    jsbin.settings.addons = defaults;
+  }
+
+
   var addons = {
     closebrackets: {
       url: '/js/vendor/codemirror3/addon/edit/closebrackets.js',
@@ -104,7 +119,7 @@
     }
   }
 
-  Object.keys(jsbin.settings.addons || {}).forEach(function (key) {
+  Object.keys(jsbin.settings.addons).forEach(function (key) {
     var addon = addons[key];
     if (addon && jsbin.settings.addons[key]) {
       if (typeof addon.url === 'string') {

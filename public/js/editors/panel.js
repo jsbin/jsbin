@@ -45,11 +45,11 @@ CodeMirror.commands.snippets = function (cm) {
   return CodeMirror.snippets(cm);
 };
 
-var foldFunc = {
-  css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
-};
+// var foldFunc = {
+//   css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+//   javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+//   html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
+// };
 
 // this is a bit of a fudge to get multiline commenting working
 // for JavaScript. It's a fudge because emmet doesn't support
@@ -144,7 +144,6 @@ var Panel = function (name, settings) {
       mode: editorModes[panelLanguage],
       lineWrapping: true,
       styleActiveLine: true,
-      highlightSelectionMatches: true,
       theme: jsbin.settings.theme || 'jsbin'
     };
 
@@ -152,9 +151,9 @@ var Panel = function (name, settings) {
 
     cmSettings.extraKeys = {};
 
-    cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
-      foldFunc[name](cm, cm.getCursor().line);
-    };
+    // cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
+    //   foldFunc[name](cm, cm.getCursor().line);
+    // };
 
     // only the js panel for now, I'd like this to work in
     // the HTML panel too, but only when you were in JS scope
@@ -181,7 +180,7 @@ var Panel = function (name, settings) {
       $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       return true;
     });
-    panel.editor.on('gutterClick', foldFunc[name]);
+    // panel.editor.on('gutterClick', foldFunc[name]);
     panel.editor.on('focus', function () {
       panel.focus();
     });

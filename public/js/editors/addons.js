@@ -15,10 +15,28 @@
       }
     },
     vim: {
-      url: '/js/vendor/codemirror3/keymap/vim.js',
+      url: [
+        '/js/vendor/codemirror3/addon/dialog/dialog.css',
+        '/js/vendor/codemirror3/keymap/vim.js',
+        '/js/vendor/codemirror3/addon/dialog/dialog.js',
+        '/js/vendor/codemirror3/addon/search/searchcursor.js'
+      ],
       done: function (cm) {
         cm.setOption('vimMode', true);
         cm.setOption('showCursorWhenSelecting', true);
+      }
+    },
+    emacs: {
+      url: [
+        '/js/vendor/codemirror3/keymap/emacs.js',
+        '/js/vendor/codemirror3/addon/edit/matchbrackets.js',
+        '/js/vendor/codemirror3/addon/comment/comment.js',
+        '/js/vendor/codemirror3/addon/dialog/dialog.js',
+        '/js/vendor/codemirror3/addon/search/searchcursor.js',
+        '/js/vendor/codemirror3/addon/search/search.js'
+      ],
+      done: function (cm) {
+        cm.setOption('keyMap', 'emacs');
       }
     },
     matchtags: {
@@ -79,7 +97,7 @@
     } else if (url.slice(-4) === '.css') {
       var d = $.Deferred();
       setTimeout(function () {
-        $body.append('<link rel="stylesheet" href="' + url + '">');
+        $body.append('<link rel="stylesheet" href="' + url + '?' + jsbin.version + '">');
         d.resolve();
       }, 0);
       return d;
@@ -93,6 +111,7 @@
         addon.url = [addon.url];
       }
 
+      // dirty jQuery way of doing .done on an array of promises
       $.when.call($, addon.url.map(load)).done(function () {
         if (addon.done) {
           // WHHHHHYYYY?? because for some reason, CodeMirror hasn't attached

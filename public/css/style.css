@@ -3648,7 +3648,7 @@ THE SOFTWARE.
 }
 
 .code-fold .CodeMirror pre {
-  padding: 0;
+  padding: 0 0.2em;
 }
 
 .CodeMirror-focused .cm-matchhighlight {

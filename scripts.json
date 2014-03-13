@@ -15,7 +15,6 @@
     "/js/vendor/codemirror3/addon/search/searchcursor.js",
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror3/addon/edit/matchbrackets.js",
-
     "/js/vendor/codemirror3/addon/selection/active-line.js",
     "/js/vendor/codemirror3/addon/search/searchcursor.js",
     "/js/vendor/codemirror3/addon/comment/comment.js",

@@ -1,4 +1,4 @@
-// jsbin.settings.editor.tern = true
+// jsbin.settings.addons.tern = true
 var ternServer;
 var ternLoaded = {};
 
@@ -66,7 +66,7 @@ var loadTern = function(editor) {
 };
 
 var searchTernDefinition = function(htmlCode) {
-  if (jsbin.settings.editor.tern === true) {
+  if (jsbin.settings.addons.tern === true) {
     for (var i = 0; i < ternDefinitions.length; i++) {
       if (ternDefinitions[i].match.test(htmlCode)) {
         if (ternDefinitions[i].type === 'def') {
@@ -92,7 +92,7 @@ CodeMirror.commands.autocomplete = function(cm) {
     else {
       indent = new Array(cm.options.indentUnit + 1).join(' ');
     }
-    if (jsbin.settings.editor.tern === true) {
+    if (jsbin.settings.addons.tern === true) {
       if (tok.string === ';') {
         return cm.replaceRange(indent, pos);
       }
@@ -107,7 +107,7 @@ CodeMirror.commands.autocomplete = function(cm) {
   }
 };
 
-if (jsbin.settings.editor.tern === true) {
+if (jsbin.settings.addons.tern === true) {
   loadTern(editors.javascript.editor);
   searchTernDefinition(template.html);
 

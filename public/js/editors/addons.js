@@ -166,44 +166,51 @@
 
   var options = Object.keys(jsbin.settings.addons);
 
-  if (Object.defineProperty && jsbin.settings) {
-    options.forEach(function (addon) {
-      try {
-        var value = jsbin.settings.addons[addon];
+  /**
+   * This was a good idea at the time, but then it does weird things in
+   * production. I don't know why, so I've commented it out, and left it
+   * here because it was kinda awesome at the time. For now, it'll be
+   * compressed out of sight.
+   */
 
-        Object.defineProperty(jsbin.settings.addons, addon, {
-          configurable: true,
-          enumerable: true,
-          get: function () {
-            return value;
-          },
-          set: function (newValue) {
-            value = newValue;
-            if (value) {
-              loadAddon(addon);
-            } else {
-              var fn = addons[addon].done.toString();
-              var opts = [];
-              fn.replace(/setOption\(cm, (.*),.*;/g, function (all, opt) {
-                opts.push(opt.replace(/['"]/g, ''));
-              });
+  // if (Object.defineProperty && jsbin.settings) {
+  //   options.forEach(function (addon) {
+  //     try {
+  //       var value = jsbin.settings.addons[addon];
 
-              jsbin.panels.allEditors(function (panel) {
-                if (panel.editor) {
-                  opts.forEach(function (opt) {
-                    panel.editor.setOption(opt, false);
-                  });
-                }
-              });
+  //       Object.defineProperty(jsbin.settings.addons, addon, {
+  //         configurable: true,
+  //         enumerable: true,
+  //         get: function () {
+  //           return value;
+  //         },
+  //         set: function (newValue) {
+  //           value = newValue;
+  //           if (value) {
+  //             loadAddon(addon);
+  //           } else {
+  //             var fn = addons[addon].done.toString();
+  //             var opts = [];
+  //             fn.replace(/setOption\(cm, (.*),.*;/g, function (all, opt) {
+  //               opts.push(opt.replace(/['"]/g, ''));
+  //             });
 
-            }
-          }
-        });
-      } catch (e) {
-        // IE8 seems to attempt the code above, but it totally fails
-      }
-    });
-  }
+  //             jsbin.panels.allEditors(function (panel) {
+  //               if (panel.editor) {
+  //                 opts.forEach(function (opt) {
+  //                   panel.editor.setOption(opt, false);
+  //                 });
+  //               }
+  //             });
+
+  //           }
+  //         }
+  //       });
+  //     } catch (e) {
+  //       // IE8 seems to attempt the code above, but it totally fails
+  //     }
+  //   });
+  // }
 
   function loadAddon(key) {
     var addon = addons[key];

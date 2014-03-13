@@ -137,7 +137,7 @@
                 addon.done(panel.editor);
               }
             });
-          }, 0);
+          }, 100);
         }
       });
     }

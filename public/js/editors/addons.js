@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*globals $, jsbin*/
+  /*globals $, jsbin, CodeMirror*/
 
   var defaults = {
     closebrackets: true,
@@ -15,18 +15,19 @@
     jsbin.settings.addons = defaults;
   }
 
-
   var addons = {
     closebrackets: {
       url: '/js/vendor/codemirror3/addon/edit/closebrackets.js',
+      test: defaultTest('autoCloseBrackets'),
       done: function (cm) {
-        cm.setOption('autoCloseBrackets', true);
+        setOption(cm, 'autoCloseBrackets', true);
       }
     },
     highlight: {
       url: '/js/vendor/codemirror3/addon/search/match-highlighter.js',
+      test: defaultTest('highlightSelectionMatches'),
       done: function (cm) {
-        cm.setOption('highlightSelectionMatches', true);
+        setOption(cm, 'highlightSelectionMatches', true);
       }
     },
     vim: {
@@ -36,9 +37,10 @@
         '/js/vendor/codemirror3/addon/dialog/dialog.js',
         '/js/vendor/codemirror3/addon/search/searchcursor.js'
       ],
+      test: defaultTest('vimMode'),
       done: function (cm) {
-        cm.setOption('vimMode', true);
-        cm.setOption('showCursorWhenSelecting', true);
+        setOption(cm, 'vimMode', true);
+        setOption(cm, 'showCursorWhenSelecting', true);
       }
     },
     emacs: {
@@ -50,8 +52,16 @@
         '/js/vendor/codemirror3/addon/search/searchcursor.js',
         '/js/vendor/codemirror3/addon/search/search.js'
       ],
+      test: function () {
+        return CodeMirror.prototype.getSearchCursor &&
+               CodeMirror.optionHandlers.matchBrackets &&
+               CodeMirror.optionHandlers.openDialog &&
+               CodeMirror.commands.find &&
+               CodeMirror.optionHandlers.lineComment &&
+               CodeMirror.keyMap.emacs;
+      },
       done: function (cm) {
-        cm.setOption('keyMap', 'emacs');
+        setOption(cm, 'keyMap', 'emacs');
       }
     },
     matchtags: {
@@ -59,15 +69,20 @@
         '/js/vendor/codemirror3/addon/fold/xml-fold.js',
         '/js/vendor/codemirror3/addon/edit/matchtags.js'
       ],
+      test: function () {
+        return CodeMirror.scanForClosingTag &&
+               CodeMirror.optionHandlers.matchTags;
+      },
       done: function (cm) {
-        cm.setOption('matchTags', { bothTags: true });
-        cm.setOption('extraKeys', {'Ctrl-J': 'toMatchingTag' });
+        setOption(cm, 'matchTags', { bothTags: true });
+        setOption(cm, 'extraKeys', {'Ctrl-J': 'toMatchingTag' });
       }
     },
     trailingspace: {
       url: '/js/vendor/codemirror3/addon/edit/trailingspace.js',
+      test: defaultTest('showTrailingSpace'),
       done: function (cm) {
-        cm.setOption('showTrailingSpace', true);
+        setOption(cm, 'showTrailingSpace', true);
       }
     },
     fold: {
@@ -79,22 +94,24 @@
         '/js/vendor/codemirror3/addon/fold/xml-fold.js',
         '/js/vendor/codemirror3/addon/fold/comment-fold.js'
       ],
+      test: function () {
+        return CodeMirror.helpers.fold &&
+               CodeMirror.optionHandlers.foldGutter &&
+               CodeMirror.optionHandlers.gutters;
+      },
       done: function (cm) {
         $body.addClass('code-fold');
-        cm.setOption('extraKeys', {'Ctrl-Q': function (cm) {
+        setOption(cm, 'extraKeys', {'Ctrl-Q': function (cm) {
           cm.foldCode(cm.getCursor());
         }});
-        cm.setOption('foldGutter', true);
-        cm.setOption('gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
+        setOption(cm, 'foldGutter', true);
+        setOption(cm, 'gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
       }
     }
   };
 
   // begin loading user addons
 
-  /**
-   * TODO convert to RSVP
-   */
 
   var $body = $('body');
 
@@ -119,7 +136,76 @@
     }
   }
 
-  Object.keys(jsbin.settings.addons).forEach(function (key) {
+  function ready(test) {
+    var d = $.Deferred();
+    var timer = null;
+
+    if (test()) {
+      d.resolve();
+    } else {
+      timer = setInterval(function () {
+        if (test()) {
+          clearInterval(timer);
+          d.resolve();
+        }
+      }, 100);
+    }
+
+    return d;
+  }
+
+  function setOption(cm, option, value) {
+    cm.setOption(option, value);
+  }
+
+  function defaultTest(prop) {
+    return function () {
+      return CodeMirror.optionHandlers[prop] !== undefined;
+    };
+  }
+
+  var options = Object.keys(jsbin.settings.addons);
+
+  if (Object.defineProperty && jsbin.settings) {
+    options.forEach(function (addon) {
+      try {
+        var value = jsbin.settings.addons[addon];
+
+        Object.defineProperty(jsbin.settings.addons, addon, {
+          configurable: true,
+          enumerable: true,
+          get: function () {
+            return value;
+          },
+          set: function (newValue) {
+            value = newValue;
+            if (value) {
+              loadAddon(addon);
+            } else {
+              var fn = addons[addon].done.toString();
+              var opts = [];
+              fn.replace(/setOption\(cm, (.*),.*;/g, function (all, opt) {
+                opts.push(opt.replace(/['"]/g, ''));
+              });
+
+              jsbin.panels.allEditors(function (panel) {
+                if (panel.editor) {
+                  opts.forEach(function (opt) {
+                    panel.editor.setOption(opt, false);
+                  });
+                }
+              });
+
+            }
+          }
+        });
+      } catch (e) {
+        // IE8 seems to attempt the code above, but it totally fails
+      }
+    });
+  }
+
+  function loadAddon(key) {
     var addon = addons[key];
     if (addon && jsbin.settings.addons[key]) {
       if (typeof addon.url === 'string') {
@@ -129,18 +215,18 @@
       // dirty jQuery way of doing .done on an array of promises
       $.when.call($, addon.url.map(load)).done(function () {
         if (addon.done) {
-          // WHHHHHYYYY?? because for some reason, CodeMirror hasn't attached
-          // the option yet, so we wait for a tick, and then it's there.
-          setTimeout(function () {
+          ready(addon.test).then(function () {
             jsbin.panels.allEditors(function (panel) {
               if (panel.editor) {
                 addon.done(panel.editor);
               }
             });
-          }, 100);
+          });
         }
       });
     }
-  });
+  }
+
+  options.forEach(loadAddon);
 
 })();

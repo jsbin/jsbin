@@ -73,7 +73,7 @@ panels.restore = function () {
     // the panel name of 'output' and the shortcut 'live'.
     // it also strips out prop=value& to avoid bashing the
     // panel name
-    
+
     toopen = decodeURIComponent(search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
 
     if (toopen.indexOf('output') !== -1) {
@@ -92,11 +92,15 @@ panels.restore = function () {
     }
   }
 
+  if (state !== null) {
+    toopen = Object.keys(state);
+  }
+
   if (toopen.length === 0) {
     toopen = jsbin.settings.panels || [];
   }
 
-  if (toopen.length === 0 && state === null) {
+  if (toopen.length === 0 && state === null && Object.keys(state).length === 0) {
     if (hasContent.javascript) toopen.push('javascript');
     if (hasContent.html) toopen.push('html');
     if (hasContent.css) toopen.push('css');

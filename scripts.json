@@ -16,7 +16,7 @@
     "/js/vendor/cm_addons/simple-hint.js",
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror3/addon/edit/matchbrackets.js",
-    "/js/vendor/codemirror3/addon/fold/foldcode.js",
+
     "/js/vendor/codemirror3/addon/selection/active-line.js",
     "/js/vendor/codemirror3/addon/search/searchcursor.js",
     "/js/editors/snippets.cm.js",
@@ -39,6 +39,7 @@
     "/js/editors/editors.js",
     "/js/editors/libraries.js",
     "/js/editors/library.js",
+    "/js/editors/addons.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/esc.js",
     "/js/chrome/issue.js",

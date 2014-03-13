@@ -99,8 +99,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/dist/css/bootstrap.css',
-      'http://getbootstrap.com/dist/js/bootstrap.js'
+      'http://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css',
+      'http://netdna.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'

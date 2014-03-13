@@ -20,6 +20,39 @@
         cm.setOption('vimMode', true);
         cm.setOption('showCursorWhenSelecting', true);
       }
+    },
+    matchtags: {
+      url: [
+        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror3/addon/edit/matchtags.js'
+      ],
+      done: function (cm) {
+        cm.setOption('matchTags', { bothTags: true });
+        cm.setOption('extraKeys', {'Ctrl-J': 'toMatchingTag' });
+      }
+    },
+    trailingspace: {
+      url: '/js/vendor/codemirror3/addon/edit/trailingspace.js',
+      done: function (cm) {
+        cm.setOption('showTrailingSpace', true);
+      }
+    },
+    fold: {
+      url: [
+        '/js/vendor/codemirror3/addon/fold/foldgutter.css',
+        '/js/vendor/codemirror3/addon/fold/foldcode.js',
+        '/js/vendor/codemirror3/addon/fold/foldgutter.js',
+        '/js/vendor/codemirror3/addon/fold/brace-fold.js',
+        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror3/addon/fold/comment-fold.js'
+      ],
+      done: function (cm) {
+        cm.setOption('extraKeys', {'Ctrl-Q': function (cm) {
+          cm.foldCode(cm.getCursor());
+        }});
+        cm.setOption('foldGutter', true);
+        cm.setOption('gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
+      }
     }
   };
 
@@ -43,9 +76,9 @@
         cache: true
       });
     } else if (url.slice(-4) === '.css') {
-      $body.append('<link href="' + url + '">');
       var d = $.Deferred();
       setTimeout(function () {
+        $body.append('<link rel="stylesheet" href="' + url + '">');
         d.resolve();
       }, 0);
       return d;

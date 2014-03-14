@@ -64,16 +64,44 @@
         </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
           <a href="#share" class="button button-dropdown group">Share</a>
           <div class="dropdown" id="share">
-            <div class="dropdowncontent">
+            <div class="dropdowncontent{{#feature request "revisionless"}} share-split{{/feature}}">
               <form>
                 {{#feature request "revisionless"}}
-                <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
-                  <strong>Bin state</strong>
-                  <ul class="inline">
-                    <li><label><input type="radio" name="realtime" checked value="realtime"> Latest</label></li>
-                    <li><label><input type="radio" name="realtime" class="lockrevision" value="snapshot"> Snapshot</label></li>
+                <div class="controls">
+                  <strong>State</strong>
+                  <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
+                    <ul>
+                      <li><label><input type="radio" name="state" checked value="realtime"> Latest &amp; live</label></li>
+                      <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot</label></li>
+                    </ul>
+                  </div>
+                  <div id="sharepanels">
+                    <strong>View</strong>
+                    <label><input checked type="radio" name="view" value="editor"> Show panels</label>
+                    <ul>
+                      <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
+                      <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="javascript">JS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="console">Console</label></li>
+                      <li><label><input name="panel" type="checkbox" value="live">Output</label></li>
+                    </ul>
+                  </div>
+                  <label><input type="radio" name="view" value="output"> Output only<br><small>(toolbar hidden)</small></label>
                 </div>
-                {{/feature}}
+                <div class="result">
+                  <div data-desc="This bin's full output without the JS Bin editor">
+                    <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Link</a></strong><br>
+                    <input name="url" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                  </div>
+                  <div data-desc="Embed this bin with the live output on your site">
+                    <span class="heading">Embed</span><br><textarea id="embedfield" name="embed" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                  </div>
+                  <div data-desc="The preview of JS Bin when you share your bin">
+                    <span class="heading">What they'll see</span><br>
+                    <img src="http://placehold.it/200x113">
+                  </div>
+                </div>
+                {{else}}
                 <div data-desc="This bin's full output without the JS Bin editor">
                   <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
                 </div>
@@ -95,11 +123,10 @@
                 <div data-desc="Embed this bin with the live output on your site">
                   <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
                 </div>
-                {{^feature request "revisionless"}}
-                  <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
-                    <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
-                  </div>
-                  <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div>
+                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
+                  <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
+                </div>
+                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div>
                 {{/feature}}
                 </div>
               </form>

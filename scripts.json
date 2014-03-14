@@ -38,6 +38,7 @@
     "/js/editors/library.js",
     "/js/editors/addons.js",
     "/js/render/saved-history-preview.js",
+    "/js/chrome/share.js",
     "/js/chrome/esc.js",
     "/js/chrome/issue.js",
     "/js/chrome/download.js",

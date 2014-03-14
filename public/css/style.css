@@ -2823,13 +2823,13 @@ textarea,
 
 #sharemenu textarea {
   font-family: "Helvetica Neue", Helvetica, Arial;
-  resize: none;
+  /* resize: none; */
   font-size: 14px;
-  height: 90px;
+  /* height: 90px; */
 }
 
 #sharemenu textarea:focus {
-  height: 90px;
+  /* height: 90px; */
 }
 
 input {
@@ -4142,7 +4142,7 @@ pre .highlight:last-of-type {
   padding: 6px 6px !important;
 }
 
-#share input {
+#share input[type=text] {
   font-size: 14px;
   line-height: 20px;
   cursor: text;
@@ -4702,7 +4702,81 @@ tbody:hover tr:hover.snapshot .url a span:before {
 .snapshot:hover td {
   opacity: 1;
 }
-.btn-login {
+
+/** share menu **/
+
+.share-split {
+  min-width: 380px;
+}
+
+.share-split .controls,
+.share-split .result {
+  min-width: 180px;
+}
+
+.share-split .controls {
+  float: left;
+  overflow: hidden;
+}
+
+.share-split .result {
+  margin-left: 180px;
+}
+
+.share-split ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px
+}
+
+#sharepanels {
+  margin-right: 20px;
+}
+
+#sharepanels ul {
+  padding-left: 20px;
+}
+
+.share-split ul {
+  margin-top: 0;
+}
+
+#sharemenu .share-split textarea {
+  min-height: 50px;
+  max-width: 190px;
+}
+
+.share-split .result {
+  width: 200px;
+}
+
+.share-split form div:first-child,
+.share-split form > div {
+  padding-top: 0;
+}
+
+.share-split .heading {
+  font-weight: bold;
+}
+
+.share-split label small {
+  display: block;
+  margin-top: -2px;
+  margin-left: 25px;
+}
+
+#share .share-split a.link {
+  text-decoration: underline;
+}
+
+.share-split a.link:after {
+/*   content: " ¶"; */
+  color: #ccc;
+}
+
+.share-split a.link:hover:after {
+  color: #000;
+}.btn-login {
   color: #AAA;
 }
 

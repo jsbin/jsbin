@@ -49,7 +49,13 @@ $('a.save').click(function (event) {
 var $shareLinks = $('#share .link');
 var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
+var split = $('#sharemenu').find('.share-split').length;
+
 function updateSavedState() {
+  if (split) {
+    return;
+  }
+
   var mapping = {
     live: 'output',
     javascript: 'js',

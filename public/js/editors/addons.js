@@ -75,7 +75,7 @@
       },
       done: function (cm) {
         setOption(cm, 'matchTags', { bothTags: true });
-        setOption(cm, 'extraKeys', {'Ctrl-J': 'toMatchingTag' });
+        cm.addKeyMap({'Ctrl-J': 'toMatchingTag' });
       }
     },
     trailingspace: {
@@ -101,7 +101,7 @@
       },
       done: function (cm) {
         $body.addClass('code-fold');
-        setOption(cm, 'extraKeys', {'Ctrl-Q': function (cm) {
+        cm.addKeyMap({'Ctrl-Q': function (cm) {
           cm.foldCode(cm.getCursor());
         }});
         setOption(cm, 'foldGutter', true);

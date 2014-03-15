@@ -81,18 +81,18 @@ var searchTernDefinition = function(htmlCode) {
 };
 
 // Overwrite the autocomplete function to use tern
-CodeMirror.commands.autocomplete = function(cm) {
-  if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    var pos = cm.getCursor();
-    var tok = cm.getTokenAt(pos);
-    var indent = '';
-    if (cm.options.indentWithTabs) {
-      indent = '\t';
-    }
-    else {
-      indent = new Array(cm.options.indentUnit + 1).join(' ');
-    }
-    if (jsbin.settings.addons.tern === true) {
+if (jsbin.settings.addons.tern === true) {
+  CodeMirror.commands.autocomplete = function(cm) {
+    if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
+      var pos = cm.getCursor();
+      var tok = cm.getTokenAt(pos);
+      var indent = '';
+      if (cm.options.indentWithTabs) {
+        indent = '\t';
+      }
+      else {
+        indent = new Array(cm.options.indentUnit + 1).join(' ');
+      }
       if (tok.string === ';') {
         return cm.replaceRange(indent, pos);
       }
@@ -101,11 +101,12 @@ CodeMirror.commands.autocomplete = function(cm) {
       }
       return cm.replaceRange(indent, pos);
     }
-    else {
-      return cm.replaceRange(indent, pos);
-    }
-  }
-};
+  };
+}
+// Use the simple autocompletion
+else {
+  CodeMirror.commands.autocomplete = simpleJsHint;
+}
 
 if (jsbin.settings.addons.tern === true) {
   loadTern(editors.javascript.editor);

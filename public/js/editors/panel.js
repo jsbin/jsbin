@@ -185,27 +185,11 @@ var Panel = function (name, settings) {
       panel.focus();
     });
 
-    // Remove emmet keymaps from javascript panel
+    // Restore keymaps taken by emmet but that we need for other functionalities
     if (name === 'javascript') {
-      for (var k in CodeMirror.keyMap.default) {
-        if (CodeMirror.keyMap.default.hasOwnProperty(k)) {
-          if (CodeMirror.keyMap.default[k].indexOf('emmet') !== -1) {
-            var o = {};
-            o[k] = function(cm) {};
-            panel.editor.addKeyMap(o);
-          }
-        }
-      }
-      // Restore the keymaps that we need
-      panel.editor.addKeyMap({
-        'Tab': 'autocomplete'
-      });
-      panel.editor.addKeyMap({
-        'Enter': 'newlineAndIndent'
-      });
-      panel.editor.addKeyMap({
-        'Cmd-D': 'deleteLine'
-      });
+      // panel.editor.addKeyMap({
+      //   'Cmd-D': 'deleteLine'
+      // });
       panel.editor.addKeyMap({
         'Cmd-/': function(cm) { CodeMirror.commands.toggleComment(cm); }
       });

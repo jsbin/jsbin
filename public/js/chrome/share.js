@@ -56,7 +56,6 @@
   }
 
   function update() {
-    console.log('updating');
     var mapping = {
       live: 'output',
       javascript: 'js',

@@ -187,9 +187,9 @@ var Panel = function (name, settings) {
 
     // Restore keymaps taken by emmet but that we need for other functionalities
     if (name === 'javascript') {
-      // panel.editor.addKeyMap({
-      //   'Cmd-D': 'deleteLine'
-      // });
+      panel.editor.addKeyMap({
+        'Cmd-D': 'deleteLine'
+      });
       panel.editor.addKeyMap({
         'Cmd-/': function(cm) { CodeMirror.commands.toggleComment(cm); }
       });

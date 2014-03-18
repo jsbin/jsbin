@@ -279,6 +279,7 @@ var renderLivePreview = (function () {
     iframe.setAttribute('class', 'stretch');
     iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
+    iframe.setAttribute('name', '<proxy>');
     $live.prepend(iframe);
     iframe.src = jsbin.runner;
     try {

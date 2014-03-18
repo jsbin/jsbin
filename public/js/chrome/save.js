@@ -37,7 +37,15 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  saveCode('save', jsbin.saveDisabled === true ? false : true);
+  // if it's connecting to a togetherjs session, save will not trigger a reload
+  var ajax = true;
+  if (jsbin.saveDisabled === true) {
+    ajax = false;
+  }
+  if (jsbin.togetherjs === true) {
+    ajax = true;
+  }
+  saveCode('save', ajax);
 
   return false;
 });
@@ -209,7 +217,7 @@ if (!jsbin.saveDisabled) {
 
           $document.trigger('tip', {
             type: 'notification',
-            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
           });
         }
       });
@@ -331,7 +339,9 @@ function saveCode(method, ajax, ajaxCallback) {
             edit;
 
         $form.attr('action', data.url + '/save');
-        ajaxCallback && ajaxCallback(data);
+        if (ajaxCallback) {
+          ajaxCallback(data);
+        }
 
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
@@ -341,10 +351,10 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.revision = data.revision;
 
         // getURL(true) gets the jsbin without the root attached
-        $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
-        edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
-        $binGroup.find('td.url a span.first').removeClass('first');
-        $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
+        // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
+        // edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
+        // $binGroup.find('td.url a span.first').removeClass('first');
+        // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
         $document.trigger('saved');
 
@@ -356,9 +366,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: function (jqXHR) {
-        onSaveError(jqXHR);
-      },
+      error: onSaveError,
       complete: function () {
         saving.inprogress(false);
       }

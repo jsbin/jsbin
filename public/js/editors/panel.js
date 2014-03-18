@@ -29,7 +29,15 @@ if (!CodeMirror.commands) {
 
 CodeMirror.commands.autocomplete = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+    var pos = cm.getCursor();
+    var indent = '';
+    if (cm.options.indentWithTabs) {
+      indent = '\t';
+    }
+    else {
+      indent = new Array(cm.options.indentUnit + 1).join(' ');
+    }
+    return cm.replaceRange(indent, pos);
   }
 };
 
@@ -37,51 +45,50 @@ CodeMirror.commands.snippets = function (cm) {
   return CodeMirror.snippets(cm);
 };
 
-var foldFunc = {
-  css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
-};
+// var foldFunc = {
+//   css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+//   javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
+//   html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
+// };
 
 // this is a bit of a fudge to get multiline commenting working
 // for JavaScript. It's a fudge because emmet doesn't support
 // JavaScript as a language at all, so we inherit code our own comment style.
-var vocab = emmet.require('resources').getVocabulary('system');
-vocab.javascript = 'javascript';
-emmet.require('resources').setVocabulary(vocab, 'system');
+// var vocab = emmet.require('resources').getVocabulary('system');
+// vocab.javascript = 'javascript';
+// emmet.require('resources').setVocabulary(vocab, 'system');
 
 // totally over the top - but cleanest way to add comments to JavaScript
-var emmetToggleComment = emmet.require('actions').get('toggle_comment');
-emmet.require('actions').add('toggle_comment', function(editor) {
-  var info = emmet.require('editorUtils').outputInfo(editor);
-  if (info.syntax == 'javascript') {
-    // in case our editor is good enough and can recognize syntax from
-    // current token, we have to make sure that cursor is not inside
-    // 'style' attribute of html element
-    var editorUtils = emmet.require('editorUtils');
-    var selection = editor.getSelection();
-    var range = editor.getCurrentLineRange();
-    var line = editor.getCurrentLine();
-    var caretPos = editor.getCaretPos();
-    var tag = emmet.require('htmlMatcher').tag(info.content, caretPos);
-    if ((selection.length) || (tag && tag.open.range.inside(caretPos))) {
-      return emmetToggleComment.fn(editor);
-    } else {
-      if (line.trim().indexOf('//') == 0) {
-        editor.setCaretPos(caretPos);
-        editor.replaceContent(editorUtils.unindent(editor, line.replace(/(\s*?)\/\/\s?/, '$1')), range.start, range.end, false);
-        editor.setCaretPos(caretPos - 3);
-      } else {
-        editor.setCaretPos(caretPos);
-        editor.replaceContent(editorUtils.unindent(editor, '// ' + line), range.start, range.end, false);
-        editor.setCaretPos(caretPos + 3);
-      }
-    }
-  } else {
-    return emmetToggleComment.fn(editor);
-  }
-});
-
+// var emmetToggleComment = emmet.require('actions').get('toggle_comment');
+// emmet.require('actions').add('toggle_comment', function(editor) {
+//   var info = emmet.require('editorUtils').outputInfo(editor);
+//   if (info.syntax == 'javascript') {
+//     // in case our editor is good enough and can recognize syntax from
+//     // current token, we have to make sure that cursor is not inside
+//     // 'style' attribute of html element
+//     var editorUtils = emmet.require('editorUtils');
+//     var selection = editor.getSelection();
+//     var range = editor.getCurrentLineRange();
+//     var line = editor.getCurrentLine();
+//     var caretPos = editor.getCaretPos();
+//     var tag = emmet.require('htmlMatcher').tag(info.content, caretPos);
+//     if ((selection.length) || (tag && tag.open.range.inside(caretPos))) {
+//       return emmetToggleComment.fn(editor);
+//     } else {
+//       if (line.trim().indexOf('//') == 0) {
+//         editor.setCaretPos(caretPos);
+//         editor.replaceContent(editorUtils.unindent(editor, line.replace(/(\s*?)\/\/\s?/, '$1')), range.start, range.end, false);
+//         editor.setCaretPos(caretPos - 3);
+//       } else {
+//         editor.setCaretPos(caretPos);
+//         editor.replaceContent(editorUtils.unindent(editor, '// ' + line), range.start, range.end, false);
+//         editor.setCaretPos(caretPos + 3);
+//       }
+//     }
+//   } else {
+//     return emmetToggleComment.fn(editor);
+//   }
+// });
 
 
 var Panel = function (name, settings) {
@@ -137,7 +144,6 @@ var Panel = function (name, settings) {
       mode: editorModes[panelLanguage],
       lineWrapping: true,
       styleActiveLine: true,
-      highlightSelectionMatches: true,
       theme: jsbin.settings.theme || 'jsbin'
     };
 
@@ -145,9 +151,9 @@ var Panel = function (name, settings) {
 
     cmSettings.extraKeys = {};
 
-    cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
-      foldFunc[name](cm, cm.getCursor().line);
-    };
+    // cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
+    //   foldFunc[name](cm, cm.getCursor().line);
+    // };
 
     // only the js panel for now, I'd like this to work in
     // the HTML panel too, but only when you were in JS scope
@@ -174,10 +180,36 @@ var Panel = function (name, settings) {
       $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       return true;
     });
-    panel.editor.on('gutterClick', foldFunc[name]);
+    // panel.editor.on('gutterClick', foldFunc[name]);
     panel.editor.on('focus', function () {
       panel.focus();
     });
+
+    // Remove emmet keymaps from javascript panel
+    if (name === 'javascript') {
+      for (var k in CodeMirror.keyMap.default) {
+        if (CodeMirror.keyMap.default.hasOwnProperty(k)) {
+          if (CodeMirror.keyMap.default[k].indexOf('emmet') !== -1) {
+            var o = {};
+            o[k] = function(cm) {};
+            panel.editor.addKeyMap(o);
+          }
+        }
+      }
+      // Restore the keymaps that we need
+      panel.editor.addKeyMap({
+        'Tab': 'autocomplete'
+      });
+      panel.editor.addKeyMap({
+        'Enter': 'newlineAndIndent'
+      });
+      panel.editor.addKeyMap({
+        'Cmd-D': 'deleteLine'
+      });
+      panel.editor.addKeyMap({
+        'Cmd-/': function(cm) { CodeMirror.commands.toggleComment(cm); }
+      });
+    }
 
     panel._setupEditor(panel.editor, name);
   }

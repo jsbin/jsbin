@@ -109,18 +109,22 @@ body {
   padding: 0.4em 0 0.4em;
 }
 
-.form-container form a.lostpass {
+.lostpass {
   text-align:center;
   width:100%;
-  display:block;
-  color:#000;
-  margin-top:10px;
-}
-
-.form-container form a.lostpass span {
-  color:rgba(0,0,0,0.5);
+  margin-top:20px;
+  text-decoration: none;
+  color:#949494;
   font-weight:400;
   font-size:0.9em;
+  border: 0;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lostpass:hover {
+  color: #111;
 }
 
 .info {
@@ -140,4 +144,13 @@ body {
   white-space: normal;
   line-height: 18px;
   padding: 10px;
+}
+
+.info.active {
+  display:block;
+}
+
+.info a {
+  color: #111;
+  font-weight: 500;
 }

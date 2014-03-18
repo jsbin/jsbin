@@ -2,13 +2,28 @@
   'use strict';
   /*globals $, saveChecksum, jsbin, $document, documentTitle*/
 
-  var $sharemenu = $('#sharemenu').bind('open', update);
+  var mapping = {
+      live: 'output',
+      javascript: 'js',
+      css: 'css',
+      html: 'html',
+      console: 'console'
+    };
+  var $sharepanels = $('#sharepanels input[type="checkbox"]');
+  var $sharemenu = $('#sharemenu').bind('open', function () {
+    // select the right panels
+    $sharepanels.prop('checked', false);
+    jsbin.panels.getVisible().forEach(function (p) {
+      $sharepanels.filter('[value="' + p.id + '"]').prop('checked', true);
+      console.log($sharepanels.filter('[value="' + p.id + '"]').prop('checked'));
+    });
+    update();
+  });
   var $realtime = $('#sharebintype input[type=radio][value="realtime"]');
   var link = $sharemenu.find('a.link')[0];
   var linkselect = $sharemenu.find('input[name="url"]')[0];
   var embed = $sharemenu.find('textarea')[0];
   var form = $sharemenu.find('form')[0];
-  var $sharepanels = $('#sharepanels input[type="checkbox"]');
 
   // get an object representation of a form's state
   function formData(form) {
@@ -56,14 +71,6 @@
   }
 
   function update() {
-    var mapping = {
-      live: 'output',
-      javascript: 'js',
-      css: 'css',
-      html: 'html',
-      console: 'console'
-    };
-
     var data = formData(form);
     var withRevision = data.state === 'snapshot';
     var url = jsbin.getURL({ revision: withRevision });

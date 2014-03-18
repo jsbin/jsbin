@@ -3939,3 +3939,12 @@ THE SOFTWARE.
   border-left: 1px solid #CCC;
   border-right: 1px solid #CCC;
 }
+
+.btn-login {
+  color: #AAA;
+}
+
+.btn-login:hover,
+.btn-login:hover span {
+  color: #111;
+}

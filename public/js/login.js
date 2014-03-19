@@ -8,6 +8,15 @@
   var $forms = $('#login-register-page.form-container form');
   var $info = $('#login-register-page.form-container .info');
   var currentPath = null;
+  var firstrun = true;
+
+  function hideInfo() {
+    return $info.removeClass('active');
+  }
+
+  function showInfo() {
+    return $info.addClass('active');
+  }
 
   function currentForm() {
     return this.pathname === window.location.pathname; // jshint ignore:line
@@ -18,10 +27,18 @@
   }
 
   function matchActionAttrTo(path) {
-    return function(){
+    return function () {
       return this.getAttribute('action').indexOf(path) !== -1;
     };
   }
+
+  function getFormData($form) {
+    return $form.serializeArray().reduce(function (obj, item) {
+      obj[item.name] = item.value;
+      return obj;
+    }, {});
+  }
+
   var $formcontainer = $('#login-register-page.form-container');
   var $tabs = $('#login-register-page .tab').click(function (event, fromPopstate) {
     var path = event.target.pathname || event.target.parentNode.pathname;
@@ -44,7 +61,11 @@
       .filter(matchActionAttrTo(path)) // One element now ↓
       .show();
 
-    $info.hide();
+    if (!firstrun) {
+      hideInfo();
+    } else {
+      firstrun = false;
+    }
 
     // fromPopstate is true when we call click in handlePopstateChanges
     // If a user navigated back, to register, it would then set pushState
@@ -67,10 +88,7 @@
     event.preventDefault();
     var $form = $(event.target);
 
-    var data = $form.serializeArray().reduce(function(obj, item) {
-      obj[item.name] = item.value;
-      return obj;
-    }, {});
+    var data = getFormData($form);
 
     $.ajax({
       url: $form.attr('action'),
@@ -81,10 +99,44 @@
         window.location.href = res.referrer;
       },
       error: function(res) {
-        $info.show().find('p').text(res.responseJSON.message);
+        showInfo().find('p').text(res.responseJSON.message);
       }
     });
 
+  });
+
+  var $loginForm = $('#login');
+  $('#lostpass').click(function (event) {
+    event.preventDefault();
+
+    showInfo().find('p').text('Requesting password reset token...');
+
+    setTimeout(function () {
+      var email = $('#email').val();
+
+      if (email) {
+        var data = getFormData($loginForm);
+        data.email = data.username;
+        $.ajax({
+          url: window.location.origin + '/forgot',
+          type: 'post',
+          data: data,
+          dataType: 'json',
+          success: function (data) {
+            showInfo().find('p').text(data.message || data.error);
+          },
+          error: function (res) {
+            var data = res.responseJSON;
+            showInfo().find('p').text(data.error || data.message);
+          }
+        });
+      } else {
+        showInfo().find('p').text('Please enter your username or email address above, and I\'ll try to find you and send you a reset token.');
+      }
+
+    }, 1000);
+
+    return false;
   });
 
 }(window));

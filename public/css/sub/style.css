@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-html, body {
+html, body, button {
   height: 100%;
   margin: 0;
 }

@@ -1,5 +1,7 @@
 var Pos = CodeMirror.Pos;
 
+CodeMirror.defaults.rtlMoveVisually = true;
+
 function forEach(arr, f) {
   for (var i = 0, e = arr.length; i < e; ++i) f(arr[i]);
 }
@@ -31,6 +33,8 @@ var opera = /Opera\/\./.test(navigator.userAgent);
 var opera_version = opera && navigator.userAgent.match(/Version\/(\d+\.\d+)/);
 if (opera_version) opera_version = Number(opera_version);
 var opera_lt10 = opera && (!opera_version || opera_version < 10);
+
+namespace = "core_";
 
 test("core_fromTextArea", function() {
   var te = document.getElementById("code");
@@ -153,6 +157,16 @@ testCM("indent", function(cm) {
   eq(cm.getLine(1), "\t\t  blah();");
 }, {value: "if (x) {\nblah();\n}", indentUnit: 3, indentWithTabs: true, tabSize: 8});
 
+testCM("indentByNumber", function(cm) {
+  cm.indentLine(0, 2);
+  eq(cm.getLine(0), "  foo");
+  cm.indentLine(0, -200);
+  eq(cm.getLine(0), "foo");
+  cm.setSelection(Pos(0, 0), Pos(1, 2));
+  cm.indentSelection(3);
+  eq(cm.getValue(), "   foo\n   bar\nbaz");
+}, {value: "foo\nbar\nbaz"});
+
 test("core_defaults", function() {
   var defsCopy = {}, defs = CodeMirror.defaults;
   for (var opt in defs) defsCopy[opt] = defs[opt];
@@ -209,15 +223,18 @@ testCM("coords", function(cm) {
 
 testCM("coordsChar", function(cm) {
   addDoc(cm, 35, 70);
-  for (var ch = 0; ch <= 35; ch += 5) {
-    for (var line = 0; line < 70; line += 5) {
-      cm.setCursor(line, ch);
-      var coords = cm.charCoords(Pos(line, ch));
-      var pos = cm.coordsChar({left: coords.left, top: coords.top + 5});
-      eqPos(pos, Pos(line, ch));
+  for (var i = 0; i < 2; ++i) {
+    var sys = i ? "local" : "page";
+    for (var ch = 0; ch <= 35; ch += 5) {
+      for (var line = 0; line < 70; line += 5) {
+        cm.setCursor(line, ch);
+        var coords = cm.charCoords(Pos(line, ch), sys);
+        var pos = cm.coordsChar({left: coords.left + 1, top: coords.top + 1}, sys);
+        eqPos(pos, Pos(line, ch));
+      }
     }
   }
-});
+}, {lineNumbers: true});
 
 testCM("posFromIndex", function(cm) {
   cm.setValue(
@@ -419,6 +436,36 @@ testCM("markTextStayGone", function(cm) {
   eq(m1.find(), null);
 }, {value: "hello"});
 
+testCM("markTextAllowEmpty", function(cm) {
+  var m1 = cm.markText(Pos(0, 1), Pos(0, 2), {clearWhenEmpty: false});
+  is(m1.find());
+  cm.replaceRange("x", Pos(0, 0));
+  is(m1.find());
+  cm.replaceRange("y", Pos(0, 2));
+  is(m1.find());
+  cm.replaceRange("z", Pos(0, 3), Pos(0, 4));
+  is(!m1.find());
+  var m2 = cm.markText(Pos(0, 1), Pos(0, 2), {clearWhenEmpty: false,
+                                              inclusiveLeft: true,
+                                              inclusiveRight: true});
+  cm.replaceRange("q", Pos(0, 1), Pos(0, 2));
+  is(m2.find());
+  cm.replaceRange("", Pos(0, 0), Pos(0, 3));
+  is(!m2.find());
+  var m3 = cm.markText(Pos(0, 1), Pos(0, 1), {clearWhenEmpty: false});
+  cm.replaceRange("a", Pos(0, 3));
+  is(m3.find());
+  cm.replaceRange("b", Pos(0, 1));
+  is(!m3.find());
+}, {value: "abcde"});
+
+testCM("markTextStacked", function(cm) {
+  var m1 = cm.markText(Pos(0, 0), Pos(0, 0), {clearWhenEmpty: false});
+  var m2 = cm.markText(Pos(0, 0), Pos(0, 0), {clearWhenEmpty: false});
+  cm.replaceRange("B", Pos(0, 1));
+  is(m1.find() && m2.find());
+}, {value: "A"});
+
 testCM("undoPreservesNewMarks", function(cm) {
   cm.markText(Pos(0, 3), Pos(0, 4));
   cm.markText(Pos(1, 1), Pos(1, 3));
@@ -444,6 +491,13 @@ testCM("markClearBetween", function(cm) {
   cm.replaceRange("aaa\nbbb\nccc", Pos(0, 0), Pos(2));
   eq(cm.findMarksAt(Pos(1, 1)).length, 0);
 });
+
+testCM("deleteSpanCollapsedInclusiveLeft", function(cm) {
+  var from = Pos(1, 0), to = Pos(1, 1);
+  var m = cm.markText(from, to, {collapsed: true, inclusiveLeft: true});
+  // Delete collapsed span.
+  cm.replaceRange("", from, to);
+}, {value: "abc\nX\ndef"});
 
 testCM("bookmark", function(cm) {
   function p(v) { return v && Pos(v[0], v[1]); }
@@ -476,6 +530,42 @@ testCM("bookmarkInsertLeft", function(cm) {
   eqPos(br.find(), Pos(0, 1));
   eqPos(bl.find(), Pos(0, 1));
 }, {value: "abcdef"});
+
+testCM("bookmarkCursor", function(cm) {
+  var pos01 = cm.cursorCoords(Pos(0, 1)), pos11 = cm.cursorCoords(Pos(1, 1)),
+      pos20 = cm.cursorCoords(Pos(2, 0)), pos30 = cm.cursorCoords(Pos(3, 0)),
+      pos41 = cm.cursorCoords(Pos(4, 1));
+  cm.setBookmark(Pos(0, 1), {widget: document.createTextNode("←"), insertLeft: true});
+  cm.setBookmark(Pos(2, 0), {widget: document.createTextNode("←"), insertLeft: true});
+  cm.setBookmark(Pos(1, 1), {widget: document.createTextNode("→")});
+  cm.setBookmark(Pos(3, 0), {widget: document.createTextNode("→")});
+  var new01 = cm.cursorCoords(Pos(0, 1)), new11 = cm.cursorCoords(Pos(1, 1)),
+      new20 = cm.cursorCoords(Pos(2, 0)), new30 = cm.cursorCoords(Pos(3, 0));
+  is(new01.left == pos01.left && new01.top == pos01.top, "at left, middle of line");
+  is(new11.left > pos11.left && new11.top == pos11.top, "at right, middle of line");
+  is(new20.left == pos20.left && new20.top == pos20.top, "at left, empty line");
+  is(new30.left > pos30.left && new30.top == pos30.top, "at right, empty line");
+  cm.setBookmark(Pos(4, 0), {widget: document.createTextNode("→")});
+  is(cm.cursorCoords(Pos(4, 1)).left > pos41.left, "single-char bug");
+}, {value: "foo\nbar\n\n\nx\ny"});
+
+testCM("multiBookmarkCursor", function(cm) {
+  if (phantom) return;
+  var ms = [], m;
+  function add(insertLeft) {
+    for (var i = 0; i < 3; ++i) {
+      var node = document.createElement("span");
+      node.innerHTML = "X";
+      ms.push(cm.setBookmark(Pos(0, 1), {widget: node, insertLeft: insertLeft}));
+    }
+  }
+  var base1 = cm.cursorCoords(Pos(0, 1)).left, base4 = cm.cursorCoords(Pos(0, 4)).left;
+  add(true);
+  is(Math.abs(base1 - cm.cursorCoords(Pos(0, 1)).left) < .1);
+  while (m = ms.pop()) m.clear();
+  add(false);
+  is(Math.abs(base4 - cm.cursorCoords(Pos(0, 1)).left) < .1);
+}, {value: "abcdefg"});
 
 testCM("getAllMarks", function(cm) {
   addDoc(cm, 10, 10);
@@ -511,7 +601,27 @@ testCM("scrollSnap", function(cm) {
   is(info.left == 0 && info.top + 2 > info.height - cm.getScrollerElement().clientHeight, "scrolled clean to bottom");
 });
 
+testCM("scrollIntoView", function(cm) {
+  if (phantom) return;
+  var outer = cm.getWrapperElement().getBoundingClientRect();
+  function test(line, ch) {
+    var pos = Pos(line, ch);
+    cm.scrollIntoView(pos);
+    var box = cm.charCoords(pos, "window");
+    is(box.left >= outer.left && box.right <= outer.right &&
+       box.top >= outer.top && box.bottom <= outer.bottom);
+  }
+  addDoc(cm, 200, 200);
+  test(199, 199);
+  test(0, 0);
+  test(100, 100);
+  test(199, 0);
+  test(0, 199);
+  test(100, 100);
+});
+
 testCM("selectionPos", function(cm) {
+  if (phantom) return;
   cm.setSize(100, 100);
   addDoc(cm, 200, 100);
   cm.setSelection(Pos(1, 100), Pos(98, 100));
@@ -632,8 +742,8 @@ testCM("collapsedRangeCoordsChar", function(cm) {
   var m1 = cm.markText(Pos(0, 0), Pos(2, 0), opts);
   eqPos(cm.coordsChar(pos_1_3), Pos(3, 3));
   m1.clear();
-  var m1 = cm.markText(Pos(0, 0), Pos(1, 1), opts);
-  var m2 = cm.markText(Pos(1, 1), Pos(2, 0), opts);
+  var m1 = cm.markText(Pos(0, 0), Pos(1, 1), {collapsed: true, inclusiveLeft: true});
+  var m2 = cm.markText(Pos(1, 1), Pos(2, 0), {collapsed: true, inclusiveRight: true});
   eqPos(cm.coordsChar(pos_1_3), Pos(3, 3));
   m1.clear(); m2.clear();
   var m1 = cm.markText(Pos(0, 0), Pos(1, 6), opts);
@@ -681,6 +791,7 @@ testCM("everythingFolded", function(cm) {
 });
 
 testCM("structuredFold", function(cm) {
+  if (phantom) return;
   addDoc(cm, 4, 8);
   var range = cm.markText(Pos(1, 2), Pos(6, 2), {
     replacedWith: document.createTextNode("Q")
@@ -694,7 +805,7 @@ testCM("structuredFold", function(cm) {
   eq(cm.getValue(), "xxxx\nxxxx\nxxxx");
   addDoc(cm, 4, 8);
   range = cm.markText(Pos(1, 2), Pos(6, 2), {
-    replacedWith: document.createTextNode("x"),
+    replacedWith: document.createTextNode("M"),
     clearOnEnter: true
   });
   var cleared = 0;
@@ -715,6 +826,12 @@ testCM("structuredFold", function(cm) {
   cm.setCursor(1, 2);
   CodeMirror.commands.goCharRight(cm);
   eqPos(cm.getCursor(), Pos(1, 3));
+  range = cm.markText(Pos(2, 0), Pos(4, 4), {
+    replacedWith: document.createTextNode("M")
+  });
+  cm.setCursor(1, 0);
+  CodeMirror.commands.goLineDown(cm);
+  eqPos(cm.getCursor(), Pos(2, 0));
 }, null);
 
 testCM("nestedFold", function(cm) {
@@ -753,6 +870,65 @@ testCM("badNestedFold", function(cm) {
   is(caught instanceof Error, "no error");
   is(/overlap/i.test(caught.message), "wrong error");
 });
+
+testCM("nestedFoldOnSide", function(cm) {
+  var m1 = cm.markText(Pos(0, 1), Pos(2, 1), {collapsed: true, inclusiveRight: true});
+  var m2 = cm.markText(Pos(0, 1), Pos(0, 2), {collapsed: true});
+  cm.markText(Pos(0, 1), Pos(0, 2), {collapsed: true}).clear();
+  try { cm.markText(Pos(0, 1), Pos(0, 2), {collapsed: true, inclusiveLeft: true}); }
+  catch(e) { var caught = e; }
+  is(caught && /overlap/i.test(caught.message));
+  var m3 = cm.markText(Pos(2, 0), Pos(2, 1), {collapsed: true});
+  var m4 = cm.markText(Pos(2, 0), Pos(2, 1), {collapse: true, inclusiveRight: true});
+  m1.clear(); m4.clear();
+  m1 = cm.markText(Pos(0, 1), Pos(2, 1), {collapsed: true});
+  cm.markText(Pos(2, 0), Pos(2, 1), {collapsed: true}).clear();
+  try { cm.markText(Pos(2, 0), Pos(2, 1), {collapsed: true, inclusiveRight: true}); }
+  catch(e) { var caught = e; }
+  is(caught && /overlap/i.test(caught.message));
+}, {value: "ab\ncd\ef"});
+
+testCM("wrappingInlineWidget", function(cm) {
+  cm.setSize("11em");
+  var w = document.createElement("span");
+  w.style.color = "red";
+  w.innerHTML = "one two three four";
+  cm.markText(Pos(0, 6), Pos(0, 9), {replacedWith: w});
+  var cur0 = cm.cursorCoords(Pos(0, 0)), cur1 = cm.cursorCoords(Pos(0, 10));
+  is(cur0.top < cur1.top);
+  is(cur0.bottom < cur1.bottom);
+  var curL = cm.cursorCoords(Pos(0, 6)), curR = cm.cursorCoords(Pos(0, 9));
+  eq(curL.top, cur0.top);
+  eq(curL.bottom, cur0.bottom);
+  eq(curR.top, cur1.top);
+  eq(curR.bottom, cur1.bottom);
+  cm.replaceRange("", Pos(0, 9), Pos(0));
+  curR = cm.cursorCoords(Pos(0, 9));
+  eq(curR.top, cur1.top);
+  eq(curR.bottom, cur1.bottom);
+}, {value: "1 2 3 xxx 4", lineWrapping: true});
+
+testCM("changedInlineWidget", function(cm) {
+  cm.setSize("10em");
+  var w = document.createElement("span");
+  w.innerHTML = "x";
+  var m = cm.markText(Pos(0, 4), Pos(0, 5), {replacedWith: w});
+  w.innerHTML = "and now the widget is really really long all of a sudden and a scrollbar is needed";
+  m.changed();
+  var hScroll = byClassName(cm.getWrapperElement(), "CodeMirror-hscrollbar")[0];
+  is(hScroll.scrollWidth > hScroll.clientWidth);
+}, {value: "hello there"});
+
+testCM("changedBookmark", function(cm) {
+  cm.setSize("10em");
+  var w = document.createElement("span");
+  w.innerHTML = "x";
+  var m = cm.setBookmark(Pos(0, 4), {widget: w});
+  w.innerHTML = "and now the widget is really really long all of a sudden and a scrollbar is needed";
+  m.changed();
+  var hScroll = byClassName(cm.getWrapperElement(), "CodeMirror-hscrollbar")[0];
+  is(hScroll.scrollWidth > hScroll.clientWidth);
+}, {value: "abcdefg"});
 
 testCM("inlineWidget", function(cm) {
   var w = cm.setBookmark(Pos(0, 2), {widget: document.createTextNode("uu")});
@@ -844,6 +1020,24 @@ testCM("moveVstuck", function(cm) {
   eqPos(cm.getCursor(), Pos(0, 26));
 }, {lineWrapping: true}, ie_lt8 || opera_lt10);
 
+testCM("collapseOnMove", function(cm) {
+  cm.setSelection(Pos(0, 1), Pos(2, 4));
+  cm.execCommand("goLineUp");
+  is(!cm.somethingSelected());
+  eqPos(cm.getCursor(), Pos(0, 1));
+  cm.setSelection(Pos(0, 1), Pos(2, 4));
+  cm.execCommand("goPageDown");
+  is(!cm.somethingSelected());
+  eqPos(cm.getCursor(), Pos(2, 4));
+  cm.execCommand("goLineUp");
+  cm.execCommand("goLineUp");
+  eqPos(cm.getCursor(), Pos(0, 4));
+  cm.setSelection(Pos(0, 1), Pos(2, 4));
+  cm.execCommand("goCharLeft");
+  is(!cm.somethingSelected());
+  eqPos(cm.getCursor(), Pos(0, 1));
+}, {value: "aaaaa\nb\nccccc"});
+
 testCM("clickTab", function(cm) {
   var p0 = cm.charCoords(Pos(0, 0));
   eqPos(cm.coordsChar({left: p0.left + 5, top: p0.top + 5}), Pos(0, 0));
@@ -857,7 +1051,7 @@ testCM("verticalScroll", function(cm) {
   cm.setLine(0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
   is(sc.scrollWidth > baseWidth, "scrollbar present");
   cm.setLine(0, "foo");
-  eq(sc.scrollWidth, baseWidth, "scrollbar gone");
+  if (!phantom) eq(sc.scrollWidth, baseWidth, "scrollbar gone");
   cm.setLine(0, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
   cm.setLine(1, "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbh");
   is(sc.scrollWidth > baseWidth, "present again");
@@ -909,14 +1103,42 @@ testCM("wordMovementCommands", function(cm) {
   cm.execCommand("goWordLeft");
   eqPos(cm.getCursor(), Pos(0, 9));
   cm.execCommand("goWordRight"); cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
-  eqPos(cm.getCursor(), Pos(1, 1));
-  cm.execCommand("goWordRight");
+  eqPos(cm.getCursor(), Pos(0, 24));
+  cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(1, 9));
   cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(1, 13));
   cm.execCommand("goWordRight"); cm.execCommand("goWordRight");
   eqPos(cm.getCursor(), Pos(2, 0));
 }, {value: "this is (the) firstline.\na foo12\u00e9\u00f8\u00d7bar\n"});
+
+testCM("groupMovementCommands", function(cm) {
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 0));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 4));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 7));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 10));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 7));
+  cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 15));
+  cm.setCursor(Pos(0, 17));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 16));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 14));
+  cm.execCommand("goGroupRight"); cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(0, 20));
+  cm.execCommand("goGroupRight");
+  eqPos(cm.getCursor(), Pos(1, 5));
+  cm.execCommand("goGroupLeft"); cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(1, 0));
+  cm.execCommand("goGroupLeft");
+  eqPos(cm.getCursor(), Pos(0, 16));
+}, {value: "booo ba---quux. ffff\n  abc d"});
 
 testCM("charMovementCommands", function(cm) {
   cm.execCommand("goCharLeft"); cm.execCommand("goColumnLeft");
@@ -984,7 +1206,8 @@ testCM("verticalMovementCommandsWrapping", function(cm) {
 
 testCM("rtlMovement", function(cm) {
   forEach(["خحج", "خحabcخحج", "abخحخحجcd", "abخde", "abخح2342خ1حج", "خ1ح2خح3حxج",
-           "خحcd", "1خحcd", "abcdeح1ج", "خمرحبها مها!", "foobarر"], function(line) {
+           "خحcd", "1خحcd", "abcdeح1ج", "خمرحبها مها!", "foobarر", "خ ة ق",
+           "<img src=\"/בדיקה3.jpg\">"], function(line) {
     var inv = line.charAt(0) == "خ";
     cm.setValue(line + "\n"); cm.execCommand(inv ? "goLineEnd" : "goLineStart");
     var cursor = byClassName(cm.getWrapperElement(), "CodeMirror-cursor")[0];
@@ -1003,7 +1226,7 @@ testCM("rtlMovement", function(cm) {
       prevX = cursor.offsetLeft;
     }
   });
-}, {rtlMoveVisually: true});
+});
 
 // Verify that updating a line clears its bidi ordering
 testCM("bidiUpdate", function(cm) {
@@ -1049,6 +1272,7 @@ testCM("lineChangeEvents", function(cm) {
 });
 
 testCM("scrollEntirelyToRight", function(cm) {
+  if (phantom) return;
   addDoc(cm, 500, 2);
   cm.setCursor(Pos(0, 500));
   var wrap = cm.getWrapperElement(), cur = byClassName(wrap, "CodeMirror-cursor")[0];
@@ -1183,6 +1407,7 @@ testCM("atomicMarker", function(cm) {
   eqPos(cm.getCursor(), Pos(8, 3));
   m.clear();
   m = atom(1, 1, 3, 8);
+  cm.setCursor(Pos(0, 0));
   cm.setCursor(Pos(2, 0));
   eqPos(cm.getCursor(), Pos(3, 8));
   cm.execCommand("goCharLeft");
@@ -1254,6 +1479,21 @@ testCM("dirtyBit", function(cm) {
   eq(cm.isClean(), true);
 });
 
+testCM("changeGeneration", function(cm) {
+  cm.replaceSelection("x", null, "+insert");
+  var softGen = cm.changeGeneration();
+  cm.replaceSelection("x", null, "+insert");
+  cm.undo();
+  eq(cm.getValue(), "");
+  is(!cm.isClean(softGen));
+  cm.replaceSelection("x", null, "+insert");
+  var hardGen = cm.changeGeneration(true);
+  cm.replaceSelection("x", null, "+insert");
+  cm.undo();
+  eq(cm.getValue(), "x");
+  is(cm.isClean(hardGen));
+});
+
 testCM("addKeyMap", function(cm) {
   function sendKey(code) {
     cm.triggerOnKeyDown({type: "keydown", keyCode: code,
@@ -1268,7 +1508,7 @@ testCM("addKeyMap", function(cm) {
   sendKey(39);
   eqPos(cm.getCursor(), Pos(0, 1));
   eq(test, 1);
-  cm.addKeyMap(map2);
+  cm.addKeyMap(map2, true);
   sendKey(39);
   eq(test, 2);
   cm.removeKeyMap(map1);
@@ -1325,6 +1565,19 @@ testCM("beforeChange", function(cm) {
   eq(cm.getValue(), "hello,_i_am_a\nhey_hey_hey");
 }, {value: "abcdefghijk"});
 
+testCM("beforeChangeUndo", function(cm) {
+  cm.setLine(0, "hi");
+  cm.setLine(0, "bye");
+  eq(cm.historySize().undo, 2);
+  cm.on("beforeChange", function(cm, change) {
+    is(!change.update);
+    change.cancel();
+  });
+  cm.undo();
+  eq(cm.historySize().undo, 0);
+  eq(cm.getValue(), "bye\ntwo");
+}, {value: "one\ntwo"});
+
 testCM("beforeSelectionChange", function(cm) {
   function notAtEnd(cm, pos) {
     var len = cm.getLine(pos.line).length;
@@ -1342,4 +1595,67 @@ testCM("beforeSelectionChange", function(cm) {
   cm.execCommand("selectAll");
   eqPos(cm.getCursor("start"), Pos(0, 0));
   eqPos(cm.getCursor("end"), Pos(9, 9));
+});
+
+testCM("change_removedText", function(cm) {
+  cm.setValue("abc\ndef");
+
+  var removedText;
+  cm.on("change", function(cm, change) {
+    removedText = [change.removed, change.next && change.next.removed];
+  });
+
+  cm.operation(function() {
+    cm.replaceRange("xyz", Pos(0, 0), Pos(1,1));
+    cm.replaceRange("123", Pos(0,0));
+  });
+
+  eq(removedText[0].join("\n"), "abc\nd");
+  eq(removedText[1].join("\n"), "");
+
+  cm.undo();
+  eq(removedText[0].join("\n"), "123");
+  eq(removedText[1].join("\n"), "xyz");
+
+  cm.redo();
+  eq(removedText[0].join("\n"), "abc\nd");
+  eq(removedText[1].join("\n"), "");
+});
+
+testCM("lineStyleFromMode", function(cm) {
+  CodeMirror.defineMode("test_mode", function() {
+    return {token: function(stream) {
+      if (stream.match(/^\[[^\]]*\]/)) return "line-brackets";
+      if (stream.match(/^\([^\]]*\)/)) return "line-background-parens";
+      stream.match(/^\s+|^\S+/);
+    }};
+  });
+  cm.setOption("mode", "test_mode");
+  var bracketElts = byClassName(cm.getWrapperElement(), "brackets");
+  eq(bracketElts.length, 1);
+  eq(bracketElts[0].nodeName, "PRE");
+  is(!/brackets.*brackets/.test(bracketElts[0].className));
+  var parenElts = byClassName(cm.getWrapperElement(), "parens");
+  eq(parenElts.length, 1);
+  eq(parenElts[0].nodeName, "DIV");
+  is(!/parens.*parens/.test(parenElts[0].className));
+}, {value: "line1: [br] [br]\nline2: (par) (par)\nline3: nothing"});
+
+CodeMirror.registerHelper("xxx", "a", "A");
+CodeMirror.registerHelper("xxx", "b", "B");
+CodeMirror.defineMode("yyy", function() {
+  return {
+    token: function(stream) { stream.skipToEnd(); },
+    xxx: ["a", "b", "q"]
+  };
+});
+CodeMirror.registerGlobalHelper("xxx", "c", function(m) { return m.enableC; }, "C");
+
+testCM("helpers", function(cm) {
+  cm.setOption("mode", "yyy");
+  eq(cm.getHelpers(Pos(0, 0), "xxx").join("/"), "A/B");
+  cm.setOption("mode", {name: "yyy", modeProps: {xxx: "b", enableC: true}});
+  eq(cm.getHelpers(Pos(0, 0), "xxx").join("/"), "B/C");
+  cm.setOption("mode", "javascript");
+  eq(cm.getHelpers(Pos(0, 0), "xxx").join("/"), "");
 });

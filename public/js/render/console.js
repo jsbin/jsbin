@@ -14,6 +14,8 @@ function cleanse(s) {
   return (s||'').replace(/[<&]/g, function (m) { return {'&':'&amp;','<':'&lt;'}[m];});
 }
 
+var historyPosition = -1;
+
 /**
  * Run a console command.
  */
@@ -70,7 +72,7 @@ var showResponse = function (response) {
       span = document.createElement('span'),
       parent = output.parentNode;
 
-  pos = history.length;
+  historyPosition = history.length;
 
   if (typeof response === 'undefined') return;
 
@@ -296,6 +298,7 @@ function about() {
 }
 
 function setHistory(history) {
+  historyPosition = history.length;
   if (typeof JSON == 'undefined') return;
 
   try {
@@ -332,9 +335,9 @@ var exec = document.getElementById('exec'),
         prototype: 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
         dojo: 'http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.xd.js',
         mootools: 'http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js',
-        underscore: 'http://documentcloud.github.com/underscore/underscore-min.js',
+        underscore: 'http://jashkenas.github.io/underscore/underscore-min.js',
         rightjs: 'http://rightjs.org/hotlink/right.js',
-        coffeescript: 'http://jashkenas.github.com/coffee-script/extras/coffee-script.js',
+        coffeescript: 'http://jashkenas.github.io/coffee-script/extras/coffee-script.js',
         yui: 'http://yui.yahooapis.com/3.9.1/build/yui/yui-min.js'
     },
     body = document.getElementsByTagName('body')[0],
@@ -366,7 +369,7 @@ var exec = document.getElementById('exec'),
       var cursor;
       return function () {
         if (cursor) return cursor;
-        return document.getElementById('cursor');
+        return document.getElementById('cursor') || { focus: function () {} };
       };
     }()),
     // I hate that I'm browser sniffing, but there's issues with Firefox and execCommand so code completion won't work
@@ -406,16 +409,12 @@ function setCursorTo(str) {
     document.execCommand('selectAll', false, null);
     document.execCommand('delete', false, null);
     document.execCommand('insertHTML', false, str);
+    getCursor().focus();
   } else {
     var rows = str.match(/\n/g);
     exec.setAttribute('rows', rows !== null ? rows.length + 1 : 1);
   }
-  getCursor().focus();
 }
-
-exec.ontouchstart = function () {
-  window.scrollTo(0,0);
-};
 
 function findNode(list, node) {
   var pos = 0;
@@ -444,41 +443,22 @@ exec.onkeydown = function (event) {
     if (event.shiftKey) return;
     // History cycle
 
-    // Allow user to navigate multiline pieces of code
-    if (window.getSelection) {
-      window.selObj = window.getSelection();
-      var selRange = selObj.getRangeAt(0),
-          cursorPos =  findNode(selObj.anchorNode.parentNode.childNodes, selObj.anchorNode) + selObj.anchorOffset;
-
-      var value = exec.value,
-          firstNewLine = value.indexOf('\n'),
-          lastNewLine = value.lastIndexOf('\n');
-
-      if (firstNewLine !== -1) {
-        if (which == keylib.up && cursorPos > firstNewLine) {
-          return;
-        } else if (which == keylib.down && cursorPos < value.length) {
-          return;
-        }
-      }
-    }
-
     // Up
     if (which == keylib.up) {
-      pos--;
+      historyPosition--;
       // Don't go past the start
-      if (pos < 0) pos = 0; //history.length - 1;
+      if (historyPosition < 0) historyPosition = 0; //history.length - 1;
     }
     // Down
     if (which == keylib.down) {
-      pos++;
+      historyPosition++;
       // Don't go past the end
-      if (pos >= history.length) pos = history.length; //0;
+      if (historyPosition >= history.length) historyPosition = history.length; //0;
     }
-    if (history[pos] != undefined && history[pos] !== '') {
-      setCursorTo(history[pos]);
+    if (history[historyPosition] != undefined && history[historyPosition] !== '') {
+      setCursorTo(history[historyPosition]);
       return false;
-    } else if (pos == history.length) {
+    } else if (historyPosition == history.length) {
       setCursorTo('');
       return false;
     }

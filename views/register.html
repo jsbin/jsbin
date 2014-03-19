@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/css/login.css">
+<div class="form-container">
+  <div class="tabs">
+    <a class="tab" href="/login">Login</a>
+    <a class="tab tab-selected" href="/register">Signup</a>
+  </div>
+  <form action="/register" method="post" class="register">
+    <div>
+      <label>Username<br>
+      <input name="username" type="text"></label>
+    </div>
+    <div>
+      <label>Email<br>
+      <input name="email" type="email"></label>
+    </div>
+    <div>
+      <label>Password<br>
+      <input name="key" type="password"></label>
+    </div>
+    <div>
+      <input type=submit value="Log in">
+      <input type="hidden" name="_csrf" value="{{token}}">
+      <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+    </div>
+  </form>
+</div>
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/chrome/login.js"></script>

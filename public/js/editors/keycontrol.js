@@ -1,31 +1,35 @@
-//= require "autocomplete"
-//= require "../chrome/esc"
-
+/*globals objectValue, $, jsbin, $body, $document*/
 var keyboardHelpVisible = false;
 
 var customKeys = objectValue('jsbin.settings.keys') || {};
 
-$('#enablealt').attr('checked', customKeys.useAlt ? true : false).change(function () {
+function enableAltUse() {
   if (!jsbin.settings.keys) {
     jsbin.settings.keys = {};
   }
   jsbin.settings.keys.useAlt = this.checked;
-});
+}
 
-if (!customKeys.disabled) $body.keydown(keycontrol);
+$('input.enablealt').attr('checked', customKeys.useAlt ? true : false).change(enableAltUse);
 
-var panelShortcuts = {}
+if (!customKeys.disabled) {
+  $body.keydown(keycontrol);
+} else {
+  $body.addClass('nokeyboardshortcuts');
+}
+
+var panelShortcuts = {};
+panelShortcuts.start = 48;
 //   49: 'javascript', // 1
 //   50: 'css', // 2
 //   51: 'html', // 3
 //   52: 'console', // 4
 //   53: 'live' // 5
 // };
-panelShortcuts.start = 48;
 
 // work out the browser platform
 var ua = navigator.userAgent;
-if (/macintosh|mac os x/.test(ua)) {
+if (ua.indexOf(' Mac ') !== -1) {
   $.browser.platform = 'mac';
 } else if (/windows|win32/.test(ua)) {
   $.browser.platform = 'win';
@@ -35,45 +39,49 @@ if (/macintosh|mac os x/.test(ua)) {
   $.browser.platform = '';
 }
 
-// var closekey = $.browser.platform == 'mac' ? 167 : 192;
 
-if (!customKeys.disabled) $document.keydown(function (event) {
-  var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
-      closekey = customKeys.closePanel ? customKeys.closePanel : 192;
+if (!customKeys.disabled) {
+  $document.keydown(function (event) {
+    var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
+        closekey = customKeys.closePanel ? customKeys.closePanel : 48;
 
-  if (event.ctrlKey) event.metaKey = true;
+    if (event.ctrlKey) { event.metaKey = true; }
 
-  if (event.metaKey && event.which == 79) { // open
-    $('.homebtn').trigger('click', 'keyboard');
-    event.preventDefault();
-  } else if (event.metaKey && event.which == 83) { // save
-    if (event.shiftKey == false) {
-      if (saveChecksum) {
-        saveChecksum = false;
-      } else {
-        // trigger an initial save
-        $('a.save:first').click();
+    if (event.metaKey && event.which === 79) { // open
+      $('a.homebtn').trigger('click', 'keyboard');
+      event.preventDefault();
+    } else if (event.metaKey && event.shiftKey && event.which === 8) { // cmd+shift+backspace
+      $('a.deletebin:first').trigger('click', 'keyboard');
+      event.preventDefault();
+    } else if (event.metaKey && event.which === 83) { // save
+      if (event.shiftKey === false) {
+        if (saveChecksum) {
+          saveChecksum = false;
+        } else {
+          // trigger an initial save
+          $('a.save:first').click();
+        }
+        event.preventDefault();
+      } else if (event.shiftKey === true) { // shift+s = clone
+        $('a.clone').click();
+        event.preventDefault();
       }
-      event.preventDefault();
-    } else if (event.shiftKey == true) { // shift+s = clone
-      $('.clone').click();
-      event.preventDefault();
+    } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {
+      jsbin.panels.hide(jsbin.panels.focused.id);
+    } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
+      jsbin.settings.hideheader = !jsbin.settings.hideheader;
+      $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
+    } else if (event.which === 76 && event.ctrlKey && jsbin.panels.panels.console.visible) {
+      if (event.shiftKey) {
+        // reset
+        jsconsole.reset();
+      } else {
+        // clear
+        jsconsole.clear();
+      }
     }
-  } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {
-    jsbin.panels.hide(jsbin.panels.focused.id);
-  } else if (event.which === 220 && (event.metaKey || event.ctrlKey)) {
-    jsbin.settings.hideheader = !jsbin.settings.hideheader;
-    $body[jsbin.settings.hideheader ? 'addClass' : 'removeClass']('hideheader');
-  } else if (event.which === 76 && event.ctrlKey && jsbin.panels.panels.console.visible) {
-    if (event.shiftKey) {
-      // reset
-      jsconsole.reset();
-    } else {
-      // clear
-      jsconsole.clear();
-    }
-  }
-});
+  });
+}
 
 var ignoreNextKey = false;
 
@@ -93,20 +101,20 @@ function keycontrol(event) {
 
   var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey;
 
-  if (event.which === 27 && !ignoreNextKey) {
-    ignoreNextKey = true;
-    return;
-  } else if (ignoreNextKey && panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
-    ignoreNextKey = false;
-    return;
-  } else if (!event.metaKey) {
-    ignoreNextKey = false;
-  }
+  // if (event.which === 27 && !ignoreNextKey) {
+  //   ignoreNextKey = true;
+  //   return;
+  // } else if (ignoreNextKey && panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
+  //   ignoreNextKey = false;
+  //   return;
+  // } else if (!event.metaKey) {
+  //   ignoreNextKey = false;
+  // }
 
   // these should fire when the key goes down
-  if (event.type == 'keydown') {
+  if (event.type === 'keydown') {
     if (codePanel) {
-      if (event.metaKey && event.which == 13) {
+      if (event.metaKey && event.which === 13) {
         if (editors.console.visible && !editors.live.visible) {
           hasRun = true;
           // editors.console.render();
@@ -133,16 +141,35 @@ function keycontrol(event) {
     // shortcut for showing a panel
     if (panelShortcuts[event.which] !== undefined && event.metaKey && includeAltKey) {
       if (jsbin.panels.focused.id === panelShortcuts[event.which]) {
-        // hide
+        // this has been disabled in favour of:
+        // if the panel is visible, and the user tries cmd+n - then the browser
+        // gets the key command.
         jsbin.panels.hide(panelShortcuts[event.which]);
+        event.stop();
       } else {
         // show
         jsbin.panels.show(panelShortcuts[event.which]);
+        event.stop();
+
+        if (!customKeys.useAlt && (!jsbin.settings.keys || !jsbin.settings.keys.seenWarning)) {
+          var cmd = $.browser.platform === 'mac' ? 'cmd' : 'ctrl';
+          if (!jsbin.settings.keys) {
+            jsbin.settings.keys = {};
+          }
+          jsbin.settings.keys.seenWarning = true;
+          $document.trigger('tip', {
+            type: 'notification',
+            content: '<label><input type="checkbox" class="enablealt"> <strong>Turn this off</strong>. Reserve ' + cmd + '+[n] for switching browser tabs and use ' + cmd + '+<u>alt</u>+[n] to switch JS Bin panels. You can access this any time in <strong>Help&rarr;Keyboard</strong></label>'
+          });
+          $('#tip').delegate('input.enablealt', 'click', function () {
+            enableAltUse.call(this);
+            window.location.reload();
+          });
+        }
       }
-      event.stop();
     }
 
-    if (event.which == 191 && event.metaKey && event.shiftKey) {
+    if (event.which === 191 && event.metaKey && event.shiftKey) {
       // show help
       $body.toggleClass('keyboardHelp');
       keyboardHelpVisible = $body.is('.keyboardHelp');
@@ -150,27 +177,27 @@ function keycontrol(event) {
         analytics.track('keyboard', 'select', 'help');
       }
       event.stop();
-    } else if (event.which == 27 && keyboardHelpVisible) {
+    } else if (event.which === 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;
       event.stop();
-    } else if (event.which == 27 && jsbin.panels.focused && codePanel) {
+    } else if (event.which === 27 && jsbin.panels.focused && codePanel) {
       // event.stop();
       // return CodeMirror.commands.autocomplete(jsbin.panels.focused.editor);
-    } else if (event.which == 190 && includeAltKey && event.metaKey && panel.id == 'html') {
+    } else if (event.which === 190 && includeAltKey && event.metaKey && panel.id === 'html') {
       // auto close the element
-      if (panel.somethingSelected()) return;
+      if (panel.somethingSelected()) {return;}
       // Find the token at the cursor
       var cur = panel.getCursor(false), token = panel.getTokenAt(cur), tprop = token;
       // If it's not a 'word-style' token, ignore the token.
       if (!/^[\w$_]*$/.test(token.string)) {
-        token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
-                         className: token.string == "." ? "js-property" : null};
+        token = tprop = {start: cur.ch, end: cur.ch, string: '', state: token.state,
+                         className: token.string === '.' ? 'js-property' : null};
       }
 
       panel.replaceRange('</' + token.state.htmlState.context.tagName + '>', {line: cur.line, ch: token.end}, {line: cur.line, ch: token.end});
       event.stop();
-    } else if (event.which == 188 && event.ctrlKey && event.shiftKey && codePanel) {
+    } else if (event.which === 188 && event.ctrlKey && event.shiftKey && codePanel) {
       // start a new tag
       event.stop();
       return startTagComplete(panel);
@@ -194,8 +221,8 @@ function normalise(event) {
     orig: event
   };
 
-  if ( event.which == null && (event.charCode != null || event.keyCode != null) ) {
-    myEvent.which = event.charCode != null ? event.charCode : event.keyCode;
+  if ( event.which === null && (event.charCode !== null || event.keyCode !== null) ) {
+    myEvent.which = event.charCode !== null ? event.charCode : event.keyCode;
   }
 
   // Add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
@@ -207,15 +234,16 @@ function normalise(event) {
   // to send through the right value. i.e. when you include a shift key modifier
   // in Firefox, if it's punctuation - event.which is zero :(
   // Note that I'm only doing this for the ? symbol + ctrl + shift
-  if (event.which === 0 && event.ctrlKey === true && event.shiftKey === true && event.type == 'keydown') {
+  if (event.which === 0 && event.ctrlKey === true && event.shiftKey === true && event.type === 'keydown') {
     myEvent.which = 191;
   }
 
   var oldStop = event.stop;
   myEvent.stop = function () {
     myEvent.stopping = true;
-    oldStop && oldStop.call(event);
+    if (oldStop) {oldStop.call(event);}
   };
 
   return myEvent;
 }
+

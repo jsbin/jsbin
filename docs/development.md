@@ -24,7 +24,7 @@ through a couple of steps. From the master branch create a test branch:
 
 Then apply the users patch:
 
-    $ curl https://github.com/remy/jsbin/pull/123.patch | git am
+    $ curl https://github.com/jsbin/jsbin/pull/123.patch | git am
 
 Then run and check the code works. If all's good merge it into master
 and push it up to GitHub.
@@ -53,4 +53,4 @@ To delete a branch on GitHub you use the following command:
     $ git push origin :<branch-to-delete>
 
 [#am]: http://git-scm.com/book/ch5-3.html#Applying-Patches-from-E-mail
-[#ex]: https://github.com/remy/jsbin/pull/190.patch
+[#ex]: https://github.com/jsbin/jsbin/pull/190.patch

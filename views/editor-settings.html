@@ -1,0 +1,117 @@
+
+{{> account_sidebar}}
+<link href="/js/vendor/codemirror3/lib/codemirror.css" rel="stylesheet" type="text/css">
+<link href="/css/codemirror.css" rel="stylesheet" type="text/css">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/ambiance-mobile.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/ambiance.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/blackboard.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/cobalt.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/eclipse.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/elegant.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/erlang-dark.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/lesser-dark.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/monokai.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/neat.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/night.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/rubyblue.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/solarized.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/twilight.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/vibrant-ink.css" rel="stylesheet" type="text/css">
+<link href="/js/vendor/codemirror3/theme/xq-dark.css" rel="stylesheet" type="text/css">
+
+
+<form>
+	<label> Font size
+		<input name="font" id="font-size" type="number">
+	</label>
+	<label>Theme
+		<select id="theme" name="theme">
+			<option value="default">
+        default
+			</option>	
+			<option value="xq">
+        xq
+			</option>	
+			<option value="vibrant">
+        vibrant
+			</option>	
+			<option value="twilight">
+        twilight
+			</option>	
+			<option value="solarized">
+        solarized
+			</option>	
+			<option value="rubyblue">
+        rubyblue
+			</option>	
+			<option value="night">
+        night
+			</option>	
+			<option value="neat">
+        neat
+			</option>	
+			<option value="monokai">
+        monokai
+			</option>	
+			<option value="lesser">
+        lesser
+			</option>	
+			<option value="erlang">
+        erlang
+			</option>	
+			<option value="elegant">
+        elegant
+			</option>	
+			<option value="eclipse">
+        eclipse
+			</option>	
+			<option value="cobalt">
+        cobalt
+			</option>	
+			<option value="blackboard">
+        blackboard
+			</option>	
+			<option value="ambiance">
+        ambiance
+			</option>	
+		</select>
+	</label>
+	<label> Use tabs
+		<select id="indentWithTabs">
+			<option value="1">
+				Tabs
+			</option>
+			<option value="0">
+				Spaces
+			</option>
+		</select>
+	</label>
+	<label> Tab size
+		<input id="tabSize" name="tabSize" min="1" type="number">
+	</label>
+	<label> Wrap lines
+		<input id="lineWrapping" name="lineWrapping" type="checkbox">
+	</label>
+	<label> VIM mode
+		<input id="vimMode" name="vimMode" type="checkbox">
+	</label>
+	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+</form>
+
+<textarea id="editor-settings-example" value="function Name (param) {/n/tthis.name = param || 'string';/n/treturn this;/n}/n/nvar object = new Object();">
+function Name (param) {
+	this.name = param || 'string';
+	return this;
+}
+var object = new Object();
+var longVariableNameToDemonstrateLineWrappingInCodeMirror = 'line wrapping is on by default'.split(' ').map(String.prototype.toUpperCase.bind(String.prototype)).join('/n');
+</textarea>
+
+<script src="/js/vendor/jquery.js"></script>
+<script src="/js/vendor/codemirror3/lib/codemirror.js"></script>
+<script src="/js/vendor/codemirror3/mode/javascript/javascript.js"></script>
+<script src="/js/vendor/codemirror3/keymap/vim.js"></script>
+<script src="/js/vendor/underscore/underscore.js"></script>
+<script src="/js/editor-settings.js"></script>
+

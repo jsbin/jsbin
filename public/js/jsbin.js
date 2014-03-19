@@ -65,7 +65,9 @@ if (storedSettings === "undefined") {
   storedSettings = null;
 }
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
-
+if (jsbin.user) {
+  $.extend(window.jsbin.settings.editor, jsbin.user.settings);
+}
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.
@@ -87,7 +89,7 @@ if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
   if (!jsbin.custom) {
-    window.location = jsbin.root + '/welcome/edit?html,live'
+    window.location = jsbin.root + '/welcome/1/edit?html,live'
       + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
   }
 }

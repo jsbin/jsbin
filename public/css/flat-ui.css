@@ -1,0 +1,85 @@
+/*#panels a:nth-child(4) {
+ display: none;
+}
+#panels a:nth-child(3).active + a ,
+#panels a:nth-child(4).active {
+ display: inline-block;
+}*/
+
+/* nav */
+#control,
+.control {
+ background: rgb(237, 237, 237);
+ background: hsl(0, 0%, 93%);
+ border-bottom: rgb(191, 191, 191) solid 1px;
+ border-bottom: hsl(0, 0%, 75%) solid 1px;
+}
+#control *,
+.control * {
+ text-shadow: none;
+ /* font-family: opensans; */
+}
+
+/* toggles */
+.hasContent {
+ font-weight: bold;
+ background: none;
+ }
+.hasContent:after {
+ display: none;
+ }
+.hasContent.active {
+ font-weight: normal;
+ }
+
+/* thick line at the top of the panel */
+.panel:before,
+.focus.panel:before {
+ background: none !important;
+ }
+
+/*panel backgrounds*/  
+.panel {
+ background: rgb(247, 247, 247);
+ background: hsl(0, 0%, 97%);
+ }
+.panel.focus {
+ background: #fff;
+ }
+/*panel borders*/
+.stretch.panelwrapper {
+ border-left-color: rgb(230, 230, 230) !important;
+ border-left-color: hsl(60, 0%, 90%) !important;
+ background: white !important;
+ }
+/* panel borders hovered */
+.resize:hover + .stretch.panelwrapper {
+ border-left-color: #39f !important;
+ border-left-style: dashed !important;
+ }
+.resize {
+ cursor:move !important;
+ }
+
+/* panel menus */
+.label.menu span strong a {
+ color: rgb(0, 170, 255);		
+ color: hsla(200, 100%, 50%, 1);
+ font-weight: normal;
+ }
+.label .name {
+ color: rgba(0,0,0,0.5);
+ }
+
+/* avatar */
+.avatar img {
+  box-shadow: none;
+}
+ 
+.open .avatar img,
+.avatar:hover img {
+  -webkit-filter: brightness(125%) saturate(125%);
+  -moz-filter: brightness(125%) saturate(125%);
+  -ms-filter: brightness(125%) saturate(125%);
+  filter: brightness(125%) saturate(125%);
+}

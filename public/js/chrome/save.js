@@ -37,7 +37,15 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  saveCode('save', jsbin.saveDisabled === true ? false : true);
+  // if it's connecting to a togetherjs session, save will not trigger a reload
+  var ajax = true;
+  if (jsbin.saveDisabled === true) {
+    ajax = false;
+  }
+  if (jsbin.togetherjs === true) {
+    ajax = true;
+  }
+  saveCode('save', ajax);
 
   return false;
 });
@@ -91,6 +99,9 @@ $document.on('saved', function () {
 
 var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
+// store it back on state
+jsbin.state.checksum = saveChecksum;
+
 if (saveChecksum) {
   // remove the disabled class, but also remove the cancelling event handlers
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
@@ -105,24 +116,16 @@ $document.one('saved', function () {
   $('#share div.disabled').removeClass('disabled').unbind('click mousedown mouseup');
 });
 
-// TODO decide whether to expose this code, it disables live saving for IE users
-// until they refresh - via a great big yellow button. For now this is hidden
-// in favour of the nasty hash hack.
-if (false) { // !saveChecksum && !history.pushState) {
-  jsbin.saveDisabled = true;
-
-  $document.bind('jsbinReady', function () {
-    $document.one('codeChange', function () {
-      $('#start-saving').css('display', 'inline-block');
-    });
-  });
-}
-
 function onSaveError(jqXHR, panelId) {
   if (jqXHR.status === 413) {
     // Hijack the tip label to show an error message.
     $('#tip p').html('Sorry this bin is too large for us to save');
     $(document.documentElement).addClass('showtip');
+  } else if (jqXHR.status === 403) {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
+    });
   } else {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
@@ -173,7 +176,13 @@ if (!jsbin.saveDisabled) {
     }, 500));
 
     $document.bind('codeChange', throttle(function (event, data) {
-      if (!data.panelId) return;
+      if (!data.panelId) {
+        return;
+      }
+
+      if (jsbin.state.deleted) {
+        return;
+      }
 
       var panelId = data.panelId;
 
@@ -185,13 +194,34 @@ if (!jsbin.saveDisabled) {
 
       saving.inprogress(true);
 
-      if (!saveChecksum) {
+      // We force a full save if there's no checksum OR if there's no bin code/url
+      if (!saveChecksum || !jsbin.state.code) {
         // create the bin and when the response comes back update the url
         saveCode('save', true);
       } else {
         updateCode(panelId);
       }
     }, 250));
+  });
+} else {
+  $document.one('jsbinReady', function () {
+    var shown = false;
+    if (!jsbin.embed && !jsbin.sandbox) {
+      $document.on('codeChange', function (event, data) {
+        if (!data.onload && !shown && data.origin !== 'setValue') {
+          shown = true;
+          var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;
+          var cmd = ismac ? '⌘' : 'ctrl';
+          var shift = ismac ? '⇧' : 'shift';
+          var plus = ismac ? '' : '+';
+
+          $document.trigger('tip', {
+            type: 'notification',
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+          });
+        }
+      });
+    }
   });
 }
 
@@ -309,19 +339,22 @@ function saveCode(method, ajax, ajaxCallback) {
             edit;
 
         $form.attr('action', data.url + '/save');
-        ajaxCallback && ajaxCallback(data);
+        if (ajaxCallback) {
+          ajaxCallback(data);
+        }
 
         sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
+        jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
 
         // getURL(true) gets the jsbin without the root attached
-        $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
-        edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
-        $binGroup.find('td.url a span.first').removeClass('first');
-        $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
+        // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
+        // edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
+        // $binGroup.find('td.url a span.first').removeClass('first');
+        // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
         $document.trigger('saved');
 
@@ -333,9 +366,7 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: function (jqXHR) {
-        onSaveError(jqXHR);
-      },
+      error: onSaveError,
       complete: function () {
         saving.inprogress(false);
       }

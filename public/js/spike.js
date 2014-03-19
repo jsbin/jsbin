@@ -205,8 +205,22 @@ function codecastStream() {
  * Spike
  */
 
+function isCodeCasting() {
+  var pathname = location.pathname;
+  var edit = '/edit';
+  var watch = '/watch';
+
+  if (pathname.slice(edit.length * -1) === edit) {
+    return true;
+  } else if (pathname.slice(watch.length * -1) === watch) {
+    return true;
+  }
+
+  return false;
+}
+
 var id = location.pathname.replace(/\/(preview|edit|watch).*$/, ''),
-    codecasting = location.pathname.indexOf('/watch') !== -1;
+    codecasting = isCodeCasting();
     queue = [],
     msgType = '',
     useSS = false,
@@ -220,9 +234,12 @@ setTimeout(function () {
   } else {
     renderStream();
   }
-  es.addEventListener('stats', function () {
-    // Could handle stats events here
-  });
+  if (window.jQuery) {
+    var $document = $(document);
+    es.addEventListener('stats', function (event) {
+      $document.trigger('stats', [event.data]);
+    });
+  }
 }, 500);
 
 // If this is the render stream, restore data from before the last reload if

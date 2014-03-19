@@ -9,13 +9,13 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.8.11",
+  "version": "3.13.1",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
   "repository": {
     "type": "git",
-    "url": "git://github.com/remy/jsbin.git"
+    "url": "git://github.com/jsbin/jsbin.git"
   },
   "scripts": {
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
@@ -26,8 +26,7 @@
   "dependencies": {
     "express": "3.0.x",
     "asyncjs": "0.0.7",
-    "hogan.js": "2.0.0",
-    "sqlite3": "~2.1.19",
+    "sqlite3": "~2.2.0",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
     "less": "~1.4.2",
@@ -45,8 +44,12 @@
     "bcrypt-nodejs": "0.0.3",
     "semver": "~2.1.0",
     "rsvp": "~3.0.1",
-    "undefsafe": "0.0.1",
-    "feature-gateway": "0.0.1"
+    "undefsafe": "0.0.2",
+    "feature-gateway": "0.0.3",
+    "hbs": "~2.4.0",
+    "replify": "~1.2.0",
+    "moment": "~2.5.1",
+    "memcached": "~0.2.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -2,11 +2,18 @@
 
 Remy Sharp
 @rem
-Founder / primary developer
+Founder / Lead developer
 
 Danny Hope
 @yandle
 UX design
+
+# Developers:
+
+Fabien O'Carroll
+@allouis_
+
+# Alumni:
 
 Aron Carroll
 @aroncarroll

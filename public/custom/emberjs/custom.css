@@ -1,4 +1,4 @@
-#control {
+#control, .control {
   background: url('/custom/emberjs/navigation_background.png') repeat-x;
   border-bottom: 1px solid #AA412F;
   -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
@@ -55,4 +55,8 @@
   -webkit-box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0,inset rgba(0, 0, 0, 0.17) 0 1px 1px;
   -moz-box-shadow: rgba(255,255,255,0.15) 0 1px 0,inset rgba(0,0,0,0.17) 0 1px 1px;
   box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0,inset rgba(0, 0, 0, 0.17) 0 1px 1px;
+}
+
+.focusbtn {
+  background: rgba(0,0,0,0);
 }

@@ -183,10 +183,6 @@ panels.restore = function () {
     panels.saveOnExit = true;
   }
 
-  console.log(toopen);
-
-
-
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query
   i = 0;

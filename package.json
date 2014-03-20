@@ -44,6 +44,7 @@
     "bcrypt-nodejs": "0.0.3",
     "semver": "~2.1.0",
     "rsvp": "~3.0.1",
+    "stripe": "~2.3.2",
     "undefsafe": "0.0.2",
     "feature-gateway": "0.0.3",
     "hbs": "~2.4.0",

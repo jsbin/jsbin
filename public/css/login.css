@@ -153,3 +153,44 @@ body {
 .info a {
   color: #111;
 }
+
+/*
+ * Github Button
+ */
+
+.btn-github {
+  font-size: 1.4em;
+  font-weight: 200;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0px 1px 1px #eee;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #aaa;
+}
+.btn-github:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+
+.btn-github img {
+  vertical-align: middle;
+  top: -2px;
+  position: relative;
+  margin-right: 2px;
+  border: none;
+  width: 22px;
+  /* display: inline-block; */
+  /* float: left; */
+}
+
+.login .btn-github {
+  display: block;
+  width: 100%;
+}

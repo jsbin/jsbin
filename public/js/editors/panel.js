@@ -27,19 +27,15 @@ if (!CodeMirror.commands) {
   CodeMirror.commands = {};
 }
 
-CodeMirror.commands.autocomplete = function(cm) {
+// Save a reference to this autocomplete function to use it when Tern scripts
+// are loaded but not used, since they will automatically overwrite the
+// CodeMirror autocomplete function with CodeMirror.showHint
+var simpleJsHint = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    var pos = cm.getCursor();
-    var indent = '';
-    if (cm.options.indentWithTabs) {
-      indent = '\t';
-    }
-    else {
-      indent = new Array(cm.options.indentUnit + 1).join(' ');
-    }
-    return cm.replaceRange(indent, pos);
+    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
   }
 };
+CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   return CodeMirror.snippets(cm);

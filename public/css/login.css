@@ -159,7 +159,7 @@ body {
  */
 
 .btn-github {
-  font-size: 1.4em;
+  font-size: 0.8em;
   font-weight: 200;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
@@ -174,9 +174,11 @@ body {
   text-align: center;
   text-decoration: none;
   border-bottom: 2px solid #aaa;
+  color:#111;
 }
 .btn-github:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+  color:#111;
 }
 
 .btn-github img {

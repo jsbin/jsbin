@@ -175,6 +175,7 @@ body {
   text-decoration: none;
   border-bottom: 2px solid #aaa;
   color:#111;
+  margin-top:25px;
 }
 .btn-github:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);

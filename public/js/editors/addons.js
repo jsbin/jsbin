@@ -17,14 +17,14 @@
 
   var addons = {
     closebrackets: {
-      url: '/js/vendor/codemirror3/addon/edit/closebrackets.js',
+      url: '/js/vendor/codemirror4/addon/edit/closebrackets.js',
       test: defaultTest('autoCloseBrackets'),
       done: function (cm) {
         setOption(cm, 'autoCloseBrackets', true);
       }
     },
     highlight: {
-      url: '/js/vendor/codemirror3/addon/search/match-highlighter.js',
+      url: '/js/vendor/codemirror4/addon/search/match-highlighter.js',
       test: defaultTest('highlightSelectionMatches'),
       done: function (cm) {
         setOption(cm, 'highlightSelectionMatches', true);
@@ -32,10 +32,10 @@
     },
     vim: {
       url: [
-        '/js/vendor/codemirror3/addon/dialog/dialog.css',
-        '/js/vendor/codemirror3/keymap/vim.js',
-        '/js/vendor/codemirror3/addon/dialog/dialog.js',
-        '/js/vendor/codemirror3/addon/search/searchcursor.js'
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/keymap/vim.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js',
+        '/js/vendor/codemirror4/addon/search/searchcursor.js'
       ],
       test: defaultTest('vimMode'),
       done: function (cm) {
@@ -45,12 +45,12 @@
     },
     emacs: {
       url: [
-        '/js/vendor/codemirror3/keymap/emacs.js',
-        '/js/vendor/codemirror3/addon/edit/matchbrackets.js',
-        '/js/vendor/codemirror3/addon/comment/comment.js',
-        '/js/vendor/codemirror3/addon/dialog/dialog.js',
-        '/js/vendor/codemirror3/addon/search/searchcursor.js',
-        '/js/vendor/codemirror3/addon/search/search.js'
+        '/js/vendor/codemirror4/keymap/emacs.js',
+        '/js/vendor/codemirror4/addon/edit/matchbrackets.js',
+        '/js/vendor/codemirror4/addon/comment/comment.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js',
+        '/js/vendor/codemirror4/addon/search/searchcursor.js',
+        '/js/vendor/codemirror4/addon/search/search.js'
       ],
       test: function () {
         return CodeMirror.prototype.getSearchCursor &&
@@ -66,8 +66,8 @@
     },
     matchtags: {
       url: [
-        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
-        '/js/vendor/codemirror3/addon/edit/matchtags.js'
+        '/js/vendor/codemirror4/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror4/addon/edit/matchtags.js'
       ],
       test: function () {
         return CodeMirror.scanForClosingTag &&
@@ -79,7 +79,7 @@
       }
     },
     trailingspace: {
-      url: '/js/vendor/codemirror3/addon/edit/trailingspace.js',
+      url: '/js/vendor/codemirror4/addon/edit/trailingspace.js',
       test: defaultTest('showTrailingSpace'),
       done: function (cm) {
         setOption(cm, 'showTrailingSpace', true);
@@ -87,12 +87,12 @@
     },
     fold: {
       url: [
-        '/js/vendor/codemirror3/addon/fold/foldgutter.css',
-        '/js/vendor/codemirror3/addon/fold/foldcode.js',
-        '/js/vendor/codemirror3/addon/fold/foldgutter.js',
-        '/js/vendor/codemirror3/addon/fold/brace-fold.js',
-        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
-        '/js/vendor/codemirror3/addon/fold/comment-fold.js'
+        '/js/vendor/codemirror4/addon/fold/foldgutter.css',
+        '/js/vendor/codemirror4/addon/fold/foldcode.js',
+        '/js/vendor/codemirror4/addon/fold/foldgutter.js',
+        '/js/vendor/codemirror4/addon/fold/brace-fold.js',
+        '/js/vendor/codemirror4/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror4/addon/fold/comment-fold.js'
       ],
       test: function () {
         return CodeMirror.helpers.fold &&

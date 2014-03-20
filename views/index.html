@@ -161,9 +161,7 @@
                       </a>
                       <span class="login-group">
                         Or
-                        <a class="btn-login" href="/login">
-                          <span>use your email address</span>
-                        </a>
+                        <a class="btn-login" href="/login">use your email address</a>
                       </span>
                     </div>
                   </div>
@@ -352,7 +350,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 </div>
 <div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
   <p>
-    {{#if flash_tip}}{{flash_tip}}{{/if}}
+    {{#if flash_tip}}{{{flash_tip}}}{{/if}}
     {{#unless flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/unless}}
   </p>
   <a class="dismiss" href="#">Dismiss x</a>

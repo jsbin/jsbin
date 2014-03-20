@@ -26,7 +26,7 @@ window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 
 // These are keys that CodeMirror (and Emmet) should never take over
 // ref: https://gist.github.com/rodneyrehm/5213304
-if (CodeMirror.keyMap) {
+if (CodeMirror.keyMap && CodeMirror.keyMap['default']) {
   delete CodeMirror.keyMap['default']['Cmd-L'];
   delete CodeMirror.keyMap['default']['Cmd-T'];
   delete CodeMirror.keyMap['default']['Cmd-W'];

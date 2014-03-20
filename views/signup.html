@@ -1,16 +1,20 @@
-<!DOCTYPE html>
-<html id="jsbin" lang="en">
-  <head>
-  </head>
-  <body>
-    <form action="/subscribe/test_pro" method="POST">
-      <script
-        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="pk_wLNay9qUFwbDwmFBt5F718Qg11Ts0"
-        data-name="JsBin Pro!"
-        data-description="Pro Account - $15 p/m"
-        data-amount="1500">
-      </script>
-    </form>
-  </body>
-</html>
+
+<h1>  JS Bin Pro</h1>
+
+<p>  Hi {{user.name}}, we think you deserve to go pro and here's why!
+</p>
+
+<p>  You can have private bins, and more!
+</p>
+
+
+
+<form action="/subscribe/test_pro" method="POST">
+  <script
+    src="https://checkout.stripe.com/checkout.js"    class="stripe-button"
+    data-key="{{publicToken}}"
+    data-name="JsBin Pro!"
+    data-description="Pro Account - $15 p/m"
+    data-amount="1500">
+  </script>
+</form>

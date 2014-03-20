@@ -85,23 +85,6 @@ function getQuery(qs) {
   return obj;
 }
 
-function getQuery2(s) {
-  'use strict';
-  var query = {};
-
-  s.replace(/\b([^&=]*)(?:=([^&=]*))?\b/g, function (m, a, d) {
-    if (typeof query[a] !== 'undefined') {
-      query[a] += ',' + d;
-    } else {
-      query[a] = d;
-    }
-  });
-
-  delete query[''];
-
-  return query;
-}
-
 panels.restore = function () {
   'use strict';
   /*globals jsbin, editors, $window, $document*/

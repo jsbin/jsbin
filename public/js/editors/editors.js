@@ -186,6 +186,11 @@ panels.restore = function () {
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query
   i = 0;
+
+  if (toopen.length === 0) {
+    toopen = defaultPanels;
+  }
+
   if (toopen.length) {
     for (name in state) {
       if (toopen.indexOf(name) !== -1) {

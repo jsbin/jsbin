@@ -44,6 +44,9 @@
               {{#feature request "togetherjs"}}
               <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration" id="togetherjs-jsbin-button">Start Collaboration</a>
               {{/feature}}
+              {{#feature request "sharejs"}}
+              <a href="#" class="button group" onclick="startShareJs(); return false" data-end-sharejs-html="End Collaboration ShareJS" id="sharejs-jsbin-button">Start Collaboration ShareJS</a>
+              {{/feature}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
@@ -540,6 +543,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/chrome/togetherjs.js{{cacheBust}}"></script>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
 {{/feature}}
+{{#feature request "sharejs"}}
+<script src="{{static}}/js/chrome/sharejs.js{{cacheBust}}"></script>
+{{/feature}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}
@@ -569,6 +575,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/editors/defs.js"></script>
 <script src="{{static}}/js/editors/definitions.js"></script>
 <script src="{{static}}/js/editors/tern.js"></script>
+{{/feature}}
+{{#feature request "sharejs"}}
+<script>
+// This is ugly and it's just temporary, but with the way everything works
+// we'll need two files, as we need to initialise the jsbin properties as soon
+// as possible, but start the connection only after CodeMirror is ready
+  if (jsbin.sharejs === true) {
+    openShareJs();
+  }
+</script>
 {{/feature}}
 </body>
 </html>

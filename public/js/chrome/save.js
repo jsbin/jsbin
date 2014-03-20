@@ -45,6 +45,9 @@ $('a.save').click(function (event) {
   if (jsbin.togetherjs === true) {
     ajax = true;
   }
+  if (jsbin.sharejs === true) {
+    ajax = true;
+  }
   saveCode('save', ajax);
 
   return false;

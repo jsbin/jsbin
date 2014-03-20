@@ -265,6 +265,10 @@ $('#createnew').click(function (event) {
     TogetherJS();
   }
 
+  if (jsbin.collaborating && sharejs) {
+    closeShareJs();
+  }
+
   // clear out the write checksum too
   sessionStorage.removeItem('checksum');
 

@@ -191,11 +191,4 @@ body {
   margin-right: 2px;
   border: none;
   width: 22px;
-  /* display: inline-block; */
-  /* float: left; */
-}
-
-.login .btn-github {
-  display: block;
-  width: 100%;
 }

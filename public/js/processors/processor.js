@@ -279,8 +279,8 @@ var processors = jsbin.processors = (function () {
       extensions: ['less'],
       url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
       init: function (ready) {
-        // less is now included in the css mode - how to activate it?
-        // $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/less/less.js', ready);
+        // In CodeMirror 4, less is now included in the css mode, so no files to load
+        ready();
       },
       handler: function (source) {
         var css = '';
@@ -420,6 +420,11 @@ var processors = jsbin.processors = (function () {
     // because it doesn't work properly
     var smartIndent = cmMode !== 'jsx';
     cmMode = cmMode === 'jsx' ? 'javascript' : cmMode;
+
+    // For less, the mode definition is changed in CodeMirror 4
+    if (cmMode === 'less') {
+      cmMode = 'text/x-less';
+    }
 
     if (!panel) return;
 

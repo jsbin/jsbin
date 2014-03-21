@@ -8,7 +8,8 @@
     vim: false,
     emacs: false,
     trailingspace: false,
-    fold: false
+    fold: false,
+    sublime: false
   };
 
   if (!jsbin.settings.addons) {
@@ -34,8 +35,7 @@
       url: [
         '/js/vendor/codemirror4/addon/dialog/dialog.css',
         '/js/vendor/codemirror4/keymap/vim.js',
-        '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/vendor/codemirror4/addon/search/searchcursor.js'
+        '/js/vendor/codemirror4/addon/dialog/dialog.js'
       ],
       test: defaultTest('vimMode'),
       done: function (cm) {
@@ -45,19 +45,14 @@
     },
     emacs: {
       url: [
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
         '/js/vendor/codemirror4/keymap/emacs.js',
-        '/js/vendor/codemirror4/addon/edit/matchbrackets.js',
-        '/js/vendor/codemirror4/addon/comment/comment.js',
         '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/vendor/codemirror4/addon/search/searchcursor.js',
         '/js/vendor/codemirror4/addon/search/search.js'
       ],
       test: function () {
-        return CodeMirror.prototype.getSearchCursor &&
-               CodeMirror.optionHandlers.matchBrackets &&
-               CodeMirror.optionHandlers.openDialog &&
+        return jsbin.panels.panels.javascript.editor.openDialog &&
                CodeMirror.commands.find &&
-               CodeMirror.optionHandlers.lineComment &&
                CodeMirror.keyMap.emacs;
       },
       done: function (cm) {
@@ -106,6 +101,29 @@
         }});
         setOption(cm, 'foldGutter', true);
         setOption(cm, 'gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
+      }
+    },
+    sublime: {
+      url: [
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/keymap/sublime.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js',
+        '/js/vendor/codemirror4/addon/search/search.js'
+      ],
+      test: function () {
+        return jsbin.panels.panels.javascript.editor.openDialog &&
+               CodeMirror.commands.find &&
+               CodeMirror.keyMap.sublime;
+      },
+      done: function (cm) {
+        setOption(cm, 'keyMap', 'sublime');
+        // Keys that CodeMirror should never take over
+        var cmd = $.browser.platform === 'mac' ? 'Cmd' : 'Ctrl';
+        delete CodeMirror.keyMap['sublime'][cmd + '-L'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-T'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-W'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-J'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-R'];
       }
     }
   };

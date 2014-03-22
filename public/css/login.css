@@ -7,6 +7,7 @@ body {
   max-width: 300px;
   margin: 0 auto;
   margin-top: 50px;
+  font-family: 'helvetica neue', arial, sans-serif;
 }
 .form-container.login {
  box-shadow: 2px 2px 1px -2px rgba(0,0,0,0.5);
@@ -159,7 +160,7 @@ body {
  */
 
 .btn-github {
-  font-size: 0.8em;
+  /* font-size: 0.8em; */
   font-weight: 200;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
@@ -176,7 +177,7 @@ body {
   border-bottom: 2px solid #aaa;
   color:#111;
   display: block;
-  width: 260px;
+  width: 280px;
   margin: 45px auto 0;
 }
 .btn-github:hover {
@@ -184,11 +185,13 @@ body {
   color:#111;
 }
 
-.btn-github img {
+#body .btn-github img {
   vertical-align: middle;
   top: -2px;
   position: relative;
   margin-right: 2px;
   border: none;
   width: 22px;
+  display: inline;
+  border: 0;
 }

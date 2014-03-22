@@ -101,10 +101,6 @@ var Panel = function (name, settings) {
 
     cmSettings.extraKeys = {};
 
-    // cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
-    //   foldFunc[name](cm, cm.getCursor().line);
-    // };
-
     // only the js panel for now, I'd like this to work in
     // the HTML panel too, but only when you were in JS scope
     if (name === 'javascript') {

@@ -34,6 +34,8 @@ var code = {
   dowhile: 'var x=0;\ndo\n {\n x++;\n } while (x < 3);\nreturn x;',
   dowhilenested: 'var x=0;\n do\n {\n x++;\n var b = 0;\n do {\n b++; \n } while (b < 3);\n } while (x < 3);\nreturn x;',
   disabled: '// noprotect\nvar x=0;\ndo\n {\n x++;\n } while (x < 3);\nreturn x;',
+  continues: 'var n = 0,\n i = 0,\n j = 0;\n \n outside:\n for (i; i < 10; i += 1) {\n for (j; j < 10; j += 1) {\n if (i === 5 && j === 5) {\n continue outside;\n }\n n += 1;\n }\n }\n \n return n;\n;',
+  continues2: 'var x = 0;\nLABEL1: do {\n  x = x + 2;\n  if (x < 100) break LABEL1;\n  if (x < 100) continue LABEL1;\n} \nwhile(0);\n\nreturn x;',
 };
 
 
@@ -206,4 +208,16 @@ describe('loop', function () {
     assert(spy(compiled) === 3);
 
   });
+
+  it('should handle continue statements and gotos', function () {
+    var c = code.continues;
+    var compiled = loopProtect.rewriteLoops(c);
+    assert(spy(compiled) === 10);
+
+    c = code.continues2;
+    compiled = loopProtect.rewriteLoops(c);
+    assert(spy(compiled) === 2);
+  });
+
+
 });

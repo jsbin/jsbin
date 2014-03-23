@@ -32,7 +32,7 @@ if (!CodeMirror.commands) {
 // CodeMirror autocomplete function with CodeMirror.showHint
 var simpleJsHint = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+    return CodeMirror.simpleHint(cm, CodeMirror.hint.javascript);
   }
 };
 CodeMirror.commands.autocomplete = simpleJsHint;

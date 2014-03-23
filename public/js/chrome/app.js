@@ -27,11 +27,12 @@ window.CodeMirror = CodeMirror; // fix to allow code mirror to break naturally
 // These are keys that CodeMirror (and Emmet) should never take over
 // ref: https://gist.github.com/rodneyrehm/5213304
 if (CodeMirror.keyMap && CodeMirror.keyMap['default']) {
-  delete CodeMirror.keyMap['default']['Cmd-L'];
-  delete CodeMirror.keyMap['default']['Cmd-T'];
-  delete CodeMirror.keyMap['default']['Cmd-W'];
-  delete CodeMirror.keyMap['default']['Cmd-J'];
-  delete CodeMirror.keyMap['default']['Cmd-R'];
+  var cmd = $.browser.platform === 'mac' ? 'Cmd' : 'Ctrl';
+  delete CodeMirror.keyMap['default'][cmd + '-L'];
+  delete CodeMirror.keyMap['default'][cmd + '-T'];
+  delete CodeMirror.keyMap['default'][cmd + '-W'];
+  delete CodeMirror.keyMap['default'][cmd + '-J'];
+  delete CodeMirror.keyMap['default'][cmd + '-R'];
 }
 
 var link = document.createElement('link');

@@ -8,7 +8,8 @@
     vim: false,
     emacs: false,
     trailingspace: false,
-    fold: false
+    fold: false,
+    sublime: false
   };
 
   if (!jsbin.settings.addons) {
@@ -17,14 +18,14 @@
 
   var addons = {
     closebrackets: {
-      url: '/js/vendor/codemirror3/addon/edit/closebrackets.js',
+      url: '/js/vendor/codemirror4/addon/edit/closebrackets.js',
       test: defaultTest('autoCloseBrackets'),
       done: function (cm) {
         setOption(cm, 'autoCloseBrackets', true);
       }
     },
     highlight: {
-      url: '/js/vendor/codemirror3/addon/search/match-highlighter.js',
+      url: '/js/vendor/codemirror4/addon/search/match-highlighter.js',
       test: defaultTest('highlightSelectionMatches'),
       done: function (cm) {
         setOption(cm, 'highlightSelectionMatches', true);
@@ -32,10 +33,9 @@
     },
     vim: {
       url: [
-        '/js/vendor/codemirror3/addon/dialog/dialog.css',
-        '/js/vendor/codemirror3/keymap/vim.js',
-        '/js/vendor/codemirror3/addon/dialog/dialog.js',
-        '/js/vendor/codemirror3/addon/search/searchcursor.js'
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/keymap/vim.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js'
       ],
       test: defaultTest('vimMode'),
       done: function (cm) {
@@ -45,19 +45,14 @@
     },
     emacs: {
       url: [
-        '/js/vendor/codemirror3/keymap/emacs.js',
-        '/js/vendor/codemirror3/addon/edit/matchbrackets.js',
-        '/js/vendor/codemirror3/addon/comment/comment.js',
-        '/js/vendor/codemirror3/addon/dialog/dialog.js',
-        '/js/vendor/codemirror3/addon/search/searchcursor.js',
-        '/js/vendor/codemirror3/addon/search/search.js'
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/keymap/emacs.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js',
+        '/js/vendor/codemirror4/addon/search/search.js'
       ],
       test: function () {
-        return CodeMirror.prototype.getSearchCursor &&
-               CodeMirror.optionHandlers.matchBrackets &&
-               CodeMirror.optionHandlers.openDialog &&
+        return jsbin.panels.panels.javascript.editor.openDialog &&
                CodeMirror.commands.find &&
-               CodeMirror.optionHandlers.lineComment &&
                CodeMirror.keyMap.emacs;
       },
       done: function (cm) {
@@ -66,8 +61,8 @@
     },
     matchtags: {
       url: [
-        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
-        '/js/vendor/codemirror3/addon/edit/matchtags.js'
+        '/js/vendor/codemirror4/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror4/addon/edit/matchtags.js'
       ],
       test: function () {
         return CodeMirror.scanForClosingTag &&
@@ -79,7 +74,7 @@
       }
     },
     trailingspace: {
-      url: '/js/vendor/codemirror3/addon/edit/trailingspace.js',
+      url: '/js/vendor/codemirror4/addon/edit/trailingspace.js',
       test: defaultTest('showTrailingSpace'),
       done: function (cm) {
         setOption(cm, 'showTrailingSpace', true);
@@ -87,12 +82,12 @@
     },
     fold: {
       url: [
-        '/js/vendor/codemirror3/addon/fold/foldgutter.css',
-        '/js/vendor/codemirror3/addon/fold/foldcode.js',
-        '/js/vendor/codemirror3/addon/fold/foldgutter.js',
-        '/js/vendor/codemirror3/addon/fold/brace-fold.js',
-        '/js/vendor/codemirror3/addon/fold/xml-fold.js',
-        '/js/vendor/codemirror3/addon/fold/comment-fold.js'
+        '/js/vendor/codemirror4/addon/fold/foldgutter.css',
+        '/js/vendor/codemirror4/addon/fold/foldcode.js',
+        '/js/vendor/codemirror4/addon/fold/foldgutter.js',
+        '/js/vendor/codemirror4/addon/fold/brace-fold.js',
+        '/js/vendor/codemirror4/addon/fold/xml-fold.js',
+        '/js/vendor/codemirror4/addon/fold/comment-fold.js'
       ],
       test: function () {
         return CodeMirror.helpers.fold &&
@@ -106,6 +101,29 @@
         }});
         setOption(cm, 'foldGutter', true);
         setOption(cm, 'gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
+      }
+    },
+    sublime: {
+      url: [
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/keymap/sublime.js',
+        '/js/vendor/codemirror4/addon/dialog/dialog.js',
+        '/js/vendor/codemirror4/addon/search/search.js'
+      ],
+      test: function () {
+        return jsbin.panels.panels.javascript.editor.openDialog &&
+               CodeMirror.commands.find &&
+               CodeMirror.keyMap.sublime;
+      },
+      done: function (cm) {
+        setOption(cm, 'keyMap', 'sublime');
+        // Keys that CodeMirror should never take over
+        var cmd = $.browser.platform === 'mac' ? 'Cmd' : 'Ctrl';
+        delete CodeMirror.keyMap['sublime'][cmd + '-L'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-T'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-W'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-J'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-R'];
       }
     }
   };
@@ -165,52 +183,6 @@
   }
 
   var options = Object.keys(jsbin.settings.addons);
-
-  /**
-   * This was a good idea at the time, but then it does weird things in
-   * production. I don't know why, so I've commented it out, and left it
-   * here because it was kinda awesome at the time. For now, it'll be
-   * compressed out of sight.
-   */
-
-  // if (Object.defineProperty && jsbin.settings) {
-  //   options.forEach(function (addon) {
-  //     try {
-  //       var value = jsbin.settings.addons[addon];
-
-  //       Object.defineProperty(jsbin.settings.addons, addon, {
-  //         configurable: true,
-  //         enumerable: true,
-  //         get: function () {
-  //           return value;
-  //         },
-  //         set: function (newValue) {
-  //           value = newValue;
-  //           if (value) {
-  //             loadAddon(addon);
-  //           } else {
-  //             var fn = addons[addon].done.toString();
-  //             var opts = [];
-  //             fn.replace(/setOption\(cm, (.*),.*;/g, function (all, opt) {
-  //               opts.push(opt.replace(/['"]/g, ''));
-  //             });
-
-  //             jsbin.panels.allEditors(function (panel) {
-  //               if (panel.editor) {
-  //                 opts.forEach(function (opt) {
-  //                   panel.editor.setOption(opt, false);
-  //                 });
-  //               }
-  //             });
-
-  //           }
-  //         }
-  //       });
-  //     } catch (e) {
-  //       // IE8 seems to attempt the code above, but it totally fails
-  //     }
-  //   });
-  // }
 
   function loadAddon(key) {
     var addon = addons[key];

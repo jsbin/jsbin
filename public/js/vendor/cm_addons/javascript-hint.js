@@ -54,7 +54,7 @@
             to: Pos(cur.line, token.end)};
   }
 
-  CodeMirror.javascriptHint = function(editor, options) {
+  CodeMirror.registerHelper('hint', 'javascript', function(editor, options) {
     // JSBIN EDIT (note: dedupe is in jsbin.js)
     var keywords = dedupe(javascriptKeywords.concat(editor.getCode().replace(/\W/g, ' ').replace(/\s+/g, ' ').trim().split(' '))).sort(function (a, b) {
       return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
@@ -67,7 +67,7 @@
     return scriptHint(editor, keywords,
                       function (e, cur) {return e.getTokenAt(cur);},
                       options);
-  };
+  });
 
   function getCoffeeScriptToken(editor, cur) {
   // This getToken, it is for coffeescript, imitates the behavior of

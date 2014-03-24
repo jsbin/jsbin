@@ -51,7 +51,8 @@
     "replify": "~1.2.0",
     "moment": "~2.5.1",
     "memcached": "~0.2.6",
-    "passport-dropbox-oauth2": "~0.1.5"
+    "passport-dropbox-oauth2": "~0.1.5",
+    "handlebars": "~2.0.0-alpha.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

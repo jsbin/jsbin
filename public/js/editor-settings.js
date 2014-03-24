@@ -25,8 +25,7 @@
 		'theme',
 		'tabSize',
 		'lineWrapping',
-		'lineNumbers',
-		'font'
+		'lineNumbers'
 	];
 
 
@@ -71,11 +70,9 @@
 		editor.setOption('vimMode', $vimMode.prop('checked'));
 		editor.setOption('lineWrapping', $lineWrapping.prop('checked'));
 		editor.setOption('lineNumbers', $lineNumbers.prop('checked'));
-    editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
+    	editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
 		editor.setOption('tabSize', $tabSize.val());
-		//editor.setOption('indentUnit', $tabSize.val());
 		editor.setOption('theme', $theme.val());
-		// editor.setOption('font', $fontsize.val());
 		$CodeMirror.css('font-size', $fontsize.val()+'px');
 		editor.refresh();
 
@@ -86,7 +83,7 @@
 
 		// Save locally
 		localStorageSettings.editor = newSettings;
-		localStorageSettings.font = $fontsize.val();
+		localStorageSettings.editor.font = $fontsize.val();
 		localStorage.settings = JSON.stringify(localStorageSettings);
 
 		// Save on server
@@ -94,7 +91,7 @@
 			type: 'POST',
 			dataType: 'json',
 			data: {
-				settings: JSON.stringify(newSettings),
+				settings: JSON.stringify(localStorageSettings.editor),
 				_csrf: $csrf.val()
 			},
 			success: function() {

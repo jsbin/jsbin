@@ -124,8 +124,8 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   }
 });
 
-jsbin.getURL = function (withoutRoot) {
-  var url = withoutRoot ? '' : jsbin.root,
+jsbin.getURL = function (withoutRoot, share) {
+  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
       state = jsbin.state;
 
   if (state.code) {

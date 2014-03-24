@@ -5,8 +5,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-2.0.3.min.js',
-    'label': 'jQuery 2.0.3',
+    'url': 'http://code.jquery.com/jquery-2.1.0.min.js',
+    'label': 'jQuery 2.1.0',
     'group': 'jQuery'
   },
   {
@@ -15,18 +15,13 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-1.10.2.min.js',
-    'label': 'jQuery 1.10.2',
+    'url': 'http://code.jquery.com/jquery-1.11.0.min.js',
+    'label': 'jQuery 1.11.0',
     'group': 'jQuery'
   },
   {
     'url': 'http://code.jquery.com/jquery-1.9.1.min.js',
     'label': 'jQuery 1.9.1',
-    'group': 'jQuery'
-  },
-  {
-    'url': 'http://code.jquery.com/jquery-1.8.3.min.js',
-    'label': 'jQuery 1.8.3',
     'group': 'jQuery'
   },
   {
@@ -41,7 +36,7 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
-      'http://code.jquery.com/jquery-1.10.2.min.js',
+      'http://code.jquery.com/jquery-1.11.0.min.js',
       'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
     ],
     'label': 'jQuery UI 1.10.4',
@@ -59,7 +54,7 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'http://code.jquery.com/jquery-1.10.2.min.js',
+      'http://code.jquery.com/jquery-1.11.0.min.js',
       'http://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
@@ -67,11 +62,11 @@ var libraries = [
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css',
-      'http://code.jquery.com/jquery-1.10.2.min.js',
-      'http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js'
+      'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css',
+      'http://code.jquery.com/jquery-1.11.0.min.js',
+      'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'
     ],
-    'label': 'jQuery Mobile 1.4.0',
+    'label': 'jQuery Mobile 1.4.2',
     'group': 'jQuery Mobile'
   },
   {
@@ -257,13 +252,13 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js',
-    'label': 'Angular 1.2.1 Stable',
+    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
+    'label': 'Angular 1.3.0 beta 1 Unstable',
     'group': 'Angular'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js',
-    'label': 'Angular 1.1.5 Unstable',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
+    'label': 'Angular 1.2.14 Stable',
     'group': 'Angular'
   },
   {
@@ -456,6 +451,15 @@ var libraries = [
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
     'label': 'Font Awesome 4.0.3'
+  },
+  {
+    'url': {
+      'url': 'https://openui5.hana.ondemand.com/resources/sap-ui-core.js',
+      'id': 'sap-ui-bootstrap',
+      'data-sap-ui-theme': 'sap_bluecrystal',
+      'data-sap-ui-libs': 'sap.m'
+    },
+    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal'
   }
 ];
 

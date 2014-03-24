@@ -5,10 +5,12 @@
     <title>Account Management</title>
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="{{static}}/images/favicon.png">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:700,400" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{static}}/css/help.css">
-    <link rel="stylesheet" href="{{static}}/css/account.css">
-    {{{analytics}}}
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:700,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{static}}/css/help.css{{cacheBust}}">
+    <link rel="stylesheet" href="{{static}}/css/account.css{{cacheBust}}">
+    {{#if isProduction}}
+      {{{analytics}}}
+    {{/if}}
   </head>
   <body>
     <div id="container">
@@ -16,8 +18,8 @@
       <div class="inner"><a id="back" href="{{root}}"><span class="morewords">Back to JS Bin</span></a>
         <nav>
           <a class="selected" href="{{root}}/account">Account</a>
-          <a href="{{root}}/blog">Blog</a>
-          <a href="{{root}}/help">Help</a>
+          <a href="{{learn}}/blog">Blog</a>
+          <a href="{{learn}}/help">Help</a>
         </nav>
       </div>
       </header>

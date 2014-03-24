@@ -5,7 +5,7 @@
  * true, preventing the loop from running again.
  */
 var loopProtect = (function () {
-
+  'use strict';
   var debug = false ? function () {
     console.log.apply(console, [].slice.apply(arguments));
   } : function () {};
@@ -20,17 +20,16 @@ var loopProtect = (function () {
    * loop, a check function.
    */
   loopProtect.rewriteLoops = function (code, offset) {
-    var recompiled = [],
-        lines = code.split('\n'),
-        re = /\b(for|while|do)\b/g;
-
-    if (!offset) offset = 0;
-
+    var recompiled = [];
+    var lines = code.split('\n');
+    var re = /\b(for|while|do)\b/g;
+    var labelRe = /\b[a-z_]{1}\w+:/i;
     var disableLoopProtection = false;
-
     var method = 'window.runnerWindow.protect';
-    var ignore = {},
-        pushonly = {};
+    var ignore = {};
+    var pushonly = {};
+    var labelPostion = null;
+
 
     var insertReset = function (lineNum, line, matchPosition) {
       // recompile the line with the reset **just** before the actual loop
@@ -39,9 +38,14 @@ var loopProtect = (function () {
       return line.slice(0, matchPosition) + ';' + method + '({ line: ' + lineNum + ', reset: true }); ' + line.slice(matchPosition);
     };
 
+    if (!offset) {
+      offset = 0;
+    }
+
     lines.forEach(function (line, lineNum) {
       // reset our regexp each time.
       re.lastIndex = 0;
+      labelRe.lastIndex = 0;
 
       if (disableLoopProtection) {
         return;
@@ -51,21 +55,24 @@ var loopProtect = (function () {
         disableLoopProtection = true;
       }
 
-      var next = line,
-          index = -1,
-          matchPosition = -1,
-          originalLineNum = lineNum,
-          printLineNumber = lineNum - offset + 1, // +1 since we're humans and don't read lines numbers from zero
-          character = '',
-          dofound = false, // special case for `do` loops, as they're tailed with `while`
-          findwhile = false,
-          cont = true,
-          oneliner = false,
-          terminator = false,
-          matches = line.match(re) || [],
-          match = matches.length ? matches[0] : '',
-          openBrackets = 0,
-          openBraces = 0;
+      if (labelRe.test(line)) {
+        labelPostion = lineNum;
+      }
+
+      var index = -1;
+      var matchPosition = -1;
+      var originalLineNum = lineNum;
+      // +1 since we're humans and don't read lines numbers from zero
+      var printLineNumber = lineNum - offset + 1;
+      var character = '';
+      // special case for `do` loops, as they're end with `while`
+      var dofound = false;
+      var findwhile = false;
+      var terminator = false;
+      var matches = line.match(re) || [];
+      var match = matches.length ? matches[0] : '';
+      var openBrackets = 0;
+      var openBraces = 0;
 
       if (ignore[lineNum]) {
         debug(' -exit: ignoring line ' + lineNum +': ' + line);
@@ -97,7 +104,7 @@ var loopProtect = (function () {
         // of a string or part of a comment
         while (--index > -1) {
           character = line.substr(index, 1);
-          if (character === '"' || character === "'" || character === '.') {
+          if (character === '"' || character === '\'' || character === '.') {
             // our loop keyword was actually either in a string or a property, so let's exit and ignore this line
             debug('- exit: matched inside a string or property key');
             recompiled.push(line);
@@ -120,10 +127,11 @@ var loopProtect = (function () {
         // and if there's one (and not a closing `*/`), then we'll
         // ignore this line as a comment
         if (lineNum > 0) {
-          var j = lineNum,
-              closeCommentTags = 1, // let's assume we're inside a comment
-              closePos = -1,
-              openPos = -1;
+          var j = lineNum;
+          var closeCommentTags = 1; // let's assume we're inside a comment
+          var closePos = -1;
+          var openPos = -1;
+
           do {
             j -= 1;
             debug('looking backwards ' + lines[j]);
@@ -209,14 +217,25 @@ var loopProtect = (function () {
             }
 
             // work out where to put the reset
-            if (lineNum === originalLineNum) {
+            if (lineNum === originalLineNum && labelPostion === null) {
               debug('- simple reset insert');
               line = insertReset(printLineNumber, line, matchPosition);
               index += (';' + method + '({ line: ' + lineNum + ', reset: true }); ').length;
             } else {
-              // insert the reset above the originalLineNum
-              debug('- reset inserted above original line');
-              recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum], matchPosition);
+              // insert the reset above the originalLineNum OR if this loop used
+              // a label, we have to insert the reset *above* the label
+              if (labelPostion === null) {
+                debug('- reset inserted above original line');
+                recompiled[originalLineNum] = insertReset(printLineNumber, recompiled[originalLineNum], matchPosition);
+              } else {
+                debug('- reset inserted above matched label on line ' + labelPostion);
+                if (recompiled[labelPostion] === undefined) {
+                  labelPostion--;
+                  matchPosition = 0;
+                }
+                recompiled[labelPostion] = insertReset(printLineNumber, recompiled[labelPostion], matchPosition);
+                labelPostion = null;
+              }
             }
 
             recompiled.push(line);
@@ -227,7 +246,7 @@ var loopProtect = (function () {
               debug('searching for closing `while` statement for: ' + line);
               // cycle forward until we find the close brace, after which should
               // be our while statement to ignore
-              var findwhile = false;
+              findwhile = false;
               while (index < line.length) {
                 character = line.substr(index, 1);
 
@@ -252,7 +271,7 @@ var loopProtect = (function () {
                 }
 
                 if (findwhile && line.indexOf('while') !== -1) {
-                  debug('- exit as we found `while`: ' + line)
+                  debug('- exit as we found `while`: ' + line);
                   pushonly[lineNum] = true;
                   return;
                 }
@@ -298,20 +317,25 @@ var loopProtect = (function () {
    * when the loops has been running for more than 100ms.
    */
   loopProtect.protect = function (state) {
-    loopProtect.counters[state.line]  = loopProtect.counters[state.line] || {};
+    loopProtect.counters[state.line] = loopProtect.counters[state.line] || {};
     var line = loopProtect.counters[state.line];
+    var now = (new Date()).getTime();
+
     if (state.reset) {
-      line.time = +new Date;
+      line.time = now;
       line.hit = 0;
       line.last = 0;
     }
+
     line.hit++;
-    if ((+new Date - line.time) > 100) {//} && line.hit !== line.last+1) {
+    if ((now - line.time) > 100) {//} && line.hit !== line.last+1) {
       // We've spent over 100ms on this loop... smells infinite.
       var msg = 'Exiting potential infinite loop at line ' + state.line + '. To disable loop protection: add "// noprotect" to your code';
       if (window.proxyConsole) {
         window.proxyConsole.error(msg);
-      } else console.error(msg);
+      } else {
+        console.error(msg);
+      }
       // Returning true prevents the loop running again
       return true;
     }

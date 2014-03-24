@@ -7,6 +7,7 @@ body {
   max-width: 300px;
   margin: 0 auto;
   margin-top: 50px;
+  font-family: 'helvetica neue', arial, sans-serif;
 }
 .form-container.login {
  box-shadow: 2px 2px 1px -2px rgba(0,0,0,0.5);
@@ -109,18 +110,22 @@ body {
   padding: 0.4em 0 0.4em;
 }
 
-.form-container form a.lostpass {
+.lostpass {
   text-align:center;
   width:100%;
-  display:block;
-  color:#000;
-  margin-top:10px;
-}
-
-.form-container form a.lostpass span {
-  color:rgba(0,0,0,0.5);
+  margin-top:20px;
+  text-decoration: none;
+  color:#949494;
   font-weight:400;
   font-size:0.9em;
+  border: 0;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lostpass:hover {
+  color: #111;
 }
 
 .info {
@@ -140,4 +145,53 @@ body {
   white-space: normal;
   line-height: 18px;
   padding: 10px;
+}
+
+.info.active {
+  display:block;
+}
+
+.info a {
+  color: #111;
+}
+
+/*
+ * Github Button
+ */
+
+.btn-github {
+  /* font-size: 0.8em; */
+  font-weight: 200;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0px 1px 1px #eee;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #aaa;
+  color:#111;
+  display: block;
+  width: 280px;
+  margin: 45px auto 0;
+}
+.btn-github:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+  color:#111;
+}
+
+#body .btn-github img {
+  vertical-align: middle;
+  top: -2px;
+  position: relative;
+  margin-right: 2px;
+  border: none;
+  width: 22px;
+  display: inline;
+  border: 0;
 }

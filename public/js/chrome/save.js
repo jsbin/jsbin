@@ -126,13 +126,9 @@ function onSaveError(jqXHR, panelId) {
       type: 'error',
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
-  } else {
+  } else if (panelId) {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-    // $document.trigger('tip', {
-    //   type: 'error',
-    //   content: 'Something went wrong while saving. Your most recent work is not saved.'
-    // });
   }
 }
 
@@ -366,7 +362,9 @@ function saveCode(method, ajax, ajaxCallback) {
           window.location.hash = data.edit;
         }
       },
-      error: onSaveError,
+      error: function (jqXHR) {
+        onSaveError(jqXHR, null);
+      },
       complete: function () {
         saving.inprogress(false);
       }

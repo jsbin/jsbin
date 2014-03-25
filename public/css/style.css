@@ -3206,6 +3206,10 @@ html * {
 
 
 
+.CodeMirror {
+  background: transparent;
+}
+
 .focus .CodeMirror-activeline-background {
   background: #e8f2ff !important;
 }

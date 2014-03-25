@@ -113,7 +113,7 @@
     showInfo().find('p').text('Requesting password reset token...');
 
     setTimeout(function () {
-      var email = $('#username').val();
+      var email = $('#login-username').val();
 
       if (email) {
         var data = getFormData($loginForm);

@@ -3206,14 +3206,19 @@ html * {
 
 
 
-.focus .CodeMirror-activeline .CodeMirror-linenumber,
 .focus .CodeMirror-activeline-background {
   background: #e8f2ff !important;
 }
 
-.code-fold .focus .CodeMirror-activeline .CodeMirror-linenumber,
-.code-fold .focus .CodeMirror-activeline-background {
-  border-right: 0.75em solid #E8F2FF;
+.CodeMirror-activeline-background:before {
+  content: "";
+  position: absolute;
+  background: inherit;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 200%;
+  right: 100%;
 }
 
 .code-fold .CodeMirror pre {

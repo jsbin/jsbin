@@ -3213,7 +3213,7 @@ html * {
 
 .code-fold .focus .CodeMirror-activeline .CodeMirror-linenumber,
 .code-fold .focus .CodeMirror-activeline-background {
-  border-right: 0.89rem solid #E8F2FF;
+  border-right: 0.65rem solid #E8F2FF;
 }
 
 .code-fold .CodeMirror pre {

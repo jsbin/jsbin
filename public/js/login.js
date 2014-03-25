@@ -34,7 +34,8 @@
 
   function getFormData($form) {
     return $form.serializeArray().reduce(function (obj, item) {
-      obj[item.name] = item.value;
+      var name = item.name.split('-')[1];
+      obj[name] = item.value;
       return obj;
     }, {});
   }

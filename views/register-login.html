@@ -14,36 +14,36 @@
   <div class="info {{#if flash}}active{{/if}}"><p>{{{flash}}}</p></div>
   <form action="{{root}}/register" method="post" class="register">
     <div>
-      <label for="username">Username</label>
-      <input id="username" name="username"type="text" required>
+      <label for="signup-username">Username</label>
+      <input id="signup-username" name="signup-username"type="text" required>
     </div>
     <div>
-      <label for="email">Email address</label>
-      <input name="email" id="email" type="email" required>
+      <label for="signup-email">Email address</label>
+      <input name="signup-email" id="signup-email" type="email" required>
     </div>
     <div>
-      <label for="key">Password</label>
-      <input name="key" id="key" type="password" required>
+      <label for="signup-key">Password</label>
+      <input name="signup-key" id="signup-key" type="password" required>
     </div>
     <div>
       <input type="submit" value="Register">
-      <input type="hidden" name="_csrf" value="{{token}}">
-      <input type="hidden" name="referrer" value="{{referrer}}">
+      <input type="hidden" name="signup-_csrf" value="{{token}}">
+      <input type="hidden" name="signup-referrer" value="{{referrer}}">
     </div>
   </form>
   <form action="{{root}}/login" method="post" class="login" id="login">
     <div>
-      <label for="username">Email address or username</label>
-      <input name="username" id="username" type="text" required>
+      <label for="login-username">Email address or username</label>
+      <input name="login-username" id="login-username" type="text" required>
     </div>
     <div>
-      <label for="key">Password</label>
-      <input name="key" id="key" type="password" required>
+      <label for="login-key">Password</label>
+      <input name="login-key" id="login-key" type="password" required>
     </div>
     <div>
       <input type="submit" value="Log in">
-      <input type="hidden" name="_csrf" value="{{token}}">
-      <input type="hidden" name="referrer" value="{{referrer}}">
+      <input type="hidden" name="login-_csrf" value="{{token}}">
+      <input type="hidden" name="login-referrer" value="{{referrer}}">
       <button id="lostpass" class="lostpass" href="{{root}}/forgot">I've forgotton my password</button>
     </div>
     </form>

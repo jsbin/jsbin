@@ -97,16 +97,19 @@ $('#share input[type=text], #share textarea').on('beforecopy', function (event) 
   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
 });
 
-var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
-  updateSavedState();
-});
-$('#sharemenu').bind('open', function () {
-  $panelCheckboxes.attr('checked', false);
-  jsbin.panels.getVisible().forEach(function (panel) {
-    $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();
+if (!split) {
+  var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
+    updateSavedState();
+  });
+  $('#sharemenu').bind('open', function () {
+    $panelCheckboxes.attr('checked', false);
+    jsbin.panels.getVisible().forEach(function (panel) {
+      $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();
+    });
+
   });
 
-});
+}
 
 var dropdownOpen = false,
     onhover = false,

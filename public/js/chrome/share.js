@@ -3,22 +3,19 @@
   /*globals $, saveChecksum, jsbin, $document, documentTitle*/
 
   var mapping = {
-      live: 'output',
-      javascript: 'js',
-      css: 'css',
-      html: 'html',
-      console: 'console'
-    };
+    live: 'output',
+    javascript: 'js'
+  };
   var $sharepanels = $('#sharepanels input[type="checkbox"]');
   var $sharemenu = $('#sharemenu').bind('open', function () {
     // select the right panels
     $sharepanels.prop('checked', false);
     jsbin.panels.getVisible().forEach(function (p) {
-      $sharepanels.filter('[value="' + p.id + '"]').prop('checked', true);
-      console.log($sharepanels.filter('[value="' + p.id + '"]').prop('checked'));
+      $sharepanels.filter('[value="' + (mapping[p.id] || p.id) + '"]').prop('checked', true);
     });
     update();
   });
+  var $sharepreview = $('#share-preview');
   var $realtime = $('#sharebintype input[type=radio][value="realtime"]');
   var link = $sharemenu.find('a.link')[0];
   var linkselect = $sharemenu.find('input[name="url"]')[0];
@@ -77,15 +74,20 @@
     var shareurl = url;
 
     // get a comma separated list of the panels that should be shown
-    var query = data.panel.map(function (value) {
-      return mapping[value];
-    }).join(',');
+    var query = data.panel.join(',');
 
     if (query) {
       query = '?' + query;
     }
 
     $sharepanels.prop('disabled', data.view === 'output');
+    $sharepreview.attr('class', data.view);
+
+    if (data.view !== 'output') {
+      $sharepreview.find('.editor div').each(function () {
+        this.hidden = data.panel.indexOf(this.className) === -1;
+      });
+    }
 
     if (data.view === 'editor') {
       shareurl += '/edit';

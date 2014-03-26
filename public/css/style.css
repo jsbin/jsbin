@@ -4761,8 +4761,9 @@ tbody:hover tr:hover.snapshot .url a span:before {
 
 .share-split label small {
   display: block;
-  margin-top: -2px;
+  margin-top: 4px;
   margin-left: 25px;
+  line-height: 1.2;
 }
 
 #share .share-split a.link {
@@ -4785,6 +4786,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
   color: #111;
 }
 
+
 #profile {
 /*   min-width: 400px; */
 }
@@ -4797,4 +4799,96 @@ tbody:hover tr:hover.snapshot .url a span:before {
 #profile .large-gravatar {
   float: left;
   margin-right: 10px;
+=======
+#share-preview .editor {
+  display: none;
+  width: 198px;
+  table-layout: fixed;
+  height: 94px;
+  border: 1px solid #999;
+  border-top: 0;
+  background: #999;
+}
+
+#share-preview .header {
+  display: none;
+  width: 200px;
+  position: relative;
+  height: 13px;
+  background: #999;
+}
+
+#share-preview.editor .editor {
+  display: table;
+}
+
+#share-preview.editor .header,
+#share-preview.output .output {
+  display: block;
+}
+
+#share-preview .output {
+  display: none;
+}
+
+#share-preview.output .output {
+  background: #F012BE;
+  height: 113px;
+  width: 200px;
+}
+
+#share-preview.output .output:after {
+  font-family: monospace;
+  font-size: 16px;
+  display: block;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  letter-spacing: 0.05rem;
+  content: attr(class);
+  padding: 10px;
+}
+
+
+#share-preview .editor div:after {
+  font-family: monospace;
+  font-size: 16px;
+  -webkit-transform: rotate(90deg) translateX(-25px);
+  -webkit-transform-origin: 0% 130%;
+  display: block;
+  text-transform: uppercase;
+  position: relative;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  letter-spacing: 0.05rem;
+  content: attr(class);
+}
+
+#share-preview .editor div {
+  position: relative;
+  display: table-cell;
+  width: 100%;
+}
+
+#share-preview .editor .js {
+  background: #FFDC00;
+}
+
+#share-preview .editor .html {
+  background: #2ECC40;
+}
+
+#share-preview .editor .css {
+  background: #0074D9;
+}
+
+#share-preview .editor .console {
+  background: #B10DC9;
+}
+
+#share-preview .editor .output {
+  background: #F012BE;
 }

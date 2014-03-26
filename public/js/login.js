@@ -34,7 +34,8 @@
 
   function getFormData($form) {
     return $form.serializeArray().reduce(function (obj, item) {
-      obj[item.name] = item.value;
+      var name = item.name.split('-')[1];
+      obj[name] = item.value;
       return obj;
     }, {});
   }
@@ -112,7 +113,7 @@
     showInfo().find('p').text('Requesting password reset token...');
 
     setTimeout(function () {
-      var email = $('#username').val();
+      var email = $('#login-username').val();
 
       if (email) {
         var data = getFormData($loginForm);

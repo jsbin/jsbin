@@ -5,8 +5,8 @@
 
     // create fake jsbin object
     window.jsbin = {
-        static: window.location.origin,
-        version: '',
+        static: jsbin.static,
+        version: jsbin.version,
         panels: {
             panels: {
                 javascript: {

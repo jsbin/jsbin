@@ -113,7 +113,7 @@ $document.on('saved', function () {
   $('#clone').removeClass('hidden');
 });
 
-var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || jsbin.keys() || false;
+var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
 
 // store it back on state
 jsbin.state.checksum = saveChecksum;

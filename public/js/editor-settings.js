@@ -3,6 +3,35 @@
 
 	/*globals $, CodeMirror */
 
+    // create fake jsbin object
+    window.jsbin = {
+        static: window.location.origin,
+        version: '',
+        panels: {
+            panels: {
+                javascript: {
+                    editor: null
+                }
+            },
+            allEditors: function(fn) {
+                fn(jsbin.panels.panels.javascript);
+            }
+        }
+    };
+
+    $.browser = {};
+    // work out the browser platform
+    var ua = navigator.userAgent;
+    if (ua.indexOf(' Mac ') !== -1) {
+      $.browser.platform = 'mac';
+    } else if (/windows|win32/.test(ua)) {
+      $.browser.platform = 'win';
+    } else if (/linux/.test(ua)) {
+      $.browser.platform = 'linux';
+    } else {
+      $.browser.platform = '';
+    }
+
 	// abstract this to a function so i can easily implement the TODO below;
 	function getCurrentSettings(){
 		// TODO do something here with a server sent object, merge it into localStorage...
@@ -49,10 +78,12 @@
     if (typeof currentSettings.addons === 'undefined') {
         currentSettings.addons = {};
     }
+    jsbin.settings = $.extend({}, currentSettings);
 
 	var editor = window.editor = CodeMirror.fromTextArea($textarea[0], $.extend({
 		mode: 'text/html'
 	}, currentSettings.editor));
+    jsbin.panels.panels.javascript.editor = editor;
 
 	var $CodeMirror = $('.CodeMirror');
 
@@ -97,9 +128,6 @@
 		editor.setOption('tabSize', $tabSize.val());
 		editor.setOption('theme', $theme.val());
 		$CodeMirror.css('font-size', $fontsize.val()+'px');
-
-        // Load the addons?
-
 		editor.refresh();
 
 		// Merge all our settings together
@@ -118,6 +146,15 @@
 		localStorageSettings.font = $fontsize.val();
         localStorageSettings.addons = newSettingsAddons;
 		localStorage.settings = JSON.stringify(localStorageSettings);
+        $.extend(jsbin.settings.addons, newSettingsAddons);
+
+        // destroy and recreate CodeMirror and load the addons
+        editor.toTextArea();
+        editor = CodeMirror.fromTextArea($textarea[0], $.extend({
+            mode: 'text/html'
+        }, newSettingsEditor));
+        jsbin.panels.panels.javascript.editor = editor;
+        reloadAddons();
 
 		// Save on server
 		$.ajax({
@@ -128,10 +165,10 @@
 				_csrf: $csrf.val()
 			},
 			success: function() {
-				console.log('success');
+				// console.log('success');
 			},
 			error: function() {
-				console.log('there was an error saving');
+				// console.log('there was an error saving');
 			}
 		});
 

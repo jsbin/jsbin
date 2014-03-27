@@ -208,4 +208,9 @@
 
   options.forEach(loadAddon);
 
+  // External method to realod all the addons
+  window.reloadAddons = function() {
+    options.forEach(loadAddon);
+  };
+
 })();

@@ -90,7 +90,7 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
 }
 .cm-s-solarized .cm-strong { color: #eee; }
 .cm-s-solarized .cm-tab:before {
-  content: "âž¤";   /*visualize tab character*/
+  content: "➤";   /*visualize tab character*/
   color: #586e75;
   position:absolute;
 }

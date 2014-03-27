@@ -2,12 +2,34 @@
   'use strict';
   /*globals $, saveChecksum, jsbin, $document, documentTitle*/
 
+  // only continue if the new share is enabled
+  if ($('#sharemenu').find('.share-split').length === 0) {
+    return;
+  }
+
   var mapping = {
     live: 'output',
     javascript: 'js'
   };
   var $sharepanels = $('#sharepanels input[type="checkbox"]');
-  var $snapshots = $('#snapshot');
+
+  var selectedSnapshot = jsbin.state.revision;
+  var $snapshots = $('#snapshot').on('change', function () {
+    selectedSnapshot = this.value * 1;
+
+    $lockRevision.prop('checked', true);
+
+    if (selectedSnapshot === jsbin.state.revision) {
+      $lockRevision.trigger('change');
+    }
+    update();
+  });
+
+
+  $document.on('saved', function () {
+    selectedSnapshot = jsbin.state.revision;
+  });
+
   var $sharemenu = $('#sharemenu').bind('open', function () {
     // select the right panels
     $sharepanels.prop('checked', false);
@@ -17,13 +39,24 @@
 
     var options = '';
     var i = jsbin.state.revision;
+    var limit = 100;
     do {
       options += '<option>' + i + '</option>';
+      limit--;
+      if (limit <= 0) {
+        break;
+      }
     } while (--i);
 
     $snapshots.html(options);
 
     update();
+  });
+  var $lockRevision = $sharemenu.find('.lockrevision').on('change', function () {
+    saveChecksum = false; // jshint ignore:line
+    jsbin.state.checksum = false;
+    console.log('LOCKED');
+    $document.trigger('locked');
   });
   var $sharepreview = $('#share-preview');
   var $realtime = $('#sharebintype input[type=radio][value="realtime"]');
@@ -79,8 +112,12 @@
 
   function update() {
     var data = formData(form);
-    var withRevision = data.state === 'snapshot';
-    var url = jsbin.getURL({ revision: withRevision });
+    var url = jsbin.getURL();
+
+    if (data.state === 'snapshot') {
+      url += '/' + selectedSnapshot;
+    }
+
     var shareurl = url;
 
     // get a comma separated list of the panels that should be shown

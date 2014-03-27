@@ -44,6 +44,7 @@
     "/js/chrome/download.js",
     "/js/chrome/login.js",
     "/js/chrome/tips.js",
+    "/js/chrome/keys.js",
     "/js/chrome/save.js",
     "/js/chrome/navigation.js",
     "/js/chrome/file-drop.js",

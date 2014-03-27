@@ -3917,8 +3917,19 @@ left: 50%;
   font-size: 15px;
   padding: 2px 0;
   display: inline-block;
-  color: #000;
+  color: #747474;
   text-decoration: none;
+}
+
+#sharemenu .share-split form label {
+  font-size: 13px;
+  font-weight: normal;
+}
+
+#sharemenu .share-split .heading,
+#sharemenu .share-split a {
+  font-weight: normal;
+  color: #777;
 }
 
 #sharemenu strong a {
@@ -4729,16 +4740,20 @@ tbody:hover tr:hover.snapshot .url a span:before {
   margin-top: 10px
 }
 
-#sharepanels {
+.share-split #sharepanels {
   margin-right: 20px;
 }
 
-#sharepanels ul {
+.share-split #sharepanels ul {
   padding-left: 20px;
 }
 
 .share-split ul {
   margin-top: 0;
+}
+
+.share-split form label {
+  color: #111;
 }
 
 #sharemenu .share-split textarea {
@@ -4761,8 +4776,8 @@ tbody:hover tr:hover.snapshot .url a span:before {
 
 .share-split label small {
   display: block;
-  margin-top: 4px;
-  margin-left: 25px;
+  /* margin-top: 4px; */
+  margin-left: 27px;
   line-height: 1.2;
 }
 

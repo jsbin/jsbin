@@ -1,3 +1,6 @@
+/*jshint strict: false */
+/*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
+
 var saving = {
   todo: {
     html: false,
@@ -12,8 +15,7 @@ var saving = {
 
     saving._inprogress = inprogress;
     if (inprogress === false) {
-      var panels = ['html','css','javascript'],
-          todo;
+      var panels = ['html','css','javascript'];
 
       var save = function () {
         var todo = panels.pop();
@@ -49,8 +51,10 @@ $('a.save').click(function (event) {
 var $shareLinks = $('#share .link');
 var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
+// TODO remove split when live
 var split = $('#sharemenu').find('.share-split').length;
 
+// TODO candidate for removal
 function updateSavedState() {
   if (split) {
     return;
@@ -64,7 +68,7 @@ function updateSavedState() {
     console: 'console'
   };
 
-  var withRevision = $('#sharebintype input:checked').val() === 'snapshot';
+  var withRevision = true;
 
   var query = $panelCheckboxes.filter(':checked').map(function () {
     return mapping[this.getAttribute('data-panel')];
@@ -109,7 +113,7 @@ $document.on('saved', function () {
   $('#clone').removeClass('hidden');
 });
 
-var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
+var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || jsbin.keys() || false;
 
 // store it back on state
 jsbin.state.checksum = saveChecksum;
@@ -139,7 +143,7 @@ function onSaveError(jqXHR, panelId) {
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
   } else if (panelId) {
-    if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
+    if (panelId) { savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100); }
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
   }
 }
@@ -259,7 +263,7 @@ function updateCode(panelId, callback) {
     success: function (data) {
       $document.trigger('saveComplete', { panelId: panelId });
       if (data.error) {
-        saveCode('save', true, function (data) {
+        saveCode('save', true, function () {
           // savedAlready = data.checksum;
         });
       } else {
@@ -271,7 +275,7 @@ function updateCode(panelId, callback) {
     },
     complete: function () {
       saving.inprogress(false);
-      callback && callback();
+      if (callback) { callback(); }
     }
   });
 }
@@ -296,7 +300,8 @@ var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="css" />')
     .append('<input type="hidden" name="method" />')
     .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />')
-    .append('<input type="hidden" name="settings" />');
+    .append('<input type="hidden" name="settings" />')
+    .append('<input type="hidden" name="checksum" />');
 
   var settings = {};
 
@@ -315,12 +320,13 @@ var $form = $('form#saveform').empty()
   $form.find('input[name=css]').val(editors.css.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);
+  $form.find('input[name=checksum]').val(jsbin.state.checksum);
 
   return $form;
 }
 
 function pad(n){
-  return n<10 ? '0'+n : n
+  return n<10 ? '0'+n : n;
 }
 
 function ISODateString(d){
@@ -329,7 +335,7 @@ function ISODateString(d){
     + pad(d.getDate())+'T'
     + pad(d.getHours())+':'
     + pad(d.getMinutes())+':'
-    + pad(d.getSeconds())+'Z'
+    + pad(d.getSeconds())+'Z';
 }
 
 function saveCode(method, ajax, ajaxCallback) {
@@ -347,9 +353,6 @@ function saveCode(method, ajax, ajaxCallback) {
       type: 'post',
       headers: {'Accept': 'application/json'},
       success: function (data) {
-        var $binGroup,
-            edit;
-
         $form.attr('action', data.url + '/save');
         if (ajaxCallback) {
           ajaxCallback(data);
@@ -361,14 +364,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
-        jsbin.state.latest = data.latest;
-
-        // getURL(true) gets the jsbin without the root attached
-        // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
-        // edit = data.edit.replace(location.protocol + '//' + window.location.host, '') + window.location.search;
-        // $binGroup.find('td.url a span.first').removeClass('first');
-        // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
-
+        jsbin.state.latest = true; // this is never not true...end of conversation!
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
@@ -391,64 +387,3 @@ function saveCode(method, ajax, ajaxCallback) {
     $form.submit();
   }
 }
-
-/**
- * Returns the similar part of two strings
- * @param  {String} a first string
- * @param  {String} b second string
- * @return {String}   common substring
- */
-function sameStart(a, b) {
-  if (a == b) return a;
-
-  var tmp = b.slice(0, 1);
-  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
-    tmp = b.slice(0, tmp.length + 1);
-  }
-
-  return tmp;
-}
-
-/*
-
-// refresh the window when we popstate, because for now we don't do an xhr to
-// inject the panel content...yet.
-window.onpopstate = function onpopstate(event) {
-  // ignore the first popstate event, because that comes from the browser...
-  if (!onpopstate.first) window.location.reload();
-  else onpopstate.first = false;
-};
-
-onpopstate.first = true;
-
-function updateURL(path) {
-  var old = location.pathname,
-      back = true,
-      same = sameStart(old, path);
-      sameAt = same.length;
-
-  if (updateURL.timer) window.cancelAnimationFrame(updateURL.timer);
-
-  var run = function () {
-    if (location.pathname !== path) {
-      updateURL.timer = window.requestAnimationFrame(run);
-    }
-
-    if (location.pathname !== same) {
-      if (back) {
-        history.replaceState({ path: path }, '', location.pathname.slice(0, -1));
-      } else {
-        history.replaceState({ path: path }, '', path.slice(0, location.pathname.length + 1));
-      }
-    } else {
-      back = false;
-      history.replaceState({ path: path }, '', path.slice(0, sameAt + 2));
-    }
-  };
-
-  history.pushState({ path: path }, '', location.pathname.slice(0, -1));
-
-  run();
-}
-
-*/

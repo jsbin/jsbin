@@ -79,7 +79,7 @@
                   </div>
                   <div id="sharepanels">
                     <strong>View</strong>
-                    <label><input checked type="radio" name="view" value="editor"> Show panels</label>
+                    <label><input checked type="radio" name="view" value="editor"> Show</label>
                     <ul>
                       <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
                       <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
@@ -88,7 +88,7 @@
                       <li><label><input name="panel" type="checkbox" value="output">Output</label></li>
                     </ul>
                   </div>
-                  <label><input type="radio" name="view" value="output"> Output only<br><small>Complete page with<br>live reload</small></label>
+                  <label><input type="radio" name="view" value="output"> Output only<br><small>with live reload</small></label>
                 </div>
                 <div class="result">
                   <div data-desc="This bin's full output without the JS Bin editor">
@@ -121,7 +121,7 @@
                 </div>
                 {{else}}
                 <div data-desc="This bin's full output without the JS Bin editor">
-                  <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
+                  <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
                 </div>
                 <hr>
                 <div id="sharepanels">
@@ -136,7 +136,7 @@
                 </div>
                 <!-- <div id="removelock"><input type="button" title="Unlocks the revision that you own so that you can continue to write to this specific bin" class="unlocklockrevision" value="Unlock revision #{{revision}}"> <small>to allow changes.</small></div> -->
                 <div data-desc="The url to this bin with the JS Bin editor">
-                  <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Edit & CodeCast</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                  <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                 </div>
                 <div data-desc="Embed this bin with the live output on your site">
                   <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>

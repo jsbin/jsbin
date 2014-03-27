@@ -352,7 +352,6 @@ function saveCode(method, ajax, ajaxCallback) {
         // $binGroup.find('td.url a span.first').removeClass('first');
         // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
-        $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
@@ -361,6 +360,8 @@ function saveCode(method, ajax, ajaxCallback) {
         } else {
           window.location.hash = data.edit;
         }
+
+        $document.trigger('saved');
       },
       error: function (jqXHR) {
         onSaveError(jqXHR, null);

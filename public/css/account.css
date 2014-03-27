@@ -26,8 +26,8 @@
   color:rgba(98, 147, 211, 0.5);
 }
 
-#sidebar .sidebar-btn.selected:before {
-  content: '» ';
+#sidebar .sidebar-btn.selected:after {
+  content: ' »';
 }
 
 #sidebar .sidebar-btn-group .sidebar-btn {

@@ -64,7 +64,9 @@ if (storedSettings === "undefined") {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
 }
+
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
+
 if (jsbin.user) {
   $.extend(window.jsbin.settings.editor, jsbin.user.settings);
   window.jsbin.settings.font = jsbin.user.settings.font;

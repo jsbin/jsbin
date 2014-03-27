@@ -7,12 +7,22 @@
     javascript: 'js'
   };
   var $sharepanels = $('#sharepanels input[type="checkbox"]');
+  var $snapshots = $('#snapshot');
   var $sharemenu = $('#sharemenu').bind('open', function () {
     // select the right panels
     $sharepanels.prop('checked', false);
     jsbin.panels.getVisible().forEach(function (p) {
       $sharepanels.filter('[value="' + (mapping[p.id] || p.id) + '"]').prop('checked', true);
     });
+
+    var options = '';
+    var i = jsbin.state.revision;
+    do {
+      options += '<option>' + i + '</option>';
+    } while (--i);
+
+    $snapshots.html(options);
+
     update();
   });
   var $sharepreview = $('#share-preview');

@@ -3104,6 +3104,10 @@ input {
   top: 1px;
 }
 
+.CodeMirror-matchingtag {
+  background: rgba(255, 150, 0, .3);
+}
+
 /* remove box-shadow from solarize theme */
 .cm-s-solarized.CodeMirror {
   -moz-box-shadow: none;

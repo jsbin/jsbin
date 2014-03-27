@@ -17,3 +17,16 @@
 .cm-s-jsbin span.cm-bracket {color: #cc7;}
 .cm-s-jsbin span.cm-tag {color: #881280;}
 .cm-s-jsbin span.cm-attribute {color: #994500;}
+
+/* style to test addons in the editor settings page */
+.CodeMirror-matchingtag {
+  background: rgba(255, 150, 0, .3);
+}
+.CodeMirror-focused .cm-matchhighlight {
+  outline: 1px solid #666;
+}
+.cm-trailingspace {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}

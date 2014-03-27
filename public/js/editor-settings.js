@@ -154,6 +154,9 @@
             mode: 'text/html'
         }, newSettingsEditor));
         jsbin.panels.panels.javascript.editor = editor;
+        $CodeMirror = $('.CodeMirror');
+        $CodeMirror.css('font-size', $fontsize.val()+'px');
+        editor.refresh();
         reloadAddons();
 
 		// Save on server

@@ -68,8 +68,7 @@ if (storedSettings === "undefined") {
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
 if (jsbin.user) {
-  $.extend(window.jsbin.settings.editor, jsbin.user.settings);
-  window.jsbin.settings.font = jsbin.user.settings.font;
+  $.extend(window.jsbin.settings, jsbin.user.settings);
 }
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
@@ -201,7 +200,7 @@ $window.unload(unload);
 window.addEventListener('storage', function (e) {
   if (e.storageArea === localStorage && e.key === 'settings') {
     console.log('updating from storage');
-    console.log(JSON.parse(localStorage.settings).editor);
+    console.log(JSON.parse(localStorage.settings));
     jsbin.settings = JSON.parse(localStorage.settings);
   }
 });

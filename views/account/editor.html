@@ -35,6 +35,7 @@
 
 <section id="content">
   <form id="editor-settings">
+    <h3>Settings</h3>
     <div>
     	<label for="font-size">Font size</label>
   		<input name="font" id="font-size" type="number">
@@ -92,10 +93,41 @@
       <label for="lineNumbers">Line nums</label>
       <input id="lineNumbers" name="lineNumbers" type="checkbox">
     </div>
-  	<div>
-      <label for="vimMode">VIM mode</label>
-  		<input id="vimMode" name="vimMode" type="checkbox">
-  	</div>
+
+    <h3>Addons</h3>
+    <div>
+      <span class="label">Mode</span>
+      <label><input type="radio" name="keymap" id="defaultKeymap" value="default"> Default</label>
+      <label><input type="radio" name="keymap" id="vim" value="vim"> Vim</label>
+      <label><input type="radio" name="keymap" id="emacs" value="emacs"> Emacs</label>
+      <label><input type="radio" name="keymap" id="sublime" value="sublime"> Sublime</label>
+    </div>
+
+    <div>
+      <label for="closebrackets">Close brackets</label>
+      <input id="closebrackets" name="closebrackets" type="checkbox">
+    </div>
+
+    <div>
+      <label for="highlight">Highlight</label>
+      <input id="highlight" name="highlight" type="checkbox">
+    </div>
+
+    <div>
+      <label for="matchtags">Match tags</label>
+      <input id="matchtags" name="matchtags" type="checkbox">
+    </div>
+
+    <div>
+      <label for="trailingspace">Trailing space</label>
+      <input id="trailingspace" name="trailingspace" type="checkbox">
+    </div>
+
+    <div>
+      <label for="fold">Fold</label>
+      <input id="fold" name="fold" type="checkbox">
+    </div>
+
   	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
   </form>
 

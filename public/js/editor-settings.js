@@ -11,12 +11,19 @@
             panels: {
                 javascript: {
                     editor: null
+                },
+                html: {
+                    editor: null
                 }
             },
             allEditors: function(fn) {
                 fn(jsbin.panels.panels.javascript);
             }
         }
+    };
+
+    var template = {
+        html: null
     };
 
     $.browser = {};
@@ -64,7 +71,8 @@
         'fold',
         'vim',
         'emacs',
-        'sublime'
+        'sublime',
+        'tern'
     ];
     var $addons = {};
 
@@ -84,6 +92,8 @@
 		mode: 'text/html'
 	}, currentSettings.editor));
     jsbin.panels.panels.javascript.editor = editor;
+    jsbin.panels.panels.html.editor = editor;
+    template.html = editor.getValue();
 
 	var $CodeMirror = $('.CodeMirror');
 
@@ -154,6 +164,8 @@
             mode: 'text/html'
         }, newSettingsEditor));
         jsbin.panels.panels.javascript.editor = editor;
+        jsbin.panels.panels.html.editor = editor;
+        template.html = editor.getValue();
         $CodeMirror = $('.CodeMirror');
         $CodeMirror.css('font-size', $fontsize.val()+'px');
         editor.refresh();

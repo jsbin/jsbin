@@ -122,3 +122,7 @@ margin-right: 20px;
   border: 1px solid #ccc;
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
 }
+
+.mini-desc {
+  color: #979A99;
+}

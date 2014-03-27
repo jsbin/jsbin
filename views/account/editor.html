@@ -97,7 +97,7 @@
 
     <h3>Addons</h3>
     <div>
-      <span class="label">Mode</span>
+      <span class="label">Keybindings</span>
       <label><input type="radio" name="keymap" id="defaultKeymap" value="default"> Default</label>
       <label><input type="radio" name="keymap" id="vim" value="vim"> Vim</label>
       <label><input type="radio" name="keymap" id="emacs" value="emacs"> Emacs</label>
@@ -107,26 +107,31 @@
     <div>
       <label for="closebrackets">Close brackets</label>
       <input id="closebrackets" name="closebrackets" type="checkbox">
+      <span class="mini-desc">Auto-close brackets and quotes</span>
     </div>
 
     <div>
       <label for="highlight">Highlight</label>
       <input id="highlight" name="highlight" type="checkbox">
+      <span class="mini-desc">Highlight all instances of a currently selected word</span>
     </div>
 
     <div>
       <label for="matchtags">Match tags</label>
       <input id="matchtags" name="matchtags" type="checkbox">
+      <span class="mini-desc">Cause the tags around the cursor to be highlighted</span>
     </div>
 
     <div>
       <label for="trailingspace">Trailing space</label>
       <input id="trailingspace" name="trailingspace" type="checkbox">
+      <span class="mini-desc">Stretch of whitespace at the end of lines</span>
     </div>
 
     <div>
       <label for="fold">Fold</label>
       <input id="fold" name="fold" type="checkbox">
+      <span class="mini-desc">Code folding</span>
     </div>
 
   	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">

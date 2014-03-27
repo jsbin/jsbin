@@ -2582,6 +2582,7 @@ input {
 
 }
 .editbox .CodeMirror.cm-s-jsbin,
+.editbox .CodeMirror.cm-s-jsbin .CodeMirror-gutters,
 .focus .editbox .CodeMirror,
 .focus .editbox .CodeMirror .CodeMirror-gutters {
   background-image: none;

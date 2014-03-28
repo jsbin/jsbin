@@ -1,0 +1,71 @@
+{{> account_sidebar}}
+
+<h1>Default Preferences</h1>
+
+<section id="content">
+  <p>Configure how JS Bin is set up when you create a new bin, such as your default
+    HTML content, processors selected, and more.</p>
+
+  <form>
+  <form id="editor-settings">
+    <h3>Panels</h3>
+    <div>
+      <span class="label">Open panels</span>
+      <label><input type="checkbox" name="open-panel" id="panel-html" checked> HTML</label>
+      <label><input type="checkbox" name="open-panel" id="panel-css"> CSS</label>
+      <label><input type="checkbox" name="open-panel" id="panel-js"> JavaScript</label>
+      <label><input type="checkbox" name="open-panel" id="panel-console"> Console</label>
+      <label><input type="checkbox" name="open-panel" id="panel-output" checked> Output</label>
+    </div>
+
+    <div>
+      <label for="focused-panel">Focused panel</label>
+      <select id="focused-panel">
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="js">JavaScript</option>
+        <option value="console">Console</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="autorun">Auto-run JS</label>
+      <input type="checkbox" checked id="autorun">
+    </div>
+
+    <h3>Processors</h3>
+    <div>
+      <label for="html-processor">HTML</label>
+      <select id="html-processor">
+        <option value="">none</option>
+        <option value="jade">Jade</option>
+        <option value="markdown">Markdown</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="css-processor">CSS</label>
+      <select id="css-processor">
+        <option value="">none</option>
+        <option value="less">Less</option>
+        <!-- <option value="stylus">Stylus</option> -->
+        <!-- <option value="scss">Scss</option> -->
+      </select>
+    </div>
+
+    <div>
+      <label for="javascript-processor">JavaScript</label>
+      <select id="javascript-processor">
+        <option value="">none</option>
+        <option value="coffeescript">CoffeeScript</option>
+        <option value="jsx">JSX (React)</option>
+        <option value="processing">Processing</option>
+        <option value="traceur">Traceur</option>
+        <option value="typescript">TypeScript</option>
+      </select>
+    </div>
+
+    <h3>Template</h3>
+    <p>The template is the default content that appears in your new bins.</p>
+  </form>
+</section>

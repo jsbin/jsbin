@@ -106,7 +106,7 @@
           {{#if home}}
             {{#feature request "accountPages"}}
             <div class="menu">
-              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Settings</a>
             </div>
             {{else}}
             <div class="menu">
@@ -554,23 +554,6 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
-{{#feature request "tern"}}
-<script src="{{static}}/js/vendor/codemirror4/addon/hint/show-hint.js"></script>
-<script src="{{static}}/js/vendor/codemirror4/addon/dialog/dialog.js"></script>
-<script src="{{static}}/js/vendor/cm_addons/tern.js"></script>
-<script src="{{static}}/js/vendor/acorn/acorn.js"></script>
-<script src="{{static}}/js/vendor/acorn/acorn_loose.js"></script>
-<script src="{{static}}/js/vendor/acorn/util/walk.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/signal.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/tern.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/def.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/comment.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/infer.js"></script>
-<script src="{{static}}/js/vendor/tern/plugin/doc_comment.js"></script>
-<script src="{{static}}/js/editors/defs.js"></script>
-<script src="{{static}}/js/editors/definitions.js"></script>
-<script src="{{static}}/js/editors/tern.js"></script>
-{{/feature}}
 </body>
 </html>
 

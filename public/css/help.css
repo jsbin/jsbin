@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-html, body, button {
+html, body {
   height: 100%;
   margin: 0;
 }
@@ -14,7 +14,7 @@ html {
   line-height: 1em;
 }
 
-form {
+label, input, select, .label {
   font-family: 'helvetica neue', sans-serif;
 }
 
@@ -577,14 +577,13 @@ h6:hover .anchor span:before {
 .subscribe {
   position: absolute;
   right: 20px;
-  top: 10px;
+  top: 20px;
   line-height: 52px;
   vertical-align: middle;
   display: block;
   color: #111;
   font-weight: bold;
   text-decoration: none;
-  z-index: 10;
 }
 
 .subscribe:before {
@@ -597,88 +596,48 @@ h6:hover .anchor span:before {
   margin-right: 4px;
 }
 
-#comments {
-  margin-top: 100px;
-}
+/* wider than 640 */
+@media only screen and (min-width: 640px) {
+  .links {
+    /* -webkit-column-count: 2; */
+    -moz-column-count: 2;
+    -ms-column-count: 2;
+    column-count: 2;
+    padding-left: 0;
+  }
 
-kbd {
-}
+  .help-index {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    -ms-column-count: 2;
+    column-count: 2;
+    padding-left: 0;
+  }
 
-kbd kbd {
-  padding: 5px;
-  border-radius: 3px;
-  background: #eee;
-}
+  .category {
+    display: inline-block;
+  }
 
-.extract {
-  /* opacity: 0.7; */
-}
-
-blockquote {
-  border-left: 5px solid #cccccd;
-  padding: 20px 30px;
-  background: #fafafd;
-  margin: 0 auto;
-  max-width: 660px;
-  font-style: italic;
-}
-
-#body blockquote p:first-child {
-  margin-top: 0;
-}
-
-#body blockquote p:last-child {
-  margin-bottom: 0;
-}
-
-blockquote em {
-  font-weight: 600;
-}
-
-.posts li {
-  color: #9B9B9B;
-  margin-bottom: 50px;
-}
-
-.posts li a {
-  color: #4AA0EB;
-}
-
-.posts li:first-child,
-.posts li:hover {
-  color: #111;
-}
-
-.posts li:first-child a,
-.posts li:hover a {
-  color: blue;
+  .links li {
+    padding-left: 0;
+    display: block;
+    margin-bottom: 10px;
+    list-style: none;
+  }
 }
 
 /* smaller than 480 */
 @media only screen and (max-width: 480px) {
-  .posts li > a {
-    display: block;
-    font-weight: bold;
-  }
   .sample {
     font-size: 200%;
   }
 
-  blockquote {
-    padding: 0px 10px;
-  }
-
-  .edit,
-  .subscribe {
+  .edit {
     position: relative;
     margin-top: 0;
     right: 0;
     margin-top: 10px;
     display: block;
-  }
-
-  .subscribe {
-    margin-top: 0;
   }
 
   #body > article h1 {
@@ -739,32 +698,23 @@ blockquote em {
   }
 }
 
-/* wider than 640 */
-@media only screen and (min-width: 640px) {
-  .links {
-    /* -webkit-column-count: 2; */
-    -moz-column-count: 2;
-    -ms-column-count: 2;
-    column-count: 2;
-    padding-left: 0;
-  }
+#comments {
+  margin-top: 100px;
+}
 
-  .help-index {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    -ms-column-count: 2;
-    column-count: 2;
-    padding-left: 0;
-  }
+kbd {
+}
 
-  .category {
-    display: inline-block;
-  }
+kbd kbd {
+  padding: 5px;
+  border-radius: 3px;
+  background: #eee;
+}
 
-  .links li {
-    padding-left: 0;
-    display: block;
-    margin-bottom: 10px;
-    list-style: none;
-  }
+.extract {
+  opacity: 0.7;
+}
+
+li {
+  /* vertical-align: bottom; */
 }

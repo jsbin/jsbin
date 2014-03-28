@@ -1,0 +1,174 @@
+
+{{> account_sidebar}}
+<link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/lib/codemirror.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/3024-day.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/3024-night.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/ambiance.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/base16-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/base16-light.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/blackboard.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/cobalt.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/eclipse.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/elegant.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/erlang-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/lesser-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/mbo.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/mdn-like.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/midnight.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/monokai.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/neat.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/night.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/paraiso-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/paraiso-light.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/pastel-on-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/rubyblue.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/solarized.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/the-matrix.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/tomorrow-night-eighties.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/twilight.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/vibrant-ink.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/xq-dark.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/xq-light.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/css/jsbin-cm-theme.css{{cacheBust}}">
+
+<h1>Customise your JS Bin editor</h1>
+
+<section id="content">
+  <form id="editor-settings">
+    <h3>Settings</h3>
+    <div>
+    	<label for="font-size">Font size</label>
+  		<input name="font" id="font-size" type="number">
+    </div>
+    <div>
+    	<label for="theme">Theme</label>
+  		<select id="theme" name="theme">
+        <option selected>jsbin</option>
+		    <option value="default">CodeMirror default</option>
+        <option>3024-day</option>
+        <option>3024-night</option>
+        <option>ambiance</option>
+        <option>base16-dark</option>
+        <option>base16-light</option>
+        <option>blackboard</option>
+        <option>cobalt</option>
+        <option>eclipse</option>
+        <option>elegant</option>
+        <option>erlang-dark</option>
+        <option>lesser-dark</option>
+        <option>mbo</option>
+        <option>mdn-like</option>
+        <option>midnight</option>
+        <option>monokai</option>
+        <option>neat</option>
+        <option>night</option>
+        <option>paraiso-dark</option>
+        <option>paraiso-light</option>
+        <option>pastel-on-dark</option>
+        <option>rubyblue</option>
+        <option>solarized dark</option>
+        <option>solarized light</option>
+        <option>the-matrix</option>
+        <option>tomorrow-night-eighties</option>
+        <option>twilight</option>
+        <option>vibrant-ink</option>
+        <option>xq-dark</option>
+        <option>xq-light</option>
+      </select>
+  	</div>
+    <div>
+    	<span class="label">Spacing</span>
+      <label><input type="radio" id="indentWithTabs" value="tabs" name="spacing"> tabs</label>
+      <label><input type="radio" id="indentWithSpaces" value="spaces" name="spacing"> spaces</label>
+  	</div>
+    <div>
+    	<label for="tabSize">Indent width</label>
+  		<input id="tabSize" name="tabSize" min="1" type="number">
+  	</div>
+    <div>
+      <label for="lineWrapping">Wrap lines</label>
+      <input id="lineWrapping" name="lineWrapping" type="checkbox">
+    </div>
+    <div>
+      <label for="lineNumbers">Line numbers</label>
+      <input id="lineNumbers" name="lineNumbers" type="checkbox">
+    </div>
+
+    <h3>Addons</h3>
+    <div>
+      <span class="label">Key bindings</span>
+      <label><input type="radio" name="keymap" id="defaultKeymap" value="default"> Default</label>
+      <label><input type="radio" name="keymap" id="vim" value="vim"> Vim</label>
+      <label><input type="radio" name="keymap" id="emacs" value="emacs"> Emacs</label>
+      <label><input type="radio" name="keymap" id="sublime" value="sublime"> Sublime</label>
+    </div>
+
+    <div>
+      <label for="closebrackets">Close brackets</label>
+      <input id="closebrackets" name="closebrackets" type="checkbox">
+      <label for="closebrackets" class="mini-desc">Auto-close brackets and quotes</label>
+    </div>
+
+    <div>
+      <label for="highlight">Highlight</label>
+      <input id="highlight" name="highlight" type="checkbox">
+      <label for="highlight" class="mini-desc">Highlight all instances of a currently selected word</label>
+    </div>
+
+    <div>
+      <label for="matchtags">Match tags</label>
+      <input id="matchtags" name="matchtags" type="checkbox">
+      <label for="matchtags" class="mini-desc">Highlight matching tags under the cursor (useful with HTML)</label>
+    </div>
+
+    <div>
+      <label for="trailingspace">Trailing space</label>
+      <input id="trailingspace" name="trailingspace" type="checkbox">
+      <label for="trailingspace" class="mini-desc">Visualise trailing whitespace</label>
+    </div>
+
+    <div>
+      <label for="fold">Code folding</label>
+      <input id="fold" name="fold" type="checkbox">
+      <label for="fold" class="mini-desc">Fold and unfold matching code blocks</label>
+    </div>
+
+    <div>
+      <label for="tern">Tern</label>
+      <input id="tern" name="tern" type="checkbox">
+      <label for="tern" class="mini-desc"><a href="http://ternjs.net/" target="_blank">Tern.js</a> code-analysis engine (not available in the preview below)</label>
+    </div>
+
+  	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+  </form>
+
+  <h2>Preview</h2>
+  <textarea id="editor-settings-example">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;title&gt;JS Bin&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;script&gt;
+    function Name(param) {&nbsp;&nbsp;&nbsp;&nbsp;
+      this.name = param || &#39;string&#39;;
+      return this;&nbsp;&nbsp;&nbsp;&nbsp;
+    }
+    var object = new Object();
+    var longVariableNameToDemonstrateLineWrappingInCodeMirror = &#39;line wrapping is on by default&#39;.split(&#39; &#39;).map(String.prototype.toUpperCase.bind(String.prototype)).join(&#39;/n&#39;);
+
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+</section>
+<script src="{{static}}/js/vendor/jquery.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/codemirror4/lib/codemirror.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/codemirror4/mode/xml/xml.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/codemirror4/mode/htmlmixed/htmlmixed.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/codemirror4/mode/javascript/javascript.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/codemirror4/keymap/vim.js{{cacheBust}}"></script>
+<script src="{{static}}/js/editor-settings.js{{cacheBust}}"></script>
+<script src="{{static}}/js/editors/addons.js{{cacheBust}}"></script>
+

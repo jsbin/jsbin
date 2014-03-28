@@ -133,6 +133,7 @@ var Panel = function (name, settings) {
       var map = {};
       map[cmd + '-D'] = 'deleteLine';
       map[cmd + '-/'] = function(cm) { CodeMirror.commands.toggleComment(cm); };
+      map.name = 'noEmmet';
       panel.editor.addKeyMap(map);
     }
 

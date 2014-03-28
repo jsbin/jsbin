@@ -302,6 +302,13 @@ var libraries = [
   },
   {
     'url': [
+      'https://rawgithub.com/ai/autoprefixer-rails/master/vendor/autoprefixer.js'
+    ],
+    'label': 'Autoprefixer',
+    'snippet': '<style type="unprocessed" id="AutoprefixerIn">%css%</style>\n<style id="AutoprefixerOut"></style>\n<script>\nAutoprefixerSettings = ""; //Specify here the browsers you want to target or leave empty\ndocument.getElementById("AutoprefixerOut").innerHTML = autoprefixer(AutoprefixerSettings || null).process(document.getElementById("AutoprefixerIn").innerHTML).css;\n</script>'
+  },
+  {
+    'url': [
       'http://jashkenas.github.io/underscore/underscore-min.js',
       'http://jashkenas.github.io/backbone/backbone-min.js'
     ],

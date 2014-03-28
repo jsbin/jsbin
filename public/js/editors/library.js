@@ -58,6 +58,9 @@ $library.bind('change', function () {
 
   analytics.library('select', group.libraries[selected[1]].label);
   insertResources(library.url);
+  if (library.snippet) {
+    insertSnippet(library.snippet);
+  }
 }).on('click', function () {
   analytics.library('open');
 });
@@ -145,6 +148,23 @@ function insertResources(urls) {
   editors.html.setCode(code);
   editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
 
+}
+
+function insertSnippet(snippet) {
+  var code = editors.html.getCode(),
+      state = { line: editors.html.editor.currentLine(),
+        character: editors.html.editor.getCursor().ch,
+        add: 0
+      };
+
+  if (code.indexOf('</head') !== -1) {
+    code = code.replace(/<\/head>/i, snippet + '\n</head>');
+  } else { // add to the start of the doc
+    code = snippet + '\n' + code;
+  }
+
+  editors.html.setCode(code);
+  editors.html.editor.setCursor({ line: state.line + state.add, ch: state.character });
 }
 
 function createHTMLToJadeTagConverter(tagName, attribute, suffix){

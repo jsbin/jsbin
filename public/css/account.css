@@ -27,7 +27,7 @@
 }
 
 #sidebar .sidebar-btn.selected:after {
-  content: ' »';
+  content: '  »';
 }
 
 #sidebar .sidebar-btn-group .sidebar-btn {
@@ -38,7 +38,7 @@
 
 #content, h1 {
 /*   float:left; */
-  
+
 margin-left: 230px;
   max-width: 100%;
 }
@@ -80,6 +80,14 @@ input[type="number"] {
   width: 50px;
 }
 
+label input[type="radio"] {
+  margin-left: 20px;
+}
+
+label:first-of-type input[type="radio"] {
+  margin-left: 0;
+}
+
 select {
   font-size: 16px;
   min-width: 120px;
@@ -94,7 +102,7 @@ form > div {
 form label[for],
 form .label {
 /*   font-size:1em; */
-  font-weight: bold;
+  font-weight: 500;
   color: #666;
   display: block;
   float: left;
@@ -123,7 +131,8 @@ margin-right: 20px;
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
 }
 
-form label.mini-desc {
+form label.mini-desc,
+form label.mini-desc a {
   color: #979A99;
   float: none;
   display: inline;

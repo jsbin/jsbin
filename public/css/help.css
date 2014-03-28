@@ -14,6 +14,10 @@ html {
   line-height: 1em;
 }
 
+label, input, select, .label {
+  font-family: 'helvetica neue', sans-serif;
+}
+
 header, footer {
   background: #f2f2f2;
 }
@@ -366,7 +370,7 @@ footer .legal a:hover {
 
 border-radius: 2px;
   vertical-align: middle;
-  
+
 right: -42px;
   margin-right: 10px;
 box-shadow: none;
@@ -601,15 +605,15 @@ h6:hover .anchor span:before {
     column-count: 2;
     padding-left: 0;
   }
-  
+
   .help-index {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     -ms-column-count: 2;
     column-count: 2;
-    padding-left: 0;    
+    padding-left: 0;
   }
-  
+
   .category {
     display: inline-block;
   }
@@ -635,12 +639,12 @@ h6:hover .anchor span:before {
     margin-top: 10px;
     display: block;
   }
-  
+
   #body > article h1 {
    line-height: 32px;
     margin-top: 10px;
   }
-  
+
   #body, .inner {
     padding: 0 10px;
   }
@@ -657,12 +661,12 @@ h6:hover .anchor span:before {
     display: block;
     float: none;
     margin-top: 10px;
-  
+
     overflow: hidden;
     clear: left;
     padding-top: 10px;
   }
-  
+
   #footer .legal li {
     display: block;
     text-align: center;
@@ -688,7 +692,7 @@ h6:hover .anchor span:before {
   #body > h1 {
     margin: 0px;
   }
-  
+
   code {
     word-wrap: break-word;
   }

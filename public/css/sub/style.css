@@ -14,6 +14,10 @@ html {
   line-height: 1em;
 }
 
+form {
+  font-family: 'helvetica neue', sans-serif;
+}
+
 header, footer {
   background: #f2f2f2;
 }

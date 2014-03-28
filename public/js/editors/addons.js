@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*globals $, jsbin, CodeMirror*/
+  /*globals $, jsbin, CodeMirror, startTern*/
 
   var defaults = {
     closebrackets: true,

@@ -2021,6 +2021,21 @@ a.active:hover {
   left: 0;
   z-index: 10;
 }
+.ie7 .help .dropdown {
+  left: auto;
+  right: 0;
+}
+.ie7 #control,
+.ie7 .control,
+.ie7 .help {
+  position: static;
+}
+.ie7 .help {
+  float: right;
+}
+.ie7 #help {
+  width: 260px;
+}
 
 .dropdown .meta {
   color: #999;

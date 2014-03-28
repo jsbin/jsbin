@@ -22,7 +22,7 @@
     }
   };
 
-  var template = {
+  window.template = {
     html: null
   };
 
@@ -93,7 +93,7 @@
   }, currentSettings.editor));
   jsbin.panels.panels.javascript.editor = editor;
   jsbin.panels.panels.html.editor = editor;
-  template.html = editor.getValue();
+  window.template.html = editor.getValue();
 
   var $CodeMirror = $('.CodeMirror');
 
@@ -165,11 +165,17 @@
     }, newSettingsEditor));
     jsbin.panels.panels.javascript.editor = editor;
     jsbin.panels.panels.html.editor = editor;
-    template.html = editor.getValue();
+    window.template.html = editor.getValue();
     $CodeMirror = $('.CodeMirror');
     $CodeMirror.css('font-size', $fontsize.val()+'px');
     editor.refresh();
-    reloadAddons();
+    // Do not load Tern files
+    var tempAddonsKeys = addonsKeys.slice(0);
+    var tempAddonsKeysTern = tempAddonsKeys.indexOf('tern');
+    if (tempAddonsKeysTern !== -1) {
+      tempAddonsKeys.splice(tempAddonsKeysTern, 1);
+    }
+    reloadAddons(tempAddonsKeys);
 
     // Save on server
     $.ajax({

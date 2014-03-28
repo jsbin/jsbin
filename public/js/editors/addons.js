@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*globals $, jsbin, CodeMirror, startTern*/
+  /*globals $, jsbin, CodeMirror*/
 
   var defaults = {
     closebrackets: true,
@@ -149,10 +149,11 @@
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
                CodeMirror.showHint &&
-               CodeMirror.TernServer;
+               CodeMirror.TernServer &&
+               CodeMirror.startTern;
       },
       done: function () {
-        startTern();
+        CodeMirror.startTern();
       }
     }
   };
@@ -238,8 +239,13 @@
   options.forEach(loadAddon);
 
   // External method to realod all the addons
-  window.reloadAddons = function() {
-    options.forEach(loadAddon);
+  window.reloadAddons = function(arr) {
+    if (arr) {
+      arr.forEach(loadAddon);
+    }
+    else {
+      options.forEach(loadAddon);
+    }
   };
 
 })();

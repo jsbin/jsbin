@@ -104,7 +104,7 @@
     }
   };
 
-  window.startTern = function() {
+  CodeMirror.startTern = function() {
     loadTern(jsbin.panels.panels.javascript.editor);
     searchTernDefinition(template.html);
 

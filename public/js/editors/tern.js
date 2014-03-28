@@ -1,9 +1,8 @@
 (function () {
   'use strict';
 
-  /*globals $, jsbin, CodeMirror, simpleJsHint, template */
+  /*globals $, jsbin, CodeMirror, template, ternDefinitions, ternBasicDefs */
 
-  // jsbin.settings.addons.tern = true
   var ternServer;
   var ternLoaded = {};
 
@@ -71,54 +70,47 @@
   };
 
   var searchTernDefinition = function(htmlCode) {
-    if (jsbin.settings.addons.tern === true) {
-      for (var i = 0; i < ternDefinitions.length; i++) {
-        if (ternDefinitions[i].match.test(htmlCode)) {
-          if (ternDefinitions[i].type === 'def') {
-            loadTernDefinition(ternDefinitions[i].name, ternDefinitions[i].file);
-          }
-          else {
-            loadTernFile(ternDefinitions[i].name, ternDefinitions[i].file);
-          }
+    for (var i = 0; i < ternDefinitions.length; i++) {
+      if (ternDefinitions[i].match.test(htmlCode)) {
+        if (ternDefinitions[i].type === 'def') {
+          loadTernDefinition(ternDefinitions[i].name, ternDefinitions[i].file);
+        }
+        else {
+          loadTernFile(ternDefinitions[i].name, ternDefinitions[i].file);
         }
       }
     }
   };
 
   // Overwrite the autocomplete function to use tern
-  if (jsbin.settings.addons.tern === true) {
-    CodeMirror.commands.autocomplete = function(cm) {
-      if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-        var pos = cm.getCursor();
-        var tok = cm.getTokenAt(pos);
-        var indent = '';
-        if (cm.options.indentWithTabs) {
-          indent = '\t';
-        } else {
-          indent = new Array(cm.options.indentUnit + 1).join(' ');
-        }
+  CodeMirror.commands.autocomplete = function(cm) {
+    if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
+      var pos = cm.getCursor();
+      var tok = cm.getTokenAt(pos);
+      var indent = '';
+      if (cm.options.indentWithTabs) {
+        indent = '\t';
+      } else {
+        indent = new Array(cm.options.indentUnit + 1).join(' ');
+      }
 
-        if (tok.string === ';') {
-          return cm.replaceRange(indent, pos);
-        }
-        if (tok.string.trim() !== '') {
-          return ternServer.complete(cm);
-        }
+      if (tok.string === ';') {
         return cm.replaceRange(indent, pos);
       }
-    };
-  } else {
-    // Use the simple autocompletion
-    CodeMirror.commands.autocomplete = simpleJsHint;
-  }
+      if (tok.string.trim() !== '') {
+        return ternServer.complete(cm);
+      }
+      return cm.replaceRange(indent, pos);
+    }
+  };
 
-  if (jsbin.settings.addons.tern === true) {
+  window.startTern = function() {
     loadTern(jsbin.panels.panels.javascript.editor);
     searchTernDefinition(template.html);
 
     $('#library').bind('change', function () {
       searchTernDefinition(jsbin.panels.panels.html.getCode());
     });
-  }
+  };
 
 })();

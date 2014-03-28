@@ -151,8 +151,8 @@
                CodeMirror.showHint &&
                CodeMirror.TernServer;
       },
-      done: function (cm) {
-        //
+      done: function () {
+        startTern();
       }
     }
   };

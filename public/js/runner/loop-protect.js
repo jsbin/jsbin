@@ -6,14 +6,93 @@
  */
 var loopProtect = (function () {
   'use strict';
-  var debug = false ? function () {
-    console.log.apply(console, [].slice.apply(arguments));
-  } : function () {};
+  var debug = null;
+
+  // the standard loops - note that recursive is not supported
+  var re = /\b(for|while|do)\b/g;
+  var labelRe = /\b([a-z_]{1}\w+:)/i;
 
   var loopProtect = {};
 
   // used in the loop detection
   loopProtect.counters = {};
+
+  // expose debug info
+  loopProtect.debug = function (state) {
+    debug = state ? function () {
+      console.log.apply(console, [].slice.apply(arguments));
+    } : function () {};
+  };
+
+  loopProtect.debug(false); // off by default
+
+  // the method - as this could be aliased to something else
+  loopProtect.method = 'window.runnerWindow.protect';
+
+  function inMultilineComment(lineNum, lines) {
+    if (lineNum === 0) {
+      return false;
+    }
+
+    var j = lineNum;
+    var closeCommentTags = 1; // let's assume we're inside a comment
+    var closePos = -1;
+    var openPos = -1;
+
+    do {
+      j -= 1;
+      debug('looking backwards ' + lines[j]);
+      closePos = lines[j].indexOf('*/');
+      openPos = lines[j].indexOf('/*');
+
+      if (closePos !== -1) {
+        closeCommentTags++;
+      }
+
+      if (openPos !== -1) {
+        closeCommentTags--;
+
+        if (closeCommentTags === 0) {
+          debug('- exit: part of a multiline comment');
+          return true;
+        }
+      }
+    } while (j !== 0);
+
+    return false;
+  }
+
+  function inCommentOrString(index, line) {
+    var character;
+    while (--index > -1) {
+      character = line.substr(index, 1);
+      if (character === '"' || character === '\'' || character === '.') {
+        // our loop keyword was actually either in a string or a property, so let's exit and ignore this line
+        debug('- exit: matched inside a string or property key');
+        return true;
+      }
+      if (character === '/' || character === '*') {
+        // looks like a comment, go back one to confirm or not
+        --index;
+        if (character === '/') {
+          // we've found a comment, so let's exit and ignore this line
+          debug('- exit: part of a comment');
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function directlyBeforeLoop(index, lineNum, lines) {
+    re.lastIndex = 0;
+
+
+
+
+
+    return false;
+  }
 
   /**
    * Look for for, while and do loops, and inserts *just* at the start of the
@@ -22,14 +101,11 @@ var loopProtect = (function () {
   loopProtect.rewriteLoops = function (code, offset) {
     var recompiled = [];
     var lines = code.split('\n');
-    var re = /\b(for|while|do)\b/g;
-    var labelRe = /\b[a-z_]{1}\w+:/i;
     var disableLoopProtection = false;
-    var method = 'window.runnerWindow.protect';
+    var method = loopProtect.method;
     var ignore = {};
     var pushonly = {};
     var labelPostion = null;
-
 
     var insertReset = function (lineNum, line, matchPosition) {
       // recompile the line with the reset **just** before the actual loop
@@ -55,10 +131,6 @@ var loopProtect = (function () {
         disableLoopProtection = true;
       }
 
-      if (labelRe.test(line)) {
-        labelPostion = lineNum;
-      }
-
       var index = -1;
       var matchPosition = -1;
       var originalLineNum = lineNum;
@@ -71,8 +143,28 @@ var loopProtect = (function () {
       var terminator = false;
       var matches = line.match(re) || [];
       var match = matches.length ? matches[0] : '';
+      var labelMatch = line.match(labelRe) || [];
       var openBrackets = 0;
       var openBraces = 0;
+
+      if (labelMatch.length) {
+        debug('- label match');
+        index = line.indexOf(labelMatch[1]);
+        if (!inCommentOrString(index, line)) {
+          if (!inMultilineComment(lineNum, lines)) {
+            if (!directlyBeforeLoop(index, lineNum, lines)) {
+              debug('- found a label: "' + labelMatch[0] + '"');
+              labelPostion = lineNum;
+            } else {
+              debug('- ignored "label", false positive');
+            }
+          } else {
+            debug('- ignored label in multline comment');
+          }
+        } else {
+          debug('- ignored label in string or comment');
+        }
+      }
 
       if (ignore[lineNum]) {
         debug(' -exit: ignoring line ' + lineNum +': ' + line);
@@ -102,56 +194,18 @@ var loopProtect = (function () {
 
         // first we need to walk backwards to ensure that our match isn't part
         // of a string or part of a comment
-        while (--index > -1) {
-          character = line.substr(index, 1);
-          if (character === '"' || character === '\'' || character === '.') {
-            // our loop keyword was actually either in a string or a property, so let's exit and ignore this line
-            debug('- exit: matched inside a string or property key');
-            recompiled.push(line);
-            return;
-          }
-          if (character === '/' || character === '*') {
-            // looks like a comment, go back one to confirm or not
-            --index;
-            if (character === '/') {
-              // we've found a comment, so let's exit and ignore this line
-              debug('- exit: part of a comment');
-              recompiled.push(line);
-              return;
-            }
-          }
+        if (inCommentOrString(index, line)) {
+          recompiled.push(line);
+          return;
         }
 
         // it's quite possible we're in the middle of a multiline
         // comment, so we'll cycle up looking for an opening comment,
         // and if there's one (and not a closing `*/`), then we'll
         // ignore this line as a comment
-        if (lineNum > 0) {
-          var j = lineNum;
-          var closeCommentTags = 1; // let's assume we're inside a comment
-          var closePos = -1;
-          var openPos = -1;
-
-          do {
-            j -= 1;
-            debug('looking backwards ' + lines[j]);
-            closePos = lines[j].indexOf('*/');
-            openPos = lines[j].indexOf('/*');
-
-            if (closePos !== -1) {
-              closeCommentTags++;
-            }
-
-            if (openPos !== -1) {
-              closeCommentTags--;
-
-              if (closeCommentTags === 0) {
-                debug('- exit: part of a multiline comment');
-                recompiled.push(line);
-                return;
-              }
-            }
-          } while (j !== 0);
+        if (inMultilineComment(lineNum, lines)) {
+          recompiled.push(line);
+          return;
         }
 
         // now work our way forward to look for '{'
@@ -172,7 +226,7 @@ var loopProtect = (function () {
 
         while (index < line.length) {
           character = line.substr(index, 1);
-          debug(character, index);
+          // debug(character, index);
 
           if (character === '(') {
             openBrackets++;
@@ -200,7 +254,7 @@ var loopProtect = (function () {
               if (lineNum !== originalLineNum) {
                 debug('- multiline inline loop');
                 // affect the compiled line
-                recompiled[originalLineNum] = recompiled[originalLineNum].substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n';
+                recompiled[originalLineNum] = recompiled[originalLineNum].substring(0, terminator + 1) + '{\nif (' + method + '({ line: ' + printLineNumber + ' })) break;\n' + recompiled[originalLineNum].substring(terminator + 1);
                 line += '\n}\n';
               } else {
                 // simpler
@@ -258,7 +312,7 @@ var loopProtect = (function () {
                   openBraces--;
                 }
 
-                debug(character, openBraces);
+                // debug(character, openBraces);
 
                 if (openBraces === 0) {
                   findwhile = true;
@@ -307,6 +361,12 @@ var loopProtect = (function () {
         recompiled.push(line);
       }
     });
+
+    debug('---- source ----');
+    debug(code);
+    debug('---- rewrite ---');
+    debug(recompiled.join('\n'));
+    debug('');
 
     return disableLoopProtection ? code : recompiled.join('\n');
   };

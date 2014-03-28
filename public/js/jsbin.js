@@ -107,11 +107,6 @@ if (jsbin.settings.codemirror) {
 
 if (jsbin.settings.editor.theme) {
   $(document.documentElement).addClass('cm-s-' + jsbin.settings.editor.theme.split(' ')[0]);
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = jsbin['static'] + '/js/vendor/codemirror4/theme/' + jsbin.settings.editor.theme.split(' ')[0] + '.css?' + jsbin.version;
-  document.getElementsByTagName('head')[0].appendChild(link);
-
 }
 
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent

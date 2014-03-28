@@ -2036,6 +2036,12 @@ a.active:hover {
 .ie7 #help {
   width: 260px;
 }
+.ie7 #embedfield {
+  border: 2px solid #b7dffd;
+  width: 95%;
+  margin: 0;
+  position: static;
+}
 
 .dropdown .meta {
   color: #999;

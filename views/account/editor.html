@@ -5,7 +5,7 @@
 {{#if isProduction}}
   <link rel="stylesheet" href="{{static}}/css/prod/jsbin-themes-{{version}}.min.css">
 {{else}}
-  {{#themes}}<link rel="stylesheet" href="{{../static}}{{.}}{{cacheBust}}">{{/themes}}
+  {{#themes}}<link rel="stylesheet" href="{{../static}}{{.}}">{{/themes}}
 {{/if}}
 
 <h1>Customise your JS Bin editor</h1>

@@ -128,6 +128,7 @@
     "/js/vendor/codemirror4/theme/xq-dark.css",
     "/js/vendor/codemirror4/theme/xq-light.css",
     "/css/jsbin-cm-theme.css",
+    "/css/_codemirror.css",
     "/css/style.css",
     "/css/flat-ui.css"
   ]

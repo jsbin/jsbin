@@ -1409,98 +1409,6 @@ input {
 */
 
 
-/* codemirror JS Bin custom styles */
-
-#bin .editbox .CodeMirror {
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  line-height: 1.2em;
-  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
-  font-size: 14px;
-}
-.editbox .CodeMirror,
-.editbox .CodeMirror .CodeMirror-gutters {
-  background-image: linear-gradient(to bottom, rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
-  
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(200,200,200,0.2)), color-stop(100%,rgba(200,200,200,0.2))); /* Chrome,Safari4+ */
-  background-image: -webkit-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* Chrome10+,Safari5.1+ */
-  background-image:    -moz-linear-gradient(top,  rgba(200,200,200,0.2) 0%, rgba(200,200,200,0.2) 100%); /* FF3.6+ */
-  background-image:      -o-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* Opera 11.10+ */
-  background-image:         linear-gradient(to bottom,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* W3C */
-
-}
-.editbox .CodeMirror.cm-s-jsbin,
-.editbox .CodeMirror.cm-s-jsbin .CodeMirror-gutters,
-.focus .editbox .CodeMirror,
-.focus .editbox .CodeMirror .CodeMirror-gutters {
-  background-image: none;
-}
-
-.CodeMirror-lines {
-  /*margin-top: 8px;*/
-  padding: .4em 0;
-}
-
-/* get some padding back in the editor after losing it above */
-.CodeMirror pre {
-  padding: 0 0.4em;
-}
-
-.CodeMirror-gutters {
-  border-right: 0;
-  background: none;
-}
-
-.CodeMirror-gutter-text {
-  padding-top: 0;
-}
-
-.activeline {
-  background: #F2F7FF !important;
-}
-
-.CodeMirror-linenumbers {
-  padding-left: 0;
-}
-
-.CodeMirror-Tern-tooltip,
-.CodeMirror-hints {
-  border: 1px solid #aaa;
-  border: 1px solid rgb(191, 191, 191);
-  border: 1px solid hsl(0, 0%, 75%);
-  border-radius: 0;
-  -webkit-box-shadow: none;
-     -moz-box-shadow: none;
-          box-shadow: none;
-  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
-  font-size: 100%;
-}
-.CodeMirror-Tern-tooltip {
-  padding-top: 5px;
-}
-.CodeMirror-hint {
-  font-size: 1.1em;
-  line-height: 1.4em;
-}
-.CodeMirror-Tern-completion:before {
-  bottom: auto;
-  top: 1px;
-}
-
-.CodeMirror-matchingtag {
-  background: rgba(255, 150, 0, .3);
-}
-
-/* remove box-shadow from solarize theme */
-.cm-s-solarized.CodeMirror {
-  -moz-box-shadow: none;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-/* END CODEMIRROR CSS */
-
 .ready #bin {
   opacity: 1;
 /*  filter: alpha(opacity=1);*/
@@ -2778,38 +2686,6 @@ html * {
   color-profile: sRGB;
   rendering-intent: auto;
 }
-
-
-
-.CodeMirror {
-  background: transparent;
-}
-
-.CodeMirror-activeline-background:before {
-  content: "";
-  position: absolute;
-  background: inherit;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 200%;
-  right: 100%;
-}
-
-.code-fold .CodeMirror pre {
-  padding: 0 0.2em;
-}
-
-.CodeMirror-focused .cm-matchhighlight {
-  outline: 1px solid #666;
-}
-
-.cm-trailingspace {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
-  background-position: bottom left;
-  background-repeat: repeat-x;
-}
-
 
 
 @media only screen and (max-width: 700px) {

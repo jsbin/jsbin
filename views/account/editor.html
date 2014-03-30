@@ -2,35 +2,11 @@
 {{> account_sidebar}}
 <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
 <link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/lib/codemirror.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/3024-day.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/3024-night.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/ambiance.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/base16-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/base16-light.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/blackboard.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/cobalt.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/eclipse.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/elegant.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/erlang-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/lesser-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/mbo.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/mdn-like.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/midnight.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/monokai.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/neat.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/night.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/paraiso-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/paraiso-light.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/pastel-on-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/rubyblue.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/solarized.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/the-matrix.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/tomorrow-night-eighties.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/twilight.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/vibrant-ink.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/xq-dark.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/xq-light.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/css/jsbin-cm-theme.css{{cacheBust}}">
+{{#if isProduction}}
+  <link rel="stylesheet" href="{{static}}/css/prod/jsbin-themes-{{version}}.min.css">
+{{else}}
+  {{#themes}}<link rel="stylesheet" href="{{../static}}{{.}}{{cacheBust}}">{{/themes}}
+{{/if}}
 
 <h1>Customise your JS Bin editor</h1>
 

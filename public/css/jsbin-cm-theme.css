@@ -18,6 +18,9 @@
 .cm-s-jsbin span.cm-tag {color: #881280;}
 .cm-s-jsbin span.cm-attribute {color: #994500;}
 
+/*.panel:not(.focus) .cm-s-jsbin span {color: #666 !important; }*/
+/*.activeline {background: #e8f2ff !important;}*/
+
 /* style to test addons in the editor settings page */
 .CodeMirror-matchingtag {
   background: rgba(255, 150, 0, .3);

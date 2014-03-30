@@ -10,7 +10,9 @@ var loopProtect = (function () {
 
   // the standard loops - note that recursive is not supported
   var re = /\b(for|while|do)\b/g;
+  var reSingle = /\b(for|while|do)\b/;
   var labelRe = /\b([a-z_]{1}\w+:)/i;
+  var comments = /(?:\/\*(?:[\s\S]*?)\*\/)|(?:([\s;])+\/\/(?:.*)$)/gm;
 
   var loopProtect = {};
 
@@ -85,13 +87,22 @@ var loopProtect = (function () {
   }
 
   function directlyBeforeLoop(index, lineNum, lines) {
-    re.lastIndex = 0;
+    reSingle.lastIndex = 0;
+    labelRe.lastIndex = 0;
+    var beforeLoop = false;
 
+    var theRest = lines.slice(lineNum).join('\n').substr(index).replace(labelRe, '');
+    theRest.replace(reSingle, function (match, capture, i) {
+      var target = theRest.substr(0, i).replace(comments, '').trim();
+      debug('- directlyBeforeLoop: ' + target);
+      if (target.length === 0) {
+        beforeLoop = true;
+      }
+      // strip comments out of the target, and if there's nothing else
+      // it's a valid label...I hope!
+    });
 
-
-
-
-    return false;
+    return beforeLoop;
   }
 
   /**
@@ -152,7 +163,7 @@ var loopProtect = (function () {
         index = line.indexOf(labelMatch[1]);
         if (!inCommentOrString(index, line)) {
           if (!inMultilineComment(lineNum, lines)) {
-            if (!directlyBeforeLoop(index, lineNum, lines)) {
+            if (directlyBeforeLoop(index, lineNum, lines)) {
               debug('- found a label: "' + labelMatch[0] + '"');
               labelPostion = lineNum;
             } else {

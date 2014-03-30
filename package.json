@@ -60,7 +60,8 @@
     "should": "~1.2.2",
     "mocha": "~1.11.0",
     "sinon": "~1.7.3",
-    "grunt-cli": "~0.1.11"
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-cssmin": "~0.9.0"
   },
   "optionalDependencies": {},
   "licenses": [

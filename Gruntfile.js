@@ -52,7 +52,9 @@ module.exports = function (grunt) {
     map:       'public/js/prod/<%= pkg.name %>.map.json', // don't version this so we overwrite
     min:       'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.min.js',
     runner:    'public/js/prod/runner-<%= pkg.version %>.js',
-    runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js'
+    runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js',
+    themes:    'public/css/prod/<%= pkg.name %>-themes-<%= pkg.version %>.min.css',
+    cssmin:    'public/css/prod/<%= pkg.name %>-<%= pkg.version %>.min.css'
   };
 
   var config = {
@@ -61,6 +63,12 @@ module.exports = function (grunt) {
       return 'public' + script;
     }),
     runnerScripts: scripts.runner.map(function (script) {
+      return 'public' + script;
+    }),
+    themesRelative: scripts.themes.map(function (script) {
+      return 'public' + script;
+    }),
+    cssRelative: scripts.css.map(function (script) {
       return 'public' + script;
     }),
     jshint: {
@@ -118,6 +126,16 @@ module.exports = function (grunt) {
         dest: distpaths.runnermin
       }
     },
+    cssmin: {
+      themes: {
+        src: '<%= themesRelative %>',
+        dest: distpaths.themes
+      },
+      minify: {
+        src: '<%= cssRelative %>',
+        dest: distpaths.cssmin
+      }
+    },
     watch: {
       files: '<%= lint.files %>',
       tasks: 'lint'
@@ -131,9 +149,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   // Default task.
-  grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('build', ['concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['jshint']);
 
 };

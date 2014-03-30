@@ -3,6 +3,7 @@ logs/*
 config.*.json
 public/js/jsbin*.js
 public/js/prod/*
+public/css/prod/*
 .nodemonignore
 !config.default.json
 statsd.js

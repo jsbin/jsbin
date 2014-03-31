@@ -4,9 +4,7 @@
   /*globals $, CodeMirror, jsbin, reloadAddons */
 
   // create fake jsbin object
-  window.jsbin = {
-    static: jsbin.static,
-    version: jsbin.version,
+  $.extend(jsbin, {
     panels: {
       panels: {
         javascript: {
@@ -20,12 +18,15 @@
         fn(jsbin.panels.panels.javascript);
       }
     }
-  };
+  });
 
+  // create fake template object, used by Tern to search in the html content
+  // for javascript definitions to load
   window.template = {
     html: null
   };
 
+  // needed for the keymaps
   $.browser = {};
   // work out the browser platform
   var ua = navigator.userAgent;
@@ -80,10 +81,10 @@
   // setup variables;
   var $textarea = $('textarea');
   var currentSettings = getCurrentSettings();
-  if (typeof currentSettings.editor === 'undefined') {
+  if (currentSettings.editor === undefined) {
     currentSettings.editor = {};
   }
-  if (typeof currentSettings.addons === 'undefined') {
+  if (currentSettings.addons === undefined) {
     currentSettings.addons = {};
   }
   jsbin.settings = $.extend({}, currentSettings);
@@ -186,10 +187,14 @@
         _csrf: $csrf.val()
       },
       success: function() {
-        // console.log('success');
+        if (console && console.log) {
+          console.log('Success on saving settings');
+        }
       },
-      error: function() {
-        // console.log('there was an error saving');
+      error: function(xhr, status) {
+        if (console && console.log) {
+          console.log('Error: ' + status);
+        }
       }
     });
 

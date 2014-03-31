@@ -242,8 +242,7 @@
   window.reloadAddons = function(arr) {
     if (arr) {
       arr.forEach(loadAddon);
-    }
-    else {
+    } else {
       options.forEach(loadAddon);
     }
   };

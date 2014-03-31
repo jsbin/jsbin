@@ -74,8 +74,7 @@
       if (ternDefinitions[i].match.test(htmlCode)) {
         if (ternDefinitions[i].type === 'def') {
           loadTernDefinition(ternDefinitions[i].name, ternDefinitions[i].file);
-        }
-        else {
+        } else {
           loadTernFile(ternDefinitions[i].name, ternDefinitions[i].file);
         }
       }

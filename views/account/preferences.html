@@ -15,7 +15,7 @@
       <label><input type="checkbox" name="open-panel" id="panel-css"> CSS</label>
       <label><input type="checkbox" name="open-panel" id="panel-js"> JavaScript</label>
       <label><input type="checkbox" name="open-panel" id="panel-console"> Console</label>
-      <label><input type="checkbox" name="open-panel" id="panel-output" checked> Output</label>
+      <label><input type="checkbox" name="open-panel" id="panel-live" checked> Output</label>
     </div>
 
     <div>
@@ -29,8 +29,8 @@
     </div>
 
     <div>
-      <label for="autorun">Auto-run JS</label>
-      <input type="checkbox" checked id="autorun">
+      <label for="includejs">Auto-run JS</label>
+      <input type="checkbox" checked id="includejs">
     </div>
 
     <h3>Processors</h3>
@@ -67,5 +67,8 @@
 
     <h3>Template</h3>
     <p>The template is the default content that appears in your new bins.</p>
+    <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
   </form>
 </section>
+<script src="{{static}}/js/vendor/jquery.js{{cacheBust}}"></script>
+<script src="{{static}}/js/preferences-settings.js{{cacheBust}}"></script>

@@ -9,7 +9,8 @@
     emacs: false,
     trailingspace: false,
     fold: false,
-    sublime: false
+    sublime: false,
+    activeline: false
   };
 
   if (!jsbin.settings.addons) {
@@ -153,6 +154,17 @@
       },
       done: function (cm) {
         //
+      }
+    },
+    activeline: {
+      url: [
+        '/js/vendor/codemirror4/addon/selection/active-line.js'
+      ],
+      test: function() {
+        return CodeMirror.defaults.styleActiveLine !== undefined;
+      },
+      done: function(cm) {
+        setOption(cm, 'styleActiveLine', true);
       }
     }
   };

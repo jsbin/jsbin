@@ -16,7 +16,6 @@
     "/js/vendor/cm_addons/simple-hint.js",
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
-    "/js/vendor/codemirror4/addon/selection/active-line.js",
     "/js/vendor/codemirror4/addon/comment/comment.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",

@@ -130,6 +130,9 @@
     },
     tern: {
       url: [
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/addon/hint/show-hint.css',
+        '/js/vendor/codemirror4/addon/tern/tern.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.js',
         '/js/vendor/codemirror4/addon/dialog/dialog.js',
         '/js/vendor/cm_addons/tern.js',

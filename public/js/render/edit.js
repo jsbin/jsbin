@@ -5,7 +5,7 @@ function jsbinShowEdit(options) {
   var moveTimer, over,
   doc = document,
   aEL = 'addEventListener',
-  path = window.location.pathname,
+  path = options.root + window.location.pathname,
   style = doc.createElement('link'),
   btn = doc.createElement('a');
 

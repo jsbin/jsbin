@@ -1993,6 +1993,9 @@ span.menu {
   bottom: 0;
   padding-top: 0;
 }
+.ie7 .editbox {
+  left: 0;
+}
 
 body.source #preview {
   display: none;

@@ -252,13 +252,13 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.1/angular.min.js',
-    'label': 'Angular 1.2.1 Stable',
+    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
+    'label': 'Angular 1.3.0 beta 1 Unstable',
     'group': 'Angular'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js',
-    'label': 'Angular 1.1.5 Unstable',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
+    'label': 'Angular 1.2.14 Stable',
     'group': 'Angular'
   },
   {
@@ -299,6 +299,13 @@ var libraries = [
     ],
     'label': 'Enyo 2.2.0',
     'group': 'Enyo'
+  },
+  {
+    'url': [
+      'https://rawgithub.com/ai/autoprefixer-rails/master/vendor/autoprefixer.js'
+    ],
+    'label': 'Autoprefixer',
+    'snippet': '<style type="unprocessed" id="AutoprefixerIn">%css%</style>\n<style id="AutoprefixerOut"></style>\n<script>\nAutoprefixerSettings = ""; //Specify here the browsers you want to target or leave empty\ndocument.getElementById("AutoprefixerOut").innerHTML = autoprefixer(AutoprefixerSettings || null).process(document.getElementById("AutoprefixerIn").innerHTML).css;\n</script>'
   },
   {
     'url': [

@@ -247,7 +247,8 @@ $('.code.panel > .label > span.name').dblclick(function () {
   });
 });
 
-$('#createnew').click(function () {
+$('#createnew').click(function (event) {
+  event.preventDefault();
   var i, key;
   analytics.createNew();
   // FIXME this is out and out [cr]lazy....
@@ -273,6 +274,7 @@ $('#createnew').click(function () {
       jsbin.panels.panels.html.show();
       jsbin.panels.panels.live.show();
     }
+    window.location = jsbin.root;
   }, 0);
 });
 

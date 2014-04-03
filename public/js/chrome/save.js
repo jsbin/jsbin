@@ -37,7 +37,11 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  saveCode('save', jsbin.saveDisabled === true ? false : true);
+  var ajax = true;
+  if (jsbin.saveDisabled === true) {
+    ajax = false;
+  }
+  saveCode('save', ajax);
 
   return false;
 });
@@ -118,13 +122,9 @@ function onSaveError(jqXHR, panelId) {
       type: 'error',
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
-  } else {
+  } else if (panelId) {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-    // $document.trigger('tip', {
-    //   type: 'error',
-    //   content: 'Something went wrong while saving. Your most recent work is not saved.'
-    // });
   }
 }
 
@@ -348,7 +348,6 @@ function saveCode(method, ajax, ajaxCallback) {
         // $binGroup.find('td.url a span.first').removeClass('first');
         // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
-        $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
@@ -357,8 +356,12 @@ function saveCode(method, ajax, ajaxCallback) {
         } else {
           window.location.hash = data.edit;
         }
+
+        $document.trigger('saved');
       },
-      error: onSaveError,
+      error: function (jqXHR) {
+        onSaveError(jqXHR, null);
+      },
       complete: function () {
         saving.inprogress(false);
       }

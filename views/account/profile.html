@@ -1,0 +1,21 @@
+{{> account_sidebar}}
+
+<h1>Your personal details</h1>
+
+
+<section id="content">
+	<p style="text-align: center; background: #FF4136; color: #fff; font-weight: bold">Not working right now, come back soon my love!</p>
+	<form>
+		<label>
+			<input name="username" type="text" value="{{user.name}}" disabled>
+		</label>
+		<label>
+			<input name="email" type="text" placeholder="{{user.email}}">
+		</label>
+		<input type="hidden" name="csrf" value="{{csrf}}">
+		<input type="submit">
+	</form>
+</section>
+
+<script src="{{static}}/js/vendor/jquery.js"></script>
+<script src="{{static}}/js/account-settings.js"></script>

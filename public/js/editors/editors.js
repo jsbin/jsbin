@@ -33,19 +33,71 @@ panels.save = function () {
   }
 
   sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
+};
+
+function getQuery(qs) {
+  /*globals $*/
+  var sep = '&';
+  var eq = '=';
+  var obj = {};
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    try {
+      k = decodeURIComponent(kstr);
+      v = decodeURIComponent(vstr);
+    } catch (e) {
+      k = kstr;
+      v = vstr;
+    }
+
+    if (!(window.hasOwnProperty ? window.hasOwnProperty(obj, k) : obj.hasOwnProperty(k))) {
+      obj[k] = v;
+    } else if ($.isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
 }
 
 panels.restore = function () {
+  'use strict';
+  /*globals jsbin, editors, $window, $document*/
   // if there are panel names on the hash (v2 of jsbin) or in the query (v3)
   // then restore those specific panels and evenly distribute them.
   var open = [],
+      defaultPanels = ['html', 'live'], // sigh, live == output :(
       location = window.location,
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = [],
       state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
-      hasContent = {
-        javascript: editors.javascript.getCode().length,
+      hasContent = { javascript: editors.javascript.getCode().length,
         css: editors.css.getCode().length,
         html: editors.html.getCode().length
       },
@@ -65,41 +117,59 @@ panels.restore = function () {
   }
 
   if (search || hash) {
-    // RS July 23, 2013 - I'm not mad on this change and
-    // would welcome a refactor to all the editor.js code
-    // because it's damn hard to navigate and work out
-    // what's happening.
-    // This change is mostly to create consistency between
-    // the panel name of 'output' and the shortcut 'live'.
-    // it also strips out prop=value& to avoid bashing the
-    // panel name
-    
-    toopen = decodeURIComponent(search || hash).replace(/\b([^&=]*)=([^&=]*)/g, '').replace(/&/g, '').split(',');
+    var query = (search || hash);
 
-    if (toopen.indexOf('output') !== -1) {
-      toopen.push('live');
-    }
-    if (toopen.indexOf('js') !== -1) {
-      toopen.push('javascript');
+    // assume the query is: html=xyz
+    if (query.indexOf('&') !== -1) {
+      query = getQuery(search || hash);
+      toopen = Object.keys(query).reduce(function (toopen, key) {
+        if (key === 'js') {
+          query.javascript = query.js;
+          key = 'javascript';
+        }
+
+        if (key === 'output') {
+          query.live = query.live;
+          key = 'live';
+        }
+
+        if (query[key] === undefined) {
+          query[key] = '';
+        }
+
+        if (validPanels.indexOf(key) !== -1) {
+          toopen.push(key + '=' + query[key]);
+        }
+
+        return toopen;
+      }, []);
+    } else {
+      toopen = query.split(',').reduce(function (toopen, key) {
+        if (key === 'js') {
+          key = 'javascript';
+        }
+
+        if (key === 'output') {
+          key = 'live';
+        }
+
+        if (validPanels.indexOf(key) !== -1) {
+          toopen.push(key);
+        }
+
+        return toopen;
+      }, []);
     }
   }
 
-  // strip out anything that wasn't recognised as a valid panel to open
-  for (i = 0; i < toopen.length; i++) {
-    if (validPanels.indexOf(toopen[i]) === -1) {
-      toopen.splice(i, 1);
-      i--;
-    }
+  if (state !== null && toopen.length === 0) {
+    toopen = Object.keys(state);
   }
 
   if (toopen.length === 0) {
-    toopen = jsbin.settings.panels || [];
-  }
-
-  if (toopen.length === 0 && state === null) {
-    if (hasContent.javascript) toopen.push('javascript');
-    if (hasContent.html) toopen.push('html');
-    if (hasContent.css) toopen.push('css');
+    if (hasContent.javascript) {toopen.push('javascript');}
+    if (hasContent.html) {toopen.push('html');}
+    if (hasContent.css) {toopen.push('css');}
     toopen.push('live');
   }
 
@@ -113,11 +183,14 @@ panels.restore = function () {
     panels.saveOnExit = true;
   }
 
-  // TODO decide whether the above code I'm trying too hard.
-
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query
   i = 0;
+
+  if (toopen.length === 0) {
+    toopen = defaultPanels;
+  }
+
   if (toopen.length) {
     for (name in state) {
       if (toopen.indexOf(name) !== -1) {
@@ -125,10 +198,12 @@ panels.restore = function () {
       }
     }
 
-    if (i === toopen.length) openWithSameDimensions = true;
+    if (i === toopen.length) {
+      openWithSameDimensions = true;
+    }
 
     for (i = 0; i < toopen.length; i++) {
-      panelURLValue = '';
+      panelURLValue = null;
       name = toopen[i];
 
       // if name contains an `=` it means we also need to set that particular panel to that code
@@ -140,7 +215,7 @@ panels.restore = function () {
       if (panels.panels[name]) {
         panel = panels.panels[name];
         // console.log(name, 'width', state[name], width * parseFloat(state[name]) / 100);
-        if (panel.editor && panelURLValue) {
+        if (panel.editor && panelURLValue !== null) {
           panel.setCode(decodeURIComponent(panelURLValue));
         }
 
@@ -150,7 +225,7 @@ panels.restore = function () {
           panel.show();
         }
         init.push(panel);
-      } else if (name && panelURLValue) { // TODO support any varible insertion
+      } else if (name && panelURLValue !== null) { // TODO support any varible insertion
         (function (name, panelURLValue) {
           var todo = ['html', 'javascript', 'css'];
 
@@ -188,11 +263,7 @@ panels.restore = function () {
       panels.panels.live.show();
     }
 
-    if (!openWithSameDimensions) this.distribute();
-  } else {
-    for (name in state) {
-      panels.panels[name].show(width * parseFloat(state[name]) / 100);
-    }
+    if (!openWithSameDimensions) {this.distribute();}
   }
 
   // now restore any data from sessionStorage

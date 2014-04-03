@@ -53,7 +53,8 @@
     "memcached": "~0.2.6",
     "passport-dropbox-oauth2": "~0.1.5",
     "handlebars": "~2.0.0-alpha.2",
-    "dropbox": "~0.10.2"
+    "dropbox": "~0.10.2",
+    "zmq": "~2.6.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

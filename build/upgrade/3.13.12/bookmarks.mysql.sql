@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS `owner_bookmarks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `owner_bookmarks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(11) NOT NULL,
+  `name` char(255) NOT NULL,
   `url` char(255) NOT NULL,
   `revision` int(11) NOT NULL,
   `type` char(50) NOT NULL,

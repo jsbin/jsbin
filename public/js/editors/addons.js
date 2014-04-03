@@ -132,6 +132,9 @@
     },
     tern: {
       url: [
+        '/js/vendor/codemirror4/addon/dialog/dialog.css',
+        '/js/vendor/codemirror4/addon/hint/show-hint.css',
+        '/js/vendor/codemirror4/addon/tern/tern.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.js',
         '/js/vendor/codemirror4/addon/dialog/dialog.js',
         '/js/vendor/cm_addons/tern.js',
@@ -151,10 +154,11 @@
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
                CodeMirror.showHint &&
-               CodeMirror.TernServer;
+               CodeMirror.TernServer &&
+               CodeMirror.startTern;
       },
-      done: function (cm) {
-        //
+      done: function () {
+        CodeMirror.startTern();
       }
     }
   };
@@ -240,8 +244,12 @@
   options.forEach(loadAddon);
 
   // External method to realod all the addons
-  window.reloadAddons = function() {
-    options.forEach(loadAddon);
+  window.reloadAddons = function(arr) {
+    if (arr) {
+      arr.forEach(loadAddon);
+    } else {
+      options.forEach(loadAddon);
+    }
   };
 
 })();

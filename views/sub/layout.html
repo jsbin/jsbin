@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"/>
-    <title>JS Bin</title>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" href="{{static}}/images/favicon.png"/>
+    <meta charset="utf-8">
+    <title>Account Management</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="{{static}}/images/favicon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:700,400" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{static}}/css/sub/style.css{{cacheBust}}"/>
+    <link rel="stylesheet" href="{{static}}/css/help.css{{cacheBust}}">
+    <script>
+      var jsbin = { "static": "{{static}}", version: "{{version}}" };
+    </script>
     {{#if isProduction}}
       {{{analytics}}}
     {{/if}}
@@ -15,7 +18,10 @@
     <div id="container">
       <header>
       <div class="inner"><a id="back" href="{{root}}"><span class="morewords">Back to JS Bin</span></a>
-        <nav><a href="{{learn}}/blog">Blog</a><a href="{{learn}}/help">Help</a>
+        <nav>
+          <a class="selected" href="{{root}}/account">Account</a>
+          <a href="{{root}}/blog">Blog</a>
+          <a href="{{root}}/help">Help</a>
         </nav>
       </div>
       </header>
@@ -38,7 +44,9 @@
         </li>
       </ul>
       <ul class="legal">
-        <li><em>"Hack. Learn. Fix. Teach."</em></li>
+        <li>
+          <em>"Hack. Learn. Fix. Teach."</em>
+        </li>
       </ul>
     </div>
     </footer>

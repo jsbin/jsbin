@@ -1,0 +1,141 @@
+#sidebar {
+  width:200px;
+  float:left;
+  margin-right: 0px;
+  margin-top: 40px;
+}
+
+#sidebar .sidebar-btn-group {
+  border:1px solid #6293D3;
+  border-bottom:none;
+  margin-bottom:20px;
+}
+
+#sidebar .sidebar-btn {
+  display:block;
+  border:1px solid #6293D3;
+  padding:8px;
+  font-size:0.8em;
+  text-decoration:none;
+  font-weight:600;
+  color:#6293D3;
+  margin-bottom:10px;
+}
+
+#sidebar .sidebar-btn:hover {
+  color:rgba(98, 147, 211, 0.5);
+}
+
+#sidebar .sidebar-btn.selected:after {
+  content: '  »';
+}
+
+#sidebar .sidebar-btn-group .sidebar-btn {
+  border:none;
+  border-bottom:1px solid #6293D3;
+  margin-bottom: 0px;
+}
+
+#content, h1 {
+/*   float:left; */
+
+margin-left: 230px;
+  max-width: 100%;
+}
+
+#content article {
+  display:none;
+}
+
+
+form input[type="submit"] {
+/*   width:60%; */
+  margin:10px 20%;
+  font-family: "Helvetica Neue", "Arial";
+  font-size: 0.75em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0 3px 2px 0px #eee;
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 2px;
+  border-bottom:1px solid rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  font-weight:600;
+}
+form input[type="submit"]:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+form input {
+  font-size: 16px;
+  position: relative;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+label input[type="radio"] {
+  margin-left: 20px;
+}
+
+label:first-of-type input[type="radio"] {
+  margin-left: 0;
+}
+
+select {
+  font-size: 16px;
+  min-width: 120px;
+}
+
+form > div {
+  min-height: 32px;
+  /* clear: left; */
+  overflow: hidden;
+}
+
+form label[for],
+form .label {
+/*   font-size:1em; */
+  font-weight: 500;
+  color: #666;
+  display: block;
+  float: left;
+
+width: 180px;
+text-align: right;
+margin-right: 20px;
+}
+
+#indentWithSpaces:checked:focus:after {
+  content: "...is the correct answer!";
+  position: absolute;
+  left: 75px;
+  width: 284px;
+  top: -2px;
+  color: #979A99;
+}
+
+#editor-settings {
+
+  margin-bottom: 20px;
+}
+
+#content .CodeMirror {
+  border: 1px solid #ccc;
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
+}
+
+form label.mini-desc,
+form label.mini-desc a {
+  color: #979A99;
+  float: none;
+  display: inline;
+  font-weight: normal;
+  margin-right: 0;
+}

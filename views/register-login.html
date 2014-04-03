@@ -14,16 +14,16 @@
   <div class="info {{#if flash}}active{{/if}}"><p>{{{flash}}}</p></div>
   <form action="{{root}}/register" method="post" class="register">
     <div>
-      <label for="username">Username</label>
-      <input id="username" name="username"type="text" required>
+      <label for="signup-username">Username</label>
+      <input name="username" id="signup-username" type="text" required>
     </div>
     <div>
-      <label for="email">Email address</label>
-      <input name="email" id="email" type="email" required>
+      <label for="signup-email">Email address</label>
+      <input name="email" id="signup-email" type="email" required>
     </div>
     <div>
-      <label for="key">Password</label>
-      <input name="key" id="key" type="password" required>
+      <label for="signup-key">Password</label>
+      <input name="key" id="signup-key" type="password" required>
     </div>
     <div>
       <input type="submit" value="Register">
@@ -33,12 +33,12 @@
   </form>
   <form action="{{root}}/login" method="post" class="login" id="login">
     <div>
-      <label for="username">Email address or username</label>
-      <input name="username" id="username" type="text" required>
+      <label for="login-username">Email address or username</label>
+      <input name="username" id="login-username" type="text" required>
     </div>
     <div>
-      <label for="key">Password</label>
-      <input name="key" id="key" type="password" required>
+      <label for="login-key">Password</label>
+      <input name="key" id="login-key" type="password" required>
     </div>
     <div>
       <input type="submit" value="Log in">

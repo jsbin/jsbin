@@ -41,9 +41,6 @@
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
-              {{#feature request "togetherjs"}}
-              <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration" id="togetherjs-jsbin-button">Start Collaboration</a>
-              {{/feature}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
@@ -106,7 +103,7 @@
           {{#if home}}
             {{#feature request "accountPages"}}
             <div class="menu">
-              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Settings</a>
             </div>
             {{else}}
             <div class="menu">
@@ -400,11 +397,11 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Close current HTML element</td>
         </tr> -->
         <tr>
-          <td>cmd + [</td>
+          <td>ctrl + [</td>
           <td>Indents selected lines</td>
         </tr>
         <tr>
-          <td>cmd + ]</td>
+          <td>ctrl + ]</td>
           <td>Unindents selected lines</td>
         </tr>
         <tr>
@@ -537,10 +534,6 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
-{{#feature request "togetherjs"}}
-<script src="{{static}}/js/chrome/togetherjs.js{{cacheBust}}"></script>
-<script src="https://togetherjs.com/togetherjs-min.js"></script>
-{{/feature}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}
@@ -554,23 +547,6 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
-{{#feature request "tern"}}
-<script src="{{static}}/js/vendor/codemirror4/addon/hint/show-hint.js"></script>
-<script src="{{static}}/js/vendor/codemirror4/addon/dialog/dialog.js"></script>
-<script src="{{static}}/js/vendor/cm_addons/tern.js"></script>
-<script src="{{static}}/js/vendor/acorn/acorn.js"></script>
-<script src="{{static}}/js/vendor/acorn/acorn_loose.js"></script>
-<script src="{{static}}/js/vendor/acorn/util/walk.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/signal.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/tern.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/def.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/comment.js"></script>
-<script src="{{static}}/js/vendor/tern/lib/infer.js"></script>
-<script src="{{static}}/js/vendor/tern/plugin/doc_comment.js"></script>
-<script src="{{static}}/js/editors/defs.js"></script>
-<script src="{{static}}/js/editors/definitions.js"></script>
-<script src="{{static}}/js/editors/tern.js"></script>
-{{/feature}}
 </body>
 </html>
 

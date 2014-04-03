@@ -424,6 +424,29 @@ $('#addmeta').click(function () {
   return false;
 });
 
+$('a.publish-to-vanity').on('click', function (event) {
+  event.preventDefault();
+  analytics.publishVanity();
+
+  $.ajax({
+    type: 'post',
+    url: this.href,
+    data: { url: jsbin.getURL() },
+    success: function () {
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'This bin is now published to your vanity URL: <a target="_blank" href="' + jsbin.shareRoot + '">' + jsbin.shareRoot + '</a>'
+      });
+    },
+    error: function (xhr) {
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'There was a problem publishing to your vanity URL. Can you try again or file a <a target="_blank" href="' + githubIssue() + '">new issue</a>?'
+      });
+    }
+  })
+});
+
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
   analytics.delete();

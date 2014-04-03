@@ -114,6 +114,9 @@ var analytics = {
   run: function (from) {
     analytics.track(from || 'button', 'run with js');
   },
+  publishVanity: function () {
+    analytics.track('bin', 'publish-vanity');
+  },
   runconsole: function (from) {
     analytics.track(from || 'button', 'run console');
   }

@@ -125,6 +125,8 @@
         delete CodeMirror.keyMap['sublime'][cmd + '-J'];
         delete CodeMirror.keyMap['sublime'][cmd + '-R'];
         delete CodeMirror.keyMap['sublime'][cmd + '-Enter'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-Up'];
+        delete CodeMirror.keyMap['sublime'][cmd + '-Down'];
         cm.removeKeyMap('noEmmet');
       }
     },

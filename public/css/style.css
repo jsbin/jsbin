@@ -1985,6 +1985,18 @@ span.menu {
   padding-top: 35px;
 }
 
+.ie7 #live iframe {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 0;
+}
+.ie7 .editbox {
+  left: 0;
+}
+
 body.source #preview {
   display: none;
 }
@@ -3250,6 +3262,32 @@ a.active:hover {
   position: absolute;
   /*padding: 3px 20px 10px 3px;*/
   padding: 0;
+}
+.ie7 .dropdown {
+  top: 100%;
+  left: 0;
+  z-index: 10;
+}
+.ie7 .help .dropdown {
+  left: auto;
+  right: 0;
+}
+.ie7 #control,
+.ie7 .control,
+.ie7 .help {
+  position: static;
+}
+.ie7 .help {
+  float: right;
+}
+.ie7 #help {
+  width: 260px;
+}
+.ie7 #embedfield {
+  border: 2px solid #b7dffd;
+  width: 95%;
+  margin: 0;
+  position: static;
 }
 
 .dropdown .meta {

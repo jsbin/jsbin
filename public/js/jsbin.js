@@ -4,7 +4,8 @@ try {
   var console = {
     log: function () {
       // alert([].slice.call(arguments).join('\n'));
-    }
+    },
+    warn: function () {}
   };
 }
 
@@ -192,13 +193,13 @@ var $window = $(window),
 
 $window.unload(unload);
 
-window.addEventListener('storage', function (e) {
-  if (e.storageArea === localStorage && e.key === 'settings') {
-    console.log('updating from storage');
-    console.log(JSON.parse(localStorage.settings));
-    jsbin.settings = JSON.parse(localStorage.settings);
-  }
-});
+// window.addEventListener('storage', function (e) {
+//   if (e.storageArea === localStorage && e.key === 'settings') {
+//     console.log('updating from storage');
+//     console.log(JSON.parse(localStorage.settings));
+//     jsbin.settings = JSON.parse(localStorage.settings);
+//   }
+// });
 
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {

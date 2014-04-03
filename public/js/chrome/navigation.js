@@ -260,11 +260,6 @@ $('#createnew').click(function (event) {
     }
   }
 
-  if (jsbin.collaborating && TogetherJS) {
-    // this ends the session (but can also start it, so we check jsbin.collaborating)
-    TogetherJS();
-  }
-
   // clear out the write checksum too
   sessionStorage.removeItem('checksum');
 

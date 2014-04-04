@@ -137,7 +137,7 @@
         '/js/vendor/codemirror4/addon/tern/tern.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.js',
         '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/prod/tern-' + jsbin.version + '.min.js'
+        '/js/prod/addon-tern-' + jsbin.version + '.min.js'
       ],
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&

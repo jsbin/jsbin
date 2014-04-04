@@ -141,7 +141,7 @@
       ],
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
-               ternBasicDefs &&
+               (typeof window.ternBasicDefs !== undefined) &&
                CodeMirror.showHint &&
                CodeMirror.TernServer &&
                CodeMirror.startTern;

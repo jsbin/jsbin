@@ -55,12 +55,19 @@ module.exports = function (grunt) {
     runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js'
   };
 
+  var addonspaths = {
+    ternmin:   'public/js/prod/tern-<%= pkg.version %>.min.js'
+  };
+
   var config = {
     pkg: pkg,
     scriptsRelative: scripts.app.map(function (script) {
       return 'public' + script;
     }),
     runnerScripts: scripts.runner.map(function (script) {
+      return 'public' + script;
+    }),
+    ternRelative: scripts.tern.map(function (script) {
       return 'public' + script;
     }),
     jshint: {
@@ -116,6 +123,11 @@ module.exports = function (grunt) {
         options: {},
         src: distpaths.runner,
         dest: distpaths.runnermin
+      },
+      addons: {
+        files: [
+          { src: '<%= ternRelative %>', dest: addonspaths.ternmin } // tern
+        ]
       }
     },
     watch: {
@@ -134,6 +146,7 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('addons', ['uglify:addons']);
   grunt.registerTask('default', ['jshint']);
 
 };

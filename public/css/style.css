@@ -2928,8 +2928,8 @@ input {
   padding-left: 0;
 }
 
-.editbox .CodeMirror-Tern-tooltip,
-.editbox .CodeMirror-hints {
+#jsbin .CodeMirror-Tern-tooltip,
+#jsbin .CodeMirror-hints {
   border: 1px solid #aaa;
   border: 1px solid rgb(191, 191, 191);
   border: 1px solid hsl(0, 0%, 75%);
@@ -2940,14 +2940,14 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 100%;
 }
-.editbox .CodeMirror-Tern-tooltip {
+#jsbin .CodeMirror-Tern-tooltip {
   padding-top: 5px;
 }
-.editbox .CodeMirror-hint {
+#jsbin .CodeMirror-hint {
   font-size: 1.1em;
   line-height: 1.4em;
 }
-.editbox .CodeMirror-Tern-completion:before {
+#jsbin .CodeMirror-Tern-completion:before {
   bottom: auto;
   top: 1px;
 }

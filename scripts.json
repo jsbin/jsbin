@@ -1,7 +1,6 @@
 {
   "app": [
     "/js/chrome/hashbang-jump.js",
-    "/js/vendor/jquery.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",

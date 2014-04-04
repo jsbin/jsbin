@@ -137,22 +137,11 @@
         '/js/vendor/codemirror4/addon/tern/tern.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.js',
         '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/vendor/cm_addons/tern.js',
-        '/js/vendor/acorn/acorn.js',
-        '/js/vendor/acorn/acorn_loose.js',
-        '/js/vendor/acorn/util/walk.js',
-        '/js/vendor/tern/lib/signal.js',
-        '/js/vendor/tern/lib/tern.js',
-        '/js/vendor/tern/lib/def.js',
-        '/js/vendor/tern/lib/comment.js',
-        '/js/vendor/tern/lib/infer.js',
-        '/js/vendor/tern/plugin/doc_comment.js',
-        '/js/editors/defs.js',
-        '/js/editors/definitions.js',
-        '/js/editors/tern.js'
+        '/js/prod/tern-' + jsbin.version + '.min.js'
       ],
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
+               ternBasicDefs &&
                CodeMirror.showHint &&
                CodeMirror.TernServer &&
                CodeMirror.startTern;

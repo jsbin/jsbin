@@ -55,10 +55,6 @@ module.exports = function (grunt) {
     runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js'
   };
 
-  var addonspaths = {
-    ternmin:   'public/js/prod/tern-<%= pkg.version %>.min.js'
-  };
-
   var config = {
     pkg: pkg,
     scriptsRelative: scripts.app.map(function (script) {
@@ -67,9 +63,21 @@ module.exports = function (grunt) {
     runnerScripts: scripts.runner.map(function (script) {
       return 'public' + script;
     }),
-    ternRelative: scripts.tern.map(function (script) {
-      return 'public' + script;
-    }),
+    addonsRelative: (function(addon) {
+      var relative = [];
+      for (var prop in addon) {
+        if (addon.hasOwnProperty(prop)) {
+          var src = addon[prop].map(function(script) {
+            return 'public' + script;
+          });
+          relative.push({
+            src: src,
+            dest: 'public/js/prod/addon-' + prop + '-<%= pkg.version %>.min.js'
+          });
+        }
+      }
+      return relative;
+    })(scripts.addons),
     jshint: {
       dist: {
         files: {
@@ -125,9 +133,7 @@ module.exports = function (grunt) {
         dest: distpaths.runnermin
       },
       addons: {
-        files: [
-          { src: '<%= ternRelative %>', dest: addonspaths.ternmin } // tern
-        ]
+        files: '<%= addonsRelative %>'
       }
     },
     watch: {

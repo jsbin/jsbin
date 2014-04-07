@@ -171,4 +171,4 @@
 <script src="{{static}}/js/vendor/codemirror4/keymap/vim.js{{cacheBust}}"></script>
 <script src="{{static}}/js/editor-settings.js{{cacheBust}}"></script>
 <script src="{{static}}/js/editors/addons.js{{cacheBust}}"></script>
-
+{{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}

@@ -50,7 +50,8 @@
     "hbs": "~2.4.0",
     "replify": "~1.2.0",
     "moment": "~2.5.1",
-    "memcached": "~0.2.6"
+    "memcached": "~0.2.6",
+    "express-cookie-blacklist": "~0.2.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

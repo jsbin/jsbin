@@ -15,7 +15,7 @@
   <form action="{{root}}/register" method="post" class="register">
     <div>
       <label for="signup-username">Username</label>
-      <input name="username" id="signup-username" type="text" required>
+      <input name="username" id="signup-username" type="text" required pattern="[a-zA-Z0-9_\-]+" oninvalid="setCustomValidity('Only numbers, letters, underscore and dash are allowed in the username')">
     </div>
     <div>
       <label for="signup-email">Email address</label>
@@ -56,5 +56,5 @@
 
 
 <script src="{{static}}/js/vendor/polyfills.js{{cacheBust}}"></script>
-<script src="{{static}}/js/vendor/jquery.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{static}}/js/login.js{{cacheBust}}"></script>

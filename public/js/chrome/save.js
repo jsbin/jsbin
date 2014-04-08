@@ -37,13 +37,9 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  // if it's connecting to a togetherjs session, save will not trigger a reload
   var ajax = true;
   if (jsbin.saveDisabled === true) {
     ajax = false;
-  }
-  if (jsbin.togetherjs === true) {
-    ajax = true;
   }
   saveCode('save', ajax);
 
@@ -66,7 +62,8 @@ function updateSavedState() {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
-    var url = jsbin.getURL() + this.getAttribute('data-path') + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var path = this.getAttribute('data-path');
+    var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     if (nodeName === 'A') {
       this.href = url;

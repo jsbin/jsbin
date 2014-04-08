@@ -260,11 +260,6 @@ $('#createnew').click(function (event) {
     }
   }
 
-  if (jsbin.collaborating && TogetherJS) {
-    // this ends the session (but can also start it, so we check jsbin.collaborating)
-    TogetherJS();
-  }
-
   // clear out the write checksum too
   sessionStorage.removeItem('checksum');
 
@@ -424,9 +419,32 @@ $('#addmeta').click(function () {
   return false;
 });
 
+$('a.publish-to-vanity').on('click', function (event) {
+  event.preventDefault();
+  analytics.publishVanity();
+
+  $.ajax({
+    type: 'post',
+    url: this.href,
+    data: { url: jsbin.getURL() },
+    success: function () {
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'This bin is now published to your vanity URL: <a target="_blank" href="' + jsbin.shareRoot + '">' + jsbin.shareRoot + '</a>'
+      });
+    },
+    error: function (xhr) {
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'There was a problem publishing to your vanity URL. Can you try again or file a <a target="_blank" href="' + githubIssue() + '">new issue</a>?'
+      });
+    }
+  })
+});
+
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
-  analytics.delete();
+  analytics['delete']();
   $.ajax({
     type: 'post',
     url: jsbin.getURL() + '/delete',
@@ -442,7 +460,7 @@ $('a.deletebin').on('click', function (e) {
       if (xhr.status === 403) {
         $document.trigger('tip', {
           content: 'You don\'t own this bin, so you can\'t delete it.',
-          autohide: 5000,
+          autohide: 5000
         });
       }
     }

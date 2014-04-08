@@ -5,6 +5,11 @@
   var pushState = window.history.pushState ? function (url) {
     window.history.pushState(null, null, url);
   } : false;
+
+  if ( !pushState) {
+    return;
+  }
+  
   var $forms = $('#login-register-page.form-container form');
   var $info = $('#login-register-page.form-container .info');
   var currentPath = null;

@@ -25,7 +25,7 @@
   <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
   {{{analytics}}}
 {{else}}
-  {{#scripts}}<script src="{{static}}{{.}}"></script>
+  {{#scripts}}<script src="{{../static}}{{.}}"></script>
   {{/scripts}}
 {{/if}}
 

@@ -4,7 +4,8 @@ try {
   var console = {
     log: function () {
       // alert([].slice.call(arguments).join('\n'));
-    }
+    },
+    warn: function () {}
   };
 }
 
@@ -107,11 +108,6 @@ if (jsbin.settings.codemirror) {
 
 if (jsbin.settings.editor.theme) {
   $(document.documentElement).addClass('cm-s-' + jsbin.settings.editor.theme.split(' ')[0]);
-  var link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = jsbin['static'] + '/js/vendor/codemirror4/theme/' + jsbin.settings.editor.theme.split(' ')[0] + '.css?' + jsbin.version;
-  document.getElementsByTagName('head')[0].appendChild(link);
-
 }
 
 // Add a pre-filter to all ajax requests to add a CSRF header to prevent
@@ -124,8 +120,8 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   }
 });
 
-jsbin.getURL = function (withoutRoot) {
-  var url = withoutRoot ? '' : jsbin.root,
+jsbin.getURL = function (withoutRoot, share) {
+  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
       state = jsbin.state;
 
   if (state.code) {
@@ -197,13 +193,13 @@ var $window = $(window),
 
 $window.unload(unload);
 
-window.addEventListener('storage', function (e) {
-  if (e.storageArea === localStorage && e.key === 'settings') {
-    console.log('updating from storage');
-    console.log(JSON.parse(localStorage.settings));
-    jsbin.settings = JSON.parse(localStorage.settings);
-  }
-});
+// window.addEventListener('storage', function (e) {
+//   if (e.storageArea === localStorage && e.key === 'settings') {
+//     console.log('updating from storage');
+//     console.log(JSON.parse(localStorage.settings));
+//     jsbin.settings = JSON.parse(localStorage.settings);
+//   }
+// });
 
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {

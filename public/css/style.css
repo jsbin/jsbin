@@ -275,171 +275,6 @@ div.CodeMirror-cursors {
   }
 }
 
-/* Addon: codemirror/addon/hint/show-hint.css
-   ========================================================================== */
-.CodeMirror-hints {
-  position: absolute;
-  z-index: 10;
-  overflow: hidden;
-  list-style: none;
-
-  margin: 0;
-  padding: 2px;
-
-  -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  border-radius: 3px;
-  border: 1px solid silver;
-
-  background: white;
-  font-size: 90%;
-  font-family: monospace;
-
-  max-height: 20em;
-  overflow-y: auto;
-}
-
-.CodeMirror-hint {
-  margin: 0;
-  padding: 0 4px;
-  border-radius: 2px;
-  max-width: 19em;
-  overflow: hidden;
-  white-space: pre;
-  color: black;
-  cursor: pointer;
-}
-
-.CodeMirror-hint-active {
-  background: #08f;
-  color: white;
-}
-
-/* codemirror/addon/dialog/dialog.css */
-/* Addon: codemirror/addon/hint/show-hint.css
-   ========================================================================== */
-.CodeMirror-dialog {
-  position: absolute;
-  left: 0; right: 0;
-  background: white;
-  z-index: 15;
-  padding: .1em .8em;
-  overflow: hidden;
-  color: #333;
-}
-
-.CodeMirror-dialog-top {
-  border-bottom: 1px solid #eee;
-  top: 0;
-}
-
-.CodeMirror-dialog-bottom {
-  border-top: 1px solid #eee;
-  bottom: 0;
-}
-
-.CodeMirror-dialog input {
-  border: none;
-  outline: none;
-  background: transparent;
-  width: 20em;
-  color: inherit;
-  font-family: monospace;
-}
-
-.CodeMirror-dialog button {
-  font-size: 70%;
-}
-
-/* Addon: codemirror/addon/tern/tern.css
-   ========================================================================== */
-.CodeMirror-Tern-completion {
-  padding-left: 22px;
-  position: relative;
-}
-.CodeMirror-Tern-completion:before {
-  position: absolute;
-  left: 2px;
-  bottom: 2px;
-  border-radius: 50%;
-  font-size: 12px;
-  font-weight: bold;
-  height: 15px;
-  width: 15px;
-  line-height: 16px;
-  text-align: center;
-  color: white;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.CodeMirror-Tern-completion-unknown:before {
-  content: "?";
-  background: #4bb;
-}
-.CodeMirror-Tern-completion-object:before {
-  content: "O";
-  background: #77c;
-}
-.CodeMirror-Tern-completion-fn:before {
-  content: "F";
-  background: #7c7;
-}
-.CodeMirror-Tern-completion-array:before {
-  content: "A";
-  background: #c66;
-}
-.CodeMirror-Tern-completion-number:before {
-  content: "1";
-  background: #999;
-}
-.CodeMirror-Tern-completion-string:before {
-  content: "S";
-  background: #999;
-}
-.CodeMirror-Tern-completion-bool:before {
-  content: "B";
-  background: #999;
-}
-
-.CodeMirror-Tern-completion-guess {
-  color: #999;
-}
-
-.CodeMirror-Tern-tooltip {
-  border: 1px solid silver;
-  border-radius: 3px;
-  color: #444;
-  padding: 2px 5px;
-  font-size: 90%;
-  font-family: monospace;
-  background-color: white;
-  white-space: pre-wrap;
-
-  max-width: 40em;
-  position: absolute;
-  z-index: 10;
-  -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-
-  transition: opacity 1s;
-  -moz-transition: opacity 1s;
-  -webkit-transition: opacity 1s;
-  -o-transition: opacity 1s;
-  -ms-transition: opacity 1s;
-}
-
-.CodeMirror-Tern-hint-doc {
-  max-width: 25em;
-}
-
-.CodeMirror-Tern-fname { color: black; }
-.CodeMirror-Tern-farg { color: #70a; }
-.CodeMirror-Tern-farg-current { text-decoration: underline; }
-.CodeMirror-Tern-type { color: #07c; }
-.CodeMirror-Tern-fhint-guess { opacity: .7; }
-
 
 /* CodeMirror themes */
 
@@ -2150,6 +1985,18 @@ span.menu {
   padding-top: 35px;
 }
 
+.ie7 #live iframe {
+  position: absolute;
+  top: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: 0;
+}
+.ie7 .editbox {
+  left: 0;
+}
+
 body.source #preview {
   display: none;
 }
@@ -3081,8 +2928,8 @@ input {
   padding-left: 0;
 }
 
-.CodeMirror-Tern-tooltip,
-.CodeMirror-hints {
+#jsbin .CodeMirror-Tern-tooltip,
+#jsbin .CodeMirror-hints {
   border: 1px solid #aaa;
   border: 1px solid rgb(191, 191, 191);
   border: 1px solid hsl(0, 0%, 75%);
@@ -3093,14 +2940,14 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 100%;
 }
-.CodeMirror-Tern-tooltip {
+#jsbin .CodeMirror-Tern-tooltip {
   padding-top: 5px;
 }
-.CodeMirror-hint {
+#jsbin .CodeMirror-hint {
   font-size: 1.1em;
   line-height: 1.4em;
 }
-.CodeMirror-Tern-completion:before {
+#jsbin .CodeMirror-Tern-completion:before {
   bottom: auto;
   top: 1px;
 }
@@ -3415,6 +3262,32 @@ a.active:hover {
   position: absolute;
   /*padding: 3px 20px 10px 3px;*/
   padding: 0;
+}
+.ie7 .dropdown {
+  top: 100%;
+  left: 0;
+  z-index: 10;
+}
+.ie7 .help .dropdown {
+  left: auto;
+  right: 0;
+}
+.ie7 #control,
+.ie7 .control,
+.ie7 .help {
+  position: static;
+}
+.ie7 .help {
+  float: right;
+}
+.ie7 #help {
+  width: 260px;
+}
+.ie7 #embedfield {
+  border: 2px solid #b7dffd;
+  width: 95%;
+  margin: 0;
+  position: static;
 }
 
 .dropdown .meta {

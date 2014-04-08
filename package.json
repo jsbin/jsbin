@@ -51,7 +51,7 @@
     "replify": "~1.2.0",
     "moment": "~2.5.1",
     "memcached": "~0.2.6",
-    "express-cookie-blacklist": "~0.2.0"
+    "express-cookie-blacklist": "~1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

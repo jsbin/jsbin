@@ -548,6 +548,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     <script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
     {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
+    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>

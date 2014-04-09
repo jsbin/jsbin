@@ -17,7 +17,25 @@ var $startingpoint = $('a.startingpoint').click(function (event) {
       content: 'Saving templates isn\'t supported in this browser I\'m afraid. Sorry'
     });
   }
-  return false;
+
+  $.ajax({
+    type: 'post',
+    url: this.href,
+    data: { url: jsbin.getURL() },
+    success: function () {
+      $document.trigger('tip', {
+        type: 'notification',
+        content: 'Starting template updated and saved',
+        autohide: 3000
+      });
+    },
+    error: function (xhr) {
+      $document.trigger('tip', {
+        type: 'error',
+        content: 'There was a problem creating the template. Can you try again or file a <a target="_blank" href="' + githubIssue() + '">new issue</a>?'
+      });
+    }
+  });
 });
 
 // if (localStorage && localStorage['saved-html']) {

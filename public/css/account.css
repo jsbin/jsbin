@@ -93,7 +93,8 @@ select {
   min-width: 120px;
 }
 
-form > div {
+form > div,
+#jshintOptions div {
   min-height: 32px;
   /* clear: left; */
   overflow: hidden;

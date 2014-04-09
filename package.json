@@ -53,8 +53,7 @@
     "memcached": "~0.2.6",
     "passport-dropbox-oauth2": "~0.1.5",
     "handlebars": "~2.0.0-alpha.2",
-    "dropbox": "~0.10.2",
-    "zmq": "~2.6.0"
+    "dropbox": "~0.10.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -66,7 +65,9 @@
     "sinon": "~1.7.3",
     "grunt-cli": "~0.1.11"
   },
-  "optionalDependencies": {},
+  "optionalDependencies": {
+    "zmq": "~2.6.0"
+  },
   "licenses": [
     {
       "type": "MIT",

@@ -722,7 +722,7 @@ Ported to CodeMirror by Peter Kroon
   text-decoration: underline;
   color: #f5e107 !important;
  }
- 
+
 .cm-s-mbo .CodeMirror-matchingtag {background: #4e4e4e;}
 
 .cm-s-mbo span.cm-searching {
@@ -1465,7 +1465,7 @@ body {
   /*min-width: 976px;*/
   overflow: hidden;
   /*background: url(../images/jsbin-bg.gif) repeat-x 0 -10px;*/
-  /* background: #fff url(../images/jsbin_animated.gif) no-repeat center; */
+  background: #fff url(../images/jsbin_animated.gif) no-repeat center;
   height: 100%;
 }
 
@@ -1647,6 +1647,38 @@ textarea:focus {
 .help a {
   outline: 0;
   /*border-right: 0;*/
+}
+
+.help li {
+  line-height: 24px;
+  list-style: none;
+}
+
+.help ul {
+  margin: 0;
+/*   margin-top: 10px; */
+}
+
+.help li a {
+  font-size: 13px;
+  display: block;
+  text-decoration: none;
+}
+
+.help li:last-child a {
+  color: #999;
+  font-size: 11px;
+  /* text-align: right; */
+  display: inline;
+  /* position: absolute; */
+  right: 5px;
+  bottom: 5px;
+  /* padding: 10px 10px 0 10px; */
+}
+
+.help li a:hover {
+  text-decoration: underline;
+  color: #000;
 }
 
 .help strong a {
@@ -2886,7 +2918,7 @@ input {
 .editbox .CodeMirror,
 .editbox .CodeMirror .CodeMirror-gutters {
   background-image: linear-gradient(to bottom, rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
-  
+
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(200,200,200,0.2)), color-stop(100%,rgba(200,200,200,0.2))); /* Chrome,Safari4+ */
   background-image: -webkit-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* Chrome10+,Safari5.1+ */
   background-image:    -moz-linear-gradient(top,  rgba(200,200,200,0.2) 0%, rgba(200,200,200,0.2) 100%); /* FF3.6+ */
@@ -4629,4 +4661,18 @@ html * {
 .btn-login:hover,
 .btn-login:hover span {
   color: #111;
+}
+
+#profile {
+/*   min-width: 400px; */
+}
+
+#profile .dropdowncontent {
+  overflow: hidden;
+  padding-right: 30px;
+}
+
+#profile .large-gravatar {
+  float: left;
+  margin-right: 10px;
 }

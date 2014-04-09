@@ -17,7 +17,7 @@
     focusedPanel: 'html'
   };
   $.extend(currentSettings, getCurrentSettings());
-  var panels = ['html', 'css', 'js', 'console', 'live'];
+  var panels = ['html', 'css', 'javascript', 'console', 'live'];
   var $panels = {};
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);

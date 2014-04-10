@@ -2,20 +2,29 @@
 
 <h1>Your personal details</h1>
 
-
 <section id="content">
-	<p style="text-align: center; background: #FF4136; color: #fff; font-weight: bold">Not working right now, come back soon my love!</p>
-	<form>
-		<label>
-			<input name="username" type="text" value="{{user.name}}" disabled>
-		</label>
-		<label>
-			<input name="email" type="text" placeholder="{{user.email}}">
-		</label>
-		<input type="hidden" name="csrf" value="{{csrf}}">
-		<input type="submit">
-	</form>
+  <form class="login" method="post" action="{{root}}/sethome">
+    <p class="loginFeedback"></p>
+
+    <div>
+      <label for="name">Username</label>
+      <input id="name" name="username" type="text" value="{{user.name}}" disabled>
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input id="email" name="email" type="text" value="{{user.email}}">
+    </div>
+
+    <div>
+      <label for="key">Password</label>
+      <input id="key" name="password" type="password">
+    </div>
+    
+    <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+    <input type="submit" value="Update account">
+  </form>
 </section>
 
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/account-settings.js"></script>
+<script src="{{static}}/js/account/account-settings.js{{cacheBust}}"></script>

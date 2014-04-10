@@ -35,6 +35,8 @@
 <h1>Customise your JS Bin editor</h1>
 
 <section id="content">
+  <p>As soon as you make any changes, they will be automatically saved.</p>
+  
   <form id="editor-settings">
     <h3>Settings</h3>
     <div>
@@ -105,6 +107,12 @@
     </div>
 
     <div>
+      <label for="activeline">Active line</label>
+      <input id="activeline" name="activeline" type="checkbox">
+      <label for="activeline" class="mini-desc">Style the current cursor line</label>
+    </div>
+
+    <div>
       <label for="closebrackets">Close brackets</label>
       <input id="closebrackets" name="closebrackets" type="checkbox">
       <label for="closebrackets" class="mini-desc">Auto-close brackets and quotes</label>
@@ -168,7 +176,6 @@
 <script src="{{static}}/js/vendor/codemirror4/mode/xml/xml.js{{cacheBust}}"></script>
 <script src="{{static}}/js/vendor/codemirror4/mode/htmlmixed/htmlmixed.js{{cacheBust}}"></script>
 <script src="{{static}}/js/vendor/codemirror4/mode/javascript/javascript.js{{cacheBust}}"></script>
-<script src="{{static}}/js/vendor/codemirror4/keymap/vim.js{{cacheBust}}"></script>
-<script src="{{static}}/js/editor-settings.js{{cacheBust}}"></script>
+<script src="{{static}}/js/account/editor-settings.js{{cacheBust}}"></script>
 <script src="{{static}}/js/editors/addons.js{{cacheBust}}"></script>
 {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}

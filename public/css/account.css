@@ -51,7 +51,7 @@ margin-left: 230px;
 form input[type="submit"] {
 /*   width:60%; */
   margin:10px 20%;
-  font-family: "Helvetica Neue", "Arial";
+/*  font-family: "Helvetica Neue", "Arial";
   font-size: 0.75em;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);
@@ -66,10 +66,10 @@ form input[type="submit"] {
   box-sizing: border-box;
   text-align: center;
   text-decoration: none;
-  font-weight:600;
+  font-weight:600;*/
 }
 form input[type="submit"]:hover {
-  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+  /*background: linear-gradient(0deg, #e8e8e8, #f8f8f8);*/
 }
 form input {
   font-size: 16px;
@@ -138,4 +138,16 @@ form label.mini-desc a {
   display: inline;
   font-weight: normal;
   margin-right: 0;
+}
+
+.loginFeedback {
+  display: none;
+  padding: 3px;
+  background: #EFF3B6;
+  background: rgba(255, 253, 0, 0.2);
+  border: 1px solid rgb(219, 225, 45);
+  margin: 0;
+  white-space: normal;
+  line-height: 18px;
+  margin-bottom: 1em;
 }

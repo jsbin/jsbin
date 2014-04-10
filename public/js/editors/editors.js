@@ -162,8 +162,14 @@ panels.restore = function () {
     }
   }
 
-  if (state !== null && toopen.length === 0) {
-    toopen = Object.keys(state);
+  if (toopen.length === 0) {
+    if (state !== null) {
+      toopen = Object.keys(state);
+    }
+    else {
+      // load from personal settings
+      toopen = jsbin.settings.panels;
+    }
   }
 
   if (toopen.length === 0) {

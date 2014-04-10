@@ -65,6 +65,7 @@
   ];
 
   var addonsKeys = [
+    'activeline',
     'closebrackets',
     'highlight',
     'matchtags',

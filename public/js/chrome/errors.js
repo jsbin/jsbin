@@ -2,7 +2,7 @@
 
 var jshint = function () {
   var source = editors.javascript.editor.getCode();
-  var ok = JSHINT(source, jsbin.settings.jshintOption);
+  var ok = JSHINT(source);
 
   return ok ? true : JSHINT.data();
 };

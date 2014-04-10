@@ -1,26 +1,13 @@
 (function(){
   'use strict';
 
-  /* global $, CodeMirror, jshint */
+  /* global $ */
 
   function getCurrentSettings(){
     return JSON.parse(localStorage.settings || '{}') || {
 
     };
   }
-
-  // window.jsbin = {
-  //   'settings': {
-  //     'jshintOption': null
-  //   }
-  // };
-
-  // window.editors = {
-  //   'javascript': {
-  //     'editor': null,
-  //     'visible': true
-  //   }
-  // };
 
   $.browser = {};
   // work out the browser platform
@@ -41,8 +28,7 @@
     panels: [],
     includejs: true,
     focusedPanel: 'html',
-    jshint: true//,
-    // jshintOptions: {}
+    jshint: true
   };
   $.extend(currentSettings, getCurrentSettings());
   var panels = ['html', 'css', 'javascript', 'console', 'live'];
@@ -62,7 +48,6 @@
     'unused': 'When variable is defined but not used',
     'curly': 'When blocks omit <code>{}</code>'
   };
-  var $jshints = {};
   var source = '';
 
   for (var i = 0; i < panels.length; i++) {
@@ -82,21 +67,6 @@
         '</div>';
     }
   }
-  // $('#jshintOptions').append(source);
-  // for (var prop in jshints) {
-  //   if (jshints.hasOwnProperty(prop)) {
-  //     $jshints[prop] = $('#' + prop).prop('checked', currentSettings.jshintOptions[ prop ]);
-  //   }
-  // }
-
-  // var $textarea = $('#editor-settings-example');
-  // editors.javascript.editor = CodeMirror.fromTextArea($textarea.get(0), $.extend({
-  //   mode: 'text/javascript'
-  // }, currentSettings.editor));
-
-  // editors.javascript.editor.getCode = function () {
-  //   return editors.javascript.editor.getValue();
-  // };
 
   // Listeners
   $(':checkbox').on('change', saveSettings);
@@ -120,18 +90,8 @@
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
 
-    // localStorageSettings.jshintOptions = {};
-    // for (var prop in jshints) {
-    //   if (jshints.hasOwnProperty(prop)) {
-    //     localStorageSettings.jshintOptions[ prop ] = $jshints[prop].prop('checked');
-    //   }
-    // }
-
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
-
-    // window.jsbin.settings.jshintOption = localStorageSettings.jshintOptions;
-    // jshint();
 
     // Save on server
     $.ajax({
@@ -143,10 +103,14 @@
         _csrf: $csrf.val()
       },
       success: function() {
-        // console.log('success');
+        if (console && console.log) {
+          console.log('Success on saving settings');
+        }
       },
-      error: function() {
-        // console.log('there was an error saving');
+      error: function(xhr, status) {
+        if (console && console.log) {
+          console.log('Error: ' + status);
+        }
       }
     });
   }

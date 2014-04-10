@@ -122,6 +122,7 @@ body {
   background: transparent;
   font-weight: 600;
   cursor: pointer;
+  display: block;
 }
 
 .lostpass:hover {

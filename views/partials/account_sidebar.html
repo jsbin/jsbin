@@ -2,14 +2,12 @@
 <div id="sidebar">
 	<div class="sidebar-btn-group">
 		<a class="sidebar-btn" href="{{root}}/account/profile">Profile</a>
-    <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
     <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
-    {{#feature request "github"}}{{#unless user.github_token}}
+    <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
+    {{#feature request "github"}}
       <a class="sidebar-btn" href="/auth/github">Link your Github account</a>
-    {{/unless}}{{/feature}}
+    {{/feature}}
 		<!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
-  </div>
-  <div class="sidebar-btn-group">
     <a class="sidebar-btn" href="{{root}}/auth/dropbox">Link with Dropbox</a>
   </div>
   <a class="sidebar-btn" href="{{root}}/logout">Logout</a>

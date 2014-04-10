@@ -9,18 +9,18 @@
     };
   }
 
-  window.jsbin = {
-    'settings': {
-      'jshintOption': null
-    }
-  };
+  // window.jsbin = {
+  //   'settings': {
+  //     'jshintOption': null
+  //   }
+  // };
 
-  window.editors = {
-    'javascript': {
-      'editor': null,
-      'visible': true
-    }
-  };
+  // window.editors = {
+  //   'javascript': {
+  //     'editor': null,
+  //     'visible': true
+  //   }
+  // };
 
   $.browser = {};
   // work out the browser platform
@@ -41,15 +41,15 @@
     panels: [],
     includejs: true,
     focusedPanel: 'html',
-    jshint: true,
-    jshintOptions: {}
+    jshint: true//,
+    // jshintOptions: {}
   };
   $.extend(currentSettings, getCurrentSettings());
   var panels = ['html', 'css', 'javascript', 'console', 'live'];
   var $panels = {};
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
-  var hints = ['js', 'css'];
+  var hints = ['js'];
   var $hints = {};
 
   var jshints = {
@@ -82,21 +82,21 @@
         '</div>';
     }
   }
-  $('#jshintOptions').append(source);
-  for (var prop in jshints) {
-    if (jshints.hasOwnProperty(prop)) {
-      $jshints[prop] = $('#' + prop).prop('checked', currentSettings.jshintOptions[ prop ]);
-    }
-  }
+  // $('#jshintOptions').append(source);
+  // for (var prop in jshints) {
+  //   if (jshints.hasOwnProperty(prop)) {
+  //     $jshints[prop] = $('#' + prop).prop('checked', currentSettings.jshintOptions[ prop ]);
+  //   }
+  // }
 
-  var $textarea = $('#editor-settings-example');
-  editors.javascript.editor = CodeMirror.fromTextArea($textarea.get(0), $.extend({
-    mode: 'text/javascript'
-  }, currentSettings.editor));
+  // var $textarea = $('#editor-settings-example');
+  // editors.javascript.editor = CodeMirror.fromTextArea($textarea.get(0), $.extend({
+  //   mode: 'text/javascript'
+  // }, currentSettings.editor));
 
-  editors.javascript.editor.getCode = function () {
-    return editors.javascript.editor.getValue();
-  };
+  // editors.javascript.editor.getCode = function () {
+  //   return editors.javascript.editor.getValue();
+  // };
 
   // Listeners
   $(':checkbox').on('change', saveSettings);
@@ -120,18 +120,18 @@
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
 
-    localStorageSettings.jshintOptions = {};
-    for (var prop in jshints) {
-      if (jshints.hasOwnProperty(prop)) {
-        localStorageSettings.jshintOptions[ prop ] = $jshints[prop].prop('checked');
-      }
-    }
+    // localStorageSettings.jshintOptions = {};
+    // for (var prop in jshints) {
+    //   if (jshints.hasOwnProperty(prop)) {
+    //     localStorageSettings.jshintOptions[ prop ] = $jshints[prop].prop('checked');
+    //   }
+    // }
 
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
 
-    window.jsbin.settings.jshintOption = localStorageSettings.jshintOptions;
-    jshint();
+    // window.jsbin.settings.jshintOption = localStorageSettings.jshintOptions;
+    // jshint();
 
     // Save on server
     $.ajax({

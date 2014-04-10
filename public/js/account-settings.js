@@ -1,33 +1,39 @@
-;(function(){
+(function(){
+  'use strict';
 
-	function getHash(){
-		return window.location.hash.slice(1);
-	}
+  /* globals $ */
 
-	var $contents = $('#content article')
-	var $btns = $('.sidebar-btn').click(function(event){
-		$btns.removeClass('selected');
-		var hash = $(this).addClass('selected')[0].hash.slice(1);
-		$contents.hide().filter(function(i, el){
-			return el.id === hash
-		}).show();
+  $('form.login').submit(function (event) {
+    event.preventDefault();
 
-	});
+    var form = $(this);
+    var name = form.find('input[name=username]').val();
+    var key = form.find('input[name=password]').val();
+    var email = form.find('input[name=email]').val();
+    var $loginFeedback = form.find('.loginFeedback');
+    var $csrf = $('#_csrf');
 
-	// Kick it all off
+    $loginFeedback.show().text('Checking...');
 
-	if(!window.location.hash) {
-		window.location.hash = $btns.filter(function(i, el){
-			return el.attributes.default;
-		})[0].hash;
-	}
+    $.ajax({
+      url: form.attr('action'),
+      data: {
+        username: name,
+        key: key,
+        email: email,
+        _csrf: $csrf.val()
+      },
+      type: 'POST',
+      dataType: 'json',
+      complete: function (jqXHR) {
+        var data = $.parseJSON(jqXHR.responseText) || {};
+        if (jqXHR.status === 200) {
+          if (data.message) {
+            $loginFeedback.text(data.message);
+          }
+        }
+      }
+    });
+  });
 
-	$contents.filter(function(i, el){
-		return el.id === getHash();
-	}).show();
-
-	$btns.filter(function(i, el){
-		return el.hash === window.location.hash;
-	}).addClass('selected');
-
-})//()
+})();

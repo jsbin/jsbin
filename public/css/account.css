@@ -140,3 +140,15 @@ form label.mini-desc a {
   font-weight: normal;
   margin-right: 0;
 }
+
+.loginFeedback {
+  display: none;
+  padding: 3px;
+  background: #EFF3B6;
+  background: rgba(255, 253, 0, 0.2);
+  border: 1px solid rgb(219, 225, 45);
+  margin: 0;
+  white-space: normal;
+  line-height: 18px;
+  margin-bottom: 1em;
+}

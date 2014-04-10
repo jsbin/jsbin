@@ -10,7 +10,8 @@
     trailingspace: false,
     fold: false,
     sublime: false,
-    activeline: false
+    tern: false,
+    activeline: true
   };
 
   if (!jsbin.settings.addons) {

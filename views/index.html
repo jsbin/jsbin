@@ -105,8 +105,23 @@
         {{#unless embed}}
           {{#if home}}
             {{#feature request "accountPages"}}
-            <div class="menu">
-              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Settings</a>
+            <div class="menu{{#if user.pro}} pro{{/if}}">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+              <div class="dropdown dd-right" id="profile">
+                <div class="dropdowncontent">
+                  {{#if large_gravatar}}<img class="large-gravatar" src="{{large_gravatar}}">{{/if}}
+                  <span class="input" id="username" readonly>
+                    @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                  </span>
+
+                  <ul>
+                    <li><a href="/account/profile">Update profile</a></li>
+                    <li><a href="/account/editor">Editor settings</a></li>
+                    <li><a href="/account/preferences">Preferences</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             {{else}}
             <div class="menu">

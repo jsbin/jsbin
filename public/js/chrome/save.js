@@ -179,6 +179,8 @@ if (!jsbin.saveDisabled) {
 
       var panelId = data.panelId;
 
+      jsbin.panels.savecontent();
+
       if (saving.inprogress()) {
         // queue up the request and wait
         saving.todo[panelId] = true;

@@ -9,7 +9,10 @@
     {{/unless}}{{/feature}}
 		<!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
   </div>
-	<a class="sidebar-btn" href="{{root}}/logout">Logout</a>
+  <div class="sidebar-btn-group">
+    <a class="sidebar-btn" href="{{root}}/auth/dropbox">Link with Dropbox</a>
+  </div>
+  <a class="sidebar-btn" href="{{root}}/logout">Logout</a>
 </div>
 <script>
 var links = document.getElementById('sidebar').getElementsByTagName('a');

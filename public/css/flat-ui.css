@@ -74,6 +74,8 @@
 /* avatar */
 .avatar img {
   box-shadow: none;
+  vertical-align: middle;
+  margin-top: -4px;
 }
  
 .open .avatar img,

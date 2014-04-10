@@ -444,27 +444,30 @@ $('a.publish-to-vanity').on('click', function (event) {
 
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
-  analytics['delete']();
-  $.ajax({
-    type: 'post',
-    url: jsbin.getURL() + '/delete',
-    data: { checksum: jsbin.state.checksum },
-    success: function () {
-      jsbin.state.deleted = true;
-      $document.trigger('tip', {
-        type: 'error',
-        content: 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
-      });
-    },
-    error: function (xhr) {
-      if (xhr.status === 403) {
+  if (confirm('Delete this bin?')) {
+    analytics['delete']();
+    $.ajax({
+      type: 'post',
+      url: jsbin.getURL() + '/delete',
+      data: { checksum: jsbin.state.checksum },
+      success: function () {
+        jsbin.state.deleted = true;
         $document.trigger('tip', {
-          content: 'You don\'t own this bin, so you can\'t delete it.',
-          autohide: 5000
+          type: 'error',
+          content: 'This bin is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
         });
+      },
+      error: function (xhr) {
+        if (xhr.status === 403) {
+          $document.trigger('tip', {
+            content: 'You don\'t own this bin, so you can\'t delete it.',
+            autohide: 5000
+          });
+        }
       }
-    }
-  });
+    });
+
+  }
 });
 
 

@@ -3412,9 +3412,9 @@ left: 50%;
 .help .menu > a.avatar {
   padding: 7px;
   margin-top: -5px;
-  line-height: 32px;
+  /* line-height: 32px; */
   height: 26px;
-  line-height: 0;
+  /* line-height: 0; */
 }
 
 #accountBtn {
@@ -3422,7 +3422,7 @@ left: 50%;
 }
 
 .help .open.menu > a.avatar {
-  height: 26px;
+  /*height: 26px;*/
 }
 
 #panels {

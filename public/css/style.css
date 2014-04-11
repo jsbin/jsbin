@@ -3158,7 +3158,7 @@ a.active {
 
 a.active:hover {
   /*-moz-box-shadow: #fff 0 0 5px;*/
-  background-color: hsl(215, 100%, 98%);
+  background-color: #F5F9FF;
   z-index: 1;
 }
 
@@ -4814,15 +4814,19 @@ tbody:hover tr:hover.snapshot .url a span:before {
 #profile .large-gravatar {
   float: left;
   margin-right: 10px;
-=======
+}
+
 #share-preview .editor {
   display: none;
   width: 198px;
   table-layout: fixed;
   height: 94px;
-  border: 1px solid #999;
+  border: 1px solid #eee;
   border-top: 0;
-  background: #999;
+  background: #eee;
+  /* border-collapse: separate; */
+  padding-top: 0;
+  border-bottom: 2px solid #eee;
 }
 
 #share-preview .header {
@@ -4830,7 +4834,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
   width: 200px;
   position: relative;
   height: 13px;
-  background: #999;
+  background: url(/images/share-header.svg) no-repeat;
 }
 
 #share-preview.editor .editor {
@@ -4868,42 +4872,75 @@ tbody:hover tr:hover.snapshot .url a span:before {
 
 
 #share-preview .editor div:after {
-  font-family: monospace;
+  font-family: SourceCodeProRegular, Monaco, consolas, monospace;
   font-size: 16px;
   -webkit-transform: rotate(90deg) translateX(-25px);
   -webkit-transform-origin: 0% 130%;
   display: block;
-  text-transform: uppercase;
+/*   text-transform: uppercase; */
   position: relative;
   font-weight: bold;
   color: #fff;
-  text-shadow: 0 0 2px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 0px rgba(0, 0, 0, 0.36);
   letter-spacing: 0.05rem;
   content: attr(class);
+  color: #111;
+  /* margin: 0 auto; */
+  padding-left: 5px;
 }
+
+#share-preview .editor div.html:after {
+  /* text-transform: uppercase; */
+  content: '<html>';
+}
+
+#share-preview .editor div.css:after {
+  content: '.css{}';
+  padding-left: 1px;
+}
+
+#share-preview .editor div.js:after {
+  content: 'js()';
+}
+
+#share-preview .editor div.console:after {
+  content: '> log';
+
+}
+
 
 #share-preview .editor div {
   position: relative;
   display: table-cell;
   width: 100%;
+  border-collapse: separate;
+  border-left: 1px solid #EEEEEE;
+  border-right: 1px solid #eee;
+  text-align: center;
 }
 
-#share-preview .editor .js {
-  background: #FFDC00;
+#share-preview .editor > div {
+  background: #fdfdfd !important;
+
 }
 
-#share-preview .editor .html {
-  background: #2ECC40;
+#share-preview .editor .js:after {
+  color: #FF4136;
+  /* padding-left: 2px; */
 }
 
-#share-preview .editor .css {
-  background: #0074D9;
+#share-preview .editor .html:after {
+  color: #37AE45;
 }
 
-#share-preview .editor .console {
-  background: #B10DC9;
+#share-preview .editor .css:after {
+  color: #0074D9;
 }
 
-#share-preview .editor .output {
-  background: #F012BE;
+#share-preview .editor .console:after {
+  color: #B10DC9;
+}
+
+#share-preview .editor .output:after {
+  color: #F012BE;
 }

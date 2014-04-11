@@ -26,8 +26,12 @@
   color:rgba(98, 147, 211, 0.5);
 }
 
+#sidebar .sidebar-btn-group .sidebar-btn.selected {
+  border-left: 10px solid #6293D3;
+}
+
 #sidebar .sidebar-btn.selected:after {
-  content: '  »';
+  /* content: '  »'; */
 }
 
 #sidebar .sidebar-btn-group .sidebar-btn {

@@ -75,6 +75,8 @@
 .avatar img {
   box-shadow: none;
   vertical-align: middle;
+}
+#accountBtn img {
   margin-top: -4px;
 }
  

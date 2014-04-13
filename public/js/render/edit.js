@@ -1,6 +1,7 @@
 // "Edit in JS Bin" button setup
 function jsbinShowEdit(options) {
-  if (window.location.hash === '#noedit') return;
+  'use strict';
+  if (window.location.hash === '#noedit') {return;}
 
   var moveTimer, over,
   doc = document,
@@ -12,12 +13,12 @@ function jsbinShowEdit(options) {
   // Add button:
   btn.id = 'edit-with-js-bin';
   btn.href = path + (path.slice(-1) === '/' ? '' : '/') + 'edit';
-  btn.innerHTML = 'Edit in JS Bin <img src="' + options.root + '/images/favicon.png" width="16" height="16">';
+  btn.innerHTML = 'Edit in JS Bin <img src="' + options['static'] + '/images/favicon.png" width="16" height="16">';
   doc.body.appendChild(btn);
 
   // Style button:
   style.setAttribute('rel', 'stylesheet');
-  style.setAttribute('href', options.root + '/css/edit.css');
+  style.setAttribute('href', options['static'] + '/css/edit.css');
   doc.getElementsByTagName('head')[0].appendChild(style);
 
 
@@ -34,10 +35,10 @@ function jsbinShowEdit(options) {
   }
 
   function hide() {
-    if (!over) btn.style.top = '-60px';
+    if (!over) { btn.style.top = '-60px'; }
   }
 
   show();
-  if (aEL in doc) doc[aEL]('mousemove', show, false);
-  else doc.attachEvent('mousemove', show);
+  if (aEL in doc) {doc[aEL]('mousemove', show, false);}
+  else {doc.attachEvent('mousemove', show);}
 }

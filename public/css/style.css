@@ -4876,8 +4876,11 @@ tbody:hover tr:hover.snapshot .url a span:before {
   font-size: 16px;
   -webkit-transform: rotate(90deg) translateX(-25px);
   -webkit-transform-origin: 0% 130%;
+  -moz-transform: rotate(90deg) translateX(-25px);
+  -moz-transform-origin: 0% 130%;
+  transform: rotate(90deg) translateX(-25px);
+  transform-origin: 0% 130%;
   display: block;
-/*   text-transform: uppercase; */
   position: relative;
   font-weight: bold;
   color: #fff;
@@ -4885,7 +4888,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
   letter-spacing: 0.05rem;
   content: attr(class);
   color: #111;
-  /* margin: 0 auto; */
+  max-width: 38px;
   padding-left: 5px;
 }
 

@@ -4851,7 +4851,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
 }
 
 #share-preview.output .output {
-  background: #F012BE;
+  background: url(/images/jsbin-output-small.gif) no-repeat;
   height: 113px;
   width: 200px;
 }

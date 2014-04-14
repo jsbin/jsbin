@@ -7,20 +7,20 @@
         <rect id="Rectangle-1" fill="#EEEEEE" sketch:type="MSShapeGroup" x="0" y="0" width="200" height="13"></rect>
         <rect id="Rectangle-2" stroke="#E7ECF4" fill="#F5F9FF" sketch:type="MSShapeGroup" x="50" y="2" width="100" height="9"></rect>
         <text id="THIS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
-            <tspan x="57" y="8">THIS</tspan>
+            <tspan x="56" y="8">THIS</tspan>
         </text>
-        <path d="M72.5,2.5 L72.5,11.5 M93.5,2.5 L93.5,11.5 M109.5,2.5 L109.5,11.5 M128.5,2.5 L128.5,11.5" id="Line" stroke="#E7ECF4" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
-        <text id="TOOK" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
-            <tspan x="79" y="8">TOOK</tspan>
+        <path d="M69.5,2.5 L69.5,11.5 M87.5,2.5 L87.5,11.5 M111.5,2.5 L111.5,11.5 M130.5,2.5 L130.5,11.5" id="Line" stroke="#E7ECF4" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+        <text id="KISS" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
+            <tspan x="74" y="8">KISS</tspan>
         </text>
-        <text id="ALL" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
-            <tspan x="98" y="8">ALL</tspan>
+        <text id="JamFace" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
+            <tspan x="92" y="8">JamFace</tspan>
         </text>
-        <text id="Friday" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
-            <tspan x="114" y="8">Friday</tspan>
+        <text id="Coslaw" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
+            <tspan x="115" y="8">Coslaw</tspan>
         </text>
-        <text id="Afternoon" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
-            <tspan x="131" y="8">Afternoon</tspan>
+        <text id="Danmit!" sketch:type="MSTextLayer" font-family="Helvetica" font-size="4" font-weight="normal" fill="#CFD6E0">
+            <tspan x="134" y="8">Danmit!</tspan>
         </text>
         <rect id="Rectangle-3" fill="#A2B3BA" sketch:type="MSShapeGroup" x="4" y="1" width="8" height="2"></rect>
         <rect id="Rectangle-3" fill="#A2B3BA" sketch:type="MSShapeGroup" x="4" y="6" width="8" height="5"></rect>

@@ -4367,6 +4367,12 @@ html * {
 .cm-s-solarized.cm-s-light {
   text-shadow: none;
 }
+.cm-s-solarized.cm-s-light .CodeMirror-selected {
+  background:none repeat scroll 0% 0% #002b36;
+}
+.cm-s-solarized.cm-s-dark .CodeMirror-selected {
+  background:none repeat scroll 0% 0% #fdf6e3;
+}
 
 
 @media only screen and (max-width: 700px) {

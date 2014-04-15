@@ -2914,6 +2914,10 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 14px;
 }
+#bin .editbox .CodeMirror pre {
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+}
+
 .editbox .CodeMirror,
 .editbox .CodeMirror .CodeMirror-gutters {
   background-image: linear-gradient(to bottom, rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);

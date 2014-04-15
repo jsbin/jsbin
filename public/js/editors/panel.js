@@ -193,6 +193,9 @@ Panel.prototype = {
   virgin: true,
   visible: false,
   show: function (x) {
+    if (this.visible) {
+      return;
+    }
     $document.trigger('history:close');
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our

@@ -4852,6 +4852,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
 
 #share-preview.output .output {
   background: url(/images/jsbin-output-small.gif) no-repeat;
+  background: url(/images/output-preview.svg) no-repeat;
   height: 113px;
   width: 200px;
 }
@@ -4866,7 +4867,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
   color: #fff;
   text-shadow: 0 0 2px rgba(0,0,0,0.5);
   letter-spacing: 0.05rem;
-  content: attr(class);
+  content: ' ';
   padding: 10px;
 }
 

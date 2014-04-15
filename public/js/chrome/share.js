@@ -23,7 +23,7 @@
       $lockRevision.trigger('change');
     }
     update();
-  });
+  }).hide();
 
 
   $document.on('saved', function () {
@@ -37,18 +37,17 @@
       $sharepanels.filter('[value="' + (mapping[p.id] || p.id) + '"]').prop('checked', true);
     });
 
-    var options = '';
-    var i = jsbin.state.revision;
-    var limit = 100;
-    do {
-      options += '<option>' + i + '</option>';
-      limit--;
-      if (limit <= 0) {
-        break;
-      }
-    } while (--i);
-
-    $snapshots.html(options);
+    // if we're the latest bin, then allow the user to switch to a snapshot
+    if (jsbin.state.latest) {
+      $realtime.prop('checked', jsbin.state.latest);
+      $snapshot.prop('checked', false);
+      $sharemenu.find('label[for="output-view"] small').show();
+    } else {
+      // otherwise, disable live
+      $realtime.prop({ checked: false, disabled: true });
+      $snapshot.prop('checked', true);
+      $sharemenu.find('label[for="output-view"] small').hide();
+    }
 
     update();
   });
@@ -60,6 +59,7 @@
   });
   var $sharepreview = $('#share-preview');
   var $realtime = $('#sharebintype input[type=radio][value="realtime"]');
+  var $snapshot = $('#sharebintype input[type=radio][value="snapshot"]');
   var link = $sharemenu.find('a.link')[0];
   var linkselect = $sharemenu.find('input[name="url"]')[0];
   var embed = $sharemenu.find('textarea')[0];
@@ -114,7 +114,7 @@
     var data = formData(form);
     var url = jsbin.getURL();
 
-    if (data.state === 'snapshot') {
+    if (data.state === 'snapshot' && jsbin.state.latest) {
       url += '/' + selectedSnapshot;
     }
 

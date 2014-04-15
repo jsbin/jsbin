@@ -4717,12 +4717,12 @@ tbody:hover tr:hover.snapshot .url a span:before {
 /** share menu **/
 
 .share-split {
-  min-width: 380px;
+  min-width: 350px;
 }
 
 .share-split .controls,
 .share-split .result {
-  min-width: 180px;
+  min-width: 150px;
 }
 
 .share-split .controls {
@@ -4731,7 +4731,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
 }
 
 .share-split .result {
-  margin-left: 180px;
+  margin-left: 150px;
 }
 
 .share-split ul {
@@ -4820,7 +4820,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
   display: none;
   width: 198px;
   table-layout: fixed;
-  height: 94px;
+  height: 100px;
   border: 1px solid #eee;
   border-top: 0;
   background: #eee;

@@ -1097,7 +1097,6 @@ http://ethanschoonover.com/solarized/img/solarized-palette.png
   color: #657b83;
   text-shadow: #eee8d5 0 1px;
 }
-
 .cm-s-solarized .CodeMirror-widget {
   text-shadow: none;
 }
@@ -4358,6 +4357,22 @@ html * {
   background-repeat: repeat-x;
 }
 
+.cm-s-solarized.cm-s-light.cm-keymap-fat-cursor div.CodeMirror-cursor {
+   background:#002b36;
+}
+.cm-s-solarized.cm-s-dark.cm-keymap-fat-cursor div.CodeMirror-cursor {
+   background:#fdf6e3;
+}
+.cm-s-solarized.cm-s-dark,
+.cm-s-solarized.cm-s-light {
+  text-shadow: none;
+}
+.cm-s-solarized.cm-s-light .CodeMirror-selected {
+  background:none repeat scroll 0% 0% #002b36;
+}
+.cm-s-solarized.cm-s-dark .CodeMirror-selected {
+  background:none repeat scroll 0% 0% #fdf6e3;
+}
 
 
 @media only screen and (max-width: 700px) {

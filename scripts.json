@@ -49,6 +49,7 @@
     "/js/chrome/gist.js",
     "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
+    "/js/chrome/zen.js",
     "/js/chrome/app.js"
   ],
   "runner": [

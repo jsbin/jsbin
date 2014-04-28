@@ -85,6 +85,9 @@ p em {
 #dave {
   float: left;
   margin-top: 3em
+  user-drag: none; 
+  -moz-user-select: none; 
+  -webkit-user-drag: none;
 }
 
 #welcome > h2 {

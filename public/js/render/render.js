@@ -19,9 +19,12 @@ var getRenderedCode = function () {
         }
         if (error.message) {
           console.warn(error.message);
-        }
-        if (error.stack) {
+        } else if (error.stack) {
           console.warn(error.stack);
+        } else if ($.isArray(error)) {
+          console.warn(error.join('\n'));
+        } else {
+          console.warn(error);
         }
 
         reject(error);

@@ -328,21 +328,37 @@ var processors = jsbin.processors = (function () {
       id: 'scss',
       target: 'scss',
       extensions: ['scss'],
-      url: jsbin.static + '/js/vendor/sass/dist/sass.worker.js',
+      // url: jsbin.static + '/js/vendor/sass/dist/sass.worker.js',
       init: function (ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
-          Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
-          ready();
-        });
+        // $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
+          // Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
+        ready();
+        // });
       },
       handler: function (source, resolve, reject) {
-        Sass.compile(source, function (result) {
-          if (typeof result !== 'string') {
-            reject(new Error('Error on line ' + result.line + ':\n' + result.message));
-          } else {
-            resolve(result.trim());
+        $.ajax({
+          type: 'post',
+          url: 'http://processor.jsbin.com',
+          data: {
+            language: 'sass-with-compass',
+            source: source,
+            url: jsbin.state.code,
+            revision: jsbin.state.revision
+          },
+          success: function (data) {
+            resolve(data);
+          },
+          error: function (jqxhr) {
+            reject(jqxhr.responseText);
           }
         });
+        // Sass.compile(source, function (result) {
+        //   if (typeof result !== 'string') {
+        //     reject(new Error('Error on line ' + result.line + ':\n' + result.message));
+        //   } else {
+        //     resolve(result.trim());
+        //   }
+        // });
       }
     }),
 

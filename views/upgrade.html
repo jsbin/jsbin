@@ -1,0 +1,125 @@
+<h1> Upgrade </h1>
+<table>
+  <thead>
+    <tr class="headings">
+      <th> </th>
+      <th> Anon </th>
+      <th> Free </th>
+      <th> Pro </th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>
+        <form action="/subscribe/test_pro" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js"    class="stripe-button"
+            data-key="{{publicToken}}"
+            data-name="JsBin Pro!"
+            data-description="Pro Account - $15 p/m"
+            data-amount="1500"
+            data-label="Upgrade">
+          </script>
+        </form>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<script src="http://code.jquery.com/jquery-git1.js"> </script>
+<script>
+var features = {{{featureList}}}
+
+var $table = $('table');
+
+features.sort(function (a, b) {
+  return a.user - b.user;
+});
+
+features.forEach(function (feature, i) {
+  var $row = $('<tr>');
+  $row.append(
+    $('<td>').html(feature.name).addClass('feature')
+  );
+
+  for (var i = 0; i < 3; i++) {
+    var $td = $('<td>');
+    // use this if we reverse order of columns
+    if (i > feature.user - 1) {
+    //if ((2 - i) >= feature.user) {
+      $td.html('&#10004;').addClass();
+    } else {
+      $td.html(' ').addClass();
+    }
+    $row.append($td);
+  }
+
+  $table.append($row);
+});
+
+</script>
+
+<style>
+body {
+  font-family: helvetica neue;
+  font-weight:200!important;
+}
+
+h1 {
+  font-weight:300;
+  text-align:center;
+}
+
+table {
+  width:100%;
+  margin:0 auto;
+}
+
+tr {
+
+}
+
+tr.headings td {
+  font-weight:400;
+  width:auto;
+}
+
+td {
+  text-align:center;
+  line-height:40px;
+  font-size:18px;
+  font-weight:300;
+  width:100px;
+}
+
+td.feature {
+  text-align:left;
+}
+/*
+button.stripe-button-el {
+  font-size: 1.4em;
+  font-weight: 200;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0px 1px 1px #eee;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #aaa;
+}
+button.stripe-button-el:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+*/
+
+
+</style>

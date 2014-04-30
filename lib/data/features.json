@@ -1,0 +1,20 @@
+{
+  "list": [
+    {
+      "name": "Private Bins",
+      "user": 2
+    },
+    {
+      "name": "Dropbox Sync",
+      "user": 2
+    },
+    {
+      "name": "Save bins to Gist",
+      "user": 1
+    },
+    {
+      "name": "Codecasting (Professor mode)",
+      "user": 0
+    }
+  ]
+}

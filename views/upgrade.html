@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="test/css" href="{{static}}/css/upgrade.css"/>
 <h1> Upgrade </h1>
 <table>
   <thead>
@@ -29,7 +30,8 @@
   </tfoot>
 </table>
 
-<script src="http://code.jquery.com/jquery-git1.js"> </script>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script>
   var features = {{{featureList}}}
 </script>
+<script src="{{static}}/js/account/upgrade-page.js"></script>

@@ -32,6 +32,7 @@ td {
 
 td.feature {
   text-align:left;
+  width:auto;
 }
 /*
 button.stripe-button-el {

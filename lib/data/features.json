@@ -15,6 +15,30 @@
     {
       "name": "Codecasting (Professor mode)",
       "user": 0
+    },
+    {
+      "name": "Custom CNAME",
+      "user": 2
+    },
+    {
+      "name": "Custom starting template",
+      "user": 0
+    },
+    {
+      "name": "Multiple external resources",
+      "user": 0
+    },
+    {
+      "name": "Asset hosting",
+      "user": 2
+    },
+    {
+      "name": "Custom libraries",
+      "user": 0
+    },
+    {
+      "name": "Remote rendering",
+      "user": 0
     }
   ]
 }

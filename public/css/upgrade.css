@@ -3,7 +3,7 @@ body {
   font-weight:200!important;
 }
 
-h1 {
+h1, h2 {
   font-weight:300;
   text-align:center;
 }

@@ -34,6 +34,16 @@ td.feature {
   text-align:left;
   width:auto;
 }
+
+.backers {
+}
+.backers a {
+
+}
+.backers img {
+  width:33%;
+  float:left;
+}
 /*
 button.stripe-button-el {
   font-size: 1.4em;

@@ -41,7 +41,7 @@ td.feature {
 .backers a {
 
 }
-.backers .backer-img {
+#body .backers .backer-img {
   width:33%;
   float:left;
 }

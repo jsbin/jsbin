@@ -36,14 +36,17 @@ td.feature {
 }
 
 .backers {
-  width:100%;
+  width:720px;
+  margin:0 auto;
 }
 .backers a {
 
 }
 #body .backers .backer-img {
-  width:33%;
+  width:200px;
+  margin:20px;
   float:left;
+  border:none;
 }
 /*
 button.stripe-button-el {

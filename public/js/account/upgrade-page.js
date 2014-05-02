@@ -34,7 +34,7 @@ backers.forEach(function (backer) {
   var $a = $('<a>');
   $a.attr('href', backer.url);
   var $img = $('<img>');
-  $img.attr('src', backer.image);
+  $img.attr('src', backer.image).addClass('backer-img');
   $a.html($img);
   $backers.append($a);
 });

@@ -27,3 +27,14 @@ features.forEach(function (feature) {
 
   $table.append($row);
 });
+
+var $backers = $('.backers');
+
+backers.forEach(function (backer) {
+  var $a = $('<a>');
+  $a.attr('href', backer.url);
+  var $img = $('<img>');
+  $img.attr('src', backer.image);
+  $a.html($img);
+  $backers.append($a);
+});

@@ -4,8 +4,15 @@ body {
 }
 
 h1, h2 {
-  font-weight:300;
   text-align:center;
+}
+
+h1 {
+  font-weight:300;
+}
+
+h2 {
+  font-weight:400;
 }
 
 table {

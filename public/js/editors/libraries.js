@@ -460,6 +460,10 @@ var libraries = [
     'label': 'Font Awesome 4.0.3'
   },
   {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.12/paper.js',
+    'label': 'Paper.js 0.9.12'
+  },
+  {
     'url': {
       'url': 'https://openui5.hana.ondemand.com/resources/sap-ui-core.js',
       'id': 'sap-ui-bootstrap',

@@ -450,10 +450,10 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/platform.js',
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/polymer.js'
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.3/platform.js',
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.3/polymer.js'
     ],
-    'label': 'Polymer 0.1.1'
+    'label': 'Polymer 0.2.3'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',

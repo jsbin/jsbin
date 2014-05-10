@@ -93,9 +93,10 @@ $document.on('saved', function () {
 });
 
 // TODO decide whether to remove this, since it definitely doesn't work!
-$('#share input[type=text], #share textarea').on('beforecopy', function (event) {
-  analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
-});
+// $('#share input[type=text], #share textarea').on('beforecopy', function (event) {
+//   console.log(this, this.getAttribute('data-path'));
+//   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
+// });
 
 if (!split) {
   var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {

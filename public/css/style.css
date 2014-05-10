@@ -3739,6 +3739,7 @@ left: 50%;
 }
 
 #history tr.selected *,
+#history tr.selected .url .snapshot,
 #history tr.selected span {
   background: #0097fe;
   color: #fff;
@@ -4690,16 +4691,14 @@ html * {
   border-right: 1px solid #CCC;
 }
 
-.snapshot1 .url a span:before {
+.snapshot1 .url a span:before,
+tbody:hover tr:hover.snapshot .url a span:before {
   content: 'snapshot# ';
+  font-size: 14px;
 }
 
 tbody:hover .snapshot1 .url a span:before {
   content: '';
-}
-
-tbody:hover tr:hover.snapshot .url a span:before {
-  content: 'snapshot# ';
 }
 
 .snapshot td {
@@ -4707,7 +4706,7 @@ tbody:hover tr:hover.snapshot .url a span:before {
 }
 
 .snapshot td.url {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .snapshot:hover td {

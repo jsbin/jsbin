@@ -22,7 +22,7 @@ jsbin.keys = (function () {
   }
 
   $document.on('saved', function () {
-    keys[jsbin.getURL({ revision: true, withoutRoot: true })] = { c: jsbin.state.checksum, d: (new Date()).getTime() };
+    keys[jsbin.getURL({ revision: false, withoutRoot: true })] = { s: jsbin.state.revsion, c: jsbin.state.checksum, d: (new Date()).getTime() };
     localStorage.keys = JSON.stringify(keys);
   });
 

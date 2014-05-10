@@ -13,13 +13,18 @@ function updateTitle(source) {
       document.title = documentTitle + ' - ' + 'JS Bin';
 
       // add the snapshot if not the latest
-      if (!jsbin.state.latest) {
-        document.title = '(#' + jsbin.state.revision + ') ' + document.title;
-      }
     } else {
       document.title = 'JS Bin';
     }
+
+    if (!jsbin.state.latest) {
+      document.title = '(#' + jsbin.state.revision + ') ' + document.title;
+    }
   }
+
+  // there's an edge case here if newDocTitle === null, it won't update to show
+  // the snapshot, but frankly, it's an edge case that people won't notice.
+
 }
 
 updateTitle.re = /<title>(.*)<\/title>/i;

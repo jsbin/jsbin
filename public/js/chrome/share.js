@@ -14,16 +14,16 @@
   var $sharepanels = $('#sharepanels input[type="checkbox"]');
 
   var selectedSnapshot = jsbin.state.revision;
-  var $snapshots = $('#snapshot').on('change', function () {
-    selectedSnapshot = this.value * 1;
+  // var $snapshots = $('#snapshot').on('change', function () {
+  //   selectedSnapshot = this.value * 1;
 
-    $lockRevision.prop('checked', true);
+  //   $lockRevision.prop('checked', true);
 
-    if (selectedSnapshot === jsbin.state.revision) {
-      $lockRevision.trigger('change');
-    }
-    update();
-  }).hide();
+  //   if (selectedSnapshot === jsbin.state.revision) {
+  //     $lockRevision.trigger('change');
+  //   }
+  //   update();
+  // }).hide();
 
 
   $document.on('saved', function () {
@@ -51,10 +51,9 @@
 
     update();
   });
-  var $lockRevision = $sharemenu.find('.lockrevision').on('change', function () {
+  $sharemenu.find('.lockrevision').on('change', function () {
     saveChecksum = false; // jshint ignore:line
     jsbin.state.checksum = false;
-    console.log('LOCKED');
     $document.trigger('locked');
   });
   var $sharepreview = $('#share-preview');
@@ -162,6 +161,9 @@
     if (this.value === 'snapshot') {
       jsbin.state.checksum = false;
       saveChecksum = false; // jshint ignore:line
+      $sharemenu.find('label[for="output-view"] small').hide();
+    } else {
+      $sharemenu.find('label[for="output-view"] small').show();
     }
   });
 

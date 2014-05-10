@@ -112,9 +112,10 @@ panels.restore = function () {
       focused = !!sessionStorage.getItem('panel'),
       validPanels = 'live javascript html css console'.split(' ');
 
-  if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
-    history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
-  }
+  // TODO document why this happens...
+  // if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
+  //   history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
+  // }
 
   if (search || hash) {
     var query = (search || hash);

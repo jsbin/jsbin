@@ -6,7 +6,7 @@ function updateTitle(source) {
   }
   // read the element out of the source code and plug it in to our document.title
   var newDocTitle = source.match(updateTitle.re);
-  if ((updateTitle.lastState !== jsbin.state.latest) || newDocTitle !== null && newDocTitle[1] !== documentTitle) {
+  if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
     updateTitle.lastState = jsbin.state.latest;
     documentTitle = $('<div>').html(newDocTitle[1].trim()).text(); // jshint ignore:line
     if (documentTitle) {
@@ -17,7 +17,8 @@ function updateTitle(source) {
       document.title = 'JS Bin';
     }
 
-    if (!jsbin.state.latest) {
+
+    if (!jsbin.state.latest && jsbin.state.revision) {
       document.title = '(#' + jsbin.state.revision + ') ' + document.title;
     }
   }

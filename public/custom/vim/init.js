@@ -9,6 +9,8 @@
                 panel = window.editors[editorKey];
                 if (panel.editor && (panel.editor instanceof window.CodeMirror)) {
                     panel.editor.setOption('keyMap', 'vim');
+                    //Reset lineNumbers option because in firefox the line numbers are not visible
+                    panel.editor.setOption('lineNumbers', true);
                 }
             }
         }

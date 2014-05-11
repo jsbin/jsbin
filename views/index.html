@@ -569,6 +569,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+  {{#if custom_js}}<script src="{{static}}/{{custom_js}}{{cacheBust}}"></script>{{/if}}
 </body>
 </html>
 

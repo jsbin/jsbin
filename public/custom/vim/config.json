@@ -4,8 +4,6 @@
         "codemirror": {
             "lineNumbers": true,
             "mode": "text/x-csrc",
-            "vimMode": true,
-            "keyMap": "vim",
             "showCursorWhenSelecting": true
         },
         "panels": ["javascript", "live"]

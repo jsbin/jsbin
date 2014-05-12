@@ -25,6 +25,10 @@
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">
   </form>
+    <a class="sidebar-btn" href="{{root}}/auth/dropbox">Link with Dropbox</a>
+    {{#feature request "github"}}
+      <a class="sidebar-btn" href="/auth/github">Link your Github account</a>
+    {{/feature}}
 </section>
 
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>

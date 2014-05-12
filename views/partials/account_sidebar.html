@@ -10,6 +10,9 @@
 		<!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
     <a class="sidebar-btn" href="{{root}}/auth/dropbox">Link with Dropbox</a>
   </div>
+  {{#unless user.pro}}
+    <a class="sidebar-btn" href="{{httproot}}/upgrade">Upgrade</a>
+  {{/unless}}
   <a class="sidebar-btn" href="{{root}}/logout">Logout</a>
 </div>
 <script>

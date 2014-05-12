@@ -1,0 +1,12 @@
+{
+    "js": "custom/vim/init.js",
+    "settings": {
+        "codemirror": {
+            "lineNumbers": true,
+            "mode": "text/x-csrc",
+            "showCursorWhenSelecting": true
+        },
+        "panels": ["javascript", "live"]
+    },
+    "name": "vim"
+}

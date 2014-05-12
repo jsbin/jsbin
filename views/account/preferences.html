@@ -9,6 +9,16 @@
 
   <form>
   <form id="editor-settings">
+    {{#feature request "assets"}}
+    <h3>Custom content</h3>
+    <p>If you want to link to images or additional assets, we redirect the <a href="#">/{{user.name}}/assets/</a> relative URL to <em>your asset URL</em>, so you can link to <a href="#">/{{user.name}}/assets/images/logo.png</a> for example.</p>
+
+    <div>
+      <label for="asset-url">Asset URL</label>
+      <input type="url" name="asset-url" id="asset-url" placeholder="http://... S3 bucket, public dropbox folder, etc" size="50">
+    </div>
+    {{/feature}}
+
     <h3>Panels</h3>
     <div>
       <span class="label">Open panels</span>

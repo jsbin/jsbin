@@ -9,6 +9,7 @@
     <div>
       <label for="name">Username</label>
       <input id="name" name="username" type="text" value="{{user.name}}" disabled>
+      {{#if user.pro}}<div class="pro-badge">Pro</div>{{/if}}
     </div>
 
     <div>

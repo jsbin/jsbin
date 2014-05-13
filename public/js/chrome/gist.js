@@ -47,8 +47,16 @@ var Gist = (function () { // jshint ignore:line
    */
 
   $('a.export-as-gist').click(function () {
+    
+    // FIXME this can be implemented better with a nicer RE
+    var description = '';
+    try {
+        description = editors.html.getCode().match(/<meta name="description" content="(.*)" \/>/i)[1];
+    } catch(e) {}
+    
     var gist = {
       public: true,
+      description: description,
       files: {}
     };
     var panels = [

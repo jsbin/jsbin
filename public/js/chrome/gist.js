@@ -48,10 +48,10 @@ var Gist = (function () { // jshint ignore:line
 
   $('a.export-as-gist').click(function () {
     
-    // FIXME this can be implemented better with a nicer RE
+    // set the Gist's description by reading this bin's description meta tag from the HTML editor
     var description = '';
     try {
-        description = editors.html.getCode().match(/<meta name="description" content="(.*)" \/>/i)[1];
+        description = editors.html.getCode().match(/<meta.*name="description".*\/>/i)[0].match(/content="(.*)"/i)[1];
     } catch(e) {}
     
     var gist = {

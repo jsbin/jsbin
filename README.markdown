@@ -1,8 +1,6 @@
-# JS Bin - WAFI version
+# JS Bin
 
-JS Bin is an open source collaborative web development debugging tool. This specific version is forked from the main one, to customize the behavior of the application to suit the needs of the WAFI research group at IIT CNR Pisa (Italy). This is a list of customizations:
-
-* gist export feature has been modified to support bl.ocks.org publishing
+JS Bin is an open source collaborative web development debugging tool.
 
 ## What can JS Bin do?
 

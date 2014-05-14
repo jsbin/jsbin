@@ -1,6 +1,6 @@
 {{> account_sidebar}}
 
-<h1>Your personal details</h1>
+<h1>Your profile</h1>
 
 <section id="content" {{#if user.pro}}class="pro"{{/if}}>
   <form class="login" method="post" action="{{root}}/sethome">
@@ -21,7 +21,7 @@
       <label for="key">Password</label>
       <input id="key" name="password" type="password">
     </div>
-    
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">
   </form>

@@ -30,6 +30,8 @@
     focusedPanel: 'html',
     jshint: true
   };
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
   $.extend(currentSettings, getCurrentSettings());
   var panels = ['html', 'css', 'javascript', 'console', 'live'];
   var $panels = {};
@@ -93,6 +95,9 @@
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
 
+    clearTimeout(saveTimer);
+    $saveStatus.addClass('show');
+
     // Save on server
     $.ajax({
       url: 'editor',
@@ -111,6 +116,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000)
       }
     });
   }

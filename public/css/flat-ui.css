@@ -10,9 +10,9 @@
 #control,
 .control {
  background: rgb(237, 237, 237);
- background: hsl(0, 0%, 93%);
+ background: hsl(0, 0%, 33%); /* JERVIS default */
  border-bottom: rgb(191, 191, 191) solid 1px;
- border-bottom: hsl(0, 0%, 75%) solid 1px;
+ border-bottom: hsl(0, 0%, 13%) solid 1px; /* JERVIS default */
 }
 #control *,
 .control * {
@@ -41,7 +41,8 @@
 /*panel backgrounds*/  
 .panel {
  background: rgb(247, 247, 247);
- background: hsl(0, 0%, 97%);
+ background: hsl(0, 0%, 18%); /* JERVIS default */
+ color: white; /* JERVIS default */
  }
 .panel.focus {
  background: #fff;
@@ -49,7 +50,7 @@
 /*panel borders*/
 .stretch.panelwrapper {
  border-left-color: rgb(230, 230, 230) !important;
- border-left-color: hsl(60, 0%, 90%) !important;
+ border-color: hsl(0, 0%, 20%) !important;
  background: white !important;
  }
 /* panel borders hovered */
@@ -68,7 +69,7 @@
  font-weight: normal;
  }
 .label .name {
- color: rgba(0,0,0,0.5);
+ color: rgba(255,255,255,0.5); /* JERVIS default */
  }
 
 /* avatar */

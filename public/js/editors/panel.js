@@ -93,7 +93,7 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      theme: jsbin.settings.theme || 'monokai' // JERVIS default
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});

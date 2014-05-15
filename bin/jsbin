@@ -3,6 +3,7 @@
 var cmd = require('commander'),
     path = require('path'),
     fs = require('fs'),
+    jsbin,
     app;
 
 function error(msg) {
@@ -47,5 +48,6 @@ cmd.option('-e --env <development>', 'deployment environment', function (env) {
 
 cmd.parse(process.argv);
 
-app = require('../lib/app.js');
+jsbin  = require('../lib/app.js');
+app = jsbin.app;
 app.connect();

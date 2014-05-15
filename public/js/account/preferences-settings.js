@@ -95,11 +95,12 @@
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
 
-    clearTimeout(saveTimer);
-    $saveStatus.addClass('show');
-
     // Save on server
     $.ajax({
+      beforeSend: function () {
+        clearTimeout(saveTimer);
+        $saveStatus.addClass('show');
+      },
       url: 'editor',
       type: 'POST',
       dataType: 'json',
@@ -120,7 +121,7 @@
       complete: function () {
         saveTimer = setTimeout(function () {
           $saveStatus.removeClass('show');
-        }, 1000)
+        }, 1000);
       }
     });
   }

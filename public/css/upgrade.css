@@ -16,11 +16,14 @@ h2 {
 }
 
 table {
-  width:100%;
-  margin:0 auto;
+  border: 1;
+  width: 80%;
+  border-collapse: collapse;
+  margin: 0 auto;
 }
 
-tr {
+tbody tr {
+    border-top: 1px solid rgb(240, 240, 240);
 
 }
 
@@ -77,3 +80,8 @@ button.stripe-button-el:hover {
   background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
 }
 */
+
+th small {
+  color: rgb(165, 164, 164);
+  font-weight: normal;
+}

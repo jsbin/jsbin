@@ -40,7 +40,7 @@ cmd.option('-l --logger <default|short|tiny|dev|none>', 'server logger option', 
   } else {
     error('-l logger must be one of "' + valid.join('" or "') + '"');
   }
-})
+});
 
 cmd.option('-e --env <development>', 'deployment environment', function (env) {
   process.env.NODE_ENV = env;

@@ -57,7 +57,9 @@ var Gist = (function () { // jshint ignore:line
     var gist = {
       public: true,
       description: description,
-      files: {}
+      files: {
+        'README.md': {content: '-'} // JERVIS - bl.ocks.org README convention
+      }
     };
     var panels = [
       { panel: 'html' },
@@ -78,8 +80,17 @@ var Gist = (function () { // jshint ignore:line
       if (processor && processor.extensions) {
         ext = processor.extensions[0] || processor.name;
       }
+      
+      // JERVIS exporting a coffee to gist should also compile it in js
+      if (ext === 'coffee') {
+         gist.files['index.js'] = {
+           content: CoffeeScript.compile(code)
+         };
+      }
+      
       // Build a file name
-      var file = ['jsbin', (jsbin.state.code || 'untitled'), ext].join('.');
+      // var file = ['jsbin', (jsbin.state.code || 'untitled'), ext].join('.');
+      var file = 'index.' + ext; // JERVIS - bl.ocks.org file name convention
       gist.files[file] = {
         content: code
       };

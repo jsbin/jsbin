@@ -39,14 +39,25 @@
 
     // if we're the latest bin, then allow the user to switch to a snapshot
     if (jsbin.state.latest) {
-      $realtime.prop('checked', jsbin.state.latest);
-      $snapshot.prop('checked', false);
-      $sharemenu.find('label[for="output-view"] small').show();
+      // if they have write access then select the latest & live by default
+      if (jsbin.state.checksum) {
+        $realtime.prop('checked', jsbin.state.latest);
+        $snapshot.prop('checked', false);
+
+        $andlive.show();
+      // otherwise select the snapshot first
+      } else {
+        $realtime.prop({ checked: false });
+        $snapshot.prop('checked', true);
+        $andlive.hide();
+      }
+
+      $withLiveReload.show();
     } else {
       // otherwise, disable live
       $realtime.prop({ checked: false, disabled: true });
       $snapshot.prop('checked', true);
-      $sharemenu.find('label[for="output-view"] small').hide();
+      $withLiveReload.hide();
     }
 
     update();
@@ -64,6 +75,8 @@
   var embed = $sharemenu.find('textarea')[0];
   var form = $sharemenu.find('form')[0];
   var $directLinks = $sharemenu.find('.direct-links');
+  var $andlive = $('#andlive');
+  var $withLiveReload = $sharemenu.find('label[for="output-view"] small');
 
   // get an object representation of a form's state
   function formData(form) {
@@ -182,7 +195,7 @@
     $directLinks.html(directLinksHTML.join(' '));
 
     linkselect.value = link.href = shareurl + query;
-    embed.value = ('<a class="jsbin-embed" href="' + url + '/embed' + query + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+    embed.value = ('<a class="jsbin-embed" href="' + url + '/embed' + query + '">' + documentTitle + ' on jsbin.com</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
         return {
           '<': '&lt;',
           '>': '&gt;',
@@ -200,9 +213,9 @@
     if (this.value === 'snapshot') {
       jsbin.state.checksum = false;
       saveChecksum = false; // jshint ignore:line
-      $sharemenu.find('label[for="output-view"] small').hide();
+      $withLiveReload.hide();
     } else {
-      $sharemenu.find('label[for="output-view"] small').show();
+      $withLiveReload.show();
     }
   });
 

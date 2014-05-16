@@ -63,6 +63,7 @@
   var linkselect = $sharemenu.find('input[name="url"]')[0];
   var embed = $sharemenu.find('textarea')[0];
   var form = $sharemenu.find('form')[0];
+  var $directLinks = $sharemenu.find('.direct-links');
 
   // get an object representation of a form's state
   function formData(form) {
@@ -141,6 +142,44 @@
       query = '';
     }
 
+    // create the direct links, it'll be faster to inject HTML rather than
+    // updating hrefs of a bunch of HTML elements
+    $directLinks.empty();
+
+    var directLinksHTML = [];
+
+    var code = ''
+    var ext = '';
+
+    code = jsbin.panels.panels.html.getCode().trim();
+
+    if (code) {
+      ext = processors[jsbin.state.processors.html || 'html'].extensions[0];
+      if (ext !== 'html') {
+        directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+      } else if (code.toLowerCase().indexOf('<svg') === 0) {
+        directLinksHTML.push('<a href="' + url + '.svg">svg</a>');
+      }
+    }
+
+    if (jsbin.panels.panels.css.getCode().trim()) {
+      ext = processors[jsbin.state.processors.css || 'css'].extensions[0];
+      directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+    }
+
+    code = jsbin.panels.panels.javascript.getCode().trim();
+
+    if (code) {
+      ext = processors[jsbin.state.processors.javascript || 'javascript'].extensions[0];
+      try {
+        JSON.parse(code);
+        directLinksHTML.push('<a href="' + url + '.json">json</a>');
+      } catch (e) {
+        directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+      }
+    }
+
+    $directLinks.html(directLinksHTML.join(' '));
 
     linkselect.value = link.href = shareurl + query;
     embed.value = ('<a class="jsbin-embed" href="' + url + '/embed' + query + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {

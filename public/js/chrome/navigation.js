@@ -451,6 +451,39 @@ $('a.publish-to-vanity').on('click', function (event) {
   })
 });
 
+$document.on('click', 'a.deleteallbins', function () {
+  if (jsbin.user && jsbin.state.metadata.name === jsbin.user.name) {
+    if (confirm('Delete all snapshots of this bin including this one?')) {
+    analytics.deleteAll();
+    $.ajax({
+      type: 'post',
+      url: jsbin.getURL() + '/delete-all',
+      success: function () {
+        jsbin.state.deleted = true;
+        $document.trigger('tip', {
+          type: 'error',
+          content: 'This bin and history is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
+        });
+      },
+      error: function (xhr) {
+        if (xhr.status === 403) {
+          $document.trigger('tip', {
+            content: 'You don\'t own this bin, so you can\'t delete it.',
+            autohide: 5000
+          });
+        }
+      }
+    });
+
+  }
+  } else {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'You must be logged in <em><strong>the bin owner</strong></em> to delete all snapshots. <a target="_blank" href="/help/delete-a-bin">Need help?</a>'
+    });
+  }
+});
+
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
   if (confirm('Delete this bin?')) {

@@ -32,15 +32,16 @@
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#feature request "private"}}
+              {{#if home}}
+              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
+              {{/if}}
               <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              <a class="deleteallbins button group" data-desc="Delete all bin snapshots" title="Delete all bin snapshots" href="{{root}}/delete-all">Delete all snapshots</a>
               {{/feature}}
-              {{#if home}}
-              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
-              {{/if}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
               <a title="Save snapshot" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Save snapshot</a>
@@ -53,7 +54,7 @@
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" class="startingpoint button group" title="Set as starting code" href="{{root}}/save" data-label="save-as-template">Save as template</a>
               <!-- <a data-desc="Reset to the original JS Bin starting point" id="cleartemplate" title="Reset to the original JS Bin starting template" class="button group" href="#clear-template" data-label="clear-template">Clear template</a> -->
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
+              <!-- <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a> -->
             </div>
           </div>
         </div><!-- spacer (or not) DO NOT TOUCH ERE BE DRAGONS etc wat?

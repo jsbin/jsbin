@@ -450,8 +450,8 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.3/platform.js',
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.3/polymer.js'
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.4/platform.js',
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.4/polymer.js'
     ],
     'label': 'Polymer 0.2.3'
   },

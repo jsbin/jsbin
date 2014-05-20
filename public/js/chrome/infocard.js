@@ -33,14 +33,18 @@
       classes.push('author');
     }
 
-    s.stop();
+    if (s) {
+      s.stop();
+    }
 
     if (!jsbin.state.streaming || owner === true) {
       $header.find('time').html(event ? 'just now' : prettyDate(meta.last_updated));
     } else if (owner === false) {
       $header.find('time').html('Streaming');
       classes.push('streaming');
-      s.start();
+      if (s) {
+        s.start();
+      }
     }
 
     if (!jsbin.checksum) {

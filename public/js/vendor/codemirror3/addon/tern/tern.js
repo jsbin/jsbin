@@ -232,7 +232,9 @@
           tip.appendChild(document.createTextNode(" — " + data.doc));
         if (data.url) {
           tip.appendChild(document.createTextNode(" "));
-          tip.appendChild(elt("a", null, "[docs]")).href = data.url;
+          var link = elt("a", null, "[docs]");
+          link.target = '_blank';
+          tip.appendChild(link).href = data.url;
         }
       }
       tempTooltip(cm, tip);
@@ -551,8 +553,10 @@
       cm.off("cursorActivity", clear);
       fadeOut(tip);
     }
-    setTimeout(clear, 1700);
+    // setTimeout(clear, 1700);
     cm.on("cursorActivity", clear);
+    cm.on("blur", clear);
+    cm.on("keydown", clear);
   }
 
   function makeTooltip(x, y, content) {

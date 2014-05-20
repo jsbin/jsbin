@@ -125,7 +125,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['coffee'],
       url: jsbin.static + '/js/vendor/coffee-script.js',
       init: function (ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/coffeescript/coffeescript.js', ready);
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
       },
       handler: function (source) {
         var renderedCode = '';
@@ -222,7 +222,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['md', 'markdown', 'mdown'],
       url: jsbin.static + '/js/vendor/markdown.js',
       init: function (ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/markdown/markdown.js', ready);
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
       },
       handler: function (source) {
         return markdown.toHTML(source);
@@ -237,7 +237,7 @@ var processors = jsbin.processors = (function () {
       init: function (ready) {
         $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
         // init and expose jade
-        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/clike/clike.js', ready);
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
       },
       handler: function (source) {
         source = [
@@ -279,7 +279,8 @@ var processors = jsbin.processors = (function () {
       extensions: ['less'],
       url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
       init: function (ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/less/less.js', ready);
+        // In CodeMirror 4, less is now included in the css mode, so no files to load
+        ready();
       },
       handler: function (source) {
         var css = '';
@@ -419,6 +420,11 @@ var processors = jsbin.processors = (function () {
     // because it doesn't work properly
     var smartIndent = cmMode !== 'jsx';
     cmMode = cmMode === 'jsx' ? 'javascript' : cmMode;
+
+    // For less, the mode definition is changed in CodeMirror 4
+    if (cmMode === 'less') {
+      cmMode = 'text/x-less';
+    }
 
     if (!panel) return;
 

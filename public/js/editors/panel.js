@@ -1,4 +1,4 @@
-/*globals $:true, CodeMirror:true, jsbin:true, emmet:true */
+/*globals $, CodeMirror, jsbin, jshintEnabled */
 
 var $document = $(document),
     $source = $('#source');
@@ -27,62 +27,19 @@ if (!CodeMirror.commands) {
   CodeMirror.commands = {};
 }
 
-CodeMirror.commands.autocomplete = function(cm) {
+// Save a reference to this autocomplete function to use it when Tern scripts
+// are loaded but not used, since they will automatically overwrite the
+// CodeMirror autocomplete function with CodeMirror.showHint
+var simpleJsHint = function(cm) {
   if (CodeMirror.snippets(cm) === CodeMirror.Pass) {
-    return CodeMirror.simpleHint(cm, CodeMirror.javascriptHint);
+    return CodeMirror.simpleHint(cm, CodeMirror.hint.javascript);
   }
 };
+CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   return CodeMirror.snippets(cm);
 };
-
-var foldFunc = {
-  css: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  javascript: CodeMirror.newFoldFunction(CodeMirror.braceRangeFinder),
-  html: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder)
-};
-
-// this is a bit of a fudge to get multiline commenting working
-// for JavaScript. It's a fudge because emmet doesn't support
-// JavaScript as a language at all, so we inherit code our own comment style.
-var vocab = emmet.require('resources').getVocabulary('system');
-vocab.javascript = 'javascript';
-emmet.require('resources').setVocabulary(vocab, 'system');
-
-// totally over the top - but cleanest way to add comments to JavaScript
-var emmetToggleComment = emmet.require('actions').get('toggle_comment');
-emmet.require('actions').add('toggle_comment', function(editor) {
-  var info = emmet.require('editorUtils').outputInfo(editor);
-  if (info.syntax == 'javascript') {
-    // in case our editor is good enough and can recognize syntax from
-    // current token, we have to make sure that cursor is not inside
-    // 'style' attribute of html element
-    var editorUtils = emmet.require('editorUtils');
-    var selection = editor.getSelection();
-    var range = editor.getCurrentLineRange();
-    var line = editor.getCurrentLine();
-    var caretPos = editor.getCaretPos();
-    var tag = emmet.require('htmlMatcher').tag(info.content, caretPos);
-    if ((selection.length) || (tag && tag.open.range.inside(caretPos))) {
-      return emmetToggleComment.fn(editor);
-    } else {
-      if (line.trim().indexOf('//') == 0) {
-        editor.setCaretPos(caretPos);
-        editor.replaceContent(editorUtils.unindent(editor, line.replace(/(\s*?)\/\/\s?/, '$1')), range.start, range.end, false);
-        editor.setCaretPos(caretPos - 3);
-      } else {
-        editor.setCaretPos(caretPos);
-        editor.replaceContent(editorUtils.unindent(editor, '// ' + line), range.start, range.end, false);
-        editor.setCaretPos(caretPos + 3);
-      }
-    }
-  } else {
-    return emmetToggleComment.fn(editor);
-  }
-});
-
-
 
 var Panel = function (name, settings) {
   var panel = this,
@@ -90,15 +47,16 @@ var Panel = function (name, settings) {
       $panel = null,
       splitterSettings = {},
       cmSettings = {},
-      panelLanguage = name;
+      panelLanguage = name,
+      $panelwrapper = $('<div class="stretch panelwrapper"></div>');
 
   panel.settings = settings = settings || {};
   panel.id = panel.name = name;
   $panel = $('.panel.' + name);
   $panel.data('name', name);
   panel.$el = $panel.detach();
-  panel.$el.appendTo($source);
-  panel.$el.wrapAll('<div class="stretch panelwrapper">');
+  panel.$el.appendTo($panelwrapper);
+  $panelwrapper.appendTo($source);
   panel.$panel = panel.$el;
   panel.$el = panel.$el.parent().hide();
   panel.el = document.getElementById(name);
@@ -135,18 +93,12 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      styleActiveLine: true,
-      highlightSelectionMatches: true,
       theme: jsbin.settings.theme || 'jsbin'
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
 
     cmSettings.extraKeys = {};
-
-    cmSettings.extraKeys['Ctrl-Q'] = function (cm) {
-      foldFunc[name](cm, cm.getCursor().line);
-    };
 
     // only the js panel for now, I'd like this to work in
     // the HTML panel too, but only when you were in JS scope
@@ -156,15 +108,11 @@ var Panel = function (name, settings) {
       cmSettings.extraKeys.Tab = 'snippets';
     }
 
-    // cmSettings.extraKeys.Tab = 'snippets';
-
-    // Add Zen Coding to html pane
-    // if (name === 'html') {
-      $.extend(cmSettings, {
-        syntax: name,   /* define Zen Coding syntax */
-        profile: name   /* define Zen Coding output profile */
-      });
-    // }
+    // some emmet "stuff" - TODO decide whether this is needed still...
+    $.extend(cmSettings, {
+      syntax: name,   /* define Zen Coding syntax */
+      profile: name   /* define Zen Coding output profile */
+    });
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
@@ -173,10 +121,20 @@ var Panel = function (name, settings) {
       $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       return true;
     });
-    panel.editor.on('gutterClick', foldFunc[name]);
+
     panel.editor.on('focus', function () {
       panel.focus();
     });
+
+    // Restore keymaps taken by emmet but that we need for other functionalities
+    if (name === 'javascript') {
+      var cmd = $.browser.platform === 'mac' ? 'Cmd' : 'Ctrl';
+      var map = {};
+      map[cmd + '-D'] = 'deleteLine';
+      map[cmd + '-/'] = function(cm) { CodeMirror.commands.toggleComment(cm); };
+      map.name = 'noEmmet';
+      panel.editor.addKeyMap(map);
+    }
 
     panel._setupEditor(panel.editor, name);
   }
@@ -235,6 +193,9 @@ Panel.prototype = {
   virgin: true,
   visible: false,
   show: function (x) {
+    if (this.visible) {
+      return;
+    }
     $document.trigger('history:close');
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our
@@ -410,7 +371,7 @@ Panel.prototype = {
     if (this.settings.init) this.settings.init.call(this);
   },
   _setupEditor: function () {
-    var focusedPanel = sessionStorage.getItem('panel'),
+    var focusedPanel = sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
         panel = this,
         editor = panel.editor;
 

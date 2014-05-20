@@ -23,6 +23,7 @@
       "collate": "utf8mb4_unicode_ci"
     }
   },
+  "session": {},
   "analytics": {
     "id": null,
     "render-id": null
@@ -139,6 +140,7 @@
     "null",
     "open",
     "oauth",
+    "post",
     "pro",
     "profile",
     "privacy",

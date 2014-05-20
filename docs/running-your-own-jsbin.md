@@ -1,8 +1,8 @@
-# Running a local copy of JS Bin
+# Run JS Bin locally
 
-JS Bin v3 is a [Node](http://nodejs.org) project, and local installation is very simple.
+JS Bin is a [Node](http://nodejs.org) project.
 
-Installation requires a number of simple steps:
+Install in 3 simple steps:
 
 1. Installing code
 2. Configuration

@@ -4336,7 +4336,8 @@ html * {
   background: transparent;
 }
 
-.CodeMirror-activeline-background:before {
+.CodeMirror-activeline-background:before,
+.line-highlight:before {
   content: "";
   position: absolute;
   background: inherit;
@@ -4695,3 +4696,5 @@ html * {
   float: left;
   margin-right: 10px;
 }
+
+.line-highlight {background: rgb(255, 255, 204);}

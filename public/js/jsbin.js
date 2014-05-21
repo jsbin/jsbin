@@ -121,7 +121,7 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
 });
 
 jsbin.owner = function () {
-  return jsbin.user && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
+  return jsbin.user && jsbin.user.name && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
 };
 
 jsbin.getURL = function (withoutRoot, share) {

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>{{title}} - JS Bin</title>
+<link rel="icon" href="{{static}}/images/favicon.png">
+<link rel="stylesheet" type="text/css" href="{{static}}/css/preview.css">
+{{#settings.is_production}}
+  {{{analytics}}}
+{{/settings.is_production}}
+</head>
+<body>
+<!-- <ul class="name header">
+  {{#username}}<li>Created by @{{username}} {{#pro}}(pro user){{/pro}}</li>{{/username}}
+  <li class="left"><a class="button" href="">By @rem</a></li>
+</ul>
+<ul class="controls header">
+  <li><a class="button" href="{{code_id_path}}/edit"><img src="/images/jsbin_16.png"> Edit this bin</a></li>
+  <li><a class="button" href="/report-abuse">F</a></li>
+  <li><a class="button" href="http://jsbin.com/help/remove-bin-preview-frame">x</a></li>
+</ul>
+ -->
+
+<div id="wrapper">
+  <iframe sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts" src="{{preview_root}}{{code_id_path}}"></iframe>
+</div>
+{{^username}}
+<div class="name header anon">
+  <p>Page was created by an anonymous JS Bin user &ndash; <a href="/report-abuse">Report Abuse</a></p>
+  <p class="right">
+    If this is your bin, you can <a href="">register</a> to remove this message
+    <a class="button" href="{{code_id_path}}/edit"><img src="/images/jsbin_16.png"> Edit this bin</a>
+    <a id="close" class="button icon icon-x" href="http://jsbin.com/help/remove-bin-preview-frame"></a>
+  </p>
+</div>
+<script>
+var path = window.location.pathname;
+var hide = document.cookie.indexOf('hide=' + path) !== -1;
+if (!hide) {
+  document.body.className='show';
+  document.getElementById('close').onclick = function (event) {
+    document.body.className='';
+    document.cookie = 'hide=' + path + ';path=' + path + ';max-age=' + 60*60*24*365;
+    event.preventDefault && event.preventDefault();
+    event.returnValue = false;
+  };
+}
+
+</script>
+{{/username}}
+</body>
+</html>

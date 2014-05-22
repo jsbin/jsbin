@@ -4712,7 +4712,7 @@ html * {
 
 #toppanel {
   height: 250px;
-  background: #0074D9;
+  background: #ecf2fa;
   position: relative;
   z-index: 100000;
   margin-top: -250px;
@@ -4721,6 +4721,7 @@ html * {
        -o-transition: margin-top ease-out 100ms;
           transition: margin-top ease-out 100ms;
 
+  border-bottom: rgb(191, 191, 191) solid 1px;
 }
 
 .toppanel #toppanel {

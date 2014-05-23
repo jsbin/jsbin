@@ -19,7 +19,7 @@ table {
   border: 1;
   width: 80%;
   border-collapse: collapse;
-  margin: 0 auto;
+  margin: -45px auto 0;
 }
 
 tbody tr {

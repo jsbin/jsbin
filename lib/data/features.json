@@ -1,46 +1,46 @@
 [
   {
     "name": "Vanity URLs",
-    "user": 2
+    "user": "pro"
   },
   {
     "name": "Private Bins",
-    "user": 2
+    "user": "pro"
   },
   {
     "name": "Dropbox Sync",
-    "user": 2
+    "user": "pro"
   },
   {
     "name": "Direct support",
-    "user": 2
+    "user": "pro"
+  },
+  {
+    "name": "Asset hosting (Coming soon)",
+    "user": "pro"
   },
   {
     "name": "Save bins to Gist",
-    "user": 1
-  },
-  {
-    "name": "Asset hosting",
-    "user": 2
+    "user": "free"
   },
   {
     "name": "Codecasting",
-    "user": 0
+    "user": "anon"
   },
   {
     "name": "Custom starting template",
-    "user": 0
+    "user": "anon"
   },
   {
     "name": "Multiple external resources",
-    "user": 0
+    "user": "anon"
   },
   {
     "name": "Custom libraries",
-    "user": 0
+    "user": "anon"
   },
   {
     "name": "Remote rendering",
-    "user": 0
+    "user": "anon"
   }
 ]

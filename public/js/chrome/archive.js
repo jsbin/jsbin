@@ -20,6 +20,8 @@ function archive(unarchive) {
         });
       },
       success: function () {
+        jsbin.state.metadata.archive = unarchive !== false;
+        updateArchiveMenu();
         $document.trigger('tip', {
           type: 'notication',
           autohide: 5000,
@@ -34,5 +36,17 @@ function archive(unarchive) {
     });
   }
 }
+
+function updateArchiveMenu() {
+  if (jsbin.state.metadata && jsbin.state.metadata.archive) {
+    $('a.archivebin').hide();
+    $('a.unarchivebin').show();
+  } else {
+    $('a.archivebin').show();
+    $('a.unarchivebin').hide();
+  }
+}
+
+updateArchiveMenu();
 
 var unarchive = archive.bind(null, false);

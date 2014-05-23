@@ -23,19 +23,18 @@ table {
 }
 
 tbody tr {
-    border-top: 1px solid rgb(240, 240, 240);
-
+  border-top: 1px solid rgb(240, 240, 240);
 }
 
-tr.headings td {
-  font-weight:400;
-  width:auto;
+tr.headings th {
+  vertical-align: bottom;
+  padding-bottom: 20px;
 }
 
 td {
   text-align:center;
-  line-height:40px;
-  font-size:18px;
+  line-height:30px;
+  font-size:16px;
   font-weight:300;
   width:100px;
 }

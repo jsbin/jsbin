@@ -53,8 +53,7 @@ td.feature {
 }
 #body .backers .backer-img {
   width:200px;
-  margin:20px;
-  float:left;
+  margin:20px auto;
   border:none;
 }
 /*

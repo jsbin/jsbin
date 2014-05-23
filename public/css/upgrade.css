@@ -84,3 +84,13 @@ th small {
   color: rgb(165, 164, 164);
   font-weight: normal;
 }
+
+tr.anon td.anon:after, tr.anon td.free:after, tr.anon td.pro:after {
+  content: "\2713";
+}
+tr.free td.free:after, tr.free td.pro:after {
+  content: "\2713";
+}
+tr.pro td.pro:after {
+  content: "\2713";
+}

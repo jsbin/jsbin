@@ -6,7 +6,19 @@
       <th>&nbsp;</th>
       <th>Anonymous</th>
       <th>Free</th>
-      <th>Pro <small>@ $15/month</small></th>
+      <th>
+        <form action="/subscribe/test_pro" method="POST">
+          <script
+            src="https://checkout.stripe.com/checkout.js"    class="stripe-button"
+            data-key="{{stripeKey}}"
+            data-name="JsBin Pro!"
+            data-description="Pro Account - $15 p/m"
+            data-amount="1500"
+            data-label="Upgrade">
+          </script>
+        </form>
+        Pro <small>@ $15/month</small>
+      </th>
     </tr>
   </thead>
   <tfoot>

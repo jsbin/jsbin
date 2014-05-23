@@ -40,6 +40,18 @@
       </td>
     </tr>
   </tfoot>
+  <tbody>
+    {{#each featureList}}
+    <tr class="{{user}}">
+      <td class="feature">
+        {{name}}
+      </td>
+      <td class="anon"></td>
+      <td class="free"></td>
+      <td class="pro"></td>
+    </tr>
+    {{/each}}
+  </tbody>
 </table>
 
 <h2>Your Pro accounts keep JS Bin 100% free for education</h2>

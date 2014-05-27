@@ -13,7 +13,7 @@ var proxyConsole = (function () {
   /**
    * Stringify all of the console objects from an array for proxying
    */
-  proxyConsole.prototype.stringifyArgs = function (args) {
+  var stringifyArgs = function (args) {
     var newArgs = [];
     // TODO this was forEach but when the array is [undefined] it wouldn't
     // iterate over them
@@ -42,7 +42,7 @@ var proxyConsole = (function () {
     proxyConsole.prototype[method] = function () {
       // Replace args that can't be sent through postMessage
       var originalArgs = [].slice.call(arguments),
-          args = this.stringifyArgs(originalArgs);
+          args = stringifyArgs(originalArgs);
 
       // Post up with method and the arguments
       runner.postMessage('console', {

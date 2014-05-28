@@ -344,6 +344,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.metadata = { name: jsbin.user.name };
 
         // getURL(true) gets the jsbin without the root attached
         // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');

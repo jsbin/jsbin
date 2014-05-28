@@ -49,6 +49,8 @@
     "/js/chrome/gist.js",
     "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
+    "/js/chrome/last-bin.js",
+    "/js/chrome/archive.js",
     "/js/chrome/app.js"
   ],
   "runner": [

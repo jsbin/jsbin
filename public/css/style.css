@@ -4742,3 +4742,21 @@ html * {
 body.ready.toppanel {
   background: white;
 }
+
+/* top panel */
+.toppanel-wrapper {
+
+}
+.toppanel-title {
+  font-size: inherit;
+}
+.toppanel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.toppanel-wrapper a {
+  color: #007FFF;
+  display: block;
+  text-decoration: none;
+}

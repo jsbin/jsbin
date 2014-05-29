@@ -54,7 +54,8 @@
     "passport-dropbox-oauth2": "~0.1.5",
     "handlebars": "~2.0.0-alpha.2",
     "dropbox": "~0.10.2",
-    "stylus": "~0.42.2"
+    "stylus": "~0.42.2",
+    "axon": "~2.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

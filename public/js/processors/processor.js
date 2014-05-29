@@ -338,7 +338,7 @@ var processors = jsbin.processors = (function () {
       handler: function (source, resolve, reject) {
         $.ajax({
           type: 'post',
-          url: 'http://processor.jsbin.com',
+          url: '/processor',
           data: {
             language: 'sass-with-compass',
             source: source,

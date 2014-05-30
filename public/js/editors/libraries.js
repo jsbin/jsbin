@@ -453,7 +453,7 @@ var libraries = [
       '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/platform.js',
       '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/polymer.js'
     ],
-    'label': 'Polymer 0.2.3'
+    'label': 'Polymer 0.3.0'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',

@@ -578,6 +578,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+{{#feature request "topPanel"}}
+  <script src="{{static}}/js/chrome/toppanel.js{{cacheBust}}"></script>
+{{/feature}}
 </body>
 </html>
 

@@ -4745,10 +4745,43 @@ body.ready.toppanel {
 
 /* top panel */
 .toppanel-wrapper {
-
+  color: #232323;
+  font-size: 0;
+  padding: 13px;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.toppanel-column {
+  font-size: 14px;
+  display: inline-block;
+  padding: 0 4px;
+  vertical-align: top;
+  width: 20%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.toppanel-section + .toppanel-section {
+  margin-top: 13px;
+}
+.toppanel-logo {
+  margin-bottom: 10px;
+  text-align: center;
 }
 .toppanel-title {
-  font-size: inherit;
+  /*border-bottom: 2px #CCC solid;
+  border-bottom: 2px rgba(0,0,0,0.1) solid;*/
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+.toppanel-title a:after {
+  /*color: #CCC;
+  color: rgba(0, 0, 0, 0.3);*/
+  content: " »";
+  font-size: 1.1em;
 }
 .toppanel-list {
   list-style: none;
@@ -4756,7 +4789,66 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  color: #007FFF;
+  /*color: #007FFF;*/
+  color: #6293D3;
   display: block;
+  padding: 6px 10px 6px 1px;
   text-decoration: none;
+  text-shadow: none;
+}
+.toppanel-wrapper a:hover {
+  background: #CCC;
+  background: rgba(0, 0, 0, 0.05);
+}
+.toppanel-wrapper a:hover:after {
+  /*color: #007FFF;*/
+}
+.toppanel-bin-name {
+  width: 5em;
+  display: inline-block;
+}
+.toppanel-bin-date {
+  color: #888;
+}
+.toppanel-quote {
+  line-height: 1.4;
+}
+.toppanel-quote-author {
+  color: #888;
+  display: block;
+  font-weight: 500;
+}
+.toppanel-button {
+  border: 1px solid #6293D3;
+  line-height: 30px;
+  margin: 0 auto;
+  text-align: center;
+  width: 150px;
+}
+.toppanel-button-dropdown {
+  position: relative;
+}
+.toppanel-button-dropdown:after {
+  border-left: 1px solid #6293D3;
+  content: "▾";
+  font-size: 18px;
+  line-height: 40px;
+  position: absolute;
+  width: 28px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.toppanel-button-disabled {
+  opacity: 0.5;
+}
+a.toppanel-hide {
+  position: absolute;
+  left: 3%;
+  top: 5%;
+  padding: 0 5px 7px;
+  font-size: 35px;
+  line-height: 0.7;
+  color: rgba(98, 147, 211, 0.5);
+  font-weight: 200;
 }

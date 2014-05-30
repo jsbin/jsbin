@@ -1,12 +1,15 @@
 <div id="toppanel" class="toppanel-wrapper">
   <div class="toppanel-column">
-    <div class="toppanel-logo"></div>
+    <div class="toppanel-logo">
+      <img src="http://static.jsbin.com/images/jsbin_static.png" width="100">
+    </div>
     <div class="toppanel-actions">
+      <a href="#" class="toppanel-hide" title="Dismiss">&times;</a>
       <div>
-        <a href="#">New bin</a>
+        <a id="createnew" href="{{root}}" class="toppanel-button toppanel-button-disabled">New bin</a>
       </div>
       <div>
-        <a href="#">Open bin</a>
+        <a href="#" class="toppanel-button toppanel-button-dropdown homebtn">Open bin...</a>
       </div>
     </div>
   </div>
@@ -40,7 +43,35 @@
   </div>
 
   <div class="toppanel-column">
-    
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="http://jsbin.com/blog">Blog</a></h2>
+      <ul class="toppanel-list">
+        <li><a href="http://jsbin.com/blog/twdtw-6-syncing-pro-accounts">Sync with Dropbox</a></li>
+      </ul>
+    </div>
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="http://jsbin.com/help">Help</a></h2>
+      <ul class="toppanel-list">
+        <li><a href="#">Private bins</a></li>
+      </ul>
+    </div>
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="https://twitter.com/js_bin" target="_blank">Twitter js_bin</a></h2>
+    </div>
+  </div>
+
+  <div class="toppanel-column">
+    <div class="toppanel-section">
+      <div class="toppanel-quote">&ldquo;Everyone should learn how to program a computer because it teaches you how to think&rdquo; &mdash; <span class="toppanel-quote-author">Steve Jobs</span></div>
+    </div>
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="#">Recent bins</a></h2>
+      <ul class="toppanel-list">
+        <li><a href="#"><span class="toppanel-bin-name">sdcwww</span> <span class="toppanel-bin-date">yesterday</span></a></li>
+        <li><a href="#"><span class="toppanel-bin-name">uhsjj</span> <span class="toppanel-bin-date">last Wednesday</span></a></li>
+        <li><a href="#"><span class="toppanel-bin-name">jiooo</span> <span class="toppanel-bin-date">2 weeks ago</span></a></li>
+      </ul>
+    </div>
   </div>
 </div>
 <script>

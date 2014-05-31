@@ -42,23 +42,20 @@
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
   var hints = ['js'];
   var $hints = {};
-  var jshintOptionsVal = JSON.stringify(currentSettings.jshintOptions, undefined, 2);
-  if (jshintOptionsVal === '{}') {
-    jshintOptionsVal = '';
-  }
-  var $jshintOptions = $('#jshintOptions').val(jshintOptionsVal);
+  var $hintsOptions = {};
+  var hintsOptionsVal = {};
 
-  var jshints = {
-    'forin': 'About unsafe <code>for..in</code>',
-    'eqnull': 'About <code>== null</code>',
-    'noempty': 'About empty blocks',
-    'eqeqeq': 'About unsafe comparisons',
-    'boss': 'About assignments inside <code>if/for/...</code>',
-    'undef': 'When variable is undefined',
-    'unused': 'When variable is defined but not used',
-    'curly': 'When blocks omit <code>{}</code>'
-  };
-  var source = '';
+  // var jshints = {
+  //   'forin': 'About unsafe <code>for..in</code>',
+  //   'eqnull': 'About <code>== null</code>',
+  //   'noempty': 'About empty blocks',
+  //   'eqeqeq': 'About unsafe comparisons',
+  //   'boss': 'About assignments inside <code>if/for/...</code>',
+  //   'undef': 'When variable is undefined',
+  //   'unused': 'When variable is defined but not used',
+  //   'curly': 'When blocks omit <code>{}</code>'
+  // };
+  // var source = '';
 
   for (var i = 0; i < panels.length; i++) {
     $panels[panels[i]] = $('#panel-' + panels[i])
@@ -68,15 +65,21 @@
   for (var m = 0; m < hints.length; m++) {
     $hints[hints[m]] = $('#' + hints[m] + 'hint')
       .prop('checked', currentSettings[ hints[m] + 'hint' ]);
+    hintsOptionsVal[hints[m]] = JSON.stringify(currentSettings[ hints[m] + 'hintOptions'], undefined, 2);
+    if (hintsOptionsVal[hints[m]] === '{}') {
+      hintsOptionsVal[hints[m]] = '';
+    }
+    $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')
+      .val(hintsOptionsVal[hints[m]]);
   }
 
-  for (var prop in jshints) {
-    if (jshints.hasOwnProperty(prop)) {
-      source += '<div><label for="' + prop + '">' + jshints[prop] + '</label>' +
-        '<input id="' + prop + '" type="checkbox">' +
-        '</div>';
-    }
-  }
+  // for (var prop in jshints) {
+  //   if (jshints.hasOwnProperty(prop)) {
+  //     source += '<div><label for="' + prop + '">' + jshints[prop] + '</label>' +
+  //       '<input id="' + prop + '" type="checkbox">' +
+  //       '</div>';
+  //   }
+  // }
 
   // Listeners
   $(':checkbox').on('change', saveSettings);
@@ -97,12 +100,12 @@
 
     for (var m = 0; m < hints.length; m++) {
       localStorageSettings[ hints[m] + 'hint' ] = $hints[hints[m]].prop('checked');
+      localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
     }
 
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
     localStorageSettings.assetUrl = $assetUrl.val();
-    localStorageSettings.jshintOptions = JSON.parse($jshintOptions.val() || '{}');
 
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
@@ -132,7 +135,7 @@
       complete: function () {
         saveTimer = setTimeout(function () {
           $saveStatus.removeClass('show');
-        }, 1000)
+        }, 1000);
       }
     });
   }

@@ -29,6 +29,7 @@
     includejs: true,
     focusedPanel: 'html',
     jshint: true,
+    jshintOptions: '{}',
     assetUrl: '',
   };
   var $saveStatus = $('span.status');
@@ -41,6 +42,11 @@
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
   var hints = ['js'];
   var $hints = {};
+  var jshintOptionsVal = JSON.stringify(currentSettings.jshintOptions, undefined, 2);
+  if (jshintOptionsVal === '{}') {
+    jshintOptionsVal = '';
+  }
+  var $jshintOptions = $('#jshintOptions').val(jshintOptionsVal);
 
   var jshints = {
     'forin': 'About unsafe <code>for..in</code>',
@@ -76,6 +82,7 @@
   $(':checkbox').on('change', saveSettings);
   $('select').on('change', saveSettings);
   $('input').on('blur', saveSettings);
+  $('textarea').on('blur', saveSettings);
 
   function saveSettings() {
     // Merge all our settings together
@@ -95,6 +102,7 @@
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
     localStorageSettings.assetUrl = $assetUrl.val();
+    localStorageSettings.jshintOptions = JSON.parse($jshintOptions.val() || '{}');
 
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);

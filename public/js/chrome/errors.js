@@ -2,7 +2,11 @@
 
 var jshint = function () {
   var source = editors.javascript.editor.getCode();
-  var ok = JSHINT(source);
+  var options = {
+    'eqnull': true
+  };
+  $.extend(options, jsbin.settings.jshintOptions || {});
+  var ok = JSHINT(source, options);
 
   return ok ? true : JSHINT.data();
 };

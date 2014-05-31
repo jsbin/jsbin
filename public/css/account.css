@@ -75,9 +75,15 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   /*background: linear-gradient(0deg, #e8e8e8, #f8f8f8);*/
 }
-form input {
+form input,
+form textarea {
   font-size: 16px;
+}
+form input {
   position: relative;
+}
+form textarea {
+  font-family: inherit;
 }
 
 input[type="number"] {
@@ -142,6 +148,14 @@ form label.mini-desc a {
   display: inline;
   font-weight: normal;
   margin-right: 0;
+}
+span.mini-desc {
+  color: #979A99;
+  display: block;
+  font-weight: normal;
+}
+span.mini-desc a {
+  color: #979A99;
 }
 
 .loginFeedback {

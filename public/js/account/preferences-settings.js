@@ -43,6 +43,7 @@
   var hints = ['js'];
   var $hints = {};
   var $hintsOptions = {};
+  var $hintsOptWrapper = {};
   var hintsOptionsVal = {};
 
   // var jshints = {
@@ -63,8 +64,13 @@
   }
 
   for (var m = 0; m < hints.length; m++) {
+    $hintsOptWrapper[hints[m]] = $('#' + hints[m] + 'hintOptWrapper')
+      .toggle(currentSettings[ hints[m] + 'hint' ]);
     $hints[hints[m]] = $('#' + hints[m] + 'hint')
-      .prop('checked', currentSettings[ hints[m] + 'hint' ]);
+      .prop('checked', currentSettings[ hints[m] + 'hint' ])
+      .on('click', { el: $hintsOptWrapper[hints[m]] }, function(event) {
+        event.data.el.toggle(this.checked);
+      });
     hintsOptionsVal[hints[m]] = JSON.stringify(currentSettings[ hints[m] + 'hintOptions'], undefined, 2);
     if (hintsOptionsVal[hints[m]] === '{}') {
       hintsOptionsVal[hints[m]] = '';

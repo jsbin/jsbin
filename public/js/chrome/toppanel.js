@@ -3,19 +3,22 @@
   'use strict';
 
   var removeToppanel = function() {
-  	$body.removeClass('toppanel');
+    $body.removeClass('toppanel');
+  };
+
+  var showToppanel = function() {
+    if (!$body.hasClass('toppanel')) {
+      $body.addClass('toppanel');
+    }
   };
   
   $('.toppanel-hide').click(function(event) {
     event.preventDefault();
     removeToppanel();
   });
-
-  // Escape
-  $document.keydown(function (event) {
-    if (event.which == 27) {
-      removeToppanel();
-    }
+  $('.toppanel-logo').click(function(event) {
+    event.preventDefault();
+    showToppanel();
   });
 
 }());

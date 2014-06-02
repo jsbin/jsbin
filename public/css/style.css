@@ -4715,30 +4715,44 @@ html * {
   background: #ecf2fa;
   position: relative;
   z-index: 100000;
-  margin-top: -250px;
-  -webkit-transition: margin-top ease-out 100ms;
-     -moz-transition: margin-top ease-out 100ms;
-       -o-transition: margin-top ease-out 100ms;
-          transition: margin-top ease-out 100ms;
-
   border-bottom: rgb(191, 191, 191) solid 1px;
 }
+#toppanel ~ #control,
+#toppanel {
+  -webkit-transform: translate(0, -250px);
+          transform: translate(0, -250px);
+  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
+     -moz-transition: transform ease-out 5s; /*100ms*/
+       -o-transition: transform ease-out 5s; /*100ms*/
+          transition: transform ease-out 5s; /*100ms*/
+}
 
-.toppanel #toppanel {
-  margin-top: 0;
+.toppanel #toppanel,
+.toppanel #toppanel ~ #control {
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
 }
 
 #bin {
-  -webkit-transition: top ease-out 100ms;
-     -moz-transition: top ease-out 100ms;
-       -o-transition: top ease-out 100ms;
-          transition: top ease-out 100ms;
+  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
+     -moz-transition: transform ease-out 5s; /*100ms*/
+       -o-transition: transform ease-out 5s; /*100ms*/
+          transition: transform ease-out 5s; /*100ms*/
 }
 
 .toppanel #bin,
 .toppanel #history,
 .toppanel #history .preview {
-  top: 286px;
+  -webkit-transform: translate(0, 250px);
+          transform: translate(0, 250px);
+}
+
+
+#toppanel ~ #control .brand {
+  margin-left: 34px;
+}
+#toppanel ~ #control .brand img {
+  display: none;
 }
 
 body.ready.toppanel {
@@ -4750,7 +4764,6 @@ body.ready.toppanel {
   color: #232323;
   font-size: 0;
   padding: 13px;
-  overflow: hidden;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -4768,9 +4781,9 @@ body.ready.toppanel {
 .toppanel-section + .toppanel-section {
   margin-top: 13px;
 }
-.toppanel-logo {
-  margin-bottom: 10px;
-  text-align: center;
+.toppanel-actions {
+  position: relative;
+  z-index: -1;
 }
 .toppanel-title {
   /*border-bottom: 2px #CCC solid;
@@ -4854,3 +4867,57 @@ a.toppanel-hide {
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
 }
+
+a.toppanel-logo {
+  display: inline-block;
+  width: 100px;
+  padding: 4px 6px;
+  text-align: center;
+  -webkit-transform: translate(-55px, 198px) scale(0.25);
+          transform: translate(-55px, 198px) scale(0.25);
+  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
+     -moz-transition: transform ease-out 5s; /*100ms*/
+       -o-transition: transform ease-out 5s; /*100ms*/
+          transition: transform ease-out 5s; /*100ms*/
+}
+a.toppanel-logo:hover {
+  /*background: rgba(0, 0, 0, 0.04);
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;*/
+}
+a.toppanel-logo:hover {
+  background: transparent;
+  border: 0 none;
+}
+.toppanel-logo img {
+  margin-top: 4px;
+  width: 100%;
+}
+.toppanel .toppanel-logo {
+  cursor: default;
+  -webkit-transform: translate(70px, 0) scale(1);
+          transform: translate(70px, 0) scale(1);
+}
+/*.toppanel-logo:before {
+  content: "";
+  display: none;
+  opacity: 1;
+  width: 100%;
+  height: 138px;
+  background: rgba(0, 0, 0, 0.04);
+  position: absolute;
+  z-index: -1;
+  top: -15px;
+  border-left: 2px solid #AAA;
+  border-right: 2px solid #AAA;
+  left: -2px;
+  -webkit-transition: opacity linear 1ms 5s;
+}
+.toppanel-logo:hover:before {
+  display: block;
+}
+.toppanel .toppanel-logo:before,
+.toppanel .toppanel-logo:hover:before {
+  opacity: 0;
+  -webkit-transition: opacity linear 1ms 5s;
+}*/

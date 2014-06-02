@@ -4733,7 +4733,9 @@ html * {
           transform: translate(0, 0);
 }
 
-#bin {
+#bin,
+#history,
+#history .preview {
   -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
      -moz-transition: transform ease-out 5s; /*100ms*/
        -o-transition: transform ease-out 5s; /*100ms*/
@@ -4783,7 +4785,7 @@ body.ready.toppanel {
 }
 .toppanel-actions {
   position: relative;
-  z-index: -1;
+  z-index: 0;
 }
 .toppanel-title {
   /*border-bottom: 2px #CCC solid;
@@ -4873,6 +4875,8 @@ a.toppanel-logo {
   width: 100px;
   padding: 4px 6px;
   text-align: center;
+  position: relative;
+  z-index: 1;
   -webkit-transform: translate(-55px, 198px) scale(0.25);
           transform: translate(-55px, 198px) scale(0.25);
   -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/

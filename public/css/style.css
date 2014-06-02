@@ -4735,7 +4735,9 @@ html * {
           transition: top ease-out 100ms;
 }
 
-.toppanel #bin {
+.toppanel #bin,
+.toppanel #history,
+.toppanel #history .preview {
   top: 286px;
 }
 

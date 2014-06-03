@@ -220,6 +220,13 @@ if (!jsbin.saveDisabled) {
   });
 }
 
+function compressKeys(keys, obj) {
+  obj.compressed = keys;
+  keys.split(',').forEach(function (key) {
+    obj[key] = LZString.compress(obj[key]);
+  });
+}
+
 function updateCode(panelId, callback) {
   var panelSettings = {};
 
@@ -227,17 +234,23 @@ function updateCode(panelId, callback) {
     panelSettings.processors = jsbin.state.processors;
   }
 
+  var data = {
+    code: jsbin.state.code,
+    revision: jsbin.state.revision,
+    method: 'update',
+    panel: panelId,
+    content: editors[panelId].getCode(),
+    checksum: saveChecksum,
+    settings: JSON.stringify(panelSettings),
+  };
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('content', data);
+  }
+
   $.ajax({
     url: jsbin.getURL() + '/save',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-      method: 'update',
-      panel: panelId,
-      content: editors[panelId].getCode(),
-      checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings)
-    },
+    data: data,
     type: 'post',
     dataType: 'json',
     headers: {'Accept': 'application/json'},
@@ -322,10 +335,19 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
+  var data = $form.serializeArray().reduce(function(obj, data) {
+    obj[data.name] = data.value;
+    return obj;
+  }, {});
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('html,css,javascript', data);
+  }
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),
-      data: $form.serialize(),
+      data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},

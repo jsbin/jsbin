@@ -220,6 +220,13 @@ if (!jsbin.saveDisabled) {
   });
 }
 
+function compressData (keys, obj) {
+  obj.compressed = keys;
+  keys.split(',').forEach(function (key) {
+    obj[key] = LZString.compress(obj[key]);
+  });
+}
+
 function updateCode(panelId, callback) {
   var panelSettings = {};
 

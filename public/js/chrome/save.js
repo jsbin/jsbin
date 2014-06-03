@@ -234,9 +234,10 @@ function updateCode(panelId, callback) {
       revision: jsbin.state.revision,
       method: 'update',
       panel: panelId,
-      content: editors[panelId].getCode(),
+      content: LZString.compress(editors[panelId].getCode()),
       checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings)
+      settings: JSON.stringify(panelSettings),
+      compressed: 'content'
     },
     type: 'post',
     dataType: 'json',

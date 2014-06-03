@@ -220,7 +220,7 @@ if (!jsbin.saveDisabled) {
   });
 }
 
-function compressData (keys, obj) {
+function compressKeys(keys, obj) {
   obj.compressed = keys;
   keys.split(',').forEach(function (key) {
     obj[key] = LZString.compress(obj[key]);
@@ -245,7 +245,7 @@ function updateCode(panelId, callback) {
   };
 
   if (jsbin.settings.useCompression) {
-    compressData('content', data);
+    compressKeys('content', data);
   }
 
   $.ajax({
@@ -341,7 +341,7 @@ function saveCode(method, ajax, ajaxCallback) {
   }, {});
 
   if (jsbin.settings.useCompression) {
-    compressData('html,css,javascript', data);
+    compressKeys('html,css,javascript', data);
   }
 
   if (ajax) {

@@ -335,13 +335,10 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
-  var data = (function () {
-    var obj = {};
-    $form.serializeArray().forEach(function (data) {
-      obj[data.name] = data.value;
-    });
+  var data = $form.serializeArray().reduce(function(obj, data) {
+    obj[data.name] = data.value;
     return obj;
-  }());
+  }, {});
 
   if (jsbin.settings.useCompression) {
     compressData('html,css,javascript', data);

@@ -4717,10 +4717,6 @@ html * {
   z-index: 100000;
   border-bottom: rgb(191, 191, 191) solid 1px;
   margin-top: -250px;
-  -webkit-transition: margin-top ease-out 5s;
-     -moz-transition: margin-top ease-out 5s;
-       -o-transition: margin-top ease-out 5s;
-          transition: margin-top ease-out 5s;
 }
 /*#toppanel ~ #control,
 #toppanel {
@@ -4749,12 +4745,6 @@ html * {
        -o-transition: transform ease-out 5s;
           transition: transform ease-out 5s;
 }*/
-#bin {
-  -webkit-transition: top ease-out 5s;
-     -moz-transition: top ease-out 5s;
-       -o-transition: top ease-out 5s;
-          transition: top ease-out 5s;
-}
 
 .toppanel #bin,
 .toppanel #history,
@@ -4894,10 +4884,6 @@ a.toppanel-logo {
   z-index: 1;
   -webkit-transform: translate(-55px, 198px) scale(0.25);
           transform: translate(-55px, 198px) scale(0.25);
-  -webkit-transition: -webkit-transform ease-out 5s;
-     -moz-transition: transform ease-out 5s;
-       -o-transition: transform ease-out 5s;
-          transition: transform ease-out 5s;
 }
 a.toppanel-logo:hover {
   /*background: rgba(0, 0, 0, 0.04);
@@ -4917,26 +4903,32 @@ a.toppanel-logo:hover {
   -webkit-transform: translate(70px, 0) scale(1);
           transform: translate(70px, 0) scale(1);
 }
-/*.toppanel-logo:before {
-  content: "";
-  display: none;
-  opacity: 1;
-  width: 100%;
-  height: 138px;
-  background: rgba(0, 0, 0, 0.04);
-  position: absolute;
-  z-index: -1;
-  top: -15px;
-  border-left: 2px solid #AAA;
-  border-right: 2px solid #AAA;
-  left: -2px;
-  -webkit-transition: opacity linear 1ms 5s;
+
+/* toppanel animation */
+#bin {
+  -webkit-transition: top ease-in-out 300ms;
+     -moz-transition: top ease-in-out 300ms;
+       -o-transition: top ease-in-out 300ms;
+          transition: top ease-in-out 300ms;
 }
-.toppanel-logo:hover:before {
-  display: block;
+#toppanel {
+  -webkit-transition: margin-top ease-in-out 300ms;
+     -moz-transition: margin-top ease-in-out 300ms;
+       -o-transition: margin-top ease-in-out 300ms;
+          transition: margin-top ease-in-out 300ms;
 }
-.toppanel .toppanel-logo:before,
-.toppanel .toppanel-logo:hover:before {
-  opacity: 0;
-  -webkit-transition: opacity linear 1ms 5s;
-}*/
+a.toppanel-logo {
+  -webkit-transition: -webkit-transform linear 300ms;
+     -moz-transition:         transform linear 300ms;
+       -o-transition:         transform linear 300ms;
+          transition:         transform linear 300ms;
+}
+
+.toppanel-slow #bin,
+.toppanel-slow #toppanel,
+.toppanel-slow a.toppanel-logo {
+  -webkit-transition-duration: 5s;
+     -moz-transition-duration: 5s;
+       -o-transition-duration: 5s;
+          transition-duration: 5s;
+}

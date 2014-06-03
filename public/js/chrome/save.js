@@ -223,7 +223,7 @@ if (!jsbin.saveDisabled) {
 function compressKeys(keys, obj) {
   obj.compressed = keys;
   keys.split(',').forEach(function (key) {
-    obj[key] = LZString.compress(obj[key]);
+    obj[key] = LZString.compressToUTF16(obj[key]);
   });
 }
 

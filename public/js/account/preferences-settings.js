@@ -93,7 +93,7 @@
   // Listeners
   $(':checkbox').on('change', saveSettings);
   $('select').on('change', saveSettings);
-  $('input').on('blur', saveSettings);
+  $('input:not([type=checkbox])').on('blur', saveSettings);
   $('textarea').on('blur', saveSettings);
 
   function saveSettings() {

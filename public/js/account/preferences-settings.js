@@ -29,7 +29,9 @@
     includejs: true,
     focusedPanel: 'html',
     jshint: true,
-    jshintOptions: '{}',
+    jshintOptions: '',
+    // csshint: false,
+    // csshintOptions: '',
     assetUrl: '',
   };
   var $saveStatus = $('span.status');
@@ -41,6 +43,7 @@
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
   var hints = ['js'];
+  // var hints = ['js', 'css'];
   var $hints = {};
   var $hintsOptions = {};
   var $hintsOptWrapper = {};

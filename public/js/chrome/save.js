@@ -227,18 +227,24 @@ function updateCode(panelId, callback) {
     panelSettings.processors = jsbin.state.processors;
   }
 
+  var data = {
+    code: jsbin.state.code,
+    revision: jsbin.state.revision,
+    method: 'update',
+    panel: panelId,
+    content: editors[panelId].getCode(),
+    checksum: saveChecksum,
+    settings: JSON.stringify(panelSettings),
+  };
+
+  if (jsbin.settings.useCompression) {
+    data.compressed = 'content';
+    data.content = LZString(data.content);
+  }
+
   $.ajax({
     url: jsbin.getURL() + '/save',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-      method: 'update',
-      panel: panelId,
-      content: LZString.compress(editors[panelId].getCode()),
-      checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings),
-      compressed: 'content'
-    },
+    data: data,
     type: 'post',
     dataType: 'json',
     headers: {'Accept': 'application/json'},

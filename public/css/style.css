@@ -4716,37 +4716,52 @@ html * {
   position: relative;
   z-index: 100000;
   border-bottom: rgb(191, 191, 191) solid 1px;
+  margin-top: -250px;
+  -webkit-transition: margin-top ease-out 5s;
+     -moz-transition: margin-top ease-out 5s;
+       -o-transition: margin-top ease-out 5s;
+          transition: margin-top ease-out 5s;
 }
-#toppanel ~ #control,
+/*#toppanel ~ #control,
 #toppanel {
   -webkit-transform: translate(0, -250px);
           transform: translate(0, -250px);
-  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
-     -moz-transition: transform ease-out 5s; /*100ms*/
-       -o-transition: transform ease-out 5s; /*100ms*/
-          transition: transform ease-out 5s; /*100ms*/
-}
+  -webkit-transition: -webkit-transform ease-out 5s;
+     -moz-transition: transform ease-out 5s;
+       -o-transition: transform ease-out 5s;
+          transition: transform ease-out 5s;
+}*/
 
-.toppanel #toppanel,
+/*.toppanel #toppanel,
 .toppanel #toppanel ~ #control {
   -webkit-transform: translate(0, 0);
           transform: translate(0, 0);
+}*/
+.toppanel #toppanel {
+  margin-top: 0;
 }
 
-#bin,
+/*#bin,
 #history,
 #history .preview {
-  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
-     -moz-transition: transform ease-out 5s; /*100ms*/
-       -o-transition: transform ease-out 5s; /*100ms*/
-          transition: transform ease-out 5s; /*100ms*/
+  -webkit-transition: -webkit-transform ease-out 5s;
+     -moz-transition: transform ease-out 5s;
+       -o-transition: transform ease-out 5s;
+          transition: transform ease-out 5s;
+}*/
+#bin {
+  -webkit-transition: top ease-out 5s;
+     -moz-transition: top ease-out 5s;
+       -o-transition: top ease-out 5s;
+          transition: top ease-out 5s;
 }
 
 .toppanel #bin,
 .toppanel #history,
 .toppanel #history .preview {
-  -webkit-transform: translate(0, 250px);
-          transform: translate(0, 250px);
+  /*-webkit-transform: translate(0, 250px);
+          transform: translate(0, 250px);*/
+  top: 286px;
 }
 
 
@@ -4879,10 +4894,10 @@ a.toppanel-logo {
   z-index: 1;
   -webkit-transform: translate(-55px, 198px) scale(0.25);
           transform: translate(-55px, 198px) scale(0.25);
-  -webkit-transition: -webkit-transform ease-out 5s; /*100ms*/
-     -moz-transition: transform ease-out 5s; /*100ms*/
-       -o-transition: transform ease-out 5s; /*100ms*/
-          transition: transform ease-out 5s; /*100ms*/
+  -webkit-transition: -webkit-transform ease-out 5s;
+     -moz-transition: transform ease-out 5s;
+       -o-transition: transform ease-out 5s;
+          transition: transform ease-out 5s;
 }
 a.toppanel-logo:hover {
   /*background: rgba(0, 0, 0, 0.04);

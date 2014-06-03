@@ -343,6 +343,10 @@ function saveCode(method, ajax, ajaxCallback) {
     return obj;
   }());
 
+  if (jsbin.settings.useCompression) {
+    compressData('html,css,javascript', data);
+  }
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),

@@ -1590,7 +1590,7 @@ textarea:focus {
 }
 
 
-#control, .label, #tip {
+#control, .label, #tip, #toppanel {
   -webkit-user-select: none;
    -khtml-user-select: none;
      -moz-user-select: -moz-none; /* if this is "none" you can't copy text */

@@ -157,6 +157,21 @@ span.mini-desc {
 span.mini-desc a {
   color: #979A99;
 }
+.mini-desc-error {
+  border-radius: 4px;
+  display: block;
+  font-weight: normal;
+  background: #FF4136;
+  color: #fff;
+  padding: 5px 10px;
+  opacity: 0;
+  -webkit-transition: opacity 100ms ease-out;
+      -ms-transition: opacity 100ms ease-out;
+          transition: opacity 100ms ease-out;
+}
+.mini-desc-error.show {
+  opacity: 1;
+}
 
 .loginFeedback {
   display: none;

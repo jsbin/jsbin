@@ -48,6 +48,7 @@
   var $hintsOptions = {};
   var $hintsOptWrapper = {};
   var hintsOptionsVal = {};
+  var $hintsOptError = {};
 
   // var jshints = {
   //   'forin': 'About unsafe <code>for..in</code>',
@@ -80,6 +81,7 @@
     }
     $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')
       .val(hintsOptionsVal[hints[m]]);
+    $hintsOptError[hints[m]] = $('#' + hints[m] + 'hintOptError');
   }
 
   // for (var prop in jshints) {
@@ -109,7 +111,13 @@
 
     for (var m = 0; m < hints.length; m++) {
       localStorageSettings[ hints[m] + 'hint' ] = $hints[hints[m]].prop('checked');
-      localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
+      $hintsOptError[ hints[m] ].html('').removeClass('show');
+      try {
+        localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
+      } catch (e) {
+        // console.log('no no no... ' + e);
+        $hintsOptError[ hints[m] ].html(e).addClass('show');
+      }
     }
 
     localStorageSettings.includejs = $includejs.prop('checked');

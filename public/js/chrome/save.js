@@ -335,10 +335,18 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
+  var data = (function () {
+    var obj = {};
+    $form.serializeArray().forEach(function (data) {
+      obj[data.name] = data.value;
+    });
+    return obj;
+  }());
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),
-      data: $form.serialize(),
+      data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},

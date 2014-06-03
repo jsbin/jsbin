@@ -245,8 +245,7 @@ function updateCode(panelId, callback) {
   };
 
   if (jsbin.settings.useCompression) {
-    data.compressed = 'content';
-    data.content = LZString(data.content);
+    compressData('content', data);
   }
 
   $.ajax({

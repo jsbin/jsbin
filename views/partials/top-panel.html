@@ -73,5 +73,12 @@
   </div>
 </div>
 <script>
-document.body.className += ' toppanel';
+//if localstorage has ... then add class
+try {
+  if (localstorage.settings.indexOf('"toppanel":false') === -1) {
+    document.body.className += ' toppanel';
+  }
+} catch (e) {
+  
+}
 </script>

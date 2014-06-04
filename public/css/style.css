@@ -4770,6 +4770,7 @@ body.ready.toppanel {
 .toppanel-wrapper {
   color: #232323;
   font-size: 0;
+  white-space: nowrap;
   padding: 13px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -4781,9 +4782,32 @@ body.ready.toppanel {
   padding: 0 4px;
   vertical-align: top;
   width: 20%;
+  min-width: 196px;
+  max-width: 250px;
+  white-space: normal;
+  height: 220px;
+  overflow: hidden;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+}
+.toppanel-column-first {
+  overflow: visible;
+}
+@media (max-width: 590px) {
+  .toppanel-column:nth-child(n+3) {
+    visibility: hidden;
+  }
+}
+@media (max-width: 789px) {
+  .toppanel-column:nth-child(n+4) {
+    visibility: hidden;
+  }
+}
+@media (max-width: 990px) {
+  .toppanel-column:nth-child(n+5) {
+    visibility: hidden;
+  }
 }
 .toppanel-section + .toppanel-section {
   margin-top: 13px;
@@ -4866,8 +4890,8 @@ body.ready.toppanel {
 }
 a.toppanel-hide {
   position: absolute;
-  left: 3%;
-  top: 5%;
+  left: 20px;
+  top: 15px;
   padding: 0 5px 7px;
   font-size: 35px;
   line-height: 0.7;

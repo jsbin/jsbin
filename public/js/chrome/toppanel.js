@@ -38,5 +38,13 @@
     jsbin.settings.gui.toppanel = true;
     showToppanel();
   });
+  $document.keydown(function (event) {
+    if (event.which == 27) {
+      if ($body.hasClass('toppanel')) {
+        jsbin.settings.gui.toppanel = false;
+        removeToppanel();
+      }
+    }
+  });
 
 }());

@@ -26,8 +26,6 @@ function hideOpen() {
     $('#login').hide();
     analytics.closeMenu('login');
     loginVisible = false;
-  } else if ($body.hasClass('toppanel')) {
-    $body.removeClass('toppanel');
   }
 }
 

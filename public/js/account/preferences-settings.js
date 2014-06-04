@@ -115,7 +115,6 @@
       try {
         localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
       } catch (e) {
-        // console.log('no no no... ' + e);
         $hintsOptError[ hints[m] ].html(e).addClass('show');
       }
     }

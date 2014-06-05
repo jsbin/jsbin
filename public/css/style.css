@@ -4762,6 +4762,9 @@ html * {
   display: none;
 }
 
+body.toppanel {
+  background-position: center calc((100% - 250px) / 2 + 256px);
+}
 body.ready.toppanel {
   background: white;
 }

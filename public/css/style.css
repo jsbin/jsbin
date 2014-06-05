@@ -4774,7 +4774,6 @@ body.ready.toppanel {
   display: block !important;
   color: #232323;
   font-size: 0;
-  white-space: nowrap;
   padding: 13px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -4788,7 +4787,6 @@ body.ready.toppanel {
   width: 20%;
   min-width: 196px;
   max-width: 250px;
-  white-space: normal;
   height: 220px;
   overflow: hidden;
   -webkit-box-sizing: border-box;
@@ -4798,19 +4796,33 @@ body.ready.toppanel {
 .toppanel-column-first {
   overflow: visible;
 }
-@media (max-width: 590px) {
-  .toppanel-column:nth-child(n+3) {
-    visibility: hidden;
+@media (max-width: 1005px) { /* 4 */
+  .toppanel-column {
+    width: 25%;
+    max-width: 100%;
   }
-}
-@media (max-width: 789px) {
-  .toppanel-column:nth-child(n+4) {
-    visibility: hidden;
-  }
-}
-@media (max-width: 990px) {
   .toppanel-column:nth-child(n+5) {
-    visibility: hidden;
+    display: none;
+  }
+}
+@media (max-width: 809px) { /* 3 */
+  .toppanel-column {
+    width: 33.33%;
+  }
+  .toppanel-column:nth-child(n+4) {
+    display: none;
+  }
+}
+@media (max-width: 613px) { /* 2 */
+  .toppanel-column {
+    width: 50%;
+    min-width: 0;
+  }
+  .toppanel-column:nth-child(n+3) {
+    display: none;
+  }
+  .toppanel-button {
+    max-width: 90%;
   }
 }
 .toppanel-section + .toppanel-section {

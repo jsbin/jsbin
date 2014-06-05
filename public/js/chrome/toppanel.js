@@ -12,10 +12,12 @@
   // $body.toggleClass('toppanel', jsbin.settings.gui.toppanel);
 
   var removeToppanel = function() {
+    $body.addClass('toppanel-close');
     $body.removeClass('toppanel');
   };
 
   var showToppanel = function() {
+    $body.removeClass('toppanel-close');
     $body.addClass('toppanel');
   };
 

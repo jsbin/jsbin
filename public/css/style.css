@@ -4959,3 +4959,13 @@ a.toppanel-logo {
        -o-transition-duration: 5s;
           transition-duration: 5s;
 }
+
+.toppanel-close #bin,
+.toppanel-close #toppanel {
+  -webkit-transition-delay: 120ms;
+  -webkit-transition-duration: 100ms;
+}
+.toppanel-close a.toppanel-logo {
+  -webkit-transition-delay: 0ms;
+  -webkit-transition-duration: 120ms;
+}

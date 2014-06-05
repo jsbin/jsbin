@@ -4768,6 +4768,7 @@ body.ready.toppanel {
 
 /* top panel */
 .toppanel-wrapper {
+  display: block !important;
   color: #232323;
   font-size: 0;
   white-space: nowrap;

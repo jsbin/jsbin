@@ -4906,8 +4906,10 @@ a.toppanel-logo {
   text-align: center;
   position: relative;
   z-index: 1;
-  -webkit-transform: translate(-55px, 198px) scale(0.25);
-          transform: translate(-55px, 198px) scale(0.25);
+  -webkit-transform: translate(-95px, 155px) scale(0.25);
+          transform: translate(-95px, 155px) scale(0.25);
+  -webkit-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
 }
 a.toppanel-logo:hover {
   /*background: rgba(0, 0, 0, 0.04);
@@ -4930,22 +4932,22 @@ a.toppanel-logo:hover {
 
 /* toppanel animation */
 #bin {
-  -webkit-transition: top ease-in-out 300ms;
-     -moz-transition: top ease-in-out 300ms;
-       -o-transition: top ease-in-out 300ms;
-          transition: top ease-in-out 300ms;
+  -webkit-transition: top ease-in-out 100ms;
+     -moz-transition: top ease-in-out 100ms;
+       -o-transition: top ease-in-out 100ms;
+          transition: top ease-in-out 100ms;
 }
 #toppanel {
-  -webkit-transition: margin-top ease-in-out 300ms;
-     -moz-transition: margin-top ease-in-out 300ms;
-       -o-transition: margin-top ease-in-out 300ms;
-          transition: margin-top ease-in-out 300ms;
+  -webkit-transition: margin-top ease-in-out 100ms;
+     -moz-transition: margin-top ease-in-out 100ms;
+       -o-transition: margin-top ease-in-out 100ms;
+          transition: margin-top ease-in-out 100ms;
 }
 a.toppanel-logo {
-  -webkit-transition: -webkit-transform linear 300ms;
-     -moz-transition:         transform linear 300ms;
-       -o-transition:         transform linear 300ms;
-          transition:         transform linear 300ms;
+  -webkit-transition: -webkit-transform linear 120ms 120ms;
+     -moz-transition:         transform linear 120ms 120ms;
+       -o-transition:         transform linear 120ms 120ms;
+          transition:         transform linear 120ms 120ms;
 }
 
 .toppanel-slow #bin,

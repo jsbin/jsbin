@@ -9,7 +9,7 @@
     jsbin.settings.gui.toppanel = true;
   }
 
-  $body.toggleClass('toppanel', jsbin.settings.gui.toppanel);
+  // $body.toggleClass('toppanel', jsbin.settings.gui.toppanel);
 
   var removeToppanel = function() {
     $body.removeClass('toppanel');

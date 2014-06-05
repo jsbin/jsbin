@@ -4710,6 +4710,7 @@ html * {
   margin-right: 10px;
 }
 
+/* toppanel status */
 #toppanel {
   height: 250px;
   background: #ecf2fa;
@@ -4718,42 +4719,15 @@ html * {
   border-bottom: rgb(191, 191, 191) solid 1px;
   margin-top: -250px;
 }
-/*#toppanel ~ #control,
-#toppanel {
-  -webkit-transform: translate(0, -250px);
-          transform: translate(0, -250px);
-  -webkit-transition: -webkit-transform ease-out 5s;
-     -moz-transition: transform ease-out 5s;
-       -o-transition: transform ease-out 5s;
-          transition: transform ease-out 5s;
-}*/
-
-/*.toppanel #toppanel,
-.toppanel #toppanel ~ #control {
-  -webkit-transform: translate(0, 0);
-          transform: translate(0, 0);
-}*/
 .toppanel #toppanel {
   margin-top: 0;
 }
 
-/*#bin,
-#history,
-#history .preview {
-  -webkit-transition: -webkit-transform ease-out 5s;
-     -moz-transition: transform ease-out 5s;
-       -o-transition: transform ease-out 5s;
-          transition: transform ease-out 5s;
-}*/
-
 .toppanel #bin,
 .toppanel #history,
 .toppanel #history .preview {
-  /*-webkit-transform: translate(0, 250px);
-          transform: translate(0, 250px);*/
   top: 286px;
 }
-
 
 #toppanel ~ #control .brand {
   margin-left: 34px;
@@ -4769,7 +4743,7 @@ body.ready.toppanel {
   background: white;
 }
 
-/* top panel */
+/* toppanel */
 .toppanel-wrapper {
   display: block !important;
   color: #232323;
@@ -4833,15 +4807,11 @@ body.ready.toppanel {
   z-index: 0;
 }
 .toppanel-title {
-  /*border-bottom: 2px #CCC solid;
-  border-bottom: 2px rgba(0,0,0,0.1) solid;*/
   font-size: 14px;
   font-weight: 600;
   margin: 0;
 }
 .toppanel-title a:after {
-  /*color: #CCC;
-  color: rgba(0, 0, 0, 0.3);*/
   content: " »";
   font-size: 1.1em;
 }
@@ -4851,7 +4821,6 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  /*color: #007FFF;*/
   color: #6293D3;
   display: block;
   padding: 6px 10px 6px 1px;
@@ -4861,9 +4830,6 @@ body.ready.toppanel {
 .toppanel-wrapper a:hover {
   background: #CCC;
   background: rgba(0, 0, 0, 0.05);
-}
-.toppanel-wrapper a:hover:after {
-  /*color: #007FFF;*/
 }
 .toppanel-bin-name {
   width: 5em;
@@ -4911,6 +4877,7 @@ a.toppanel-hide {
   padding: 0 5px 7px;
   font-size: 35px;
   line-height: 0.7;
+  color: #6293D3;
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
 }
@@ -4923,14 +4890,15 @@ a.toppanel-logo {
   position: relative;
   z-index: 1;
   -webkit-transform: translate(-95px, 155px) scale(0.25);
+     -moz-transform: translate(-95px, 155px) scale(0.25);
+      -ms-transform: translate(-95px, 155px) scale(0.25);
+       -o-transform: translate(-95px, 155px) scale(0.25);
           transform: translate(-95px, 155px) scale(0.25);
   -webkit-transform-origin: 100% 100%;
+     -moz-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+       -o-transform-origin: 100% 100%;
           transform-origin: 100% 100%;
-}
-a.toppanel-logo:hover {
-  /*background: rgba(0, 0, 0, 0.04);
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;*/
 }
 a.toppanel-logo:hover {
   background: transparent;
@@ -4943,6 +4911,9 @@ a.toppanel-logo:hover {
 .toppanel .toppanel-logo {
   cursor: default;
   -webkit-transform: translate(70px, 0) scale(1);
+     -moz-transform: translate(70px, 0) scale(1);
+      -ms-transform: translate(70px, 0) scale(1);
+       -o-transform: translate(70px, 0) scale(1);
           transform: translate(70px, 0) scale(1);
 }
 
@@ -4961,11 +4932,11 @@ a.toppanel-logo:hover {
 }
 a.toppanel-logo {
   -webkit-transition: -webkit-transform linear 120ms 120ms;
-     -moz-transition:         transform linear 120ms 120ms;
-       -o-transition:         transform linear 120ms 120ms;
+     -moz-transition:    -moz-transform linear 120ms 120ms;
+       -o-transition:      -o-transform linear 120ms 120ms;
           transition:         transform linear 120ms 120ms;
 }
-
+/* slow to remove */
 .toppanel-slow #bin,
 .toppanel-slow #toppanel,
 .toppanel-slow a.toppanel-logo {
@@ -4978,9 +4949,21 @@ a.toppanel-logo {
 .toppanel-close #bin,
 .toppanel-close #toppanel {
   -webkit-transition-delay: 120ms;
+     -moz-transition-delay: 120ms;
+       -o-transition-delay: 120ms;
+          transition-delay: 120ms;
   -webkit-transition-duration: 100ms;
+     -moz-transition-duration: 100ms;
+       -o-transition-duration: 100ms;
+          transition-duration: 100ms;
 }
 .toppanel-close a.toppanel-logo {
   -webkit-transition-delay: 0ms;
+     -moz-transition-delay: 0ms;
+       -o-transition-delay: 0ms;
+          transition-delay: 0ms;
   -webkit-transition-duration: 120ms;
+     -moz-transition-duration: 120ms;
+       -o-transition-duration: 120ms;
+          transition-duration: 120ms;
 }

@@ -9,8 +9,6 @@
     jsbin.settings.gui.toppanel = true;
   }
 
-  // $body.toggleClass('toppanel', jsbin.settings.gui.toppanel);
-
   var removeToppanel = function() {
     $body.addClass('toppanel-close');
     $body.removeClass('toppanel');
@@ -21,6 +19,7 @@
     $body.addClass('toppanel');
   };
 
+  // to remove
   var goSlow = function(e) {
     $body.removeClass('toppanel-slow');
     if (e.shiftKey) {

@@ -4905,6 +4905,7 @@ a.toppanel-logo:hover {
   border: 0 none;
 }
 .toppanel-logo img {
+  border: 0 none;
   margin-top: 4px;
   width: 100%;
 }

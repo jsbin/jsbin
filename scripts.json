@@ -16,6 +16,7 @@
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
     "/js/vendor/codemirror4/addon/comment/comment.js",
+    "/js/vendor/lz-string-1.3.3.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
     "/js/vendor/prettyprint.js",
@@ -49,6 +50,8 @@
     "/js/chrome/gist.js",
     "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
+    "/js/chrome/last-bin.js",
+    "/js/chrome/archive.js",
     "/js/chrome/app.js"
   ],
   "runner": [

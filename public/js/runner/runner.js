@@ -4,7 +4,7 @@
  * ========================================================================== */
 
 var runner = (function () {
-
+  'use strict';
   var runner = {};
 
   /**
@@ -18,7 +18,7 @@ var runner = (function () {
    */
   runner.error = function () {
     var args = ['Runner:'].concat([].slice.call(arguments));
-    if (!('console' in window)) return alert(args.join(' '));
+    if (!('console' in window)) {return alert(args.join(' '));}
     window.console.error.apply(console, args);
   };
 
@@ -26,7 +26,7 @@ var runner = (function () {
    * Handle all incoming postMessages to the runner
    */
   runner.handleMessage = function (event) {
-    if (!event.origin) return;
+    if (!event.origin) {return;}
     var data = event.data;
     try {
       data = JSON.parse(event.data);
@@ -66,6 +66,12 @@ var runner = (function () {
       var childDoc = iframe.contentDocument,
           childWindow = getIframeWindow(iframe);
       if (!childDoc) childDoc = childWindow.document;
+
+      // Reset the console to the prototype state
+      proxyConsole.methods.forEach(function (method) {
+        delete proxyConsole[method];
+      });
+
 
       // Process the source according to the options passed in
       var source = processor.render(data.source, data.options);

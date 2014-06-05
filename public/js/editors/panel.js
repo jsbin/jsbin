@@ -118,7 +118,11 @@ var Panel = function (name, settings) {
 
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {
-      $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      if (jsbin.saveDisabled) {
+        $document.trigger('codeChange.live', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);  
+      } else {
+        $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      }
       return true;
     });
 

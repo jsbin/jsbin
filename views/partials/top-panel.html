@@ -14,64 +14,65 @@
     </div>
   </div>
 
+  {{#information}}
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{toppanel.features.link}}">{{toppanel.features.title}}</a></h2>
-    {{#toppanel.features.data}}
+    <h2 class="toppanel-title"><a href="{{features.link}}">{{features.title}}</a></h2>
+    {{#features.data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{this.link}}">{{this.title}}</a></li>
+          <li><a href="{{link}}">{{title}}</a></li>
         {{/.}}
       </ul>
-    {{/toppanel.features.data}}
+    {{/features.data}}
   </div>
 
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{toppanel.pro-features.title}}">{{toppanel.pro-features.title}}</a></h2>
-    {{#toppanel.pro-features.data}}
+    <h2 class="toppanel-title"><a href="{{pro-features.title}}">{{pro-features.title}}{{#unless user.pro}} (£10/month){{/unless}}</a></h2>
+    {{#pro-features.data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{this.link}}">{{this.title}}</a></li>
+          <li><a href="{{link}}">{{title}}</a></li>
         {{/.}}
       </ul>
-    {{/toppanel.pro-features.data}}
+    {{/pro-features.data}}
   </div>
 
   <div class="toppanel-column">
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{toppanel.blog.title}}">{{toppanel.blog.title}}</a></h2>
-      {{#toppanel.blog.data}}
+      <h2 class="toppanel-title"><a href="{{blog.title}}">{{blog.title}}</a></h2>
+      {{#blog.data}}
         <ul class="toppanel-list">
           {{#.}}
-            <li><a href="{{this.link}}">{{this.title}}</a></li>
+            <li><a href="{{link}}">{{title}}</a></li>
           {{/.}}
         </ul>
-      {{/toppanel.blog.data}}
+      {{/blog.data}}
     </div>
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{toppanel.help.link}}">{{toppanel.help.title}}</a></h2>
-      {{#toppanel.help.data}}
+      <h2 class="toppanel-title"><a href="{{help.link}}">{{help.title}}</a></h2>
+      {{#help.data}}
         <ul class="toppanel-list">
           {{#.}}
-            <li><a href="{{this.link}}">{{this.title}}</a></li>
+            <li><a href="{{link}}">{{title}}</a></li>
           {{/.}}
         </ul>
-      {{/toppanel.help.data}}
+      {{/help.data}}
     </div>
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{toppanel.twitter.link}}" target="_blank">{{toppanel.twitter.title}}</a></h2>
-      {{#toppanel.twitter.data}}
+      <h2 class="toppanel-title"><a href="{{twitter.link}}" target="_blank">{{twitter.title}}</a></h2>
+      {{#twitter.data}}
         <ul class="toppanel-list">
           {{#.}}
-            <li><a href="{{this.link}}">{{this.title}}</a></li>
+            <li><a href="{{link}}">{{title}}</a></li>
           {{/.}}
         </ul>
-      {{/toppanel.twitter.data}}
+      {{/twitter.data}}
     </div>
   </div>
 
   <div class="toppanel-column">
     <div class="toppanel-section">
-      <div class="toppanel-quote">{{{toppanel.quote}}}</div>
+      <div class="toppanel-quote">{{{quote}}}</div>
     </div>
     {{!--
       <div class="toppanel-section">
@@ -84,6 +85,7 @@
       </div>
     --}}
   </div>
+  {{/information}}
 </div>
 <script>
 try {

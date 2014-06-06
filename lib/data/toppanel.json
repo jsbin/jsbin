@@ -1,0 +1,97 @@
+{
+  "features": {
+    "title": "JS BIN featuresXX",
+    "link": "http://jsbin.com",
+    "data": [
+      {
+        "title": "Interactive console",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Codecasting",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Remote rendering",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Quiet mode",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Get integration",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Milestones",
+        "link": "http://jsbin.com"
+      }
+    ]
+  },
+  "pro-features": {
+    "title": "Pro features (£10/month)",
+    "link": "http://jsbin.com",
+    "data": [
+      {
+        "title": "Sync with Dropbox",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Private bins",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Your own subdomain",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Direct support (rather that via GitHub)",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Asset hosting",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Access experiments",
+        "link": "http://jsbin.com"
+      }
+    ]
+  },
+  "blog": {
+    "title": "Blog",
+    "link": "http://jsbin.com/blog",
+    "data": [
+      {
+        "title": "Blog post 1",
+        "link": "http://jsbin.com"
+      },
+      {
+        "title": "Blog post 2",
+        "link": "http://jsbin.com"
+      }
+    ]
+  },
+  "help": {
+    "title": "Help",
+    "link": "http://jsbin.com/help",
+    "data": [
+      {
+        "title": "Private bins",
+        "link": "http://jsbin.com"
+      }
+    ]
+  },
+  "twitter": {
+    "title": "Twitter js_bin",
+    "link": "http://twitter.com/js_bin",
+    "data": [
+      {
+        "title": "lorem ipsum",
+        "link": "http://jsbin.com"
+      }
+    ]
+  },
+  "quote": "&ldquo;Everyone should learn how to program a computer because it teaches you how to think&rdquo; &mdash; <span class=\"toppanel-quote-author\">Steve Jobs</span>"
+}

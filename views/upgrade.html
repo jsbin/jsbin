@@ -70,10 +70,10 @@
   and entirely from a usb stick with zero install).</p>
 
 <h2> Supporters </h2>
-<div class="backers"></div>
-
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js{{cachebust}}"></script>
-<script>
-  var backers = {{{backersList}}}
-</script>
-<script src="{{static}}/js/account/upgrade-page.js{{cachebust}}"></script>
+<div class="backers">
+  {{#each backersList}}
+    <a href="{{url}}">
+      <img class="backer-img" src="{{image}}"/>
+    </a>
+  {{/each}}
+</div>

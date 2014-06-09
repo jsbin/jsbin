@@ -4846,12 +4846,17 @@ body.ready.toppanel {
   display: block;
   font-weight: 500;
 }
+div:first-child > .toppanel-button {
+  position: static;
+}
 .toppanel-button {
   border: 1px solid #6293D3;
   line-height: 30px;
   margin: 0 auto;
   text-align: center;
   width: 150px;
+  position: relative;
+  top: -1px;
 }
 .toppanel-button-dropdown {
   position: relative;

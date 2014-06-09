@@ -14,67 +14,86 @@
     </div>
   </div>
 
-  {{#welcomePanel}}
+{{#welcomePanel}}
+{{#features}}
+  <!-- Features -->
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{features.link}}">{{features.title}}</a></h2>
-    {{#features.data}}
+    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+    {{#data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{link}}">{{title}}</a></li>
+          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
         {{/.}}
       </ul>
-    {{/features.data}}
+    {{/data}}
   </div>
+{{/features}}
 
+{{#pro-features}}
+  <!-- Pro features -->
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{pro-features.title}}">{{pro-features.title}}{{#unless user.pro}} (£10/month){{/unless}}</a></h2>
-    {{#pro-features.data}}
+    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}{{#unless user.pro}} (£10/month){{/unless}}</a></h2>
+    {{#data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{link}}">{{title}}</a></li>
+          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
         {{/.}}
       </ul>
-    {{/pro-features.data}}
+    {{/data}}
+  </div>
+{{/pro-features}}
+
+  <div class="toppanel-column">
+  {{#blog}}
+    <!-- Blog  -->
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+      {{#data}}
+        <ul class="toppanel-list">
+          {{#.}}
+            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+          {{/.}}
+        </ul>
+      {{/data}}
+    </div>
+  {{/blog}}
+  {{#help}}
+    <!-- Help -->
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+      {{#data}}
+        <ul class="toppanel-list">
+          {{#.}}
+            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+          {{/.}}
+        </ul>
+      {{/data}}
+    </div>
+  {{/help}}
+  {{#twitter}}
+    <!-- Twitter -->
+    <div class="toppanel-section">
+      <h2 class="toppanel-title"><a href="{{link}}" target="_blank">{{title}}</a></h2>
+      {{#data}}
+        <ul class="toppanel-list">
+          {{#.}}
+            <li><a href="{{link}}" target="_blank">{{{title}}}</a></li>
+          {{/.}}
+        </ul>
+      {{/data}}
+    </div>
+  {{/twitter}}
   </div>
 
   <div class="toppanel-column">
+  {{#quote}}
+    <!-- Quote -->
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{blog.title}}">{{blog.title}}</a></h2>
-      {{#blog.data}}
-        <ul class="toppanel-list">
-          {{#.}}
-            <li><a href="{{link}}">{{title}}</a></li>
-          {{/.}}
-        </ul>
-      {{/blog.data}}
+      <div class="toppanel-quote">{{{.}}}</div>
     </div>
-    <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{help.link}}">{{help.title}}</a></h2>
-      {{#help.data}}
-        <ul class="toppanel-list">
-          {{#.}}
-            <li><a href="{{link}}">{{title}}</a></li>
-          {{/.}}
-        </ul>
-      {{/help.data}}
-    </div>
-    <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{twitter.link}}" target="_blank">{{twitter.title}}</a></h2>
-      {{#twitter.data}}
-        <ul class="toppanel-list">
-          {{#.}}
-            <li><a href="{{link}}">{{title}}</a></li>
-          {{/.}}
-        </ul>
-      {{/twitter.data}}
-    </div>
-  </div>
-
-  <div class="toppanel-column">
-    <div class="toppanel-section">
-      <div class="toppanel-quote">{{{quote}}}</div>
-    </div>
+  {{/quote}}
     {{!--
+      <!-- Recent bins -->
       <div class="toppanel-section">
         <h2 class="toppanel-title"><a href="#">Recent bins</a></h2>
         <ul class="toppanel-list">
@@ -85,7 +104,7 @@
       </div>
     --}}
   </div>
-  {{/welcomePanel}}
+{{/welcomePanel}}
 </div>
 <script>
 try {

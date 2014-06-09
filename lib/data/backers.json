@@ -4,6 +4,7 @@
       "name": "Librato",
       "url": "http://metrics.librato.com",
       "image": "http://data.bigdatastartups.netdna-cdn.com/wp-content/uploads/2013/08/Librato-logo.jpg"
+<<<<<<< HEAD
     },
     {
       "name": "Google",
@@ -14,6 +15,8 @@
       "name": "Microsoft",
       "url": "http://microsoft.com",
       "image": "http://c.s-microsoft.com/en-us/CMSImages/mslogo.png?version=856673f8-e6be-0476-6669-d5bf2300391d"
+=======
+>>>>>>> 043e9c447ce1608ef15e7b80d52600b877148298
     }
   ]
 }

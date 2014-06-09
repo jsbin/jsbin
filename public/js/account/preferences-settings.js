@@ -30,6 +30,8 @@
     focusedPanel: 'html',
     jshint: true
   };
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
   $.extend(currentSettings, getCurrentSettings());
   var panels = ['html', 'css', 'javascript', 'console', 'live'];
   var $panels = {};
@@ -95,6 +97,10 @@
 
     // Save on server
     $.ajax({
+      beforeSend: function () {
+        clearTimeout(saveTimer);
+        $saveStatus.addClass('show');
+      },
       url: 'editor',
       type: 'POST',
       dataType: 'json',
@@ -111,6 +117,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000);
       }
     });
   }

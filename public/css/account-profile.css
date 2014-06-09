@@ -1,0 +1,24 @@
+a.link-btn {
+  font-size: 0.9em;
+  font-weight: 200;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0px 1px 1px #eee;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #aaa;
+  color:#232323;
+  width:276px;
+  margin-left:104px;
+} 
+a.link-btn:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+} 
+

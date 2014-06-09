@@ -80,6 +80,9 @@
 
 
   // setup variables;
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
+
   var $textarea = $('textarea');
   var currentSettings = getCurrentSettings();
   if (currentSettings.editor === undefined) {
@@ -146,7 +149,7 @@
     var localStorageSettings = JSON.parse(localStorage.settings || '{}');
     var codemirrorSettings = pick(editor.options, settingsKeys);
     var newSettingsEditor = $.extend(localStorageSettings.editor, codemirrorSettings);
-        
+
     var addonsSettings = {};
     for (var i = 0; i < addonsKeys.length; i++) {
       addonsSettings[ addonsKeys[i] ] = $addons[ addonsKeys[i] ].prop('checked');
@@ -188,6 +191,13 @@
         _csrf: $csrf.val()
       },
       success: function() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(function () {
+          $saveStatus.addClass('show');
+          saveTimer = setTimeout(function () {
+            $saveStatus.removeClass('show');
+          }, 3000);
+        }, 1000);
         if (console && console.log) {
           console.log('Success on saving settings');
         }

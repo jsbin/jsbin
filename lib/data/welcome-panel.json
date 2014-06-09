@@ -1,61 +1,61 @@
 {
   "features": {
     "title": "JS BIN features",
-    "link": "http://jsbin.com",
+    "link": "http://jsbin.com/help/features",
     "data": [
       {
-        "title": "Interactive console",
+        "title": "Getting started with JS Bin",
         "link": "http://jsbin.com"
+      },
+      {
+        "title": "Keyboard Shortcuts",
+        "link": "http://jsbin.com/help/keyboard-shortcuts"
+      },
+      {
+        "title": "Test out code on other devices",
+        "link": "http://jsbin.com/help/test-code-on-other-devices"
+      },
+      {
+        "title": "Exporting/importing gist",
+        "link": "http://jsbin.com/help/export-gist"
       },
       {
         "title": "Codecasting",
-        "link": "http://jsbin.com"
+        "link": "http://remysharp.com/2013/11/14/what-is-codecasting/"
       },
       {
-        "title": "Remote rendering",
-        "link": "http://jsbin.com"
-      },
-      {
-        "title": "Quiet mode",
-        "link": "http://jsbin.com"
-      },
-      {
-        "title": "Get integration",
-        "link": "http://jsbin.com"
-      },
-      {
-        "title": "Milestones",
-        "link": "http://jsbin.com"
+        "title": "Tutorial videos",
+        "link": "http://www.youtube.com/playlist?list=PLXmT1r4krsTooRDWOrIu23P3SEZ3luIUq"
       }
     ]
   },
   "pro-features": {
     "title": "Pro features",
-    "link": "http://jsbin.com",
+    "link": "http://jsbin.com/help/features",
     "data": [
       {
         "title": "Sync with Dropbox",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       },
       {
         "title": "Private bins",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       },
       {
         "title": "Your own subdomain",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       },
       {
         "title": "Direct support (rather that via GitHub)",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       },
       {
         "title": "Asset hosting",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       },
       {
         "title": "Access experiments",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/features"
       }
     ]
   },
@@ -64,12 +64,8 @@
     "link": "http://jsbin.com/blog",
     "data": [
       {
-        "title": "Blog post 1",
-        "link": "http://jsbin.com"
-      },
-      {
-        "title": "Blog post 2",
-        "link": "http://jsbin.com"
+        "title": "SVG support and settings live",
+        "link": "http://jsbin.com/blog/twdtw-8-svg-settings"
       }
     ]
   },
@@ -78,8 +74,8 @@
     "link": "http://jsbin.com/help",
     "data": [
       {
-        "title": "Private bins",
-        "link": "http://jsbin.com"
+        "title": "Delete a bin",
+        "link": "http://jsbin.com/help/delete-a-bin"
       }
     ]
   },
@@ -88,8 +84,8 @@
     "link": "http://twitter.com/js_bin",
     "data": [
       {
-        "title": "lorem ipsum",
-        "link": "http://jsbin.com"
+        "title": "&hellip;and account settings is live for all now",
+        "link": "https://twitter.com/js_bin/status/471279979305918464"
       }
     ]
   },

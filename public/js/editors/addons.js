@@ -11,7 +11,8 @@
     fold: false,
     sublime: false,
     tern: false,
-    activeline: true
+    activeline: true,
+    matchbrackets: false
   };
 
   if (!jsbin.settings.addons) {
@@ -161,6 +162,15 @@
       },
       done: function(cm) {
         setOption(cm, 'styleActiveLine', true);
+      }
+    },
+    matchbrackets: {
+      url: [],
+      test: function() {
+        return CodeMirror.defaults.matchBrackets !== undefined;
+      },
+      done: function(cm) {
+        setOption(cm, 'matchBrackets', true);
       }
     }
   };

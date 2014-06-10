@@ -21,7 +21,18 @@ CREATE TABLE IF NOT EXISTS `ownership` (
   `github_id` INTEGER NULL,
   `last_login` DATETIME NOT NULL,
   `created` DATETIME NOT NULL,
-  `updated` DATETIME NOT NULL
+  `updated` DATETIME NOT NULL,
+  `settings` TEXT,
+  `pro` INTEGER DEFAULT '0'
+);
+
+CREATE TABLE IF NOT EXISTS `owner_bookmarks` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  `revision` INTEGER NOT NULL,
+  `type` VARCHAR(50) NOT NULL,
+  `created` DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `sandbox` (
@@ -58,6 +69,8 @@ CREATE INDEX IF NOT EXISTS "sandbox_revision" ON "sandbox" (`url`,`revision`);
 CREATE INDEX IF NOT EXISTS "ownership_name_key" ON "ownership" (`name`,`key`);
 CREATE INDEX IF NOT EXISTS "ownership_api_key" ON "ownership" (`api_key`);
 CREATE INDEX IF NOT EXISTS "owners_name_url" ON "owners" (`name`,`url`,`revision`);
+CREATE INDEX IF NOT EXISTS "owner_bookmarks_name" ON "owner_bookmarks" (`name`, `type`, `created`);
+CREATE INDEX IF NOT EXISTS "owner_bookmarks_revision" ON "owner_bookmarks" (`url`, `revision`);
 CREATE INDEX IF NOT EXISTS "index_owners_last_updated" ON "owners" (`name`, `last_updated`);
 CREATE INDEX IF NOT EXISTS "index_expires" ON "forgot_tokens" (`expires`);
 CREATE INDEX IF NOT EXISTS "index_token_expires" ON "forgot_tokens" (`token`,`created`,`expires`);

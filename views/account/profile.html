@@ -3,13 +3,13 @@
 <h1>Your profile</h1>
 
 <section id="content" {{#if user.pro}}class="pro"{{/if}}>
-  <form class="login" method="post" action="{{root}}/sethome">
+  <form class="login" method="post" action="/account/update">
     <p class="loginFeedback"></p>
 
     <div>
       <label for="name">Username</label>
       <input id="name" name="username" type="text" value="{{user.name}}" disabled>
-      {{#if user.pro}}<div class="pro-badge">Pro</div>{{/if}}
+      {{#if user.pro}}<sup class="pro-badge">Pro</sup>{{/if}}
     </div>
 
     <div>

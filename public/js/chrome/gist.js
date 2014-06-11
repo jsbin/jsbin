@@ -21,7 +21,6 @@ var Gist = (function () { // jshint ignore:line
     $.get('https://api.github.com/gists/' + id + token, function (data) {
       if (!data) {return;}
       $.each(data.files, function (fileName, fileData) {
-        console.log.apply(console, [].slice.call(arguments));
         var ext = fileName.split('.').slice(-1).join('');
         gist.code[ext] = fileData.content;
       });
@@ -38,7 +37,9 @@ var Gist = (function () { // jshint ignore:line
           panel = jsbin.panels.panels[target];
       if (!panel) {return;}
       processors.set(target, processorInit.id);
+      jsbin.saveDisabled = true;
       panel.setCode(data);
+      jsbin.saveDisabled = false;
     });
   };
 

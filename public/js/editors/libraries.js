@@ -207,6 +207,30 @@ var libraries = [
   },
   {
     'url': [
+      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css',
+      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.default.min.css',
+      'http://code.jquery.com/jquery-1.9.1.min.js',
+      'http://cdn.kendostatic.com/2014.1.528/js/kendo.ui.core.min.js'
+    ],
+    'label': 'Kendo UI Core Q1 SP2',
+    'group': 'Kendo UI'
+  },
+  {
+    'url': [
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.rtl.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.default.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.mobile.all.min.css',
+      'http://code.jquery.com/jquery-1.9.1.min.js',
+      'http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js'
+    ],
+    'label': 'Kendo UI Q1 2014',
+    'group': 'Kendo UI'
+  },
+  {
+    'url': [
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css',
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css',
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css',
@@ -217,20 +241,6 @@ var libraries = [
       'http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js'
     ],
     'label': 'Kendo UI Q3 2013',
-    'group': 'Kendo UI'
-  },
-  {
-    'url': [
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.mobile.all.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2013.2.716/js/kendo.all.min.js'
-    ],
-    'label': 'Kendo UI Q2 2013',
     'group': 'Kendo UI'
   },
   {
@@ -450,14 +460,18 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/platform.js',
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.1.1/polymer.js'
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/platform.js',
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/polymer.js'
     ],
-    'label': 'Polymer 0.1.1'
+    'label': 'Polymer 0.3.0'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
     'label': 'Font Awesome 4.0.3'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/paper.js/0.9.12/paper.js',
+    'label': 'Paper.js 0.9.12'
   },
   {
     'url': {
@@ -467,6 +481,10 @@ var libraries = [
       'data-sap-ui-libs': 'sap.m'
     },
     'label': 'OpenUI5 1.18.8 Mobile BlueCrystal'
+  },
+  {
+    'url': 'http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
+    'label': 'GSAP 1.11.7'
   }
 ];
 

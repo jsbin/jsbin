@@ -46,9 +46,18 @@
       <td class="feature">
         {{name}}
       </td>
-      <td class="anon"></td>
-      <td class="free"></td>
-      <td class="pro"></td>
+      <td class="anon">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+      </td>
+      <td class="free">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+        {{#equal user 'free'}}&#10003;{{/equal}}
+      </td>
+      <td class="pro">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+        {{#equal user 'free'}}&#10003;{{/equal}}
+        {{#equal user 'pro'}}&#10003;{{/equal}}
+      </td>
     </tr>
     {{/each}}
   </tbody>

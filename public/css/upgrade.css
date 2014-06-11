@@ -84,7 +84,7 @@ th small {
   font-weight: normal;
 }
 
-tr.anon td.anon:after, tr.anon td.free:after, tr.anon td.pro:after {
+/*tr.anon td.anon:after, tr.anon td.free:after, tr.anon td.pro:after {
   content: "\2713";
 }
 tr.free td.free:after, tr.free td.pro:after {
@@ -92,4 +92,4 @@ tr.free td.free:after, tr.free td.pro:after {
 }
 tr.pro td.pro:after {
   content: "\2713";
-}
+}*/

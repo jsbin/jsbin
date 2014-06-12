@@ -108,10 +108,10 @@
 </div>
 <script>
 try {
-  if (localStorage.settings.indexOf('"toppanel":false') === -1) {
+  if (localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1) {
     document.body.className += ' toppanel';
   }
 } catch (e) {
-  // if there is no localStorage 
+  // if there is no localStorage
 }
 </script>

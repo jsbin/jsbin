@@ -18,14 +18,6 @@
       {
         "title": "Exporting/importing gist",
         "link": "http://jsbin.com/help/export-gist"
-      },
-      {
-        "title": "Codecasting",
-        "link": "http://remysharp.com/2013/11/14/what-is-codecasting/"
-      },
-      {
-        "title": "Tutorial videos",
-        "link": "http://www.youtube.com/playlist?list=PLXmT1r4krsTooRDWOrIu23P3SEZ3luIUq"
       }
     ]
   },
@@ -47,14 +39,6 @@
       },
       {
         "title": "Direct support (rather that via GitHub)",
-        "link": "http://jsbin.com/help/features"
-      },
-      {
-        "title": "Asset hosting",
-        "link": "http://jsbin.com/help/features"
-      },
-      {
-        "title": "Access experiments",
         "link": "http://jsbin.com/help/features"
       }
     ]

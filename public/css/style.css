@@ -4712,12 +4712,12 @@ html * {
 
 /* toppanel status */
 #toppanel {
-  height: 250px;
+  height: 200px;
   background: #ecf2fa;
   position: relative;
   z-index: 100000;
   border-bottom: rgb(191, 191, 191) solid 1px;
-  margin-top: -250px;
+  margin-top: -200px;
 }
 .toppanel #toppanel {
   margin-top: 0;
@@ -4726,7 +4726,7 @@ html * {
 .toppanel #bin,
 .toppanel #history,
 .toppanel #history .preview {
-  top: 286px;
+  top: 236px;
 }
 
 #toppanel ~ #control .brand {
@@ -4748,7 +4748,7 @@ body.ready.toppanel {
   display: block !important;
   color: #232323;
   font-size: 0;
-  padding: 13px;
+  padding: 10px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
@@ -4759,7 +4759,7 @@ body.ready.toppanel {
   padding: 0 4px;
   vertical-align: top;
   width: 200px;
-  height: 220px;
+  height: 179px;
   overflow: hidden;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -4794,6 +4794,7 @@ body.ready.toppanel {
 }
 .toppanel-actions {
   position: relative;
+  top: -12px;
   z-index: 0;
 }
 .toppanel-title {
@@ -4841,7 +4842,7 @@ div:first-child > .toppanel-button {
 }
 .toppanel-button {
   border: 1px solid #6293D3;
-  line-height: 30px;
+  line-height: 25px;
   margin: 0 auto;
   text-align: center;
   width: 150px;
@@ -4867,8 +4868,8 @@ div:first-child > .toppanel-button {
 }
 a.toppanel-hide {
   position: absolute;
-  left: 20px;
-  top: 15px;
+  left: 5px;
+  top: 5px;
   padding: 0 5px 7px;
   font-size: 35px;
   line-height: 0.7;
@@ -4884,11 +4885,11 @@ a.toppanel-logo {
   text-align: center;
   position: relative;
   z-index: 1;
-  -webkit-transform: translate(-95px, 155px) scale(0.25);
-     -moz-transform: translate(-95px, 155px) scale(0.25);
-      -ms-transform: translate(-95px, 155px) scale(0.25);
-       -o-transform: translate(-95px, 155px) scale(0.25);
-          transform: translate(-95px, 155px) scale(0.25);
+  -webkit-transform: translate(-94px, 112px) scale(0.25);
+     -moz-transform: translate(-94px, 112px) scale(0.25);
+      -ms-transform: translate(-94px, 112px) scale(0.25);
+       -o-transform: translate(-94px, 112px) scale(0.25);
+          transform: translate(-94px, 112px) scale(0.25);
   -webkit-transform-origin: 100% 100%;
      -moz-transform-origin: 100% 100%;
       -ms-transform-origin: 100% 100%;
@@ -4901,16 +4902,15 @@ a.toppanel-logo:hover {
 }
 .toppanel-logo img {
   border: 0 none;
-  margin-top: 4px;
   width: 100%;
 }
 .toppanel .toppanel-logo {
   cursor: default;
-  -webkit-transform: translate(70px, 0) scale(1);
-     -moz-transform: translate(70px, 0) scale(1);
-      -ms-transform: translate(70px, 0) scale(1);
-       -o-transform: translate(70px, 0) scale(1);
-          transform: translate(70px, 0) scale(1);
+  -webkit-transform: translate(41px, -8px) scale(1);
+     -moz-transform: translate(41px, -8px) scale(1);
+      -ms-transform: translate(41px, -8px) scale(1);
+       -o-transform: translate(41px, -8px) scale(1);
+          transform: translate(41px, -8px) scale(1);
 }
 
 /* toppanel animation */

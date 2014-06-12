@@ -4743,6 +4743,11 @@ body.ready.toppanel {
   background: white;
 }
 
+.toppanel #tip.notification,
+.toppanel #tip.error {
+  top: 234px;
+}
+
 /* toppanel */
 .toppanel-wrapper {
   display: block !important;

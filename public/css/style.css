@@ -4763,7 +4763,8 @@ body.ready.toppanel {
   display: inline-block;
   padding: 0 4px;
   vertical-align: top;
-  width: 200px;
+  max-width: 220px;
+  width: 16.66%;
   height: 179px;
   overflow: hidden;
   -webkit-box-sizing: border-box;
@@ -4773,6 +4774,7 @@ body.ready.toppanel {
 @media (max-width: 1223px) { /* 5 */
   .toppanel-column {
     width: calc((100% - 217px) / 4);
+    max-width: 100%;
   }
   .toppanel-column:nth-child(n+6) {
     display: none;

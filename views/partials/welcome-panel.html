@@ -4,7 +4,7 @@
     <a href="#" class="toppanel-logo">
       <img src="{{static}}/images/dave.svg" width="100">
     </a>
-    <div class="toppanel-actions">
+    <div class="toppanel-actions{{#unless home}} toppanel-actions-alone{{/unless}}">
       <div>
         <a id="createnew" href="{{root}}" class="toppanel-button">New bin</a>
       </div>

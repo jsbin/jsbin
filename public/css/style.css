@@ -4894,6 +4894,15 @@ a.toppanel-hide {
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
 }
+.toppanel-actions .btn-github {
+  font-size: 70%;
+  width: 163px;
+  margin: 0 auto;
+  color: #232323;
+}
+.toppanel-actions .btn-github:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
 
 a.toppanel-logo {
   display: inline-block;

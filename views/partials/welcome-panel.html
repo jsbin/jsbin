@@ -9,7 +9,14 @@
         <a id="createnew" href="{{root}}" class="toppanel-button">New bin</a>
       </div>
       <div>
+        {{#if home}}
         <a href="#" class="toppanel-button homebtn">Open bin...</a>
+        {{else}}
+        <a class="btn-github" href="/auth/github">
+          <img src="{{static}}/images/github-32.png">
+          Login or Register via GitHub
+        </a>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -73,19 +80,19 @@
   </div>
 
   <div class="toppanel-column">
-  {{#twitter}}
-    <!-- Twitter -->
-    <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{link}}" target="_blank">{{title}}</a></h2>
-      {{#data}}
-        <ul class="toppanel-list">
-          {{#.}}
-            <li><a href="{{link}}" target="_blank">{{{title}}}</a></li>
-          {{/.}}
-        </ul>
-      {{/data}}
-    </div>
-  {{/twitter}}
+    {{#twitter}}
+      <!-- Twitter -->
+      <div class="toppanel-section">
+        <h2 class="toppanel-title"><a href="{{link}}" target="_blank">{{title}}</a></h2>
+        {{#data}}
+          <ul class="toppanel-list">
+            {{#.}}
+              <li><a href="{{link}}" target="_blank">{{{title}}}</a></li>
+            {{/.}}
+          </ul>
+        {{/data}}
+      </div>
+    {{/twitter}}
   </div>
 
   <div class="toppanel-column">

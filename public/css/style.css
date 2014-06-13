@@ -4850,6 +4850,9 @@ body.ready.toppanel {
   background: #CCC;
   background: rgba(0, 0, 0, 0.05);
 }
+a.toppanel-twitter-link {
+  display: inline;
+}
 .toppanel-bin-name {
   width: 5em;
   display: inline-block;

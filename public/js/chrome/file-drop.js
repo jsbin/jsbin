@@ -26,7 +26,7 @@ function allowDrop(holder) {
         reader = new FileReader();
     reader.onload = function (event) {
       // put JS in the JavaScript panel
-      var type = file.type ? file.type.toLowerCase().replace(/^text\//, '') : file.name.toLowerCase().replace(/.*\./g, ''),
+      var type = file.type ? file.type.toLowerCase().replace(/^(text|application)\//, '') : file.name.toLowerCase().replace(/.*\./g, ''),
           panelId = 'html',
           panel = editors[panelId],
           syncCode = event.target.result,

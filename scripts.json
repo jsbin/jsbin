@@ -1,23 +1,22 @@
 {
   "app": [
     "/js/chrome/hashbang-jump.js",
-    "/js/vendor/jquery.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",
     "/js/vendor/jshint/jshint.js",
-    "/js/vendor/codemirror3/lib/codemirror.js",
-    "/js/vendor/codemirror3/mode/xml/xml.js",
-    "/js/vendor/codemirror3/mode/css/css.js",
-    "/js/vendor/codemirror3/mode/javascript/javascript.js",
-    "/js/vendor/codemirror3/mode/htmlmixed/htmlmixed.js",
+    "/js/vendor/codemirror4/lib/codemirror.js",
+    "/js/vendor/codemirror4/mode/xml/xml.js",
+    "/js/vendor/codemirror4/mode/css/css.js",
+    "/js/vendor/codemirror4/mode/javascript/javascript.js",
+    "/js/vendor/codemirror4/mode/htmlmixed/htmlmixed.js",
     "/js/vendor/cm_addons/emmet.js",
-    "/js/vendor/codemirror3/addon/search/searchcursor.js",
+    "/js/vendor/codemirror4/addon/search/searchcursor.js",
+    "/js/vendor/cm_addons/simple-hint.js",
     "/js/vendor/cm_addons/javascript-hint.js",
-    "/js/vendor/codemirror3/addon/edit/matchbrackets.js",
-    "/js/vendor/codemirror3/addon/selection/active-line.js",
-    "/js/vendor/codemirror3/addon/search/searchcursor.js",
-    "/js/vendor/codemirror3/addon/comment/comment.js",
+    "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
+    "/js/vendor/codemirror4/addon/comment/comment.js",
+    "/js/vendor/lz-string-1.3.3.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
     "/js/vendor/prettyprint.js",
@@ -51,6 +50,8 @@
     "/js/chrome/gist.js",
     "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
+    "/js/chrome/last-bin.js",
+    "/js/chrome/archive.js",
     "/js/chrome/app.js"
   ],
   "runner": [
@@ -64,8 +65,21 @@
     "/js/runner/runner.js",
     "/js/runner/index.js"
   ],
-  "// removed": [
-    "/js/vendor/codemirror3/addon/search/match-highlighter.js",
-    "/js/vendor/codemirror3/keymap/vim.js"
-  ]
+  "addons": {
+    "tern": [
+      "/js/vendor/cm_addons/tern.js",
+      "/js/vendor/acorn/acorn.js",
+      "/js/vendor/acorn/acorn_loose.js",
+      "/js/vendor/acorn/util/walk.js",
+      "/js/vendor/tern/lib/signal.js",
+      "/js/vendor/tern/lib/tern.js",
+      "/js/vendor/tern/lib/def.js",
+      "/js/vendor/tern/lib/comment.js",
+      "/js/vendor/tern/lib/infer.js",
+      "/js/vendor/tern/plugin/doc_comment.js",
+      "/js/editors/defs.js",
+      "/js/editors/definitions.js",
+      "/js/editors/tern.js"
+    ]
+  }
 }

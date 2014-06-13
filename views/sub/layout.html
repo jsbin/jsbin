@@ -1,21 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html class="{{#if flash_tip}}showtip{{/if}}">
   <head>
-    <meta charset="utf-8"/>
-    <title>JS Bin</title>
-    <meta name="viewport" content="width=device-width"/>
-    <link rel="icon" href="{{static}}/images/favicon.png"/>
-    <link rel="stylesheet" href="{{static}}/css/sub/style.css"/>
+    <meta charset="utf-8">
+    <title>Account Management</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="{{static}}/images/favicon.png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:700,400" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{static}}/css/help.css{{cacheBust}}">
+    <script>
+      var jsbin = { "static": "{{static}}", version: "{{version}}" };
+    </script>
+    <script src="{{static}}/js/vendor/html5shiv.min.js{{cacheBust}}"></script>
+    {{#if isProduction}}
+      {{{analytics}}}
+    {{/if}}
   </head>
   <body>
     <div id="container">
       <header>
       <div class="inner"><a id="back" href="{{root}}"><span class="morewords">Back to JS Bin</span></a>
-        <nav><a href="{{learn}}/help">Help</a>
+        <nav>
+          <span class="status">Settings saved</span>
+          <a class="selected" href="{{root}}/account">Account</a>
+          <a href="{{root}}/blog">Blog</a>
+          <a href="{{root}}/help">Help</a>
         </nav>
       </div>
       </header>
-      <div>
+      <div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
+        <p>
+          {{#if flash_tip}}{{{flash_tip}}}{{/if}}
+        </p>
+        <a class="dismiss" href="#">Dismiss x</a>
+      </div>
+      <div id="body">
         {{{body}}}
       </div>
       <div class="clear">
@@ -24,7 +42,7 @@
     <footer id="footer">
     <div class="inner">
       <ul class="notable">
-        <li><a href="{{learn}}/about">About</a>
+        <li><a href="{{root}}/about">About</a>
         </li>
         <li><a href="http://github.com/jsbin">Github</a>
         </li>
@@ -33,7 +51,17 @@
         <li><a href="http://jsbin.com/videos">YouTube</a>
         </li>
       </ul>
+      <ul class="legal">
+        <li>
+          <em>"Hack. Learn. Fix. Teach."</em>
+        </li>
+      </ul>
     </div>
     </footer>
+    <script>
+      var $document = $(document); // for chrome/tips.js
+    </script>
+    <script src="{{static}}/js/chrome/last-bin.js{{cacheBust}}"></script>
+    <script src="{{static}}/js/chrome/tips.js{{cacheBust}}"></script>
   </body>
 </html>

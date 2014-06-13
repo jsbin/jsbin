@@ -1,14 +1,20 @@
-<link href="/css/account-sidebar.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="{{static}}/css/account.css{{cacheBust}}">
 <div id="sidebar">
-
 	<div class="sidebar-btn-group">
-
-		<a class="sidebar-btn" href="#editor">Editor settings</a>
-		<a class="sidebar-btn" default href="#profile">Profile</a>
-		<a class="sidebar-btn" href="#editorSettings">Delete my account...</a>
-
-	</div>
-
-	<a class="sidebar-btn" href="#editorSettings">Logout</a>
-
+		<a class="sidebar-btn" href="{{root}}/account/profile">Profile</a>
+    <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
+    <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
+    <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
+  </div>
+  {{#feature request "upgrade"}}
+    <a class="sidebar-btn" href="{{httproot}}/upgrade">Upgrade</a>
+  {{/feature}}
 </div>
+<script>
+var links = document.getElementById('sidebar').getElementsByTagName('a');
+[].forEach.call(links, function (el) {
+  if (el.href.indexOf(window.location.pathname) !== -1) {
+    el.className += ' selected';
+  }
+});
+</script>

@@ -37,17 +37,14 @@ $('a.save').click(function (event) {
 
   analytics.milestone();
   // if save is disabled, hitting save will trigger a reload
-  // if it's connecting to a togetherjs session, save will not trigger a reload
   var ajax = true;
   if (jsbin.saveDisabled === true) {
     ajax = false;
   }
-  if (jsbin.togetherjs === true) {
-    ajax = true;
-  }
   if (jsbin.sharejs === true) {
     ajax = true;
   }
+
   saveCode('save', ajax);
 
   return false;
@@ -69,7 +66,8 @@ function updateSavedState() {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
-    var url = jsbin.getURL() + this.getAttribute('data-path') + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var path = this.getAttribute('data-path');
+    var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     if (nodeName === 'A') {
       this.href = url;
@@ -129,13 +127,9 @@ function onSaveError(jqXHR, panelId) {
       type: 'error',
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
-  } else {
+  } else if (panelId) {
     if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
-    // $document.trigger('tip', {
-    //   type: 'error',
-    //   content: 'Something went wrong while saving. Your most recent work is not saved.'
-    // });
   }
 }
 
@@ -189,6 +183,8 @@ if (!jsbin.saveDisabled) {
 
       var panelId = data.panelId;
 
+      jsbin.panels.savecontent();
+
       if (saving.inprogress()) {
         // queue up the request and wait
         saving.todo[panelId] = true;
@@ -228,6 +224,13 @@ if (!jsbin.saveDisabled) {
   });
 }
 
+function compressKeys(keys, obj) {
+  obj.compressed = keys;
+  keys.split(',').forEach(function (key) {
+    obj[key] = LZString.compressToUTF16(obj[key]);
+  });
+}
+
 function updateCode(panelId, callback) {
   var panelSettings = {};
 
@@ -235,17 +238,23 @@ function updateCode(panelId, callback) {
     panelSettings.processors = jsbin.state.processors;
   }
 
+  var data = {
+    code: jsbin.state.code,
+    revision: jsbin.state.revision,
+    method: 'update',
+    panel: panelId,
+    content: editors[panelId].getCode(),
+    checksum: saveChecksum,
+    settings: JSON.stringify(panelSettings),
+  };
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('content', data);
+  }
+
   $.ajax({
     url: jsbin.getURL() + '/save',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-      method: 'update',
-      panel: panelId,
-      content: editors[panelId].getCode(),
-      checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings)
-    },
+    data: data,
     type: 'post',
     dataType: 'json',
     headers: {'Accept': 'application/json'},
@@ -330,10 +339,19 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
+  var data = $form.serializeArray().reduce(function(obj, data) {
+    obj[data.name] = data.value;
+    return obj;
+  }, {});
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('html,css,javascript', data);
+  }
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),
-      data: $form.serialize(),
+      data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},
@@ -352,6 +370,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.metadata = { name: jsbin.user.name };
 
         // getURL(true) gets the jsbin without the root attached
         // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
@@ -359,7 +378,6 @@ function saveCode(method, ajax, ajaxCallback) {
         // $binGroup.find('td.url a span.first').removeClass('first');
         // $binGroup.before('<tr data-url="' + data.url + '/" data-edit-url="' + edit + '"><td class="url"><a href="' + edit + '?live"><span class="first">' + data.code + '/</span>' + data.revision + '/</a></td><td class="created"><a href="' + edit + '" pubdate="' + data.created + '">Just now</a></td><td class="title"><a href="' + edit + '">' + data.title + '</a></td></tr>');
 
-        $document.trigger('saved');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
@@ -368,8 +386,12 @@ function saveCode(method, ajax, ajaxCallback) {
         } else {
           window.location.hash = data.edit;
         }
+
+        $document.trigger('saved');
       },
-      error: onSaveError,
+      error: function (jqXHR) {
+        onSaveError(jqXHR, null);
+      },
       complete: function () {
         saving.inprogress(false);
       }

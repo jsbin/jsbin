@@ -26,7 +26,7 @@ var analytics = {
   clone: function () {
     analytics.track('bin', 'clone', window.location.pathname);
   },
-  delete: function () {
+  'delete': function () {
     analytics.track('bin', 'delete', window.location.pathname);
   },
   lock: function () {
@@ -113,6 +113,9 @@ var analytics = {
   },
   run: function (from) {
     analytics.track(from || 'button', 'run with js');
+  },
+  publishVanity: function () {
+    analytics.track('bin', 'publish-vanity');
   },
   runconsole: function (from) {
     analytics.track(from || 'button', 'run console');

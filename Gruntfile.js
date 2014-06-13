@@ -63,6 +63,21 @@ module.exports = function (grunt) {
     runnerScripts: scripts.runner.map(function (script) {
       return 'public' + script;
     }),
+    addonsRelative: (function(addon) {
+      var relative = [];
+      for (var prop in addon) {
+        if (addon.hasOwnProperty(prop)) {
+          var src = addon[prop].map(function(script) {
+            return 'public' + script;
+          });
+          relative.push({
+            src: src,
+            dest: 'public/js/prod/addon-' + prop + '-<%= pkg.version %>.min.js'
+          });
+        }
+      }
+      return relative;
+    })(scripts.addons),
     jshint: {
       dist: {
         files: {
@@ -116,6 +131,9 @@ module.exports = function (grunt) {
         options: {},
         src: distpaths.runner,
         dest: distpaths.runnermin
+      },
+      addons: {
+        files: '<%= addonsRelative %>'
       }
     },
     watch: {
@@ -134,6 +152,7 @@ module.exports = function (grunt) {
 
   // Default task.
   grunt.registerTask('build', ['concat', 'uglify']);
+  grunt.registerTask('addons', ['uglify:addons']);
   grunt.registerTask('default', ['jshint']);
 
 };

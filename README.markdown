@@ -2,6 +2,10 @@
 
 JS Bin is an open source collaborative web development debugging tool.
 
+## If you use JS Bin locally...
+
+It likely means you're not going to subscribe a pro user - which is how we're sustaining our project, which is cool, but [please consider donating via gittip here](https://www.gittip.com/js_bin/).
+
 ## What can JS Bin do?
 
 * Write code and have it both save in real-time, but also render a full preview in real-time
@@ -15,7 +19,7 @@ Find out more about JS Bin's features via the [YouTube JS Bin playlist](http://j
 
 ## Who built this?
 
-JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open source and available [http://github.com/remy/jsbin](http://github.com/remy/jsbin). You can also follow [@rem](http://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.
+JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open source and available at [http://github.com/jsbin/jsbin](http://github.com/jsbin/jsbin). You can also follow [@rem](http://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.
 
 If you would like to work with Remy and his company, [Left Logic](http://leftlogic.com) on a front end development project, [please get in touch](http://leftlogic.com/contact?message=Found%20through%20jsbin.com).
 

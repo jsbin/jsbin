@@ -18,7 +18,7 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
 
-    $(this.textarea).blur(throttle(function () {
+    $(this.textarea)[jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup'](throttle(function () {
       $(document).trigger('codeChange', { panelId: el.id });
     }, 200));
 
@@ -57,6 +57,8 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     currentLine: function () {
       return 0;
     },
+    addKeyMap: noop,
+    indentLine: noop,
     cursorPosition: function () {
       return { character: 0 };
     },

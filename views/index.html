@@ -27,8 +27,8 @@
         </span>
       {{else}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#bins" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/jsbin_16.png"> Bins</a>
-          <div class="dropdown" id="bins">
+          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/jsbin_16.png"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
+          <div class="dropdown" id="{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#feature request "private"}}
@@ -38,12 +38,11 @@
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
+              <a class="archivebin button group" data-desc="Archive bin" title="Archive this bin" href="{{code_id_path}}/archive" data-shortcut="ctrl+y">Archive</a>
+              <a class="unarchivebin button group" data-desc="Unrchive bin" title="Restore this bin from the archive" href="{{code_id_path}}/unarchive" data-shortcut="ctrl+shift+y">Unarchive</a>
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
-              {{#feature request "togetherjs"}}
-              <a href="#" class="button group" onclick="TogetherJS(this); return false" data-end-togetherjs-html="End Collaboration" id="togetherjs-jsbin-button">Start Collaboration</a>
-              {{/feature}}
               {{#feature request "sharejs"}}
               <a href="#" class="button group" onclick="startShareJs(); return false" data-end-sharejs-html="End Collaboration ShareJS" id="sharejs-jsbin-button">Start Collaboration ShareJS</a>
               {{/feature}}
@@ -52,6 +51,9 @@
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
+              {{#feature request "vanity"}}
+              <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="/account/bookmark/vanity">Publish to vanity homepage</a>
+              {{/feature}}
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" class="startingpoint button group" title="Set as starting code" href="{{root}}/save" data-label="save-as-template">Save as template</a>
@@ -96,6 +98,7 @@
                 <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
               </form>
             </div>
+
           </div>
         </div><!-- intentional space -->
         <div id="start-saving" class="menu">
@@ -107,8 +110,23 @@
         {{#unless embed}}
           {{#if home}}
             {{#feature request "accountPages"}}
-            <div class="menu">
-              <a title="@{{home}}" href="/account" class="button avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+            <div class="menu{{#if user.pro}} pro{{/if}}">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+              <div class="dropdown dd-right" id="profile">
+                <div class="dropdowncontent">
+                  {{#if large_gravatar}}<img class="large-gravatar" src="{{large_gravatar}}">{{/if}}
+                  <span class="input" id="username" readonly>
+                    @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                  </span>
+
+                  <ul>
+                    <li><a href="/account/profile">Update profile</a></li>
+                    <li><a href="/account/editor">Editor settings</a></li>
+                    <li><a href="/account/preferences">Preferences</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             {{else}}
             <div class="menu">
@@ -164,9 +182,7 @@
                       </a>
                       <span class="login-group">
                         Or
-                        <a class="btn-login" href="/login">
-                          <span>use your email address</span>
-                        </a>
+                        <a class="btn-login" href="/login">use your email address</a>
                       </span>
                     </div>
                   </div>
@@ -355,7 +371,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 </div>
 <div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
   <p>
-    {{#if flash_tip}}{{flash_tip}}{{/if}}
+    {{#if flash_tip}}{{{flash_tip}}}{{/if}}
     {{#unless flash_tip}}You can jump to the latest bin by adding <code>/latest</code> to your URL{{/unless}}
   </p>
   <a class="dismiss" href="#">Dismiss x</a>
@@ -404,16 +420,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Close current HTML element</td>
         </tr> -->
         <tr>
-          <td>cmd + [</td>
+          <td>ctrl + [</td>
           <td>Indents selected lines</td>
         </tr>
         <tr>
-          <td>cmd + ]</td>
+          <td>ctrl + ]</td>
           <td>Unindents selected lines</td>
         </tr>
         <tr>
           <td>tab</td>
-          <td>Code complete (JavaScript only) &amp; Emmet expand</td>
+          <td>Code complete &amp; <a href="http://docs.emmet.io/" target="_blank">Emmet</a> expand</td>
         </tr>
         <tr>
           <td>ctrl + s</td>
@@ -422,6 +438,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <tr>
           <td>ctrl + shift + s</td>
           <td>Clone Bin</td>
+        </tr>
+        <tr>
+          <td>ctrl + y</td>
+          <td>Archive Bin</td>
         </tr>
         <!-- too confusing, let's throw it away -->
         <!--
@@ -438,7 +458,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Hide focused panel</td>
         </tr>-->
 
-        <tr><td colspan="2"><small><br>JS Bin also supports <a href="http://docs.emmet.io/" target="_blank">Emmet/Zen Coding</a> shortcuts</small></td></tr>
+        <tr><td colspan="2"><small><br><a href="/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
       </tbody>
     </table>
   </div>
@@ -541,6 +561,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
+<<<<<<< HEAD
 {{#feature request "togetherjs"}}
 <script src="{{static}}/js/chrome/togetherjs.js{{cacheBust}}"></script>
 <script src="https://togetherjs.com/togetherjs-min.js"></script>
@@ -548,19 +569,26 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{#feature request "sharejs"}}
 <script src="{{static}}/js/chrome/sharejs.js{{cacheBust}}"></script>
 {{/feature}}
+=======
+>>>>>>> master
 {{#if isProduction}}
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 {{else}}
   {{#if concat}}
+<script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
+    <script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
     {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
+    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+<<<<<<< HEAD
 {{#feature request "tern"}}
 <script src="{{static}}/js/vendor/codemirror3/addon/hint/show-hint.js"></script>
 <script src="{{static}}/js/vendor/codemirror3/addon/dialog/dialog.js"></script>
@@ -588,6 +616,8 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   }
 </script>
 {{/feature}}
+=======
+>>>>>>> master
 </body>
 </html>
 

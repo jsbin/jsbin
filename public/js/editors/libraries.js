@@ -99,8 +99,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/dist/css/bootstrap.css',
-      'http://getbootstrap.com/dist/js/bootstrap.js'
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -108,9 +108,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap.css',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css',
-      'http://getbootstrap.com/2.3.2/assets/js/bootstrap.js'
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap 2.3.2',
     'group': 'Bootstrap'

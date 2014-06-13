@@ -19,7 +19,7 @@ table {
   border: 1;
   width: 80%;
   border-collapse: collapse;
-  margin: -45px auto 0;
+  margin-left:10%;
 }
 
 tbody tr {
@@ -36,12 +36,21 @@ td {
   line-height:30px;
   font-size:16px;
   font-weight:300;
-  width:100px;
+  width:160px;
 }
 
 td.feature {
   text-align:left;
   width:auto;
+}
+
+.coupon-btn {
+  font-size:14px;
+}
+
+#coupon_code {
+  visibility:hidden;
+  font-size:14px;
 }
 
 .backers {

@@ -138,6 +138,7 @@
     editor.setOption('lineNumbers', $lineNumbers.prop('checked'));
     editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
     editor.setOption('tabSize', $tabSize.val());
+    editor.setOption('indentUnit', $tabSize.val());
     editor.setOption('theme', $theme.val());
     $CodeMirror.css('font-size', $fontsize.val()+'px');
     editor.refresh();

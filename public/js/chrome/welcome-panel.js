@@ -1,5 +1,5 @@
 (function () {
-  /*global jsbin, $, $body, $document, analytics*/
+  /*global jsbin, $, $body, $document, analytics, settings*/
   'use strict';
 
   if (jsbin.settings.gui === undefined) {
@@ -10,18 +10,24 @@
     localStorage.setItem('settings', JSON.stringify(jsbin.settings));
   }
 
-  analytics.welcomePanelState($body.hasClass('toppanel'));
+  if ($body.hasClass('toppanel') && jsbin.settings.gui.toppanel === false) {
+    $body.addClass('toppanel-close');
+    $body.removeClass('toppanel');
+  }
+
+  // analytics for panel state
+  analytics.welcomePanelState(jsbin.settings.gui.toppanel);
 
   var removeToppanel = function() {
     jsbin.settings.gui.toppanel = false;
-    localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+    settings.save();
     $body.addClass('toppanel-close');
     $body.removeClass('toppanel');
   };
 
   var showToppanel = function() {
     jsbin.settings.gui.toppanel = true;
-    localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+    settings.save();
     $body.removeClass('toppanel-close');
     $body.addClass('toppanel');
   };

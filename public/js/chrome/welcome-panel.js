@@ -1,5 +1,5 @@
 (function () {
-  /*global jsbin, $, $body, $document*/
+  /*global jsbin, $, $body, $document, analytics*/
   'use strict';
 
   if (jsbin.settings.gui === undefined) {
@@ -9,6 +9,8 @@
     jsbin.settings.gui.toppanel = true;
     localStorage.setItem('settings', JSON.stringify(jsbin.settings));
   }
+
+  analytics.welcomePanelState($body.hasClass('toppanel'));
 
   var removeToppanel = function() {
     jsbin.settings.gui.toppanel = false;
@@ -48,6 +50,11 @@
         removeToppanel();
       }
     }
+  });
+
+  // analytics for links
+  $('#toppanel').find('.toppanel-link').mousedown(function() {
+    analytics.welcomePanelLink(this.href);
   });
 
 }());

@@ -20,11 +20,11 @@
 {{#features}}
   <!-- Features -->
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
     {{#data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
         {{/.}}
       </ul>
     {{/data}}
@@ -34,11 +34,11 @@
 {{#pro-features}}
   <!-- Pro features -->
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}{{#unless ../../user.pro}} (£10/month){{/unless}}</a></h2>
+    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} (£10/month){{/unless}}</a></h2>
     {{#data}}
       <ul class="toppanel-list">
         {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
         {{/.}}
       </ul>
     {{/data}}
@@ -49,11 +49,11 @@
   {{#blog}}
     <!-- Blog  -->
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       {{#data}}
         <ul class="toppanel-list">
           {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
           {{/.}}
         </ul>
       {{/data}}
@@ -62,11 +62,11 @@
   {{#help}}
     <!-- Help -->
     <div class="toppanel-section">
-      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></h2>
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       {{#data}}
         <ul class="toppanel-list">
           {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}}>{{title}}</a></li>
+            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
           {{/.}}
         </ul>
       {{/data}}
@@ -78,11 +78,11 @@
     {{#twitter}}
       <!-- Twitter -->
       <div class="toppanel-section">
-        <h2 class="toppanel-title"><a href="{{link}}" target="_blank">{{title}}</a></h2>
+        <h2 class="toppanel-title"><a href="{{link}}" target="_blank" class="toppanel-link">{{title}}</a></h2>
         {{#data}}
           <ul class="toppanel-list">
             {{#.}}
-              <li><a href="{{link}}" target="_blank">{{{title}}}</a></li>
+              <li><a href="{{link}}" target="_blank" class="toppanel-link">{{{title}}}</a></li>
             {{/.}}
           </ul>
         {{/data}}

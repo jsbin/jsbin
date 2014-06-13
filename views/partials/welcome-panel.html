@@ -21,13 +21,13 @@
   <!-- Features -->
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
-    {{#data}}
       <ul class="toppanel-list">
+      {{#data}}
         {{#.}}
           <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
         {{/.}}
+      {{/data}}
       </ul>
-    {{/data}}
   </div>
 {{/features}}
 
@@ -35,13 +35,13 @@
   <!-- Pro features -->
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} (£10/month){{/unless}}</a></h2>
-    {{#data}}
       <ul class="toppanel-list">
+      {{#data}}
         {{#.}}
           <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
         {{/.}}
+      {{/data}}
       </ul>
-    {{/data}}
   </div>
 {{/pro-features}}
 
@@ -50,26 +50,26 @@
     <!-- Blog  -->
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
-      {{#data}}
         <ul class="toppanel-list">
+        {{#data}}
           {{#.}}
             <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
           {{/.}}
+        {{/data}}
         </ul>
-      {{/data}}
     </div>
   {{/blog}}
   {{#help}}
     <!-- Help -->
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
-      {{#data}}
         <ul class="toppanel-list">
+        {{#data}}
           {{#.}}
             <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
           {{/.}}
+        {{/data}}
         </ul>
-      {{/data}}
     </div>
   {{/help}}
   </div>
@@ -79,13 +79,13 @@
       <!-- Twitter -->
       <div class="toppanel-section">
         <h2 class="toppanel-title"><a href="{{link}}" target="_blank" class="toppanel-link">{{title}}</a></h2>
-        {{#data}}
           <ul class="toppanel-list">
+          {{#data}}
             {{#.}}
               <li>&ldquo;{{{title}}}&rdquo; &mdash; <a href="{{link}}" target="_blank" class="toppanel-link toppanel-twitter-link">@js_bin</a></li>
             {{/.}}
+          {{/data}}
           </ul>
-        {{/data}}
       </div>
     {{/twitter}}
   </div>

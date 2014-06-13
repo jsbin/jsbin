@@ -74,7 +74,8 @@
     'vim',
     'emacs',
     'sublime',
-    'tern'
+    'tern',
+    'matchbrackets'
   ];
   var $addons = {};
 

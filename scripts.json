@@ -25,6 +25,7 @@
     "/js/editors/mobileCodeMirror.js",
     "/js/chrome/splitter.js",
     "/js/chrome/analytics.js",
+    "/js/chrome/settings.js",
     "/js/chrome/font.js",
     "/js/render/render.js",
     "/js/render/live.js",

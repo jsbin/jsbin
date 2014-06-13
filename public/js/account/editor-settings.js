@@ -78,6 +78,9 @@
   ];
   var $addons = {};
 
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
+
 
   // setup variables;
   var $textarea = $('textarea');
@@ -179,6 +182,9 @@
     }
     reloadAddons(tempAddonsKeys);
 
+    clearTimeout(saveTimer);
+    $saveStatus.addClass('show');
+
     // Save on server
     $.ajax({
       type: 'POST',
@@ -196,6 +202,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000);
       }
     });
 

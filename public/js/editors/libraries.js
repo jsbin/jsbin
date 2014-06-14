@@ -384,8 +384,8 @@ var libraries = [
     'label': 'Lo-Dash 2.4.1'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
-    'label': 'Modernizr 2.6.2'
+    'url': 'http://modernizr.com/downloads/modernizr-latest.js',
+    'label': 'Modernizr Development latest'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',

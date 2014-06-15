@@ -26,6 +26,12 @@
     html: null
   };
 
+  // default CodeMirror settings
+  var cmDefaultSettings = {
+    lineWrapping: true,
+    theme: 'jsbin'
+  }
+
   // needed for the keymaps
   $.browser = {};
   // work out the browser platform
@@ -92,6 +98,7 @@
   if (currentSettings.addons === undefined) {
     currentSettings.addons = {};
   }
+  currentSettings.editor = $.extend({}, cmDefaultSettings, currentSettings.editor);
   jsbin.settings = $.extend({}, currentSettings);
 
   var editor = window.editor = CodeMirror.fromTextArea($textarea[0], $.extend({

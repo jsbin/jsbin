@@ -29,7 +29,9 @@
   // default CodeMirror settings
   var cmDefaultSettings = {
     lineWrapping: true,
-    theme: 'jsbin'
+    theme: 'jsbin',
+    indentUnit: 2,
+    tabSize: 2
   }
 
   // needed for the keymaps

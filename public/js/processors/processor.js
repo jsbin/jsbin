@@ -346,7 +346,11 @@ var processors = jsbin.processors = (function () {
             revision: jsbin.state.revision
           },
           success: function (data) {
-            resolve(data);
+            if (data.errors) {
+              console.log(data.errors);
+            } else if (data.result) {
+              resolve(data.result);
+            }
           },
           error: function (jqxhr) {
             reject(jqxhr.responseText);

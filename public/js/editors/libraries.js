@@ -271,6 +271,11 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
+    'label': 'Angular 1.2.14 Uncompressed',
+    'group': 'Angular'
+  },
+  {
     'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js',
     'label': 'Angular 1.0.7 Stable',
     'group': 'Angular'

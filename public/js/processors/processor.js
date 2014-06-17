@@ -335,12 +335,12 @@ var processors = jsbin.processors = (function () {
         ready();
         // });
       },
-      handler: function (source, resolve, reject) {
+      handler: throttle(function (source, resolve, reject) {
         $.ajax({
           type: 'post',
           url: '/processor',
           data: {
-            language: 'sass-with-compass',
+            language: 'scss',
             source: source,
             url: jsbin.state.code,
             revision: jsbin.state.revision
@@ -356,6 +356,7 @@ var processors = jsbin.processors = (function () {
             reject(jqxhr.responseText);
           }
         });
+        // RS: keep this as it's the client side version of SCSS support...
         // Sass.compile(source, function (result) {
         //   if (typeof result !== 'string') {
         //     reject(new Error('Error on line ' + result.line + ':\n' + result.message));
@@ -363,6 +364,37 @@ var processors = jsbin.processors = (function () {
         //     resolve(result.trim());
         //   }
         // });
+      }, 1000),
+    }),
+
+    sass: createProcessor({
+      id: 'sass',
+      target: 'sass',
+      extensions: ['sass'],
+      init: function (ready) {
+        ready();
+      },
+      handler: function (source, resolve, reject) {
+        $.ajax({
+          type: 'post',
+          url: '/processor',
+          data: {
+            language: 'sass',
+            source: source,
+            url: jsbin.state.code,
+            revision: jsbin.state.revision
+          },
+          success: function (data) {
+            if (data.errors) {
+              console.log(data.errors);
+            } else if (data.result) {
+              resolve(data.result);
+            }
+          },
+          error: function (jqxhr) {
+            reject(jqxhr.responseText);
+          }
+        });
       }
     }),
 

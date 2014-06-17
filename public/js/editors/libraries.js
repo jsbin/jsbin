@@ -99,8 +99,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/dist/css/bootstrap.css',
-      'http://getbootstrap.com/dist/js/bootstrap.js'
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -108,9 +108,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap.css',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css',
-      'http://getbootstrap.com/2.3.2/assets/js/bootstrap.js'
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap 2.3.2',
     'group': 'Bootstrap'
@@ -272,6 +271,11 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
+    'label': 'Angular 1.2.14 Uncompressed',
+    'group': 'Angular'
+  },
+  {
     'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js',
     'label': 'Angular 1.0.7 Stable',
     'group': 'Angular'
@@ -385,8 +389,8 @@ var libraries = [
     'label': 'Lo-Dash 2.4.1'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
-    'label': 'Modernizr 2.6.2'
+    'url': 'http://modernizr.com/downloads/modernizr-latest.js',
+    'label': 'Modernizr Development latest'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',

@@ -16,6 +16,9 @@
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
   <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
+{{#feature request "welcomePanel"}}
+  {{> welcome_panel}}
+{{/feature}}
 <div id="control">
   <div class="control">
     <div id="menuinfo"><p></p></div>
@@ -575,6 +578,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+{{#feature request "welcomePanel"}}
+  <script src="{{static}}/js/chrome/welcome-panel.js{{cacheBust}}"></script>
+{{/feature}}
 </body>
 </html>
 

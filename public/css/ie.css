@@ -19,3 +19,25 @@ div {
 .fake-dropdown:after {
   content: url(/images/down-arrow.png); 
 }
+
+/* toppanel */
+a.toppanel-logo {
+	position: relative;
+	left: -10px;
+	top: 237px;
+	width: 20px;
+}
+.toppanel a.toppanel-logo {
+	position: relative;
+	left: 65px;
+	top: 0;
+	width: 100px;
+}
+.toppanel-button-dropdown:after {
+	text-align: center;
+}
+.toppanel-button-disabled {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+}

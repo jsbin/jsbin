@@ -1,0 +1,14 @@
+<link rel="stylesheet" type="text/css" href="{{static}}/css/preview.css">
+<div id="__jsbin" style="display: block !important" class="name header anon">
+  <p>Page was created by an anonymous JS Bin user &ndash; <a target="_top" href="https://github.com/jsbin/jsbin/issues/new?title=Abuse%20Report%20on%20{{code_id_path}}&amp;body=The%20following%20url%20is%20suspected%20of%20abuse%20of%20JS%20Bin's%20use:%0A%0A{{code_id_path}}%0A%0A![http://jsbin-screenshots.herokuapp.com/?url={{code_id_path}}](http://jsbin-screenshots.herokuapp.com/?url={{code_id_path}})%0A%0ADetail%20of%20abuse:%0A%0A">Report Abuse</a></p>
+  <p class="right">
+    If this is your bin, you can <a href="{{root}}/register" target="_top">register</a> to remove this message
+    <a class="button" href="{{code_id_path}}/edit" target="_top"><img src="{{static}}/images/jsbin_16.png"> Edit this bin</a>
+    <a id="close" class="button icon icon-x" href="http://jsbin.com/help/remove-bin-preview-frame" target="_top"></a>
+  </p>
+</div>
+<script>
+document.getElementById('close').onclick = function (event) {
+  window.postMessage('hide', '*');
+};
+</script>

@@ -1,4 +1,5 @@
 logs
+tmp/*
 logs/*
 config.*.json
 public/js/jsbin*.js

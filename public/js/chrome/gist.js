@@ -48,9 +48,19 @@ var Gist = (function () { // jshint ignore:line
    */
 
   $('a.export-as-gist').click(function () {
+    
+    // set the Gist's description by reading this bin's description meta tag from the HTML editor
+    var description = '';
+    try {
+        description = editors.html.getCode().match(/<meta.*name="description".*\/>/i)[0].match(/content="(.*)"/i)[1];
+    } catch(e) {}
+    
     var gist = {
       public: true,
-      files: {}
+      description: description,
+      files: {
+        'README.md': {content: '-'} // JERVIS - bl.ocks.org README convention
+      }
     };
     var panels = [
       { panel: 'html' },
@@ -71,8 +81,17 @@ var Gist = (function () { // jshint ignore:line
       if (processor && processor.extensions) {
         ext = processor.extensions[0] || processor.name;
       }
+      
+      // JERVIS exporting a coffee to gist should also compile it in js
+      if (ext === 'coffee') {
+         gist.files['index.js'] = {
+           content: CoffeeScript.compile(code)
+         };
+      }
+      
       // Build a file name
-      var file = ['jsbin', (jsbin.state.code || 'untitled'), ext].join('.');
+      // var file = ['jsbin', (jsbin.state.code || 'untitled'), ext].join('.');
+      var file = 'index.' + ext; // JERVIS - bl.ocks.org file name convention
       gist.files[file] = {
         content: code
       };

@@ -1708,7 +1708,7 @@ ul.flat li {
 }
 
 #control > *, a {
-  color: #232323;
+  color: #DDD;
   text-shadow: #fff 0 1px 1px;
 }
 
@@ -3164,7 +3164,7 @@ input {
 
 a.active {
   background-color: #EBF3FF;
-  background-color: hsl(215, 100%, 96%);
+  background-color: hsl(215, 24%, 37%); /* JERVIS default */
   text-shadow: 0 1px 0 rgba(255,255,255,0.5);
   border-top: 1px solid #AAA;
   border-left: 1px solid #AAA;
@@ -3346,9 +3346,9 @@ a.active:hover {
 .dropdownmenu,
 .dropdowncontent {
   /* margin: 3px 5px; */
-  background: white;
+  background: hsl(0, 0%, 33%);
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
-  border: 1px solid #CCC;
+  border: 1px solid rgb(61, 61, 61);
   height: auto;
   /* border-radius: 5px; */
   text-align: left;
@@ -3483,6 +3483,7 @@ left: 50%;
   line-height: 19px;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid hsl(0, 0%, 80%);
+  border-color: rgb(61, 61, 61) !important;
 }
 
 #panels .button.active {

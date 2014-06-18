@@ -340,7 +340,7 @@ var processors = jsbin.processors = (function () {
           type: 'post',
           url: '/processor',
           data: {
-            language: 'scss-with-compass',
+            language: 'scss',
             source: source,
             url: jsbin.state.code,
             revision: jsbin.state.revision
@@ -379,7 +379,7 @@ var processors = jsbin.processors = (function () {
           type: 'post',
           url: '/processor',
           data: {
-            language: 'sass-with-compass',
+            language: 'sass',
             source: source,
             url: jsbin.state.code,
             revision: jsbin.state.revision

@@ -28,13 +28,17 @@
     panels: [],
     includejs: true,
     focusedPanel: 'html',
-    jshint: true
+    jshint: true,
+    assetUrl: '',
   };
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
   $.extend(currentSettings, getCurrentSettings());
   var panels = ['html', 'css', 'javascript', 'console', 'live'];
   var $panels = {};
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
+  var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
   var hints = ['js'];
   var $hints = {};
 
@@ -71,6 +75,7 @@
   // Listeners
   $(':checkbox').on('change', saveSettings);
   $('select').on('change', saveSettings);
+  $('input').on('blur', saveSettings);
 
   function saveSettings() {
     // Merge all our settings together
@@ -89,9 +94,13 @@
 
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
+    localStorageSettings.assetUrl = $assetUrl.val();
 
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);
+
+    clearTimeout(saveTimer);
+    $saveStatus.addClass('show');
 
     // Save on server
     $.ajax({
@@ -111,6 +120,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000)
       }
     });
   }

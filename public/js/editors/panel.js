@@ -118,7 +118,11 @@ var Panel = function (name, settings) {
 
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {
-      $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      if (jsbin.saveDisabled) {
+        $document.trigger('codeChange.live', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      } else {
+        $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      }
       return true;
     });
 
@@ -193,6 +197,9 @@ Panel.prototype = {
   virgin: true,
   visible: false,
   show: function (x) {
+    if (this.visible) {
+      return;
+    }
     $document.trigger('history:close');
     // check to see if there's a panel to the left.
     // if there is, take it's size/2 and make this our
@@ -525,7 +532,7 @@ function populateEditor(editor, panel) {
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];
-    } else if (saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
+    } else if (!template.post && saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);

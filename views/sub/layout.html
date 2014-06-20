@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="{{#if flash_tip}}showtip{{/if}}">
   <head>
     <meta charset="utf-8">
     <title>Account Management</title>
@@ -20,12 +20,19 @@
       <header>
       <div class="inner"><a id="back" href="{{root}}"><span class="morewords">Back to JS Bin</span></a>
         <nav>
+          <span class="status">Settings saved</span>
           <a class="selected" href="{{root}}/account">Account</a>
           <a href="{{root}}/blog">Blog</a>
           <a href="{{root}}/help">Help</a>
         </nav>
       </div>
       </header>
+      <div id="tip" class="{{#if flash_tip_type}}{{flash_tip_type}}{{/if}}{{#unless flash_tip_type}} notification{{/unless}}">
+        <p>
+          {{#if flash_tip}}{{{flash_tip}}}{{/if}}
+        </p>
+        <a class="dismiss" href="#">Dismiss x</a>
+      </div>
       <div id="body">
         {{{body}}}
       </div>
@@ -51,5 +58,10 @@
       </ul>
     </div>
     </footer>
+    <script>
+      var $document = $(document); // for chrome/tips.js
+    </script>
+    <script src="{{static}}/js/chrome/last-bin.js{{cacheBust}}"></script>
+    <script src="{{static}}/js/chrome/tips.js{{cacheBust}}"></script>
   </body>
 </html>

@@ -3,6 +3,7 @@
 var cmd = require('commander'),
     path = require('path'),
     fs = require('fs'),
+    jsbin,
     app;
 
 function error(msg) {
@@ -39,7 +40,7 @@ cmd.option('-l --logger <default|short|tiny|dev|none>', 'server logger option', 
   } else {
     error('-l logger must be one of "' + valid.join('" or "') + '"');
   }
-})
+});
 
 cmd.option('-e --env <development>', 'deployment environment', function (env) {
   process.env.NODE_ENV = env;
@@ -47,5 +48,6 @@ cmd.option('-e --env <development>', 'deployment environment', function (env) {
 
 cmd.parse(process.argv);
 
-app = require('../lib/app.js');
+jsbin  = require('../lib/app.js');
+app = jsbin.app;
 app.connect();

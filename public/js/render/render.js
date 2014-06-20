@@ -79,7 +79,7 @@ var getPreparedCode = (function () {
 
     // set the flags *before* we tweak the code with loop protection, etc.
     hasJS = !!js.trim();
-    hasCSS = !!$.trim(css);
+    hasCSS = !!css.trim();
 
     // Rewrite loops to detect infiniteness.
     // This is done by rewriting the for/while/do loops to perform a check at

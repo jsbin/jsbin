@@ -1,14 +1,15 @@
 {{> account_sidebar}}
 
-<h1>Your personal details</h1>
+<h1>Your profile</h1>
 
-<section id="content">
-  <form class="login" method="post" action="{{root}}/sethome">
+<section id="content" {{#if user.pro}}class="pro"{{/if}}>
+  <form class="login" method="post" action="/account/update">
     <p class="loginFeedback"></p>
 
     <div>
       <label for="name">Username</label>
       <input id="name" name="username" type="text" value="{{user.name}}" disabled>
+      {{#if user.pro}}<sup class="pro-badge">Pro</sup>{{/if}}
     </div>
 
     <div>
@@ -18,13 +19,24 @@
 
     <div>
       <label for="key">Password</label>
-      <input id="key" name="password" type="password">
+      <input id="key" name="password" type="password" autocomplete="false">
     </div>
-    
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">
   </form>
-</section>
 
+  <h2>Third party applications</h2>
+  <ul>
+  {{#feature request "github"}}
+    <li class="link-container"><strong>Use Github for logging in</strong> &ndash; <a href="/auth/github">link your Github account</a></li>
+  {{/feature}}
+
+  {{#feature request "dropbox"}}
+    <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
+  {{/feature}}
+  </ul>
+</section>
+<link href="{{static}}/css/account-profile.css" rel="stylesheet" type="text/css"/>
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{static}}/js/account/account-settings.js{{cacheBust}}"></script>

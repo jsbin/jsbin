@@ -120,7 +120,7 @@ var Panel = function (name, settings) {
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     panel.editor.on('highlightLines', function () {
-      panels.highlightLines.apply(this, arguments);
+      window.location.hash = panels.getHighlightLines();
     });
 
     // Bind events using CM3 syntax

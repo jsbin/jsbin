@@ -306,7 +306,7 @@ panels.savecontent = function () {
   }
 };
 
-panels.highlightLines = function (cm, lines, string) {
+panels.getHighlightLines = function () {
   'use strict';
   var hash = [];
   var lines = '';
@@ -319,13 +319,8 @@ panels.highlightLines = function (cm, lines, string) {
         hash.push(name.substr(0, 1).toUpperCase() + ':L' + lines);
       }
     }
-
-    if (hash.length) {
-      window.location.hash = hash.join(',');
-    } else {
-      window.location.hash = '';
-    }
   }
+  return hash.join(',');
 };
 
 panels.focus = function (panel) {

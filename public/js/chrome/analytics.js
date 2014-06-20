@@ -119,6 +119,16 @@ var analytics = {
   },
   runconsole: function (from) {
     analytics.track(from || 'button', 'run console');
+  },
+  welcomePanelState: function (state) {
+    var s = 'close';
+    if (state) {
+      s = 'open';
+    }
+    analytics.track('state', 'welcome-panel', s);
+  },
+  welcomePanelLink: function (url) {
+    analytics.track('welcome-panel-link', url);
   }
 };
 

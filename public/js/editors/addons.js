@@ -11,7 +11,8 @@
     fold: false,
     sublime: false,
     tern: false,
-    activeline: true
+    activeline: true,
+    matchbrackets: false
   };
 
   if (!jsbin.settings.addons) {
@@ -102,7 +103,11 @@
           cm.foldCode(cm.getCursor());
         }});
         setOption(cm, 'foldGutter', true);
-        setOption(cm, 'gutters', ['CodeMirror-linenumbers', 'CodeMirror-foldgutter']);
+        var gutters = cm.getOptions('gutters');
+        console.log('gutters', gutters);
+        gutters.push('CodeMirror-linenumbers');
+        gutters.push('CodeMirror-foldgutter');
+        setOption(cm, 'gutters', gutters);
       }
     },
     sublime: {
@@ -161,6 +166,15 @@
       },
       done: function(cm) {
         setOption(cm, 'styleActiveLine', true);
+      }
+    },
+    matchbrackets: {
+      url: [],
+      test: function() {
+        return CodeMirror.defaults.matchBrackets !== undefined;
+      },
+      done: function(cm) {
+        setOption(cm, 'matchBrackets', true);
       }
     }
   };

@@ -35,7 +35,7 @@
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
     "async": "~0.1.22",
-    "lynx": "0.0.11",
+    "lynx": "~0.1.1",
     "file-db": "0.0.2",
     "underscore": "~1.4.4",
     "passport": "~0.1.17",

@@ -42,6 +42,7 @@ CodeMirror.commands.snippets = function (cm) {
 };
 
 var Panel = function (name, settings) {
+  'use strict';
   var panel = this,
       showPanelButton = true,
       $panel = null,
@@ -93,7 +94,9 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      // gutters: ['line-highlight'],
+      theme: jsbin.settings.theme || 'jsbin',
+      highlighLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -116,10 +119,14 @@ var Panel = function (name, settings) {
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
+    panel.editor.on('highlightLines', function () {
+      window.location.hash = panels.getHighlightLines();
+    });
+
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {
       if (jsbin.saveDisabled) {
-        $document.trigger('codeChange.live', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);  
+        $document.trigger('codeChange.live', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       } else {
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       }
@@ -532,7 +539,7 @@ function populateEditor(editor, panel) {
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];
-    } else if (saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
+    } else if (!template.post && saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);

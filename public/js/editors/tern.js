@@ -2,12 +2,16 @@
   'use strict';
 
   /*globals $, jsbin, CodeMirror, template, ternDefinitions, ternBasicDefs */
+  if (!jsbin.settings.addons.tern) {
+    return;
+  }
 
   var ternServer;
   var ternLoaded = {};
 
   var initTern = function(editor, defs){
     var keyMap = {
+      'Ctrl-Q': function(cm) { ternServer.selectName(cm); },
       'Ctrl-I': function(cm) { ternServer.showType(cm); },
       'Ctrl-Space': function(cm) { ternServer.complete(cm); }
     };
@@ -90,7 +94,7 @@
       if (cm.options.indentWithTabs) {
         indent = '\t';
       } else {
-        indent = new Array(cm.options.indentUnit + 1).join(' ');
+        indent = new Array(cm.options.indentUnit * 1 + 1).join(' ');
       }
 
       if (tok.string === ';') {

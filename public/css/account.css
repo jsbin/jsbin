@@ -184,3 +184,9 @@ span.mini-desc a {
   line-height: 18px;
   margin-bottom: 1em;
 }
+
+#jshintOptions {
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
+  font-size: 18px;
+  line-height: 1.2em;
+}

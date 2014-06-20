@@ -470,6 +470,14 @@ $('a.deletebin').on('click', function (e) {
   }
 });
 
+$('a.archivebin').on('click', function (e) {
+  e.preventDefault();
+  archive();
+});
 
+$('a.unarchivebin').on('click', function (e) {
+  e.preventDefault();
+  archive(false);
+});
 
 }());

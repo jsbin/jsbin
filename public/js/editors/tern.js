@@ -2,6 +2,9 @@
   'use strict';
 
   /*globals $, jsbin, CodeMirror, template, ternDefinitions, ternBasicDefs */
+  if (!jsbin.settings.addons.tern) {
+    return;
+  }
 
   var ternServer;
   var ternLoaded = {};
@@ -90,7 +93,7 @@
       if (cm.options.indentWithTabs) {
         indent = '\t';
       } else {
-        indent = new Array(cm.options.indentUnit + 1).join(' ');
+        indent = new Array(cm.options.indentUnit * 1 + 1).join(' ');
       }
 
       if (tok.string === ';') {

@@ -91,10 +91,6 @@ jsbin.ie = (function(){
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
   localStorage.setItem('settings', '{}');
-  if (!jsbin.custom) {
-    window.location = jsbin.root + '/welcome/1/edit?html,live'
-      + (location.search.indexOf('api=') !== -1 ?  ',&' + location.search.substring(1) : '');
-  }
 }
 
 if (!jsbin.settings.editor) {
@@ -119,6 +115,10 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
     xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
   }
 });
+
+jsbin.owner = function () {
+  return jsbin.user && jsbin.user.name && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
+};
 
 jsbin.getURL = function (withoutRoot, share) {
   var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),

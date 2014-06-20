@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.13.30",
+  "version": "3.13.35",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -35,7 +35,7 @@
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
     "async": "~0.1.22",
-    "lynx": "0.0.11",
+    "lynx": "~0.1.1",
     "file-db": "0.0.2",
     "underscore": "~1.4.4",
     "passport": "~0.1.17",
@@ -54,7 +54,8 @@
     "express-cookie-blacklist": "~2.0.0",
     "passport-dropbox-oauth2": "~0.1.5",
     "handlebars": "~2.0.0-alpha.2",
-    "dropbox": "~0.10.2"
+    "dropbox": "~0.10.2",
+    "lz-string": "~1.3.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -26,6 +26,14 @@
     html: null
   };
 
+  // default CodeMirror settings
+  var cmDefaultSettings = {
+    lineWrapping: true,
+    theme: 'jsbin',
+    indentUnit: 2,
+    tabSize: 2
+  }
+
   // needed for the keymaps
   $.browser = {};
   // work out the browser platform
@@ -74,9 +82,13 @@
     'vim',
     'emacs',
     'sublime',
-    'tern'
+    'tern',
+    'matchbrackets'
   ];
   var $addons = {};
+
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
 
 
   // setup variables;
@@ -88,6 +100,7 @@
   if (currentSettings.addons === undefined) {
     currentSettings.addons = {};
   }
+  currentSettings.editor = $.extend({}, cmDefaultSettings, currentSettings.editor);
   jsbin.settings = $.extend({}, currentSettings);
 
   var editor = window.editor = CodeMirror.fromTextArea($textarea[0], $.extend({
@@ -138,6 +151,7 @@
     editor.setOption('lineNumbers', $lineNumbers.prop('checked'));
     editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
     editor.setOption('tabSize', $tabSize.val());
+    editor.setOption('indentUnit', $tabSize.val());
     editor.setOption('theme', $theme.val());
     $CodeMirror.css('font-size', $fontsize.val()+'px');
     editor.refresh();
@@ -179,6 +193,9 @@
     }
     reloadAddons(tempAddonsKeys);
 
+    clearTimeout(saveTimer);
+    $saveStatus.addClass('show');
+
     // Save on server
     $.ajax({
       type: 'POST',
@@ -196,6 +213,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000);
       }
     });
 

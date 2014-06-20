@@ -200,13 +200,14 @@ header nav a {
 
 header nav a.selected:before {
   position: absolute;
-  top: 42px;
+  top: 45px; /* 42px */
   left: 35%;
   /* border-left: solid 1px #ccc; */
   /* border-top: solid 1px #ccc; */
   width: 1.1em;
   height: 1.1em;
   -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
   background: #fff;
   content: '';
 }
@@ -253,6 +254,8 @@ article p {
 
 nav {
   float: right;
+  width: 50%;
+  text-align: right;
 }
 
 .button.action {

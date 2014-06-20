@@ -131,6 +131,10 @@
 
     // Save on server
     $.ajax({
+      beforeSend: function () {
+        clearTimeout(saveTimer);
+        $saveStatus.addClass('show');
+      },
       url: 'editor',
       type: 'POST',
       dataType: 'json',

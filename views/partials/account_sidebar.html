@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="{{static}}/css/account.css{{cacheBust}}">
 <div id="sidebar">
-	<div class="sidebar-btn-group">
-		<a class="sidebar-btn" href="{{root}}/account/profile">Profile</a>
+  <div class="sidebar-btn-group">
+    <a class="sidebar-btn" href="{{root}}/account/profile">Profile</a>
     <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
     <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
     <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
   </div>
   {{#feature request "upgrade"}}
-    <a class="sidebar-btn" href="{{httproot}}/upgrade">Upgrade</a>
+    <a class="sidebar-btn" href="{{root}}/account/upgrade">Upgrade</a>
   {{/feature}}
 </div>
 <script>

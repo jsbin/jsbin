@@ -27,8 +27,10 @@
             data-label="Upgrade">
           </script>
         </form>
-        <a class="coupon-btn" href="#">Click here if you have a code</a>
-        <input id="coupon_code" placeholder="Enter your code here" type="text"/>
+        {{#if showCoupon}}
+          <a class="coupon-btn" href="#">Click here if you have a code</a>
+          <input id="coupon_code" placeholder="Enter your code here" type="text"/>
+        {{/if}}
       </td>
     </tr>
   </tfoot>

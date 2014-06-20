@@ -561,6 +561,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   var template = {{{json_template}}};
   var jsbin = {{{jsbin}}}; tips  = {{tips}};
 </script>
+<!--[if lte IE 8]>
+<script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
+<![endif]-->
 {{#if isProduction}}
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>

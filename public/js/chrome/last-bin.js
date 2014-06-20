@@ -34,7 +34,7 @@
     var el = document.getElementById('back');
     var back = readCookie('last');
 
-    if (el && back !== null) {
+    if (el && back !== null && back !== '%2Fedit') {
       el.href = decodeURIComponent(back);
     }
   }

@@ -75,8 +75,10 @@
       .on('click', { el: $hintsOptWrapper[hints[m]] }, function(event) {
         event.data.el.toggle(this.checked);
       });
+
     hintsOptionsVal[hints[m]] = JSON.stringify(currentSettings[ hints[m] + 'hintOptions'], undefined, 2);
-    if (hintsOptionsVal[hints[m]] === '{}') {
+
+    if (hintsOptionsVal[hints[m]] === '{}' || !currentSettings[ hints[m] + 'hintOptions']) {
       hintsOptionsVal[hints[m]] = '';
     }
     $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')

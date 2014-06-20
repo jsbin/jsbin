@@ -1,11 +1,11 @@
 {
   "features": {
-    "title": "JS BIN features",
+    "title": "JS Bin features",
     "link": "http://jsbin.com/help/features",
     "data": [
       {
         "title": "Getting started with JS Bin",
-        "link": "http://jsbin.com"
+        "link": "http://jsbin.com/help/getting-started"
       },
       {
         "title": "Keyboard Shortcuts",
@@ -34,11 +34,11 @@
         "link": "http://jsbin.com/help/features"
       },
       {
-        "title": "Your own subdomain",
+        "title": "Vanity URLs",
         "link": "http://jsbin.com/help/features"
       },
       {
-        "title": "Direct support (rather that via GitHub)",
+        "title": "Read & write API",
         "link": "http://jsbin.com/help/features"
       }
     ]
@@ -48,8 +48,8 @@
     "link": "http://jsbin.com/blog",
     "data": [
       {
-        "title": "SVG support and settings live",
-        "link": "http://jsbin.com/blog/twdtw-8-svg-settings"
+        "title": "JSHint, line highlighting and more",
+        "link": "http://jsbin.com/blog/twdtw-10-jshint-highlighting-pro"
       }
     ]
   },
@@ -57,6 +57,10 @@
     "title": "Help",
     "link": "http://jsbin.com/help",
     "data": [
+      {
+        "title": "Versions: processors & more",
+        "link": "http://jsbin.com/help/versions"
+      },
       {
         "title": "Delete a bin",
         "link": "http://jsbin.com/help/delete-a-bin"
@@ -68,8 +72,8 @@
     "link": "http://twitter.com/js_bin",
     "data": [
       {
-        "title": "&hellip;and account settings is live for all now",
-        "link": "https://twitter.com/js_bin/status/471279979305918464"
+        "title": "We’re expecting to hit our 10 __millionth__ bin in around a week’s time. Wow.",
+        "link": "https://twitter.com/js_bin/status/479668198384865281"
       }
     ]
   },

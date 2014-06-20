@@ -12,6 +12,10 @@
     "user": "pro"
   },
   {
+    "name": "Read & write API access",
+    "user": "pro"
+  },
+  {
     "name": "Direct support",
     "user": "pro"
   },
@@ -24,23 +28,23 @@
     "user": "free"
   },
   {
-    "name": "Codecasting",
+    "name": "Codecasting (unlimited connections)",
     "user": "anon"
   },
   {
-    "name": "Custom starting template",
+    "name": "Live reload (unlimited connections)",
     "user": "anon"
   },
   {
-    "name": "Multiple external resources",
+    "name": "Custom starting code",
+    "user": "anon"
+  },
+  {
+    "name": "Unlimited external resources",
     "user": "anon"
   },
   {
     "name": "Custom libraries",
-    "user": "anon"
-  },
-  {
-    "name": "Remote rendering",
     "user": "anon"
   }
 ]

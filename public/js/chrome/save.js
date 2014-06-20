@@ -51,6 +51,7 @@ var $shareLinks = $('#share .link');
 $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 function updateSavedState() {
+  'use strict';
   var mapping = {
     live: 'output',
     javascript: 'js',
@@ -65,12 +66,21 @@ function updateSavedState() {
     var path = this.getAttribute('data-path');
     var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
+    var hash = panels.getHighlightLines();
+
+    if (hash) {
+      hash = '#' + hash;
+    }
+
     if (nodeName === 'A') {
       this.href = url;
     } else if (nodeName === 'INPUT') {
       this.value = url;
+      if (path === '/edit') {
+        this.value += hash;
+      }
     } else if (nodeName === 'TEXTAREA') {
-      this.value = ('<a class="jsbin-embed" href="' + url + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      this.value = ('<a class="jsbin-embed" href="' + url + hash + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
           return {
             '<': '&lt;',
             '>': '&gt;',
@@ -377,7 +387,9 @@ function saveCode(method, ajax, ajaxCallback) {
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
-          window.history.pushState(null, '', jsbin.getURL() + '/edit');
+          var hash = panels.getHighlightLines();
+          if (hash) hash = '#' + hash;
+          window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;

@@ -42,6 +42,7 @@ CodeMirror.commands.snippets = function (cm) {
 };
 
 var Panel = function (name, settings) {
+  'use strict';
   var panel = this,
       showPanelButton = true,
       $panel = null,
@@ -93,7 +94,9 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      // gutters: ['line-highlight'],
+      theme: jsbin.settings.theme || 'jsbin',
+      highlighLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -115,6 +118,10 @@ var Panel = function (name, settings) {
     });
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
+
+    panel.editor.on('highlightLines', function () {
+      window.location.hash = panels.getHighlightLines();
+    });
 
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {

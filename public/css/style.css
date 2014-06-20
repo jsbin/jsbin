@@ -4357,7 +4357,8 @@ html * {
   background: transparent;
 }
 
-.CodeMirror-activeline-background:before {
+.CodeMirror-activeline-background:before,
+.line-highlight:before {
   content: "";
   position: absolute;
   background: inherit;
@@ -4715,6 +4716,12 @@ html * {
 #profile .large-gravatar {
   float: left;
   margin-right: 10px;
+}
+
+.CodeMirror-highlight-line,
+.CodeMirror-highlight-line .CodeMirror-linenumber,
+.CodeMirror-highlight-line-background {
+  background: rgba(255, 255, 204, 0.6);
 }
 
 /* toppanel status */

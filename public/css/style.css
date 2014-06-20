@@ -4718,7 +4718,11 @@ html * {
   margin-right: 10px;
 }
 
-.line-highlight {background: rgb(255, 255, 204);}
+.CodeMirror-highlight-line,
+.CodeMirror-highlight-line .CodeMirror-linenumber,
+.CodeMirror-highlight-line-background {
+  background: rgba(255, 255, 204, 0.6);
+}
 
 /* toppanel status */
 #toppanel {

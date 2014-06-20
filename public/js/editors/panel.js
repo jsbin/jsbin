@@ -42,6 +42,7 @@ CodeMirror.commands.snippets = function (cm) {
 };
 
 var Panel = function (name, settings) {
+  'use strict';
   var panel = this,
       showPanelButton = true,
       $panel = null,
@@ -93,8 +94,9 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      gutters: ['line-highlight'],
-      theme: jsbin.settings.theme || 'jsbin'
+      // gutters: ['line-highlight'],
+      theme: jsbin.settings.theme || 'jsbin',
+      highlighLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -117,6 +119,10 @@ var Panel = function (name, settings) {
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
+    panel.editor.on('highlightLines', function () {
+      panels.highlightLines.apply(this, arguments);
+    });
+
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {
       if (jsbin.saveDisabled) {
@@ -125,26 +131,6 @@ var Panel = function (name, settings) {
         $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
       }
       return true;
-    });
-
-    panel.editor.on('gutterClick', function(cm, n, event) {
-      if (event.shiftKey) { // find other selected lines and highlight to here
-        console.log('shiftKey');
-      } else {
-        cm.clearGutter('line-highlight');
-      }
-
-      // TODO
-      // 1. Keep track of marked lines, and individually remove them
-      //    using clearGutter won't work, because we're manually setting classes
-      // 2. Use #html:L30-L20
-      var info = cm.lineInfo(n);
-      cm.setGutterMarker(n, 'line-highlight', info.gutterMarkers ? null : document.createElement('div'));
-      if (info.gutterMarkers) {
-        cm.removeLineClass(n, 'wrap', 'line-highlight');
-      } else {
-        cm.addLineClass(n, 'wrap', 'line-highlight');
-      }
     });
 
     panel.editor.on('focus', function () {

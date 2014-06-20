@@ -11,6 +11,7 @@
 
   var initTern = function(editor, defs){
     var keyMap = {
+      'Ctrl-Q': function(cm) { ternServer.selectName(cm); },
       'Ctrl-I': function(cm) { ternServer.showType(cm); },
       'Ctrl-Space': function(cm) { ternServer.complete(cm); }
     };

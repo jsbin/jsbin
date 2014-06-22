@@ -221,6 +221,11 @@ $('#runconsole').click(function () {
   return false;
 });
 
+$('#clearconsole').click(function () {  
+  jsconsole.clear();
+  return false;
+});
+
 $('#showhelp').click(function () {
   $body.toggleClass('keyboardHelp');
   keyboardHelpVisible = $body.is('.keyboardHelp');

@@ -210,9 +210,9 @@ input.invalid {
   font-size: 14px;
   margin: 3px 1px 4px 1px;
   line-height: 16px;
-  background: rgb(216, 216, 216);
+  background: rgba(216, 216, 216, 0.5);
   padding: 3px;
-  border-right: 1px solid rgb(216, 216, 216);
+  border-right: 1px solid rgba(216, 216, 216, 0.5);
 }
 
 .disabled #vatiso {

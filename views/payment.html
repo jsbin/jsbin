@@ -1,0 +1,52 @@
+<link href="{{static}}/css/card.css" rel="stylesheet" type="text/css"/>
+{{> account_sidebar}}
+
+<h1>Your payment details</h1>
+
+<section id="content">
+  <form class="login" method="post" action="/account/upgrade/pay">
+    <p class="feedback"></p>
+
+    <div class="card-wrapper"></div>
+
+    <div class="form-container">
+      <div>
+        <label for="cardnumber">Card number</label>
+        <input id="cardnumber" placeholder="Card number" type="text" name="number">
+      </div>
+
+      <div>
+        <label for="fullname">Full name</label>
+        <input id="fullname" placeholder="Full name" type="text" name="name">
+      </div>
+
+      <div>
+        <label for="expiry">Expiry</label>
+        <input id="expiry" placeholder="MM/YY" type="text" name="expiry">
+      </div>
+
+      <div>
+        <label for="cvc">CVC</label>
+        <input id="cvc" placeholder="CVC" type="text" name="cvc">
+      </div>
+
+    </div>
+
+    <div>
+      <label for="country">Country</label>
+      {{> country}}
+    </div>
+
+    <div>
+      <label for="vat">VAT number*</label>
+      <input id="vat" name="vat" type="text" value="{{user.vat}}">
+      <button id="validateVat">Validate</button>
+      <br>
+      <small>VAT is not applicable outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small>
+    </div>
+
+
+</section>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/vendor/jquery.card.js"></script>
+<script src="{{static}}/js/account/pay.js"></script>

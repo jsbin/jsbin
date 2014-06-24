@@ -13,7 +13,7 @@
 <script>
 var links = document.getElementById('sidebar').getElementsByTagName('a');
 [].forEach.call(links, function (el) {
-  if (el.href.indexOf(window.location.pathname) !== -1) {
+  if (window.location.pathname.indexOf(el.pathname) !== -1) {
     el.className += ' selected';
   }
 });

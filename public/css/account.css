@@ -196,3 +196,34 @@ input.valid {
 input.invalid {
   background: #FF4136;
 }
+
+.disabled {
+  opacity: 0.5;
+}
+
+#vatiso {
+  position: absolute;
+  background: rgb(255, 255, 255);
+  color: black;
+  z-index: 1;
+  font-family: sans-serif;
+  font-size: 14px;
+  margin: 3px 1px 4px 1px;
+  line-height: 16px;
+  background: rgb(216, 216, 216);
+  padding: 3px;
+  border-right: 1px solid rgb(216, 216, 216);
+}
+
+.disabled #vatiso {
+  display: none;
+}
+
+#vat {
+  padding-left: 30px;
+  width: 180px;
+}
+
+select#country {
+  width: 180px;
+}

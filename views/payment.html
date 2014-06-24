@@ -37,8 +37,9 @@
       {{> country}}
     </div>
 
-    <div>
+    <div class="disabled">
       <label for="vat">VAT number*</label>
+      <span id="vatiso"></span>
       <input id="vat" name="vat" type="text" value="{{user.vat}}">
       <button id="validateVat">Validate</button>
       <br>

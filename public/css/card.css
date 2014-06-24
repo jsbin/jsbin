@@ -203,7 +203,7 @@
   perspective: 1000px;
   width: 350px;
   height: 200px;
-  margin: auto;
+  margin: 0 70px 30px;
   z-index: 1;
   position: relative; }
 

@@ -197,8 +197,8 @@ function embed(link) {
   var iframe = document.createElement('iframe'),
       resize = document.createElement('div'),
       url = link.href.replace(/edit/, 'embed');
-  iframe.src = url;
-  iframe._src = url; // support for google slide embed
+  iframe.src = url.split('&')[0];
+  iframe._src = url.split('&')[0]; // support for google slide embed
   iframe.className = link.className; // inherit all the classes from the link
   iframe.id = link.id; // also inherit, giving more style control to the user
   iframe.style.border = '1px solid #aaa';

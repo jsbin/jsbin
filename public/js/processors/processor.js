@@ -398,6 +398,54 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    // myth: createProcessor({
+    //   id: 'myth',
+    //   target: 'css',
+    //   extensions: ['myth'],
+    //   init: function (ready) {
+    //     ready();
+    //   },
+    //   handler: function (source, resolve, reject) {
+    //     $.ajax({
+    //       type: 'post',
+    //       url: '/processor',
+    //       data: {
+    //         language: 'myth',
+    //         source: source,
+    //         url: jsbin.state.code,
+    //         revision: jsbin.state.revision
+    //       },
+    //       success: function (data) {
+    //         if (data.errors) {
+    //           console.log(data.errors);
+    //         } else if (data.result) {
+    //           resolve(data.result);
+    //         }
+    //       },
+    //       error: function (jqxhr) {
+    //         reject(jqxhr.responseText);
+    //       }
+    //     });
+    //   }
+    // }),
+
+    myth: createProcessor({
+      id: 'myth',
+      target: 'css',
+      extensions: ['myth'],
+      url: jsbin.static + '/js/vendor/myth-1.0.4.min.js',
+      init: function (ready) {
+        ready();
+      },
+      handler: function (source, resolve, reject) {
+        try {
+          resolve(myth(source));
+        } catch (e) {
+          reject(e);
+        }
+      }
+    }),
+
     stylus: createProcessor({
       id: 'stylus',
       target: 'css',

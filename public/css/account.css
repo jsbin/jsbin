@@ -1,3 +1,53 @@
+@font-face {
+  font-family: 'icomoon';
+  src:url('../font/account.eot?-p4vtht');
+  src:url('../font/account.eot?#iefix-p4vtht') format('embedded-opentype'),
+    url('../font/account.woff?-p4vtht') format('woff'),
+    url('../font/account.ttf?-p4vtht') format('truetype'),
+    url('../font/account.svg?-p4vtht#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-mail:before {
+  content: "\e002";
+}
+.icon-lock:before {
+  content: "\e007";
+}
+.icon-info-circle:before {
+  content: "\f05a";
+}
+.icon-calendar-o:before {
+  content: "\f133";
+}
+.icon-credit:before {
+  content: "\e600";
+}
+.icon-happy:before {
+  content: "\e601";
+}
+.icon-smiley:before {
+  content: "\e602";
+}
+.icon-calendar:before {
+  content: "\e603";
+}
+
 #sidebar {
   width:200px;
   float:left;
@@ -221,9 +271,131 @@ input.invalid {
 
 #vat {
   padding-left: 30px;
-  width: 180px;
+  width: 200px;
+}
+
+#vat.validating {
+  background: url(/images/loader.svg) no-repeat right;
+}
+
+button {
+  font-size: 13px;
 }
 
 select#country {
-  width: 180px;
+  width: 200px;
+}
+
+.payment-errors:empty {
+  padding: 0;
+}
+
+.payment-errors {
+  padding: 10px;
+  color: #fff;
+  background: #2ECC40;
+  line-height: 24px;
+}
+
+.payment-errors b {
+  font-size: 16px;
+  line-height: 29px;
+  display: inline-block;
+  /* vertical-align: initial; */
+}
+
+input.invalid {
+  border: 2px solid red;
+}
+
+.validation.failed:after {
+  color: red;
+  content: 'Validation failed';
+}
+
+.validation.passed:after {
+  color: green;
+  content: 'Validation passed';
+}
+
+.carddetails {
+  margin-left: 200px;
+  width: 200px;
+}
+
+.input {
+  border: 1px solid #ccc;
+}
+
+.inputWithImage {
+  position: relative;
+  display: inline-block;
+}
+
+.inputWithImage b {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  margin-left: 5px;
+  font-size: 14px;
+  line-height: 28px;
+  color: rgb(147, 147, 147);
+  left: 0;
+}
+
+.inputWithImage.valid b {
+  color: green;
+}
+
+.inputWithImage.invalid b {
+  color: red;
+}
+
+.inputWithImage input {
+  padding-left: 24px;
+  width: 200px;
+}
+
+#email {
+  /*width: 200px;*/
+}
+
+#expiry {
+  width: 110px;
+}
+
+#cvc {
+  width: 86px;
+}
+
+
+div.vat {
+/*   margin-top: 30px; */
+}
+
+div.vat small {
+  width: 500px;
+  display: block;
+  margin-left: 90px;
+  margin-top: 10px;
+}
+
+div.options label {
+  float: left;
+  font-weight: normal;
+  margin-left: 0;
+  width: auto;
+}
+
+div.buyer-type {
+  margin: 20px 0;
+}
+
+#pay {
+  display: block;
+  margin: 40px 250px;
+}
+
+.business {
+  /*display: none;*/
 }

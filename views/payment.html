@@ -1,53 +1,78 @@
-<link href="{{static}}/css/card.css" rel="stylesheet" type="text/css"/>
 {{> account_sidebar}}
 
 <h1>Your payment details</h1>
 
 <section id="content">
-  <form class="login" method="post" action="/account/upgrade/pay">
-    <p class="feedback"></p>
-
-    <div class="card-wrapper"></div>
+  <form id="payment-form" method="post" action="/account/upgrade/pay">
+    <p class="payment-errors"></p>
 
     <div class="form-container">
       <div>
-        <label for="cardnumber">Card number</label>
-        <input id="cardnumber" placeholder="Card number" type="text" name="number">
+        <label for="email">Email</label>
+        <span class="inputWithImage">
+          <b class="icon-mail"></b>
+          <input id="email" value="{{ user.email }}" autofocus placeholder="you@example.com" type="email" name="email" required>
+        </span>
       </div>
 
       <div>
-        <label for="fullname">Full name</label>
-        <input id="fullname" placeholder="Full name" type="text" name="name">
+        <label for="cardnumber">Card details</label>
+        <div class="carddetails">
+          <span class="inputWithImage">
+            <b class="icon-credit"></b>
+            <input id="cardnumber" placeholder="Card number" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
+          </span>
+          <span class="inputWithImage">
+            <b class="icon-calendar-o"></b>
+            <input id="expiry" placeholder="MM / YY" type="text" name="expiry" size="7" required x-autocompletetype="cc-exp" maxlength="9" data-stripe="expiry">
+          </span>
+          <span class="inputWithImage">
+            <b class="icon-lock"></b>
+            <input id="cvc" placeholder="CVC" type="text" name="cvc" size="4" pattern="\d*" x-autocompletetype="cc-csc" required  autocomplete="off" data-stripe="cvc">
+          </span>
+        </div>
       </div>
-
-      <div>
-        <label for="expiry">Expiry</label>
-        <input id="expiry" placeholder="MM/YY" type="text" name="expiry">
-      </div>
-
-      <div>
-        <label for="cvc">CVC</label>
-        <input id="cvc" placeholder="CVC" type="text" name="cvc">
-      </div>
-
     </div>
+
+    <div class="buyer-type">
+      <span class="label">Paying as:</span>
+      <div class="options">
+        <label for="individual"><input id="individual" type="radio" name="buyer_type" checked value="individual"> Individal</label>
+        <label for="business"><input id="business" type="radio" name="buyer_type" value="business"> Business</label>
+      </div>
+    </div>
+
+    <div class="business">
+      <div>
+        <label for="country">Country</label>
+        <select name="country" id="country" data-stripe="address_country">
+          {{> country}}
+        </select>
+      </div>
+
+      <div class="disabled vat">
+        <label for="vat">VAT number</label>
+        <span id="vatiso"></span>
+        <input id="vat" name="vat" type="text" value="{{user.vat}}">
+        <button id="validateVat">Validate</button>
+        <br>
+        <small>VAT is not applicable outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small>
+      </div>
+    </div>
+
 
     <div>
-      <label for="country">Country</label>
-      {{> country}}
-    </div>
-
-    <div class="disabled">
-      <label for="vat">VAT number*</label>
-      <span id="vatiso"></span>
-      <input id="vat" name="vat" type="text" value="{{user.vat}}">
-      <button id="validateVat">Validate</button>
-      <br>
-      <small>VAT is not applicable outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small>
+      <button id="pay">Upgrade!</button>
     </div>
 
 
 </section>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('{{stripe.key}}');
+  // ...
+</script>
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/vendor/jquery.card.js"></script>
+<script src="{{static}}/js/vendor/jquery.payment.js"></script>
 <script src="{{static}}/js/account/pay.js"></script>

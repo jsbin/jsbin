@@ -277,7 +277,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
+      url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
       init: function (ready) {
         // In CodeMirror 4, less is now included in the css mode, so no files to load
         ready();

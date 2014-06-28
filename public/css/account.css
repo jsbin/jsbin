@@ -213,8 +213,6 @@ span.mini-desc a {
   color: #fff;
   padding: 5px 10px;
   opacity: 0;
-  -webkit-transition: opacity 100ms ease-out;
-      -ms-transition: opacity 100ms ease-out;
           transition: opacity 100ms ease-out;
 }
 .mini-desc-error.show {
@@ -245,6 +243,13 @@ input.valid {
 
 input.invalid {
   background: #FF4136;
+}
+
+section.business {
+  -webkit-transition: opacity 50ms ease-out;
+  -moz-transition: opacity 50ms ease-out;
+  -o-transition: opacity 50ms ease-out;
+  transition: opacity 50ms ease-out;
 }
 
 .disabled {
@@ -380,22 +385,31 @@ div.vat small {
   margin-top: 10px;
 }
 
-div.options label {
+form .options {
+  margin-left: 180px;
+}
+
+.options input[type=radio] {
+  margin-right: 10px;
+}
+
+form .options label {
   float: left;
   font-weight: normal;
   margin-left: 0;
   width: auto;
 }
 
-div.buyer-type {
+section {
   margin: 20px 0;
+  overflow: hidden;
 }
 
 #pay {
   display: block;
-  margin: 40px 250px;
-}
-
-.business {
-  /*display: none;*/
+  margin: 10px 250px;
+  -webkit-transform: scale(1.75);
+  transform: scale(1.75);
+  padding-left: 30px;
+  padding-right: 30px;
 }

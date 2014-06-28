@@ -34,17 +34,25 @@
       </div>
     </div>
 
-    <div class="buyer-type">
+    <section class="payment-type">
+      <span class="label">Commitment:</span>
+      <div class="options">
+        <label for="yearly"><input id="yearly" type="radio" name="subscription" checked value="yearly">£60 <small>+ VAT per year</small></label><br>
+        <label for="monthly"><input id="monthly" type="radio" name="subscription" value="monthly">£6 <small>+ VAT per month</small></label>
+      </div>
+    </section>
+
+    <section class="buyer-type">
       <span class="label">Paying as:</span>
       <div class="options">
-        <label for="individual"><input id="individual" type="radio" name="buyer_type" checked value="individual"> Individal</label>
-        <label for="business"><input id="business" type="radio" name="buyer_type" value="business"> Business</label>
+        <label for="individual"><input id="individual" type="radio" name="buyer_type" checked value="individual">Individual</label>
+        <label for="business"><input id="business" type="radio" name="buyer_type" value="business">Business</label>
       </div>
-    </div>
+    </section>
 
-    <div class="business">
+    <section class="business">
       <div>
-        <label for="country">Country</label>
+        <label for="country">Country of business</label>
         <select name="country" id="country" data-stripe="address_country">
           {{> country}}
         </select>
@@ -56,14 +64,14 @@
         <input id="vat" name="vat" type="text" value="{{user.vat}}">
         <button id="validateVat">Validate</button>
         <br>
-        <small>VAT is not applicable outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small>
       </div>
-    </div>
+    </section>
 
+    <div><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></div>
 
-    <div>
+    <section>
       <button id="pay">Upgrade!</button>
-    </div>
+    </section>
 
 
 </section>

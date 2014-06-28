@@ -11,12 +11,12 @@ jQuery(function ($) {
   /**
    * Make the form friendly for credit card input
    */
-  var cardnumber = $('#cardnumber').payment('formatCardNumber').on('blur', function () {
+  var cardnumber = $('#cardnumber').payment('formatCardNumber').on('blur input', function () {
     $(this).closest('span').toggleClass('valid', $.payment.validateCardNumber(this.value));
   });
 
   // Expiry is a single field, so we need to split it up to validate
-  var expiry = $('#expiry').payment('formatCardExpiry').on('blur', function () {
+  var expiry = $('#expiry').payment('formatCardExpiry').on('blur input', function () {
     var data = this.value.split('/').map(function (s) {
       return s.trim();
     });
@@ -25,12 +25,12 @@ jQuery(function ($) {
   });
 
   // CVC
-  var cvc = $('#cvc').payment('formatCardCVC').on('blur', function () {
+  var cvc = $('#cvc').payment('formatCardCVC').on('blur input', function () {
     var card = $.payment.cardType(cardnumber.val());
     $(this).closest('span').toggleClass('valid', $.payment.validateCardCVC(this.value, card));
   });
 
-  var email = $('#email').on('blur', function () {
+  var email = $('#email').on('blur input', function () {
     $(this).closest('span').toggleClass('valid', this.validity && this.validity.valid);
   });
 
@@ -38,11 +38,8 @@ jQuery(function ($) {
 
 
   $('input[name=buyer_type]').on('change', function () {
-    if (this.value === 'business' && this.checked) {
-      $('.business').fadeTo(50, 1).find(':input').prop('disabled', false);
-    } else {
-      $('.business').fadeTo(50, 0.5).find(':input').prop('disabled', true);
-    }
+    var disabled = !(this.value === 'business' && this.checked);
+      $('.business').toggleClass('disabled', disabled).find(':input').prop('disabled', disabled);
   }).trigger('change');
 
 

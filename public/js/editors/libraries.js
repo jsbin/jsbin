@@ -341,6 +341,10 @@ var libraries = [
     'label': 'Bonsai 0.4.latest'
   },
   {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.js',
+    'label': 'Bluebird 1.2.2'
+  },
+  {
     'url': 'http://jashkenas.github.io/coffee-script/extras/coffee-script.js',
     'label': 'CoffeeScript'
   },

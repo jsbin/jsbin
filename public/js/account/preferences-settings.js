@@ -24,15 +24,24 @@
 
   // Setup variables
   var $csrf = $('#_csrf');
+  var hintsShow = {
+    console: true,
+    line: true,
+    under: false,
+    tooltip: true,
+    gutter: true
+  };
   var currentSettings = {
     panels: [],
     includejs: true,
     focusedPanel: 'html',
+    assetUrl: '',
     jshint: true,
     jshintOptions: '',
-    // csshint: false,
+    jshintShow: hintsShow,
+    csshint: false,
     // csshintOptions: '',
-    assetUrl: '',
+    csshintShow: hintsShow
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -42,13 +51,13 @@
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
-  var hints = ['js'];
-  // var hints = ['js', 'css'];
+  var hints = ['js', 'css'];
   var $hints = {};
   var $hintsOptions = {};
   var $hintsOptWrapper = {};
   var hintsOptionsVal = {};
   var $hintsOptError = {};
+  var $hintsShow = {};
 
   // var jshints = {
   //   'forin': 'About unsafe <code>for..in</code>',
@@ -84,6 +93,13 @@
     $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')
       .val(hintsOptionsVal[hints[m]]);
     $hintsOptError[hints[m]] = $('#' + hints[m] + 'hintOptError');
+
+    $hintsShow[hints[m]] = {};
+    for (var key in hintsShow) {
+      if (hintsShow.hasOwnProperty(key)) {
+        $hintsShow[hints[m]][key] = $('#' + hints[m] + 'hintShow-' + key).prop('checked', currentSettings[hints[m] + 'hintShow'][key]);
+      }
+    }
   }
 
   // for (var prop in jshints) {
@@ -118,6 +134,13 @@
         localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
       } catch (e) {
         $hintsOptError[ hints[m] ].html(e).addClass('show');
+      }
+
+      localStorageSettings[ hints[m] + 'hintShow'] = {};
+      for (var key in hintsShow) {
+        if (hintsShow.hasOwnProperty(key)) {
+          localStorageSettings[ hints[m] + 'hintShow'][key] = $hintsShow[hints[m]][key].prop('checked');
+        }
       }
     }
 

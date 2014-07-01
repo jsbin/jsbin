@@ -12,13 +12,20 @@
     sublime: false,
     tern: false,
     activeline: true,
-    matchbrackets: false,
-    csslint: false
+    matchbrackets: false
   };
 
   if (!jsbin.settings.addons) {
     jsbin.settings.addons = defaults;
   }
+
+
+  var settingsHints = {};
+  ['js', 'css'].forEach(function (val) {
+    var h = val + 'hint';
+    settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
+  });
+  var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);
 
   var addons = {
     closebrackets: {
@@ -178,37 +185,18 @@
         setOption(cm, 'matchBrackets', true);
       }
     },
-    csslint: {
+    csshint: {
       url: [
+        '/js/vendor/csslint/csslint.js',
         '/js/vendor/cm_addons/lint/lint.css',
-        '/js/vendor/cm_addons/lint/csslint.js',
         '/js/vendor/cm_addons/lint/css-lint.js',
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return CodeMirror.defaults.lint !== undefined &&
-               CodeMirror.helpers.lint &&
-               CodeMirror.helpers.lint.css &&
-               CodeMirror.optionHandlers.lint;
+        return hintingTest('css');
       },
       done: function(cm) {
-        if (cm.getOption('mode') === 'css') {
-          setOption(cm, 'lintOpt', {
-            console: true,
-            consoleParent: cm.getWrapperElement().parentNode.parentNode,
-            line: true,
-            under: false,
-            tooltip: true
-            // gutter option doesn't exist, it takes from main gutters property
-          });
-          var gutters = cm.getOption('gutters');
-          gutters.push('CodeMirror-lint-markers');
-          setOption(cm, 'gutters', gutters);
-          setOption(cm, 'lint', true);
-          var ln = cm.getOption('lineNumbers');
-          setOption(cm, 'lineNumbers', !ln);
-          setOption(cm, 'lineNumbers', ln);
-        }
+        hintingDone(cm);
       }
     }
   };
@@ -267,11 +255,34 @@
     };
   }
 
-  var options = Object.keys(jsbin.settings.addons);
+  function hintingTest(mode) {
+    return CodeMirror.defaults.lint !== undefined &&
+           CodeMirror.helpers.lint &&
+           CodeMirror.helpers.lint[mode] &&
+           CodeMirror.optionHandlers.lint;
+  }
+
+  function hintingDone(cm) {
+    var mode = cm.getOption('mode');
+    var opt = $.extend({}, jsbin.settings[mode + 'hintShow']);
+    opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
+    setOption(cm, 'lintOpt', opt);
+    if (opt.gutter) {
+      var gutters = cm.getOption('gutters');
+      gutters.push('CodeMirror-lint-markers');
+      setOption(cm, 'gutters', gutters);
+      setOption(cm, 'lint', true);
+      var ln = cm.getOption('lineNumbers');
+      setOption(cm, 'lineNumbers', !ln);
+      setOption(cm, 'lineNumbers', ln);
+    }
+  }
+
+  var options = Object.keys(settingsAddons);
 
   function loadAddon(key) {
     var addon = addons[key];
-    if (addon && jsbin.settings.addons[key]) {
+    if (addon && settingsAddons[key]) {
       if (typeof addon.url === 'string') {
         addon.url = [addon.url];
       }

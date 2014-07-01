@@ -203,7 +203,8 @@
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return hintingTest('css');
+        return hintingTest('css') &&
+               CSSLint !== undefined;
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'css') {
@@ -220,7 +221,8 @@
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return hintingTest('javascript');
+        return hintingTest('javascript') &&
+               JSHINT !== undefined;
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'javascript') {
@@ -239,7 +241,8 @@
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return hintingTest('htmlmixed');
+        return hintingTest('htmlmixed') &&
+               HTMLHint !== undefined;
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'htmlmixed') {

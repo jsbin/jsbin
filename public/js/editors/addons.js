@@ -199,6 +199,22 @@
       done: function(cm) {
         hintingDone(cm);
       }
+    },
+    jshint: {
+      url: [
+        '/js/vendor/jshint/jshint.js',
+        '/js/vendor/cm_addons/lint/lint.css',
+        '/js/vendor/cm_addons/lint/javascript-lint.js',
+        '/js/vendor/cm_addons/lint/lint.js'
+      ],
+      test: function() {
+        return hintingTest('javascript');
+      },
+      done: function(cm) {
+        hintingDone(cm, {
+          'eqnull': true
+        });
+      }
     }
   };
 
@@ -263,8 +279,11 @@
            CodeMirror.optionHandlers.lint;
   }
 
-  function hintingDone(cm) {
+  function hintingDone(cm, defhintOptions) {
     var mode = cm.getOption('mode');
+    if (mode === 'javascript') {
+      mode = 'js';
+    }
     var opt = $.extend({}, jsbin.settings[mode + 'hintShow']);
     opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
     setOption(cm, 'lintOpt', opt);
@@ -272,7 +291,7 @@
       var gutters = cm.getOption('gutters');
       gutters.push('CodeMirror-lint-markers');
       setOption(cm, 'gutters', gutters);
-      setOption(cm, 'lintRules', jsbin.settings[mode + 'hintOptions']);
+      setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);

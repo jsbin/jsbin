@@ -12,7 +12,7 @@
 })(function(CodeMirror) {
   "use strict";
 
-  function validator(text, options) {
+  CodeMirror.registerHelper("lint", "htmlmixed", function(text, options) {
     var found = [];
     if (!window.HTMLHint) return found;
     var results = HTMLHint.verify(text, options), messages = results, message = null;
@@ -27,9 +27,6 @@
       });
     }
     return found;
-  }
-
-  CodeMirror.registerHelper('lint', 'html', validator);
-  CodeMirror.registerHelper('lint', 'htmlmixed', validator);
+  });
 
 });

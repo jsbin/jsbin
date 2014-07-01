@@ -68,6 +68,9 @@
     if (options instanceof Function) return {getAnnotations: options};
     if (!options || options === true) options = {};
     if (!options.getAnnotations) options.getAnnotations = cm.getHelper(CodeMirror.Pos(0, 0), 'lint');
+    if (!options.getAnnotations && cm.getOption('mode') === 'htmlmixed') {
+      options.getAnnotations = CodeMirror.helpers.lint.htmlmixed;
+    }
     if (!options.getAnnotations) throw new Error('Required option "getAnnotations" missing (lint addon)');
     return options;
   }

@@ -206,6 +206,9 @@
         return hintingTest('css');
       },
       done: function(cm) {
+        if (cm.getOption('mode') !== 'css') {
+          return;
+        }
         hintingDone(cm);
       }
     },
@@ -220,6 +223,9 @@
         return hintingTest('javascript');
       },
       done: function(cm) {
+        if (cm.getOption('mode') !== 'javascript') {
+          return;
+        }
         hintingDone(cm, {
           'eqnull': true
         });
@@ -233,9 +239,12 @@
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return hintingTest('html');
+        return hintingTest('htmlmixed');
       },
       done: function(cm) {
+        if (cm.getOption('mode') !== 'htmlmixed') {
+          return;
+        }
         hintingDone(cm);
       }
     }

@@ -10,29 +10,29 @@
   else // Plain browser env
     mod(CodeMirror);
 })(function(CodeMirror) {
-"use strict";
+  "use strict";
 
-CodeMirror.registerHelper("lint", "coffeescript", function(text) {
-  var found = [];
-  var parseError = function(err) {
-    var loc = err.lineNumber;
-    found.push({from: CodeMirror.Pos(loc-1, 0),
-                to: CodeMirror.Pos(loc, 0),
-                severity: err.level,
-                message: err.message});
-  };
-  try {
-    var res = coffeelint.lint(text);
-    for(var i = 0; i < res.length; i++) {
-      parseError(res[i]);
+  CodeMirror.registerHelper("lint", "coffeescript", function(text, options) {
+    var found = [];
+    var parseError = function(err) {
+      var loc = err.lineNumber;
+      found.push({from: CodeMirror.Pos(loc-1, 0),
+                  to: CodeMirror.Pos(loc, 0),
+                  severity: err.level,
+                  message: err.message});
+    };
+    try {
+      var res = coffeelint.lint(text, options);
+      for(var i = 0; i < res.length; i++) {
+        parseError(res[i]);
+      }
+    } catch(e) {
+      found.push({from: CodeMirror.Pos(e.location.first_line, 0),
+                  to: CodeMirror.Pos(e.location.last_line, e.location.last_column),
+                  severity: 'error',
+                  message: e.message});
     }
-  } catch(e) {
-    found.push({from: CodeMirror.Pos(e.location.first_line, 0),
-                to: CodeMirror.Pos(e.location.last_line, e.location.last_column),
-                severity: 'error',
-                message: e.message});
-  }
-  return found;
-});
+    return found;
+  });
 
 });

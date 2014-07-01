@@ -256,7 +256,8 @@
         '/js/vendor/cm_addons/lint/lint.js'
       ],
       test: function() {
-        return hintingTest('coffeescript');
+        return hintingTest('coffeescript') &&
+               coffeelint !== undefined;
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'coffeescript') {

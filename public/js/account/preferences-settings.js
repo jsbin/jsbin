@@ -40,7 +40,7 @@
     jshintOptions: '',
     jshintShow: hintsShow,
     csshint: false,
-    // csshintOptions: '',
+    csshintOptions: '',
     csshintShow: hintsShow
   };
   var $saveStatus = $('span.status');

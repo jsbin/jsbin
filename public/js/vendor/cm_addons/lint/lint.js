@@ -226,9 +226,9 @@
   function startLinting(cm) {
     var state = cm.state.lint, options = state.options;
     if (options.async)
-      options.getAnnotations(cm, updateLinting, options);
+      options.getAnnotations(cm, updateLinting, cm.options.lintRules);
     else
-      updateLinting(cm, options.getAnnotations(cm.getValue(), options.options));
+      updateLinting(cm, options.getAnnotations(cm.getValue(), cm.options.lintRules));
   }
 
   function updateLinting(cm, annotationsNotSorted) {
@@ -335,6 +335,10 @@
       if (defaults.hasOwnProperty(key)) {
         cm.options.lintOpt[key] = (cm.options.lintOpt[key] !== undefined) ? cm.options.lintOpt[key] : defaults[key];
       }
+    }
+
+    if (!cm.options.lintRules) {
+      cm.options.lintRules = {};
     }
     
     if (old && old != CodeMirror.Init) {

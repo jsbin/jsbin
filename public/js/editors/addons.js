@@ -271,6 +271,7 @@
       var gutters = cm.getOption('gutters');
       gutters.push('CodeMirror-lint-markers');
       setOption(cm, 'gutters', gutters);
+      setOption(cm, 'lintRules', jsbin.settings[mode + 'hintOptions']);
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);

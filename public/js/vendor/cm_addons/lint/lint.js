@@ -179,9 +179,20 @@
     if (cm.consolelint.warning === 0) counterWclass = ' dis';
     if (cm.consolelint.error === 1) es = '';
     if (cm.consolelint.warning === 1) ws = '';
-    cm.consolelint.head.innerHTML = '<i class="lint-icon-error' + counterEclass + '"></i> ' +
-      cm.consolelint.error + ' error' + es + ' <i class="lint-icon-warning' + counterWclass + '"></i> ' +
+    cm.consolelint.head.innerHTML = '';
+    if (counterEclass && counterWclass) {
+      cm.consolelint.head.style.display = 'none';
+      return;
+    }
+    cm.consolelint.head.style.display = '';
+    if (!counterEclass) {
+      cm.consolelint.head.innerHTML += '<i class="lint-icon-error' + counterEclass + '"></i> ' +
+        cm.consolelint.error + ' error' + es + ' ';
+    }
+    if (!counterWclass) {
+      cm.consolelint.head.innerHTML += '<i class="lint-icon-warning' + counterWclass + '"></i> ' +
       cm.consolelint.warning + ' warning' + ws;
+    }
   }
 
   function consoleClick(event, cm) {

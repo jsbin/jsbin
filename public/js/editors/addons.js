@@ -104,7 +104,7 @@
           cm.foldCode(cm.getCursor());
         }});
         setOption(cm, 'foldGutter', true);
-        var gutters = cm.getOptions('gutters');
+        var gutters = cm.getOption('gutters');
         console.log('gutters', gutters);
         gutters.push('CodeMirror-linenumbers');
         gutters.push('CodeMirror-foldgutter');
@@ -205,6 +205,9 @@
           gutters.push('CodeMirror-lint-markers');
           setOption(cm, 'gutters', gutters);
           setOption(cm, 'lint', true);
+          var ln = cm.getOption('lineNumbers');
+          setOption(cm, 'lineNumbers', !ln);
+          setOption(cm, 'lineNumbers', ln);
         }
       }
     }

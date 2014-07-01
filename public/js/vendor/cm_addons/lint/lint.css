@@ -97,10 +97,8 @@
   padding: 2px 5px 3px;
 }
 .console-wrapper {
-  /*position: absolute;*/
-  /*bottom: 0;*/
-  /*background: #fff;*/
-  /*z-index: 10;*/
+  background: #FFF;
+  color: #333;
 }
 .console-log-head {
   background: #ecf2fa;

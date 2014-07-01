@@ -19,6 +19,7 @@
     jsbin.settings.addons = defaults;
   }
 
+  var detailsSupport = 'open' in document.createElement('details');
 
   var settingsHints = {};
   ['js', 'css'].forEach(function (val) {
@@ -276,6 +277,18 @@
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
       setOption(cm, 'lineNumbers', ln);
+    }
+    if (opt.console) {
+      $document.trigger('sizeeditors');
+      $(cm.consolelint.head).on('click', function() {
+        if (!detailsSupport) {
+          $(this).nextAll().toggle();
+        }
+        // trigger a resize after the click has completed and the details is close
+        setTimeout(function () {
+          $document.trigger('sizeeditors');
+        }, 10);
+      });
     }
   }
 

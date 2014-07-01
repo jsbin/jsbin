@@ -444,14 +444,8 @@ Panel.prototype = {
         var height = panel.editor.scroller.closest('.panel').outerHeight(),
             offset = 0;
             // offset = panel.$el.find('> .label').outerHeight();
-
-        // special case for the javascript panel
-        if (panel.name === 'javascript') {
-          if ($error === null) { // it wasn't there right away, so we populate
-            $error = panel.$el.find('details');
-          }
-          offset += ($error.filter(':visible').height() || 0);
-        }
+        $error = panel.$el.find('details');
+        offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
           editor.scroller.height(height - offset);

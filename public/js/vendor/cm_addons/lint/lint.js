@@ -182,9 +182,12 @@
     cm.consolelint.head.innerHTML = '';
     if (counterEclass && counterWclass) {
       cm.consolelint.head.style.display = 'none';
+      cm.consolelint.logs.style.display = 'none';
+      $document.trigger('sizeeditors');
       return;
     }
     cm.consolelint.head.style.display = '';
+    cm.consolelint.logs.style.display = '';
     if (!counterEclass) {
       cm.consolelint.head.innerHTML += '<i class="lint-icon-error' + counterEclass + '"></i> ' +
         cm.consolelint.error + ' error' + es + ' ';
@@ -193,6 +196,7 @@
       cm.consolelint.head.innerHTML += '<i class="lint-icon-warning' + counterWclass + '"></i> ' +
       cm.consolelint.warning + ' warning' + ws;
     }
+    $document.trigger('sizeeditors');
   }
 
   function consoleClick(event, cm) {

@@ -105,6 +105,27 @@
       <textarea name="htmlhintOptions" id="htmlhintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom HTMLHint settings" }'></textarea>
     </div>
 
+    <hr>
+
+    <div>
+      <label for="coffeescripthint">CoffeeLint</label>
+      <input type="checkbox" checked id="coffeescripthint">
+    </div>
+
+    <div class="coffeescripthintOptWrapper">
+      <span class="label">CoffeeLint show errors in:</span>
+      <label><input type="checkbox" name="coffeescripthintShow-console" id="coffeescripthintShow-console"> Console</label>
+      <label><input type="checkbox" name="coffeescripthintShow-gutter" id="coffeescripthintShow-gutter"> Gutter</label>
+      <label><input type="checkbox" name="coffeescripthintShow-line" id="coffeescripthintShow-line"> Line</label>
+      <label><input type="checkbox" name="coffeescripthintShow-under" id="coffeescripthintShow-under"> Text highlight</label>
+      <label><input type="checkbox" name="coffeescripthintShow-tooltip" id="coffeescripthintShow-tooltip"> Tooltip</label>
+    </div>
+
+    <div class="coffeescripthintOptWrapper">
+      <label for="coffeescripthintOptions">CoffeeLint options <span class="mini-desc">JSON format, for more info read the <a href="http://www.coffeelint.org/#options" target="_blank">documentation</a></span> <span id="coffeescripthintOptError" class="mini-desc-error"></span></label>
+      <textarea name="coffeescripthintOptions" id="coffeescripthintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom CoffeeLint settings" }'></textarea>
+    </div>
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
   </form>
 </section>

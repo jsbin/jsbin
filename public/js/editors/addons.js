@@ -30,7 +30,7 @@
     tooltip: true,
     gutter: true
   };
-  ['js', 'css', 'html'].forEach(function (val) {
+  ['js', 'css', 'html', 'coffeescript'].forEach(function (val) {
     var h = val + 'hint';
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
     settingsHintsShow[h] = $.extend({}, hintsShow, jsbin.settings[h + 'Show']);
@@ -243,6 +243,23 @@
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'htmlmixed') {
+          return;
+        }
+        hintingDone(cm);
+      }
+    },
+    coffeescripthint: {
+      url: [
+        '/js/vendor/coffeelint/coffeelint.js',
+        '/js/vendor/cm_addons/lint/lint.css',
+        '/js/vendor/cm_addons/lint/coffeescript-lint.js',
+        '/js/vendor/cm_addons/lint/lint.js'
+      ],
+      test: function() {
+        return hintingTest('coffeescript');
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') !== 'coffeescript') {
           return;
         }
         hintingDone(cm);

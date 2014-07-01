@@ -44,7 +44,10 @@
     csshintShow: hintsShow,
     htmlhint: false,
     htmlhintOptions: '',
-    htmlhintShow: hintsShow
+    htmlhintShow: hintsShow,
+    coffeescripthint: false,
+    coffeescripthintOptions: '',
+    coffeescripthintShow: hintsShow
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -54,7 +57,7 @@
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
-  var hints = ['js', 'css', 'html'];
+  var hints = ['js', 'css', 'html', 'coffeescript'];
   var $hints = {};
   var $hintsOptions = {};
   var $hintsOptWrapper = {};

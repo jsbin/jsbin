@@ -75,17 +75,18 @@ var Panel = function (name, settings) {
   }
 
   // this is nasty and wrong, but I'm going to put here anyway .i..
-  if (this.id === 'javascript') {
-    this.on('processor', function (e, preprocessor) {
-      if (preprocessor === 'none') {
-        jshintEnabled = true;
-        checkForErrors();
-      } else {
-        jshintEnabled = false;
-        $error.hide();
-      }
-    });
-  }
+  // removed as we have a different way to check for errors
+  // if (this.id === 'javascript') {
+  //   this.on('processor', function (e, preprocessor) {
+  //     if (preprocessor === 'none') {
+  //       jshintEnabled = true;
+  //       checkForErrors();
+  //     } else {
+  //       jshintEnabled = false;
+  //       $error.hide();
+  //     }
+  //   });
+  // }
 
   if (settings.editor) {
     cmSettings = {

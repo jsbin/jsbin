@@ -83,7 +83,8 @@
     'emacs',
     'sublime',
     'tern',
-    'matchbrackets'
+    'matchbrackets',
+    'csslint'
   ];
   var $addons = {};
 

@@ -12,7 +12,8 @@
     sublime: false,
     tern: false,
     activeline: true,
-    matchbrackets: false
+    matchbrackets: false,
+    csslint: false
   };
 
   if (!jsbin.settings.addons) {
@@ -175,6 +176,36 @@
       },
       done: function(cm) {
         setOption(cm, 'matchBrackets', true);
+      }
+    },
+    csslint: {
+      url: [
+        '/js/vendor/cm_addons/lint/lint.css',
+        '/js/vendor/cm_addons/lint/csslint.js',
+        '/js/vendor/cm_addons/lint/css-lint.js',
+        '/js/vendor/cm_addons/lint/lint.js'
+      ],
+      test: function() {
+        return CodeMirror.defaults.lint !== undefined &&
+               CodeMirror.helpers.lint &&
+               CodeMirror.helpers.lint.css &&
+               CodeMirror.optionHandlers.lint;
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') === 'css') {
+          setOption(cm, 'lintOpt', {
+            console: true,
+            consoleParent: cm.getWrapperElement().parentNode.parentNode,
+            line: true,
+            under: false,
+            tooltip: true
+            // gutter option doesn't exist, it takes from main gutters property
+          });
+          var gutters = cm.getOption('gutters');
+          gutters.push('CodeMirror-lint-markers');
+          setOption(cm, 'gutters', gutters);
+          setOption(cm, 'lint', true);
+        }
       }
     }
   };

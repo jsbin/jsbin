@@ -22,9 +22,18 @@
   var detailsSupport = 'open' in document.createElement('details');
 
   var settingsHints = {};
-  ['js', 'css'].forEach(function (val) {
+  var settingsHintsShow = {};
+  var hintsShow = {
+    console: true,
+    line: true,
+    under: false,
+    tooltip: true,
+    gutter: true
+  };
+  ['js', 'css', 'html'].forEach(function (val) {
     var h = val + 'hint';
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
+    settingsHintsShow[h] = $.extend({}, hintsShow, jsbin.settings[h + 'Show']);
   });
   var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);
 
@@ -215,6 +224,20 @@
           'eqnull': true
         });
       }
+    },
+    htmlhint: {
+      url: [
+        '/js/vendor/htmlhint/htmlhint.js',
+        '/js/vendor/cm_addons/lint/lint.css',
+        '/js/vendor/cm_addons/lint/html-lint.js',
+        '/js/vendor/cm_addons/lint/lint.js'
+      ],
+      test: function() {
+        return hintingTest('html');
+      },
+      done: function(cm) {
+        hintingDone(cm);
+      }
     }
   };
 
@@ -284,7 +307,10 @@
     if (mode === 'javascript') {
       mode = 'js';
     }
-    var opt = $.extend({}, jsbin.settings[mode + 'hintShow']);
+    if (mode === 'htmlmixed') {
+      mode = 'html';
+    }
+    var opt = $.extend({}, settingsHintsShow[mode + 'hint']);
     opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
     setOption(cm, 'lintOpt', opt);
     if (opt.gutter) {

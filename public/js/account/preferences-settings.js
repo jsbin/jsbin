@@ -41,7 +41,10 @@
     jshintShow: hintsShow,
     csshint: false,
     csshintOptions: '',
-    csshintShow: hintsShow
+    csshintShow: hintsShow,
+    htmlhint: false,
+    htmlhintOptions: '',
+    htmlhintShow: hintsShow
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -51,7 +54,7 @@
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
-  var hints = ['js', 'css'];
+  var hints = ['js', 'css', 'html'];
   var $hints = {};
   var $hintsOptions = {};
   var $hintsOptWrapper = {};
@@ -77,7 +80,7 @@
   }
 
   for (var m = 0; m < hints.length; m++) {
-    $hintsOptWrapper[hints[m]] = $('#' + hints[m] + 'hintOptWrapper')
+    $hintsOptWrapper[hints[m]] = $('.' + hints[m] + 'hintOptWrapper')
       .toggle(currentSettings[ hints[m] + 'hint' ]);
     $hints[hints[m]] = $('#' + hints[m] + 'hint')
       .prop('checked', currentSettings[ hints[m] + 'hint' ])

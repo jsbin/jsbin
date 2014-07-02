@@ -30,7 +30,7 @@
     tooltip: true,
     gutter: true
   };
-  ['js', 'css', 'html', 'coffeescript'].forEach(function (val) {
+  ['js', 'html', 'coffeescript', 'css'].forEach(function (val) {
     var h = val + 'hint';
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
   });

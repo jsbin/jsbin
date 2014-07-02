@@ -42,6 +42,7 @@
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
+  var $ssl = $('#ssl'); // .prop('checked', currentSettings.ssl); // checking happens server side
   var hints = ['js'];
   // var hints = ['js', 'css'];
   var $hints = {};
@@ -124,6 +125,7 @@
     localStorageSettings.includejs = $includejs.prop('checked');
     localStorageSettings.focusedPanel = $focusedPanel.val();
     localStorageSettings.assetUrl = $assetUrl.val();
+    localStorageSettings.ssl = $ssl.prop('checked');
 
     localStorage.settings = JSON.stringify(localStorageSettings);
     console.log(localStorageSettings);

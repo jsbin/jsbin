@@ -197,7 +197,7 @@
     },
     csshint: {
       url: [
-        '/js/vendor/csslint/csslint.js',
+        '/js/vendor/csslint/csslint.min.js',
         '/js/vendor/cm_addons/lint/lint.css',
         '/js/vendor/cm_addons/lint/css-lint.js',
         '/js/vendor/cm_addons/lint/lint.js'
@@ -215,7 +215,7 @@
     },
     jshint: {
       url: [
-        '/js/vendor/jshint/jshint.js',
+        '/js/vendor/jshint/jshint.min.js',
         '/js/vendor/cm_addons/lint/lint.css',
         '/js/vendor/cm_addons/lint/javascript-lint.js',
         '/js/vendor/cm_addons/lint/lint.js'
@@ -253,7 +253,7 @@
     },
     coffeescripthint: {
       url: [
-        '/js/vendor/coffeelint/coffeelint.js',
+        '/js/vendor/coffeelint/coffeelint.min.js',
         '/js/vendor/cm_addons/lint/lint.css',
         '/js/vendor/cm_addons/lint/coffeescript-lint.js',
         '/js/vendor/cm_addons/lint/lint.js'

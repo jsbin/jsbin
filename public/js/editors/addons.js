@@ -30,6 +30,8 @@
     tooltip: true,
     gutter: true
   };
+  // css must go last for the moment due to CSSLint creating the
+  // global variable 'exports'
   ['js', 'html', 'coffeescript', 'css'].forEach(function (val) {
     var h = val + 'hint';
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;

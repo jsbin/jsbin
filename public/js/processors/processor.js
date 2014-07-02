@@ -348,6 +348,18 @@ var processors = jsbin.processors = (function () {
           success: function (data) {
             if (data.errors) {
               console.log(data.errors);
+              if (typeof jsbin.panels.panels.css.editor.updateLinting !== 'undefined') {
+                var temp = [];
+                for (var i = 0; i < data.errors.length; i++) {
+                  temp.push({
+                    from: CodeMirror.Pos(data.errors[i].line * 1 - 1, data.errors[i].ch * 1),
+                    to: CodeMirror.Pos(data.errors[i].line * 1 - 1, data.errors[i].ch * 1),
+                    message: data.errors[i].msg,
+                    severity : 'error'
+                  });
+                }
+                jsbin.panels.panels.css.editor.updateLinting(temp);
+              }
             } else if (data.result) {
               resolve(data.result);
             }

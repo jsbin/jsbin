@@ -390,9 +390,9 @@
     }
 
     // probably to improve according to real case scenarios
-    // cm.updateLinting = function(annotationsNotSorted) {
-    //   updateLinting(cm, annotationsNotSorted);
-    //   console.log('ciao');
-    // };
+    cm.updateLinting = function(annotationsNotSorted) {
+      updateLinting(cm, annotationsNotSorted);
+      console.log('ciao');
+    };
   });
 });

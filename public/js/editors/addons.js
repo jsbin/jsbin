@@ -22,8 +22,8 @@
   var detailsSupport = 'open' in document.createElement('details');
 
   var settingsHints = {};
-  var settingsHintsShow = {};
-  var hintsShow = {
+  var settingsHintShow = {};
+  var hintShow = {
     console: true,
     line: true,
     under: false,
@@ -33,8 +33,8 @@
   ['js', 'css', 'html', 'coffeescript'].forEach(function (val) {
     var h = val + 'hint';
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
-    settingsHintsShow[h] = $.extend({}, hintsShow, jsbin.settings[h + 'Show']);
   });
+  settingsHintShow = $.extend({}, hintShow, jsbin.settings.hintShow);
   var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);
 
   var addons = {
@@ -340,18 +340,20 @@
     if (mode === 'htmlmixed') {
       mode = 'html';
     }
-    var opt = $.extend({}, settingsHintsShow[mode + 'hint']);
+    var opt = $.extend({}, settingsHintShow);
     opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
     setOption(cm, 'lintOpt', opt);
+    setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
       gutters.push('CodeMirror-lint-markers');
       setOption(cm, 'gutters', gutters);
-      setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
       setOption(cm, 'lineNumbers', ln);
+    } else {
+      setOption(cm, 'lint', true);
     }
     if (opt.console) {
       $document.trigger('sizeeditors');

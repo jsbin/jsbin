@@ -24,11 +24,11 @@
 
   // Setup variables
   var $csrf = $('#_csrf');
-  var hintsShow = {
+  var hintShow = {
     console: true,
     line: true,
-    under: false,
-    tooltip: true,
+    // under: false,
+    // tooltip: true,
     gutter: true
   };
   var currentSettings = {
@@ -36,18 +36,15 @@
     includejs: true,
     focusedPanel: 'html',
     assetUrl: '',
+    hintShow: hintShow,
     jshint: true,
     jshintOptions: '',
-    jshintShow: hintsShow,
     csshint: false,
     csshintOptions: '',
-    csshintShow: hintsShow,
     htmlhint: false,
     htmlhintOptions: '',
-    htmlhintShow: hintsShow,
     coffeescripthint: false,
     coffeescripthintOptions: '',
-    coffeescripthintShow: hintsShow
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -63,7 +60,7 @@
   var $hintsOptWrapper = {};
   var hintsOptionsVal = {};
   var $hintsOptError = {};
-  var $hintsShow = {};
+  var $hintShow = {};
 
   // var jshints = {
   //   'forin': 'About unsafe <code>for..in</code>',
@@ -99,12 +96,11 @@
     $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')
       .val(hintsOptionsVal[hints[m]]);
     $hintsOptError[hints[m]] = $('#' + hints[m] + 'hintOptError');
-
-    $hintsShow[hints[m]] = {};
-    for (var key in hintsShow) {
-      if (hintsShow.hasOwnProperty(key)) {
-        $hintsShow[hints[m]][key] = $('#' + hints[m] + 'hintShow-' + key).prop('checked', currentSettings[hints[m] + 'hintShow'][key]);
-      }
+  }
+  $hintShow = {};
+  for (var key in hintShow) {
+    if (hintShow.hasOwnProperty(key)) {
+      $hintShow[key] = $('#hintShow-' + key).prop('checked', currentSettings.hintShow[key]);
     }
   }
 
@@ -141,12 +137,11 @@
       } catch (e) {
         $hintsOptError[ hints[m] ].html(e).addClass('show');
       }
-
-      localStorageSettings[ hints[m] + 'hintShow'] = {};
-      for (var key in hintsShow) {
-        if (hintsShow.hasOwnProperty(key)) {
-          localStorageSettings[ hints[m] + 'hintShow'][key] = $hintsShow[hints[m]][key].prop('checked');
-        }
+    }
+    localStorageSettings.hintShow = {};
+    for (var key in hintShow) {
+      if (hintShow.hasOwnProperty(key)) {
+        localStorageSettings.hintShow[key] = $hintShow[key].prop('checked');
       }
     }
 

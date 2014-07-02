@@ -1,0 +1,24 @@
+{
+  "name": "sass.js",
+  "version": "0.0.0",
+  "main": [
+    "./dist/sass.min.js",
+    "./dist/sass.worker.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "*.html",
+    "*.md",
+    "*.json",
+    "bin",
+    "scss",
+    "src",
+    "test"
+  ],
+  "keywords": [
+    "libsass",
+    "sass",
+    "scss",
+    "css"
+  ]
+}

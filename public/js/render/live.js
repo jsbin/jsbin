@@ -295,27 +295,29 @@ var renderLivePreview = (function () {
   // The big daddy that handles postmessaging the runner.
   var renderLivePreview = function (requested) {
     // No postMessage? Don't render – the event-stream will handle it.
-    if (!window.postMessage) return;
+    if (!window.postMessage) { return; }
 
-    var source = getPreparedCode(),
-        includeJsInRealtime = jsbin.settings.includejs;
     // Inform other pages event streaming render to reload
-    if (requested) sendReload();
+    if (requested) { sendReload(); }
+    getPreparedCode().then(function (source) {
+      var includeJsInRealtime = jsbin.settings.includejs;
 
-    // Tell the iframe to reload
-    var visiblePanels = jsbin.panels.getVisible();
-    var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
-    var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
-    if (!outputPanelOpen && !consolePanelOpen) {
-      return;
-    }
-    renderer.postMessage('render', {
-      source: source,
-      options: {
-        requested: requested,
-        debug: jsbin.settings.debug,
-        includeJsInRealtime: jsbin.settings.includejs
+      // Tell the iframe to reload
+      var visiblePanels = jsbin.panels.getVisible();
+      var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
+      var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
+      if (!outputPanelOpen && !consolePanelOpen) {
+        return;
       }
+      renderer.postMessage('render', {
+        source: source,
+        options: {
+          requested: requested,
+          debug: jsbin.settings.debug,
+          includeJsInRealtime: jsbin.settings.includejs
+        }
+      });
+
     });
   };
 

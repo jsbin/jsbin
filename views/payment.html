@@ -1,12 +1,20 @@
 {{> account_sidebar}}
 
-<h1>Your payment details</h1>
+<h1>Your subscription</h1>
 
 <section id="content">
   <form id="payment-form" method="post" action="/account/upgrade/pay">
+    <section class="payment-type">
+      <span class="label">Plan</span>
+      <div class="options">
+        <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" checked value="yearly">Yearly &ndash; <span class="highlight">save £12</span> @ £60<small>+VAT</small></label>
+        <label class="hasinput" for="monthly"><input id="monthly" type="radio" name="subscription" value="monthly">Monthly @ £6<small>+VAT</small></label>
+      </div>
+    </section>
+
     <p class="payment-errors"></p>
 
-    <div class="form-container">
+    <div>
       <div>
         <label for="email">Email</label>
         <span class="inputWithImage">
@@ -34,16 +42,8 @@
       </div>
     </div>
 
-    <section class="payment-type">
-      <span class="label">Commitment:</span>
-      <div class="options">
-        <label for="yearly"><input id="yearly" type="radio" name="subscription" checked value="yearly">£60 <small>+ VAT per year</small></label><br>
-        <label for="monthly"><input id="monthly" type="radio" name="subscription" value="monthly">£6 <small>+ VAT per month</small></label>
-      </div>
-    </section>
-
     <section class="buyer-type">
-      <span class="label">Paying as:</span>
+      <span class="label">Paying as</span>
       <div class="options">
         <label for="individual"><input id="individual" type="radio" name="buyer_type" checked value="individual">Individual</label>
         <label for="business"><input id="business" type="radio" name="buyer_type" value="business">Business</label>
@@ -67,12 +67,12 @@
       </div>
     </section>
 
-    <div><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></div>
 
     <section>
       <button id="pay">Upgrade!</button>
     </section>
 
+    <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>
 
 </section>
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

@@ -49,7 +49,7 @@
 }
 
 #sidebar {
-  width:200px;
+  width: 200px;
   float:left;
   margin-right: 0px;
   margin-top: 40px;
@@ -91,7 +91,7 @@
 #content, h1 {
 /*   float:left; */
 
-margin-left: 230px;
+margin-left: 300px;
   max-width: 100%;
 }
 
@@ -164,10 +164,22 @@ form .label {
   color: #666;
   display: block;
   float: left;
+  width: 180px;
+  text-align: right;
+  margin-right: 20px;
+}
 
-width: 180px;
-text-align: right;
-margin-right: 20px;
+form label.hasinput {
+  text-align: left;
+  margin-left: 10px;
+  /* padding-left: 20px; */
+  /* float: left; */
+  /* clear: left; */
+}
+
+form label.hasinput input,
+form label.hasinput:first-of-type input[type="radio"]{
+  /* margin-left: -20px; */
 }
 
 #indentWithSpaces:checked:focus:after {
@@ -180,7 +192,6 @@ margin-right: 20px;
 }
 
 #editor-settings {
-
   margin-bottom: 20px;
 }
 
@@ -293,13 +304,16 @@ select#country {
 
 .payment-errors:empty {
   padding: 0;
+  border: 0;
 }
 
 .payment-errors {
-  padding: 10px;
+  padding: 10px 20px;
   color: #fff;
   background: #2ECC40;
   line-height: 24px;
+  border: 1px solid rgb(25, 175, 42);
+  border-radius: 3px;
 }
 
 .payment-errors b {
@@ -349,7 +363,7 @@ input.invalid {
 }
 
 .inputWithImage.valid b {
-  color: green;
+  color: rgb(0, 128, 0);
 }
 
 .inputWithImage.invalid b {
@@ -394,10 +408,12 @@ form .options {
 }
 
 form .options label {
-  float: left;
+  float: none;
   font-weight: normal;
   margin-left: 0;
   width: auto;
+  /* display: block; */
+  text-align: left;
 }
 
 section {
@@ -412,4 +428,9 @@ section {
   transform: scale(1.75);
   padding-left: 30px;
   padding-right: 30px;
+}
+
+.highlight {
+  color: rgb(0, 180, 0);
+  font-weight: 500;
 }

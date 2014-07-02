@@ -69,7 +69,7 @@ if (storedSettings === "undefined") {
 window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
 
 if (jsbin.user) {
-  $.extend(window.jsbin.settings, jsbin.user.settings);
+  $.extend(jsbin.user.settings, window.jsbin.settings);
 }
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);

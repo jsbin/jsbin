@@ -166,7 +166,7 @@
       ],
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
-               (typeof window.ternBasicDefs !== undefined) &&
+               (typeof window.ternBasicDefs !== 'undefined') &&
                CodeMirror.showHint &&
                CodeMirror.TernServer &&
                CodeMirror.startTern;
@@ -180,7 +180,7 @@
         '/js/vendor/codemirror4/addon/selection/active-line.js'
       ],
       test: function() {
-        return CodeMirror.defaults.styleActiveLine !== undefined;
+        return (typeof CodeMirror.defaults.styleActiveLine !== 'undefined');
       },
       done: function(cm) {
         setOption(cm, 'styleActiveLine', true);
@@ -189,7 +189,7 @@
     matchbrackets: {
       url: [],
       test: function() {
-        return CodeMirror.defaults.matchBrackets !== undefined;
+        return (typeof CodeMirror.defaults.matchBrackets !== 'undefined');
       },
       done: function(cm) {
         setOption(cm, 'matchBrackets', true);
@@ -204,7 +204,7 @@
       ],
       test: function() {
         return hintingTest('css') &&
-               CSSLint !== undefined;
+               (typeof CSSLint !== 'undefined');
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'css') {
@@ -222,7 +222,7 @@
       ],
       test: function() {
         return hintingTest('javascript') &&
-               JSHINT !== undefined;
+               (typeof JSHINT !== 'undefined');
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'javascript') {
@@ -242,7 +242,7 @@
       ],
       test: function() {
         return hintingTest('htmlmixed') &&
-               HTMLHint !== undefined;
+               (typeof HTMLHint !== 'undefined');
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'htmlmixed') {
@@ -260,7 +260,7 @@
       ],
       test: function() {
         return hintingTest('coffeescript') &&
-               coffeelint !== undefined;
+               (typeof coffeelint !== 'undefined');
       },
       done: function(cm) {
         if (cm.getOption('mode') !== 'coffeescript') {
@@ -321,12 +321,12 @@
 
   function defaultTest(prop) {
     return function () {
-      return CodeMirror.optionHandlers[prop] !== undefined;
+      return (typeof CodeMirror.optionHandlers[prop] !== 'undefined');
     };
   }
 
   function hintingTest(mode) {
-    return CodeMirror.defaults.lint !== undefined &&
+    return (typeof CodeMirror.defaults.lint !== 'undefined') &&
            CodeMirror.helpers.lint &&
            CodeMirror.helpers.lint[mode] &&
            CodeMirror.optionHandlers.lint;

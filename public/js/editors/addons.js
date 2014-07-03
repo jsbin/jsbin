@@ -334,7 +334,7 @@
            CodeMirror.optionHandlers.lint;
   }
 
-  function hintingDone(cm, defhintOptions) {
+  window.hintingDone = function(cm, defhintOptions) {
     var mode = cm.getOption('mode');
     if (mode === 'javascript') {
       mode = 'js';
@@ -348,8 +348,10 @@
     setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
-      gutters.push('CodeMirror-lint-markers');
-      setOption(cm, 'gutters', gutters);
+      if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
+        gutters.push('CodeMirror-lint-markers');
+        setOption(cm, 'gutters', gutters);
+      }
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
@@ -405,5 +407,13 @@
       options.forEach(loadAddon);
     }
   };
+
+  // External method to realod the selected addon
+  // may be useful in the future
+  // window.reloadSelectedAddon = function(addon) {
+  //   if (options.indexOf(addon) !== -1) {
+  //     loadAddon(addon);
+  //   }
+  // };
 
 })();

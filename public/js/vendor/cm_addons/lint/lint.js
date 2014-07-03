@@ -1,6 +1,3 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
-
 (function(mod) {
   if (typeof exports == 'object' && typeof module == 'object') // CommonJS
     mod(require('../../lib/codemirror'));
@@ -70,6 +67,9 @@
     if (!options.getAnnotations) options.getAnnotations = cm.getHelper(CodeMirror.Pos(0, 0), 'lint');
     if (!options.getAnnotations && cm.getOption('mode') === 'htmlmixed') {
       options.getAnnotations = CodeMirror.helpers.lint.htmlmixed;
+    }
+    if (!options.getAnnotations && cm.getOption('mode') === 'coffeescript') {
+      options.getAnnotations = CodeMirror.helpers.lint.coffeescript;
     }
     if (!options.getAnnotations) throw new Error('Required option "getAnnotations" missing (lint addon)');
     return options;
@@ -145,6 +145,7 @@
     wrapper.appendChild(head);
     wrapper.appendChild(logs);
     cm.consolelint = {
+      wrapper: wrapper,
       logs: logs,
       head: head,
       error: 0,
@@ -338,6 +339,28 @@
     }
   }
 
+  function lintStop(cm) {
+    lineReset(cm);
+    cm.setOption('lint', false);
+    var opt = cm.getOption('lintOpt');
+    if (opt.gutter) {
+      var gutters = cm.getOption('gutters');
+      var pos = gutters.indexOf('CodeMirror-lint-markers');
+      if (pos !== -1) {
+        gutters.splice(pos, 1);
+        cm.setOption('gutters', gutters);
+        var ln = cm.getOption('lineNumbers');
+        cm.setOption('lineNumbers', !ln);
+        cm.setOption('lineNumbers', ln);
+      }
+    }
+    if (opt.console) {
+      opt.consoleParent.removeChild(cm.consolelint.wrapper);
+      $document.trigger('sizeeditors');
+    }
+    cm.refresh();
+  }
+
   CodeMirror.defineOption('lint', false, function(cm, val, old) {
     var defaults = {
       console: true,
@@ -387,6 +410,10 @@
         CodeMirror.on(cm.getWrapperElement(), 'mouseover', state.onMouseOver);
 
       startLinting(cm);
+
+      cm.lintStop = function() {
+        return lintStop(this);
+      };
     }
 
     // probably to improve according to real case scenarios

@@ -27,7 +27,6 @@
     console: true,
     line: false,
     under: false,
-    tooltip: false,
     gutter: false
   };
   // css must go last for the moment due to CSSLint creating the
@@ -40,7 +39,9 @@
     }
     settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : d;
   });
+
   settingsHintShow = $.extend({}, hintShow, jsbin.settings.hintShow);
+  settingsHintShow.tooltip = settingsHintShow.gutter;
   var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);
 
   var addons = {
@@ -128,7 +129,6 @@
         }});
         setOption(cm, 'foldGutter', true);
         var gutters = cm.getOption('gutters');
-        console.log('gutters', gutters);
         gutters.push('CodeMirror-linenumbers');
         gutters.push('CodeMirror-foldgutter');
         setOption(cm, 'gutters', gutters);

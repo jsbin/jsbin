@@ -1,11 +1,13 @@
 try {
   console.log('Dave is ready!');
 } catch (e) {
-  var console = {
+  window.console = {
     log: function () {
       // alert([].slice.call(arguments).join('\n'));
     },
-    warn: function () {}
+    warn: function () {},
+    trace: function () {},
+    error: function () {}
   };
 }
 
@@ -60,7 +62,9 @@ function dedupe(array) {
 function exposeSettings() {
   'use strict';
   if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
-    window.jsbin = {}; // create the holding object
+    window.jsbin = {
+      'static': jsbin['static']
+    }; // create the holding object
 
     if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name) {
       window.jsbin.settings = jsbin.settings;

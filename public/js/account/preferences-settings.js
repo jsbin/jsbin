@@ -152,7 +152,6 @@
     localStorageSettings.ssl = $ssl.prop('checked');
 
     localStorage.settings = JSON.stringify(localStorageSettings);
-    console.log(localStorageSettings);
 
     clearTimeout(saveTimer);
     $saveStatus.addClass('show');

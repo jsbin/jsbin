@@ -252,11 +252,11 @@
 
   function updateLinting(cm, annotationsNotSorted) {
     var state = cm.state.lint, options = state.options;
-    
+
     if (cm.options.lintOpt.under) {
       underClear(cm);
     }
-    
+
     if (state.hasGutter) {
       gutterReset(cm);
     }
@@ -284,11 +284,11 @@
         maxSeverity = getMaxSeverity(maxSeverity, severity);
 
         if (options.formatAnnotation) ann = options.formatAnnotation(ann);
-        
+
         if (state.hasGutter) {
           tipLabel.appendChild(annotationTooltip(ann, severity));
         }
-        
+
         if (cm.options.lintOpt.console) {
           cm.consolelint.logs.appendChild(consoleLine(ann, severity, cm));
         }
@@ -381,7 +381,7 @@
     if (!cm.options.lintRules) {
       cm.options.lintRules = {};
     }
-    
+
     if (old && old != CodeMirror.Init) {
       if (cm.options.lintOpt.under) {
         underClear(cm);

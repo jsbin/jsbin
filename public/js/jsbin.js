@@ -66,10 +66,12 @@ if (storedSettings === "undefined") {
   storedSettings = null;
 }
 
-window.jsbin.settings = $.extend(JSON.parse(storedSettings || '{}'), jsbin.settings);
+// In all cases localStorage takes precedence over user settings so users can
+// configure it from the console and overwrite the server delivered settings
+window.jsbin.settings = $.extend(jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
-  $.extend(window.jsbin.settings, jsbin.user.settings);
+  window.jsbin.settings = $.extend({}, jsbin.user.settings, window.jsbin.settings);
 }
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);

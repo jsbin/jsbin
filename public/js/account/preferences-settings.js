@@ -24,15 +24,27 @@
 
   // Setup variables
   var $csrf = $('#_csrf');
+  var hintShow = {
+    console: true,
+    line: false,
+    // under: false,
+    // tooltip: true,
+    gutter: false
+  };
   var currentSettings = {
     panels: [],
     includejs: true,
     focusedPanel: 'html',
+    assetUrl: '',
+    hintShow: hintShow,
     jshint: true,
     jshintOptions: '',
-    // csshint: false,
-    // csshintOptions: '',
-    assetUrl: '',
+    csshint: false,
+    csshintOptions: '',
+    htmlhint: false,
+    htmlhintOptions: '',
+    coffeescripthint: false,
+    coffeescripthintOptions: '',
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -42,14 +54,14 @@
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
+  var hints = ['js', 'css', 'html', 'coffeescript'];
   var $ssl = $('#ssl'); // .prop('checked', currentSettings.ssl); // checking happens server side
-  var hints = ['js'];
-  // var hints = ['js', 'css'];
   var $hints = {};
   var $hintsOptions = {};
   var $hintsOptWrapper = {};
   var hintsOptionsVal = {};
   var $hintsOptError = {};
+  var $hintShow = {};
 
   // var jshints = {
   //   'forin': 'About unsafe <code>for..in</code>',
@@ -69,7 +81,7 @@
   }
 
   for (var m = 0; m < hints.length; m++) {
-    $hintsOptWrapper[hints[m]] = $('#' + hints[m] + 'hintOptWrapper')
+    $hintsOptWrapper[hints[m]] = $('.' + hints[m] + 'hintOptWrapper')
       .toggle(currentSettings[ hints[m] + 'hint' ]);
     $hints[hints[m]] = $('#' + hints[m] + 'hint')
       .prop('checked', currentSettings[ hints[m] + 'hint' ])
@@ -85,6 +97,12 @@
     $hintsOptions[hints[m]] = $('#' + hints[m] + 'hintOptions')
       .val(hintsOptionsVal[hints[m]]);
     $hintsOptError[hints[m]] = $('#' + hints[m] + 'hintOptError');
+  }
+  $hintShow = {};
+  for (var key in hintShow) {
+    if (hintShow.hasOwnProperty(key)) {
+      $hintShow[key] = $('#hintShow-' + key).prop('checked', currentSettings.hintShow[key]);
+    }
   }
 
   // for (var prop in jshints) {
@@ -119,6 +137,12 @@
         localStorageSettings[ hints[m] + 'hintOptions' ] = JSON.parse($hintsOptions[ hints[m] ].val() || '{}');
       } catch (e) {
         $hintsOptError[ hints[m] ].html(e).addClass('show');
+      }
+    }
+    localStorageSettings.hintShow = {};
+    for (var key in hintShow) {
+      if (hintShow.hasOwnProperty(key)) {
+        localStorageSettings.hintShow[key] = $hintShow[key].prop('checked');
       }
     }
 

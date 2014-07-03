@@ -153,6 +153,7 @@ span.mini-desc {
   color: #979A99;
   display: block;
   font-weight: normal;
+  font-size: 14px;
 }
 span.mini-desc a {
   color: #979A99;
@@ -185,8 +186,37 @@ span.mini-desc a {
   margin-bottom: 1em;
 }
 
-#jshintOptions {
+.hintOptions {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.2em;
+}
+
+
+.hintOptWrapper {
+  display: inline;
+  width: 400px;
+  margin-left: 1em;
+}
+.hintOptWrapper summary {
+  width: 100px;
+  display: inline;
+  outline: none;
+  color: #979A99;
+  cursor: pointer;
+}
+.hintOptWrapper summary + div {
+  margin-top: 0.5em;
+}
+#jshint, #csshint, #htmlhint, #coffeescripthint {
+  vertical-align: top;
+  margin-top: 6px;
+}
+form label.hintOptions {
+  width: 400px;
+  display: block;
+  float: none;
+  text-align: left;
+  margin-top: -8px;
+  margin-bottom: 1em;
 }

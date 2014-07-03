@@ -75,17 +75,18 @@ var Panel = function (name, settings) {
   }
 
   // this is nasty and wrong, but I'm going to put here anyway .i..
-  if (this.id === 'javascript') {
-    this.on('processor', function (e, preprocessor) {
-      if (preprocessor === 'none') {
-        jshintEnabled = true;
-        checkForErrors();
-      } else {
-        jshintEnabled = false;
-        $error.hide();
-      }
-    });
-  }
+  // removed as we have a different way to check for errors
+  // if (this.id === 'javascript') {
+  //   this.on('processor', function (e, preprocessor) {
+  //     if (preprocessor === 'none') {
+  //       jshintEnabled = true;
+  //       checkForErrors();
+  //     } else {
+  //       jshintEnabled = false;
+  //       $error.hide();
+  //     }
+  //   });
+  // }
 
   if (settings.editor) {
     cmSettings = {
@@ -452,14 +453,8 @@ Panel.prototype = {
         var height = panel.editor.scroller.closest('.panel').outerHeight(),
             offset = 0;
             // offset = panel.$el.find('> .label').outerHeight();
-
-        // special case for the javascript panel
-        if (panel.name === 'javascript') {
-          if ($error === null) { // it wasn't there right away, so we populate
-            $error = panel.$el.find('details');
-          }
-          offset += ($error.filter(':visible').height() || 0);
-        }
+        $error = panel.$el.find('details');
+        offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
           editor.scroller.height(height - offset);

@@ -19,6 +19,30 @@
     jsbin.settings.addons = defaults;
   }
 
+  var detailsSupport = 'open' in document.createElement('details');
+
+  var settingsHints = {};
+  var settingsHintShow = {};
+  var hintShow = {
+    console: true,
+    line: false,
+    under: false,
+    tooltip: false,
+    gutter: false
+  };
+  // css must go last for the moment due to CSSLint creating the
+  // global variable 'exports'
+  ['js', 'html', 'coffeescript', 'css'].forEach(function (val) {
+    var h = val + 'hint';
+    var d = false;
+    if (val === 'js') {
+      d = true;
+    }
+    settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : d;
+  });
+  settingsHintShow = $.extend({}, hintShow, jsbin.settings.hintShow);
+  var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);
+
   var addons = {
     closebrackets: {
       url: '/js/vendor/codemirror4/addon/edit/closebrackets.js',
@@ -103,7 +127,7 @@
           cm.foldCode(cm.getCursor());
         }});
         setOption(cm, 'foldGutter', true);
-        var gutters = cm.getOptions('gutters');
+        var gutters = cm.getOption('gutters');
         console.log('gutters', gutters);
         gutters.push('CodeMirror-linenumbers');
         gutters.push('CodeMirror-foldgutter');
@@ -148,7 +172,7 @@
       ],
       test: function () {
         return jsbin.panels.panels.javascript.editor.openDialog &&
-               (typeof window.ternBasicDefs !== undefined) &&
+               (typeof window.ternBasicDefs !== 'undefined') &&
                CodeMirror.showHint &&
                CodeMirror.TernServer &&
                CodeMirror.startTern;
@@ -162,7 +186,7 @@
         '/js/vendor/codemirror4/addon/selection/active-line.js'
       ],
       test: function() {
-        return CodeMirror.defaults.styleActiveLine !== undefined;
+        return (typeof CodeMirror.defaults.styleActiveLine !== 'undefined');
       },
       done: function(cm) {
         setOption(cm, 'styleActiveLine', true);
@@ -171,10 +195,73 @@
     matchbrackets: {
       url: [],
       test: function() {
-        return CodeMirror.defaults.matchBrackets !== undefined;
+        return (typeof CodeMirror.defaults.matchBrackets !== 'undefined');
       },
       done: function(cm) {
         setOption(cm, 'matchBrackets', true);
+      }
+    },
+    csshint: {
+      url: [
+        '/js/vendor/csslint/csslint.min.js',
+        '/js/vendor/cm_addons/lint/css-lint.js'
+      ],
+      test: function() {
+        return hintingTest('css') &&
+               (typeof CSSLint !== 'undefined');
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') !== 'css') {
+          return;
+        }
+        hintingDone(cm);
+      }
+    },
+    jshint: {
+      url: [],
+      test: function() {
+        return hintingTest('javascript') &&
+               (typeof JSHINT !== 'undefined');
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') !== 'javascript') {
+          return;
+        }
+        hintingDone(cm, {
+          'eqnull': true
+        });
+      }
+    },
+    htmlhint: {
+      url: [
+        '/js/vendor/htmlhint/htmlhint.js',
+        '/js/vendor/cm_addons/lint/html-lint.js'
+      ],
+      test: function() {
+        return hintingTest('htmlmixed') &&
+               (typeof HTMLHint !== 'undefined');
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') !== 'htmlmixed') {
+          return;
+        }
+        hintingDone(cm);
+      }
+    },
+    coffeescripthint: {
+      url: [
+        '/js/vendor/coffeelint/coffeelint.min.js',
+        '/js/vendor/cm_addons/lint/coffeescript-lint.js'
+      ],
+      test: function() {
+        return hintingTest('coffeescript') &&
+               (typeof coffeelint !== 'undefined');
+      },
+      done: function(cm) {
+        if (cm.getOption('mode') !== 'coffeescript') {
+          return;
+        }
+        hintingDone(cm);
       }
     }
   };
@@ -229,15 +316,61 @@
 
   function defaultTest(prop) {
     return function () {
-      return CodeMirror.optionHandlers[prop] !== undefined;
+      return (typeof CodeMirror.optionHandlers[prop] !== 'undefined');
     };
   }
 
-  var options = Object.keys(jsbin.settings.addons);
+  function hintingTest(mode) {
+    return (typeof CodeMirror.defaults.lint !== 'undefined') &&
+           CodeMirror.helpers.lint &&
+           CodeMirror.helpers.lint[mode] &&
+           CodeMirror.optionHandlers.lint;
+  }
+
+  window.hintingDone = function(cm, defhintOptions) {
+    var mode = cm.getOption('mode');
+    if (mode === 'javascript') {
+      mode = 'js';
+    }
+    if (mode === 'htmlmixed') {
+      mode = 'html';
+    }
+    var opt = $.extend({}, settingsHintShow);
+    opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
+    setOption(cm, 'lintOpt', opt);
+    setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
+    if (opt.gutter) {
+      var gutters = cm.getOption('gutters');
+      if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
+        gutters.push('CodeMirror-lint-markers');
+        setOption(cm, 'gutters', gutters);
+      }
+      setOption(cm, 'lint', true);
+      var ln = cm.getOption('lineNumbers');
+      setOption(cm, 'lineNumbers', !ln);
+      setOption(cm, 'lineNumbers', ln);
+    } else {
+      setOption(cm, 'lint', true);
+    }
+    if (opt.console) {
+      $document.trigger('sizeeditors');
+      $(cm.consolelint.head).on('click', function() {
+        if (!detailsSupport) {
+          $(this).nextAll().toggle();
+        }
+        // trigger a resize after the click has completed and the details is close
+        setTimeout(function () {
+          $document.trigger('sizeeditors');
+        }, 10);
+      });
+    }
+  }
+
+  var options = Object.keys(settingsAddons);
 
   function loadAddon(key) {
     var addon = addons[key];
-    if (addon && jsbin.settings.addons[key]) {
+    if (addon && settingsAddons[key]) {
       if (typeof addon.url === 'string') {
         addon.url = [addon.url];
       }
@@ -267,5 +400,13 @@
       options.forEach(loadAddon);
     }
   };
+
+  // External method to realod the selected addon
+  // may be useful in the future
+  // window.reloadSelectedAddon = function(addon) {
+  //   if (options.indexOf(addon) !== -1) {
+  //     loadAddon(addon);
+  //   }
+  // };
 
 })();

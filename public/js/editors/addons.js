@@ -25,16 +25,20 @@
   var settingsHintShow = {};
   var hintShow = {
     console: true,
-    line: true,
+    line: false,
     under: false,
-    tooltip: true,
-    gutter: true
+    tooltip: false,
+    gutter: false
   };
   // css must go last for the moment due to CSSLint creating the
   // global variable 'exports'
   ['js', 'html', 'coffeescript', 'css'].forEach(function (val) {
     var h = val + 'hint';
-    settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : true;
+    var d = false;
+    if (val === 'js') {
+      d = true;
+    }
+    settingsHints[h] = (jsbin.settings[h] !== undefined) ? jsbin.settings[h] : d;
   });
   settingsHintShow = $.extend({}, hintShow, jsbin.settings.hintShow);
   var settingsAddons = $.extend({}, jsbin.settings.addons, settingsHints);

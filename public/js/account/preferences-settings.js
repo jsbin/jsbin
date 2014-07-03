@@ -26,10 +26,10 @@
   var $csrf = $('#_csrf');
   var hintShow = {
     console: true,
-    line: true,
+    line: false,
     // under: false,
     // tooltip: true,
-    gutter: true
+    gutter: false
   };
   var currentSettings = {
     panels: [],

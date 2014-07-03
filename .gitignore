@@ -2,7 +2,6 @@ logs
 logs/*
 config.*.json
 public/js/jsbin*.js
-public/js/prod/*
 .nodemonignore
 !config.default.json
 statsd.js

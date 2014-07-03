@@ -1,3 +1,4 @@
+'use strict';
 /*global module:false*/
 module.exports = function (grunt) {
   var fs = require('fs'),
@@ -32,7 +33,7 @@ module.exports = function (grunt) {
       }
     }
 
-    child = exec(cmd, function (err, stdout, stderr) {
+    child = exec(cmd, function (err) {
       if (err) {
         grunt.log.writeln(err.message);
         process.exit(err.code);
@@ -96,9 +97,9 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
-          'public/js/intro.js',
+          'public/js/intro-start.js',
           '<%= scriptsRelative %>',
-          'public/js/outro.js'
+          'public/js/outro-start.js'
         ],
         dest: distpaths.script
       },
@@ -124,7 +125,7 @@ module.exports = function (grunt) {
           sourceMapPrefix: 2,
           sourceMapRoot: '/js',
         },
-        src: '<%= scriptsRelative %>',
+        src: distpaths.script, //'<%= scriptsRelative %>',
         dest: distpaths.min
       },
       runner: {

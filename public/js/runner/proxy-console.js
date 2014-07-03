@@ -6,7 +6,7 @@
 var proxyConsole = (function () {
   'use strict';
   var supportsConsole = true;
-  try { window.console.log('runner'); } catch (e) { supportsConsole = false; }
+  try { window.console.log('d[ o_0 ]b'); } catch (e) { supportsConsole = false; }
 
   var proxyConsole = function() {};
 

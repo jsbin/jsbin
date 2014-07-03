@@ -1,0 +1,1 @@
+function start(template, jsbin, window, document, undefined) {

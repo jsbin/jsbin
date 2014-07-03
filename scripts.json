@@ -54,6 +54,7 @@
     "/js/chrome/infocard.js",
     "/js/chrome/last-bin.js",
     "/js/chrome/archive.js",
+    "/js/chrome/welcome-panel.js",
     "/js/chrome/app.js"
   ],
   "runner": [

@@ -583,8 +583,10 @@ var msgType = '';
 jsconsole.init(document.getElementById('output'));
 
 function upgradeConsolePanel(console) {
-    console.$el.click(function () {
-      jsconsole.focus();
+    console.$el.click(function (event) {
+      if (!$(event.target).closest('#output').length) {
+        jsconsole.focus();
+      }
     });
     console.reset = function () {
       jsconsole.reset();

@@ -402,6 +402,13 @@ var libraries = [
     'label': 'Modernizr Development latest'
   },
   {
+    'url': [
+      'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
+      'http://cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
+    ],
+    'label': 'Detectizr 1.5.0'
+  },
+  {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',
     'label': 'Prefixfree 1.0.7'
   },

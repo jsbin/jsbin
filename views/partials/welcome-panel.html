@@ -18,7 +18,6 @@
 
 {{#welcomePanel}}
 {{#features}}
-  <!-- Features -->
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
@@ -32,7 +31,6 @@
 {{/features}}
 
 {{#pro-features}}
-  <!-- Pro features -->
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} ($15/month){{/unless}}</a></h2>
       <ul class="toppanel-list">
@@ -47,7 +45,6 @@
 
   <div class="toppanel-column">
   {{#blog}}
-    <!-- Blog  -->
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
@@ -60,7 +57,6 @@
     </div>
   {{/blog}}
   {{#help}}
-    <!-- Help -->
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
@@ -76,7 +72,6 @@
 
   <div class="toppanel-column">
     {{#twitter}}
-      <!-- Twitter -->
       <div class="toppanel-section">
         <h2 class="toppanel-title"><a href="{{link}}" target="_blank" class="toppanel-link">{{title}}</a></h2>
           <ul class="toppanel-list">
@@ -92,13 +87,11 @@
 
   <div class="toppanel-column">
   {{#quote}}
-    <!-- Quote -->
     <div class="toppanel-section">
       <div class="toppanel-quote">{{{.}}}</div>
     </div>
   {{/quote}}
     {{!--
-      <!-- Recent bins -->
       <div class="toppanel-section">
         <h2 class="toppanel-title"><a href="#">Recent bins</a></h2>
         <ul class="toppanel-list">

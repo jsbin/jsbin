@@ -489,6 +489,10 @@ var libraries = [
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
     'label': 'GSAP 1.11.7'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
+    'label': 'Phaser 2.0.5'
   }
 ];
 

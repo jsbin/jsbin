@@ -1,4 +1,4 @@
-/*globals jsbin, _, $, RSVP*/
+/*globals jsbin, _, $, RSVP, CodeMirror*/
 var processors = jsbin.processors = (function () {
   'use strict';
   /*
@@ -352,8 +352,8 @@ var processors = jsbin.processors = (function () {
                 var temp = [];
                 for (var i = 0; i < data.errors.length; i++) {
                   temp.push({
-                    from: CodeMirror.Pos(data.errors[i].line * 1 - 1, data.errors[i].ch * 1),
-                    to: CodeMirror.Pos(data.errors[i].line * 1 - 1, data.errors[i].ch * 1),
+                    from: CodeMirror.Pos(data.errors[i].line - 1, data.errors[i].ch),
+                    to: CodeMirror.Pos(data.errors[i].line - 1, data.errors[i].ch),
                     message: data.errors[i].msg,
                     severity : 'error'
                   });

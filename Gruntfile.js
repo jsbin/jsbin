@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 
   var distpaths = {
     script:    'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.js',
-    map:       'public/js/prod/<%= pkg.name %>.map.json', // don't version this so we overwrite
+    // map:       'public/js/prod/<%= pkg.name %>.map.json', // don't version this so we overwrite
     min:       'public/js/prod/<%= pkg.name %>-<%= pkg.version %>.min.js',
     runner:    'public/js/prod/runner-<%= pkg.version %>.js',
     runnermin: 'public/js/prod/runner-<%= pkg.version %>.min.js'
@@ -120,10 +120,10 @@ module.exports = function (grunt) {
         options: {
           banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                   '<%= grunt.template.today("yyyy-mm-dd") %> */\n',
-          sourceMap: distpaths.map,
-          sourceMappingURL: '/js/prod/jsbin.map.json',
-          sourceMapPrefix: 2,
-          sourceMapRoot: '/js',
+          // sourceMap: distpaths.map,
+          // sourceMappingURL: '/js/prod/jsbin.map.json',
+          // sourceMapPrefix: 2,
+          // sourceMapRoot: '/js',
         },
         src: distpaths.script, //'<%= scriptsRelative %>',
         dest: distpaths.min

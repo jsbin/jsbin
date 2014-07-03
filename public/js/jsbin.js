@@ -66,7 +66,7 @@ function exposeSettings() {
       'static': jsbin['static']
     }; // create the holding object
 
-    if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name) {
+    if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name && jsbin.user.name) {
       window.jsbin.settings = jsbin.settings;
       return;
     }

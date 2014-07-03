@@ -1,5 +1,5 @@
 try {
-  console.log('init');
+  console.log('Dave is ready!');
 } catch (e) {
   var console = {
     log: function () {
@@ -57,9 +57,27 @@ function dedupe(array) {
   return results;
 }
 
+function exposeSettings() {
+  'use strict';
+  if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
+    window.jsbin = {}; // create the holding object
 
-window['jsbin'] || (window.jsbin = {});
-// dodgy?
+    if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name) {
+      window.jsbin.settings = jsbin.settings;
+      return;
+    }
+
+    var key = 'o' + (Math.random() * 1).toString(32).slice(2);
+    Object.defineProperty(window, key, {
+      get:function () {
+        window.jsbin.settings = jsbin.settings;
+        console.log('jsbin.settings can how be modified on the console');
+      }
+    });
+    console.log('To edit settings, type this string into the console: ' + key);
+  }
+}
+
 var storedSettings = localStorage.getItem('settings');
 if (storedSettings === "undefined") {
   // yes, equals the *string* "undefined", then something went wrong
@@ -68,11 +86,14 @@ if (storedSettings === "undefined") {
 
 // In all cases localStorage takes precedence over user settings so users can
 // configure it from the console and overwrite the server delivered settings
-window.jsbin.settings = $.extend(jsbin.settings, JSON.parse(storedSettings || '{}'));
+jsbin.settings = $.extend(jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
-  window.jsbin.settings = $.extend({}, jsbin.user.settings, window.jsbin.settings);
+  jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
 }
+
+exposeSettings();
+
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
 jsbin.tablet = /iPad/i.test(navigator.userAgent); // sue me.

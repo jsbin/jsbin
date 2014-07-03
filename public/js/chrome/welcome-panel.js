@@ -2,6 +2,10 @@
   /*global jsbin, $, $body, $document, analytics, settings*/
   'use strict';
 
+  if (!$('#toppanel').length) {
+    return;
+  }
+
   if (jsbin.settings.gui === undefined) {
     jsbin.settings.gui = {};
   }
@@ -39,7 +43,7 @@
       $body.addClass('toppanel-slow');
     }
   };
-  
+
   $('.toppanel-hide').click(function(event) {
     event.preventDefault();
     goSlow(event);
@@ -51,7 +55,7 @@
     showToppanel();
   });
   $document.keydown(function (event) {
-    if (event.which == 27) {
+    if (event.which === 27) {
       if ($body.hasClass('toppanel')) {
         removeToppanel();
       }

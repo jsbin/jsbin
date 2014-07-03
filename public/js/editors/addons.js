@@ -200,9 +200,7 @@
     csshint: {
       url: [
         '/js/vendor/csslint/csslint.min.js',
-        '/js/vendor/cm_addons/lint/lint.css',
-        '/js/vendor/cm_addons/lint/css-lint.js',
-        '/js/vendor/cm_addons/lint/lint.js'
+        '/js/vendor/cm_addons/lint/css-lint.js'
       ],
       test: function() {
         return hintingTest('css') &&
@@ -216,12 +214,7 @@
       }
     },
     jshint: {
-      url: [
-        '/js/vendor/jshint/jshint.min.js',
-        '/js/vendor/cm_addons/lint/lint.css',
-        '/js/vendor/cm_addons/lint/javascript-lint.js',
-        '/js/vendor/cm_addons/lint/lint.js'
-      ],
+      url: [],
       test: function() {
         return hintingTest('javascript') &&
                (typeof JSHINT !== 'undefined');
@@ -238,9 +231,7 @@
     htmlhint: {
       url: [
         '/js/vendor/htmlhint/htmlhint.js',
-        '/js/vendor/cm_addons/lint/lint.css',
-        '/js/vendor/cm_addons/lint/html-lint.js',
-        '/js/vendor/cm_addons/lint/lint.js'
+        '/js/vendor/cm_addons/lint/html-lint.js'
       ],
       test: function() {
         return hintingTest('htmlmixed') &&
@@ -256,9 +247,7 @@
     coffeescripthint: {
       url: [
         '/js/vendor/coffeelint/coffeelint.min.js',
-        '/js/vendor/cm_addons/lint/lint.css',
-        '/js/vendor/cm_addons/lint/coffeescript-lint.js',
-        '/js/vendor/cm_addons/lint/lint.js'
+        '/js/vendor/cm_addons/lint/coffeescript-lint.js'
       ],
       test: function() {
         return hintingTest('coffeescript') &&

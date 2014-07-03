@@ -4203,8 +4203,11 @@ pre .highlight:last-of-type {
 .embed #live .options {
   overflow: hidden;
   background: #fff;
-  background: rgba(255, 255, 255, 0.8);
-  opacity: 0;
+  background: rgba(255, 255, 255, 0.3);
+  opacity: 0.3;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
   -webkit-transition: opacity ease-in 50ms;
      -moz-transition: opacity ease-in 50ms;
        -o-transition: opacity ease-in 50ms;
@@ -4213,6 +4216,18 @@ pre .highlight:last-of-type {
 
 .embed #live:hover .options {
   opacity: 1;
+}
+
+.embed #live .label {
+  position: static;
+}
+
+.embed .blog {
+  display: none;
+}
+
+.embed .options a {
+  display: none;
 }
 
 .embed #live iframe {
@@ -5159,4 +5174,41 @@ a.toppanel-logo {
 }
 #console-log-line-selected {
   background: #AFF;
+}
+
+/* embed tweaks */
+.embed #control {
+  height: 28px;
+}
+
+.embed #bin {
+  top: 28px;
+}
+
+.embed .dropdownmenu a,
+.embed .button {
+  height: 18px;
+  line-height: 20px;
+}
+
+.embed #panels {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.embed #panels .button {
+  border-radius: 0;
+  border-top: 0;
+  border-bottom: 0;
+  height: 18px;
+  line-height: 20px;
+}
+
+.embed .menu .brand {
+  margin-left: 0;
+  padding-left: 5px;
+}
+
+.embed .menu .brand img {
+  margin-top: 2px;
 }

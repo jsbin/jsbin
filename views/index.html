@@ -16,9 +16,9 @@
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
 <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
-{{#feature request "welcomePanel"}}
+{{#unless embed}}{{#feature request "welcomePanel"}}
   {{> welcome_panel}}
-{{/feature}}
+{{/feature}}{{/unless}}
 <div id="control">
   <div class="control">
     <div id="menuinfo"><p></p></div>
@@ -266,7 +266,7 @@
         {{/unless}}
 
         {{#if settings.[ui showblog]}}
-        <div class="menu">
+        <div class="menu blog">
           <a href="http://jsbin.com/blog" class="button">Blog</a>
         </div>
         {{/if}}

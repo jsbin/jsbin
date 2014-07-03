@@ -349,16 +349,8 @@ var processors = jsbin.processors = (function () {
             if (data.errors) {
               console.log(data.errors);
               if (typeof jsbin.panels.panels.css.editor.updateLinting !== 'undefined') {
-                var temp = [];
-                for (var i = 0; i < data.errors.length; i++) {
-                  temp.push({
-                    from: CodeMirror.Pos(data.errors[i].line - 1, data.errors[i].ch),
-                    to: CodeMirror.Pos(data.errors[i].line - 1, data.errors[i].ch),
-                    message: data.errors[i].msg,
-                    severity : 'error'
-                  });
-                }
-                jsbin.panels.panels.css.editor.updateLinting(temp);
+                var err = formatErrors(data.errors);
+                jsbin.panels.panels.css.editor.updateLinting(err);
               }
             } else if (data.result) {
               resolve(data.result);
@@ -523,6 +515,23 @@ var processors = jsbin.processors = (function () {
     if (jsbin.panels.ready) {
       editors.console.render();
     }
+  };
+
+  var formatErrors = function(res) {
+    var errors = [];
+    var line = 0;
+    var ch = 0;
+    for (var i = 0; i < res.length; i++) {
+      line = res[i].line - 1;
+      ch = res[i].ch - 1;
+      errors.push({
+        from: CodeMirror.Pos(line, ch),
+        to: CodeMirror.Pos(line, ch),
+        message: res[i].msg,
+        severity : 'error'
+      });
+    }
+    return errors;
   };
 
   var $panelButtons = $('#panels');

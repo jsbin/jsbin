@@ -43,6 +43,9 @@
   "server": {
     "logger": "default"
   },
+  "security": {
+    "allowAnonymousPreview": false
+  },
   "client": {
     "user": true
   },

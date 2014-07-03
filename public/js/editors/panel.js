@@ -118,6 +118,14 @@ var Panel = function (name, settings) {
       profile: name   /* define Zen Coding output profile */
     });
 
+    // make sure tabSize and indentUnit are numbers
+    if (typeof cmSettings.tabSize === 'string') {
+      cmSettings.tabSize = parseInt(cmSettings.tabSize, 10) || 2;
+    }
+    if (typeof cmSettings.indentUnit === 'string') {
+      cmSettings.indentUnit = parseInt(cmSettings.indentUnit, 10) || 2;
+    }
+
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     panel.editor.on('highlightLines', function () {

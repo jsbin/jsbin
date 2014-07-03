@@ -7,6 +7,18 @@
 
   <form>
   <form id="editor-settings">
+    {{#feature request "pro"}}
+    <h3>Security</h3>
+
+    <div>
+      <label for="ssl">Always use SSL</label>
+      <input type="checkbox" name="ssl" id="ssl" {{#feature request "sslForAll"}}checked{{/feature}}>
+    </div>
+
+    <p><small>Note that by enabling SSL for all of JS Bin, including non-https assets in your bins will cause the iframe <em>not</em> to render. This is the correct behaviour for https frames containing non-secure content. <a href="http://jsbin.com/help/ssl">Read more</a>.</small></p>
+
+    {{/feature}}
+
     {{#feature request "assets"}}
     <h3>Custom content</h3>
     <p>If you want to link to images or additional assets, we redirect the <a href="#">/{{user.name}}/assets/</a> relative URL to <em>your asset URL</em>, so you can link to <a href="#">/{{user.name}}/assets/images/logo.png</a> for example.</p>

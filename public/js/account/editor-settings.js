@@ -32,7 +32,7 @@
     theme: 'jsbin',
     indentUnit: 2,
     tabSize: 2
-  }
+  };
 
   // needed for the keymaps
   $.browser = {};
@@ -153,8 +153,8 @@
     editor.setOption('lineWrapping', $lineWrapping.prop('checked'));
     editor.setOption('lineNumbers', $lineNumbers.prop('checked'));
     editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
-    editor.setOption('tabSize', $tabSize.val());
-    editor.setOption('indentUnit', $tabSize.val());
+    editor.setOption('tabSize', parseInt($tabSize.val(), 10));
+    editor.setOption('indentUnit', parseInt($tabSize.val(), 10));
     editor.setOption('theme', $theme.val());
     $CodeMirror.css('font-size', $fontsize.val()+'px');
     editor.refresh();

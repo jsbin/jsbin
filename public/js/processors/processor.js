@@ -347,7 +347,13 @@ var processors = jsbin.processors = (function () {
           },
           success: function (data) {
             if (data.errors) {
-              console.log(data.errors);
+              // console.log(data.errors);
+              var cm = jsbin.panels.panels.css.editor;
+              if (typeof cm.updateLinting !== 'undefined') {
+                hintingDone(cm);
+                var err = formatErrors(data.errors);
+                cm.updateLinting(err);
+              }
             } else if (data.result) {
               resolve(data.result);
             }
@@ -386,7 +392,13 @@ var processors = jsbin.processors = (function () {
           },
           success: function (data) {
             if (data.errors) {
-              console.log(data.errors);
+              // console.log(data.errors);
+              var cm = jsbin.panels.panels.css.editor;
+              if (typeof cm.updateLinting !== 'undefined') {
+                hintingDone(cm);
+                var err = formatErrors(data.errors);
+                cm.updateLinting(err);
+              }
             } else if (data.result) {
               resolve(data.result);
             }
@@ -513,6 +525,23 @@ var processors = jsbin.processors = (function () {
     }
   };
 
+  var formatErrors = function(res) {
+    var errors = [];
+    var line = 0;
+    var ch = 0;
+    for (var i = 0; i < res.length; i++) {
+      line = res[i].line || 0;
+      ch = res[i].ch || 0;
+      errors.push({
+        from: CodeMirror.Pos(line, ch),
+        to: CodeMirror.Pos(line, ch),
+        message: res[i].msg,
+        severity : 'error'
+      });
+    }
+    return errors;
+  };
+
   var $panelButtons = $('#panels');
 
   var $processorSelectors = $('div.processorSelector').each(function () {
@@ -606,7 +635,7 @@ var processors = jsbin.processors = (function () {
     }
 
     // linting
-    mmMode = cmMode;
+    var mmMode = cmMode;
     if (cmMode === 'javascript') {
       mmMode = 'js';
     }

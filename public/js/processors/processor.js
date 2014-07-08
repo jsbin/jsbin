@@ -604,6 +604,26 @@ var processors = jsbin.processors = (function () {
       delete jsbin.state.processors[panelId];
       delete panel.type;
     }
+
+    // linting
+    mmMode = cmMode;
+    if (cmMode === 'javascript') {
+      mmMode = 'js';
+    }
+    if (cmMode === 'htmlmixed') {
+      mmMode = 'html';
+    }
+    var isHint = panel.editor.getOption('lint');
+    if (isHint) {
+      panel.editor.lintStop();
+    }
+    if (jsbin.settings[mmMode + 'hint']) {
+      panel.editor.setOption('mode', cmMode);
+      if (typeof hintingDone !== 'undefined') {
+        panel.editor.setOption('mode', cmMode);
+        hintingDone(panel.editor);
+      }
+    }
   };
 
   processors.reset = function (panelId) {

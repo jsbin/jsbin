@@ -26,6 +26,14 @@
     html: null
   };
 
+  // default CodeMirror settings
+  var cmDefaultSettings = {
+    lineWrapping: true,
+    theme: 'jsbin',
+    indentUnit: 2,
+    tabSize: 2
+  };
+
   // needed for the keymaps
   $.browser = {};
   // work out the browser platform
@@ -74,12 +82,19 @@
     'vim',
     'emacs',
     'sublime',
-    'tern'
+    'tern',
+    'matchbrackets'
   ];
   var $addons = {};
 
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
+
 
   // setup variables;
+  var $saveStatus = $('span.status');
+  var saveTimer = null;
+
   var $textarea = $('textarea');
   var currentSettings = getCurrentSettings();
   if (currentSettings.editor === undefined) {
@@ -88,6 +103,7 @@
   if (currentSettings.addons === undefined) {
     currentSettings.addons = {};
   }
+  currentSettings.editor = $.extend({}, cmDefaultSettings, currentSettings.editor);
   jsbin.settings = $.extend({}, currentSettings);
 
   var editor = window.editor = CodeMirror.fromTextArea($textarea[0], $.extend({
@@ -137,7 +153,8 @@
     editor.setOption('lineWrapping', $lineWrapping.prop('checked'));
     editor.setOption('lineNumbers', $lineNumbers.prop('checked'));
     editor.setOption('indentWithTabs', $indentWithTabs.prop('checked'));
-    editor.setOption('tabSize', $tabSize.val());
+    editor.setOption('tabSize', parseInt($tabSize.val(), 10));
+    editor.setOption('indentUnit', parseInt($tabSize.val(), 10));
     editor.setOption('theme', $theme.val());
     $CodeMirror.css('font-size', $fontsize.val()+'px');
     editor.refresh();
@@ -146,7 +163,7 @@
     var localStorageSettings = JSON.parse(localStorage.settings || '{}');
     var codemirrorSettings = pick(editor.options, settingsKeys);
     var newSettingsEditor = $.extend(localStorageSettings.editor, codemirrorSettings);
-        
+
     var addonsSettings = {};
     for (var i = 0; i < addonsKeys.length; i++) {
       addonsSettings[ addonsKeys[i] ] = $addons[ addonsKeys[i] ].prop('checked');
@@ -179,6 +196,9 @@
     }
     reloadAddons(tempAddonsKeys);
 
+    clearTimeout(saveTimer);
+    $saveStatus.addClass('show');
+
     // Save on server
     $.ajax({
       type: 'POST',
@@ -188,6 +208,13 @@
         _csrf: $csrf.val()
       },
       success: function() {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(function () {
+          $saveStatus.addClass('show');
+          saveTimer = setTimeout(function () {
+            $saveStatus.removeClass('show');
+          }, 3000);
+        }, 1000);
         if (console && console.log) {
           console.log('Success on saving settings');
         }
@@ -196,6 +223,11 @@
         if (console && console.log) {
           console.log('Error: ' + status);
         }
+      },
+      complete: function () {
+        saveTimer = setTimeout(function () {
+          $saveStatus.removeClass('show');
+        }, 1000);
       }
     });
 

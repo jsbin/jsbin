@@ -51,6 +51,7 @@ var $shareLinks = $('#share .link');
 $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 function updateSavedState() {
+  'use strict';
   var mapping = {
     live: 'output',
     javascript: 'js',
@@ -65,12 +66,21 @@ function updateSavedState() {
     var path = this.getAttribute('data-path');
     var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
+    var hash = panels.getHighlightLines();
+
+    if (hash) {
+      hash = '#' + hash;
+    }
+
     if (nodeName === 'A') {
       this.href = url;
     } else if (nodeName === 'INPUT') {
       this.value = url;
+      if (path === '/edit') {
+        this.value += hash;
+      }
     } else if (nodeName === 'TEXTAREA') {
-      this.value = ('<a class="jsbin-embed" href="' + url + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      this.value = ('<a class="jsbin-embed" href="' + url + hash + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
           return {
             '<': '&lt;',
             '>': '&gt;',
@@ -220,6 +230,13 @@ if (!jsbin.saveDisabled) {
   });
 }
 
+function compressKeys(keys, obj) {
+  obj.compressed = keys;
+  keys.split(',').forEach(function (key) {
+    obj[key] = LZString.compressToUTF16(obj[key]);
+  });
+}
+
 function updateCode(panelId, callback) {
   var panelSettings = {};
 
@@ -227,17 +244,23 @@ function updateCode(panelId, callback) {
     panelSettings.processors = jsbin.state.processors;
   }
 
+  var data = {
+    code: jsbin.state.code,
+    revision: jsbin.state.revision,
+    method: 'update',
+    panel: panelId,
+    content: editors[panelId].getCode(),
+    checksum: saveChecksum,
+    settings: JSON.stringify(panelSettings),
+  };
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('content', data);
+  }
+
   $.ajax({
     url: jsbin.getURL() + '/save',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-      method: 'update',
-      panel: panelId,
-      content: editors[panelId].getCode(),
-      checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings)
-    },
+    data: data,
     type: 'post',
     dataType: 'json',
     headers: {'Accept': 'application/json'},
@@ -322,10 +345,19 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
+  var data = $form.serializeArray().reduce(function(obj, data) {
+    obj[data.name] = data.value;
+    return obj;
+  }, {});
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('html,css,javascript', data);
+  }
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),
-      data: $form.serialize(),
+      data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},
@@ -344,6 +376,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.metadata = { name: jsbin.user.name };
 
         // getURL(true) gets the jsbin without the root attached
         // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');
@@ -354,7 +387,9 @@ function saveCode(method, ajax, ajaxCallback) {
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
-          window.history.pushState(null, '', jsbin.getURL() + '/edit');
+          var hash = panels.getHighlightLines();
+          if (hash) hash = '#' + hash;
+          window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;

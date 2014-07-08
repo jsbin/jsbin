@@ -47,6 +47,11 @@ if (!customKeys.disabled) {
 
     if (event.ctrlKey) { event.metaKey = true; }
 
+    if (event.metaKey && event.which === 89) {
+      archive(!event.shiftKey);
+      return event.preventDefault();
+    }
+
     if (event.metaKey && event.which === 79) { // open
       $('a.homebtn').trigger('click', 'keyboard');
       event.preventDefault();

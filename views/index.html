@@ -15,7 +15,10 @@
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
-  <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
+<!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
+{{#unless embed}}{{#feature request "welcomePanel"}}
+  {{> welcome_panel}}
+{{/feature}}{{/unless}}
 <div id="control">
   <div class="control">
     <div id="menuinfo"><p></p></div>
@@ -38,6 +41,8 @@
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
               {{/feature}}
+              <a class="archivebin button group" data-desc="Archive bin" title="Archive this bin" href="{{code_id_path}}/archive" data-shortcut="ctrl+y">Archive</a>
+              <a class="unarchivebin button group" data-desc="Unrchive bin" title="Restore this bin from the archive" href="{{code_id_path}}/unarchive" data-shortcut="ctrl+shift+y">Unarchive</a>
               {{#if home}}
               <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
               {{/if}}
@@ -261,7 +266,7 @@
         {{/unless}}
 
         {{#if settings.[ui showblog]}}
-        <div class="menu">
+        <div class="menu blog">
           <a href="http://jsbin.com/blog" class="button">Blog</a>
         </div>
         {{/if}}
@@ -343,6 +348,7 @@
         <span class="name"><strong>Console</strong></span>
         <span class="options">
           <button id="runconsole" title="ctrl + enter">Run</button>
+          <button id="clearconsole" title="ctrl + l">Clear</button>
         </span>
       </div>
       <div id="console" class="stretch"><ul id="output"></ul><form>
@@ -427,7 +433,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         </tr>
         <tr>
           <td>tab</td>
-          <td>Code complete (JavaScript only) &amp; Emmet expand</td>
+          <td>Code complete &amp; <a href="http://docs.emmet.io/" target="_blank">Emmet</a> expand</td>
         </tr>
         <tr>
           <td>ctrl + s</td>
@@ -436,6 +442,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         <tr>
           <td>ctrl + shift + s</td>
           <td>Clone Bin</td>
+        </tr>
+        <tr>
+          <td>ctrl + y</td>
+          <td>Archive Bin</td>
         </tr>
         <!-- too confusing, let's throw it away -->
         <!--
@@ -452,7 +462,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Hide focused panel</td>
         </tr>-->
 
-        <tr><td colspan="2"><small><br>JS Bin also supports <a href="http://docs.emmet.io/" target="_blank">Emmet/Zen Coding</a> shortcuts</small></td></tr>
+        <tr><td colspan="2"><small><br><a href="/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
       </tbody>
     </table>
   </div>
@@ -551,27 +561,34 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{/feature}}
-<script>
-  var template = {{{json_template}}};
-  var jsbin = {{{jsbin}}}; tips  = {{tips}};
-</script>
-{{#if isProduction}}
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-{{else}}
-  {{#if concat}}
-<script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
-<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
-  {{else}}
-    <script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
-    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
-  {{/if}}
-    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
-{{/if}}
+<!--[if lte IE 8]>
+<script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
+<![endif]-->
 {{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{else}}
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+  {{#if isProduction}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
+<script>
+  start({{{json_template}}}, {{{jsbin}}}, this, document);
+</script>
+  {{else}}
+<script>
+window.template = {{{json_template}}};
+window.jsbin = {{{jsbin}}};
+</script>
+    {{#if concat}}
+<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+    {{else}}
+      {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
+    {{/if}}
+      {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{/if}}
 {{/if}}
+<script>
+</script>
 </body>
 </html>
 

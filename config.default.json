@@ -43,6 +43,9 @@
   "server": {
     "logger": "default"
   },
+  "security": {
+    "allowAnonymousPreview": false
+  },
   "client": {
     "user": true
   },
@@ -153,6 +156,7 @@
     "translate",
     "trends",
     "unarchive",
+    "upgrade",
     "user",
     "users",
     "widgets",

@@ -75,9 +75,15 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
   /*background: linear-gradient(0deg, #e8e8e8, #f8f8f8);*/
 }
-form input {
+form input,
+form textarea {
   font-size: 16px;
+}
+form input {
   position: relative;
+}
+form textarea {
+  font-family: inherit;
 }
 
 input[type="number"] {
@@ -143,6 +149,30 @@ form label.mini-desc a {
   font-weight: normal;
   margin-right: 0;
 }
+span.mini-desc {
+  color: #979A99;
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+}
+span.mini-desc a {
+  color: #979A99;
+}
+.mini-desc-error {
+  border-radius: 4px;
+  display: block;
+  font-weight: normal;
+  background: #FF4136;
+  color: #fff;
+  padding: 5px 10px;
+  opacity: 0;
+  -webkit-transition: opacity 100ms ease-out;
+      -ms-transition: opacity 100ms ease-out;
+          transition: opacity 100ms ease-out;
+}
+.mini-desc-error.show {
+  opacity: 1;
+}
 
 .loginFeedback {
   display: none;
@@ -153,5 +183,40 @@ form label.mini-desc a {
   margin: 0;
   white-space: normal;
   line-height: 18px;
+  margin-bottom: 1em;
+}
+
+.hintOptions {
+  font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
+  font-size: 16px;
+  line-height: 1.2em;
+}
+
+
+.hintOptWrapper {
+  display: inline;
+  width: 400px;
+  margin-left: 1em;
+}
+.hintOptWrapper summary {
+  width: 100px;
+  display: inline;
+  outline: none;
+  color: #979A99;
+  cursor: pointer;
+}
+.hintOptWrapper summary + div {
+  margin-top: 0.5em;
+}
+#jshint, #csshint, #htmlhint, #coffeescripthint {
+  vertical-align: top;
+  margin-top: 6px;
+}
+form label.hintOptions {
+  width: 400px;
+  display: block;
+  float: none;
+  text-align: left;
+  margin-top: -8px;
   margin-bottom: 1em;
 }

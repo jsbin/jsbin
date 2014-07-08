@@ -35,6 +35,15 @@ var libraries = [
   },
   {
     'url': [
+      'http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.min.css',
+      'http://code.jquery.com/jquery-1.11.0.min.js',
+      'http://code.jquery.com/ui/1.11.0/jquery-ui.min.js'
+    ],
+    'label': 'jQuery UI 1.11.0',
+    'group': 'jQuery UI'
+  },
+  {
+    'url': [
       'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
       'http://code.jquery.com/jquery-1.11.0.min.js',
       'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
@@ -99,8 +108,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/dist/css/bootstrap.css',
-      'http://getbootstrap.com/dist/js/bootstrap.js'
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -108,9 +117,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap.css',
-      'http://getbootstrap.com/2.3.2/assets/css/bootstrap-responsive.css',
-      'http://getbootstrap.com/2.3.2/assets/js/bootstrap.js'
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
+      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap 2.3.2',
     'group': 'Bootstrap'
@@ -207,6 +215,30 @@ var libraries = [
   },
   {
     'url': [
+      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css',
+      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.default.min.css',
+      'http://code.jquery.com/jquery-1.9.1.min.js',
+      'http://cdn.kendostatic.com/2014.1.528/js/kendo.ui.core.min.js'
+    ],
+    'label': 'Kendo UI Core Q1 SP2',
+    'group': 'Kendo UI'
+  },
+  {
+    'url': [
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.rtl.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.default.min.css',
+      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.mobile.all.min.css',
+      'http://code.jquery.com/jquery-1.9.1.min.js',
+      'http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js'
+    ],
+    'label': 'Kendo UI Q1 2014',
+    'group': 'Kendo UI'
+  },
+  {
+    'url': [
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css',
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css',
       'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css',
@@ -217,20 +249,6 @@ var libraries = [
       'http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js'
     ],
     'label': 'Kendo UI Q3 2013',
-    'group': 'Kendo UI'
-  },
-  {
-    'url': [
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2013.2.716/styles/kendo.mobile.all.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2013.2.716/js/kendo.all.min.js'
-    ],
-    'label': 'Kendo UI Q2 2013',
     'group': 'Kendo UI'
   },
   {
@@ -259,6 +277,11 @@ var libraries = [
   {
     'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
     'label': 'Angular 1.2.14 Stable',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
+    'label': 'Angular 1.2.14 Uncompressed',
     'group': 'Angular'
   },
   {
@@ -375,8 +398,15 @@ var libraries = [
     'label': 'Lo-Dash 2.4.1'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
-    'label': 'Modernizr 2.6.2'
+    'url': 'http://modernizr.com/downloads/modernizr-latest.js',
+    'label': 'Modernizr Development latest'
+  },
+  {
+    'url': [
+      'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
+      'http://cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
+    ],
+    'label': 'Detectizr 1.5.0'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',
@@ -389,6 +419,10 @@ var libraries = [
   {
     'url': 'http://d3js.org/d3.v3.min.js',
     'label': 'D3 3.x'
+  },
+  {
+    'url': '//code.highcharts.com/highcharts.js',
+    'label': 'Highcharts latest'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js',
@@ -450,10 +484,10 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.4/platform.js',
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.2.4/polymer.js'
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/platform.js',
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/polymer.js'
     ],
-    'label': 'Polymer 0.2.3'
+    'label': 'Polymer 0.3.3'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
@@ -475,6 +509,10 @@ var libraries = [
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
     'label': 'GSAP 1.11.7'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
+    'label': 'Phaser 2.0.5'
   }
 ];
 

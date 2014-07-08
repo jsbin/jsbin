@@ -17,6 +17,10 @@
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
     "/js/vendor/codemirror4/addon/comment/comment.js",
+    "/js/vendor/cm_addons/lint/javascript-lint.js",
+    "/js/vendor/cm_addons/lint/lint.js",
+    "/js/vendor/lz-string-1.3.3.js",
+    "/js/vendor/cm_addons/cm-highlight-line.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
     "/js/vendor/prettyprint.js",
@@ -26,18 +30,19 @@
     "/js/editors/mobileCodeMirror.js",
     "/js/chrome/splitter.js",
     "/js/chrome/analytics.js",
+    "/js/chrome/settings.js",
     "/js/chrome/font.js",
     "/js/render/render.js",
     "/js/render/live.js",
     "/js/editors/keycontrol.js",
     "/js/render/console.js",
-    "/js/chrome/errors.js",
     "/js/processors/processor.js",
     "/js/editors/panel.js",
     "/js/editors/editors.js",
     "/js/editors/libraries.js",
     "/js/editors/library.js",
     "/js/editors/addons.js",
+    "/js/editors/tern.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/esc.js",
     "/js/chrome/issue.js",
@@ -51,6 +56,8 @@
     "/js/chrome/spinner.js",
     "/js/chrome/infocard.js",
     "/js/chrome/last-bin.js",
+    "/js/chrome/archive.js",
+    "/js/chrome/welcome-panel.js",
     "/js/chrome/app.js"
   ],
   "runner": [
@@ -77,8 +84,7 @@
       "/js/vendor/tern/lib/infer.js",
       "/js/vendor/tern/plugin/doc_comment.js",
       "/js/editors/defs.js",
-      "/js/editors/definitions.js",
-      "/js/editors/tern.js"
+      "/js/editors/definitions.js"
     ]
   }
 }

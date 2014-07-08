@@ -17,7 +17,12 @@
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
 <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
 {{#unless embed}}
-<script>if(top != self) document.write('<!--');</script>
+<script>
+if(top != self) {
+  window.location = '{{embedURL}}';
+  document.write('<!--');
+}
+</script>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}{{/unless}}

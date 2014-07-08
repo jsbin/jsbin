@@ -523,7 +523,7 @@ function populateEditor(editor, panel) {
   if (!editor.codeSet) {
     // populate - should eventually use: session, saved data, local storage
     var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
-        saved = localStorage.getItem('saved-' + panel), // user template
+        saved = jsbin.embed ? null : localStorage.getItem('saved-' + panel), // user template
         sessionURL = sessionStorage.getItem('url'),
         changed = false;
 
@@ -542,7 +542,7 @@ function populateEditor(editor, panel) {
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];
-    } else if (!template.post && saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
+    } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);

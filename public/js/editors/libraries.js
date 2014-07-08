@@ -324,6 +324,26 @@ var libraries = [
     'group': 'Enyo'
   },
   {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.js',
+    'label': 'Bluebird 1.2.2',
+    'group': 'Promises'
+  },
+  {
+    'url': 'https://www.promisejs.org/polyfills/promise-4.0.0.js',
+    'label': 'Promise 4.0.0',
+    'group': 'Promises'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/q.js/1.0.1/q.js',
+    'label': 'Q 1.0.1',
+    'group': 'Promises'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/rsvp/3.0.6/rsvp.js',
+    'label': 'RSVP 3.0.6',
+    'group': 'Promises'
+  },
+  {
     'url': [
       'https://rawgithub.com/ai/autoprefixer-rails/master/vendor/autoprefixer.js'
     ],

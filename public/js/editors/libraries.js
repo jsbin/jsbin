@@ -35,6 +35,15 @@ var libraries = [
   },
   {
     'url': [
+      'http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.min.css',
+      'http://code.jquery.com/jquery-1.11.0.min.js',
+      'http://code.jquery.com/ui/1.11.0/jquery-ui.min.js'
+    ],
+    'label': 'jQuery UI 1.11.0',
+    'group': 'jQuery UI'
+  },
+  {
+    'url': [
       'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
       'http://code.jquery.com/jquery-1.11.0.min.js',
       'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
@@ -99,8 +108,8 @@ var libraries = [
   {
     'url': [
       'http://code.jquery.com/jquery.min.js',
-      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
-      'http://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',
+      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -315,6 +324,26 @@ var libraries = [
     'group': 'Enyo'
   },
   {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/bluebird/1.2.2/bluebird.js',
+    'label': 'Bluebird 1.2.2',
+    'group': 'Promises'
+  },
+  {
+    'url': 'https://www.promisejs.org/polyfills/promise-4.0.0.js',
+    'label': 'Promise 4.0.0',
+    'group': 'Promises'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/q.js/1.0.1/q.js',
+    'label': 'Q 1.0.1',
+    'group': 'Promises'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/rsvp/3.0.6/rsvp.js',
+    'label': 'RSVP 3.0.6',
+    'group': 'Promises'
+  },
+  {
     'url': [
       'https://rawgithub.com/ai/autoprefixer-rails/master/vendor/autoprefixer.js'
     ],
@@ -393,6 +422,13 @@ var libraries = [
     'label': 'Modernizr Development latest'
   },
   {
+    'url': [
+      'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
+      'http://cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
+    ],
+    'label': 'Detectizr 1.5.0'
+  },
+  {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',
     'label': 'Prefixfree 1.0.7'
   },
@@ -403,6 +439,10 @@ var libraries = [
   {
     'url': 'http://d3js.org/d3.v3.min.js',
     'label': 'D3 3.x'
+  },
+  {
+    'url': '//code.highcharts.com/highcharts.js',
+    'label': 'Highcharts latest'
   },
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js',
@@ -464,10 +504,10 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/platform.js',
-      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.0/polymer.js'
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/platform.js',
+      '//cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/polymer.js'
     ],
-    'label': 'Polymer 0.3.0'
+    'label': 'Polymer 0.3.3'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
@@ -489,6 +529,10 @@ var libraries = [
   {
     'url': 'http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
     'label': 'GSAP 1.11.7'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
+    'label': 'Phaser 2.0.5'
   }
 ];
 

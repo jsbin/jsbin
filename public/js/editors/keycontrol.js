@@ -58,7 +58,7 @@ if (!customKeys.disabled) {
     } else if (event.metaKey && event.shiftKey && event.which === 8) { // cmd+shift+backspace
       $('a.deletebin:first').trigger('click', 'keyboard');
       event.preventDefault();
-    } else if (event.metaKey && event.which === 83) { // save
+    } else if (!jsbin.embed && event.metaKey && event.which === 83) { // save
       if (event.shiftKey === false) {
         if (saveChecksum) {
           saveChecksum = false;

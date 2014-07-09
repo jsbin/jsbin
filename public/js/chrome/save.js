@@ -365,7 +365,6 @@ function saveCode(method, ajax, ajaxCallback) {
         var $binGroup,
             edit;
 
-        $form.attr('action', data.url + '/save');
         if (ajaxCallback) {
           ajaxCallback(data);
         }
@@ -377,6 +376,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
         jsbin.state.metadata = { name: jsbin.user.name };
+        $form.attr('action', jsbin.getURL() + '/save');
 
         // getURL(true) gets the jsbin without the root attached
         // $binGroup = $('#history tr[data-url="' + jsbin.getURL(true) + '"]');

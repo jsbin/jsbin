@@ -177,7 +177,7 @@ if(top != self) {
               {{#feature request "sslLogin"}}
                 <div class="menu">
                   {{#feature request "github"}}
-                  <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
+                  <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
                   <div class="dropdown login" id="registerLogin">
                     <div class="dropdowncontent">
                       <a class="btn-github" href="/auth/github">
@@ -186,12 +186,12 @@ if(top != self) {
                       </a>
                       <span class="login-group">
                         Or
-                        <a class="btn-login" href="/login">use your email address</a>
+                        <a class="btn-login" href="{{root}}/login">use your email address</a>
                       </span>
                     </div>
                   </div>
                   {{else}}
-                  <a href="/login" class="button" id="loginbtn">Login or Register</a>
+                  <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
                   {{/feature}}
                 </div>
               {{else}}

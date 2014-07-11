@@ -1,5 +1,5 @@
 try {
-  console.log('Dave is ready!');
+  console.log('Dave is ready.');
 } catch (e) {
   window.console = {
     log: function () {
@@ -112,7 +112,9 @@ function exposeSettings() {
         console.log('jsbin.settings can how be modified on the console');
       }
     });
-    console.log('To edit settings, type this string into the console: ' + key);
+    if (!jsbin.embed) {
+      console.log('To edit settings, type this string into the console: ' + key);
+    }
   }
 }
 

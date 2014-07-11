@@ -29,7 +29,7 @@
     "sqlite3": "~2.2.0",
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
-    "less": "~1.4.2",
+    "less": "~1.7.3",
     "jade": "0.26.3",
     "stylus": "0.28.2",
     "flatten.js": "0.1.0",

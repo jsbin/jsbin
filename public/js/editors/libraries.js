@@ -165,8 +165,13 @@ var libraries = [
     'group': 'YUI'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js',
-    'label': 'MooTools latest',
+    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-yui-compressed.js',
+    'label': 'MooTools 1.5.0',
+    'group': 'MooTools'
+  },
+  {
+    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-nocompat-yui-compressed.js',
+    'label': 'MooTools 1.5.0 (without 1.2+ compatibility layer)',
     'group': 'MooTools'
   },
   {

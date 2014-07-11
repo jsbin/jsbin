@@ -39,7 +39,7 @@
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
-  "setCustomer" : "REPLACE INTO `customers` (`stripe_id`, `user_id`, `name`) VALUES (?, ?, ?)",
+  "setCustomer" : "REPLACE INTO `customers` (`stripe_id`, `user_id`, `name`, `plan`) VALUES (?, ?, ?, ?)",
   "setCustomerActive": "UPDATE `customers` SET `active`=? WHERE `name`=?",
   "getCustomerByStripeId": "SELECT * FROM `customers` WHERE `stripe_id`=? LIMIT 1",
   "getCustomerByUser": "SELECT * FROM `customers` WHERE `name`=? LIMIT 1",

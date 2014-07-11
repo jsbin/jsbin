@@ -260,7 +260,7 @@ Panel.prototype = {
         if (panel.virgin) {
           var top = panel.$el.find('.label').outerHeight();
           top += 8;
-          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
+          $(panel.editor.scroller).find('.CodeMirror-lines').css('padding-top', top);
 
           populateEditor(panel, panel.name);
         }
@@ -450,13 +450,15 @@ Panel.prototype = {
     var $error = null;
     $document.bind('sizeeditors', function () {
       if (panel.visible) {
-        var height = panel.editor.scroller.closest('.panel').outerHeight(),
-            offset = 0;
-            // offset = panel.$el.find('> .label').outerHeight();
+        var height = panel.editor.scroller.closest('.panel').outerHeight();
+        var offset = 0;
+        var lineHeight = panel.editor.defaultTextHeight();
         $error = panel.$el.find('details');
         offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
+          // show 50% more lines as blank
+          panel.editor.scroller.find('.CodeMirror-lines').css({ paddingBottom: height / 4 * 3 });
           editor.scroller.height(height - offset);
         }
         try { editor.refresh(); } catch (e) {}

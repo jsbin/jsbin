@@ -7,19 +7,19 @@
     <section class="payment-type">
       <span class="label">Plan</span>
       <div class="options">
-        <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" checked value="yearly">Yearly &ndash; <span class="highlight">save £12</span> @ £60<small>+VAT</small></label>
-        <label class="hasinput" for="monthly"><input id="monthly" type="radio" name="subscription" value="monthly">Monthly @ £6<small>+VAT</small></label>
+        <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly &ndash; <span class="highlight">save £12</span> @ £60<small>+VAT</small></label>
+        <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly @ £6<small>+VAT</small></label>
       </div>
     </section>
 
-    <p class="payment-errors"></p>
+    <p class="payment-errors">{{{flash}}}</p>
 
     <div>
       <div>
         <label for="email">Email</label>
         <span class="inputWithImage">
           <b class="icon-mail"></b>
-          <input id="email" value="{{ user.email }}" autofocus placeholder="you@example.com" type="email" name="email" required>
+          <input id="email" value="{{values.email}}" autofocus placeholder="you@example.com" type="email" name="email" required>
         </span>
       </div>
 
@@ -28,15 +28,15 @@
         <div class="carddetails">
           <span class="inputWithImage">
             <b class="icon-credit"></b>
-            <input id="cardnumber" placeholder="Card number" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
+            <input id="cardnumber" placeholder="Card number" value="{{values.number}}" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
           </span>
           <span class="inputWithImage">
             <b class="icon-calendar-o"></b>
-            <input id="expiry" placeholder="MM / YY" type="text" name="expiry" size="7" required x-autocompletetype="cc-exp" maxlength="9" data-stripe="expiry">
+            <input id="expiry" value="{{values.expiry}}" placeholder="MM / YY" type="text" name="expiry" size="7" required x-autocompletetype="cc-exp" maxlength="9" data-stripe="expiry">
           </span>
           <span class="inputWithImage">
             <b class="icon-lock"></b>
-            <input id="cvc" placeholder="CVC" type="text" name="cvc" size="4" pattern="\d*" x-autocompletetype="cc-csc" required  autocomplete="off" data-stripe="cvc">
+            <input id="cvc" placeholder="CVC" value="{{values.cvc}}" type="text" name="cvc" size="4" pattern="\d*" x-autocompletetype="cc-csc" required  autocomplete="off" data-stripe="cvc">
           </span>
         </div>
       </div>
@@ -45,8 +45,8 @@
     <section class="buyer-type">
       <span class="label">Paying as</span>
       <div class="options">
-        <label for="individual"><input id="individual" type="radio" name="buyer_type" checked value="individual">Individual</label>
-        <label for="business"><input id="business" type="radio" name="buyer_type" value="business">Business</label>
+        <label for="individual"><input id="individual" type="radio" name="buyer_type" {{#equal values.buyer_type "individual"}}checked{{/equal}}{{#unless values.buyer_type}}checked{{/unless}} value="individual">Individual</label>
+        <label for="business"><input id="business" type="radio" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">Business</label>
       </div>
     </section>
 
@@ -61,7 +61,7 @@
       <div class="disabled vat">
         <label for="vat">VAT number</label>
         <span id="vatiso"></span>
-        <input id="vat" name="vat" type="text" value="{{user.vat}}">
+        <input id="vat" name="vat" type="text" value="{{values.vat}}">
         <button id="validateVat">Validate</button>
         <br>
       </div>
@@ -70,6 +70,7 @@
 
     <section>
       <button id="pay">Upgrade!</button>
+      <input type="hidden" name="_csrf" value="{{csrf}}">
     </section>
 
     <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>

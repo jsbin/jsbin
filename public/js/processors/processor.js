@@ -335,7 +335,7 @@ var processors = jsbin.processors = (function () {
         ready();
         // });
       },
-      handler: throttle(function (source, resolve, reject) {
+      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
           type: 'post',
           url: '/processor',
@@ -360,7 +360,8 @@ var processors = jsbin.processors = (function () {
           },
           error: function (jqxhr) {
             reject(jqxhr.responseText);
-          }
+          },
+          complete: done
         });
         // RS: keep this as it's the client side version of SCSS support...
         // Sass.compile(source, function (result) {
@@ -370,7 +371,7 @@ var processors = jsbin.processors = (function () {
         //     resolve(result.trim());
         //   }
         // });
-      }, 1000),
+      }), 1000),
     }),
 
     sass: createProcessor({
@@ -380,7 +381,7 @@ var processors = jsbin.processors = (function () {
       init: function (ready) {
         ready();
       },
-      handler: function (source, resolve, reject) {
+      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
           type: 'post',
           url: '/processor',
@@ -405,9 +406,10 @@ var processors = jsbin.processors = (function () {
           },
           error: function (jqxhr) {
             reject(jqxhr.responseText);
-          }
+          },
+          complete: done
         });
-      }
+      }), 1000),
     }),
 
     // myth: createProcessor({

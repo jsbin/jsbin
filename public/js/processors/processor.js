@@ -359,7 +359,7 @@ var processors = jsbin.processors = (function () {
             }
           },
           error: function (jqxhr) {
-            reject(jqxhr.responseText);
+            reject(new Error(jqxhr.responseText));
           },
           complete: done
         });
@@ -371,7 +371,7 @@ var processors = jsbin.processors = (function () {
         //     resolve(result.trim());
         //   }
         // });
-      }), 1000),
+      }), 500),
     }),
 
     sass: createProcessor({
@@ -405,43 +405,12 @@ var processors = jsbin.processors = (function () {
             }
           },
           error: function (jqxhr) {
-            reject(jqxhr.responseText);
+            reject(new Error(jqxhr.responseText));
           },
           complete: done
         });
-      }), 1000),
+      }), 500),
     }),
-
-    // myth: createProcessor({
-    //   id: 'myth',
-    //   target: 'css',
-    //   extensions: ['myth'],
-    //   init: function (ready) {
-    //     ready();
-    //   },
-    //   handler: function (source, resolve, reject) {
-    //     $.ajax({
-    //       type: 'post',
-    //       url: '/processor',
-    //       data: {
-    //         language: 'myth',
-    //         source: source,
-    //         url: jsbin.state.code,
-    //         revision: jsbin.state.revision
-    //       },
-    //       success: function (data) {
-    //         if (data.errors) {
-    //           console.log(data.errors);
-    //         } else if (data.result) {
-    //           resolve(data.result);
-    //         }
-    //       },
-    //       error: function (jqxhr) {
-    //         reject(jqxhr.responseText);
-    //       }
-    //     });
-    //   }
-    // }),
 
     myth: createProcessor({
       id: 'myth',

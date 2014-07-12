@@ -3,13 +3,11 @@
 var autoprefixer = _dereq_('autoprefixer');
 var calc = _dereq_('rework-calc');
 var color = _dereq_('rework-color-function');
-var customMedia = _dereq_('rework-custom-media');
 var dirname = _dereq_('path').dirname;
 var hex = _dereq_('rework-hex-alpha');
-var importer = _dereq_('rework-import');
+var inline = _dereq_('rework-inline');
 var noop = function(){};
 var rework = _dereq_('rework');
-var rebeccapurple = _dereq_('rework-rebeccapurple');
 var variants = _dereq_('rework-font-variant');
 var vars = _dereq_('rework-vars');
 
@@ -59,23 +57,21 @@ function plugin(options){
       : autoprefixer(browsers).rework;
 
     var imports = 'undefined' == typeof window && source
-      ? importer({ path: dirname(source) })
+      ? inline({ path: dirname(source) })
       : noop;
 
     rework
       .use(imports)
       .use(variables)
-      .use(customMedia)
       .use(hex)
       .use(color)
       .use(calc)
       .use(variants)
-      .use(prefixes)
-      .use(rebeccapurple);
+      .use(prefixes);
   };
 }
 
-},{"autoprefixer":4,"path":60,"rework":104,"rework-calc":62,"rework-color-function":64,"rework-custom-media":75,"rework-font-variant":76,"rework-hex-alpha":78,"rework-import":80,"rework-rebeccapurple":100,"rework-vars":101}],2:[function(_dereq_,module,exports){
+},{"autoprefixer":4,"path":60,"rework":101,"rework-calc":62,"rework-color-function":64,"rework-font-variant":75,"rework-hex-alpha":77,"rework-inline":79,"rework-vars":99}],2:[function(_dereq_,module,exports){
 (function() {
   module.exports = {
     android: {
@@ -4506,7 +4502,7 @@ define(function (_dereq_, exports, module) {
   Object.defineProperty(SourceMapConsumer.prototype, 'sources', {
     get: function () {
       return this._sources.toArray().map(function (s) {
-        return this.sourceRoot ? util.join(this.sourceRoot, s) : s;
+        return this.sourceRoot != null ? util.join(this.sourceRoot, s) : s;
       }, this);
     }
   });
@@ -4705,7 +4701,7 @@ define(function (_dereq_, exports, module) {
 
       if (mapping && mapping.generatedLine === needle.generatedLine) {
         var source = util.getArg(mapping, 'source', null);
-        if (source && this.sourceRoot) {
+        if (source != null && this.sourceRoot != null) {
           source = util.join(this.sourceRoot, source);
         }
         return {
@@ -4735,7 +4731,7 @@ define(function (_dereq_, exports, module) {
         return null;
       }
 
-      if (this.sourceRoot) {
+      if (this.sourceRoot != null) {
         aSource = util.relative(this.sourceRoot, aSource);
       }
 
@@ -4744,7 +4740,7 @@ define(function (_dereq_, exports, module) {
       }
 
       var url;
-      if (this.sourceRoot
+      if (this.sourceRoot != null
           && (url = util.urlParse(this.sourceRoot))) {
         // XXX: file:// URIs and absolute paths lead to unexpected behavior for
         // many users. We can help them out when they expect file:// URIs to
@@ -4787,7 +4783,7 @@ define(function (_dereq_, exports, module) {
         originalColumn: util.getArg(aArgs, 'column')
       };
 
-      if (this.sourceRoot) {
+      if (this.sourceRoot != null) {
         needle.source = util.relative(this.sourceRoot, needle.source);
       }
 
@@ -4849,7 +4845,7 @@ define(function (_dereq_, exports, module) {
       var sourceRoot = this.sourceRoot;
       mappings.map(function (mapping) {
         var source = mapping.source;
-        if (source && sourceRoot) {
+        if (source != null && sourceRoot != null) {
           source = util.join(sourceRoot, source);
         }
         return {
@@ -4925,9 +4921,9 @@ define(function (_dereq_, exports, module) {
           }
         };
 
-        if (mapping.source) {
+        if (mapping.source != null) {
           newMapping.source = mapping.source;
-          if (sourceRoot) {
+          if (sourceRoot != null) {
             newMapping.source = util.relative(sourceRoot, newMapping.source);
           }
 
@@ -4936,7 +4932,7 @@ define(function (_dereq_, exports, module) {
             column: mapping.originalColumn
           };
 
-          if (mapping.name) {
+          if (mapping.name != null) {
             newMapping.name = mapping.name;
           }
         }
@@ -4945,7 +4941,7 @@ define(function (_dereq_, exports, module) {
       });
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
         var content = aSourceMapConsumer.sourceContentFor(sourceFile);
-        if (content) {
+        if (content != null) {
           generator.setSourceContent(sourceFile, content);
         }
       });
@@ -4971,11 +4967,11 @@ define(function (_dereq_, exports, module) {
 
       this._validateMapping(generated, original, source, name);
 
-      if (source && !this._sources.has(source)) {
+      if (source != null && !this._sources.has(source)) {
         this._sources.add(source);
       }
 
-      if (name && !this._names.has(name)) {
+      if (name != null && !this._names.has(name)) {
         this._names.add(name);
       }
 
@@ -4995,11 +4991,11 @@ define(function (_dereq_, exports, module) {
   SourceMapGenerator.prototype.setSourceContent =
     function SourceMapGenerator_setSourceContent(aSourceFile, aSourceContent) {
       var source = aSourceFile;
-      if (this._sourceRoot) {
+      if (this._sourceRoot != null) {
         source = util.relative(this._sourceRoot, source);
       }
 
-      if (aSourceContent !== null) {
+      if (aSourceContent != null) {
         // Add the source content to the _sourcesContents map.
         // Create a new _sourcesContents map if the property is null.
         if (!this._sourcesContents) {
@@ -5034,46 +5030,47 @@ define(function (_dereq_, exports, module) {
    */
   SourceMapGenerator.prototype.applySourceMap =
     function SourceMapGenerator_applySourceMap(aSourceMapConsumer, aSourceFile, aSourceMapPath) {
+      var sourceFile = aSourceFile;
       // If aSourceFile is omitted, we will use the file property of the SourceMap
-      if (!aSourceFile) {
-        if (!aSourceMapConsumer.file) {
+      if (aSourceFile == null) {
+        if (aSourceMapConsumer.file == null) {
           throw new Error(
             'SourceMapGenerator.prototype.applySourceMap requires either an explicit source file, ' +
             'or the source map\'s "file" property. Both were omitted.'
           );
         }
-        aSourceFile = aSourceMapConsumer.file;
+        sourceFile = aSourceMapConsumer.file;
       }
       var sourceRoot = this._sourceRoot;
-      // Make "aSourceFile" relative if an absolute Url is passed.
-      if (sourceRoot) {
-        aSourceFile = util.relative(sourceRoot, aSourceFile);
+      // Make "sourceFile" relative if an absolute Url is passed.
+      if (sourceRoot != null) {
+        sourceFile = util.relative(sourceRoot, sourceFile);
       }
       // Applying the SourceMap can add and remove items from the sources and
       // the names array.
       var newSources = new ArraySet();
       var newNames = new ArraySet();
 
-      // Find mappings for the "aSourceFile"
+      // Find mappings for the "sourceFile"
       this._mappings.forEach(function (mapping) {
-        if (mapping.source === aSourceFile && mapping.originalLine) {
+        if (mapping.source === sourceFile && mapping.originalLine != null) {
           // Check if it can be mapped by the source map, then update the mapping.
           var original = aSourceMapConsumer.originalPositionFor({
             line: mapping.originalLine,
             column: mapping.originalColumn
           });
-          if (original.source !== null) {
+          if (original.source != null) {
             // Copy mapping
             mapping.source = original.source;
-            if (aSourceMapPath) {
+            if (aSourceMapPath != null) {
               mapping.source = util.join(aSourceMapPath, mapping.source)
             }
-            if (sourceRoot) {
+            if (sourceRoot != null) {
               mapping.source = util.relative(sourceRoot, mapping.source);
             }
             mapping.originalLine = original.line;
             mapping.originalColumn = original.column;
-            if (original.name !== null && mapping.name !== null) {
+            if (original.name != null && mapping.name != null) {
               // Only use the identifier name if it's an identifier
               // in both SourceMaps
               mapping.name = original.name;
@@ -5082,12 +5079,12 @@ define(function (_dereq_, exports, module) {
         }
 
         var source = mapping.source;
-        if (source && !newSources.has(source)) {
+        if (source != null && !newSources.has(source)) {
           newSources.add(source);
         }
 
         var name = mapping.name;
-        if (name && !newNames.has(name)) {
+        if (name != null && !newNames.has(name)) {
           newNames.add(name);
         }
 
@@ -5098,11 +5095,11 @@ define(function (_dereq_, exports, module) {
       // Copy sourcesContents of applied map.
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
         var content = aSourceMapConsumer.sourceContentFor(sourceFile);
-        if (content) {
-          if (aSourceMapPath) {
+        if (content != null) {
+          if (aSourceMapPath != null) {
             sourceFile = util.join(aSourceMapPath, sourceFile);
           }
-          if (sourceRoot) {
+          if (sourceRoot != null) {
             sourceFile = util.relative(sourceRoot, sourceFile);
           }
           this.setSourceContent(sourceFile, content);
@@ -5193,7 +5190,7 @@ define(function (_dereq_, exports, module) {
                                    - previousGeneratedColumn);
         previousGeneratedColumn = mapping.generatedColumn;
 
-        if (mapping.source) {
+        if (mapping.source != null) {
           result += base64VLQ.encode(this._sources.indexOf(mapping.source)
                                      - previousSource);
           previousSource = this._sources.indexOf(mapping.source);
@@ -5207,7 +5204,7 @@ define(function (_dereq_, exports, module) {
                                      - previousOriginalColumn);
           previousOriginalColumn = mapping.originalColumn;
 
-          if (mapping.name) {
+          if (mapping.name != null) {
             result += base64VLQ.encode(this._names.indexOf(mapping.name)
                                        - previousName);
             previousName = this._names.indexOf(mapping.name);
@@ -5224,7 +5221,7 @@ define(function (_dereq_, exports, module) {
         if (!this._sourcesContents) {
           return null;
         }
-        if (aSourceRoot) {
+        if (aSourceRoot != null) {
           source = util.relative(aSourceRoot, source);
         }
         var key = util.toSetString(source);
@@ -5242,12 +5239,14 @@ define(function (_dereq_, exports, module) {
     function SourceMapGenerator_toJSON() {
       var map = {
         version: this._version,
-        file: this._file,
         sources: this._sources.toArray(),
         names: this._names.toArray(),
         mappings: this._serializeMappings()
       };
-      if (this._sourceRoot) {
+      if (this._file != null) {
+        map.file = this._file;
+      }
+      if (this._sourceRoot != null) {
         map.sourceRoot = this._sourceRoot;
       }
       if (this._sourcesContents) {
@@ -5286,7 +5285,7 @@ define(function (_dereq_, exports, module) {
 
   // Matches a Windows-style `\r\n` newline or a `\n` newline used by all other
   // operating systems these days (capturing the result).
-  var REGEX_NEWLINE = /(\r?\n)/g;
+  var REGEX_NEWLINE = /(\r?\n)/;
 
   // Matches a Windows-style newline, or any character.
   var REGEX_CHARACTER = /\r\n|[\s\S]/g;
@@ -5306,10 +5305,10 @@ define(function (_dereq_, exports, module) {
   function SourceNode(aLine, aColumn, aSource, aChunks, aName) {
     this.children = [];
     this.sourceContents = {};
-    this.line = aLine === undefined ? null : aLine;
-    this.column = aColumn === undefined ? null : aColumn;
-    this.source = aSource === undefined ? null : aSource;
-    this.name = aName === undefined ? null : aName;
+    this.line = aLine == null ? null : aLine;
+    this.column = aColumn == null ? null : aColumn;
+    this.source = aSource == null ? null : aSource;
+    this.name = aName == null ? null : aName;
     if (aChunks != null) this.add(aChunks);
   }
 
@@ -5318,9 +5317,11 @@ define(function (_dereq_, exports, module) {
    *
    * @param aGeneratedCode The generated code
    * @param aSourceMapConsumer The SourceMap for the generated code
+   * @param aRelativePath Optional. The path that relative sources in the
+   *        SourceMapConsumer should be relative to.
    */
   SourceNode.fromStringWithSourceMap =
-    function SourceNode_fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer) {
+    function SourceNode_fromStringWithSourceMap(aGeneratedCode, aSourceMapConsumer, aRelativePath) {
       // The SourceNode we want to fill with the generated code
       // and the SourceMap
       var node = new SourceNode();
@@ -5400,7 +5401,10 @@ define(function (_dereq_, exports, module) {
       // Copy sourcesContent into SourceNode
       aSourceMapConsumer.sources.forEach(function (sourceFile) {
         var content = aSourceMapConsumer.sourceContentFor(sourceFile);
-        if (content) {
+        if (content != null) {
+          if (aRelativePath != null) {
+            sourceFile = util.join(aRelativePath, sourceFile);
+          }
           node.setSourceContent(sourceFile, content);
         }
       });
@@ -5411,9 +5415,12 @@ define(function (_dereq_, exports, module) {
         if (mapping === null || mapping.source === undefined) {
           node.add(code);
         } else {
+          var source = aRelativePath
+            ? util.join(aRelativePath, mapping.source)
+            : mapping.source;
           node.add(new SourceNode(mapping.originalLine,
                                   mapping.originalColumn,
-                                  mapping.source,
+                                  source,
                                   code,
                                   mapping.name));
         }
@@ -5817,6 +5824,12 @@ define(function (_dereq_, exports, module) {
    * - Joining for example 'http://' and 'www.example.com' is also supported.
    */
   function join(aRoot, aPath) {
+    if (aRoot === "") {
+      aRoot = ".";
+    }
+    if (aPath === "") {
+      aPath = ".";
+    }
     var aPathUrl = urlParse(aPath);
     var aRootUrl = urlParse(aRoot);
     if (aRootUrl) {
@@ -5854,6 +5867,27 @@ define(function (_dereq_, exports, module) {
   exports.join = join;
 
   /**
+   * Make a path relative to a URL or another path.
+   *
+   * @param aRoot The root path or URL.
+   * @param aPath The path or URL to be made relative to aRoot.
+   */
+  function relative(aRoot, aPath) {
+    aRoot = aRoot.replace(/\/$/, '');
+
+    // XXX: It is possible to remove this block, and the tests still pass!
+    var url = urlParse(aRoot);
+    if (aPath.charAt(0) == "/" && url && url.path == "/") {
+      return aPath.slice(1);
+    }
+
+    return aPath.indexOf(aRoot + '/') === 0
+      ? aPath.substr(aRoot.length + 1)
+      : aPath;
+  }
+  exports.relative = relative;
+
+  /**
    * Because behavior goes wacky when you set `__proto__` on objects, we
    * have to prefix all the strings in our set with an arbitrary character.
    *
@@ -5871,20 +5905,6 @@ define(function (_dereq_, exports, module) {
     return aStr.substr(1);
   }
   exports.fromSetString = fromSetString;
-
-  function relative(aRoot, aPath) {
-    aRoot = aRoot.replace(/\/$/, '');
-
-    var url = urlParse(aRoot);
-    if (aPath.charAt(0) == "/" && url && url.path == "/") {
-      return aPath.slice(1);
-    }
-
-    return aPath.indexOf(aRoot + '/') === 0
-      ? aPath.substr(aRoot.length + 1)
-      : aPath;
-  }
-  exports.relative = relative;
 
   function strcmp(aStr1, aStr2) {
     var s1 = aStr1 || "";
@@ -9831,58 +9851,6 @@ try {
 } catch(e){}
 
 },{}],75:[function(_dereq_,module,exports){
-/**
- * Constants.
- */
-
-var EXTENSION_RE = /\((--[\w-]+)\)/;
-
-/**
- * Module export.
- */
-
-module.exports = function customMedia(ast) {
-  var map = {};
-  var indices = [];
-
-  // define custom media query aliases
-  ast.rules.forEach(function (rule, i) {
-    if (rule.type !== 'custom-media') return;
-    map[rule.name] = rule.media;
-    indices.push(i);
-  });
-
-  // substitute custom media query aliases
-  ast.rules.forEach(function (rule, i) {
-    if (rule.type !== 'media') return;
-    rule.media = rule.media.replace(EXTENSION_RE, function(_, name) {
-      var replacement = map[name];
-      var column = rule.position.start.column;
-      var line = rule.position.start.line;
-      var source = rule.position.source;
-
-      if (replacement) {
-        return replacement;
-      } else {
-        console.warn(
-          'WARNING: undefined CSS custom media alias "' + name + '" at ' +
-          line + ':' + column + (source ? ' in ' + source : '') + '.\n' +
-          'The rule has been removed from the output. Please check your ' +
-          '@custom-media definitions.'
-        );
-        indices.push(i);
-      }
-    });
-  });
-
-  // remove @custom-media blocks from css in reverse order to avoid affecting
-  // indices before they are removed
-  for (var i = indices.length - 1; i >= 0; i -= 1) {
-    ast.rules.splice(indices[i], 1);
-  }
-};
-
-},{}],76:[function(_dereq_,module,exports){
 
 var properties = _dereq_('./properties');
 
@@ -9948,7 +9916,7 @@ function shorthand (value) {
     return properties['font-variant'][val];
   }).join(', ');
 }
-},{"./properties":77}],77:[function(_dereq_,module,exports){
+},{"./properties":76}],76:[function(_dereq_,module,exports){
 
 /**
  * The `font-variant-ligatures` property.
@@ -10015,7 +9983,7 @@ for (var prop in exports) {
     exports['font-variant'][key] = keys[key];
   }
 }
-},{}],78:[function(_dereq_,module,exports){
+},{}],77:[function(_dereq_,module,exports){
 
 var convert = _dereq_('rgb');
 
@@ -10073,7 +10041,7 @@ function declaration(obj, i){
   var l = hex.length;
   obj.value = val.slice(0, i) + rgb + val.slice(i + l);
 }
-},{"rgb":79}],79:[function(_dereq_,module,exports){
+},{"rgb":78}],78:[function(_dereq_,module,exports){
 /*
 color
 */"use strict"
@@ -10211,7 +10179,7 @@ color.matches = function(string){
 
 module.exports = color
 
-},{}],80:[function(_dereq_,module,exports){
+},{}],79:[function(_dereq_,module,exports){
 (function (process){
 'use strict';
 
@@ -10219,7 +10187,6 @@ var css = _dereq_('css');
 var findFile = _dereq_('find-file');
 var fs = _dereq_('fs');
 var parseImport = _dereq_('parse-import');
-var path = _dereq_('path');
 
 /**
  * Inline stylesheet using `@import`
@@ -10230,28 +10197,9 @@ var path = _dereq_('path');
  */
 
 function Import(style, opts) {
-    var sourceDir
-    if (style.rules.length && style.rules[0].position && style.rules[0].position.source) {
-        sourceDir = path.dirname(style.rules[0].position.source)
-    }
-
-    this.opts = opts || {};
-
-    this.opts.path = (
-        // convert string to an array or single element
-        typeof this.opts.path === 'string' ?
-        [this.opts.path] :
-        (this.opts.path || []) // fallback to empty array
-    );
-    // if source available, prepend sourceDir in the path array
-    if (sourceDir && this.opts.path.indexOf(sourceDir) === -1) {
-        this.opts.path.unshift(sourceDir);
-    }
-    // if we got nothing for the path, just use cwd
-    if (this.opts.path.length === 0) {
-        this.opts.path.push(process.cwd());
-    }
-    this.opts.transform = this.opts.transform || function(value) { return value };
+    opts = opts || {};
+    this.opts = opts;
+    this.path = opts.path || process.cwd();
     this.rules = style.rules || [];
 }
 
@@ -10271,26 +10219,12 @@ Import.prototype.process = function () {
         }
 
         var data = parseImport(rule.import);
-
-        // ignore protocol base uri (protocol:// )
-        if (data.path.match(/[a-z]+:\/\//i)) {
-            return rules.push(rule);
-        }
-
-        var opts = clone(self.opts);
-        opts.source = self._check(data.path, rule.position ? rule.position.source : undefined);
-        var dirname = path.dirname(opts.source);
-
-        if (opts.path.indexOf(dirname) === -1 ) {
-            opts.path = opts.path.slice();
-            opts.path.unshift(dirname);
-        }
-
+        var file = self._check(data.path);
         var media = data.condition;
         var res;
-        var content = self._read(opts.source);
+        var content = self._read(file);
 
-        parseStyle(content, opts);
+        parseStyle(content, self.opts)
 
         if (!media || !media.length) {
             res = content.rules;
@@ -10316,8 +10250,8 @@ Import.prototype.process = function () {
  */
 
 Import.prototype._read = function (file) {
-    var data = this.opts.transform(fs.readFileSync(file, this.opts.encoding || 'utf8'), file);
-    var style = css.parse(data, {source: file}).stylesheet;
+    var data = fs.readFileSync(file, this.opts.encoding || 'utf8');
+    var style = css.parse(data).stylesheet;
 
     return style;
 };
@@ -10329,16 +10263,11 @@ Import.prototype._read = function (file) {
  * @api private
  */
 
-Import.prototype._check = function (name, source) {
-    var file = findFile(name, { path: this.opts.path, global: false });
+Import.prototype._check = function (name) {
+    var file = findFile(name, { path: this.path, global: false });
+
     if (!file) {
-        throw new Error(
-            'Failed to find ' + name +
-            (source ? "\n    from " + source : "") +
-            "\n    in [ " +
-            "\n        " + this.opts.path.join(",\n        ") +
-            "\n    ]"
-        );
+        throw new Error('failed to find ' + name);
     }
 
     return file[0];
@@ -10350,7 +10279,6 @@ Import.prototype._check = function (name, source) {
  * @param {Object} style
  * @param {Object} opts
  */
-
 function parseStyle(style, opts) {
     var inline = new Import(style, opts);
     var rules = inline.process();
@@ -10358,26 +10286,6 @@ function parseStyle(style, opts) {
     style.rules = rules;
 }
 
-/**
- * Clone object
- *
- * @param {Object} obj
- */
-
-function clone(obj) {
-    if (obj === null || obj !== typeof 'object' ) {
-        return obj;
-    }
-
-    var copy = obj.constructor();
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) {
-            copy[attr] = obj[attr];
-        }
-    }
-
-    return copy;
-}
 
 /**
  * Module exports
@@ -10385,17 +10293,17 @@ function clone(obj) {
 
 module.exports = function (opts) {
     return function (style) {
-        parseStyle(style, opts);
+        parseStyle(style, opts)
     };
 };
 
 }).call(this,_dereq_("FWaASH"))
-},{"FWaASH":61,"css":81,"find-file":98,"fs":56,"parse-import":99,"path":60}],81:[function(_dereq_,module,exports){
+},{"FWaASH":61,"css":80,"find-file":97,"fs":56,"parse-import":98}],80:[function(_dereq_,module,exports){
 
 exports.parse = _dereq_('css-parse');
 exports.stringify = _dereq_('css-stringify');
 
-},{"css-parse":82,"css-stringify":83}],82:[function(_dereq_,module,exports){
+},{"css-parse":81,"css-stringify":82}],81:[function(_dereq_,module,exports){
 
 module.exports = function(css, options){
   options = options || {};
@@ -10891,35 +10799,35 @@ function trim(str) {
   return str ? str.replace(/^\s+|\s+$/g, '') : '';
 }
 
-},{}],83:[function(_dereq_,module,exports){
+},{}],82:[function(_dereq_,module,exports){
 module.exports=_dereq_(41)
-},{"./lib/compress":85,"./lib/identity":86,"./lib/source-map-support":87}],84:[function(_dereq_,module,exports){
+},{"./lib/compress":84,"./lib/identity":85,"./lib/source-map-support":86}],83:[function(_dereq_,module,exports){
 module.exports=_dereq_(42)
-},{}],85:[function(_dereq_,module,exports){
+},{}],84:[function(_dereq_,module,exports){
 module.exports=_dereq_(43)
-},{"./compiler":84}],86:[function(_dereq_,module,exports){
+},{"./compiler":83}],85:[function(_dereq_,module,exports){
 module.exports=_dereq_(44)
-},{"./compiler":84}],87:[function(_dereq_,module,exports){
+},{"./compiler":83}],86:[function(_dereq_,module,exports){
 module.exports=_dereq_(45)
-},{"source-map":88}],88:[function(_dereq_,module,exports){
+},{"source-map":87}],87:[function(_dereq_,module,exports){
 arguments[4][46][0].apply(exports,arguments)
-},{"./source-map/source-map-consumer":93,"./source-map/source-map-generator":94,"./source-map/source-node":95}],89:[function(_dereq_,module,exports){
+},{"./source-map/source-map-consumer":92,"./source-map/source-map-generator":93,"./source-map/source-node":94}],88:[function(_dereq_,module,exports){
 arguments[4][47][0].apply(exports,arguments)
-},{"./util":96,"amdefine":97}],90:[function(_dereq_,module,exports){
+},{"./util":95,"amdefine":96}],89:[function(_dereq_,module,exports){
 arguments[4][48][0].apply(exports,arguments)
-},{"./base64":91,"amdefine":97}],91:[function(_dereq_,module,exports){
+},{"./base64":90,"amdefine":96}],90:[function(_dereq_,module,exports){
 arguments[4][49][0].apply(exports,arguments)
-},{"amdefine":97}],92:[function(_dereq_,module,exports){
+},{"amdefine":96}],91:[function(_dereq_,module,exports){
 arguments[4][50][0].apply(exports,arguments)
-},{"amdefine":97}],93:[function(_dereq_,module,exports){
+},{"amdefine":96}],92:[function(_dereq_,module,exports){
 arguments[4][51][0].apply(exports,arguments)
-},{"./array-set":89,"./base64-vlq":90,"./binary-search":92,"./util":96,"amdefine":97}],94:[function(_dereq_,module,exports){
+},{"./array-set":88,"./base64-vlq":89,"./binary-search":91,"./util":95,"amdefine":96}],93:[function(_dereq_,module,exports){
 arguments[4][52][0].apply(exports,arguments)
-},{"./array-set":89,"./base64-vlq":90,"./util":96,"amdefine":97}],95:[function(_dereq_,module,exports){
+},{"./array-set":88,"./base64-vlq":89,"./util":95,"amdefine":96}],94:[function(_dereq_,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"./source-map-generator":94,"./util":96,"amdefine":97}],96:[function(_dereq_,module,exports){
+},{"./source-map-generator":93,"./util":95,"amdefine":96}],95:[function(_dereq_,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"amdefine":97}],97:[function(_dereq_,module,exports){
+},{"amdefine":96}],96:[function(_dereq_,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -11221,8 +11129,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_("FWaASH"),"/../node_modules/rework-import/node_modules/css/node_modules/css-stringify/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"FWaASH":61,"path":60}],98:[function(_dereq_,module,exports){
+}).call(this,_dereq_("FWaASH"),"/../node_modules/rework-inline/node_modules/css/node_modules/css-stringify/node_modules/source-map/node_modules/amdefine/amdefine.js")
+},{"FWaASH":61,"path":60}],97:[function(_dereq_,module,exports){
 (function (process){
 'use strict';
 
@@ -11276,7 +11184,7 @@ module.exports = function (name, opts) {
 };
 
 }).call(this,_dereq_("FWaASH"))
-},{"FWaASH":61,"fs":56,"path":60}],99:[function(_dereq_,module,exports){
+},{"FWaASH":61,"fs":56,"path":60}],98:[function(_dereq_,module,exports){
 'use strict';
 
 /**
@@ -11319,117 +11227,61 @@ module.exports = function (str) {
     return ret;
 };
 
-},{}],100:[function(_dereq_,module,exports){
-(function () {
-  var rework = _dereq_('rework');
-  var match = /(rebeccapurple)\b/i;
-  var colorvalue = '#663399';
-
-  module.exports = function (stylesheet) {
-    stylesheet.rules.map(rule);
-  };
-
-  function rule(obj) {
-    if (obj.declarations) {
-      obj.declarations.map(declaration);
-    }
-    if (obj.rules) {
-      obj.rules.map(rule);
-    }
-    return obj;
-  }
-
-  function declaration(obj) {
-    if (obj.type === 'declaration' && match.test(obj.value)) {
-      obj.value = obj.value.replace(match, colorvalue);
-    }
-    return obj;
-  }
-
-}());
-
-},{"rework":104}],101:[function(_dereq_,module,exports){
+},{}],99:[function(_dereq_,module,exports){
 /**
  * Module dependencies.
  */
 
-var balanced = _dereq_('balanced-match');
 var visit = _dereq_('rework-visit');
 
 /**
  * Constants.
  */
 
-var VAR_PROP_IDENTIFIER = '--';
-var VAR_FUNC_IDENTIFIER = 'var';
+var VAR_SET_IDENTIFIER = '--';
+var VAR_GET_IDENTIFIER = 'var(';
 
 /**
  * Module export.
  */
 
-module.exports = function (options) {
+module.exports = function(jsmap) {
 
-  return function vars(style) {
-    options = options || {};
-    var map = options.map || {};
-    var preserve = (options.preserve === true ? true : false);
+  return function vars(style){
+    var map = jsmap || {};
 
     // define variables
     style.rules.forEach(function (rule) {
       var varNameIndices = [];
 
       if (rule.type !== 'rule') return;
+
       // only variables declared for `:root` are supported
-      if (rule.selectors.length !== 1 || rule.selectors[0] !== ':root') return;
+      if (rule.selectors.length === 1 && rule.selectors[0] === ':root') {
+        rule.declarations.forEach(function(decl, idx){
+          var prop = decl.property;
+          var val = decl.value;
 
-      rule.declarations.forEach(function (decl, i) {
-        var prop = decl.property;
-        var value = decl.value;
+          if (prop && prop.indexOf(VAR_SET_IDENTIFIER) === 0) {
+            map[prop] = val;
+            varNameIndices.push(idx);
+          }
+        });
 
-        if (prop && prop.indexOf(VAR_PROP_IDENTIFIER) === 0) {
-          map[prop] = value;
-          varNameIndices.push(i);
-        }
-      });
-
-      // optionally remove `--*` properties from the rule
-      if (!preserve) {
-        for (var i = varNameIndices.length - 1; i >= 0; i--) {
+        // remove `--*` properties from the rule
+        for (var i = varNameIndices.length - 1; i >= 0; i -= 1) {
           rule.declarations.splice(varNameIndices[i], 1);
         }
       }
     });
 
     // resolve variables
-    visit(style, function (declarations, node) {
-      var decl;
-      var resolvedValue;
-      var value;
-
-      for (var i = 0; i < declarations.length; i++) {
-        decl = declarations[i];
-        value = decl.value;
-
-        // skip comments
-        if (decl.type !== 'declaration') continue;
-        // skip values that don't contain variable functions
-        if (!value || value.indexOf(VAR_FUNC_IDENTIFIER + '(') === -1) continue;
-
-        resolvedValue = resolveValue(value, map);
-
-        if (!preserve) {
-          decl.value = resolvedValue;
+    visit(style, function(declarations, node){
+      declarations.forEach(function(decl, idx){
+        if (decl.value && decl.value.indexOf(VAR_GET_IDENTIFIER) !== -1) {
+          decl.value = replaceValue(decl.value, map);
         }
-        else {
-          declarations.splice(i, 0, {
-            type: decl.type,
-            property: decl.property,
-            value: resolvedValue
-          });
-          // skip ahead of preserved declaration
-          i++;
-        }
-      }
+      });
     });
   };
 };
@@ -11443,69 +11295,61 @@ module.exports = function (options) {
  *
  * var(name[, fallback])
  *
+ * Since the fallback can be *any* value, the value needs to be parsed
+ * character-by-character to deduce the contents of a variable function.
+ *
  * @param {String} value A property value known to contain CSS variable functions
  * @param {Object} map A map of variable names and values
  * @return {String} A property value with all CSS variables substituted.
  */
 
-function resolveValue(value, map) {
-  // matches `name[, fallback]`, captures 'name' and 'fallback'
-  var RE_VAR = /([\w-]+)(?:\s*,\s*)?(.*)?/;
-  var balancedParens = balanced('(', ')', value);
-  var varStartIndex = value.indexOf('var(');
-  var varRef = balanced('(', ')', value.substring(varStartIndex)).body;
+function replaceValue(value, map){
+  // matches `var(name[, fallback])`, captures 'name' and 'fallback'
+  var RE_VAR = /\bvar\(([\w-]+)(?:\s*,\s*)?(.*)?\)/;
+  // matches `var()`
+  var RE_EMPTY_VAR = /\bvar\(\s*\)/;
 
-  if (!balancedParens) throw new Error('rework-vars: missing closing ")" in the value "' + value + '"');
-  if (varRef === '') throw new Error('rework-vars: var() must contain a non-whitespace string');
+  var valueLen = value.length;
+  var beginSlice = value.indexOf('var(');
+  var endSlice = beginSlice + 'var('.length;
+  var depth = 1;
+  var currentChar;
+  var cssVariable;
 
-  var varFunc = VAR_FUNC_IDENTIFIER + '(' + varRef + ')';
+  // find the closing `)` of the CSS variable function,
+  // accounting for nested functions
+  while (endSlice < valueLen && depth > 0) {
+    currentChar = value.charAt(endSlice);
+    if (currentChar == '(') depth += 1;
+    if (currentChar == ')') depth -= 1;
+    endSlice += 1;
+  }
 
-  var varResult = varRef.replace(RE_VAR, function (_, name, fallback) {
+  if (depth > 0) throw new Error('rework-vars: missing closing ")" in the value "' + value + '"');
+
+  cssVariable = value.slice(beginSlice, endSlice);
+
+  if (RE_EMPTY_VAR.test(cssVariable)) throw new Error('rework-vars: var() must contain a non-whitespace string');
+
+  cssReplacement = cssVariable.replace(RE_VAR, function(_, name, fallback){
     var replacement = map[name];
     if (!replacement && !fallback) throw new Error('rework-vars: variable "' + name + '" is undefined');
     if (!replacement && fallback) return fallback;
     return replacement;
   });
 
-
   // resolve the variable
-  value = value.split(varFunc).join(varResult);
+  value = value.split(cssVariable).join(cssReplacement);
 
-  // recursively resolve any remaining variables in the value
-  if (value.indexOf(VAR_FUNC_IDENTIFIER) !== -1) {
-    value = resolveValue(value, map);
+  // recursively resolve any remaining variables
+  if (value.indexOf(VAR_GET_IDENTIFIER) !== -1) {
+    value = replaceValue(value, map);
   }
 
   return value;
 }
 
-},{"balanced-match":102,"rework-visit":103}],102:[function(_dereq_,module,exports){
-module.exports = function(a, b, str) {
-  var bal = 0;
-  var m = {};
-
-  for (var i = 0; i < str.length; i++) {
-    if (a == str.substr(i, a.length)) {
-      if (!('start' in m)) m.start = i;
-      bal++;
-    }
-    else if (b == str.substr(i, b.length) && 'start' in m) {
-      bal--;
-      if (!bal) {
-        m.end = i;
-        m.pre = str.substr(0, m.start);
-        m.body = (m.end - m.start > 1)
-          ? str.substring(m.start + a.length, m.end)
-          : '';
-        m.post = str.slice(m.end + b.length);
-        return m;
-      }
-    }
-  }
-};
-
-
-},{}],103:[function(_dereq_,module,exports){
+},{"rework-visit":100}],100:[function(_dereq_,module,exports){
 
 /**
  * Expose `visit()`.
@@ -11545,21 +11389,658 @@ function visit(node, fn){
   });
 };
 
-},{}],104:[function(_dereq_,module,exports){
+},{}],101:[function(_dereq_,module,exports){
+
+module.exports = _dereq_('./lib/rework');
+},{"./lib/rework":111}],102:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var utils = _dereq_('../utils');
+var path = _dereq_('path');
+var stripQuotes = utils.stripQuotes;
+
+/**
+ * Vendor crap.
+ */
+
+var query = [
+  '(min--moz-device-pixel-ratio: 1.5)',
+  '(-o-min-device-pixel-ratio: 3/2)',
+  '(-webkit-min-device-pixel-ratio: 1.5)',
+  '(min-device-pixel-ratio: 1.5)',
+  '(min-resolution: 144dpi)',
+  '(min-resolution: 1.5dppx)'
+].join(', ');
+
+/**
+ * Translate
+ *
+ *   .logo {
+ *     background-image: url('/public/images/logo.png')
+ *   }
+ *
+ * yields:
+ *
+ *   .logo {
+ *     background-image: url('/public/images/logo.png')
+ *   }
+ *
+ *   @media all and (-webkit-min-device-pixel-ratio : 1.5) {
+ *     .logo {
+ *       background-image: url("/public/images/logo@2x.png");
+ *       background-size: contain
+ *     }
+ *   }
+ *
+ */
+
+module.exports = function() {
+  return function(style){
+    style.rules.forEach(function(rule){
+      if (!rule.declarations) return;
+
+      var backgroundSize = rule.declarations.filter(backgroundWithSize).map(value)[0] || 'contain';
+
+      rule.declarations.filter(backgroundWithHiResURL).forEach(function(decl){
+        if ('comment' == decl.type) return;
+
+        // parse url
+        var val = decl.value.replace(/\s+(at-2x)\s*(;|$)/, '$2');
+        decl.value = val;
+        var i = val.indexOf('url(');
+        var url = stripQuotes(val.slice(i + 4, val.indexOf(')', i)));
+        var ext = path.extname(url);
+
+        // ignore .svg
+        if ('.svg' == ext) return;
+
+        // @2x value
+        url = path.join(path.dirname(url), path.basename(url, ext) + '@2x' + ext);
+
+        // wrap in @media
+        style.rules.push({
+          type: 'media',
+          media: query,
+          rules: [
+            {
+              type: 'rule',
+              selectors: rule.selectors,
+              declarations: [
+                {
+                  type: 'declaration',
+                  property: 'background-image',
+                  value: 'url("' + url + '")'
+                },
+                {
+                  type: 'declaration',
+                  property: 'background-size',
+                  value: backgroundSize
+                }
+              ]
+            }
+          ]
+        });
+      });
+    });
+  };
+};
+
+/**
+ * Filter background[-image] with url().
+ */
+
+function backgroundWithHiResURL(decl) {
+  return ('background' == decl.property
+    || 'background-image' == decl.property)
+    && ~decl.value.indexOf('url(')
+    && ~decl.value.indexOf('at-2x');
+}
+
+/**
+ * Predicate on background-size property.
+ */
+
+function backgroundWithSize(decl) {
+  return 'background-size' == decl.property;
+}
+
+/**
+ * Return value atribute of a declaration.
+ */
+
+function value(decl) {
+  return decl.value;
+}
+
+},{"../utils":112,"path":60}],103:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var parse = _dereq_('color-parser');
+var hsb2rgb = _dereq_('hsb2rgb');
+var functions = _dereq_('./function');
+
+/**
+ * Provide color manipulation helpers.
+ */
+
+module.exports = function() {
+  return functions({
+
+    /**
+     * Converts RGBA(color, alpha) to the corrosponding RGBA(r, g, b, a) equivalent.
+     *
+     *    background: rgba(#eee, .5)
+     *    background: rgba(white, .2)
+     *
+     */
+
+    rgba: function(color, alpha){
+      var args;
+      if (2 == arguments.length) {
+        var c = parse(color.trim());
+        args = [c.r, c.g, c.b, alpha];
+      } else {
+        args = [].slice.call(arguments);
+      }
+
+      return 'rgba(' + args.join(', ') + ')';
+    },
+
+    /**
+     * Converts HSV (HSB) color values to RGB.
+     * Saturation and brightness can be expressed as floats or percentages.
+     *
+     *     color: hsb(220, 45%, .3);
+     *     color: hsb(220deg, 0.45, 30%);
+     *
+     */
+
+    hsb: function (hue, saturation, value) {
+      var rgb = hsb2rgb(hue, saturation, value);
+      return 'rgb(' + rgb.join(', ') + ')';
+    },
+
+
+    /**
+     * Converts HSV (HSB) color values with alpha specified to RGBa.
+     * Saturation, brightness and alpha can be expressed as floats or
+     * percentages.
+     *
+     *     color: hsba(220, 45%, .3, .4);
+     *     color: hsba(220deg, 0.45, 30%, 40%);
+     *
+     */
+
+    hsba: function (hue, saturation, value, alpha) {
+      alpha = /%/.test(alpha)
+        ? parseInt(alpha, 10) / 100
+        : parseFloat(alpha, 10);
+
+      alpha = String(alpha).replace(/^0+\./, '.');
+
+      var rgb = hsb2rgb(hue, saturation, value);
+      return 'rgba(' + rgb.join(', ') + ', ' + alpha + ')';
+    }
+  });
+};
+
+},{"./function":105,"color-parser":115,"hsb2rgb":137}],104:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var visit = _dereq_('../visit');
+
+/**
+ * Easing functions.
+ */
+
+var ease = {
+  'ease-in-out-back': 'cubic-bezier(0.680, -0.550, 0.265, 1.550)',
+  'ease-in-out-circ': 'cubic-bezier(0.785, 0.135, 0.150, 0.860)',
+  'ease-in-out-expo': 'cubic-bezier(1.000, 0.000, 0.000, 1.000)',
+  'ease-in-out-sine': 'cubic-bezier(0.445, 0.050, 0.550, 0.950)',
+  'ease-in-out-quint': 'cubic-bezier(0.860, 0.000, 0.070, 1.000)',
+  'ease-in-out-quart': 'cubic-bezier(0.770, 0.000, 0.175, 1.000)',
+  'ease-in-out-cubic': 'cubic-bezier(0.645, 0.045, 0.355, 1.000)',
+  'ease-in-out-quad': 'cubic-bezier(0.455, 0.030, 0.515, 0.955)',
+  'ease-out-back': 'cubic-bezier(0.175, 0.885, 0.320, 1.275)',
+  'ease-out-circ': 'cubic-bezier(0.075, 0.820, 0.165, 1.000)',
+  'ease-out-expo': 'cubic-bezier(0.190, 1.000, 0.220, 1.000)',
+  'ease-out-sine': 'cubic-bezier(0.390, 0.575, 0.565, 1.000)',
+  'ease-out-quint': 'cubic-bezier(0.230, 1.000, 0.320, 1.000)',
+  'ease-out-quart': 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
+  'ease-out-cubic': 'cubic-bezier(0.215, 0.610, 0.355, 1.000)',
+  'ease-out-quad': 'cubic-bezier(0.250, 0.460, 0.450, 0.940)',
+  'ease-in-back': 'cubic-bezier(0.600, -0.280, 0.735, 0.045)',
+  'ease-in-circ': 'cubic-bezier(0.600, 0.040, 0.980, 0.335)',
+  'ease-in-expo': 'cubic-bezier(0.950, 0.050, 0.795, 0.035)',
+  'ease-in-sine': 'cubic-bezier(0.470, 0.000, 0.745, 0.715)',
+  'ease-in-quint': 'cubic-bezier(0.755, 0.050, 0.855, 0.060)',
+  'ease-in-quart': 'cubic-bezier(0.895, 0.030, 0.685, 0.220)',
+  'ease-in-cubic': 'cubic-bezier(0.550, 0.055, 0.675, 0.190)',
+  'ease-in-quad': 'cubic-bezier(0.550, 0.085, 0.680, 0.530)'
+};
+
+/**
+ * Keys.
+ */
+
+var keys = Object.keys(ease);
+
+/**
+ * Provide additional easing functions:
+ *
+ *    #logo {
+ *      transition: all 500ms ease-out-back;
+ *    }
+ *
+ * yields:
+ *
+ *    #logo {
+ *      transition: all 500ms cubic-bezier(0.175, 0.885, 0.320, 1.275)
+ *    }
+ *
+ */
+
+module.exports = function() {
+  return function(style){
+    visit.declarations(style, substitute);
+  }
+};
+
+/**
+ * Substitute easing functions.
+ *
+ * @api private
+ */
+
+function substitute(declarations) {
+  for (var i = 0, len = declarations.length; i < len; ++i) {
+    var decl = declarations[i];
+    if ('comment' == decl.type) continue;
+    if (!decl.property.match(/transition|animation|timing/)) continue;
+    for (var k = 0; k < keys.length; ++k) {
+      var key = keys[k];
+      if (~decl.value.indexOf(key)) {
+        decl.value = decl.value.replace(key, ease[key]);
+        break;
+      }
+    }
+  }
+}
+
+},{"../visit":113}],105:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var visit = _dereq_('../visit');
+var utils = _dereq_('../utils');
+var strip = utils.stripQuotes;
+
+/**
+ * Define custom function.
+ */
+
+module.exports = function(functions, args) {
+  if (!functions) throw new Error('functions object required');
+  return function(style){
+    var functionMatcher = functionMatcherBuilder(Object.keys(functions).join('|'));
+
+    visit.declarations(style, function(declarations){
+      func(declarations, functions, functionMatcher, args);
+    });
+  }
+};
+
+/**
+ * Visit declarations and apply functions.
+ *
+ * @param {Array} declarations
+ * @param {Object} functions
+ * @param {RegExp} functionMatcher
+ * @param {Boolean} [parseArgs]
+ * @api private
+ */
+
+function func(declarations, functions, functionMatcher, parseArgs) {
+  if (false !== parseArgs) parseArgs = true;
+
+  declarations.forEach(function(decl){
+    if ('comment' == decl.type) return;
+    var generatedFuncs = [], result, generatedFunc;
+
+    while (decl.value.match(functionMatcher)) {
+      decl.value = decl.value.replace(functionMatcher, function(_, name, args){
+        if (parseArgs) {
+          args = args.split(/\s*,\s*/).map(strip);
+        } else {
+          args = [strip(args)];
+        }
+        // Ensure result is string
+        result = '' + functions[name].apply(decl, args);
+
+        // Prevent fall into infinite loop like this:
+        //
+        // {
+        //   url: function(path) {
+        //     return 'url(' + '/some/prefix' + path + ')'
+        //   }
+        // }
+        //
+        generatedFunc = {from: name, to: name + getRandomString()};
+        result = result.replace(functionMatcherBuilder(name), generatedFunc.to + '($2)');
+        generatedFuncs.push(generatedFunc);
+        return result;
+      });
+    }
+
+    generatedFuncs.forEach(function(func) {
+      decl.value = decl.value.replace(func.to, func.from);
+    })
+  });
+}
+
+/**
+ * Build function regexp
+ *
+ * @param {String} name
+ * @api private
+ */
+
+function functionMatcherBuilder(name) {
+  // /(?!\W+)(\w+)\(([^()]+)\)/
+  return new RegExp("(?!\\W+)(" + name + ")\\(([^\(\)]+)\\)");
+}
+
+/**
+ * get random string
+ *
+ * @api private
+ */
+
+function getRandomString() {
+  return Math.random().toString(36).slice(2);
+}
+
+
+},{"../utils":112,"../visit":113}],106:[function(_dereq_,module,exports){
+(function (Buffer){
+
+/**
+ * Module dependencies.
+ */
+
+var func = _dereq_('./function');
+var path = _dereq_('path');
+var mime = _dereq_('mime');
+var fs = _dereq_('fs');
+var read = fs.readFileSync;
+var exists = fs.existsSync;
+
+/**
+ * Inline images and fonts.
+ *
+ *    .logo {
+ *      background: inline(icons/logo.png);
+ *    }
+ *
+ * yields:
+ *
+ *    .logo {
+ *      background: url("data:image/png;base64,iVBORw0…");
+ *    }
+ *
+ */
+
+module.exports = function(dirs) {
+  if (!Array.isArray(dirs)) {
+    dirs = Array.prototype.slice.call(arguments);
+  }
+
+  function inline(filename){
+    var file = dirs.map(function(dir) {
+      return path.join(dir, filename);
+    }).filter(exists)[0];
+
+    if (!file) throw new Error('inline(): failed to find "' + filename + '"');
+
+    var type = mime.lookup(file);
+    var base64 = new Buffer(read(file)).toString('base64');
+    return 'url("data:' + type + ';base64,' + base64 + '")';
+  }
+
+  return func({ inline: inline });
+};
+
+}).call(this,_dereq_("buffer").Buffer)
+},{"./function":105,"buffer":57,"fs":56,"mime":138,"path":60}],107:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var visit = _dereq_('../visit');
+
+/**
+ * Define custom mixins.
+ */
+
+module.exports = function(mixins) {
+  if (!mixins) throw new Error('mixins object required');
+  return function(style, rework){
+    visit.declarations(style, function(declarations){
+      mixin(rework, declarations, mixins);
+    });
+  }
+};
+
+/**
+ * Visit declarations and apply mixins.
+ *
+ * @param {Rework} rework
+ * @param {Array} declarations
+ * @param {Object} mixins
+ * @api private
+ */
+
+function mixin(rework, declarations, mixins) {
+  for (var i = 0; i < declarations.length; ++i) {
+    var decl = declarations[i];
+    if ('comment' == decl.type) continue;
+
+    var key = decl.property;
+    var val = decl.value;
+    var fn = mixins[key];
+    if (!fn) continue;
+
+    // invoke mixin
+    var ret = fn.call(rework, val);
+
+    // apply properties
+    for (var key in ret) {
+      var val = ret[key];
+      if (Array.isArray(val)) {
+        val.forEach(function(val){
+          declarations.splice(i++, 0, {
+            type: 'declaration',
+            property: key,
+            value: val
+          });
+        });
+      } else {
+        declarations.splice(i++, 0, {
+          type: 'declaration',
+          property: key,
+          value: val
+        });
+      }
+    }
+
+    // remove original
+    declarations.splice(i--, 1);
+  }
+}
+
+},{"../visit":113}],108:[function(_dereq_,module,exports){
+
+/**
+ * Prefix selectors with `str`.
+ *
+ *    button {
+ *      color: red;
+ *    }
+ *
+ * yields:
+ *
+ *    #dialog button {
+ *      color: red;
+ *    }
+ *
+ */
+
+module.exports = function(str) {
+  return function(style){
+    style.rules = style.rules.map(function(rule){
+      if (!rule.selectors) return rule;
+      rule.selectors = rule.selectors.map(function(selector){
+        if (':root' == selector) return str;
+        selector = selector.replace(/^\:root\s?/, '');
+        return str + ' ' + selector;
+      });
+      return rule;
+    });
+  }
+};
+
+},{}],109:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var visit = _dereq_('../visit');
+
+/**
+ * Provide property reference support.
+ *
+ *    button {
+ *      width: 50px;
+ *      height: @width;
+ *      line-height: @height;
+ *    }
+ *
+ * yields:
+ *
+ *    button {
+ *      width: 50px;
+*       height: 50px;
+*       line-height: 50px;
+ *    }
+ *
+ */
+
+module.exports = function() {
+  return function(style){
+    visit.declarations(style, substitute);
+  }
+};
+
+/**
+ * Substitute easing functions.
+ *
+ * @api private
+ */
+
+function substitute(declarations) {
+  var map = {};
+
+  for (var i = 0, len = declarations.length; i < len; ++i) {
+    var decl = declarations[i];
+    var key = decl.property;
+    var val = decl.value;
+
+    if ('comment' == decl.type) continue;
+
+    decl.value = val.replace(/@([-\w]+)/g, function(_, name){
+      // TODO: fix this problem for real with visionmedia/css-value
+      if ('2x' == name) return '@' + name;
+      if (null == map[name]) throw new Error('@' + name + ' is not defined in this scope');
+      return map[name];
+    });
+
+    map[key] = decl.value;
+  }
+}
+
+},{"../visit":113}],110:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var func = _dereq_('./function');
+
+/**
+ * Map `url()` calls.
+ *
+ *   body {
+ *     background: url(/images/bg.png);
+ *   }
+ *
+ * yields:
+ *
+ *   body {
+ *     background: url(http://example.com/images/bg.png);
+ *   }
+ *
+ */
+
+module.exports = function(fn) {
+  return func({
+    url: function(path){
+      return 'url("' + fn(path) + '")';
+    }
+  }, false);
+};
+
+},{"./function":105}],111:[function(_dereq_,module,exports){
 
 /**
  * Module dependencies.
  */
 
 var css = _dereq_('css');
-var parse = css.parse;
-var stringify = css.stringify;
 
 /**
  * Expose `rework`.
  */
 
 exports = module.exports = rework;
+
+/**
+ * Expose `visit` helpers.
+ */
+
+exports.visit = _dereq_('./visit');
+
+/**
+ * Expose prefix properties.
+ */
+
+exports.__defineGetter__('properties', function () {
+  console.warn('rework.properties has been removed.');
+  return [];
+})
 
 /**
  * Initialize a new stylesheet `Rework` with `str`.
@@ -11571,7 +12052,9 @@ exports = module.exports = rework;
  */
 
 function rework(str, options) {
-  return new Rework(parse(str, options));
+  options = options || {};
+  options.position = true; // we need this for sourcemaps
+  return new Rework(css.parse(str, options));
 }
 
 /**
@@ -11599,6 +12082,24 @@ Rework.prototype.use = function(fn){
 };
 
 /**
+ * Specify global vendor `prefixes`,
+ * explicit ones may still be passed
+ * to most plugins.
+ *
+ * Deprecated as of https://github.com/visionmedia/rework/issues/126.
+ *
+ * @param {Array} prefixes
+ * @return {Rework}
+ * @api public
+ */
+
+Rework.prototype.vendors = function(prefixes){
+  console.warn('rework.vendors() is deprecated. Please see: https://github.com/visionmedia/rework/issues/126.');
+  this.prefixes = prefixes;
+  return this;
+};
+
+/**
  * Stringify the stylesheet.
  *
  * @param {Object} options
@@ -11608,7 +12109,7 @@ Rework.prototype.use = function(fn){
 
 Rework.prototype.toString = function(options){
   options = options || {};
-  var result = stringify(this.obj, options);
+  var result = css.stringify(this.obj, options);
   if (options.sourcemap && !options.sourcemapAsObject) {
     result = result.code + '\n' + sourcemapToComment(result.map);
   }
@@ -11629,7 +12130,347 @@ function sourcemapToComment(map) {
   return '/*# sourceMappingURL=data:application/json;base64,' + content + ' */';
 }
 
-},{"convert-source-map":105,"css":106}],105:[function(_dereq_,module,exports){
+/**
+ * Expose plugins.
+ */
+
+exports.mixin = exports.mixins = _dereq_('./plugins/mixin');
+exports.function = exports.functions = _dereq_('./plugins/function');
+exports.colors = _dereq_('./plugins/colors');
+exports.extend = _dereq_('rework-inherit');
+exports.references = _dereq_('./plugins/references');
+exports.prefixSelectors = _dereq_('./plugins/prefix-selectors');
+exports.at2x = _dereq_('./plugins/at2x');
+exports.url = _dereq_('./plugins/url');
+exports.ease = _dereq_('./plugins/ease');
+
+/**
+ * Warn if users try to use removed components.
+ * This will be removed in v1.
+ */
+
+[
+  'vars',
+  'keyframes',
+  'prefix',
+  'prefixValue',
+].forEach(function (plugin) {
+  exports[plugin] = function () {
+    console.warn('rework.' + plugin + '() has been removed from rework core. Please view https://github.com/visionmedia/rework or https://github.com/visionmedia/rework/wiki/Plugins-and-Utilities.');
+    return noop;
+  };
+});
+
+/**
+ * Try/catch plugins unavailable in component.
+ */
+
+ try {
+  exports.inline = _dereq_('./plugins/inline');
+} catch (err) {}
+
+function noop(){}
+
+},{"./plugins/at2x":102,"./plugins/colors":103,"./plugins/ease":104,"./plugins/function":105,"./plugins/inline":106,"./plugins/mixin":107,"./plugins/prefix-selectors":108,"./plugins/references":109,"./plugins/url":110,"./visit":113,"convert-source-map":116,"css":117,"rework-inherit":139}],112:[function(_dereq_,module,exports){
+
+/**
+ * Strip `str` quotes.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+exports.stripQuotes = function(str) {
+  if ('"' == str[0] || "'" == str[0]) return str.slice(1, -1);
+  return str;
+};
+},{}],113:[function(_dereq_,module,exports){
+
+// TODO: require() directly in plugins...
+exports.declarations = _dereq_('rework-visit');
+
+},{"rework-visit":140}],114:[function(_dereq_,module,exports){
+
+module.exports = {
+    aliceblue: [240, 248, 255]
+  , antiquewhite: [250, 235, 215]
+  , aqua: [0, 255, 255]
+  , aquamarine: [127, 255, 212]
+  , azure: [240, 255, 255]
+  , beige: [245, 245, 220]
+  , bisque: [255, 228, 196]
+  , black: [0, 0, 0]
+  , blanchedalmond: [255, 235, 205]
+  , blue: [0, 0, 255]
+  , blueviolet: [138, 43, 226]
+  , brown: [165, 42, 42]
+  , burlywood: [222, 184, 135]
+  , cadetblue: [95, 158, 160]
+  , chartreuse: [127, 255, 0]
+  , chocolate: [210, 105, 30]
+  , coral: [255, 127, 80]
+  , cornflowerblue: [100, 149, 237]
+  , cornsilk: [255, 248, 220]
+  , crimson: [220, 20, 60]
+  , cyan: [0, 255, 255]
+  , darkblue: [0, 0, 139]
+  , darkcyan: [0, 139, 139]
+  , darkgoldenrod: [184, 132, 11]
+  , darkgray: [169, 169, 169]
+  , darkgreen: [0, 100, 0]
+  , darkgrey: [169, 169, 169]
+  , darkkhaki: [189, 183, 107]
+  , darkmagenta: [139, 0, 139]
+  , darkolivegreen: [85, 107, 47]
+  , darkorange: [255, 140, 0]
+  , darkorchid: [153, 50, 204]
+  , darkred: [139, 0, 0]
+  , darksalmon: [233, 150, 122]
+  , darkseagreen: [143, 188, 143]
+  , darkslateblue: [72, 61, 139]
+  , darkslategray: [47, 79, 79]
+  , darkslategrey: [47, 79, 79]
+  , darkturquoise: [0, 206, 209]
+  , darkviolet: [148, 0, 211]
+  , deeppink: [255, 20, 147]
+  , deepskyblue: [0, 191, 255]
+  , dimgray: [105, 105, 105]
+  , dimgrey: [105, 105, 105]
+  , dodgerblue: [30, 144, 255]
+  , firebrick: [178, 34, 34]
+  , floralwhite: [255, 255, 240]
+  , forestgreen: [34, 139, 34]
+  , fuchsia: [255, 0, 255]
+  , gainsboro: [220, 220, 220]
+  , ghostwhite: [248, 248, 255]
+  , gold: [255, 215, 0]
+  , goldenrod: [218, 165, 32]
+  , gray: [128, 128, 128]
+  , green: [0, 128, 0]
+  , greenyellow: [173, 255, 47]
+  , grey: [128, 128, 128]
+  , honeydew: [240, 255, 240]
+  , hotpink: [255, 105, 180]
+  , indianred: [205, 92, 92]
+  , indigo: [75, 0, 130]
+  , ivory: [255, 255, 240]
+  , khaki: [240, 230, 140]
+  , lavender: [230, 230, 250]
+  , lavenderblush: [255, 240, 245]
+  , lawngreen: [124, 252, 0]
+  , lemonchiffon: [255, 250, 205]
+  , lightblue: [173, 216, 230]
+  , lightcoral: [240, 128, 128]
+  , lightcyan: [224, 255, 255]
+  , lightgoldenrodyellow: [250, 250, 210]
+  , lightgray: [211, 211, 211]
+  , lightgreen: [144, 238, 144]
+  , lightgrey: [211, 211, 211]
+  , lightpink: [255, 182, 193]
+  , lightsalmon: [255, 160, 122]
+  , lightseagreen: [32, 178, 170]
+  , lightskyblue: [135, 206, 250]
+  , lightslategray: [119, 136, 153]
+  , lightslategrey: [119, 136, 153]
+  , lightsteelblue: [176, 196, 222]
+  , lightyellow: [255, 255, 224]
+  , lime: [0, 255, 0]
+  , limegreen: [50, 205, 50]
+  , linen: [250, 240, 230]
+  , magenta: [255, 0, 255]
+  , maroon: [128, 0, 0]
+  , mediumaquamarine: [102, 205, 170]
+  , mediumblue: [0, 0, 205]
+  , mediumorchid: [186, 85, 211]
+  , mediumpurple: [147, 112, 219]
+  , mediumseagreen: [60, 179, 113]
+  , mediumslateblue: [123, 104, 238]
+  , mediumspringgreen: [0, 250, 154]
+  , mediumturquoise: [72, 209, 204]
+  , mediumvioletred: [199, 21, 133]
+  , midnightblue: [25, 25, 112]
+  , mintcream: [245, 255, 250]
+  , mistyrose: [255, 228, 225]
+  , moccasin: [255, 228, 181]
+  , navajowhite: [255, 222, 173]
+  , navy: [0, 0, 128]
+  , oldlace: [253, 245, 230]
+  , olive: [128, 128, 0]
+  , olivedrab: [107, 142, 35]
+  , orange: [255, 165, 0]
+  , orangered: [255, 69, 0]
+  , orchid: [218, 112, 214]
+  , palegoldenrod: [238, 232, 170]
+  , palegreen: [152, 251, 152]
+  , paleturquoise: [175, 238, 238]
+  , palevioletred: [219, 112, 147]
+  , papayawhip: [255, 239, 213]
+  , peachpuff: [255, 218, 185]
+  , peru: [205, 133, 63]
+  , pink: [255, 192, 203]
+  , plum: [221, 160, 203]
+  , powderblue: [176, 224, 230]
+  , purple: [128, 0, 128]
+  , red: [255, 0, 0]
+  , rosybrown: [188, 143, 143]
+  , royalblue: [65, 105, 225]
+  , saddlebrown: [139, 69, 19]
+  , salmon: [250, 128, 114]
+  , sandybrown: [244, 164, 96]
+  , seagreen: [46, 139, 87]
+  , seashell: [255, 245, 238]
+  , sienna: [160, 82, 45]
+  , silver: [192, 192, 192]
+  , skyblue: [135, 206, 235]
+  , slateblue: [106, 90, 205]
+  , slategray: [119, 128, 144]
+  , slategrey: [119, 128, 144]
+  , snow: [255, 255, 250]
+  , springgreen: [0, 255, 127]
+  , steelblue: [70, 130, 180]
+  , tan: [210, 180, 140]
+  , teal: [0, 128, 128]
+  , thistle: [216, 191, 216]
+  , tomato: [255, 99, 71]
+  , turquoise: [64, 224, 208]
+  , violet: [238, 130, 238]
+  , wheat: [245, 222, 179]
+  , white: [255, 255, 255]
+  , whitesmoke: [245, 245, 245]
+  , yellow: [255, 255, 0]
+  , yellowgreen: [154, 205, 5]
+};
+},{}],115:[function(_dereq_,module,exports){
+
+/**
+ * Module dependencies.
+ */
+
+var colors = _dereq_('./colors');
+
+/**
+ * Expose `parse`.
+ */
+
+module.exports = parse;
+
+/**
+ * Parse `str`.
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api public
+ */
+
+function parse(str) {
+  return named(str)
+    || hex3(str)
+    || hex6(str)
+    || rgb(str)
+    || rgba(str);
+}
+
+/**
+ * Parse named css color `str`.
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api private
+ */
+
+function named(str) {
+  var c = colors[str.toLowerCase()];
+  if (!c) return;
+  return {
+    r: c[0],
+    g: c[1],
+    b: c[2]
+  }
+}
+
+/**
+ * Parse rgb(n, n, n)
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api private
+ */
+
+function rgb(str) {
+  if (0 == str.indexOf('rgb(')) {
+    str = str.match(/rgb\(([^)]+)\)/)[1];
+    var parts = str.split(/ *, */).map(Number);
+    return {
+      r: parts[0],
+      g: parts[1],
+      b: parts[2],
+      a: 1
+    }
+  }
+}
+
+/**
+ * Parse rgba(n, n, n, n)
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api private
+ */
+
+function rgba(str) {
+  if (0 == str.indexOf('rgba(')) {
+    str = str.match(/rgba\(([^)]+)\)/)[1];
+    var parts = str.split(/ *, */).map(Number);
+    return {
+      r: parts[0],
+      g: parts[1],
+      b: parts[2],
+      a: parts[3]
+    }
+  }
+}
+
+/**
+ * Parse #nnnnnn
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api private
+ */
+
+function hex6(str) {
+  if ('#' == str[0] && 7 == str.length) {
+    return {
+      r: parseInt(str.slice(1, 3), 16),
+      g: parseInt(str.slice(3, 5), 16),
+      b: parseInt(str.slice(5, 7), 16),
+      a: 1
+    }
+  }
+}
+
+/**
+ * Parse #nnn
+ *
+ * @param {String} str
+ * @return {Object}
+ * @api private
+ */
+
+function hex3(str) {
+  if ('#' == str[0] && 4 == str.length) {
+    return {
+      r: parseInt(str[1] + str[1], 16),
+      g: parseInt(str[2] + str[2], 16),
+      b: parseInt(str[3] + str[3], 16),
+      a: 1
+    }
+  }
+}
+
+
+},{"./colors":114}],116:[function(_dereq_,module,exports){
 (function (Buffer){
 'use strict';
 var fs = _dereq_('fs');
@@ -11772,1620 +12613,39 @@ exports.__defineGetter__('mapFileCommentRegex', function () {
 });
 
 }).call(this,_dereq_("buffer").Buffer)
-},{"buffer":57,"fs":56,"path":60}],106:[function(_dereq_,module,exports){
-exports.parse = _dereq_('./lib/parse');
-exports.stringify = _dereq_('./lib/stringify');
-
-},{"./lib/parse":107,"./lib/stringify":111}],107:[function(_dereq_,module,exports){
-// http://www.w3.org/TR/CSS21/grammar.html
-// https://github.com/visionmedia/css-parse/pull/49#issuecomment-30088027
-var commentre = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//g
-
-module.exports = function(css, options){
-  options = options || {};
-
-  /**
-   * Positional.
-   */
-
-  var lineno = 1;
-  var column = 1;
-
-  /**
-   * Update lineno and column based on `str`.
-   */
-
-  function updatePosition(str) {
-    var lines = str.match(/\n/g);
-    if (lines) lineno += lines.length;
-    var i = str.lastIndexOf('\n');
-    column = ~i ? str.length - i : column + str.length;
-  }
-
-  /**
-   * Mark position and patch `node.position`.
-   */
-
-  function position() {
-    var start = { line: lineno, column: column };
-    return function(node){
-      node.position = new Position(start);
-      whitespace();
-      return node;
-    };
-  }
-
-  /**
-   * Store position information for a node
-   */
-
-  function Position(start) {
-    this.start = start;
-    this.end = { line: lineno, column: column };
-    this.source = options.source;
-  }
-
-  /**
-   * Non-enumerable source string
-   */
-
-  Position.prototype.content = css;
-
-  /**
-   * Error `msg`.
-   */
-
-  function error(msg) {
-    if (options.silent === true) {
-      return false;
-    }
-
-    var err = new Error(msg + ' near line ' + lineno + ':' + column);
-    err.filename = options.source;
-    err.line = lineno;
-    err.column = column;
-    err.source = css;
-    throw err;
-  }
-
-  /**
-   * Parse stylesheet.
-   */
-
-  function stylesheet() {
-    return {
-      type: 'stylesheet',
-      stylesheet: {
-        rules: rules()
-      }
-    };
-  }
-
-  /**
-   * Opening brace.
-   */
-
-  function open() {
-    return match(/^{\s*/);
-  }
-
-  /**
-   * Closing brace.
-   */
-
-  function close() {
-    return match(/^}/);
-  }
-
-  /**
-   * Parse ruleset.
-   */
-
-  function rules() {
-    var node;
-    var rules = [];
-    whitespace();
-    comments(rules);
-    while (css.length && css.charAt(0) != '}' && (node = atrule() || rule())) {
-      if (node !== false) {
-        rules.push(node);
-        comments(rules);
-      }
-    }
-    return rules;
-  }
-
-  /**
-   * Match `re` and return captures.
-   */
-
-  function match(re) {
-    var m = re.exec(css);
-    if (!m) return;
-    var str = m[0];
-    updatePosition(str);
-    css = css.slice(str.length);
-    return m;
-  }
-
-  /**
-   * Parse whitespace.
-   */
-
-  function whitespace() {
-    match(/^\s*/);
-  }
-
-  /**
-   * Parse comments;
-   */
-
-  function comments(rules) {
-    var c;
-    rules = rules || [];
-    while (c = comment()) {
-      if (c !== false) {
-        rules.push(c);
-      }
-    }
-    return rules;
-  }
-
-  /**
-   * Parse comment.
-   */
-
-  function comment() {
-    var pos = position();
-    if ('/' != css.charAt(0) || '*' != css.charAt(1)) return;
-
-    var i = 2;
-    while ("" != css.charAt(i) && ('*' != css.charAt(i) || '/' != css.charAt(i + 1))) ++i;
-    i += 2;
-
-    if ("" === css.charAt(i-1)) {
-      return error('End of comment missing');
-    }
-
-    var str = css.slice(2, i - 2);
-    column += 2;
-    updatePosition(str);
-    css = css.slice(i);
-    column += 2;
-
-    return pos({
-      type: 'comment',
-      comment: str
-    });
-  }
-
-  /**
-   * Parse selector.
-   */
-
-  function selector() {
-    var m = match(/^([^{]+)/);
-    if (!m) return;
-    /* @fix Remove all comments from selectors
-     * http://ostermiller.org/findcomment.html */
-    return trim(m[0])
-      .replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*\/+/g, '')
-      .replace(/(?:"[^"]*"|'[^']*')/g, function(m) {
-        return m.replace(/,/g, '\u200C');
-      })
-      .split(/\s*(?![^(]*\)),\s*/)
-      .map(function(s) {
-        return s.replace(/\u200C/g, ',');
-      });
-  }
-
-  /**
-   * Parse declaration.
-   */
-
-  function declaration() {
-    var pos = position();
-
-    // prop
-    var prop = match(/^(\*?[-#\/\*\\\w]+(\[[0-9a-z_-]+\])?)\s*/);
-    if (!prop) return;
-    prop = trim(prop[0]);
-
-    // :
-    if (!match(/^:\s*/)) return error("property missing ':'");
-
-    // val
-    var val = match(/^((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)/);
-
-    var ret = pos({
-      type: 'declaration',
-      property: prop.replace(commentre, ''),
-      value: val ? trim(val[0]).replace(commentre, '') : ''
-    });
-
-    // ;
-    match(/^[;\s]*/);
-
-    return ret;
-  }
-
-  /**
-   * Parse declarations.
-   */
-
-  function declarations() {
-    var decls = [];
-
-    if (!open()) return error("missing '{'");
-    comments(decls);
-
-    // declarations
-    var decl;
-    while (decl = declaration()) {
-      if (decl !== false) {
-        decls.push(decl);
-        comments(decls);
-      }
-    }
-
-    if (!close()) return error("missing '}'");
-    return decls;
-  }
-
-  /**
-   * Parse keyframe.
-   */
-
-  function keyframe() {
-    var m;
-    var vals = [];
-    var pos = position();
-
-    while (m = match(/^((\d+\.\d+|\.\d+|\d+)%?|[a-z]+)\s*/)) {
-      vals.push(m[1]);
-      match(/^,\s*/);
-    }
-
-    if (!vals.length) return;
-
-    return pos({
-      type: 'keyframe',
-      values: vals,
-      declarations: declarations()
-    });
-  }
-
-  /**
-   * Parse keyframes.
-   */
-
-  function atkeyframes() {
-    var pos = position();
-    var m = match(/^@([-\w]+)?keyframes */);
-
-    if (!m) return;
-    var vendor = m[1];
-
-    // identifier
-    var m = match(/^([-\w]+)\s*/);
-    if (!m) return error("@keyframes missing name");
-    var name = m[1];
-
-    if (!open()) return error("@keyframes missing '{'");
-
-    var frame;
-    var frames = comments();
-    while (frame = keyframe()) {
-      frames.push(frame);
-      frames = frames.concat(comments());
-    }
-
-    if (!close()) return error("@keyframes missing '}'");
-
-    return pos({
-      type: 'keyframes',
-      name: name,
-      vendor: vendor,
-      keyframes: frames
-    });
-  }
-
-  /**
-   * Parse supports.
-   */
-
-  function atsupports() {
-    var pos = position();
-    var m = match(/^@supports *([^{]+)/);
-
-    if (!m) return;
-    var supports = trim(m[1]);
-
-    if (!open()) return error("@supports missing '{'");
-
-    var style = comments().concat(rules());
-
-    if (!close()) return error("@supports missing '}'");
-
-    return pos({
-      type: 'supports',
-      supports: supports,
-      rules: style
-    });
-  }
-
-  /**
-   * Parse host.
-   */
-
-  function athost() {
-    var pos = position();
-    var m = match(/^@host */);
-
-    if (!m) return;
-
-    if (!open()) return error("@host missing '{'");
-
-    var style = comments().concat(rules());
-
-    if (!close()) return error("@host missing '}'");
-
-    return pos({
-      type: 'host',
-      rules: style
-    });
-  }
-
-  /**
-   * Parse media.
-   */
-
-  function atmedia() {
-    var pos = position();
-    var m = match(/^@media *([^{]+)/);
-
-    if (!m) return;
-    var media = trim(m[1]);
-
-    if (!open()) return error("@media missing '{'");
-
-    var style = comments().concat(rules());
-
-    if (!close()) return error("@media missing '}'");
-
-    return pos({
-      type: 'media',
-      media: media,
-      rules: style
-    });
-  }
-
-
-  /**
-   * Parse custom-media.
-   */
-
-  function atcustommedia() {
-    var pos = position();
-    var m = match(/^@custom-media (--[^\s]+) *([^{;]+);/);
-    if (!m) return;
-
-    return pos({
-      type: 'custom-media',
-      name: trim(m[1]),
-      media: trim(m[2])
-    });
-  }
-
-  /**
-   * Parse paged media.
-   */
-
-  function atpage() {
-    var pos = position();
-    var m = match(/^@page */);
-    if (!m) return;
-
-    var sel = selector() || [];
-
-    if (!open()) return error("@page missing '{'");
-    var decls = comments();
-
-    // declarations
-    var decl;
-    while (decl = declaration()) {
-      decls.push(decl);
-      decls = decls.concat(comments());
-    }
-
-    if (!close()) return error("@page missing '}'");
-
-    return pos({
-      type: 'page',
-      selectors: sel,
-      declarations: decls
-    });
-  }
-
-  /**
-   * Parse document.
-   */
-
-  function atdocument() {
-    var pos = position();
-    var m = match(/^@([-\w]+)?document *([^{]+)/);
-    if (!m) return;
-
-    var vendor = trim(m[1]);
-    var doc = trim(m[2]);
-
-    if (!open()) return error("@document missing '{'");
-
-    var style = comments().concat(rules());
-
-    if (!close()) return error("@document missing '}'");
-
-    return pos({
-      type: 'document',
-      document: doc,
-      vendor: vendor,
-      rules: style
-    });
-  }
-
-  /**
-   * Parse font-face.
-   */
-
-  function atfontface() {
-    var pos = position();
-    var m = match(/^@font-face */);
-    if (!m) return;
-
-    if (!open()) return error("@font-face missing '{'");
-    var decls = comments();
-
-    // declarations
-    var decl;
-    while (decl = declaration()) {
-      decls.push(decl);
-      decls = decls.concat(comments());
-    }
-
-    if (!close()) return error("@font-face missing '}'");
-
-    return pos({
-      type: 'font-face',
-      declarations: decls
-    });
-  }
-
-  /**
-   * Parse import
-   */
-
-  var atimport = _compileAtrule('import');
-
-  /**
-   * Parse charset
-   */
-
-  var atcharset = _compileAtrule('charset');
-
-  /**
-   * Parse namespace
-   */
-
-  var atnamespace = _compileAtrule('namespace');
-
-  /**
-   * Parse non-block at-rules
-   */
-
-
-  function _compileAtrule(name) {
-    var re = new RegExp('^@' + name + ' *([^;\\n]+);');
-    return function() {
-      var pos = position();
-      var m = match(re);
-      if (!m) return;
-      var ret = { type: name };
-      ret[name] = m[1].trim();
-      return pos(ret);
-    }
-  }
-
-  /**
-   * Parse at rule.
-   */
-
-  function atrule() {
-    if (css[0] != '@') return;
-
-    return atkeyframes()
-      || atmedia()
-      || atcustommedia()
-      || atsupports()
-      || atimport()
-      || atcharset()
-      || atnamespace()
-      || atdocument()
-      || atpage()
-      || athost()
-      || atfontface();
-  }
-
-  /**
-   * Parse rule.
-   */
-
-  function rule() {
-    var pos = position();
-    var sel = selector();
-
-    if (!sel) return error('selector missing');
-    comments();
-
-    return pos({
-      type: 'rule',
-      selectors: sel,
-      declarations: declarations()
-    });
-  }
-
-  return addParent(stylesheet());
-};
-
-/**
- * Trim `str`.
- */
-
-function trim(str) {
-  return str ? str.replace(/^\s+|\s+$/g, '') : '';
-}
-
-/**
- * Adds non-enumerable parent node reference to each node.
- */
-
-function addParent(obj, parent) {
-  var isNode = obj && typeof obj.type === 'string';
-  var childParent = isNode ? obj : parent;
-
-  for (var k in obj) {
-    var value = obj[k];
-    if (Array.isArray(value)) {
-      value.forEach(function(v) { addParent(v, childParent); });
-    } else if (value && typeof value === 'object') {
-      addParent(value, childParent);
-    }
-  }
-
-  if (isNode) {
-    Object.defineProperty(obj, 'parent', {
-      configurable: true,
-      writable: true,
-      enumerable: false,
-      value: parent || null
-    });
-  }
-
-  return obj;
-}
-
-},{}],108:[function(_dereq_,module,exports){
+},{"buffer":57,"fs":56,"path":60}],117:[function(_dereq_,module,exports){
+module.exports=_dereq_(80)
+},{"css-parse":118,"css-stringify":119}],118:[function(_dereq_,module,exports){
+module.exports=_dereq_(81)
+},{}],119:[function(_dereq_,module,exports){
+module.exports=_dereq_(41)
+},{"./lib/compress":121,"./lib/identity":122,"./lib/source-map-support":123}],120:[function(_dereq_,module,exports){
 module.exports=_dereq_(42)
-},{}],109:[function(_dereq_,module,exports){
-
-/**
- * Module dependencies.
- */
-
-var Base = _dereq_('./compiler');
-
-/**
- * Expose compiler.
- */
-
-module.exports = Compiler;
-
-/**
- * Initialize a new `Compiler`.
- */
-
-function Compiler(options) {
-  Base.call(this, options);
-}
-
-/**
- * Inherit from `Base.prototype`.
- */
-
-Compiler.prototype.__proto__ = Base.prototype;
-
-/**
- * Compile `node`.
- */
-
-Compiler.prototype.compile = function(node){
-  return node.stylesheet
-    .rules.map(this.visit, this)
-    .join('');
-};
-
-/**
- * Visit comment node.
- */
-
-Compiler.prototype.comment = function(node){
-  return this.emit('', node.position);
-};
-
-/**
- * Visit import node.
- */
-
-Compiler.prototype.import = function(node){
-  return this.emit('@import ' + node.import + ';', node.position);
-};
-
-/**
- * Visit media node.
- */
-
-Compiler.prototype.media = function(node){
-  return this.emit('@media ' + node.media, node.position)
-    + this.emit('{')
-    + this.mapVisit(node.rules)
-    + this.emit('}');
-};
-
-/**
- * Visit document node.
- */
-
-Compiler.prototype.document = function(node){
-  var doc = '@' + (node.vendor || '') + 'document ' + node.document;
-
-  return this.emit(doc, node.position)
-    + this.emit('{')
-    + this.mapVisit(node.rules)
-    + this.emit('}');
-};
-
-/**
- * Visit charset node.
- */
-
-Compiler.prototype.charset = function(node){
-  return this.emit('@charset ' + node.charset + ';', node.position);
-};
-
-/**
- * Visit namespace node.
- */
-
-Compiler.prototype.namespace = function(node){
-  return this.emit('@namespace ' + node.namespace + ';', node.position);
-};
-
-/**
- * Visit supports node.
- */
-
-Compiler.prototype.supports = function(node){
-  return this.emit('@supports ' + node.supports, node.position)
-    + this.emit('{')
-    + this.mapVisit(node.rules)
-    + this.emit('}');
-};
-
-/**
- * Visit keyframes node.
- */
-
-Compiler.prototype.keyframes = function(node){
-  return this.emit('@'
-    + (node.vendor || '')
-    + 'keyframes '
-    + node.name, node.position)
-    + this.emit('{')
-    + this.mapVisit(node.keyframes)
-    + this.emit('}');
-};
-
-/**
- * Visit keyframe node.
- */
-
-Compiler.prototype.keyframe = function(node){
-  var decls = node.declarations;
-
-  return this.emit(node.values.join(','), node.position)
-    + this.emit('{')
-    + this.mapVisit(decls)
-    + this.emit('}');
-};
-
-/**
- * Visit page node.
- */
-
-Compiler.prototype.page = function(node){
-  var sel = node.selectors.length
-    ? node.selectors.join(', ')
-    : '';
-
-  return this.emit('@page ' + sel, node.position)
-    + this.emit('{')
-    + this.mapVisit(node.declarations)
-    + this.emit('}');
-};
-
-/**
- * Visit font-face node.
- */
-
-Compiler.prototype['font-face'] = function(node){
-  return this.emit('@font-face', node.position)
-    + this.emit('{')
-    + this.mapVisit(node.declarations)
-    + this.emit('}');
-};
-
-/**
- * Visit host node.
- */
-
-Compiler.prototype.host = function(node){
-  return this.emit('@host', node.position)
-    + this.emit('{')
-    + this.mapVisit(node.rules)
-    + this.emit('}');
-};
-
-/**
- * Visit custom-media node.
- */
-
-Compiler.prototype['custom-media'] = function(node){
-  return this.emit('@custom-media ' + node.name + ' ' + node.media + ';', node.position);
-};
-
-/**
- * Visit rule node.
- */
-
-Compiler.prototype.rule = function(node){
-  var decls = node.declarations;
-  if (!decls.length) return '';
-
-  return this.emit(node.selectors.join(','), node.position)
-    + this.emit('{')
-    + this.mapVisit(decls)
-    + this.emit('}');
-};
-
-/**
- * Visit declaration node.
- */
-
-Compiler.prototype.declaration = function(node){
-  return this.emit(node.property + ':' + node.value, node.position) + this.emit(';');
-};
-
-
-},{"./compiler":108}],110:[function(_dereq_,module,exports){
-
-/**
- * Module dependencies.
- */
-
-var Base = _dereq_('./compiler');
-
-/**
- * Expose compiler.
- */
-
-module.exports = Compiler;
-
-/**
- * Initialize a new `Compiler`.
- */
-
-function Compiler(options) {
-  options = options || {};
-  Base.call(this, options);
-  this.indentation = options.indent;
-}
-
-/**
- * Inherit from `Base.prototype`.
- */
-
-Compiler.prototype.__proto__ = Base.prototype;
-
-/**
- * Compile `node`.
- */
-
-Compiler.prototype.compile = function(node){
-  return this.stylesheet(node);
-};
-
-/**
- * Visit stylesheet node.
- */
-
-Compiler.prototype.stylesheet = function(node){
-  return this.mapVisit(node.stylesheet.rules, '\n\n');
-};
-
-/**
- * Visit comment node.
- */
-
-Compiler.prototype.comment = function(node){
-  return this.emit(this.indent() + '/*' + node.comment + '*/', node.position);
-};
-
-/**
- * Visit import node.
- */
-
-Compiler.prototype.import = function(node){
-  return this.emit('@import ' + node.import + ';', node.position);
-};
-
-/**
- * Visit media node.
- */
-
-Compiler.prototype.media = function(node){
-  return this.emit('@media ' + node.media, node.position)
-    + this.emit(
-        ' {\n'
-        + this.indent(1))
-    + this.mapVisit(node.rules, '\n\n')
-    + this.emit(
-        this.indent(-1)
-        + '\n}');
-};
-
-/**
- * Visit document node.
- */
-
-Compiler.prototype.document = function(node){
-  var doc = '@' + (node.vendor || '') + 'document ' + node.document;
-
-  return this.emit(doc, node.position)
-    + this.emit(
-        ' '
-      + ' {\n'
-      + this.indent(1))
-    + this.mapVisit(node.rules, '\n\n')
-    + this.emit(
-        this.indent(-1)
-        + '\n}');
-};
-
-/**
- * Visit charset node.
- */
-
-Compiler.prototype.charset = function(node){
-  return this.emit('@charset ' + node.charset + ';', node.position);
-};
-
-/**
- * Visit namespace node.
- */
-
-Compiler.prototype.namespace = function(node){
-  return this.emit('@namespace ' + node.namespace + ';', node.position);
-};
-
-/**
- * Visit supports node.
- */
-
-Compiler.prototype.supports = function(node){
-  return this.emit('@supports ' + node.supports, node.position)
-    + this.emit(
-      ' {\n'
-      + this.indent(1))
-    + this.mapVisit(node.rules, '\n\n')
-    + this.emit(
-        this.indent(-1)
-        + '\n}');
-};
-
-/**
- * Visit keyframes node.
- */
-
-Compiler.prototype.keyframes = function(node){
-  return this.emit('@' + (node.vendor || '') + 'keyframes ' + node.name, node.position)
-    + this.emit(
-      ' {\n'
-      + this.indent(1))
-    + this.mapVisit(node.keyframes, '\n')
-    + this.emit(
-        this.indent(-1)
-        + '}');
-};
-
-/**
- * Visit keyframe node.
- */
-
-Compiler.prototype.keyframe = function(node){
-  var decls = node.declarations;
-
-  return this.emit(this.indent())
-    + this.emit(node.values.join(', '), node.position)
-    + this.emit(
-      ' {\n'
-      + this.indent(1))
-    + this.mapVisit(decls, '\n')
-    + this.emit(
-      this.indent(-1)
-      + '\n'
-      + this.indent() + '}\n');
-};
-
-/**
- * Visit page node.
- */
-
-Compiler.prototype.page = function(node){
-  var sel = node.selectors.length
-    ? node.selectors.join(', ') + ' '
-    : '';
-
-  return this.emit('@page ' + sel, node.position)
-    + this.emit('{\n')
-    + this.emit(this.indent(1))
-    + this.mapVisit(node.declarations, '\n')
-    + this.emit(this.indent(-1))
-    + this.emit('\n}');
-};
-
-/**
- * Visit font-face node.
- */
-
-Compiler.prototype['font-face'] = function(node){
-  return this.emit('@font-face ', node.position)
-    + this.emit('{\n')
-    + this.emit(this.indent(1))
-    + this.mapVisit(node.declarations, '\n')
-    + this.emit(this.indent(-1))
-    + this.emit('\n}');
-};
-
-/**
- * Visit host node.
- */
-
-Compiler.prototype.host = function(node){
-  return this.emit('@host', node.position)
-    + this.emit(
-        ' {\n'
-        + this.indent(1))
-    + this.mapVisit(node.rules, '\n\n')
-    + this.emit(
-        this.indent(-1)
-        + '\n}');
-};
-
-/**
- * Visit custom-media node.
- */
-
-Compiler.prototype['custom-media'] = function(node){
-  return this.emit('@custom-media ' + node.name + ' ' + node.media + ';', node.position);
-};
-
-/**
- * Visit rule node.
- */
-
-Compiler.prototype.rule = function(node){
-  var indent = this.indent();
-  var decls = node.declarations;
-  if (!decls.length) return '';
-
-  return this.emit(node.selectors.map(function(s){ return indent + s }).join(',\n'), node.position)
-    + this.emit(' {\n')
-    + this.emit(this.indent(1))
-    + this.mapVisit(decls, '\n')
-    + this.emit(this.indent(-1))
-    + this.emit('\n' + this.indent() + '}');
-};
-
-/**
- * Visit declaration node.
- */
-
-Compiler.prototype.declaration = function(node){
-  return this.emit(this.indent())
-    + this.emit(node.property + ': ' + node.value, node.position)
-    + this.emit(';');
-};
-
-/**
- * Increase, decrease or return current indentation.
- */
-
-Compiler.prototype.indent = function(level) {
-  this.level = this.level || 1;
-
-  if (null != level) {
-    this.level += level;
-    return '';
-  }
-
-  return Array(this.level).join(this.indentation || '  ');
-};
-
-},{"./compiler":108}],111:[function(_dereq_,module,exports){
-
-/**
- * Module dependencies.
- */
-
-var Compressed = _dereq_('./compress');
-var Identity = _dereq_('./identity');
-
-/**
- * Stringfy the given AST `node`.
- *
- * Options:
- *
- *  - `compress` space-optimized output
- *  - `sourcemap` return an object with `.code` and `.map`
- *
- * @param {Object} node
- * @param {Object} [options]
- * @return {String}
- * @api public
- */
-
-module.exports = function(node, options){
-  options = options || {};
-
-  var compiler = options.compress
-    ? new Compressed(options)
-    : new Identity(options);
-
-  // source maps
-  if (options.sourcemap) {
-    var sourcemaps = _dereq_('./source-map-support');
-    sourcemaps(compiler);
-
-    var code = compiler.compile(node);
-    compiler.applySourceMaps();
-    return { code: code, map: compiler.map.toJSON() };
-  }
-
-  var code = compiler.compile(node);
-  return code;
-};
-
-},{"./compress":109,"./identity":110,"./source-map-support":112}],112:[function(_dereq_,module,exports){
-
-/**
- * Module dependencies.
- */
-
-var SourceMap = _dereq_('source-map').SourceMapGenerator;
-var SourceMapConsumer = _dereq_('source-map').SourceMapConsumer;
-var sourceMapResolve = _dereq_('source-map-resolve');
-var urix = _dereq_('urix');
-var fs = _dereq_('fs');
-var path = _dereq_('path');
-
-/**
- * Expose `mixin()`.
- */
-
-module.exports = mixin;
-
-/**
- * Mixin source map support into `compiler`.
- *
- * @param {Compiler} compiler
- * @api public
- */
-
-function mixin(compiler) {
-  compiler._comment = compiler.comment;
-  compiler.map = new SourceMap();
-  compiler.position = { line: 1, column: 1 };
-  compiler.files = {};
-  for (var k in exports) compiler[k] = exports[k];
-}
-
-/**
- * Update position.
- *
- * @param {String} str
- * @api private
- */
-
-exports.updatePosition = function(str) {
-  var lines = str.match(/\n/g);
-  if (lines) this.position.line += lines.length;
-  var i = str.lastIndexOf('\n');
-  this.position.column = ~i ? str.length - i : this.position.column + str.length;
-};
-
-/**
- * Emit `str`.
- *
- * @param {String} str
- * @param {Object} [pos]
- * @return {String}
- * @api private
- */
-
-exports.emit = function(str, pos) {
-  if (pos) {
-    var sourceFile = urix(pos.source || 'source.css');
-
-    this.map.addMapping({
-      source: sourceFile,
-      generated: {
-        line: this.position.line,
-        column: Math.max(this.position.column - 1, 0)
-      },
-      original: {
-        line: pos.start.line,
-        column: pos.start.column - 1
-      }
-    });
-
-    this.addFile(sourceFile, pos);
-  }
-
-  this.updatePosition(str);
-
-  return str;
-};
-
-/**
- * Adds a file to the source map output if it has not already been added
- * @param {String} file
- * @param {Object} pos
- */
-
-exports.addFile = function(file, pos) {
-  if (typeof pos.content !== 'string') return;
-  if (Object.prototype.hasOwnProperty.call(this.files, file)) return;
-
-  this.files[file] = pos.content;
-};
-
-/**
- * Applies any original source maps to the output and embeds the source file
- * contents in the source map.
- */
-
-exports.applySourceMaps = function() {
-  Object.keys(this.files).forEach(function(file) {
-    var content = this.files[file];
-    this.map.setSourceContent(file, content);
-
-    var originalMap = sourceMapResolve.resolveSync(
-      content, file, fs.readFileSync);
-    if (originalMap) {
-      var map = new SourceMapConsumer(originalMap.map);
-      var relativeTo = originalMap.sourcesRelativeTo;
-      this.map.applySourceMap(map, file, urix(path.dirname(relativeTo)));
-    }
-  }, this);
-};
-
-/**
- * Process comments, drops sourceMap comments.
- * @param {Object} node
- */
-
-exports.comment = function(node) {
-  if (/^# sourceMappingURL=/.test(node.comment))
-    return this.emit('', node.position);
-  else
-    return this._comment(node);
-};
-
-},{"fs":56,"path":60,"source-map":116,"source-map-resolve":115,"urix":126}],113:[function(_dereq_,module,exports){
-// Copyright 2014 Simon Lydell
-// X11 (“MIT”) Licensed. (See LICENSE.)
-
-void (function(root, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(factory)
-  } else if (typeof exports === "object") {
-    module.exports = factory()
-  } else {
-    root.resolveUrl = factory()
-  }
-}(this, function() {
-
-  function resolveUrl(/* ...urls */) {
-    var numUrls = arguments.length
-
-    if (numUrls === 0) {
-      throw new Error("resolveUrl requires at least one argument; got none.")
-    }
-
-    var base = document.createElement("base")
-    base.href = arguments[0]
-
-    if (numUrls === 1) {
-      return base.href
-    }
-
-    var head = document.getElementsByTagName("head")[0]
-    head.insertBefore(base, head.firstChild)
-
-    var a = document.createElement("a")
-    var resolved
-
-    for (var index = 1; index < numUrls; index++) {
-      a.href = arguments[index]
-      resolved = a.href
-      base.href = resolved
-    }
-
-    head.removeChild(base)
-
-    return resolved
-  }
-
-  return resolveUrl
-
-}));
-
-},{}],114:[function(_dereq_,module,exports){
-// Copyright 2014 Simon Lydell
-
-void (function(root, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(factory)
-  } else if (typeof exports === "object") {
-    module.exports = factory()
-  } else {
-    root.sourceMappingURL = factory()
-  }
-}(this, function(undefined) {
-
-  var innerRegex = /[#@] sourceMappingURL=([^\s'"]*)/
-  var newlineRegex = /\r\n?|\n/
-
-  var regex = RegExp(
-    "(^|(?:" + newlineRegex.source + "))" +
-    "(?:" +
-      "/\\*" +
-      "(?:\\s*(?:" + newlineRegex.source + ")(?://)?)?" +
-      "(?:" + innerRegex.source + ")" +
-      "\\s*" +
-      "\\*/" +
-      "|" +
-      "//(?:" + innerRegex.source + ")" +
-    ")" +
-    "\\s*$"
-  )
-
-  function SourceMappingURL(commentSyntax) {
-    this._commentSyntax = commentSyntax
-  }
-
-  SourceMappingURL.prototype.regex = regex
-  SourceMappingURL.prototype._innerRegex = innerRegex
-  SourceMappingURL.prototype._newlineRegex = newlineRegex
-
-  SourceMappingURL.prototype.get = function(code) {
-    var match = code.match(this.regex)
-    if (!match) {
-      return null
-    }
-    return match[2] || match[3] || ""
-  }
-
-  SourceMappingURL.prototype.set = function(code, url, commentSyntax) {
-    if (!commentSyntax) {
-      commentSyntax = this._commentSyntax
-    }
-    // Use a newline present in the code, or fall back to '\n'.
-    var newline = String(code.match(this._newlineRegex) || "\n")
-    var open = commentSyntax[0], close = commentSyntax[1] || ""
-    code = this.remove(code)
-    return code + newline + open + "# sourceMappingURL=" + url + close
-  }
-
-  SourceMappingURL.prototype.remove = function(code) {
-    return code.replace(this.regex, "")
-  }
-
-  SourceMappingURL.prototype.insertBefore = function(code, string) {
-    var match = code.match(this.regex)
-    if (match) {
-      var hasNewline = Boolean(match[1])
-      return code.slice(0, match.index) +
-        string +
-        (hasNewline ? "" : "\n") +
-        code.slice(match.index)
-    } else {
-      return code + string
-    }
-  }
-
-  SourceMappingURL.prototype.SourceMappingURL = SourceMappingURL
-
-  return new SourceMappingURL(["/*", " */"])
-
-}));
-
-},{}],115:[function(_dereq_,module,exports){
-// Copyright 2014 Simon Lydell
-// X11 (“MIT”) Licensed. (See LICENSE.)
-
-// Note: source-map-resolve.js is generated from source-map-resolve-node.js and
-// source-map-resolve-template.js. Only edit the two latter files, _not_
-// source-map-resolve.js!
-
-void (function(root, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(["source-map-url", "resolve-url"], factory)
-  } else if (typeof exports === "object") {
-    var sourceMappingURL = _dereq_("source-map-url")
-    var resolveUrl = _dereq_("resolve-url")
-    module.exports = factory(sourceMappingURL, resolveUrl)
-  } else {
-    root.sourceMapResolve = factory(root.sourceMappingURL, root.resolveUrl)
-  }
-}(this, function(sourceMappingURL, resolveUrl) {
-
-  function callbackAsync(callback, error, result) {
-    setImmediate(function() { callback(error, result) })
-  }
-
-  function sig(name, codeOrMap, url, read, callback) {
-    var type = (name.indexOf("Sources") >= 0 ? "map" : "code")
-
-    var throwError = function(num, what, got) {
-      throw new Error(
-        name + " requires argument " + num + " to be " + what + ". Got:\n" + got
-      )
-    }
-
-    if (type === "map") {
-      if (typeof codeOrMap !== "object" || codeOrMap === null) {
-        throwError(1, "a source map", codeOrMap)
-      }
-    } else {
-      if (typeof codeOrMap !== "string") {
-        throwError(1, "some code", codeOrMap)
-      }
-    }
-    if (typeof url !== "string") {
-      throwError(2, "the " + type + " url", url)
-    }
-    if (typeof read !== "function") {
-      throwError(3, "a reading function", read)
-    }
-    if (arguments.length === 1 + 4 && typeof callback !== "function") {
-      throwError(4, "a callback function", callback)
-    }
-  }
-
-  function parseMapToJSON(string) {
-    return JSON.parse(string.replace(/^\)\]\}'/, ""))
-  }
-
-
-
-  function resolveSourceMap(code, codeUrl, read, callback) {
-    sig("resolveSourceMap", code, codeUrl, read, callback)
-    var mapData
-    try {
-      mapData = resolveSourceMapHelper(code, codeUrl)
-    } catch (error) {
-      return callbackAsync(callback, error)
-    }
-    if (!mapData || mapData.map) {
-      return callbackAsync(callback, null, mapData)
-    }
-    read(mapData.url, function(error, result) {
-      if (error) {
-        return callback(error)
-      }
-      try {
-        mapData.map = parseMapToJSON(String(result))
-      } catch (error) {
-        return callback(error)
-      }
-      callback(null, mapData)
-    })
-  }
-
-  function resolveSourceMapSync(code, codeUrl, read) {
-    sig("resolveSourceMapSync", code, codeUrl, read)
-    var mapData = resolveSourceMapHelper(code, codeUrl)
-    if (!mapData || mapData.map) {
-      return mapData
-    }
-    mapData.map = parseMapToJSON(String(read(mapData.url)))
-    return mapData
-  }
-
-  var dataUriRegex = /^data:([^,;]*)(;[^,;]*)*(?:,(.*))?$/
-  var jsonMimeTypeRegex = /^(?:application|text)\/json$/
-
-  function resolveSourceMapHelper(code, codeUrl) {
-    var url = sourceMappingURL.get(code)
-    if (!url) {
-      return null
-    }
-
-    var dataUri = url.match(dataUriRegex)
-    if (dataUri) {
-      var mimeType = dataUri[1]
-      var lastParameter = dataUri[2]
-      var encoded = dataUri[3]
-      if (!jsonMimeTypeRegex.test(mimeType)) {
-        throw new Error("Unuseful data uri mime type: " + (mimeType || "text/plain"))
-      }
-      return {
-        sourceMappingURL: url,
-        url: null,
-        sourcesRelativeTo: codeUrl,
-        map: parseMapToJSON(lastParameter === ";base64" ? atob(encoded) : decodeURIComponent(encoded))
-      }
-    }
-
-    var mapUrl = resolveUrl(codeUrl, url)
-    return {
-      sourceMappingURL: url,
-      url: mapUrl,
-      sourcesRelativeTo: mapUrl,
-      map: null
-    }
-  }
-
-
-
-  function resolveSources(map, mapUrl, read, callback) {
-    sig("resolveSources", map, mapUrl, read, callback)
-    var pending = map.sources.length
-    var errored = false
-    var sources = []
-
-    var done = function(error) {
-      if (errored) {
-        return
-      }
-      if (error) {
-        errored = true
-        return callback(error)
-      }
-      pending--
-      if (pending === 0) {
-        callback(null, sources)
-      }
-    }
-
-    resolveSourcesHelper(map, mapUrl, function(fullUrl, sourceContent, index) {
-      if (typeof sourceContent === "string") {
-        sources[index] = sourceContent
-        callbackAsync(done, null)
-      } else {
-        read(fullUrl, function(error, result) {
-          sources[index] = String(result)
-          done(error)
-        })
-      }
-    })
-  }
-
-  function resolveSourcesSync(map, mapUrl, read) {
-    sig("resolveSourcesSync", map, mapUrl, read)
-    var sources = []
-    resolveSourcesHelper(map, mapUrl, function(fullUrl, sourceContent, index) {
-      if (typeof sourceContent === "string") {
-        sources[index] = sourceContent
-      } else {
-        sources[index] = String(read(fullUrl))
-      }
-    })
-    return sources
-  }
-
-  var endingSlash = /\/?$/
-
-  function resolveSourcesHelper(map, mapUrl, fn) {
-    var fullUrl
-    var sourceContent
-    for (var index = 0, len = map.sources.length; index < len; index++) {
-      if (map.sourceRoot) {
-        // Make sure that the sourceRoot ends with a slash, so that `/scripts/subdir` becomes
-        // `/scripts/subdir/<source>`, not `/scripts/<source>`. Pointing to a file as source root
-        // does not make sense.
-        fullUrl = resolveUrl(mapUrl, map.sourceRoot.replace(endingSlash, "/"), map.sources[index])
-      } else {
-        fullUrl = resolveUrl(mapUrl, map.sources[index])
-      }
-      sourceContent = (map.sourcesContent || [])[index]
-      fn(fullUrl, sourceContent, index)
-    }
-  }
-
-
-
-  function resolve(code, codeUrl, read, callback) {
-    sig("resolve", code, codeUrl, read, callback)
-    resolveSourceMap(code, codeUrl, read, function(error, mapData) {
-      if (error) {
-        return callback(error)
-      }
-      if (!mapData) {
-        return callback(null, null)
-      }
-      resolveSources(mapData.map, mapData.sourcesRelativeTo, read, function(error, sources) {
-        if (error) {
-          return callback(error)
-        }
-        mapData.sources = sources
-        callback(null, mapData)
-      })
-    })
-  }
-
-  function resolveSync(code, codeUrl, read) {
-    sig("resolveSync", code, codeUrl, read)
-    var mapData = resolveSourceMapSync(code, codeUrl, read)
-    if (!mapData) {
-      return null
-    }
-    mapData.sources = resolveSourcesSync(mapData.map, mapData.sourcesRelativeTo, read)
-    return mapData
-  }
-
-
-
-  return {
-    resolveSourceMap:     resolveSourceMap,
-    resolveSourceMapSync: resolveSourceMapSync,
-    resolveSources:       resolveSources,
-    resolveSourcesSync:   resolveSourcesSync,
-    resolve:              resolve,
-    resolveSync:          resolveSync
-  }
-
-}));
-
-},{"resolve-url":113,"source-map-url":114}],116:[function(_dereq_,module,exports){
+},{}],121:[function(_dereq_,module,exports){
+module.exports=_dereq_(43)
+},{"./compiler":120}],122:[function(_dereq_,module,exports){
+module.exports=_dereq_(44)
+},{"./compiler":120}],123:[function(_dereq_,module,exports){
+module.exports=_dereq_(45)
+},{"source-map":124}],124:[function(_dereq_,module,exports){
 arguments[4][46][0].apply(exports,arguments)
-},{"./source-map/source-map-consumer":121,"./source-map/source-map-generator":122,"./source-map/source-node":123}],117:[function(_dereq_,module,exports){
+},{"./source-map/source-map-consumer":129,"./source-map/source-map-generator":130,"./source-map/source-node":131}],125:[function(_dereq_,module,exports){
 arguments[4][47][0].apply(exports,arguments)
-},{"./util":124,"amdefine":125}],118:[function(_dereq_,module,exports){
+},{"./util":132,"amdefine":133}],126:[function(_dereq_,module,exports){
 arguments[4][48][0].apply(exports,arguments)
-},{"./base64":119,"amdefine":125}],119:[function(_dereq_,module,exports){
+},{"./base64":127,"amdefine":133}],127:[function(_dereq_,module,exports){
 arguments[4][49][0].apply(exports,arguments)
-},{"amdefine":125}],120:[function(_dereq_,module,exports){
+},{"amdefine":133}],128:[function(_dereq_,module,exports){
 arguments[4][50][0].apply(exports,arguments)
-},{"amdefine":125}],121:[function(_dereq_,module,exports){
+},{"amdefine":133}],129:[function(_dereq_,module,exports){
 arguments[4][51][0].apply(exports,arguments)
-},{"./array-set":117,"./base64-vlq":118,"./binary-search":120,"./util":124,"amdefine":125}],122:[function(_dereq_,module,exports){
+},{"./array-set":125,"./base64-vlq":126,"./binary-search":128,"./util":132,"amdefine":133}],130:[function(_dereq_,module,exports){
 arguments[4][52][0].apply(exports,arguments)
-},{"./array-set":117,"./base64-vlq":118,"./util":124,"amdefine":125}],123:[function(_dereq_,module,exports){
+},{"./array-set":125,"./base64-vlq":126,"./util":132,"amdefine":133}],131:[function(_dereq_,module,exports){
 arguments[4][53][0].apply(exports,arguments)
-},{"./source-map-generator":122,"./util":124,"amdefine":125}],124:[function(_dereq_,module,exports){
+},{"./source-map-generator":130,"./util":132,"amdefine":133}],132:[function(_dereq_,module,exports){
 arguments[4][54][0].apply(exports,arguments)
-},{"amdefine":125}],125:[function(_dereq_,module,exports){
+},{"amdefine":133}],133:[function(_dereq_,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -13687,26 +12947,861 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_("FWaASH"),"/../node_modules/rework/node_modules/css/node_modules/source-map/node_modules/amdefine/amdefine.js")
-},{"FWaASH":61,"path":60}],126:[function(_dereq_,module,exports){
-// Copyright 2014 Simon Lydell
-// X11 (“MIT”) Licensed. (See LICENSE.)
+}).call(this,_dereq_("FWaASH"),"/../node_modules/rework/node_modules/css/node_modules/css-stringify/node_modules/source-map/node_modules/amdefine/amdefine.js")
+},{"FWaASH":61,"path":60}],134:[function(_dereq_,module,exports){
 
-var path = _dereq_("path")
+/**
+ * This is the web browser implementation of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
 
-"use strict"
+exports = module.exports = _dereq_('./debug');
+exports.log = log;
+exports.formatArgs = formatArgs;
+exports.save = save;
+exports.load = load;
+exports.useColors = useColors;
 
-function urix(aPath) {
-  if (path.sep === "\\") {
-    return aPath
-      .replace(/\\/g, "/")
-      .replace(/^[a-z]:\/?/i, "/")
-  }
-  return aPath
+/**
+ * Colors.
+ */
+
+exports.colors = [
+  'lightseagreen',
+  'forestgreen',
+  'goldenrod',
+  'dodgerblue',
+  'darkorchid',
+  'crimson'
+];
+
+/**
+ * Currently only WebKit-based Web Inspectors and the Firebug
+ * extension (*not* the built-in Firefox web inpector) are
+ * known to support "%c" CSS customizations.
+ *
+ * TODO: add a `localStorage` variable to explicitly enable/disable colors
+ */
+
+function useColors() {
+  // is webkit? http://stackoverflow.com/a/16459606/376773
+  return ('WebkitAppearance' in document.documentElement.style) ||
+    // is firebug? http://stackoverflow.com/a/398120/376773
+    (window.console && (console.firebug || (console.exception && console.table)));
 }
 
-module.exports = urix
+/**
+ * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+ */
 
-},{"path":60}]},{},[1])
+exports.formatters.j = function(v) {
+  return JSON.stringify(v);
+};
+
+
+/**
+ * Colorize log arguments if enabled.
+ *
+ * @api public
+ */
+
+function formatArgs() {
+  var args = arguments;
+  var useColors = this.useColors;
+
+  args[0] = (useColors ? '%c' : '')
+    + this.namespace
+    + (useColors ? '%c ' : ' ')
+    + args[0]
+    + (useColors ? '%c ' : ' ')
+    + '+' + exports.humanize(this.diff);
+
+  if (!useColors) return args;
+
+  var c = 'color: ' + this.color;
+  args = [args[0], c, ''].concat(Array.prototype.slice.call(args, 1));
+
+  // the final "%c" is somewhat tricky, because there could be other
+  // arguments passed either before or after the %c, so we need to
+  // figure out the correct index to insert the CSS into
+  var index = 0;
+  var lastC = 0;
+  args[0].replace(/%[a-z%]/g, function(match) {
+    if ('%%' === match) return;
+    index++;
+    if ('%c' === match) {
+      // we only are interested in the *last* %c
+      // (the user may have provided their own)
+      lastC = index;
+    }
+  });
+
+  args.splice(lastC, 0, c);
+  return args;
+}
+
+/**
+ * Invokes `console.log()` when available.
+ * No-op when `console.log` is not a "function".
+ *
+ * @api public
+ */
+
+function log() {
+  // This hackery is required for IE8,
+  // where the `console.log` function doesn't have 'apply'
+  return 'object' == typeof console
+    && 'function' == typeof console.log
+    && Function.prototype.apply.call(console.log, console, arguments);
+}
+
+/**
+ * Save `namespaces`.
+ *
+ * @param {String} namespaces
+ * @api private
+ */
+
+function save(namespaces) {
+  try {
+    if (null == namespaces) {
+      localStorage.removeItem('debug');
+    } else {
+      localStorage.debug = namespaces;
+    }
+  } catch(e) {}
+}
+
+/**
+ * Load `namespaces`.
+ *
+ * @return {String} returns the previously persisted debug modes
+ * @api private
+ */
+
+function load() {
+  var r;
+  try {
+    r = localStorage.debug;
+  } catch(e) {}
+  return r;
+}
+
+/**
+ * Enable namespaces listed in `localStorage.debug` initially.
+ */
+
+exports.enable(load());
+
+},{"./debug":135}],135:[function(_dereq_,module,exports){
+
+/**
+ * This is the common logic for both the Node.js and web browser
+ * implementations of `debug()`.
+ *
+ * Expose `debug()` as the module.
+ */
+
+exports = module.exports = debug;
+exports.coerce = coerce;
+exports.disable = disable;
+exports.enable = enable;
+exports.enabled = enabled;
+exports.humanize = _dereq_('ms');
+
+/**
+ * The currently active debug mode names, and names to skip.
+ */
+
+exports.names = [];
+exports.skips = [];
+
+/**
+ * Map of special "%n" handling functions, for the debug "format" argument.
+ *
+ * Valid key names are a single, lowercased letter, i.e. "n".
+ */
+
+exports.formatters = {};
+
+/**
+ * Previously assigned color.
+ */
+
+var prevColor = 0;
+
+/**
+ * Previous log timestamp.
+ */
+
+var prevTime;
+
+/**
+ * Select a color.
+ *
+ * @return {Number}
+ * @api private
+ */
+
+function selectColor() {
+  return exports.colors[prevColor++ % exports.colors.length];
+}
+
+/**
+ * Create a debugger with the given `namespace`.
+ *
+ * @param {String} namespace
+ * @return {Function}
+ * @api public
+ */
+
+function debug(namespace) {
+
+  // define the `disabled` version
+  function disabled() {
+  }
+  disabled.enabled = false;
+
+  // define the `enabled` version
+  function enabled() {
+
+    var self = enabled;
+
+    // set `diff` timestamp
+    var curr = +new Date();
+    var ms = curr - (prevTime || curr);
+    self.diff = ms;
+    self.prev = prevTime;
+    self.curr = curr;
+    prevTime = curr;
+
+    // add the `color` if not set
+    if (null == self.useColors) self.useColors = exports.useColors();
+    if (null == self.color && self.useColors) self.color = selectColor();
+
+    var args = Array.prototype.slice.call(arguments);
+
+    args[0] = exports.coerce(args[0]);
+
+    if ('string' !== typeof args[0]) {
+      // anything else let's inspect with %o
+      args = ['%o'].concat(args);
+    }
+
+    // apply any `formatters` transformations
+    var index = 0;
+    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+      // if we encounter an escaped % then don't increase the array index
+      if (match === '%%') return match;
+      index++;
+      var formatter = exports.formatters[format];
+      if ('function' === typeof formatter) {
+        var val = args[index];
+        match = formatter.call(self, val);
+
+        // now we need to remove `args[index]` since it's inlined in the `format`
+        args.splice(index, 1);
+        index--;
+      }
+      return match;
+    });
+
+    if ('function' === typeof exports.formatArgs) {
+      args = exports.formatArgs.apply(self, args);
+    }
+    var logFn = exports.log || enabled.log || console.log.bind(console);
+    logFn.apply(self, args);
+  }
+  enabled.enabled = true;
+
+  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+  fn.namespace = namespace;
+
+  return fn;
+}
+
+/**
+ * Enables a debug mode by namespaces. This can include modes
+ * separated by a colon and wildcards.
+ *
+ * @param {String} namespaces
+ * @api public
+ */
+
+function enable(namespaces) {
+  exports.save(namespaces);
+
+  var split = (namespaces || '').split(/[\s,]+/);
+  var len = split.length;
+
+  for (var i = 0; i < len; i++) {
+    if (!split[i]) continue; // ignore empty strings
+    namespaces = split[i].replace(/\*/g, '.*?');
+    if (namespaces[0] === '-') {
+      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+    } else {
+      exports.names.push(new RegExp('^' + namespaces + '$'));
+    }
+  }
+}
+
+/**
+ * Disable debug output.
+ *
+ * @api public
+ */
+
+function disable() {
+  exports.enable('');
+}
+
+/**
+ * Returns true if the given mode name is enabled, false otherwise.
+ *
+ * @param {String} name
+ * @return {Boolean}
+ * @api public
+ */
+
+function enabled(name) {
+  var i, len;
+  for (i = 0, len = exports.skips.length; i < len; i++) {
+    if (exports.skips[i].test(name)) {
+      return false;
+    }
+  }
+  for (i = 0, len = exports.names.length; i < len; i++) {
+    if (exports.names[i].test(name)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Coerce `val`.
+ *
+ * @param {Mixed} val
+ * @return {Mixed}
+ * @api private
+ */
+
+function coerce(val) {
+  if (val instanceof Error) return val.stack || val.message;
+  return val;
+}
+
+},{"ms":136}],136:[function(_dereq_,module,exports){
+/**
+ * Helpers.
+ */
+
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+var y = d * 365.25;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} options
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options){
+  options = options || {};
+  if ('string' == typeof val) return parse(val);
+  return options.long
+    ? long(val)
+    : short(val);
+};
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  var match = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)?$/i.exec(str);
+  if (!match) return;
+  var n = parseFloat(match[1]);
+  var type = (match[2] || 'ms').toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'y':
+      return n * y;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d;
+    case 'hours':
+    case 'hour':
+    case 'h':
+      return n * h;
+    case 'minutes':
+    case 'minute':
+    case 'm':
+      return n * m;
+    case 'seconds':
+    case 'second':
+    case 's':
+      return n * s;
+    case 'ms':
+      return n;
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function short(ms) {
+  if (ms >= d) return Math.round(ms / d) + 'd';
+  if (ms >= h) return Math.round(ms / h) + 'h';
+  if (ms >= m) return Math.round(ms / m) + 'm';
+  if (ms >= s) return Math.round(ms / s) + 's';
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function long(ms) {
+  return plural(ms, d, 'day')
+    || plural(ms, h, 'hour')
+    || plural(ms, m, 'minute')
+    || plural(ms, s, 'second')
+    || ms + ' ms';
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) return;
+  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
+  return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+},{}],137:[function(_dereq_,module,exports){
+
+function hsb2rgb(hue, saturation, value) {
+  hue = (parseInt(hue, 10) || 0) % 360;
+
+  saturation = /%/.test(saturation)
+    ? parseInt(saturation, 10) / 100
+    : parseFloat(saturation, 10);
+
+  value = /%/.test(value)
+    ? parseInt(value, 10) / 100
+    : parseFloat(value, 10);
+
+  saturation = Math.max(0, Math.min(saturation, 1));
+  value = Math.max(0, Math.min(value, 1));
+
+  var rgb;
+  if (saturation === 0) {
+    return [
+      Math.round(255 * value),
+      Math.round(255 * value),
+      Math.round(255 * value)
+    ];
+  }
+
+  var side = hue / 60;
+  var chroma = value * saturation;
+  var x = chroma * (1 - Math.abs(side % 2 - 1));
+  var match = value - chroma;
+
+  switch (Math.floor(side)) {
+  case 0: rgb = [ chroma, x, 0 ]; break;
+  case 1: rgb = [ x, chroma, 0 ]; break;
+  case 2: rgb = [ 0, chroma, x ]; break;
+  case 3: rgb = [ 0, x, chroma ]; break;
+  case 4: rgb = [ x, 0, chroma ]; break;
+  case 5: rgb = [ chroma, 0, x ]; break;
+  default: rgb = [ 0, 0, 0 ];
+  }
+
+  rgb[0] = Math.round(255 * (rgb[0] + match));
+  rgb[1] = Math.round(255 * (rgb[1] + match));
+  rgb[2] = Math.round(255 * (rgb[2] + match));
+
+  return rgb;
+}
+
+
+module.exports = hsb2rgb;
+
+},{}],138:[function(_dereq_,module,exports){
+(function (process,__dirname){
+var path = _dereq_('path');
+var fs = _dereq_('fs');
+
+function Mime() {
+  // Map of extension -> mime type
+  this.types = Object.create(null);
+
+  // Map of mime type -> extension
+  this.extensions = Object.create(null);
+}
+
+/**
+ * Define mimetype -> extension mappings.  Each key is a mime-type that maps
+ * to an array of extensions associated with the type.  The first extension is
+ * used as the default extension for the type.
+ *
+ * e.g. mime.define({'audio/ogg', ['oga', 'ogg', 'spx']});
+ *
+ * @param map (Object) type definitions
+ */
+Mime.prototype.define = function (map) {
+  for (var type in map) {
+    var exts = map[type];
+
+    for (var i = 0; i < exts.length; i++) {
+      if (process.env.DEBUG_MIME && this.types[exts]) {
+        console.warn(this._loading.replace(/.*\//, ''), 'changes "' + exts[i] + '" extension type from ' +
+          this.types[exts] + ' to ' + type);
+      }
+
+      this.types[exts[i]] = type;
+    }
+
+    // Default extension is the first one we encounter
+    if (!this.extensions[type]) {
+      this.extensions[type] = exts[0];
+    }
+  }
+};
+
+/**
+ * Load an Apache2-style ".types" file
+ *
+ * This may be called multiple times (it's expected).  Where files declare
+ * overlapping types/extensions, the last file wins.
+ *
+ * @param file (String) path of file to load.
+ */
+Mime.prototype.load = function(file) {
+
+  this._loading = file;
+  // Read file and split into lines
+  var map = {},
+      content = fs.readFileSync(file, 'ascii'),
+      lines = content.split(/[\r\n]+/);
+
+  lines.forEach(function(line) {
+    // Clean up whitespace/comments, and split into fields
+    var fields = line.replace(/\s*#.*|^\s*|\s*$/g, '').split(/\s+/);
+    map[fields.shift()] = fields;
+  });
+
+  this.define(map);
+
+  this._loading = null;
+};
+
+/**
+ * Lookup a mime type based on extension
+ */
+Mime.prototype.lookup = function(path, fallback) {
+  var ext = path.replace(/.*[\.\/\\]/, '').toLowerCase();
+
+  return this.types[ext] || fallback || this.default_type;
+};
+
+/**
+ * Return file extension associated with a mime type
+ */
+Mime.prototype.extension = function(mimeType) {
+  var type = mimeType.match(/^\s*([^;\s]*)(?:;|\s|$)/)[1].toLowerCase();
+  return this.extensions[type];
+};
+
+// Default instance
+var mime = new Mime();
+
+// Load local copy of
+// http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+mime.load(path.join(__dirname, 'types/mime.types'));
+
+// Load additional types from node.js community
+mime.load(path.join(__dirname, 'types/node.types'));
+
+// Default type
+mime.default_type = mime.lookup('bin');
+
+//
+// Additional API specific to the default instance
+//
+
+mime.Mime = Mime;
+
+/**
+ * Lookup a charset based on mime type.
+ */
+mime.charsets = {
+  lookup: function(mimeType, fallback) {
+    // Assume text types are utf8
+    return (/^text\//).test(mimeType) ? 'UTF-8' : fallback;
+  }
+};
+
+module.exports = mime;
+
+}).call(this,_dereq_("FWaASH"),"/../node_modules/rework/node_modules/mime")
+},{"FWaASH":61,"fs":56,"path":60}],139:[function(_dereq_,module,exports){
+var debug = _dereq_('debug')('rework-inherit')
+
+exports = module.exports = function (options) {
+  return function inherit(style) {
+    return new Inherit(style, options || {})
+  }
+}
+
+exports.Inherit = Inherit
+
+function Inherit(style, options) {
+  if (!(this instanceof Inherit))
+    return new Inherit(style, options);
+
+  options = options || {}
+
+  this.propertyRegExp = options.propertyRegExp
+    || /^(inherit|extend)s?$/i
+
+  var rules = this.rules = style.rules
+  this.matches = {}
+
+  for (var i = 0; i < rules.length; i++) {
+    var rule = rules[i]
+    if (rule.rules) {
+      // Media queries
+      this.inheritMedia(rule)
+      if (!rule.rules.length) rules.splice(i--, 1);
+    } else if (rule.selectors) {
+      // Regular rules
+      this.inheritRules(rule)
+      if (!rule.declarations.length) rules.splice(i--, 1);
+    }
+  }
+
+  this.removePlaceholders()
+}
+
+Inherit.prototype.inheritMedia = function (mediaRule) {
+  var rules = mediaRule.rules
+  var query = mediaRule.media
+
+  for (var i = 0; i < rules.length; i++) {
+    var rule = rules[i]
+    if (!rule.selectors) continue;
+
+    var additionalRules = this.inheritMediaRules(rule, query)
+
+    if (!rule.declarations.length) rules.splice(i--, 1);
+
+    // I don't remember why I'm using apply here.
+    ;[].splice.apply(rules, [i, 0].concat(additionalRules))
+    i += additionalRules.length
+  }
+}
+
+Inherit.prototype.inheritMediaRules = function (rule, query) {
+  var declarations = rule.declarations
+  var selectors = rule.selectors
+  var appendRules = []
+
+  for (var i = 0; i < declarations.length; i++) {
+    var decl = declarations[i]
+    // Could be comments
+    if (decl.type !== 'declaration') continue;
+    if (!this.propertyRegExp.test(decl.property)) continue;
+
+    decl.value.split(',').map(trim).forEach(function (val) {
+      // Should probably just use concat here
+      ;[].push.apply(appendRules, this.inheritMediaRule(val, selectors, query));
+    }, this)
+
+    declarations.splice(i--, 1)
+  }
+
+  return appendRules
+}
+
+Inherit.prototype.inheritMediaRule = function (val, selectors, query) {
+  var matchedRules = this.matches[val] || this.matchRules(val)
+  var alreadyMatched = matchedRules.media[query]
+  var matchedQueryRules = alreadyMatched || this.matchQueryRule(val, query)
+
+  if (!matchedQueryRules.rules.length)
+    throw new Error('Failed to extend as media query from ' + val + '.');
+
+  debug('extend %j in @media %j with %j', selectors, query, val);
+
+  this.appendSelectors(matchedQueryRules, val, selectors)
+
+  return alreadyMatched
+    ? []
+    : matchedQueryRules.rules.map(getRule)
+}
+
+Inherit.prototype.inheritRules = function (rule) {
+  var declarations = rule.declarations
+  var selectors = rule.selectors
+
+  for (var i = 0; i < declarations.length; i++) {
+    var decl = declarations[i]
+    // Could be comments
+    if (decl.type !== 'declaration') continue;
+    if (!this.propertyRegExp.test(decl.property)) continue;
+
+    decl.value.split(',').map(trim).forEach(function (val) {
+      this.inheritRule(val, selectors)
+    }, this)
+
+    declarations.splice(i--, 1)
+  }
+}
+
+Inherit.prototype.inheritRule = function (val, selectors) {
+  var matchedRules = this.matches[val] || this.matchRules(val)
+
+  if (!matchedRules.rules.length)
+    throw new Error('Failed to extend from ' + val + '.');
+
+  debug('extend %j with %j', selectors, val);
+
+  this.appendSelectors(matchedRules, val, selectors)
+}
+
+Inherit.prototype.matchQueryRule = function (val, query) {
+  var matchedRules = this.matches[val] || this.matchRules(val)
+
+  return matchedRules.media[query] = {
+    media: query,
+    rules: matchedRules.rules.map(function (rule) {
+      return {
+        selectors: rule.selectors,
+        declarations: rule.declarations,
+        rule: {
+          type: 'rule',
+          selectors: [],
+          declarations: rule.declarations
+        }
+      }
+    })
+  }
+}
+
+Inherit.prototype.matchRules = function (val) {
+  var matchedRules = this.matches[val] = {
+    rules: [],
+    media: {}
+  }
+
+  this.rules.forEach(function (rule) {
+    if (!rule.selectors) return;
+
+    var matchedSelectors = rule.selectors.filter(function (selector) {
+      return selector.match(replaceRegExp(val))
+    })
+
+    if (!matchedSelectors.length) return;
+
+    matchedRules.rules.push({
+      selectors: matchedSelectors,
+      declarations: rule.declarations,
+      rule: rule
+    })
+  })
+
+  return matchedRules
+}
+
+Inherit.prototype.appendSelectors = function (matchedRules, val, selectors) {
+  matchedRules.rules.forEach(function (matchedRule) {
+    // Selector to actually inherit
+    var selectorReference = matchedRule.rule.selectors
+
+    matchedRule.selectors.forEach(function (matchedSelector) {
+      ;[].push.apply(selectorReference, selectors.map(function (selector) {
+        return replaceSelector(matchedSelector, val, selector)
+      }))
+    })
+  })
+}
+
+// Placeholders are not allowed in media queries
+Inherit.prototype.removePlaceholders = function () {
+  var rules = this.rules
+
+  for (var i = 0; i < rules.length; i++) {
+    var selectors = rules[i].selectors
+    if (!selectors) continue;
+
+    for (var j = 0; j < selectors.length; j++) {
+      var selector = selectors[j]
+      if (~selector.indexOf('%')) selectors.splice(j--, 1);
+    }
+
+    if (!selectors.length) rules.splice(i--, 1);
+  }
+}
+
+function replaceSelector(matchedSelector, val, selector) {
+  return matchedSelector.replace(replaceRegExp(val), function (_, first, last) {
+    return first + selector + last
+  })
+}
+
+function replaceRegExp(val) {
+  return new RegExp(
+    '(^|\\s|\\>|\\+|~)' +
+    escapeRegExp(val) +
+    '($|\\s|\\>|\\+|~|\\:)'
+    , 'g'
+  )
+}
+
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
+}
+
+function trim(x) {
+  return x.trim()
+}
+
+function getRule(x) {
+  return x.rule
+}
+
+},{"debug":134}],140:[function(_dereq_,module,exports){
+module.exports=_dereq_(100)
+},{}]},{},[1])
 (1)
 });

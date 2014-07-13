@@ -144,9 +144,9 @@
     $('a[pubdate]', $history).attr('pubdate', function (i, val) {
       return val.replace('Z', '+0000');
     }).prettyDate();
-    setInterval(function(){
-      $created.prettyDate();
-    }, 30 * 1000);
+    // setInterval(function(){
+    //   $created.prettyDate();
+    // }, 30 * 1000);
 
     // Update the layout straign away
     setTimeout(function () {

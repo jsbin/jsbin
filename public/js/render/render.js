@@ -56,7 +56,7 @@ var getPreparedCode = (function () {
       try { // the try/catch is to catch and preprocessor errors
         js = editors.javascript.render();
         // RS: removed sourceURL support - never really seemed to work
-        // var sourceURL = 'sourceURL=jsbin' + jsbin.getURL(true).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
+        // var sourceURL = 'sourceURL=jsbin' + jsbin.getURL({ withRevision: true }).replace(/\//g, '.') + '-' + sourceURLctr + '.js';
         // if (js.trim()) js = js + '\n\n//# ' + sourceURL + '\n//@ ' + sourceURL;
         // sourceURLctr++;
       } catch (e) {

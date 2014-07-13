@@ -2,6 +2,12 @@
 jsbin.keys = (function () {
   /*global $document*/
   'use strict';
+
+  // don't store the keys if they're logged in, since we have this on the server
+  if (jsbin.user.name) {
+    return;
+  }
+
   var keys = {};
 
   var find = function (url) {

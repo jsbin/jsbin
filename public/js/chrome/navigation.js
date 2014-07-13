@@ -230,7 +230,7 @@ $('#runconsole').click(function () {
   return false;
 });
 
-$('#clearconsole').click(function () {  
+$('#clearconsole').click(function () {
   jsconsole.clear();
   return false;
 });
@@ -301,7 +301,7 @@ var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) 
   var visibility = $(this).data('vis');
 
   $.ajax({
-    url: jsbin.getURL() + '/' + visibility,
+    url: jsbin.getURL({ withRevision: true }) + '/' + visibility,
     type: 'post',
     success: function (data) {
 
@@ -440,7 +440,7 @@ $('a.publish-to-vanity').on('click', function (event) {
   $.ajax({
     type: 'post',
     url: this.href,
-    data: { url: jsbin.getURL() },
+    data: { url: jsbin.getURL({ withRevision: true }) },
     success: function () {
       $document.trigger('tip', {
         type: 'notification',
@@ -495,7 +495,7 @@ $('a.deletebin').on('click', function (e) {
     analytics['delete']();
     $.ajax({
       type: 'post',
-      url: jsbin.getURL() + '/delete',
+      url: jsbin.getURL({ withRevision: true }) + '/delete',
       data: { checksum: jsbin.state.checksum },
       success: function () {
         jsbin.state.deleted = true;

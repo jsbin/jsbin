@@ -3,7 +3,7 @@ function archive(unarchive) {
   'use strict';
   var type = unarchive === false ? 'unarchive' : 'archive';
   var text = unarchive === false ? 'restore from archive' : 'archiving';
-  analytics[type](jsbin.getURL());
+  analytics[type](jsbin.getURL({ revision: true }));
   if (!jsbin.user.name) {
     $document.trigger('tip', {
       type: 'notication',
@@ -12,7 +12,7 @@ function archive(unarchive) {
   } else if (jsbin.owner()) {
     $.ajax({
       type: 'POST',
-      url: jsbin.getURL() + '/' + type,
+      url: jsbin.getURL({ revision: true }) + '/' + type,
       error: function () {
         $document.trigger('tip', {
           type: 'error',

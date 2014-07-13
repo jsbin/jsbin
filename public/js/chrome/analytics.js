@@ -14,6 +14,9 @@ var analytics = {
   library: function (action, value) {
     analytics.track('menu', action, 'library', value);
   },
+  infocard: function (action, value) {
+    analytics.track('infocard', action, value);
+  },
   embed: function () {
     analytics.track('state', 'embed');
     try {
@@ -131,9 +134,3 @@ var analytics = {
     analytics.track('welcome-panel-link', url);
   }
 };
-
-/* TODO
-- run js
-- run console
-- final splitter and panel config & positions!!!
-*/

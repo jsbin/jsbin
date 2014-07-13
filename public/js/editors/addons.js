@@ -2,6 +2,11 @@
   'use strict';
   /*globals $, jsbin, CodeMirror*/
 
+  // ignore addons for embedded views
+  if (jsbin.embed) {
+    return;
+  }
+
   var defaults = {
     closebrackets: true,
     highlight: false,

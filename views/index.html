@@ -25,7 +25,8 @@ if(top != self) {
 </script>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
-{{/feature}}{{/unless}}
+{{/feature}}
+{{/unless}}
 <div id="control">
   <div class="control">
     <div id="menuinfo"><p></p></div>
@@ -510,7 +511,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
-{{#feature request "infocard"}}
+{{#unless embed}}{{#feature request "infocard"}}
 <div hidden>
   <div class="card" id="infocard">
     <header><img>
@@ -535,6 +536,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{/feature}}
+{{/unless}}
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
 <![endif]-->

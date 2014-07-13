@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Vanity URLs",
+    "user": "pro"
+  },
+  {
+    "name": "Private Bins",
+    "user": "pro"
+  },
+  {
+    "name": "Dropbox Sync",
+    "user": "pro"
+  },
+  {
+    "name": "Read & write API access",
+    "user": "pro"
+  },
+  {
+    "name": "Direct support",
+    "user": "pro"
+  },
+  {
+    "name": "Asset hosting (coming soon)",
+    "user": "pro"
+  },
+  {
+    "name": "Save bins to Gist",
+    "user": "free"
+  },
+  {
+    "name": "Codecasting (unlimited connections)",
+    "user": "anon"
+  },
+  {
+    "name": "Live reload (unlimited connections)",
+    "user": "anon"
+  },
+  {
+    "name": "Custom starting code",
+    "user": "anon"
+  },
+  {
+    "name": "Unlimited external resources",
+    "user": "anon"
+  },
+  {
+    "name": "Custom libraries",
+    "user": "anon"
+  }
+]

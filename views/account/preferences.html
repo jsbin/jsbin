@@ -3,12 +3,22 @@
 <h1>Default Preferences</h1>
 
 <section id="content">
-  <p>Configure how JS Bin is set up when you create a new bin<!-- , such as your default
-    HTML content, processors selected, and more -->. <br>
-  As soon as you make any changes, they will be automatically saved.</p>
+  <p>Configure how JS Bin is set up when you create a new bin, and how errors are reported.</p>
 
   <form>
   <form id="editor-settings">
+    {{#feature request "pro"}}
+    <h3>Security</h3>
+
+    <div>
+      <label for="ssl">Always use SSL</label>
+      <input type="checkbox" name="ssl" id="ssl" {{#feature request "sslForAll"}}checked{{/feature}}>
+    </div>
+
+    <p><small>Note that by enabling SSL for all of JS Bin, including non-https assets in your bins will cause the iframe <em>not</em> to render. This is the correct behaviour for https frames containing non-secure content. <a href="http://jsbin.com/help/ssl">Read more</a>.</small></p>
+
+    {{/feature}}
+
     {{#feature request "assets"}}
     <h3>Custom content</h3>
     <p>If you want to link to images or additional assets, we redirect the <a href="#">/{{user.name}}/assets/</a> relative URL to <em>your asset URL</em>, so you can link to <a href="#">/{{user.name}}/assets/images/logo.png</a> for example.</p>
@@ -44,10 +54,65 @@
       <input type="checkbox" checked id="includejs">
     </div>
 
+    <h3>Linting</h3>
+
+    <div>
+      <span class="label">Show errors in</span>
+      <label><input type="checkbox" name="hintShow-console" id="hintShow-console"> Footer</label>
+      <label><input type="checkbox" name="hintShow-gutter" id="hintShow-gutter"> Gutter</label>
+      <label><input type="checkbox" name="hintShow-line" id="hintShow-line"> Intraline</label>
+    </div>
+
     <div>
       <label for="jshint">JSHint</label>
       <input type="checkbox" checked id="jshint">
+      <details class="jshintOptWrapper hintOptWrapper">
+        <summary>settings</summary>
+        <div>
+          <textarea name="jshintOptions" id="jshintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom JSHint settings" }'></textarea>
+          <label for="jshintOptions" class="hintOptions"><span class="mini-desc">JSON format, for more info read the <a href="http://jshint.com/docs/options/" target="_blank">documentation</a></span> <span id="jshintOptError" class="mini-desc-error"></span></label>
+        </div>
+      </details>
     </div>
+
+    <div>
+      <label for="coffeescripthint">CoffeeLint</label>
+      <input type="checkbox" checked id="coffeescripthint">
+      <details class="coffeescripthintOptWrapper hintOptWrapper">
+        <summary>settings</summary>
+        <div>
+          <textarea name="coffeescripthintOptions" id="coffeescripthintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom CoffeeLint settings" }'></textarea>
+          <label for="coffeescripthintOptions" class="hintOptions"><span class="mini-desc">JSON format, for more info read the <a href="http://www.coffeelint.org/#options" target="_blank">documentation</a></span> <span id="coffeescripthintOptError" class="mini-desc-error"></span></label>
+        </div>
+      </details>
+    </div>
+
+    <div>
+      <label for="csshint">CSSLint</label>
+      <input type="checkbox" checked id="csshint">
+      <details class="csshintOptWrapper hintOptWrapper">
+        <summary>settings</summary>
+        <div>
+          <textarea name="csshintOptions" id="csshintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom CSSLint settings" }'></textarea>
+          <label for="csshintOptions" class="hintOptions"><span class="mini-desc">JSON format, for more info read the <a href="https://github.com/CSSLint/csslint/wiki/Rules" target="_blank">documentation</a></span> <span id="csshintOptError" class="mini-desc-error"></span></label>
+        </div>
+      </details>
+    </div>
+
+    <div>
+      <label for="htmlhint">HTMLHint</label>
+      <input type="checkbox" checked id="htmlhint">
+      <details class="htmlhintOptWrapper hintOptWrapper">
+        <summary>settings</summary>
+        <div>
+          <textarea name="htmlhintOptions" id="htmlhintOptions" class="hintOptions" cols="40" rows="5" placeholder='{ "//": "your custom HTMLHint settings" }'></textarea>
+          <label for="htmlhintOptions" class="hintOptions"><span class="mini-desc">JSON format, for more info read the <a href="https://github.com/yaniswang/HTMLHint/wiki/Rules" target="_blank">documentation</a></span> <span id="htmlhintOptError" class="mini-desc-error"></span></label>
+        </div>
+      </details>
+    </div>
+
+
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
   </form>
 </section>

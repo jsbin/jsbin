@@ -110,12 +110,12 @@ panels.restore = function () {
       width = $window.width(),
       deferredCodeInsert = '',
       focused = !!sessionStorage.getItem('panel'),
-      validPanels = 'live javascript html css console'.split(' ');
+      validPanels = 'live javascript html css console'.split(' '),
+      cachedHash = '';
 
-  // TODO document why this happens...
-  // if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
-  //   history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit'));
-  // }
+  if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
+    history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit') + (hash ? '#' + hash : ''));
+  }
 
   if (search || hash) {
     var query = (search || hash);
@@ -304,6 +304,23 @@ panels.savecontent = function () {
     panel = this.panels[name];
     if (panel.editor) sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
   }
+};
+
+panels.getHighlightLines = function () {
+  'use strict';
+  var hash = [];
+  var lines = '';
+  var panel;
+  for (name in panels.panels) {
+    panel = panels.panels[name];
+    if (panel.editor) {
+      lines = panel.editor.highlightLines().string;
+      if (lines) {
+        hash.push(name.substr(0, 1).toUpperCase() + ':L' + lines);
+      }
+    }
+  }
+  return hash.join(',');
 };
 
 panels.focus = function (panel) {
@@ -579,16 +596,31 @@ var editorsReady = setInterval(function () {
   var ready = true,
       resizeTimer = null,
       panel,
-      panelId;
+      panelId,
+      hash = window.location.hash.substring(1);
+
 
   for (panelId in panels.panels) {
     panel = panels.panels[panelId];
-    if (panel.visible && !panel.ready) ready = false;
+    if (panel.visible && !panel.ready) {
+      ready = false;
+      break;
+    }
   }
 
   panels.ready = ready;
 
   if (ready) {
+    panels.allEditors(function (panel) {
+      var key = panel.id.substr(0, 1).toUpperCase() + ':L';
+      if (hash.indexOf(key) !== -1) {
+        var lines = hash.match(new RegExp(key + '(\\d+(?:-\\d+)?)'));
+        if (lines !== null) {
+          panel.editor.highlightLines(lines[1]);
+        }
+      }
+    });
+
     clearInterval(editorsReady);
     // panels.ready = true;
     // if (typeof editors.onReady == 'function') editors.onReady();

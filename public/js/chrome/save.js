@@ -56,6 +56,7 @@ var split = $('#sharemenu').find('.share-split').length;
 
 // TODO candidate for removal
 function updateSavedState() {
+  'use strict';
   if (split) {
     return;
   }
@@ -76,12 +77,21 @@ function updateSavedState() {
   $shareLinks.each(function () {
     var url = jsbin.getURL({ revision: withRevision }) + this.getAttribute('data-path') + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
+    var hash = panels.getHighlightLines();
+
+    if (hash) {
+      hash = '#' + hash;
+    }
+
     if (nodeName === 'A') {
       this.href = url;
     } else if (nodeName === 'INPUT') {
       this.value = url;
+      if (path === '/edit') {
+        this.value += hash;
+      }
     } else if (nodeName === 'TEXTAREA') {
-      this.value = ('<a class="jsbin-embed" href="' + url + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+      this.value = ('<a class="jsbin-embed" href="' + url + hash + '">' + documentTitle + '</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
           return {
             '<': '&lt;',
             '>': '&gt;',
@@ -239,6 +249,13 @@ if (!jsbin.saveDisabled) {
   });
 }
 
+function compressKeys(keys, obj) {
+  obj.compressed = keys;
+  keys.split(',').forEach(function (key) {
+    obj[key] = LZString.compressToUTF16(obj[key]);
+  });
+}
+
 function updateCode(panelId, callback) {
   var panelSettings = {};
 
@@ -246,17 +263,23 @@ function updateCode(panelId, callback) {
     panelSettings.processors = jsbin.state.processors;
   }
 
+  var data = {
+    code: jsbin.state.code,
+    revision: jsbin.state.revision,
+    method: 'update',
+    panel: panelId,
+    content: editors[panelId].getCode(),
+    checksum: saveChecksum,
+    settings: JSON.stringify(panelSettings),
+  };
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('content', data);
+  }
+
   $.ajax({
     url: jsbin.getURL() + '/save',
-    data: {
-      code: jsbin.state.code,
-      revision: jsbin.state.revision,
-      method: 'update',
-      panel: panelId,
-      content: editors[panelId].getCode(),
-      checksum: saveChecksum,
-      settings: JSON.stringify(panelSettings)
-    },
+    data: data,
     type: 'post',
     dataType: 'json',
     headers: {'Accept': 'application/json'},
@@ -345,15 +368,23 @@ function saveCode(method, ajax, ajaxCallback) {
   jsbin.panels.save();
   jsbin.panels.saveOnExit = true;
 
+  var data = $form.serializeArray().reduce(function(obj, data) {
+    obj[data.name] = data.value;
+    return obj;
+  }, {});
+
+  if (jsbin.settings.useCompression) {
+    compressKeys('html,css,javascript', data);
+  }
+
   if (ajax) {
     $.ajax({
       url: $form.attr('action'),
-      data: $form.serialize(),
+      data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},
       success: function (data) {
-        $form.attr('action', data.url + '/save');
         if (ajaxCallback) {
           ajaxCallback(data);
         }
@@ -365,10 +396,14 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
         jsbin.state.latest = true; // this is never not true...end of conversation!
+        jsbin.state.metadata = { name: jsbin.user.name };
+        $form.attr('action', jsbin.getURL() + '/save');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
-          window.history.pushState(null, '', jsbin.getURL() + '/edit');
+          var hash = panels.getHighlightLines();
+          if (hash) {hash = '#' + hash;}
+          window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
           sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;

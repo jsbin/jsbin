@@ -279,7 +279,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.4.2.min.js',
+      url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
       init: function (ready) {
         // In CodeMirror 4, less is now included in the css mode, so no files to load
         ready();
@@ -448,6 +448,26 @@ var processors = jsbin.processors = (function () {
       panel.processor = defaultProcessor;
       delete jsbin.state.processors[panelId];
       delete panel.type;
+    }
+
+    // linting
+    mmMode = cmMode;
+    if (cmMode === 'javascript') {
+      mmMode = 'js';
+    }
+    if (cmMode === 'htmlmixed') {
+      mmMode = 'html';
+    }
+    var isHint = panel.editor.getOption('lint');
+    if (isHint) {
+      panel.editor.lintStop();
+    }
+    if (jsbin.settings[mmMode + 'hint']) {
+      panel.editor.setOption('mode', cmMode);
+      if (typeof hintingDone !== 'undefined') {
+        panel.editor.setOption('mode', cmMode);
+        hintingDone(panel.editor);
+      }
     }
   };
 

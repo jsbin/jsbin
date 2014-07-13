@@ -4,16 +4,16 @@
  * ========================================================================== */
 
 var proxyConsole = (function () {
-
+  'use strict';
   var supportsConsole = true;
-  try { window.console.log('runner'); } catch (e) { supportsConsole = false; }
+  try { window.console.log('d[ o_0 ]b'); } catch (e) { supportsConsole = false; }
 
-  var proxyConsole = {};
+  var proxyConsole = function() {};
 
   /**
    * Stringify all of the console objects from an array for proxying
    */
-  proxyConsole.stringifyArgs = function (args) {
+  var stringifyArgs = function (args) {
     var newArgs = [];
     // TODO this was forEach but when the array is [undefined] it wouldn't
     // iterate over them
@@ -31,7 +31,7 @@ var proxyConsole = (function () {
 
   // Create each of these methods on the proxy, and postMessage up to JS Bin
   // when one is called.
-  var methods = [
+  var methods = proxyConsole.prototype.methods = [
     'debug', 'clear', 'error', 'info', 'log', 'warn', 'dir', 'props', '_raw',
     'group', 'groupEnd', 'dirxml', 'table', 'trace', 'assert', 'count',
     'markTimeline', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp',
@@ -39,10 +39,10 @@ var proxyConsole = (function () {
   ];
   methods.forEach(function (method) {
     // Create console method
-    proxyConsole[method] = function () {
+    proxyConsole.prototype[method] = function () {
       // Replace args that can't be sent through postMessage
       var originalArgs = [].slice.call(arguments),
-          args = proxyConsole.stringifyArgs(originalArgs);
+          args = stringifyArgs(originalArgs);
 
       // Post up with method and the arguments
       runner.postMessage('console', {
@@ -59,6 +59,6 @@ var proxyConsole = (function () {
     };
   });
 
-  return proxyConsole;
+  return new proxyConsole();
 
 }());

@@ -1,1 +1,1 @@
-})(this, document);
+})(window, document);

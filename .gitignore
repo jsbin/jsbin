@@ -2,8 +2,8 @@ logs
 logs/*
 config.*.json
 public/js/jsbin*.js
-public/js/prod/*
 .nodemonignore
+public/js/prod
 !config.default.json
 statsd.js
 .allow-devtools-edit

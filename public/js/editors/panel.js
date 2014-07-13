@@ -42,6 +42,7 @@ CodeMirror.commands.snippets = function (cm) {
 };
 
 var Panel = function (name, settings) {
+  'use strict';
   var panel = this,
       showPanelButton = true,
       $panel = null,
@@ -74,17 +75,18 @@ var Panel = function (name, settings) {
   }
 
   // this is nasty and wrong, but I'm going to put here anyway .i..
-  if (this.id === 'javascript') {
-    this.on('processor', function (e, preprocessor) {
-      if (preprocessor === 'none') {
-        jshintEnabled = true;
-        checkForErrors();
-      } else {
-        jshintEnabled = false;
-        $error.hide();
-      }
-    });
-  }
+  // removed as we have a different way to check for errors
+  // if (this.id === 'javascript') {
+  //   this.on('processor', function (e, preprocessor) {
+  //     if (preprocessor === 'none') {
+  //       jshintEnabled = true;
+  //       checkForErrors();
+  //     } else {
+  //       jshintEnabled = false;
+  //       $error.hide();
+  //     }
+  //   });
+  // }
 
   if (settings.editor) {
     cmSettings = {
@@ -93,7 +95,9 @@ var Panel = function (name, settings) {
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
       lineWrapping: true,
-      theme: jsbin.settings.theme || 'jsbin'
+      // gutters: ['line-highlight'],
+      theme: jsbin.settings.theme || 'jsbin',
+      highlighLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -114,11 +118,27 @@ var Panel = function (name, settings) {
       profile: name   /* define Zen Coding output profile */
     });
 
+    // make sure tabSize and indentUnit are numbers
+    if (typeof cmSettings.tabSize === 'string') {
+      cmSettings.tabSize = parseInt(cmSettings.tabSize, 10) || 2;
+    }
+    if (typeof cmSettings.indentUnit === 'string') {
+      cmSettings.indentUnit = parseInt(cmSettings.indentUnit, 10) || 2;
+    }
+
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
+
+    panel.editor.on('highlightLines', function () {
+      window.location.hash = panels.getHighlightLines();
+    });
 
     // Bind events using CM3 syntax
     panel.editor.on('change', function codeChange(cm, changeObj) {
-      $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      if (jsbin.saveDisabled) {
+        $document.trigger('codeChange.live', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      } else {
+        $document.trigger('codeChange', [{ panelId: panel.id, revert: true, origin: changeObj.origin }]);
+      }
       return true;
     });
 
@@ -433,14 +453,8 @@ Panel.prototype = {
         var height = panel.editor.scroller.closest('.panel').outerHeight(),
             offset = 0;
             // offset = panel.$el.find('> .label').outerHeight();
-
-        // special case for the javascript panel
-        if (panel.name === 'javascript') {
-          if ($error === null) { // it wasn't there right away, so we populate
-            $error = panel.$el.find('details');
-          }
-          offset += ($error.filter(':visible').height() || 0);
-        }
+        $error = panel.$el.find('details');
+        offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
           editor.scroller.height(height - offset);
@@ -509,7 +523,7 @@ function populateEditor(editor, panel) {
   if (!editor.codeSet) {
     // populate - should eventually use: session, saved data, local storage
     var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
-        saved = localStorage.getItem('saved-' + panel), // user template
+        saved = jsbin.embed ? null : localStorage.getItem('saved-' + panel), // user template
         sessionURL = sessionStorage.getItem('url'),
         changed = false;
 
@@ -528,7 +542,7 @@ function populateEditor(editor, panel) {
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];
-    } else if (saved !== null && !/edit/.test(window.location) && !window.location.search) { // then their saved preference
+    } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);

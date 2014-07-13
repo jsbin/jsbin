@@ -47,20 +47,18 @@ if (!customKeys.disabled) {
 
     if (event.ctrlKey) { event.metaKey = true; }
 
+    if (event.metaKey && event.which === 89) {
+      archive(!event.shiftKey);
+      return event.preventDefault();
+    }
+
     if (event.metaKey && event.which === 79) { // open
       $('a.homebtn').trigger('click', 'keyboard');
       event.preventDefault();
     } else if (event.metaKey && event.shiftKey && event.which === 8) { // cmd+shift+backspace
       $('a.deletebin:first').trigger('click', 'keyboard');
       event.preventDefault();
-    // } else if (event.altKey && event.which === 83) { // open share menu
-    //   var $sharemenu = $('#sharemenu');
-    //   if ($sharemenu.hasClass('open')) {
-
-    //   }
-    //   $('#sharemenu a').trigger('mousedown');
-    //   event.preventDefault();
-    } else if (event.metaKey && event.which === 83) { // save
+    } else if (!jsbin.embed && event.metaKey && event.which === 83) { // save
       if (event.shiftKey === false) {
         if (saveChecksum) {
           saveChecksum = false;

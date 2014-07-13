@@ -1,0 +1,104 @@
+body {
+  font-family: 'helvetica neue', sans-serif;
+  font-weight:200!important;
+}
+
+h1, h2 {
+  text-align:center;
+}
+
+h1 {
+  font-weight:300;
+}
+
+h2 {
+  font-weight:400;
+}
+
+table {
+  border: 1;
+  width: 80%;
+  border-collapse: collapse;
+  margin-left:10%;
+}
+
+tbody tr {
+  border-top: 1px solid rgb(240, 240, 240);
+}
+
+tr.headings th {
+  vertical-align: bottom;
+  padding-bottom: 20px;
+}
+
+td {
+  text-align:center;
+  line-height:30px;
+  font-size:16px;
+  font-weight:300;
+  width:160px;
+}
+
+td.feature {
+  text-align:left;
+  width: auto;
+  min-width:230px;
+}
+
+.coupon-btn {
+  font-size:14px;
+}
+
+#coupon_code {
+  font-size:14px;
+}
+
+.backers {
+  width:720px;
+  margin:0 auto;
+}
+.backers a {
+
+}
+#body .backers .backer-img {
+  width:200px;
+  margin:20px auto;
+  border:none;
+}
+/*
+button.stripe-button-el {
+  font-size: 1.4em;
+  font-weight: 200;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  box-shadow: 0px 1px 1px #eee;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: inline;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  border-bottom: 2px solid #aaa;
+}
+button.stripe-button-el:hover {
+  background: linear-gradient(0deg, #e8e8e8, #f8f8f8);
+}
+*/
+
+th small {
+  color: rgb(165, 164, 164);
+  font-weight: normal;
+}
+
+/*tr.anon td.anon:after, tr.anon td.free:after, tr.anon td.pro:after {
+  content: "\2713";
+}
+tr.free td.free:after, tr.free td.pro:after {
+  content: "\2713";
+}
+tr.pro td.pro:after {
+  content: "\2713";
+}*/

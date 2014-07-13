@@ -43,6 +43,9 @@
   "server": {
     "logger": "default"
   },
+  "security": {
+    "allowAnonymousPreview": false
+  },
   "client": {
     "user": true
   },
@@ -96,6 +99,8 @@
     "devices",
     "download",
     "downloads",
+    "edit",
+    "embed",
     "faq",
     "favorites",
     "favs",
@@ -152,8 +157,10 @@
     "translate",
     "trends",
     "unarchive",
+    "upgrade",
     "user",
     "users",
+    "watch",
     "widgets",
     "tutorials",
     "video",

@@ -152,7 +152,6 @@ jQuery(function ($) {
       }
 
       $form.find('button').prop('disabled', false);
-      console.log(response);
 
       // response contains id and card, which contains additional card details
       var token = response.id;

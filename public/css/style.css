@@ -4158,6 +4158,7 @@ pre .highlight:last-of-type {
   font-size: 14px;
   line-height: 20px;
   cursor: text;
+  width: 100%;
 }
 
 .ie span.icon {
@@ -4280,7 +4281,8 @@ pre .highlight:last-of-type {
 }
 
 #share {
-  width: 320px;
+  width: 433.6px;
+  box-sizing: border-box;
 }
 
 .inline {
@@ -4721,7 +4723,7 @@ tbody:hover .snapshot1 .url a span:before {
 
 .share-split .controls,
 .share-split .result {
-  min-width: 150px;
+  width: 33%;
 }
 
 .share-split .controls {
@@ -4730,7 +4732,7 @@ tbody:hover .snapshot1 .url a span:before {
 }
 
 .share-split .result {
-  margin-left: 150px;
+  margin-left: 33%;
 }
 
 .share-split ul {
@@ -4757,11 +4759,18 @@ tbody:hover .snapshot1 .url a span:before {
 
 #sharemenu .share-split textarea {
   min-height: 50px;
-  max-width: 190px;
+  max-width: 100%;
+  width: 100%;
 }
 
 .share-split .result {
-  width: 200px;
+  width: 67%;
+  position: relative;
+}
+
+.share-split .result input,
+.share-split .result textarea {
+  box-sizing: border-box;
 }
 
 .share-split form div:first-child,
@@ -4817,7 +4826,7 @@ tbody:hover .snapshot1 .url a span:before {
 
 #share-preview .editor {
   display: none;
-  width: 198px;
+  width: 100%;
   table-layout: fixed;
   height: 100px;
   border: 1px solid #eee;
@@ -4830,7 +4839,7 @@ tbody:hover .snapshot1 .url a span:before {
 
 #share-preview .header {
   display: none;
-  width: 200px;
+  width: 100%;
   position: relative;
   height: 13px;
   background: url(/images/share-header.svg) no-repeat;
@@ -4853,7 +4862,7 @@ tbody:hover .snapshot1 .url a span:before {
   background: url(/images/jsbin-output-small.gif) no-repeat;
   background: url(/images/output-preview.svg) no-repeat;
   height: 113px;
-  width: 200px;
+  /* width: 200px; */
 }
 
 #share-preview.output .output:after {
@@ -4946,4 +4955,18 @@ tbody:hover .snapshot1 .url a span:before {
 
 #share-preview .editor .output:after {
   color: #F012BE;
+}
+
+#share .direct-links:empty {
+  display: none;
+}
+
+#share .direct-links:before {
+  color: rgb(119, 119, 119);
+  font-size: 14px;
+  content: 'Sources: ';
+}
+
+#share .direct-links a {
+  margin-right: 5px;
 }

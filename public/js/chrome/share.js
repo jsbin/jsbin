@@ -159,7 +159,7 @@
     // updating hrefs of a bunch of HTML elements
     $directLinks.empty();
 
-    var directLinksHTML = [];
+    var directLinksHTML = []; //['<a href="' + url + '.html">html</a>'];
 
     var code = ''
     var ext = '';
@@ -192,7 +192,7 @@
       }
     }
 
-    $directLinks.html(directLinksHTML.join(' '));
+    $directLinks.html(directLinksHTML.join(''));
 
     linkselect.value = link.href = shareurl + query;
     embed.value = ('<a class="jsbin-embed" href="' + url + '/embed' + query + '">' + documentTitle + ' on jsbin.com</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {

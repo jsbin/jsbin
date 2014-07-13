@@ -42,8 +42,10 @@ if(top != self) {
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#feature request "private"}}
-              <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
-              <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
+              <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis="public">Make bin public</a>
+              <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis="private">Make bin private</a>
+              {{else}}
+              <a data-desc="Set this bin to private" data-pro="true" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}/account/upgrade">Make bin private</a>
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
@@ -59,12 +61,14 @@ if(top != self) {
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
               {{#feature request "vanity"}}
-              <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="/account/bookmark/vanity">Publish to vanity homepage</a>
+              <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/bookmark/vanity">Publish to vanity homepage</a>
+              {{else}}
+              <a data-pro="true" data-desc="Publish the current bin to {{vanity}}" class="button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/upgrade">Publish to vanity homepage</a>
               {{/feature}}
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" class="startingpoint button group" title="Set as starting code" href="{{root}}/save" data-label="save-as-template">Save as template</a>
-              <a data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
+              <a hidden data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
             </div>
           </div>
         </div><div class="menu">

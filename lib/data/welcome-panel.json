@@ -23,12 +23,8 @@
   },
   "pro-features": {
     "title": "Pro features",
-    "link": "http://jsbin.com/help/features",
+    "link": "/account/upgrade",
     "data": [
-      {
-        "title": "Sync with Dropbox",
-        "link": "http://jsbin.com/help/features"
-      },
       {
         "title": "Private bins",
         "link": "http://jsbin.com/help/features"
@@ -38,7 +34,11 @@
         "link": "http://jsbin.com/help/features"
       },
       {
-        "title": "Read & write API",
+        "title": "SSL",
+        "link": "http://jsbin.com/help/ssl#enablingsslforallofjsbin"
+      },
+      {
+        "title": "Dropbox",
         "link": "http://jsbin.com/help/features"
       }
     ]

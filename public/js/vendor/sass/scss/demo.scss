@@ -1,0 +1,594 @@
+a {
+  color: blue;
+}div {
+  img {
+    border: 0px;
+  }
+}$color: red;
+
+a {
+  color: $color;
+}$color: "black";
+$color: red;
+$background: "blue";
+
+a {
+  color: $color;
+  background: $background;
+}
+
+$y: before;
+
+$x: 1 2 $y;
+
+foo {
+  a: $x;
+}
+
+$y: after;
+
+foo {
+  a: $x;
+}div {
+  span {
+    color: red;
+    background: blue;
+  }
+}
+
+div {
+  color: gray;
+  empty {
+    span {
+      color: red;
+      background: blue;
+    }
+  }
+}
+
+empty1 {
+  empty2 {
+    div {
+      blah: blah;
+    }
+  }
+}
+
+empty1 {
+  empty2 {
+    div {
+      bloo: blee;
+      empty3 {
+        span {
+          blah: blah;
+          blah: blah;
+        }
+      }
+    }
+  }
+}
+$blah: bloo blee;
+$blip: "a 'red' and \"blue\" value";
+
+/* top level comment -- should be preserved */
+div {
+  /* another comment that should be preserved */
+  color: red;
+  background: blue;
+  $blux: hux; // gone!
+  span {
+    font-weight: bold;
+    a {
+      text-decoration: none; /* where will this comment go? */
+      color: green;
+      /* what about this comment? */ border: 1px $blah red;
+    }
+    /* yet another comment that should be preserved */
+    display: inline-block;
+  }  // gone!
+  /* the next selector should be indented two spaces */
+  empty {
+    not_empty {
+      blah: blah; // gone!
+      bloo: bloo;
+    }
+  }
+  p {
+    padding: 10px 8%;
+    -webkit-box-sizing: $blux;
+  }
+  margin: 10px 5px;
+  h1 {
+    color: $blip;
+  }
+}
+/* last comment, top level again --
+   compare the indentation! */
+   
+div {
+  f: g;
+  empty {
+    span {
+      a: b;
+    }
+  }
+  empty_with_comment {
+    /* hey now */
+    span {
+      c: d;
+    }
+  }
+}a, b {
+  color: red;
+  background: blue;
+}
+
+c, d {
+  color: gray;
+  e, f {
+    background: blue;
+    padding: 10px 5px;
+  }
+  g, h {
+    blah: blah;
+    bloo: bloo;
+  }
+  i, j {
+    foo: goo;
+    k, l {
+      m, n, o {
+        wow: we are far inside;
+        but: it still works;
+      }
+      hoo: boo;
+    }
+  }
+}a   +   b  >  c {
+  d e {
+    color: blue;
+    background: white;
+  }
+  color: red;
+  background: gray;
+}a + b, c {
+  blah: blah;
+  bleh: bleh;
+  d e, f ~ g + h, > i {
+    bloo: bloo;
+    blee: blee;
+  }
+}a + b, .class {
+  blah: blah;
+  bleh: bleh;
+  d #id, f ~ g.other + h, > i#grar {
+    bloo: bloo;
+    blee: blee;
+  }
+}[hey  =  'ho'], a > b {
+  blah: blah;
+  c, [hoo *=    "ha" ] {
+    bloo: bloo;
+  }
+}a b {
+  color: red;
+  :first-child, :nth-of-type(  -2n+1 ) {
+    .foo#bar:nth-child(even) {
+      hoo: goo;
+    }
+    blah: bloo;
+    ::after {
+      content: "glux";
+      color: green;
+    }
+    :not(.foo) {
+      hoo: boo;
+    }
+    // the following is not actually valid, but sass accepts it
+    :not(:not(:not(.foo[bleeble="blabble"] > .hello, .gluxbux))) { hoo: boo; }
+    a { b: c; }
+  }
+}hey, ho {
+  & > boo, foo &.goo {
+    bloo: bloo;
+  }
+  blah: blah;
+}div {
+  p01: #abc;
+  p02: #aabbcc;
+  p03: #abc + hello;
+  p04: #abc + 1; // add 1 to each triplet
+  p05: #abc + #001; // triplet-wise addition
+  p06: #0000ff + 1; // add 1 to each triplet; ignore overflow because it doesn't correspond to a color name
+  p07: #0000ff + #000001; // convert overflow to name of color (blue)
+  p08: #00ffff + #000101; // aqua
+  p09: #000000;
+  p10: #000000 - 1; // black
+  p11: #000000 - #000001; // black
+  p12: #ffff00 + #010100; // yellow
+  p13: (#101010 / 7);
+  p14: #000 + 0;
+  p15: 10 - #222;
+  p16: #000 - #001;
+  p17: #f0f + #101;
+  p18: 10 #222 + 1;
+  p19: (10 / #222);
+  p20: rgb(10,10,10) + #010001;
+  p21: #010000 + rgb(255, 255, 255);
+}@mixin foo($x, $y) {
+  hugabug: $y $x;
+}
+
+@mixin bar($a, $b: flug) {
+  flugablug: $a $b glug;
+}
+
+@mixin hux() {
+  no: parameters here;
+  div, span {
+    some: nested stuff;
+    foo, bar {
+      more: stuff so forth;
+      blah: blah;
+    }
+  }
+  /* end of hux */
+}
+
+a {
+  hey: ho;
+  @include foo(second, third);
+  @include foo($y: kwd-y, $x: kwd-x);
+  goo: boo hoo;
+  @include hux;
+  @include bar(pug);
+  @include bar(pug, mug);
+}
+
+
+$x: from a variable;
+
+div {
+  blah: blah $x blah;
+}$x: global x;
+$y: global y;
+
+@mixin foo($x) {
+  f-a: $x;
+  f-b: $y;
+  $x: local x changed by foo;
+  $y: global y changed by foo;
+  $z: new local z;
+  f-a: $x;
+  f-b: $y;
+  f-c: $z;
+}
+
+div {
+  a: $x;
+  b: $y;
+  @include foo(arg);
+  a: $x;
+  b: $y;
+}$x: global-x;
+$y: global-y;
+$z: global-z;
+
+@mixin foo($x, $y) {
+  /* begin foo */
+  margin: $x $y;
+  blip {
+    hey: now;
+  }
+  /* end foo */
+}
+
+@mixin foogoo($x, $y, $z) {
+  margin: $x $y $z;
+}
+
+@mixin hux($y) {
+  /* begin hux */
+  color: $y;
+  @include foo(called-from-hux, $y: $y);
+  /* end hux */
+}
+
+div {
+  @include foo(1, 2);
+  @include foo(1, 3);
+  @include foogoo(1, 2, $z: zee);
+  @include foogoo(1, $y /* blah */ : kwd-y, $z: kwd-z);
+}
+
+div {
+  @include hux($y: $y);
+}
+
+$y: different-global-y;
+
+div {
+  @include hux(calling-hux-again);
+}
+
+@mixin bung() {
+  blah: original-bung;
+}
+
+div {
+  @include bung();
+}
+
+@mixin bung() {
+  blah: redefined-bung;
+}
+
+div {
+  @include bung();
+}
+
+div {
+  /* calls to nullary mixins may omit the empty argument list */
+  @include bung;
+}
+
+div {
+  @include foo($x: kwdarg1, $y: kwdarg2);
+}
+
+@mixin ruleset() {
+  hoo {
+    color: boo;
+  }
+}
+
+@include ruleset();
+
+$da: default argument;
+
+@mixin default_args($x, $y: $da) {
+  blah: $x $y;
+}
+$da: some other default;
+
+div {
+  @include default_args(boogoo);
+}
+
+@mixin original() {
+  value: original;
+}
+
+div {
+  @include original();
+}
+
+@mixin original() {
+  value: no longer original;
+}
+
+div {
+  @include original();
+}
+
+@mixin set-x($x) {
+  $x: changed local x;
+  arg: $x;
+  $y: changed global y;
+  blarg: $y;
+}
+
+div {
+  @include set-x(blah);
+  a: $x;
+  b: $y;
+}@mixin foo() {
+  /* begin foo */
+  /* assigning to $x */
+  $x: inside foo;
+  x: $x;
+  /* end foo */
+}
+
+outer {
+  /* assigning to $x */
+  $x: inside outer scope;
+  blah: blah;
+  inner {
+    @include foo();
+    x: $x;
+  }
+}div {
+  color: rgb(255, $blue: 0, $green: 255);
+  background: rgb(123, 45, 6);
+}
+$x: rgb(0, 255, 255);
+
+div {
+  color: rgb(255, $blue: 0, $green: 255);
+  background: rgb(123, 45, 6);
+  flah: rgba(0, 0, 0, 1) + #111;
+  grah: rgba(#f0e, $alpha: .5);
+  blah: rgba(1,2,3,.6);
+  
+  floo: $x;
+  bloo: rgba($x, 0.7);
+  groo: $x;
+  
+  $x: rgb(123, 45, 6);
+  
+  hoo: red($x);
+  moo: green($x);
+  poo: blue($x);
+  
+  goo: mix(rgba(255, 0, 0, 0.5), #00f);
+  
+  boo: invert(#123456);
+}
+div {
+  a: hello#{world};
+  a: hello #{world};
+  b: 12#{3};
+  b: type-of(12#{3});
+  b: #{12 + 111};
+  b: type-of(#{12 + 111});
+}div {
+  a: {
+    p1: q;
+    b: {
+      p2: q;
+    }
+    p3: q;
+  }
+}
+
+foo {
+  bar: baz {
+    bip: bop;
+    bing: type-of("hello");
+    bang: 1 + 2;
+    bung: bap;
+    bong: bup {
+      x: x;
+      y: y;
+      z: z;
+    }
+  }
+}
+div {
+  blah: "hello #{2+2} world #{unit(23px)} #{'bloo\n'} blah";
+}$x: oo, ba;
+$y: az, hu;
+
+f#{$x}r {
+  p: 1;
+  b#{$y}x {
+    q: 2;
+    mumble#{length($x) + length($y)} {
+      r: 3;
+    }
+  }
+}a b c {
+  blee: blee;
+  d e f {
+    blah: blah;
+    bloo: bloo;
+  }
+  g h, i j {
+    @media print and (foo: 1 2 3), (bar: 3px hux(muz)), not screen {
+      hey: ho;
+      k l m {
+        hee: fee;
+      }
+    }
+  }
+  blah: blah;
+}
+
+
+$x: pop;
+$y: 123;
+
+
+
+div {
+  foo: url(bloo/blah.css);
+  bar: url(http://foo/bar/hux.css);
+  foo: url(fudge#{$x}.css);
+  bar: url("http://fudge#{$x}/styles.css");
+  hux: url(http://box_#{$y}////fudge#{$x}.css);
+  @each $i in (1 2 3 4 5) {
+    hux: url(http://box_#{$y}////fudge#{$x}.css);
+    foo: url(http://blah.com/bar-#{$i}.css);
+  }
+  gloo: url("hey#{1+2}.css");
+  floo: url(hadoop-#{$y+321}.css);
+}
+
+$x: a, b, 1+2;
+
+@if type-of(nth($x, 3)) == number {
+  div {
+    background: gray;
+  }
+}
+
+@if type-of(nth($x, 2)) == number {
+  div {
+    background: gray;
+  }
+}
+@else if type-of(nth($x, 2)) == string {
+  div {
+    background: blue;
+  }
+}
+
+@if type-of(nth($x, 2)) == number {
+  div {
+    background: gray;
+  }
+}
+@else if type-of(nth($x, 2)) == color {
+  div {
+    background: blue;
+  }
+}
+@else {
+  div {
+    background: red;
+  }
+}$x: true;
+
+@function foobar() {
+  @if $x {
+    $x: false;
+    @return foo;
+  }
+  @else {
+    $x: true;
+    @return bar;
+  }
+}
+
+div {
+  content: foobar();
+  content: foobar();
+  content: foobar();
+  content: foobar();
+  $x: false;
+  content: foobar();
+}$x: true;
+
+@mixin foobar() {
+  @if $x {
+    $x: false;
+    content: foo;
+  }
+  @else {
+    $x: true;
+    content: bar;
+  }
+}
+
+div {
+  @include foobar();
+  @include foobar();
+  @include foobar();
+  $x: true;
+  @include foobar();
+}div {
+  width: 10% + 20%;
+  height: 10% - 20%;
+  width: 10% + 10;
+  width: 10 + 10%;
+  height: 10% - 10;
+  height: 10 - 10%;
+  blah: (20% / 4%);
+  flah: 12 * 75%;
+  grah: 75% * 12;
+  // hwah: (24 / 8%);
+  nyah: (35% / 7);
+}.test {
+  background-color: null;
+  color: blue;
+}

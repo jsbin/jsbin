@@ -126,7 +126,7 @@ if (storedSettings === "undefined") {
 
 // In all cases localStorage takes precedence over user settings so users can
 // configure it from the console and overwrite the server delivered settings
-jsbin.settings = $.extend(jsbin.settings, JSON.parse(storedSettings || '{}'));
+jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
   jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);

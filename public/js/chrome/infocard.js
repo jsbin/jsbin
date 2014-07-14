@@ -1,5 +1,5 @@
 (function () {
-  /*global $:true, jsbin:true, prettyDate:true, EventSource:true, throttle:true, $document:true*/
+  /*global spinner, $, jsbin, prettyDate, EventSource, throttle, $document, analytics*/
   'use strict';
 
   // don't insert this on embeded views
@@ -68,7 +68,8 @@
 
       $header.click(function (e) {
         e.preventDefault();
-        $template.toggleClass('open');
+        analytics.infocard('click', 'no-result');
+      //   $template.toggleClass('open');
       });
 
       var viewers = 0;

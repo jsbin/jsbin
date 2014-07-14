@@ -228,8 +228,7 @@ var id = location.pathname.replace(/\/(preview|edit|watch).*$/, ''),
     useSS = false,
     es = null;
 
-// Wait for a bit, then set up the EventSource stream
-setTimeout(function () {
+function startStream() {
   es = new EventSource(id + '?' + Math.random());
   if (codecasting) {
     codecastStream();
@@ -242,6 +241,37 @@ setTimeout(function () {
       $document.trigger('stats', [event.data]);
     });
   }
+
+  return es;
+}
+
+function handleVisibility(es, listen) {
+  var hiddenProperty = 'hidden' in document ? 'hidden' :
+    'webkitHidden' in document ? 'webkitHidden' :
+    'mozHidden' in document ? 'mozHidden' :
+    null;
+  var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' :
+    'webkitVisibilityState' in document ? 'webkitVisibilityState' :
+    'mozVisibilityState' in document ? 'mozVisibilityState' :
+    null;
+
+  if (visibilityStateProperty) {
+    var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+    document.addEventListener(visibilityChangeEvent, function visibilityChangeEvent() {
+      if (document[hiddenProperty]) { // hidden
+        es.close();
+      } else {
+        es = listen();
+      }
+    });
+  }
+}
+
+
+// Wait for a bit, then set up the EventSource stream
+setTimeout(function() {
+  es = startStream();
+  handleVisibility(es, startStream);
 }, 500);
 
 // If this is the render stream, restore data from before the last reload if

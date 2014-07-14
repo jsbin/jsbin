@@ -77,6 +77,7 @@
       if (jsbin.state.streaming) {
         if (window.EventSource && owner) {
           listenStats();
+          handleVisibility();
           var url = jsbin.getURL();
           $document.on('saved', function () {
             var newurl = window.location.toString();
@@ -89,6 +90,28 @@
           $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
           $document.on('stats', throttle(updateStats, 1000));
         }
+      }
+    }
+
+    function handleVisibility() {
+      var hiddenProperty = 'hidden' in document ? 'hidden' :
+        'webkitHidden' in document ? 'webkitHidden' :
+        'mozHidden' in document ? 'mozHidden' :
+        null;
+      var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' :
+        'webkitVisibilityState' in document ? 'webkitVisibilityState' :
+        'mozVisibilityState' in document ? 'mozVisibilityState' :
+        null;
+
+      if (visibilityStateProperty) {
+        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        document.addEventListener(visibilityChangeEvent, function visibilityChangeEvent() {
+          if (document[hiddenProperty]) { // hidden
+            es.close();
+          } else {
+            listenStats();
+          }
+        });
       }
     }
 
@@ -118,8 +141,11 @@
     }
 
     function listenStats() {
-      es = new EventSource(jsbin.getURL() + '/stats?checksum=' + jsbin.state.checksum);
-      es.addEventListener('stats', throttle(updateStats, 1000));
+      if (window.EventSource && owner) {
+        // TODO use pagevisibility api to close connection
+        es = new EventSource(jsbin.getURL() + '/stats?checksum=' + jsbin.state.checksum);
+        es.addEventListener('stats', throttle(updateStats, 1000));
+      }
     }
   }
 

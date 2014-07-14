@@ -335,7 +335,13 @@ if(top != self) {
         <div class="dropdown" id="cssprocessors">
           <div class="dropdownmenu processorSelector" data-type="css">
             <a href="#css">CSS</a>
-            <a href="#less">LESS</a>
+            {{#feature request "processors"}}
+            <a href="#sass">Sass</a>
+            <a href="#scss">SCSS</a>
+            {{/feature}}
+            <a href="#less">Less</a>
+            <a href="#myth">Myth</a>
+            <a href="#stylus">Stylus</a>
             <a href="#convert">Convert to CSS</a>
           </div>
         </div>
@@ -511,7 +517,12 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
+<<<<<<< HEAD
 {{#unless embed}}{{#feature request "infocard"}}
+=======
+{{#unless embed}}
+{{#feature request "infocard"}}
+>>>>>>> master
 <div hidden>
   <div class="card" id="infocard">
     <header><img>
@@ -540,34 +551,28 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
 <![endif]-->
-{{#unless embed}}
-<script>if(top != self) document.write('<!--');</script>
-{{/unless}}
-{{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
-<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
-{{else}}
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-  {{#if isProduction}}
+{{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 <script>
   start({{{json_template}}}, {{{jsbin}}}, this, document);
 </script>
-  {{else}}
+{{else}}
 <script>
 window.template = {{{json_template}}};
 window.jsbin = {{{jsbin}}};
 </script>
-    {{#if concat}}
+  {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
-    {{else}}
-      {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
-    {{/if}}
-      {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{else}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
+    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
 {{/if}}
-<script>
-</script>
+{{#if live}}
+<script src="{{static}}/js/vendor/eventsource.js"></script>
+<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{/if}}
 </body>
 </html>
 

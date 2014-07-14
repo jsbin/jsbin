@@ -416,7 +416,7 @@ var processors = jsbin.processors = (function () {
       id: 'myth',
       target: 'css',
       extensions: ['myth'],
-      url: jsbin.static + '/js/vendor/myth-1.0.4.min.js',
+      url: jsbin.static + '/js/vendor/myth.min.js',
       init: function (ready) {
         ready();
       },

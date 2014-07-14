@@ -15,17 +15,15 @@
       </div>
     </div>
   </div>
-
+{{#unless user.settings.gui.toppanel}}
+<!-- handle ajax injection -->
+{{else}}
 {{#welcomePanel}}
 {{#features}}
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
-      {{#data}}
-        {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-        {{/.}}
-      {{/data}}
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
   </div>
 {{/features}}
@@ -34,11 +32,7 @@
   <div class="toppanel-column">
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} (upgrade){{/unless}}</a></h2>
       <ul class="toppanel-list">
-      {{#data}}
-        {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-        {{/.}}
-      {{/data}}
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
   </div>
 {{/pro-features}}
@@ -48,11 +42,7 @@
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
-        {{#data}}
-          {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-          {{/.}}
-        {{/data}}
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
         </ul>
     </div>
   {{/blog}}
@@ -60,11 +50,7 @@
     <div class="toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
-        {{#data}}
-          {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-          {{/.}}
-        {{/data}}
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
         </ul>
     </div>
   {{/help}}
@@ -103,7 +89,9 @@
     --}}
   </div>
 {{/welcomePanel}}
+{{/unless}}
 </div>
+
 <script>
 try {
   if (localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1) {

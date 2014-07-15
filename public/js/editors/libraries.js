@@ -487,9 +487,9 @@ var libraries = [
   },
   {
     'url':[
-      'http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js'
+      'http://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js'
     ],
-    'label': 'Three.js r61'
+    'label': 'Three.js r67'
   },
   {
     'url':[

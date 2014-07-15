@@ -138,8 +138,7 @@ var getPreparedCode = (function () {
           return escapeMap[m];
         }) + '</pre>';
       } else if (re.code.test(html)) {
-        parts = html.split('%code%');
-        html = parts[0] + js + parts[1];
+        html = html.split('%code%').join(js);
       } else if (hasJS) {
         close = '';
         if (html.indexOf('</body>') !== -1) {
@@ -180,8 +179,7 @@ var getPreparedCode = (function () {
           return escapeMap[m];
         }) + '</pre>';
       } else if (re.csscode.test(html)) {
-        parts = html.split('%css%');
-        html = parts[0] + css + parts[1];
+        html = html.split('%css%').join(css);
       } else if (css && hasHTML) {
         parts = [];
         close = '';

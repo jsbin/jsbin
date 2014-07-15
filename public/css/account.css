@@ -220,3 +220,7 @@ form label.hintOptions {
   margin-top: -8px;
   margin-bottom: 1em;
 }
+
+.success {
+  color: rgb(44, 149, 56);
+}

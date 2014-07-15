@@ -205,7 +205,7 @@ var renderer = (function () {
    * When the iframe focuses, simulate that here
    */
   renderer.focus = function () {
-    $('#live').focus();
+    jsbin.panels.focus(jsbin.panels.panels.live);
     // also close any open dropdowns
     closedropdown();
   };

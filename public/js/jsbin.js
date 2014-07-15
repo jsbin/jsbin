@@ -37,7 +37,7 @@ function debounceAsync(fn) {
   'use strict';
   var waiting = false;
   var last = null;
- 
+
   return function debouceRunner() {
     var args = [].slice.call(arguments, 0);
     // console.time('tracker');
@@ -52,10 +52,10 @@ function debounceAsync(fn) {
         last = null;
       }
     };
- 
+
     // put the tracker in place of the callback
     args.push(tracker);
- 
+
     if (!waiting) {
       // console.log('running this time...');
       waiting = true;
@@ -97,7 +97,8 @@ function exposeSettings() {
   'use strict';
   if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
     window.jsbin = {
-      'static': jsbin['static']
+      'static': jsbin['static'],
+      version: jsbin.version
     }; // create the holding object
 
     if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name && jsbin.user.name) {

@@ -1,4 +1,4 @@
-/*globals jsbin, _, $, RSVP*/
+/*globals jsbin, _, $, RSVP, renderLivePreview, editors, throttle, debounceAsync, hintingDone, CodeMirror, Panel, editorModes */
 var processors = jsbin.processors = (function () {
   'use strict';
   /*
@@ -50,7 +50,9 @@ var processors = jsbin.processors = (function () {
         processorData = _.pick(opts, 'id', 'target', 'extensions');
 
     opts.extensions = opts.extensions || [];
-    if (!opts.extensions.length) opts.extensions = [opts.id];
+    if (!opts.extensions.length) {
+      opts.extensions = [opts.id];
+    }
 
     opts.extensions.forEach(function (ext) {
       processorBy.extension[ext] = opts.id;
@@ -63,7 +65,9 @@ var processors = jsbin.processors = (function () {
 
       // Overwritten when the script loads
       var callback = function () {
-        window.console && window.console.warn('Processor is not ready yet - trying again');
+        if (window.console) {
+          window.console.warn('Processor is not ready yet - trying again');
+        }
         failed = true;
         return '';
       };
@@ -143,18 +147,24 @@ var processors = jsbin.processors = (function () {
       target: 'javascript',
       extensions: ['coffee'],
       url: jsbin.static + '/js/vendor/coffee-script.js',
-      init: function (ready) {
+      init: function coffeescript(ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
         try {
-          renderedCode = CoffeeScript.compile(source, {
+          renderedCode = window.CoffeeScript.compile(source, {
             bare: true
           });
           resolve(renderedCode);
         } catch (e) {
-          reject(e);
+          var errors = {
+            line: parseInt(e.location.first_line, 10) || 0, // jshint ignore:line
+            ch: parseInt(e.location.first_column, 10) || 0, // jshint ignore:line
+            msg: e.message
+          };
+
+          reject([errors]);
         }
       }
     }),
@@ -164,7 +174,7 @@ var processors = jsbin.processors = (function () {
       target: 'javascript',
       extensions: ['jsx'],
       url: jsbin.static + '/js/vendor/JSXTransformer.js',
-      init: function (ready) {
+      init: function jsx(ready) {
         // Don't add React if the code already contains a script whose name
         // starts with 'react', to avoid duplicate copies.
         var code = editors.html.getCode();
@@ -176,7 +186,7 @@ var processors = jsbin.processors = (function () {
       handler: function (source, resolve, reject) {
         var renderedCode = '';
         try {
-          renderedCode = JSXTransformer.transform(source).code;
+          renderedCode = window.JSXTransformer.transform(source).code;
           resolve(renderedCode);
         } catch (e) {
           reject(e);
@@ -190,7 +200,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['ts'],
       url: jsbin.static + '/js/vendor/typescript.min.js',
       init: passthrough,
-      handler: function (source, resolve, reject) {
+      handler: function typescript(source, resolve, reject) {
         var noop = function () {};
         var outfile = {
           source: '',
@@ -211,7 +221,7 @@ var processors = jsbin.processors = (function () {
 
         var parseErrors = [];
 
-        var compiler = new TypeScript.TypeScriptCompiler(outfile, outerr);
+        var compiler = new window.TypeScript.TypeScriptCompiler(outfile, outerr);
 
         compiler.setErrorCallback(function (start, len, message) {
           parseErrors.push({ start: start, len: len, message: message });
@@ -242,12 +252,12 @@ var processors = jsbin.processors = (function () {
       target: 'html',
       extensions: ['md', 'markdown', 'mdown'],
       url: jsbin.static + '/js/vendor/markdown.js',
-      init: function (ready) {
+      init: function markdown(ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
       },
       handler: function (source, resolve, reject) {
         try {
-          resolve(markdown.toHTML(source));
+          resolve(window.markdown.toHTML(source));
         } catch (e) {
           reject(e);
         }
@@ -264,9 +274,9 @@ var processors = jsbin.processors = (function () {
         // init and expose jade
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
       },
-      handler: function (source, resolve, reject) {
+      handler: function processing(source, resolve, reject) {
         try {
-          var sketch = Processing.compile(source).sourceCode;
+          var sketch = window.Processing.compile(source).sourceCode;
           resolve([
             '(function(){',
             '  var canvas = document.querySelector("canvas");',
@@ -291,16 +301,26 @@ var processors = jsbin.processors = (function () {
       target: 'html',
       extensions: ['jade'],
       url: jsbin.static + '/js/vendor/jade.js',
-      init: function (ready) {
-        // init and expose jade
-        window.jade = require('jade');
-        ready();
-      },
-      handler: function (source, resolve, reject) {
+      init: passthrough,
+      handler: function jade(source, resolve, reject) {
         try {
-          resolve(jade.compile(source, { pretty: true })());
+          resolve(window.jade.compile(source, { pretty: true })());
         } catch (e) {
-          reject(e);
+          console.log('Errors', e);
+          // index starts at 1
+          var lineMatch = e.message.match(/Jade:(\d+)/) || [,];
+          var line = parseInt(lineMatch[1], 10) || 0;
+          if (line > 0) {
+            line = line - 1;
+          }
+          var msg = e.message.match(/\n\n(.+)$/) || [,];
+          var errors = {
+            line: line,
+            ch: null,
+            msg: msg[1]
+          };
+
+          reject([errors]);
         }
       }
     }),
@@ -310,14 +330,26 @@ var processors = jsbin.processors = (function () {
       target: 'css',
       extensions: ['less'],
       url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
-      init: function (ready) {
-        // In CodeMirror 4, less is now included in the css mode, so no files to load
-        ready();
-      },
-      handler: function (source, resolve, reject) {
-        less.Parser().parse(source, function (err, result) {
-          if (err) {
-            return reject(err);
+      init: passthrough,
+      handler: function less(source, resolve, reject) {
+        window.less.Parser().parse(source, function (error, result) {
+          if (error) {
+            // index starts at 1
+            var line = parseInt(error.line, 10) || 0;
+            var ch = parseInt(error.column, 10) || 0;
+            if (line > 0) {
+              line = line - 1;
+            }
+            if (ch > 0) {
+              ch = ch - 1;
+            }
+            var errors = {
+              line: line,
+              ch: ch,
+              msg: error.message
+            };
+
+            return reject([errors]);
           }
           resolve(result.toCSS().trim());
         });
@@ -329,12 +361,10 @@ var processors = jsbin.processors = (function () {
       target: 'scss',
       extensions: ['scss'],
       // url: jsbin.static + '/js/vendor/sass/dist/sass.worker.js',
-      init: function (ready) {
+      init: passthrough,
+        /* keeping old code for local version of scss if we ever want it again */
         // $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
-          // Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
-        ready();
-        // });
-      },
+        // Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
           type: 'post',
@@ -379,7 +409,7 @@ var processors = jsbin.processors = (function () {
       target: 'sass',
       extensions: ['sass'],
       init: function (ready) {
-        ready();
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/sass/sass.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
@@ -422,9 +452,24 @@ var processors = jsbin.processors = (function () {
       },
       handler: function (source, resolve, reject) {
         try {
-          resolve(myth(source));
+          resolve(window.myth(source));
         } catch (e) {
-          reject(e);
+          // index starts at 1
+          var line = parseInt(e.line, 10) || 0;
+          var ch = parseInt(e.column, 10) || 0;
+          if (line > 0) {
+            line = line - 1;
+          }
+          if (ch > 0) {
+            ch = ch - 1;
+          }
+          var errors = {
+            line: line,
+            ch: ch,
+            msg: e.message
+          };
+
+          reject([errors]);
         }
       }
     }),
@@ -435,10 +480,23 @@ var processors = jsbin.processors = (function () {
       extensions: ['styl'],
       url: jsbin.static + '/js/vendor/stylus.js',
       init: passthrough,
-      handler: function (source, resolve, reject) {
-        stylus(source).render(function (err, result) {
-          if (err) {
-            return reject(err);
+      handler: function stylus(source, resolve, reject) {
+        window.stylus(source).render(function (error, result) {
+          if (error) {
+            // index starts at 1
+            var lineMatch = error.message.match(/stylus:(\d+)/) || [,];
+            var line = parseInt(lineMatch[1], 10) || 0;
+            var msg = error.message.match(/\n\n(.+)\n$/) || [,];
+            if (line > 0) {
+              line = line - 1;
+            }
+            var errors = {
+              line: line,
+              ch: null,
+              msg: msg[1]
+            };
+
+            return reject([errors]);
           }
 
           resolve(result.trim());
@@ -460,10 +518,10 @@ var processors = jsbin.processors = (function () {
         init: function (ready) {
           // Only create these once, when the processor is loaded
           $('#library').val( $('#library').find(':contains("Traceur")').val() ).trigger('change');
-          SourceMapConsumer = traceur.outputgeneration.SourceMapConsumer;
-          SourceMapGenerator = traceur.outputgeneration.SourceMapGenerator;
-          ProjectWriter = traceur.outputgeneration.ProjectWriter;
-          ErrorReporter = traceur.util.ErrorReporter;
+          SourceMapConsumer = window.traceur.outputgeneration.SourceMapConsumer;
+          SourceMapGenerator = window.traceur.outputgeneration.SourceMapGenerator;
+          ProjectWriter = window.traceur.outputgeneration.ProjectWriter;
+          ErrorReporter = window.traceur.util.ErrorReporter;
           ready();
         },
         handler: function (source, resolve, reject) {
@@ -475,12 +533,12 @@ var processors = jsbin.processors = (function () {
           };
 
           var url = location.href;
-          var project = new traceur.semantics.symbols.Project(url);
+          var project = new window.traceur.semantics.symbols.Project(url);
           var name = 'jsbin';
 
-          var sourceFile = new traceur.syntax.SourceFile(name, source);
+          var sourceFile = new window.traceur.syntax.SourceFile(name, source);
           project.addFile(sourceFile);
-          var res = traceur.codegeneration.Compiler.compile(reporter, project, false);
+          var res = window.traceur.codegeneration.Compiler.compile(reporter, project, false);
 
           var msg = '/*\nIf you\'ve just translated to JS, make sure traceur is in the HTML panel.\nThis is terrible, sorry, but the only way we could get around race conditions.\n\nHugs & kisses,\nDave xox\n*/\ntry{window.traceur = top.traceur;}catch(e){}\n';
           resolve(msg + ProjectWriter.write(res));
@@ -527,8 +585,7 @@ var processors = jsbin.processors = (function () {
 
       e.preventDefault();
       var target = this.hash.substring(1),
-          label = $(this).text(),
-          code;
+          label = $(this).text();
       if (target !== 'convert') {
         $panelButton.html(label);
         $label.text(label);
@@ -575,13 +632,7 @@ var processors = jsbin.processors = (function () {
 
     // For JSX, use the plain JavaScript mode but disable smart indentation
     // because it doesn't work properly
-    var smartIndent = cmMode !== 'jsx';
-    cmMode = cmMode === 'jsx' ? 'javascript' : cmMode;
-
-    // For less, the mode definition is changed in CodeMirror 4
-    if (cmMode === 'less') {
-      cmMode = 'text/x-less';
-    }
+    var smartIndent = processorName !== 'jsx';
 
     if (!panel) { return; }
 
@@ -635,7 +686,9 @@ var processors = jsbin.processors = (function () {
    */
   processors.findByExtension = function (ext) {
     var id = processorBy.extension[ext];
-    if (!id) return defaultProcessor;
+    if (!id) {
+      return defaultProcessor;
+    }
     return jsbin.processors[id];
   };
 

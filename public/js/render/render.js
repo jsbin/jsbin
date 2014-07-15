@@ -1,8 +1,26 @@
-/*globals jsbin, editors, RSVP, loopProtect, documentTitle*/
+/*globals jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
 var renderCodeWorking = false;
+
 var getRenderedCode = function () {
   'use strict';
+
+  var formatErrors = function(res) {
+    var errors = [];
+    var line = 0;
+    var ch = 0;
+    for (var i = 0; i < res.length; i++) {
+      line = res[i].line || 0;
+      ch = res[i].ch || 0;
+      errors.push({
+        from: CodeMirror.Pos(line, ch),
+        to: CodeMirror.Pos(line, ch),
+        message: res[i].msg,
+        severity : 'error'
+      });
+    }
+    return errors;
+  };
 
   if (renderCodeWorking) {
     // cancel existing jobs, and replace with this job
@@ -17,12 +35,22 @@ var getRenderedCode = function () {
         if (!error) {
           error = {};
         }
-        if (error.message) {
-          console.warn(error.message);
-        } else if (error.stack) {
-          console.warn(error.stack);
-        } else if ($.isArray(error)) {
-          console.warn(error.join('\n'));
+
+        if ($.isArray(error)) { // then this is for our hinter
+          // console.log(data.errors);
+          var cm = jsbin.panels.panels[language].editor;
+
+          // if we have the error reporting function (called updateLinting)
+          if (typeof cm.updateLinting !== 'undefined') {
+            hintingDone(cm);
+            var err = formatErrors(error);
+            cm.updateLinting(err);
+          } else {
+            // otherwise dump to the console
+            console.warn(error);
+          }
+        } else if (error.message) {
+          console.warn(error.message, error.stack);
         } else {
           console.warn(error);
         }

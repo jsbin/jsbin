@@ -7,12 +7,13 @@ var editorModes = {
   html: 'htmlmixed',
   javascript: 'javascript',
   css: 'css',
-  scss: 'text/x-scss',
   typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
-  jsx: 'jsx',
-  less: 'less',
+  jsx: 'javascript',
+  less: 'text/x-less',
+  sass: 'text/x-sass',
+  scss: 'text/x-scss',
   processing: 'text/x-csrc'
 };
 
@@ -39,7 +40,12 @@ var simpleJsHint = function(cm) {
 CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
-  return CodeMirror.snippets(cm);
+  'use strict';
+  if (['htmlmixed', 'javascript', 'css'].indexOf(cm.options.mode) !== 0) {
+    return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
+  } else {
+    return CodeMirror.snippets(cm);
+  }
 };
 
 var Panel = function (name, settings) {

@@ -14,6 +14,7 @@
     "/js/vendor/cm_addons/emmet.js",
     "/js/vendor/codemirror4/addon/search/searchcursor.js",
     "/js/vendor/cm_addons/simple-hint.js",
+    "/js/vendor/codemirror4/addon/hint/anyword-hint.js",
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
     "/js/vendor/codemirror4/addon/comment/comment.js",

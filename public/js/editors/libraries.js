@@ -165,8 +165,13 @@ var libraries = [
     'group': 'YUI'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1/mootools-yui-compressed.js',
-    'label': 'MooTools latest',
+    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-yui-compressed.js',
+    'label': 'MooTools 1.5.0',
+    'group': 'MooTools'
+  },
+  {
+    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-nocompat-yui-compressed.js',
+    'label': 'MooTools 1.5.0 (without 1.2+ compatibility layer)',
     'group': 'MooTools'
   },
   {
@@ -482,9 +487,9 @@ var libraries = [
   },
   {
     'url':[
-      'http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js'
+      'http://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js'
     ],
-    'label': 'Three.js r61'
+    'label': 'Three.js r67'
   },
   {
     'url':[

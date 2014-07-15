@@ -38,7 +38,7 @@ function spinner(element) {
       start -= 1;
     }
 
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = '#f9f9f9';
     ctx.strokeStyle = '#111';
     ctx.fillRect(w/2 - r*2, h/2 - r*2, r * 4, r * 4);
     ctx.beginPath();

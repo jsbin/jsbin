@@ -1,0 +1,57 @@
+{
+  "name": "sass.js",
+  "version": "0.0.0",
+  "title": "Sass.js - API for emscripted libsass",
+  "description": "Sass.js is a convenience API for the JavaScript libsass (compiled with Emscripten)",
+  "homepage": "http://medialize.github.com/sass.js/",
+  "author": {
+    "name": "Rodney Rehm",
+    "url": "http://rodneyrehm.de/"
+  },
+  "contributors": [
+    {
+      "name": "Sebastian Golasch",
+      "url": "http://asciidisco.com/"
+    },
+    {
+      "name": "Christian Kruse",
+      "url": "http://http://wwwtech.de/"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medialize/sass.js.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license"
+    }
+  ],
+  "keywords": [
+    "libsass",
+    "sass",
+    "scss",
+    "css"
+  ],
+  "main": "./dist/sass.min.js",
+  "scripts": {
+    "build": "grunt build",
+    "test": "grunt test",
+    "lint": "grunt lint"
+  },
+  "files": [
+    "dist/"
+  ],
+  "devDependencies": {
+    "jshint-stylish": "~0.1.5",
+    "chai": "~1.8.1",
+    "grunt-mocha-test": "~0.8.1",
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "node-sass": "~0.8.1",
+    "benchmark": "~1.0.0"
+  }
+}

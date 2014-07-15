@@ -221,7 +221,7 @@ $('#runconsole').click(function () {
   return false;
 });
 
-$('#clearconsole').click(function () {  
+$('#clearconsole').click(function () {
   jsconsole.clear();
   return false;
 });

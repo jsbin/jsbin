@@ -2,7 +2,7 @@
 (function() {
   'use strict';
   var defaults = {
-      cl: 'console.log("$0");',
+      cl: 'console.log(\'$0\');',
       fn: 'function $0() {\n\t\n}'
     };
 

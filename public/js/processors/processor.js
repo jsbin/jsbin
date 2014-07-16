@@ -474,6 +474,38 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    pleeease: createProcessor({
+      id: 'pleeease',
+      target: 'css',
+      extensions: ['pleeease'],
+      url: jsbin.static + '/js/vendor/pleeease.js',
+      init: function (ready) {
+        ready();
+      },
+      handler: function (source, resolve, reject) {
+        try {
+          resolve(pleeease.process(source));
+        } catch (e) {
+          // index starts at 1
+          var line = parseInt(e.line, 10) || 0;
+          var ch = parseInt(e.column, 10) || 0;
+          if (line > 0) {
+            line = line - 1;
+          }
+          if (ch > 0) {
+            ch = ch - 1;
+          }
+          var errors = {
+            line: line,
+            ch: ch,
+            msg: e.message
+          };
+
+          reject([errors]);
+        }
+      }
+    }),
+
     stylus: createProcessor({
       id: 'stylus',
       target: 'css',

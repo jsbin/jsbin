@@ -478,7 +478,7 @@ var processors = jsbin.processors = (function () {
       id: 'pleeease',
       target: 'css',
       extensions: ['pleeease'],
-      url: jsbin.static + '/js/vendor/pleeease.js',
+      url: jsbin.static + '/js/vendor/pleeease-0.4.1.min.js',
       init: function (ready) {
         ready();
       },

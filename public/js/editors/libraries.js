@@ -295,13 +295,13 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': '//fb.me/react-0.9.0.js',
-    'label': 'React 0.9.0',
+    'url': '//fb.me/react-0.11.0.js',
+    'label': 'React 0.11.0',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-with-addons-0.9.0.js',
-    'label': 'React with Add-Ons 0.9.0',
+    'url': '//fb.me/react-with-addons-0.11.0.js',
+    'label': 'React with Add-Ons 0.11.0',
     'group': 'React'
   },
   {

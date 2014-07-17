@@ -29,10 +29,17 @@
   <h2>Third party applications</h2>
   <ul>
   {{#feature request "github"}}
+    {{#if user.github_token}}
+    <li class="link-container success"><strong>Github for logging in</strong> &ndash; complete &#10004; (<a href="/auth/github">re-link</a>)</li>
+    {{else}}
     <li class="link-container"><strong>Use Github for logging in</strong> &ndash; <a href="/auth/github">link your Github account</a></li>
+    {{/if}}
   {{/feature}}
 
   {{#feature request "dropbox"}}
+    {{#if user.dropbox_token}}
+    <li class="link-container success"><strong>Dropbox automatic exporting</strong> &ndash; complete &#10004; (<a href="{{root}}/auth/dropbox">re-link</a>)</li>
+    {{else}}
     <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
   {{else}}
   <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/account/upgrade"><span class="pro-required">Pro</span></a> <a href="/account/upgrade">account required</a></li>

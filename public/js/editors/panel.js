@@ -389,13 +389,14 @@ Panel.prototype = {
   },
   render: function () {
     'use strict';
+    var args = [].slice.call(arguments);
     var panel = this;
     return new RSVP.Promise(function (resolve, reject) {
       if (panel.editor) {
         panel.processor(panel.getCode()).then(resolve, reject);
       } else if (panel.visible && panel.settings.render) {
         if (jsbin.panels.ready) {
-          panel.settings.render.apply(panel, arguments);
+          panel.settings.render.apply(panel, args);
         }
         resolve();
       }

@@ -478,6 +478,7 @@ form label.hintOptions {
   margin-bottom: 1em;
 }
 
+<<<<<<< HEAD
 .pro-required {
   text-decoration: none;
   color: rgb(124, 123, 123);
@@ -540,4 +541,8 @@ a[data-pro]:hover:after {
 
 .ccy-note {
   color: rgb(180, 0, 72);
+}
+
+.success {
+  color: rgb(44, 149, 56);
 }

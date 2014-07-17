@@ -4463,7 +4463,7 @@ html * {
   bottom: 12px;
   right: 12px;
   float: left;
-  font-family: 'helvetica neue';
+  font-family: "Helvetica Neue", sans-serif;
   font-weight: 400;
   background: #fafafa;
   background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */

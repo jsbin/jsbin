@@ -220,40 +220,40 @@ var libraries = [
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
       '//code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2014.1.528/js/kendo.ui.core.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI Core Q1 SP2',
+    'label': 'Kendo UI Core 2014.Q2',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.mobile.all.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.rtl.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.mobile.all.min.css',
       '//code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/js/kendo.all.min.js'
     ],
-    'label': 'Kendo UI Q1 2014',
+    'label': 'Kendo UI 2014.Q2',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.rtl.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.mobile.all.min.css',
       '//code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/js/kendo.all.min.js'
     ],
-    'label': 'Kendo UI Q3 2013',
+    'label': 'Kendo UI 2014.Q1',
     'group': 'Kendo UI'
   },
   {

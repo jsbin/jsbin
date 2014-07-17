@@ -394,12 +394,16 @@ div.vat small {
   margin-top: 10px;
 }
 
-form .options {
+form div.options {
   margin-left: 180px;
 }
 
-.options input[type=radio] {
+div.options input[type=radio] {
   margin-right: 10px;
+}
+
+p.options input[type=radio] {
+  margin-left: 0;
 }
 
 form .options label {
@@ -409,6 +413,12 @@ form .options label {
   width: auto;
   /* display: block; */
   text-align: left;
+}
+
+form p.options label {
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 5px;
 }
 
 section {
@@ -511,4 +521,23 @@ a[data-pro]:after {
 a[data-pro]:hover:after {
   color: #999;
   border-color: #999;
+}
+
+.more-content {
+  font-size: 0.9em;
+}
+
+.change-ccy {
+  font-weight: bold;
+  color: rgb(0, 116, 217);
+  text-decoration: underline;
+}
+
+.footnotes p {
+  margin: 8px 0;
+  line-height: 20px;
+}
+
+.ccy-note {
+  color: rgb(180, 0, 72);
 }

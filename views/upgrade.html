@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
-<h1> Upgrade </h1>
+<h1>Feature headlines</h1>
 <table>
   <thead>
     <tr class="headings">
@@ -17,19 +17,7 @@
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>
-        <form id="stripe_pro_month" action="{{stripeProMonthURL}}" method="POST">
-          <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{stripeKey}}"
-            data-name="JB Bin Pro!"
-            data-description="Pro Account - $15 p/m"
-            data-amount="1500"
-            data-label="Upgrade">
-          </script>
-        </form>
-        {{#if showCoupon}}
-          <input id="coupon_code" placeholder="Enter your code here" type="text"/>
-        {{/if}}
+        <a id="pay" href="/account/upgrade"><button>Upgrade!</button></a>
       </td>
     </tr>
   </tfoot>

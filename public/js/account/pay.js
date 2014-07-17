@@ -74,6 +74,50 @@ jQuery(function ($) {
   });
 
 
+  var price = { yearly: {}, monthly: {} };
+  price.yearly.el = $('#price-yearly');
+  price.yearly.value = price.yearly.el.data('price') * 1;
+  price.monthly.el = $('#price-monthly');
+  price.monthly.value = price.monthly.el.data('price') * 1;
+
+  var fx = {
+    USD: { rate: 0, symbol: '$' },
+    EUR: { rate: 0, symbol: '€' },
+    GBP: { rate: 1, symbol: '£' }
+  };
+
+  function updatePricesTo(ccy) {
+    price.yearly.el.html(fx[ccy].symbol + (price.yearly.value * fx[ccy].rate | 0));
+    price.monthly.el.html(fx[ccy].symbol + (price.monthly.value * fx[ccy].rate | 0));
+  }
+
+  var $ccynote = $('.ccy-note');
+
+  $('.ccy input').change(function () {
+    var ccy = this.value;
+
+    if (ccy === 'GBP') {
+      $ccynote.prop('hidden', true);
+    } else {
+      $ccynote.prop('hidden', false);
+    }
+
+    if (!fx[ccy].rate) {
+      // get via ajax
+      $.ajax({
+        url: 'https://rate-exchange.appspot.com/currency?from=GBP&to=' + ccy,
+        dataType: 'jsonp',
+        success: function (data) {
+          fx[ccy].rate = data.rate;
+          updatePricesTo(ccy);
+        }
+      })
+    } else {
+      updatePricesTo(ccy);
+    }
+  })
+
+
   /**
    * Validate the VAT registration number (which we'll also do on the server
    * side) using a simple heroku app.
@@ -87,7 +131,6 @@ jQuery(function ($) {
       vatEl.addClass('validating');
       $.getJSON('//vat-validator.herokuapp.com/' + vat + '?callback=?', function (data) {
         if (data.error) {
-          console.error('500 error on VAT lookup');
           return setTimeout(function () {
             $('#validateVat').click();
           }, 2000);

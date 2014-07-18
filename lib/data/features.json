@@ -16,16 +16,20 @@
     "user": "pro"
   },
   {
-    "name": "Read & write API access",
+    "name": "Priority direct support",
     "user": "pro"
   },
   {
-    "name": "Direct support",
+    "name": "Read & write API access (very soon)",
     "user": "pro"
   },
   {
     "name": "Asset hosting (coming soon)",
     "user": "pro"
+  },
+  {
+    "name": "Full, unmodified output",
+    "user": "free"
   },
   {
     "name": "Save bins to Gist",

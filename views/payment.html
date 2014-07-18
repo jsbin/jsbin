@@ -3,7 +3,7 @@
 <h1>Upgrade to Pro</h1>
 
 <section id="content">
-  <form id="payment-form" method="post" action="/account/upgrade">
+  <form id="payment-form" method="post" action="/account/upgrade/pay">
     {{#if showCoupon}}
     <section class="country">
       <label for="coupon">Coupon</label>
@@ -96,32 +96,4 @@
     <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
     <script src="{{static}}/js/vendor/jquery.payment.js"></script>
     <script src="{{static}}/js/account/pay.js"></script>
-
-    <div class="more-content">
-      <h2>Why Pro?</h2>
-
-<p>In addition all our sweet free features (codecasting, live reload, processors, and so on), Pro adds: </p>
-  <ul>
-    <li><a target="_blank" href="/help/private">Private bins</a></li>
-    <li><a target="_blank" href="/help/vanity-urls">Vanity URLs</a></li>
-    <li><a target="_blank" href="/help/dropbox">Dropbox linked</a></li>
-    <li><a target="_blank" href="/help/ssl">SSL</a></li>
-    <li>And more to come: beta access, asset hosting, read/write api, timelines</li>
-    <li>See our <a href="/account/upgrade/features" target="_blank">feature table</a></li>
-  </ul>
-      <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
-      <p>
-        Aside from the features listed above, your pro account will help keep
-        JS Bin 100% free for educational uses (schools, universities and community
-        training). Those good people will be able to get free training accounts
-        so they can continue to help young students and new-comers with JS Bin in
-        their tool belt.
-      </p>
-
-      <p>Education is dear to our hearts, and pro accounts allows us to keep developing
-        JS Bin with feature i want to see land, and to help fix and issues that cause
-        problems for noth general users and those students stuck working with limited
-        access to tech (like the version of JS Bin that works without a web connection
-        and entirely from a usb stick with zero install).</p>
-    </div>
 </section>

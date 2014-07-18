@@ -128,6 +128,10 @@ if(top != self) {
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>
 
+                  {{#unless user.pro}}
+                  <a href="/account/upgrade" class="gopro pro-required">Go Pro</a>
+                  {{/unless}}
+
                   <ul>
                     <li><a href="/account/profile">Update profile</a></li>
                     <li><a href="/account/editor">Editor settings</a></li>

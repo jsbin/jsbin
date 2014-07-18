@@ -5252,3 +5252,14 @@ a[data-pro]:hover:after {
   color: #999;
   border-color: #999;
 }
+
+.gopro { /* not the camera...silly */
+  text-decoration: none;
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.gopro:hover { /* not the camera...silly */
+  color: #999;
+  border-color: #999;
+}

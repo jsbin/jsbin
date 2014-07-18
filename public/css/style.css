@@ -3364,7 +3364,7 @@ a.active:hover {
   /* margin: 3px 5px; */
   background: white;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
-  border: 1px solid #CCC;
+  border: 1px solid rgb(204, 204, 204);
   height: auto;
   /* border-radius: 5px; */
   text-align: left;
@@ -5255,11 +5255,23 @@ a[data-pro]:hover:after {
 
 .gopro { /* not the camera...silly */
   text-decoration: none;
-  margin-right: 5px;
-  margin-top: 3px;
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0;
+  background: rgb(39, 192, 39);
+  font-size: 15px;
+  text-align: center;
+  margin-top: -2px;
+  color: white;
+  color: white;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-top: 0;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
+  line-height: 30px;
 }
 
-.gopro:hover { /* not the camera...silly */
-  color: #999;
-  border-color: #999;
+.gopro:hover {
+  background: rgb(3, 166, 3);
 }

@@ -7,6 +7,7 @@
 
   <form>
   <form id="editor-settings">
+    {{#feature request "upgrade"}}
     <h3>Security</h3>
 
     <div>
@@ -15,6 +16,7 @@
     </div>
 
     <p><small>Note that by enabling SSL for all of JS Bin, including non-https assets in your bins will cause the iframe <em>not</em> to render. This is the correct behaviour for https frames containing non-secure content. <a href="http://jsbin.com/help/ssl">Read more</a>.</small></p>
+    {{/feature}}
 
     {{#feature request "assets"}}
     <h3>Custom content</h3>

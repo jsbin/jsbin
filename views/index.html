@@ -46,7 +46,9 @@ if(top != self) {
               <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis="public">Make bin public</a>
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis="private">Make bin private</a>
               {{else}}
+                {{#feature request "upgrade"}}
               <a data-desc="Set this bin to private" data-pro="true" class="button group" title="Set this bin to private" href="{{root}}/account/upgrade">Make bin private</a>
+                {{/feature}}
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
@@ -61,10 +63,12 @@ if(top != self) {
               <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
               <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
-              {{#feature request "vanity"}}
+              {{#feature request "upgrade"}}
+                {{#feature request "vanity"}}
               <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/bookmark/vanity">Publish to vanity homepage</a>
-              {{else}}
+                {{else}}
               <a data-pro="true" data-desc="Publish the current bin to {{vanity}}" class="button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/upgrade">Publish to vanity homepage</a>
+                {{/feature}}
               {{/feature}}
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
@@ -128,17 +132,19 @@ if(top != self) {
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>
 
-                  {{#unless user.pro}}
-                  <a href="/account/upgrade" class="gopro pro-required">Go Pro</a>
-                  {{/unless}}
-
                   <ul>
                     <li><a href="/account/profile">Update profile</a></li>
                     <li><a href="/account/editor">Editor settings</a></li>
                     <li><a href="/account/preferences">Preferences</a></li>
                     <li><a href="/logout">Logout</a></li>
                   </ul>
+
                 </div>
+                {{#feature request "upgrade"}}
+                  {{#unless user.pro}}
+                <a href="/account/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+                  {{/unless}}
+                {{/feature}}
               </div>
             </div>
             {{else}}

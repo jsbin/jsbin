@@ -271,7 +271,6 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/processing.min.js',
       init: function (ready) {
         $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
-        // init and expose jade
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
       },
       handler: function processing(source, resolve, reject) {
@@ -300,7 +299,7 @@ var processors = jsbin.processors = (function () {
       id: 'jade',
       target: 'html',
       extensions: ['jade'],
-      url: jsbin.static + '/js/vendor/jade.js',
+      url: jsbin.static + '/js/vendor/jade.js?1.4.2',
       init: function jade(ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
       },

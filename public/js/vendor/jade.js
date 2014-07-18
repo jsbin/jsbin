@@ -838,7 +838,7 @@ exports.cache = {};
  *
  * @param {String} str
  * @param {Object} options
- * @return {String}
+ * @return {Object}
  * @api private
  */
 
@@ -878,7 +878,7 @@ function parse(str, options){
   globals.push('jade_debug');
   globals.push('buf');
 
-  return ''
+  var body = ''
     + 'var buf = [];\n'
     + 'var jade_mixins = {};\n'
     + 'var jade_interp;\n'
@@ -886,6 +886,7 @@ function parse(str, options){
       ? 'var self = locals || {};\n' + js
       : addWith('locals || {}', '\n' + js, globals)) + ';'
     + 'return buf.join("");';
+  return {body: body, dependencies: parser.dependencies};
 }
 
 /**
@@ -913,27 +914,30 @@ exports.compile = function(str, options){
 
   str = String(str);
 
+  var parsed = parse(str, options);
   if (options.compileDebug !== false) {
     fn = [
         'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(str, options)
+      , parsed.body
       , '} catch (err) {'
       , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno' + (options.compileDebug === true ? ',' + JSON.stringify(str) : '') + ');'
       , '}'
     ].join('\n');
   } else {
-    fn = parse(str, options);
+    fn = parsed.body;
   }
   fn = new Function('locals, jade', fn)
   var res = function(locals){ return fn(locals, Object.create(runtime)) };
   if (options.client) {
     res.toString = function () {
-      var err = new Error('The `client` option is deprecated, use `jade.compileClient`');
+      var err = new Error('The `client` option is deprecated, use the `jade.compileClient` method instead');
+      err.name = 'Warning';
       console.error(err.stack || err.message);
       return exports.compileClient(str, options);
     };
   }
+  res.dependencies = parsed.dependencies;
   return res;
 };
 
@@ -943,8 +947,9 @@ exports.compile = function(str, options){
  * Options:
  *
  *   - `compileDebug` When it is `true`, the source code is included in
-       the compiled template for better error messages.
+ *     the compiled template for better error messages.
  *   - `filename` used to improve errors when `compileDebug` is not `true` and to resolve imports/extends
+ *   - `name` the name of the resulting function (defaults to "template")
  *
  * @param {String} str
  * @param {Options} options
@@ -953,11 +958,10 @@ exports.compile = function(str, options){
  */
 
 exports.compileClient = function(str, options){
-  var options = options || {}
-    , filename = options.filename
-      ? JSON.stringify(options.filename)
-      : 'undefined'
-    , fn;
+  var options = options || {};
+  var name = options.name || 'template';
+  var filename = options.filename ? JSON.stringify(options.filename) : 'undefined';
+  var fn;
 
   str = String(str);
 
@@ -966,17 +970,17 @@ exports.compileClient = function(str, options){
     fn = [
         'var jade_debug = [{ lineno: 1, filename: ' + filename + ' }];'
       , 'try {'
-      , parse(str, options)
+      , parse(str, options).body
       , '} catch (err) {'
       , '  jade.rethrow(err, jade_debug[0].filename, jade_debug[0].lineno, ' + JSON.stringify(str) + ');'
       , '}'
     ].join('\n');
   } else {
     options.compileDebug = false;
-    fn = parse(str, options);
+    fn = parse(str, options).body;
   }
 
-  return 'function template(locals) {\n' + fn + '\n}';
+  return 'function ' + name + '(locals) {\n' + fn + '\n}';
 };
 
 
@@ -1280,6 +1284,7 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
+      this.pipeless = true;
       return tok;
     }
   },
@@ -1329,7 +1334,11 @@ Lexer.prototype = {
    */
 
   filter: function() {
-    return this.scan(/^:([\w\-]+)/, 'filter');
+    var tok = this.scan(/^:([\w\-]+)/, 'filter');
+    if (tok) {
+      this.pipeless = true;
+      return tok;
+    }
   },
 
   /**
@@ -1368,7 +1377,9 @@ Lexer.prototype = {
    */
 
   text: function() {
-    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') || this.scan(/^(<[^\n]*)/, 'text');
+    return this.scan(/^(?:\| ?| )([^\n]+)/, 'text') ||
+      this.scan(/^\|?( )/, 'text') ||
+      this.scan(/^(<[^\n]*)/, 'text');
   },
 
   textFail: function () {
@@ -1385,7 +1396,11 @@ Lexer.prototype = {
    */
 
   dot: function() {
-    return this.scan(/^\./, 'dot');
+    var match;
+    if (match = this.scan(/^\./, 'dot')) {
+      this.pipeless = true;
+      return match;
+    }
   },
 
   /**
@@ -1461,7 +1476,7 @@ Lexer.prototype = {
    * Yield.
    */
 
-  yield: function() {
+  'yield': function() {
     return this.scan(/^yield */, 'yield');
   },
 
@@ -1479,12 +1494,22 @@ Lexer.prototype = {
 
   includeFiltered: function() {
     var captures;
-    if (captures = /^include:([\w\-]+) +([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
+    if (captures = /^include:([\w\-]+)([\( ])/.exec(this.input)) {
+      this.consume(captures[0].length - 1);
       var filter = captures[1];
-      var path = captures[2];
+      var attrs = captures[2] === '(' ? this.attrs() : null;
+      if (!(captures[2] === ' ' || this.input[0] === ' ')) {
+        throw new Error('expected space after include:filter but got ' + JSON.stringify(this.input[0]));
+      }
+      captures = /^ *([^\n]+)/.exec(this.input);
+      if (!captures || captures[1].trim() === '') {
+        throw new Error('missing path for include:filter');
+      }
+      this.consume(captures[0].length);
+      var path = captures[1];
       var tok = this.tok('include', path);
       tok.filter = filter;
+      tok.attrs = attrs;
       return tok;
     }
   },
@@ -1543,7 +1568,7 @@ Lexer.prototype = {
       if (captures = /^ *\(/.exec(this.input)) {
         try {
           var range = this.bracketExpression(captures[0].length - 1);
-          if (!/^ *[-\w]+ *=/.test(range.src)) { // not attributes
+          if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
             this.consume(range.end + 1);
             tok.args = range.src;
           }
@@ -1855,7 +1880,10 @@ Lexer.prototype = {
       }
 
       // blank line
-      if ('\n' == this.input[0]) return this.tok('newline');
+      if ('\n' == this.input[0]) {
+        this.pipeless = false;
+        return this.tok('newline');
+      }
 
       // outdent
       if (this.indentStack.length && indents < this.indentStack[0]) {
@@ -1873,6 +1901,7 @@ Lexer.prototype = {
         tok = this.tok('newline');
       }
 
+      this.pipeless = false;
       return tok;
     }
   },
@@ -1883,13 +1912,48 @@ Lexer.prototype = {
    */
 
   pipelessText: function() {
-    if (this.pipeless) {
-      if ('\n' == this.input[0]) return;
-      var i = this.input.indexOf('\n');
-      if (-1 == i) i = this.input.length;
-      var str = this.input.substr(0, i);
-      this.consume(str.length);
-      return this.tok('text', str);
+    if (!this.pipeless) return;
+    var captures, re;
+
+    // established regexp
+    if (this.indentRe) {
+      captures = this.indentRe.exec(this.input);
+    // determine regexp
+    } else {
+      // tabs
+      re = /^\n(\t*) */;
+      captures = re.exec(this.input);
+
+      // spaces
+      if (captures && !captures[1].length) {
+        re = /^\n( *)/;
+        captures = re.exec(this.input);
+      }
+
+      // established
+      if (captures && captures[1].length) this.indentRe = re;
+    }
+
+    var indents = captures && captures[1].length;
+    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+      var indent = captures[1];
+      var line;
+      var tokens = [];
+      var isMatch;
+      do {
+        // text has `\n` as a prefix
+        var i = this.input.substr(1).indexOf('\n');
+        if (-1 == i) i = this.input.length - 1;
+        var str = this.input.substr(1, i);
+        isMatch = str.substr(0, indent.length) === indent || !str.trim();
+        if (isMatch) {
+          // consume test along with `\n` prefix if match
+          this.consume(str.length + 1);
+          tokens.push(str.substr(indent.length));
+        }
+      } while(this.input.length && isMatch);
+      while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
+      return this.tok('pipeless-text', tokens);
     }
   },
 
@@ -1902,10 +1966,6 @@ Lexer.prototype = {
   },
 
   fail: function () {
-    if (/^ ($|\n)/.test(this.input)) {
-      this.consume(1);
-      return this.next();
-    }
     throw new Error('unexpected text ' + this.input.substr(0, 5));
   },
 
@@ -2293,7 +2353,7 @@ Comment.prototype.type = 'Comment';
 var Node = _dereq_('./node');
 
 /**
- * Initialize a `Doctype` with the given `val`.
+ * Initialize a `Doctype` with the given `val`. 
  *
  * @param {String} val
  * @api public
@@ -2620,6 +2680,7 @@ var Parser = exports = module.exports = function Parser(str, filename, options){
   this.options = options;
   this.contexts = [this];
   this.inMixin = false;
+  this.dependencies = [];
 };
 
 /**
@@ -2727,6 +2788,27 @@ Parser.prototype = {
       return ast;
     }
 
+    if (!this.extending && !this.included && Object.keys(this.blocks).length){
+      var blocks = [];
+      utils.walkAST(block, function (node) {
+        if (node.type === 'Block' && node.name) {
+          blocks.push(node.name);
+        }
+      });
+      Object.keys(this.blocks).forEach(function (name) {
+        if (blocks.indexOf(name) === -1) {
+          console.warn('Warning: Unexpected block "'
+                       + name
+                       + '" '
+                       + ' on line '
+                       + this.blocks[name].line
+                       + ' of '
+                       + (this.blocks[name].filename)
+                       + '. This block is never used. This warning will be an error in v2.0.0');
+        }
+      }.bind(this));
+    }
+
     return block;
   },
 
@@ -2828,7 +2910,7 @@ Parser.prototype = {
 
   parseText: function(){
     var tok = this.expect('text');
-    var tokens = this.parseTextWithInlineTags(tok.val);
+    var tokens = this.parseInlineTagsInText(tok.val);
     if (tokens.length === 1) return tokens[0];
     var node = new nodes.Block;
     for (var i = 0; i < tokens.length; i++) {
@@ -2952,10 +3034,9 @@ Parser.prototype = {
     var tok = this.expect('comment');
     var node;
 
-    if ('indent' == this.peek().type) {
-      this.lexer.pipeless = true;
-      node = new nodes.BlockComment(tok.val, this.parseTextBlock(), tok.buffer);
-      this.lexer.pipeless = false;
+    var block;
+    if (block = this.parseTextBlock()) {
+      node = new nodes.BlockComment(tok.val, block, tok.buffer);
     } else {
       node = new nodes.Comment(tok.val, tok.buffer);
     }
@@ -2984,13 +3065,7 @@ Parser.prototype = {
     var attrs = this.accept('attrs');
     var block;
 
-    if ('indent' == this.peek().type) {
-      this.lexer.pipeless = true;
-      block = this.parseTextBlock();
-      this.lexer.pipeless = false;
-    } else {
-      block = new nodes.Block;
-    }
+    block = this.parseTextBlock() || new nodes.Block();
 
     var options = {};
     if (attrs) {
@@ -3059,8 +3134,10 @@ Parser.prototype = {
     var path = this.resolvePath(this.expect('extends').val.trim(), 'extends');
     if ('.jade' != path.substr(-5)) path += '.jade';
 
+    this.dependencies.push(path);
     var str = fs.readFileSync(path, 'utf8');
     var parser = new this.constructor(str, path, this.options);
+    parser.dependencies = this.dependencies;
 
     parser.blocks = this.blocks;
     parser.contexts = this.contexts;
@@ -3082,6 +3159,7 @@ Parser.prototype = {
     block = 'indent' == this.peek().type
       ? this.block()
       : new nodes.Block(new nodes.Literal(''));
+    block.name = name;
 
     var prev = this.blocks[name] || {prepended: [], appended: []}
     if (prev.mode === 'replace') return this.blocks[name] = prev;
@@ -3126,11 +3204,17 @@ Parser.prototype = {
     var tok = this.expect('include');
 
     var path = this.resolvePath(tok.val.trim(), 'include');
-
+    this.dependencies.push(path);
     // has-filter
     if (tok.filter) {
       var str = fs.readFileSync(path, 'utf8').replace(/\r/g, '');
-      str = filters(tok.filter, str, { filename: path });
+      var options = {filename: path};
+      if (tok.attrs) {
+        tok.attrs.attrs.forEach(function (attribute) {
+          options[attribute.name] = constantinople.toConstant(attribute.val);
+        });
+      }
+      str = filters(tok.filter, str, options);
       return new nodes.Literal(str);
     }
 
@@ -3142,7 +3226,10 @@ Parser.prototype = {
 
     var str = fs.readFileSync(path, 'utf8');
     var parser = new this.constructor(str, path, this.options);
+    parser.dependencies = this.dependencies;
+
     parser.blocks = utils.merge({}, this.blocks);
+    parser.included = true;
 
     parser.mixins = this.mixins;
 
@@ -3200,7 +3287,7 @@ Parser.prototype = {
     }
   },
 
-  parseTextWithInlineTags: function (str) {
+  parseInlineTagsInText: function (str) {
     var line = this.line();
 
     var match = /(\\)?#\[((?:.|\n)*)$/.exec(str);
@@ -3208,7 +3295,7 @@ Parser.prototype = {
       if (match[1]) { // escape
         var text = new nodes.Text(str.substr(0, match.index) + '#[');
         text.line = line;
-        var rest = this.parseTextWithInlineTags(match[2]);
+        var rest = this.parseInlineTagsInText(match[2]);
         if (rest[0].type === 'Text') {
           text.val += rest[0].val;
           rest.shift();
@@ -3222,7 +3309,7 @@ Parser.prototype = {
         var range = parseJSExpression(rest);
         var inner = new Parser(range.src, this.filename, this.options);
         buffer.push(inner.parse());
-        return buffer.concat(this.parseTextWithInlineTags(rest.substr(range.end + 1)));
+        return buffer.concat(this.parseInlineTagsInText(rest.substr(range.end + 1)));
       }
     } else {
       var text = new nodes.Text(str);
@@ -3238,30 +3325,12 @@ Parser.prototype = {
   parseTextBlock: function(){
     var block = new nodes.Block;
     block.line = this.line();
-    var spaces = this.expect('indent').val;
-    if (null == this._spaces) this._spaces = spaces;
-    var indent = Array(spaces - this._spaces + 1).join(' ');
-    while ('outdent' != this.peek().type) {
-      switch (this.peek().type) {
-        case 'newline':
-          this.advance();
-          break;
-        case 'indent':
-          this.parseTextBlock(true).nodes.forEach(function(node){
-            block.push(node);
-          });
-          break;
-        default:
-          var texts = this.parseTextWithInlineTags(indent + this.advance().val);
-          texts.forEach(function (text) {
-            block.push(text);
-          });
-      }
-    }
-
-    if (spaces == this._spaces) this._spaces = null;
-    this.expect('outdent');
-
+    var body = this.peek();
+    if (body.type !== 'pipeless-text') return;
+    this.advance();
+    block.nodes = body.val.reduce(function (accumulator, text) {
+      return accumulator.concat(this.parseInlineTagsInText(text));
+    }.bind(this), []);
     return block;
   },
 
@@ -3374,6 +3443,7 @@ Parser.prototype = {
       case 'indent':
       case 'outdent':
       case 'eos':
+      case 'pipeless-text':
         break;
       default:
         throw new Error('Unexpected token `' + this.peek().type + '` expected `text`, `code`, `:`, `newline` or `eos`')
@@ -3383,16 +3453,12 @@ Parser.prototype = {
     while ('newline' == this.peek().type) this.advance();
 
     // block?
-    if ('indent' == this.peek().type) {
-      if (tag.textOnly) {
-        this.lexer.pipeless = true;
-        tag.block = this.parseTextBlock();
-        this.lexer.pipeless = false;
-      } else {
-        var block = this.block();
-        for (var i = 0, len = block.nodes.length; i < len; ++i) {
-          tag.block.push(block.nodes[i]);
-        }
+    if (tag.textOnly) {
+      tag.block = this.parseTextBlock();
+    } else if ('indent' == this.peek().type) {
+      var block = this.block();
+      for (var i = 0, len = block.nodes.length; i < len; ++i) {
+        tag.block.push(block.nodes[i]);
       }
     }
 
@@ -3580,7 +3646,7 @@ exports.rethrow = function rethrow(err, filename, lineno, str){
     throw err;
   }
   try {
-    str =  str || _dereq_('fs').readFileSync(filename, 'utf8')
+    str = str || _dereq_('fs').readFileSync(filename, 'utf8')
   } catch (ex) {
     rethrow(err, null, lineno)
   }
@@ -3646,6 +3712,37 @@ exports.merge = function(a, b) {
   return a;
 };
 
+exports.walkAST = function walkAST(ast, before, after) {
+  before && before(ast);
+  switch (ast.type) {
+    case 'Block':
+      ast.nodes.forEach(function (node) {
+        walkAST(node, before, after);
+      });
+      break;
+    case 'Case':
+    case 'Each':
+    case 'Mixin':
+    case 'Tag':
+    case 'When':
+    case 'Code':
+      ast.block && walkAST(ast.block, before, after);
+      break;
+    case 'Attrs':
+    case 'BlockComment':
+    case 'Comment':
+    case 'Doctype':
+    case 'Filter':
+    case 'Literal':
+    case 'MixinBlock':
+    case 'Text':
+      break;
+    default:
+      throw new Error('Unexpected node type ' + ast.type);
+      break;
+  }
+  after && after(ast);
+};
 
 },{}],27:[function(_dereq_,module,exports){
 

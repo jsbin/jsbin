@@ -30,7 +30,7 @@
     "nodemailer": "0.3.20",
     "commander": "1.0.0",
     "less": "~1.7.3",
-    "jade": "0.26.3",
+    "jade": "~1.4.2",
     "flatten.js": "0.1.0",
     "soak": "0.3.0",
     "async": "~0.1.22",

@@ -14,7 +14,8 @@ var editorModes = {
   less: 'text/x-less',
   sass: 'text/x-sass',
   scss: 'text/x-scss',
-  processing: 'text/x-csrc'
+  processing: 'text/x-csrc',
+  jade: 'text/x-jade'
 };
 
 var badChars = new RegExp('[\u200B\u0080-\u00a0]', 'g');
@@ -41,7 +42,7 @@ CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   'use strict';
-  if (['htmlmixed', 'javascript', 'css'].indexOf(cm.options.mode) !== 0) {
+  if (['htmlmixed', 'javascript', 'css', editorModes['less']].indexOf(cm.options.mode) === -1) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
   } else {
     return CodeMirror.snippets(cm);

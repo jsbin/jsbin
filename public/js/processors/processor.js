@@ -301,7 +301,9 @@ var processors = jsbin.processors = (function () {
       target: 'html',
       extensions: ['jade'],
       url: jsbin.static + '/js/vendor/jade.js',
-      init: passthrough,
+      init: function jade(ready) {
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
+      },
       handler: function jade(source, resolve, reject) {
         try {
           resolve(window.jade.compile(source, { pretty: true })());

@@ -41,7 +41,7 @@ CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   'use strict';
-  if (['htmlmixed', 'javascript', 'css'].indexOf(cm.options.mode) !== 0) {
+  if (['htmlmixed', 'javascript', 'css'].indexOf(cm.options.mode) === -1) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
   } else {
     return CodeMirror.snippets(cm);

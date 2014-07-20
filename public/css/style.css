@@ -4760,6 +4760,7 @@ tbody:hover .snapshot1 .url a span:before {
 
 .share-split {
   min-width: 350px;
+  overflow: hidden;
 }
 
 .share-split .controls,

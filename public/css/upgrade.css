@@ -102,3 +102,14 @@ tr.free td.free:after, tr.free td.pro:after {
 tr.pro td.pro:after {
   content: "\2713";
 }*/
+
+
+#pay {
+  display: block;
+  margin: 10px;
+  -webkit-transform: scale(1.75);
+  transform: scale(1.75);
+  padding-left: 30px;
+  padding-right: 30px;
+  text-decoration: none;
+}

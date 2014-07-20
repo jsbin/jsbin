@@ -36,12 +36,16 @@
     {{/if}}
   {{/feature}}
 
+  {{#feature request "upgrade"}}
   {{#feature request "dropbox"}}
     {{#if user.dropbox_token}}
     <li class="link-container success"><strong>Dropbox automatic exporting</strong> &ndash; complete &#10004; (<a href="{{root}}/auth/dropbox">re-link</a>)</li>
     {{else}}
     <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
     {{/if}}
+  {{else}}
+  <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/account/upgrade"><span class="pro-required">Pro</span></a> <a href="/account/upgrade">account required</a></li>
+  {{/feature}}
   {{/feature}}
   </ul>
 </section>

@@ -1597,12 +1597,21 @@ textarea:focus {
 }
 
 
-#control, .label, #tip, #toppanel {
+#control, .label, #tip, #toppanel, .ready #toppanel .toppanel-column-first {
   -webkit-user-select: none;
    -khtml-user-select: none;
      -moz-user-select: -moz-none; /* if this is "none" you can't copy text */
       -ms-user-select: none;
           user-select: none;
+}
+
+/* total faff, not sure why, but jsbin loads and selects all the text :-\ */
+.ready #toppanel {
+  -webkit-user-select: initial;
+   -khtml-user-select: initial;
+     -moz-user-select: initial;
+      -ms-user-select: initial;
+          user-select: initial;
 }
 
 .control, .help, .starting {
@@ -3355,7 +3364,7 @@ a.active:hover {
   /* margin: 3px 5px; */
   background: white;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
-  border: 1px solid #CCC;
+  border: 1px solid rgb(204, 204, 204);
   height: auto;
   /* border-radius: 5px; */
   text-align: left;
@@ -5219,4 +5228,50 @@ a.toppanel-logo {
 
 .embed .menu .brand img {
   margin-top: 2px;
+}
+
+a[data-pro]:after, .pro-required {
+  content: 'Pro';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
+  /* letter-spacing: 0.1em; */
+  border: 1px solid #ccc;
+  line-height: 10px;
+  padding: 3px;
+  border-radius: 3px;
+  top: 11px;
+  text-align: center;
+  background: rgb(252, 252, 252);
+}
+
+a[data-pro]:hover:after {
+  color: #999;
+  border-color: #999;
+}
+
+.gopro { /* not the camera...silly */
+  text-decoration: none;
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0;
+  background: rgb(39, 192, 39);
+  font-size: 15px;
+  text-align: center;
+  margin-top: -2px;
+  color: white;
+  color: white;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-top: 0;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
+  line-height: 30px;
+}
+
+.gopro:hover {
+  background: rgb(3, 166, 3);
 }

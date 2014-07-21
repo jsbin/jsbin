@@ -6,6 +6,10 @@ var $startingpoint = $('a.startingpoint').click(function (event) {
     localStorage.setItem('saved-html', editors.html.getCode());
     localStorage.setItem('saved-css', editors.css.getCode());
 
+    localStorage.setItem('saved-javascript-processor', jsbin.panels.panels.javascript.processor.id);
+    localStorage.setItem('saved-html-processor', jsbin.panels.panels.html.processor.id);
+    localStorage.setItem('saved-css-processor', jsbin.panels.panels.css.processor.id);
+
     $document.trigger('tip', {
       type: 'notification',
       content: 'Starting template updated and saved',

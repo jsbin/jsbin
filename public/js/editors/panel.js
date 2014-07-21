@@ -15,7 +15,8 @@ var editorModes = {
   sass: 'text/x-sass',
   scss: 'text/x-scss',
   processing: 'text/x-csrc',
-  jade: 'text/x-jade'
+  jade: 'text/x-jade',
+  haml: 'text/x-haml'
 };
 
 var badChars = new RegExp('[\u200B\u0080-\u00a0]', 'g');

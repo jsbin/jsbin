@@ -62,6 +62,64 @@
     }
   });
 
+  function shuffle(array) {
+    var m = array.length, t, i;
+
+    // While there remain elements to shuffle...
+    while (m) {
+
+      // Pick a remaining element...
+      i = Math.floor(Math.random() * m--);
+
+      // And swap it with the current element.
+      t = array[m];
+      array[m] = array[i];
+      array[i] = t;
+    }
+
+    return array;
+  }
+
+  $.ajax({
+    // tries to cache once a day
+    url: '/blog/all.json?' + (new Date()).toString().split(' ').slice(0, 4).join('-'),
+    dataType: 'json',
+    cache: true,
+    success: function (data) {
+      var blogpost = data.blog[0];
+      $('.toppanel-blog ul').html('<li><a href="/' + blogpost.slug + '" target="_blank" class="toppanel-link">' + blogpost.title.replace(/TWDTW\s/, '') + '</a></li>');
+
+      var last = null;
+      try {
+        last = localStorage.lastpost || null;
+      } catch (e) {}
+
+      if (last === null) {
+        console.log('1 post to read');
+      } else {
+        last *= 1;
+        if (last < blogpost.timestamp) {
+          var count = data.blog.reduce(function (prev, current, array) {
+            if (last < current.timestamp) {
+              return prev + 1;
+            }
+            return prev;
+          }, 0);
+
+          console.log('count: ' + count);
+          console.log(data.blog[count-1]);
+
+          $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
+        }
+      }
+
+      var help = shuffle(data.help);
+
+      $('.toppanel-help ul').html('<li><a href="/' + help[0].slug + '" target="_blank" class="toppanel-link">' + help[0].title + '</a></li><li><a href="/' + help[1].slug + '" target="_blank" class="toppanel-link">' + help[1].title + '</a></li>');
+
+    }
+  })
+
   // analytics for links
   $('#toppanel').find('.toppanel-link').mousedown(function() {
     analytics.welcomePanelLink(this.href);

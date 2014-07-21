@@ -5275,3 +5275,22 @@ a[data-pro]:hover:after {
 .gopro:hover {
   background: rgb(3, 166, 3);
 }
+
+.blog a[data-count]:after {
+  content: attr(data-count);
+  position: absolute;
+  top: 3px;
+  font-size: 10px;
+  border: 1px solid rgb(216, 23, 23);
+  /* border-radius: 10px; */
+  display: block;
+  right: 0;
+  background: rgb(255, 0, 0);
+  color: white;
+  padding: 1px;
+  width: 9px;
+  line-height: 9px;
+  height: 8px;
+  text-align: center;
+  font-family: monospace;
+}

@@ -36,7 +36,7 @@
 
   <div class="toppanel-column">
   {{#blog}}
-    <div class="toppanel-section">
+    <div class="toppanel-blog toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
         {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
@@ -44,7 +44,7 @@
     </div>
   {{/blog}}
   {{#help}}
-    <div class="toppanel-section">
+    <div class="toppanel-help toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
         {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}

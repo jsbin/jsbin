@@ -7,7 +7,11 @@
     <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
   </div>
   {{#feature request "upgrade"}}
+    {{#feature request "pro"}}
+    <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
+    {{else}}
     <a class="sidebar-btn" href="{{root}}/account/upgrade/pay">Upgrade</a>
+    {{/feature}}
   {{/feature}}
 </div>
 <script>

@@ -545,3 +545,12 @@ a[data-pro]:hover:after {
 .success {
   color: rgb(44, 149, 56);
 }
+
+#body img.powered-by-stripe {
+  position: absolute;
+  top: 25px;
+  right: 0;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+}

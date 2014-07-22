@@ -4755,7 +4755,7 @@ html * {
 /* toppanel status */
 #toppanel {
   height: 200px;
-  background: #ecf2fa;
+  background: rgb(236, 242, 250);
   position: relative;
   z-index: 100000;
   border-bottom: rgb(191, 191, 191) solid 1px;
@@ -4812,7 +4812,9 @@ body.ready.toppanel {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+  position: relative;
 }
+
 @media (max-width: 1223px) { /* 5 */
   .toppanel-column {
     width: calc((100% - 217px) / 4);
@@ -4856,9 +4858,21 @@ body.ready.toppanel {
   overflow: visible;
   width: 197px;
 }
-.toppanel-section + .toppanel-section {
-  margin-top: 13px;
+.toppanel-section {
+  margin-bottom: 12px;
 }
+
+.toppanel-love {
+  border: 1px solid hsl(214, 58%, 75%);
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: hsl(214, 52%, 98%);
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* box-sizing: border-box; */
+  margin-top: 24px;
+}
+
 .toppanel-actions {
   position: relative;
   top: -12px;
@@ -4887,6 +4901,10 @@ body.ready.toppanel {
   padding: 6px 10px 6px 1px;
   text-decoration: none;
   text-shadow: none;
+}
+.toppanel-wrapper p a {
+  display: inline;
+  padding: inherit;
 }
 .toppanel-wrapper a:hover {
   background: #CCC;
@@ -5293,4 +5311,8 @@ a[data-pro]:hover:after {
   height: 8px;
   text-align: center;
   font-family: monospace;
+}
+
+.love {
+  color: #FF4136;
 }

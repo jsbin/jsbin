@@ -23,7 +23,7 @@
   },
   "pro-features": {
     "title": "Pro features",
-    "link": "/account/upgrade",
+    "//link": "/account/upgrade",
     "data": [
       {
         "title": "Private bins",

@@ -34,7 +34,7 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
   <script>
   document.getElementById('cancel').onsubmit = function (event) {
     event = event || window.event;
-    var result = prompt("Enter your username to confirm the cancellation.\n\nWe'll miss you :(");
+    var result = prompt("Enter your username to confirm the cancellation\n(it's \"{{../../username}}\" by the way).\n\nWe'll miss you :(");
     if (!result || (result.toLowerCase().trim() !== '{{../../username}}'.toLowerCase())) {
       if (event.preventDefault) event.preventDefault();
       return false;

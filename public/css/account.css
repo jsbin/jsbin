@@ -554,3 +554,25 @@ a[data-pro]:hover:after {
   box-shadow: none;
   border-radius: 0;
 }
+
+.cancel small {
+  line-height: 18px;
+  display: block;
+}
+
+.cancel {
+  margin-top: 60px;
+  border: 1px solid rgb(232, 232, 186);
+  border-radius: 4px;
+  padding: 20px;
+  background: hsla(60, 70%, 90%, 0.6);
+  font-size: 0.9em;
+}
+
+.cancel h3 {
+  margin-top: 0;
+}
+
+.cancel p:last-child {
+  margin-bottom: 0;
+}

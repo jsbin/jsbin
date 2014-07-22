@@ -1,0 +1,29 @@
+{{> account_sidebar}}
+
+<h1>Your Pro Subscription</h1>
+
+<img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="149" height="41">
+<section id="content">
+  {{#each data}}
+  {{!--
+      <!-- Period: {{#stripeTimestampAsDate period.start "MMM-D, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate period.end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}} --> --}}
+  <pre>Plan: {{plan.name}}
+Cost: £{{#divide plan.amount 100 2}}{{/divide}} per {{plan.interval}} {{#if plan.vat}}(£{{#divide plan.vat 100 2}}+VAT{{/divide}}){{/if}}
+Creted: {{#stripeTimestampAsDate start "MMM-D, YYYY"}}{{/stripeTimestampAsDate}}
+Next payment: {{#stripeTimestampAsDate current_period_end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}}</pre>
+  {{/each}}
+  <p><a href="http://jsbin.com/dave/last">Dave</a> loves you. Thank you.</p>
+
+  <div class="cancel">
+    <h3>Cancellation Zone</h3>
+    <p>This will disable all your Pro access and disable your warm love for JS Bin. It's cool, but we'll miss you.</p>
+    <form method="post" action="/account/subscription/cancel">
+      <input type="hidden" name="subscription" value="{{data.0.id}}">
+      <input type="hidden" name="_csrf" value="{{csrf}}">
+      <button>Cancel my subscription</button>
+    </form>
+  </div>
+
+</section>
+
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>

@@ -23,7 +23,7 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
   <div class="cancel">
     <h3>Cancellation Zone</h3>
     <p>This will disable all your Pro access and disable your warm love for JS Bin.</p>
-    <p>If you do cancel, your Pro status will remain active until {{#stripeTimestampAsDate datacurrent_period_end "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}, when your subscription will not be renewed.</p>
+    <p>If you do cancel, your Pro status will remain active until {{#stripeTimestampAsDate current_period_end "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}, when your subscription will not be renewed.</p>
     <form id="cancel" method="post" action="/account/subscription/cancel">
       <input type="hidden" name="subscription" value="{{id}}">
       <input type="hidden" name="_csrf" value="{{../../csrf}}">

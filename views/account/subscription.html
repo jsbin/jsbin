@@ -4,26 +4,46 @@
 
 <img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="149" height="41">
 <section id="content">
-  {{#each data}}
-  {{!--
-      <!-- Period: {{#stripeTimestampAsDate period.start "MMM-D, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate period.end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}} --> --}}
-  <pre>Plan: {{plan.name}}
+  {{#subscription}}
+  <pre>Plan: {{plan.name}}{{#if cancel_at_period_end}} (cancelled on {{#stripeTimestampAsDate canceled_at "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}){{/if}}
 Cost: £{{#divide plan.amount 100 2}}{{/divide}} per {{plan.interval}} {{#if plan.vat}}(£{{#divide plan.vat 100 2}}+VAT{{/divide}}){{/if}}
-Creted: {{#stripeTimestampAsDate start "MMM-D, YYYY"}}{{/stripeTimestampAsDate}}
-Next payment: {{#stripeTimestampAsDate current_period_end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}}</pre>
-  {{/each}}
-  <p><a href="http://jsbin.com/dave/last">Dave</a> loves you. Thank you.</p>
+Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}
+{{#unless cancel_at_period_end}}Next payment: {{#stripeTimestampAsDate current_period_end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}}{{/unless}}</pre>
 
+<!-- Your credit card will automatically be charged £{{#divide plan.amount 100 0}}{{/divide}} on {{#stripeTimestampAsDate current_period_end "MMM-D, YYYY"}}{{/stripeTimestampAsDate}} for another {{plan.interval}} of service. -->
+
+  <p><a href="http://jsbin.com/dave/last">Dave</a> loves you <span class="love">&hearts;</span> Thank you.</p>
+
+  {{#if cancel_at_period_end}}
   <div class="cancel">
     <h3>Cancellation Zone</h3>
-    <p>This will disable all your Pro access and disable your warm love for JS Bin. It's cool, but we'll miss you.</p>
-    <form method="post" action="/account/subscription/cancel">
-      <input type="hidden" name="subscription" value="{{data.0.id}}">
-      <input type="hidden" name="_csrf" value="{{csrf}}">
+    <p>You cancelled your Pro subscription on {{#stripeTimestampAsDate canceled_at "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}. You'll keep your Pro status until then.</p>
+  </div>
+  {{else}}
+  <div class="cancel">
+    <h3>Cancellation Zone</h3>
+    <p>This will disable all your Pro access and disable your warm love for JS Bin.</p>
+    <p>If you do cancel, your Pro status will remain active until {{#stripeTimestampAsDate datacurrent_period_end "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}, when your subscription will not be renewed.</p>
+    <form id="cancel" method="post" action="/account/subscription/cancel">
+      <input type="hidden" name="subscription" value="{{id}}">
+      <input type="hidden" name="_csrf" value="{{../../csrf}}">
       <button>Cancel my subscription</button>
     </form>
   </div>
 
-</section>
+  <script>
+  document.getElementById('cancel').onsubmit = function (event) {
+    event = event || window.event;
+    var result = prompt("Enter your username to confirm the cancellation.\n\nWe'll miss you :(");
+    if (!result || (result.toLowerCase().trim() !== '{{../../username}}'.toLowerCase())) {
+      if (event.preventDefault) event.preventDefault();
+      return false;
+    }
+  };
+  </script>
 
+  {{/if}}
+
+  {{/subscription}}
+</section>
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>

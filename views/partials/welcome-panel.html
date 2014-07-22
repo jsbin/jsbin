@@ -34,7 +34,7 @@
   </div>
 {{/pro-features}}
 
-  <div class="toppanel-column">
+  <div class="toppanel-column toppanel-stretch">
   {{#blog}}
     <div class="toppanel-blog toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
@@ -66,6 +66,11 @@
           </ul>
       </div>
     {{/twitter}}
+    {{#if ../user.pro}}
+      <div class="toppanel-section toppanel-love">
+        <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
+      </div>
+    {{/if}}
   </div>
 
   <div class="toppanel-column">

@@ -251,13 +251,13 @@ var processors = jsbin.processors = (function () {
       id: 'markdown',
       target: 'html',
       extensions: ['md', 'markdown', 'mdown'],
-      url: jsbin.static + '/js/vendor/markdown.js',
+      url: jsbin.static + '/js/vendor/marked.min.js',
       init: function markdown(ready) {
         $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
       },
       handler: function (source, resolve, reject) {
         try {
-          resolve(window.markdown.toHTML(source));
+          resolve(window.marked(source));
         } catch (e) {
           reject(e);
         }

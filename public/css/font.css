@@ -19,7 +19,16 @@
          url('../font/SourceCodePro-Regular-webfont.svg#SourceCodeProRegular') format('svg');
     font-weight: normal;
     font-style: normal;
-
+}
+@font-face {
+    font-family: 'SourceCodeProRegular';
+    src: url('../font/SourceCodePro-Bold-webfont.eot');
+    src: url('../font/SourceCodePro-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/SourceCodePro-Bold-webfont.woff?#cacheBust1') format('woff'),
+         url('../font/SourceCodePro-Bold-webfont.ttf?#cacheBust1') format('truetype'),
+         url('../font/SourceCodePro-Bold-webfont.svg#SourceCodeProRegular') format('svg');
+    font-weight: bold;
+    font-style: normal;
 }
 
 @font-face {

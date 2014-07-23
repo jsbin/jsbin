@@ -4764,6 +4764,7 @@ html * {
 }
 .toppanel #toppanel {
   margin-top: 0;
+  line-height:16px;
 }
 
 .toppanel #bin,

@@ -4665,6 +4665,7 @@ html * {
   color: rgba(0,0,0,.4);
   font-weight: 800;
   font-size: 12px;
+  line-height:16px;
   display: block;
 }
 

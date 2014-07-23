@@ -580,3 +580,78 @@ a[data-pro]:hover:after {
 .love {
   color: #FF4136;
 }
+
+
+@media only screen and (max-width: 640px) {
+  #sidebar {
+    float: none;
+  }
+  #content, h1 {
+    margin-left: 0;
+  }
+  #payment-form {
+
+  }
+  #payment-form .label,
+  #payment-form label[for] {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  #payment-form .options {
+    margin-left: 0;
+  }
+  #payment-form .carddetails {
+    margin-left: 0;
+    width: 100%;
+  }
+  #payment-form label:first-of-type input[type="radio"] {
+    margin-left: 20px;
+  }
+  #payment-form .payment-details span {
+    display: block;
+  }
+  #payment-form .payment-details input {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+  }
+  #payment-form .inputWithImage b {
+    display: none;
+  }
+  #payment-form #vat {
+    width: 100%;
+  }
+  #payment-form #vatiso {
+    position: static;
+  }
+  #payment-form #pay {
+    margin-left: 0;
+    margin-right: 0;
+    -webkit-transform: none;
+    transform: none;
+    width: 100%;
+    font-size: 2em;
+  }
+  #payment-form p.options input[type=radio] {
+    margin-left: 20px;
+  }
+
+  header nav {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 0;
+  }
+  header nav a {
+    display: inline;
+  }
+  span.status {
+    position: absolute;
+    top: -100%;
+    right: 0;
+  }
+  #body img.powered-by-stripe {
+    right: 5px;
+  }
+}

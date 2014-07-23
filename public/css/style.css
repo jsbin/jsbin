@@ -4814,6 +4814,11 @@ body.ready.toppanel {
           box-sizing: border-box;
   position: relative;
 }
+/* Pro column 
+   this could change in the future depending on the content */
+.toppanel-column:nth-child(3) {
+  max-width: 160px;
+}
 
 @media (max-width: 1223px) { /* 5 */
   .toppanel-column {

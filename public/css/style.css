@@ -4665,6 +4665,7 @@ html * {
   color: rgba(0,0,0,.4);
   font-weight: 800;
   font-size: 12px;
+  line-height:16px;
   display: block;
 }
 
@@ -4763,6 +4764,7 @@ html * {
 }
 .toppanel #toppanel {
   margin-top: 0;
+  line-height:16px;
 }
 
 .toppanel #bin,
@@ -4983,6 +4985,7 @@ a.toppanel-logo {
   width: 100px;
   padding: 4px 6px;
   text-align: center;
+  line-height:16px;
   position: relative;
   z-index: 1;
   -webkit-transform: translate(-94px, 112px) scale(0.25);

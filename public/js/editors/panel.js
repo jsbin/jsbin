@@ -562,7 +562,7 @@ function populateEditor(editor, panel) {
       changed = cached != saved && cached != template[panel];
     } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
-      var processor = localStorage.getItem('saved-' + panel + '-processor');
+      var processor = JSON.parse(localStorage.getItem('saved-processors') || '{}')[panel];
       if (processor) {
         jsbin.processors.set(jsbin.panels.panels[panel], processor);
       }

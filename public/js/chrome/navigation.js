@@ -6,9 +6,11 @@ var $startingpoint = $('a.startingpoint').click(function (event) {
     localStorage.setItem('saved-html', editors.html.getCode());
     localStorage.setItem('saved-css', editors.css.getCode());
 
-    localStorage.setItem('saved-javascript-processor', jsbin.panels.panels.javascript.processor.id);
-    localStorage.setItem('saved-html-processor', jsbin.panels.panels.html.processor.id);
-    localStorage.setItem('saved-css-processor', jsbin.panels.panels.css.processor.id);
+    localStorage.setItem('saved-processors', JSON.stringify({
+      javascript: jsbin.panels.panels.javascript.processor.id,
+      html: jsbin.panels.panels.html.processor.id,
+      css: jsbin.panels.panels.css.processor.id,
+    }));
 
     $document.trigger('tip', {
       type: 'notification',

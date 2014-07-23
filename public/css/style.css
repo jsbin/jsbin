@@ -4816,6 +4816,11 @@ body.ready.toppanel {
           box-sizing: border-box;
   position: relative;
 }
+/* Pro column 
+   this could change in the future depending on the content */
+.toppanel-column:nth-child(3) {
+  max-width: 160px;
+}
 
 @media (max-width: 1223px) { /* 5 */
   .toppanel-column {
@@ -5036,9 +5041,9 @@ a.toppanel-logo {
           transition:         transform linear 120ms 120ms;
 }
 /* slow to remove */
-.toppanel-slow #bin,
-.toppanel-slow #toppanel,
-.toppanel-slow a.toppanel-logo {
+#jsbin .toppanel-slow #bin,
+#jsbin .toppanel-slow #toppanel,
+#jsbin .toppanel-slow a.toppanel-logo {
   -webkit-transition-duration: 5s;
      -moz-transition-duration: 5s;
        -o-transition-duration: 5s;

@@ -4983,6 +4983,7 @@ a.toppanel-logo {
   width: 100px;
   padding: 4px 6px;
   text-align: center;
+  line-height:16px;
   position: relative;
   z-index: 1;
   -webkit-transform: translate(-94px, 112px) scale(0.25);

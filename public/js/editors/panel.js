@@ -557,6 +557,10 @@ function populateEditor(editor, panel) {
       editor.setCode(cached);
     } else if (cached && sessionURL == jsbin.getURL()) { // try to restore the session first - only if it matches this url
       editor.setCode(cached);
+      var processor = JSON.parse(localStorage.getItem('saved-processors') || '{}')[panel];
+      if (processor) {
+        jsbin.processors.set(jsbin.panels.panels[panel], processor);
+      }
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];

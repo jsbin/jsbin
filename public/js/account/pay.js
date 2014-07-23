@@ -188,14 +188,6 @@ jQuery(function ($) {
       $form.find('.payment-errors').html('<b class="icon-info-circle"></b> ' + response.error.message);
       $form.find('button').prop('disabled', false);
     } else {
-      if (response.card.country) {
-        if (countryEl.val() !== response.card.country) {
-
-        }
-      }
-
-      $form.find('button').prop('disabled', false);
-
       // response contains id and card, which contains additional card details
       var token = response.id;
       // Insert the token into the form so it gets submitted to the server

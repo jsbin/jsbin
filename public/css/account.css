@@ -548,11 +548,12 @@ a[data-pro]:hover:after {
 
 #body img.powered-by-stripe {
   position: absolute;
-  top: 25px;
+  top: 35px;
   right: 0;
   border: 0;
   box-shadow: none;
   border-radius: 0;
+  opacity: 0.5;
 }
 
 .cancel small {
@@ -581,6 +582,22 @@ a[data-pro]:hover:after {
   color: #FF4136;
 }
 
+.issue {
+  margin: 20px 0;
+  display: inline-block;
+  font-weight: 200;
+  /*color: #999;*/
+}
+
+.issue:before {
+  content: '';
+  background: url(/images/comment.svg) no-repeat;
+  background-size: cover;
+  display: inline-block;
+  height: 12px;
+  width: 12px;
+  margin-right: 4px;
+}
 
 @media only screen and (max-width: 640px) {
   #sidebar {

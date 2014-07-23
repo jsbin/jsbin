@@ -2,7 +2,7 @@
 
 <h1>Your Pro Subscription</h1>
 
-<img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="149" height="41">
+<img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="119">
 <section id="content">
   {{#subscription}}
   <pre>Plan: {{plan.name}}{{#if cancel_at_period_end}} (cancelled on {{#stripeTimestampAsDate canceled_at "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}){{/if}}

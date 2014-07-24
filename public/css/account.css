@@ -207,6 +207,7 @@ form label.mini-desc a {
   display: inline;
   font-weight: normal;
   margin-right: 0;
+  font-size: 15px;
 }
 span.mini-desc {
   color: #979A99;

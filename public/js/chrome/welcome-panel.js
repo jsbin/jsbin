@@ -104,9 +104,14 @@
             }
             return prev;
           }, 0);
+        } else {
+          count = 0;
         }
       }
-      $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
+
+      if (count) {
+        $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
+      }
 
       var help = shuffle(data.help);
 

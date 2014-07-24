@@ -519,7 +519,7 @@ var libraries = [
       'data-sap-ui-theme': 'sap_bluecrystal',
       'data-sap-ui-libs': 'sap.m'
     },
-    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal'
+    'label': 'OpenUI5 latest (Mobile BlueCrystal)'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',

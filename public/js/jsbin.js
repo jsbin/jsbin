@@ -247,7 +247,9 @@ var $window = $(window),
       sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
-      // if (jsbin.panels.saveOnExit) ;
+      if (jsbin.panels.saveOnExit === false) {
+        return;
+      }
       jsbin.panels.save();
       jsbin.panels.savecontent();
 

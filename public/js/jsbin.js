@@ -254,7 +254,9 @@ var $window = $(window),
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
-      if (panel) sessionStorage.setItem('panel', panel.id);
+      if (panel) {
+        sessionStorage.setItem('panel', panel.id);
+      }
     };
 
 $window.unload(unload);

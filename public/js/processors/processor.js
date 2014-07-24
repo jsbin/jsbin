@@ -194,6 +194,40 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    livescript: createProcessor({
+      id: 'livescript',
+      target: 'javascript',
+      extensions: ['ls'],
+      url: jsbin.static + '/js/vendor/livescript.js',
+      init: function livescript(ready) {
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/livescript/livescript.js', ready);
+      },
+      handler: function (source, resolve, reject) {
+        var renderedCode = '';
+        try {
+          renderedCode = window.LiveScript.compile(source, {
+            bare: true
+          });
+          resolve(renderedCode);
+        } catch (e) {
+          // index starts at 1
+          var lineMatch = e.message.match(/on line (\d+)/) || [,];
+          var line = parseInt(lineMatch[1], 10) || 0;
+          if (line > 0) {
+            line = line - 1;
+          }
+          var msg = e.message.match(/(.+) on line (\d+)$/) || [,];
+          var errors = {
+            line: line,
+            ch: null,
+            msg: msg[1]
+          };
+
+          reject([errors]);
+        }
+      }
+    }),
+
     typescript: createProcessor({
       id: 'typescript',
       target: 'javascript',

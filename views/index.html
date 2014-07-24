@@ -11,6 +11,16 @@
   {{#if isProduction}}
   {{{analytics}}}
   {{/if}}
+  {{#if bin}}
+  <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
+  <meta property="og:title" content="JS Bin" />
+  <meta property="og:description" content="Sample of the bin: {{bin.metadata.summary}}" />
+  {{else}}
+  <meta property="og:url" content="{{root}}" />
+  <meta property="og:title" content="JS Bin" />
+  <meta property="og:description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
+  {{/if}}
+  <meta property="og:image" content="{{static}}/images/logo.png" />
 </head>
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->

@@ -36,6 +36,7 @@
   "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
   "updateBinData": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "updateOwnersData": "UPDATE `owners` SET `:field`=? WHERE `url`=? AND `revision`=?",
+  "updateOwnershipData": "UPDATE `ownership` SET `:field`=? WHERE `name`=?",
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
   "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
@@ -74,5 +75,25 @@
     "javascript",
     "archive",
     "visibility"
+  ],
+  "ownershipColumns": [
+    "// protected name",
+    "key",
+    "email",
+    "api_key",
+    "github_token",
+    "github_id",
+    "last_login",
+    "created",
+    "updated",
+    "pro",
+    "settings",
+    "// protected id",
+    "dropbox_token",
+    "domain",
+    "verified",
+    "dropbox_id",
+    "beta",
+    "flagged"
   ]
 }

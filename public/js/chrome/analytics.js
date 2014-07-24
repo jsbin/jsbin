@@ -8,7 +8,6 @@ var analytics = {
       data.push(value);
     }
 
-    // console.log(data, (new Error()).stack);
     window._gaq && _gaq.push(data);
   },
   library: function (action, value) {

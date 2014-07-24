@@ -54,13 +54,13 @@
     goSlow(event);
     showToppanel();
   });
-  $document.keydown(function (event) {
-    if (event.which === 27) {
-      if ($body.hasClass('toppanel')) {
-        removeToppanel();
-      }
-    }
-  });
+  // $document.keydown(function (event) {
+  //   if (event.which === 27) {
+  //     if ($body.hasClass('toppanel')) {
+  //       removeToppanel();
+  //     }
+  //   }
+  // });
 
   function shuffle(array) {
     var m = array.length, t, i;
@@ -87,31 +87,26 @@
     cache: true,
     success: function (data) {
       var blogpost = data.blog[0];
-      $('.toppanel-blog ul').html('<li><a href="/' + blogpost.slug + '" target="_blank" class="toppanel-link">' + blogpost.title.replace(/TWDTW\s/, '') + '</a></li>');
+      $('.toppanel-blog ul').html('<li><a href="/' + blogpost.slug + '" target="_blank" class="toppanel-link">' + blogpost.title.replace(/TWDTW.*:\s/, '') + '</a></li>');
 
       var last = null;
+      var count = 1;
       try {
         last = localStorage.lastpost || null;
       } catch (e) {}
 
-      if (last === null) {
-        console.log('1 post to read');
-      } else {
+      if (last !== null) {
         last *= 1;
         if (last < blogpost.timestamp) {
-          var count = data.blog.reduce(function (prev, current, array) {
+          count = data.blog.reduce(function (prev, current) {
             if (last < current.timestamp) {
               return prev + 1;
             }
             return prev;
           }, 0);
-
-          console.log('count: ' + count);
-          console.log(data.blog[count-1]);
-
-          $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
         }
       }
+      $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
 
       var help = shuffle(data.help);
 

@@ -528,6 +528,13 @@ var libraries = [
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
     'label': 'Phaser 2.0.5'
+  },
+  {
+    'url': [
+      '//vjs.zencdn.net/4.6/video-js.css',
+      '//vjs.zencdn.net/4.6/video.js'
+    ],
+    'label': 'Video.js 4.6.x'
   }
 ];
 

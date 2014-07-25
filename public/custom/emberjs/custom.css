@@ -6,6 +6,16 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0 0 3px;
 }
 
+.menu > .focusbtn {
+  padding: 6px 10px;
+  margin: 0;
+  background-color: transparent;
+}
+
+.menu > .focusbtn:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
 .menu > .button:hover,
 .menu > .button:active,
 .menu.open > .button {

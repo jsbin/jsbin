@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
-  {{#if isProduction}}
-  {{{analytics}}}
+  {{#if is_production}}
+  {{> analytics}}
   {{/if}}
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
@@ -571,7 +571,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
 <![endif]-->
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-{{#if isProduction}}
+{{#if is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 <script>
   start({{{json_template}}}, {{{jsbin}}}, this, document);

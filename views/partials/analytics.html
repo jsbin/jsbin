@@ -1,6 +1,7 @@
+{{#if analyticsId}}
 <script>
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '{{id}}']);
+_gaq.push(['_setAccount', '{{analyticsId}}']);
 _gaq.push(['_trackPageview']);
 
 (function() {
@@ -9,3 +10,4 @@ _gaq.push(['_trackPageview']);
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
 })();
 </script>
+{{/if}}

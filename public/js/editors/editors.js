@@ -180,15 +180,7 @@ panels.restore = function () {
     toopen.push('live');
   }
 
-  // otherwise restore the user's regular settings
-  // also set a flag indicating whether or not we should save the panel settings
-  // this is based on whether they're on jsbin.com or if they're on an existing
-  // bin. Also, if they hit save - *always* save their layout.
-  if (location.pathname && location.pathname !== '/') {
-    panels.saveOnExit = false;
-  } else {
-    panels.saveOnExit = true;
-  }
+  panels.saveOnExit = true;
 
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query

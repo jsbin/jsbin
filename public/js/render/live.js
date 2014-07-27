@@ -175,6 +175,16 @@ var renderer = (function () {
   };
 
   /**
+   * When the renderer is complete, it means we didn't hit an initial
+   * infinite loop
+   */
+  renderer.complete = function () {
+    try {
+      delete sessionStorage.runnerPending;
+    } catch (e) {}
+  };
+
+  /**
    * When the iframe resizes, update the size text
    */
   renderer.resize = (function () {
@@ -309,6 +319,11 @@ var renderLivePreview = (function () {
       if (!outputPanelOpen && !consolePanelOpen) {
         return;
       }
+      // this is a flag that helps detect crashed runners
+      if (jsbin.settings.includejs) {
+        sessionStorage.runnerPending = 1;
+      }
+
       renderer.postMessage('render', {
         source: source,
         options: {
@@ -324,6 +339,13 @@ var renderLivePreview = (function () {
   /**
    * Events
    */
+
+  $document.on('codeChange.live', function (event, arg) {
+    if (arg.origin === 'setValue' || arg.origin === undefined) {
+      return;
+    }
+    delete sessionStorage.runnerPending;
+  });
 
   // Listen for console input and post it to the iframe
   $document.on('console:run', function (event, cmd) {

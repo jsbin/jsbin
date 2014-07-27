@@ -113,6 +113,8 @@ var runner = (function () {
       // Close the document. This will fire another DOMContentLoaded.
       childDoc.close();
 
+      runner.postMessage('complete');
+
       // Setup the new window
       sandbox.wrap(childWindow, data.options);
     });

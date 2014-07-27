@@ -11,8 +11,8 @@
       var jsbin = { "static": "{{static}}", version: "{{version}}" };
     </script>
     <script src="{{static}}/js/vendor/html5shiv.min.js{{cacheBust}}"></script>
-    {{#if isProduction}}
-      {{{analytics}}}
+    {{#if is_production}}
+      {{> analytics}}
     {{/if}}
   </head>
   <body>

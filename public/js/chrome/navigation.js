@@ -332,6 +332,14 @@ $('#lostpass').click(function (e) {
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
+if (sessionStorage.runnerPending) {
+  $document.trigger('tip', {
+    content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
+    type: 'notification'
+  });
+  jsbin.settings.includejs = false;
+}
+
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
   analytics.enableLiveJS(jsbin.settings.includejs);

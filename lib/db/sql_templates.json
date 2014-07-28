@@ -94,6 +94,7 @@
     "verified",
     "dropbox_id",
     "beta",
-    "flagged"
+    "flagged",
+    "last_seen"
   ]
 }

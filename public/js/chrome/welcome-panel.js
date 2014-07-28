@@ -87,7 +87,10 @@
     cache: true,
     success: function (data) {
       var blogpost = data.blog[0];
-      $('.toppanel-blog ul').html('<li><a href="/' + blogpost.slug + '" target="_blank" class="toppanel-link">' + blogpost.title.replace(/TWDTW.*:\s/, '') + '</a></li>');
+      // this is daft, but it means that the landing page is the same
+      // for all, and ensures that blog comments end up on a single place
+      var root = jsbin.root.replace(/^https/, 'http');
+      $('.toppanel-blog ul').html('<li><a href="' + root + '/' + blogpost.slug + '" target="_blank" class="toppanel-link">' + blogpost.title.replace(/TWDTW.*:\s/, '') + '</a></li>');
 
       var last = null;
       var count = 1;
@@ -110,12 +113,12 @@
       }
 
       if (count) {
-        $('.blog a').attr('href', '/' + data.blog[count-1].slug).attr('data-count', count);
+        $('.blog a').attr('href', root + '/' + data.blog[count-1].slug).attr('data-count', count);
       }
 
       var help = shuffle(data.help);
 
-      $('.toppanel-help ul').html('<li><a href="/' + help[0].slug + '" target="_blank" class="toppanel-link">' + help[0].title + '</a></li><li><a href="/' + help[1].slug + '" target="_blank" class="toppanel-link">' + help[1].title + '</a></li>');
+      $('.toppanel-help ul').html('<li><a href="' + root + '/' + help[0].slug + '" target="_blank" class="toppanel-link">' + help[0].title + '</a></li><li><a href="' + root + '/' + help[1].slug + '" target="_blank" class="toppanel-link">' + help[1].title + '</a></li>');
 
     }
   })

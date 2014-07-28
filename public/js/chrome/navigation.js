@@ -335,7 +335,7 @@ jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin
 if (sessionStorage.runnerPending) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
-    type: 'notification'
+    type: 'error'
   });
   jsbin.settings.includejs = false;
 }

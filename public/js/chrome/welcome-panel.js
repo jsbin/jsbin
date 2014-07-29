@@ -44,6 +44,10 @@
     }
   };
 
+  $('.toppanel-logo').on('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e) {
+    $document.trigger('sizeeditors');
+  });
+
   $('.toppanel-hide').click(function(event) {
     event.preventDefault();
     goSlow(event);

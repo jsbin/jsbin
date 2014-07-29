@@ -97,6 +97,7 @@
         indent = new Array(cm.options.indentUnit * 1 + 1).join(' ');
       }
 
+      // I don't like this - feel like we shouldnt be pseudo parsing the code around the cursor. - FO
       if (tok.string === ';' || tok.type === 'string' || tok.type === null && tok.string !== '.') {
         return cm.replaceRange(indent, pos);
       }

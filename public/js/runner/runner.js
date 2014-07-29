@@ -8,6 +8,15 @@ var runner = (function () {
   var runner = {};
 
   /**
+   * Update the loop protoction hit function to send an event up to the parent
+   * window so we can insert it in our error UI
+   */
+  loopProtect.hit = function (line) {
+    console.warn('Exiting potential infinite loop at line ' + line + '. To disable loop protection: add "// noprotect" to your code');
+    runner.postMessage('loopProtectHit', line);
+  }
+
+  /**
    * Store what parent origin *should* be
    */
   runner.parent = {};

@@ -256,6 +256,8 @@
   function updateLinting(cm, annotationsNotSorted) {
     var state = cm.state.lint, options = state.options;
 
+    cm.state.lint.annotations = annotationsNotSorted;
+
     if (cm.options.lintOpt.under) {
       underClear(cm);
     }

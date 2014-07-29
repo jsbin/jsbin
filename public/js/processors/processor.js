@@ -400,7 +400,7 @@ var processors = jsbin.processors = (function () {
         /* keeping old code for local version of scss if we ever want it again */
         // $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
         // Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
-      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
+      handler: throttle(debounceAsync(function sass(source, resolve, reject, done) {
         $.ajax({
           type: 'post',
           url: '/processor',

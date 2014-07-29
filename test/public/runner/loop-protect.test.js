@@ -3,7 +3,7 @@
 var assert = require('assert');
 var sinon = require('sinon');
 var pwd = process.cwd();
-var loopProtect = require(pwd + '/public/js/runner/loop-protect');
+var loopProtect = require(pwd + '/public/js/vendor/loop-protect.min');
 
 // expose a window object for loopProtect compatibility
 global.window = {

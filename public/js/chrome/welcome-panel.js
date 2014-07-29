@@ -27,6 +27,8 @@
     settings.save();
     $body.addClass('toppanel-close');
     $body.removeClass('toppanel');
+
+    // $document.trigger('sizeeditors');
   };
 
   var showToppanel = function() {
@@ -36,7 +38,6 @@
     $body.addClass('toppanel');
   };
 
-  // to remove
   var goSlow = function(e) {
     $body.removeClass('toppanel-slow');
     if (e.shiftKey) {

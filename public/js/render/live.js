@@ -185,6 +185,35 @@ var renderer = (function () {
   };
 
   /**
+   * Pass loop protection hit calls up to the error UI
+   */
+  renderer.loopProtectHit = function (line) {
+    var cm = jsbin.panels.panels.javascript.editor;
+
+    // grr - more setTimeouts to the rescue. We need this to go in *after*
+    // jshint does it's magic, but jshint set on a setTimeout, so we have to
+    // schedule after.
+    setTimeout(function () {
+      var annotations = cm.state.lint.annotations || [];
+      if (typeof cm.updateLinting !== 'undefined') {
+        // note: this just updated the *source* reference
+        annotations = annotations.filter(function (a) {
+          return a.source !== 'loopProtectLine:' + line;
+        });
+        annotations.push({
+          from: CodeMirror.Pos(line-1, 0),
+          to: CodeMirror.Pos(line-1, 0),
+          message: 'Exiting potential infinite loop.\nTo disable loop protection: add "// noprotect" to your code',
+          severity: 'warning',
+          source: 'loopProtectLine:' + line
+        });
+
+        cm.updateLinting(annotations);
+      }
+    }, cm.state.lint.options.delay || 0);
+  };
+
+  /**
    * When the iframe resizes, update the size text
    */
   renderer.resize = (function () {

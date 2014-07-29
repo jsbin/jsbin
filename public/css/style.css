@@ -5178,8 +5178,8 @@ a.toppanel-logo {
 }
 .console-log-head {
   background: #ecf2fa;
-  border: 1px solid #CCC;
-  border-top: 0 none;
+  border-top: 1px solid rgb(220, 220, 220);
+  /* border-top: 0 none; */
   color: #6293d3;
   cursor: pointer;
   float: none;
@@ -5190,9 +5190,14 @@ a.toppanel-logo {
   padding: 0.2em 0.2em 0.2em 1em;
   width: auto;
 }
+
+[open] .console-log-head {
+  border-bottom: 1px solid rgb(220, 220, 220);
+}
+
 .console-log {
-  border: 1px solid #CCC;
-  border-top: 0 none;
+  /* border: 1px solid rgb(204, 204, 204); */
+  /* border-top: 0 none; */
   font-size: 13px;
   height: 10.5em;
   overflow: auto;
@@ -5201,6 +5206,8 @@ a.toppanel-logo {
   border-top: 1px solid #CCC;
   cursor: pointer;
   padding: 0.2em;
+  padding-left: 2.3em;
+  /* padding-right: 0; */
 }
 .console-log-line:first-child {
   border-top: 0 none;
@@ -5208,8 +5215,10 @@ a.toppanel-logo {
 .console-log-line:before {
   display: inline-block;
   min-width: 1em;
-  padding-right: 0.5em;
+  /* padding-right: 0.5em; */
   text-align: center;
+  position: absolute;
+  left: 0.6em;
 }
 #console-log-line-selected {
   background: #AFF;

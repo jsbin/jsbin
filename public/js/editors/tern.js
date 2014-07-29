@@ -97,7 +97,7 @@
         indent = new Array(cm.options.indentUnit * 1 + 1).join(' ');
       }
 
-      if (tok.string === ';') {
+      if (tok.string === ';' || tok.type === 'string' || tok.type === null && tok.string !== '.') {
         return cm.replaceRange(indent, pos);
       }
       if (tok.string.trim() !== '') {

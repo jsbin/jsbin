@@ -31,10 +31,10 @@
       <input type="hidden" name="referrer" value="{{referrer}}">
     </div>
   </form>
-  <form action="{{root}}/login" method="post" class="login" id="login">
+  <form action="{{root}}/login" method="post" class="login{{#if forgotten}} forgotten{{/if}}" id="login">
     <div>
       <label for="login-username">Email address or username</label>
-      <input name="username" id="login-username" type="text" required>
+      <input name="username" id="login-username" type="text" required value="{{email}}">
     </div>
     <div>
       <label for="login-key">Password</label>

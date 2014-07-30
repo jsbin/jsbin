@@ -123,10 +123,49 @@ body {
   font-weight: 600;
   cursor: pointer;
   display: block;
+  text-decoration: underline;
 }
 
 .lostpass:hover {
   color: #111;
+}
+
+.forgotten .lostpass {
+  border: 5px solid white;
+  -webkit-animation: flash 250ms linear 6 alternate;
+  -moz-animation: flash 250ms linear 6 alternate;
+  -ms-animation: flash 250ms linear 6 alternate;
+  -o-animation: flash 250ms linear 6 alternate;
+  animation: flash 250ms linear 6 alternate;
+
+  -webkit-transition: bottom 100ms linear;
+  transition: bottom 100ms linear;
+}
+
+@-webkit-keyframes flash {
+  to {
+    border-color: rgb(25, 175, 42);
+  }
+}
+@-moz-keyframes flash {
+  to {
+    border-color: rgb(25, 175, 42);
+  }
+}
+@-ms-keyframes flash {
+  to {
+    border-color: rgb(25, 175, 42);
+  }
+}
+@-o-keyframes flash {
+  to {
+    border-color: rgb(25, 175, 42);
+  }
+}
+@keyframes flash {
+  to {
+    border-color: rgb(25, 175, 42);
+  }
 }
 
 .info {

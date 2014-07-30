@@ -22,6 +22,11 @@
       <input id="key" name="password" type="password" autocomplete="false">
     </div>
 
+    <div>
+      <label for="subscribed">Recieve Announcements</label>
+      <input id="subscribed" name="subscribed" type="checkbox" {{#if user.subscribed}}checked{{/if}}>
+    </div>
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">
   </form>

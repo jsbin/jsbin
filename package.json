@@ -60,7 +60,8 @@
     "stripe": "~2.7.3",
     "stylus": "^0.47.1",
     "bin-to-file": "0.0.4",
-    "validator": "^3.16.1"
+    "validator": "^3.16.1",
+    "sendy-api": "0.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

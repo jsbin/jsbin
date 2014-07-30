@@ -97,7 +97,10 @@
         indent = new Array(cm.options.indentUnit * 1 + 1).join(' ');
       }
 
-      if (tok.string === ';') {
+      // I don't like this - feel like we shouldnt be pseudo parsing the code around the cursor. - FO
+      // the && here is in the correct place, if the token type is null, but the token string is '.'
+      // then we're probably at the end of an object lookup so let's use tern for autocomplete
+      if (tok.string === ';' || tok.type === 'string' || tok.type === null && tok.string !== '.') {
         return cm.replaceRange(indent, pos);
       }
       if (tok.string.trim() !== '') {

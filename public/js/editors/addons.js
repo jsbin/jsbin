@@ -66,9 +66,7 @@
     },
     vim: {
       url: [
-        '/js/vendor/codemirror4/addon/dialog/dialog.css',
-        '/js/vendor/codemirror4/keymap/vim.js',
-        '/js/vendor/codemirror4/addon/dialog/dialog.js'
+        '/js/vendor/codemirror4/keymap/vim.js'
       ],
       test: defaultTest('vimMode'),
       done: function (cm) {
@@ -78,15 +76,10 @@
     },
     emacs: {
       url: [
-        '/js/vendor/codemirror4/addon/dialog/dialog.css',
-        '/js/vendor/codemirror4/keymap/emacs.js',
-        '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/vendor/codemirror4/addon/search/search.js'
+        '/js/vendor/codemirror4/keymap/emacs.js'
       ],
       test: function () {
-        return jsbin.panels.panels.javascript.editor.openDialog &&
-               CodeMirror.commands.find &&
-               CodeMirror.keyMap.emacs;
+        return CodeMirror.keyMap.emacs;
       },
       done: function (cm) {
         setOption(cm, 'keyMap', 'emacs');
@@ -141,15 +134,10 @@
     },
     sublime: {
       url: [
-        '/js/vendor/codemirror4/addon/dialog/dialog.css',
-        '/js/vendor/codemirror4/keymap/sublime.js',
-        '/js/vendor/codemirror4/addon/dialog/dialog.js',
-        '/js/vendor/codemirror4/addon/search/search.js'
+        '/js/vendor/codemirror4/keymap/sublime.js'
       ],
       test: function () {
-        return jsbin.panels.panels.javascript.editor.openDialog &&
-               CodeMirror.commands.find &&
-               CodeMirror.keyMap.sublime;
+        return CodeMirror.keyMap.sublime;
       },
       done: function (cm) {
         setOption(cm, 'keyMap', 'sublime');
@@ -168,16 +156,13 @@
     },
     tern: {
       url: [
-        '/js/vendor/codemirror4/addon/dialog/dialog.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.css',
         '/js/vendor/codemirror4/addon/tern/tern.css',
         '/js/vendor/codemirror4/addon/hint/show-hint.js',
-        '/js/vendor/codemirror4/addon/dialog/dialog.js',
         '/js/prod/addon-tern-' + jsbin.version + '.min.js'
       ],
       test: function () {
-        return jsbin.panels.panels.javascript.editor.openDialog &&
-               (typeof window.ternBasicDefs !== 'undefined') &&
+        return (typeof window.ternBasicDefs !== 'undefined') &&
                CodeMirror.showHint &&
                CodeMirror.TernServer &&
                CodeMirror.startTern;

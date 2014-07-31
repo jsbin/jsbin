@@ -275,6 +275,43 @@ div.CodeMirror-cursors {
   }
 }
 
+/* CodeMirror addons */
+
+/* Addon: dialog/dialog.css
+   ========================================================================== */
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  background: white;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+  color: #333;
+}
+
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid #eee;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid #eee;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
 
 /* CodeMirror themes */
 
@@ -2542,6 +2579,11 @@ body.streaming #bin {
   border: 0;
   font-family: SourceCodeProRegular, Monaco, consolas, monospace;
   font-size: 13px;
+}
+
+.CodeMirror-dialog {
+  border-bottom-color: #E6E6E6;
+  z-index: 20;
 }
 
 .showtip #bin {

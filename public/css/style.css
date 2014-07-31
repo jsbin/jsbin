@@ -4826,7 +4826,7 @@ body.ready.toppanel {
           box-sizing: border-box;
   position: relative;
 }
-/* Pro column 
+/* Pro column
    this could change in the future depending on the content */
 .toppanel-column:nth-child(3) {
   max-width: 160px;
@@ -5349,3 +5349,4 @@ a[data-pro]:hover:after {
 .love {
   color: #FF4136;
 }
+

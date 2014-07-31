@@ -430,10 +430,11 @@ section {
 #pay {
   display: block;
   margin: 10px 250px;
-  -webkit-transform: scale(1.75);
-  transform: scale(1.75);
-  padding-left: 30px;
-  padding-right: 30px;
+  height: auto;
+  /*-webkit-transform: scale(1.75);*/
+  /*transform: scale(1.75);*/
+  /*padding-left: 30px;*/
+  /*padding-right: 30px;*/
 }
 
 .highlight {
@@ -672,4 +673,206 @@ a[data-pro]:hover:after {
   #body img.powered-by-stripe {
     right: 5px;
   }
+}
+
+/* line 24, ../scss/partials/_buttons.scss */
+.actionButton {
+  -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.5), 0px 1px 2px rgba(0, 0, 0, 0.15);
+  background-color: #eeeeee;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fbfbfb), color-stop(100%, #e1e1e1));
+  background: -webkit-linear-gradient(top, #fbfbfb, #e1e1e1);
+  background: -moz-linear-gradient(top, #fbfbfb, #e1e1e1);
+  background: -o-linear-gradient(top, #fbfbfb, #e1e1e1);
+  background: linear-gradient(top, #fbfbfb, #e1e1e1);
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  border: 1px solid #d4d4d4;
+  height: 32px;
+  line-height: 32px;
+  padding: 0px 25.6px;
+  font-weight: 300;
+  font-size: 14px;
+  font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
+  color: #666666;
+  text-shadow: 0 1px 1px white;
+  margin: 0;
+  text-decoration: none;
+  text-align: center;
+}
+/* line 42, ../scss/partials/_buttons.scss */
+.actionButton:hover {
+  background-color: #eeeeee;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #dcdcdc));
+  background: -webkit-linear-gradient(top, #ffffff, #dcdcdc);
+  background: -moz-linear-gradient(top, #ffffff, #dcdcdc);
+  background: -o-linear-gradient(top, #ffffff, #dcdcdc);
+  background: linear-gradient(top, #ffffff, #dcdcdc);
+}
+/* line 46, ../scss/partials/_buttons.scss */
+.actionButton:active {
+  -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 1px 0px white;
+  -moz-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 1px 0px white;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.3), 0px 1px 0px white;
+  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4);
+  background: #eeeeee;
+  color: #bbbbbb;
+}
+/* line 52, ../scss/partials/_buttons.scss */
+.actionButton:focus {
+  outline: none;
+}
+
+/* line 58, ../scss/partials/_buttons.scss */
+input.actionButton, button.actionButton {
+  height: 34px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+/* line 65, ../scss/partials/_buttons.scss */
+.actionButton-block {
+  display: block;
+}
+
+/* line 74, ../scss/partials/_buttons.scss */
+.actionButton.disabled,
+.actionButton.disabled:hover,
+.actionButton.disabled:active,
+input.actionButton:disabled,
+button.actionButton:disabled {
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+  background: #EEE;
+  border: 1px solid #DDD;
+  text-shadow: 0 1px 1px white;
+  color: #CCC;
+  cursor: default;
+  -webkit-appearance: none;
+}
+
+/* line 86, ../scss/partials/_buttons.scss */
+.actionButton-wrap {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e3e3e3), color-stop(100%, #f2f2f2));
+  background: -webkit-linear-gradient(top, #e3e3e3, #f2f2f2);
+  background: -moz-linear-gradient(top, #e3e3e3, #f2f2f2);
+  background: -o-linear-gradient(top, #e3e3e3, #f2f2f2);
+  background: linear-gradient(top, #e3e3e3, #f2f2f2);
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  -ms-border-radius: 200px;
+  -o-border-radius: 200px;
+  border-radius: 200px;
+  -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.04);
+  -moz-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.04);
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 10px;
+  display: inline-block;
+}
+
+/* line 192, ../scss/partials/_buttons.scss */
+.actionButton-rounded {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 226, ../scss/partials/_buttons.scss */
+.actionButton-primary {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #76a1d9), color-stop(100%, #4e85cd));
+  background: -webkit-linear-gradient(top, #76a1d9, #4e85cd);
+  background: -moz-linear-gradient(top, #76a1d9, #4e85cd);
+  background: -o-linear-gradient(top, #76a1d9, #4e85cd);
+  background: linear-gradient(top, #76a1d9, #4e85cd);
+  background-color: #6293d3;
+  border-color: #3a78c8;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(34, 72, 122, 0.35);
+}
+/* line 233, ../scss/partials/_buttons.scss */
+.actionButton-primary:hover {
+  color: white;
+  background-color: #6293d3;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #8aaede), color-stop(100%, #4e85cd));
+  background: -webkit-linear-gradient(top, #8aaede, #4e85cd);
+  background: -moz-linear-gradient(top, #8aaede, #4e85cd);
+  background: -o-linear-gradient(top, #8aaede, #4e85cd);
+  background: linear-gradient(top, #8aaede, #4e85cd);
+}
+/* line 238, ../scss/partials/_buttons.scss */
+.actionButton-primary:active {
+  background: #7696bf;
+  color: #2d60a2;
+}
+
+/* line 226, ../scss/partials/_buttons.scss */
+.actionButton-action {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #8fcf00), color-stop(100%, #6b9c00));
+  background: -webkit-linear-gradient(top, #8fcf00, #6b9c00);
+  background: -moz-linear-gradient(top, #8fcf00, #6b9c00);
+  background: -o-linear-gradient(top, #8fcf00, #6b9c00);
+  background: linear-gradient(top, #8fcf00, #6b9c00);
+  background-color: #7db500;
+  border-color: #5a8200;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(19, 28, 0, 0.35);
+}
+/* line 233, ../scss/partials/_buttons.scss */
+.actionButton-action:hover {
+  color: white;
+  background-color: #7db500;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a0e800), color-stop(100%, #6b9c00));
+  background: -webkit-linear-gradient(top, #a0e800, #6b9c00);
+  background: -moz-linear-gradient(top, #a0e800, #6b9c00);
+  background: -o-linear-gradient(top, #a0e800, #6b9c00);
+  background: linear-gradient(top, #a0e800, #6b9c00);
+}
+/* line 238, ../scss/partials/_buttons.scss */
+.actionButton-action:active {
+  background: #76a312;
+  color: #374f00;
+}
+
+/* line 359, ../scss/partials/_buttons.scss */
+.actionButton-jumbo {
+  font-size: 24px;
+  height: 51.2px;
+  line-height: 51.2px;
+  padding: 0px 40.96px;
+}
+
+/* line 359, ../scss/partials/_buttons.scss */
+.actionButton-large {
+  font-size: 19px;
+  height: 38.4px;
+  line-height: 38.4px;
+  padding: 0px 30.72px;
+}
+
+/* line 390, ../scss/partials/_buttons.scss */
+input.actionButton-large, button.actionButton-large {
+  height: 40.4px;
+}
+
+/* line 359, ../scss/partials/_buttons.scss */
+.actionButton-small {
+  font-size: 15px;
+  height: 25.6px;
+  line-height: 25.6px;
+  padding: 0px 20.48px;
+}
+
+/* line 390, ../scss/partials/_buttons.scss */
+input.actionButton-small, button.actionButton-small {
+  height: 27.6px;
 }

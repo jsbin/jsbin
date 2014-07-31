@@ -22,11 +22,19 @@
       <input id="key" name="password" type="password" autocomplete="false">
     </div>
 
-    {{#feature "sendy"}}
-    <div>
-      <label for="subscribed">Recieve Announcements</label>
-      <input id="subscribed" name="subscribed" type="checkbox" {{#if user.subscribed}}checked{{/if}}>
-    </div>
+    {{#feature request "sendy"}}
+      {{#if request.mailError}}
+      <div>
+        <label for="subscribed">Email announcements</label>
+        <input id="subscribed" name="subscribed" type="checkbox" disabled checked>
+        <small>Unable to retrieve subscription status please try again later</small>
+      </div>
+      {{else}}
+      <div>
+        <label for="subscribed">Email announcements</label>
+        <input id="subscribed" name="subscribed" type="checkbox" {{#if user.subscribed}}checked{{/if}}>
+      </div>
+      {{/if}}
     {{/feature}}
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">

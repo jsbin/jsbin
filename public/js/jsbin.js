@@ -97,7 +97,7 @@ function exposeSettings() {
   'use strict';
 
   function mockPanels() {
-    var result = {};
+    var results = {};
     var panels = jsbin.panels.panels;
     ['css', 'javascript', 'html'].forEach(function (type) {
       results[type] = {
@@ -153,8 +153,6 @@ jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}')
 if (jsbin.user) {
   jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
 }
-
-exposeSettings();
 
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
@@ -324,6 +322,7 @@ if (location.search.indexOf('api=') !== -1) {
 
 
 $document.one('jsbinReady', function () {
+  exposeSettings();
   $bin.removeAttr('style');
   $body.addClass('ready');
 });

@@ -95,10 +95,31 @@ function dedupe(array) {
 
 function exposeSettings() {
   'use strict';
+
+  function mockPanels() {
+    var result = {};
+    var panels = jsbin.panels.panels;
+    ['css', 'javascript', 'html'].forEach(function (type) {
+      results[type] = {
+        setCode: panels[type].setCode.bind(panels[type]),
+        editor: {
+          setCursor: panels[type].editor.setCursor.bind(panels[type].editor),
+          getCursor: panels[type].editor.getCursor.bind(panels[type].editor)
+        }
+      };
+    });
+
+    return results;
+  }
+
   if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
     window.jsbin = {
       'static': jsbin['static'],
-      version: jsbin.version
+      version: jsbin.version,
+      panels: {
+        // FIXME decide whether this should be locked down further
+        panels: mockPanels()
+      }
     }; // create the holding object
 
     if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name && jsbin.user.name) {

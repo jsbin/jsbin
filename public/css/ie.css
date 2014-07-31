@@ -21,17 +21,35 @@ div {
 }
 
 /* toppanel */
-a.toppanel-logo {
-	position: relative;
-	left: -10px;
-	top: 237px;
-	width: 20px;
-}
-.toppanel a.toppanel-logo {
-	position: relative;
-	left: 65px;
-	top: 0;
-	width: 100px;
+/* IE6/7/8 (via Keith Clarke) */
+@media \0screen\,screen\9 {
+  .toppanel-wrapper {
+    white-space: nowrap;
+  }
+  .toppanel-column {
+    white-space: normal;
+  }
+  a.toppanel-logo {
+  	position: relative;
+  	left: -10px;
+  	top: 195px;
+  	width: 20px;
+    background: transparent url("../images/jsbin_16.png") no-repeat scroll center center;
+  }
+  a.toppanel-logo:hover {
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .toppanel a.toppanel-logo {
+  	position: relative;
+  	left: 35px;
+  	top: 0;
+  	width: 100px;
+    background-image: url("../images/jsbin-32.png");
+  }
+  .toppanel-logo img {
+    visibility: hidden;
+  }
 }
 .toppanel-button-dropdown:after {
 	text-align: center;

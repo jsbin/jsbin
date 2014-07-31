@@ -2667,6 +2667,7 @@ details li, .details li {
 
 .keyboardHelp #keyboardHelp {
   display: block;
+  z-index: 999999;
 }
 
 .urlHelp #urlHelp {
@@ -3891,6 +3892,12 @@ left: 50%;
   top: 6px;
 }
 
+.toppanel.hideheader.ready #bin,
+.toppanel.hideheader #history,
+.toppanel.hideheader #history .preview {
+  top: 200px;
+}
+
 .hideheader #control:hover {
   top: 0;
   -webkit-transition: top ease-out 10ms;
@@ -5042,6 +5049,12 @@ a.toppanel-logo {
      -moz-transition:    -moz-transform linear 120ms 120ms;
        -o-transition:      -o-transform linear 120ms 120ms;
           transition:         transform linear 120ms 120ms;
+}
+.hideheader.ready a.toppanel-logo {
+  top: -35px;
+}
+.hideheader.ready.toppanel a.toppanel-logo {
+  top: 0;
 }
 /* slow to remove */
 #jsbin .toppanel-slow #bin,

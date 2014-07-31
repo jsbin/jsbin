@@ -8,9 +8,12 @@
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
-  {{#if is_production}}
+
   {{> analytics}}
-  {{/if}}
+  <script>
+  ga('set', 'dimension1', '{{user.id}}');
+  </script>
+
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />

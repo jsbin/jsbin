@@ -109,10 +109,13 @@ function exposeSettings() {
     ['css', 'javascript', 'html'].forEach(function (type) {
       results[type] = {
         setCode: panels[type].setCode.bind(panels[type]),
-        editor: {
-          setCursor: panels[type].editor.setCursor.bind(panels[type].editor),
-          getCursor: panels[type].editor.getCursor.bind(panels[type].editor)
-        }
+        getCode: panels[type].getCode.bind(panels[type]),
+        editor: mockEditor(panels[type].editor, [
+          'setCursor',
+          'getCursor',
+          'addKeyMap',
+          'on'
+        ])
       };
     });
 

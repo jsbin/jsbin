@@ -96,6 +96,13 @@ function dedupe(array) {
 function exposeSettings() {
   'use strict';
 
+  function mockEditor (editor, methods) {
+    return methods.reduce(function (mockEditor, method) {
+      mockEditor[method] = editor[method].bind(editor);
+      return mockEditor;
+    }, {});
+  }
+
   function mockPanels() {
     var results = {};
     var panels = jsbin.panels.panels;

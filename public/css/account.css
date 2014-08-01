@@ -259,6 +259,10 @@ section.business {
   transition: opacity 50ms ease-out;
 }
 
+section.business.disabled {
+  display: none;
+}
+
 .disabled {
   opacity: 0.5;
 }
@@ -429,7 +433,7 @@ section {
 
 #pay {
   display: block;
-  margin: 10px 250px;
+  margin: 10px 200px 10px;
   height: auto;
   /*-webkit-transform: scale(1.75);*/
   /*transform: scale(1.75);*/

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 var memcache = require('memcached');
 var repl = require('repl');

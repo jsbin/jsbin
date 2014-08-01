@@ -1,0 +1,92 @@
+{{#if showCoupon}}
+<section class="country">
+  <label for="coupon">Coupon</label>
+  <input id="coupon" name="coupon" placeholder="Gimmie the magic" value="{{values.coupon}}">
+  <p><small>You will still need to provide card details – but this so that we, and Stripe, can store you as a real customer.</small></p>
+</section>
+{{/if}}
+
+<section class="payment-type">
+  <span class="label">Plan</span>
+  <div class="options">
+    <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly @ <span data-price="60" id="price-yearly">£60</span><small>+VAT</small> <span class="highlight">&ndash; 2 months free</span> </label>
+    <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly @ <span id="price-monthly" data-price="6">£6</span><small>+VAT</small></label>
+  </div>
+</section>
+
+<p class="payment-errors">{{{flash}}}</p>
+
+<div class="payment-details">
+  <div>
+    <label for="email">Email</label>
+    <span class="inputWithImage">
+      <b class="icon-mail"></b>
+      <input id="email" value="{{values.email}}" autofocus placeholder="you@example.com" type="email" name="email" required>
+    </span>
+  </div>
+
+  <div>
+    <label for="cardnumber">Card details</label>
+    <div class="carddetails">
+      <span class="inputWithImage">
+        <b class="icon-credit"></b>
+        <input id="cardnumber" placeholder="Card number" value="{{values.number}}" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
+      </span>
+      <span class="inputWithImage">
+        <b class="icon-calendar-o"></b>
+        <input id="expiry" value="{{values.expiry}}" placeholder="MM / YY" type="text" name="expiry" size="7" required x-autocompletetype="cc-exp" maxlength="9" data-stripe="expiry">
+      </span>
+      <span class="inputWithImage">
+        <b class="icon-lock"></b>
+        <input id="cvc" placeholder="CVC" value="{{values.cvc}}" type="text" name="cvc" size="4" pattern="\d*" x-autocompletetype="cc-csc" required  autocomplete="off" data-stripe="cvc">
+      </span>
+    </div>
+  </div>
+</div>
+
+<section class="buyer-type">
+  <label for="business">Paying as a business?</label>
+  <input id="business" type="checkbox" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">
+</section>
+
+<section class="business{{#equal values.buyer_type "business"}}{{else}} disabled{{/equal}}">
+  <div>
+    <label for="country">Country of business</label>
+    <select name="country" id="country" data-stripe="address_country">
+      {{> country}}
+    </select>
+  </div>
+
+  <div class="disabled vat">
+    <label for="vat">VAT number</label>
+    <span id="vatiso"></span>
+    <input id="vat" name="vat" type="text" value="{{values.vat}}">
+    <button id="validateVat">Validate</button>
+    <br>
+  </div>
+</section>
+
+
+<section>
+  <button class="actionButton actionButton-rounded actionButton-primary actionButton-jumbo" id="pay">Upgrade!</button>
+  <input type="hidden" name="_csrf" value="{{csrf}}">
+</section>
+
+<section class="footnotes">
+  <p class="options ccy"><small>Show currency in <label for="ccy-gbp"><input type="radio" value="GBP" name="ccy" checked id="ccy-gbp"> GBP</label> <label for="ccy-usd"><input type="radio" value="USD" name="ccy" id="ccy-usd"> USD</label> <label for="ccy-eur"><input type="radio" name="ccy" value="EUR" id="ccy-eur"> EUR</label></small></p>
+  <p class="ccy-note" hidden><small>Note that you will be invoiced in GBP, and that non-GBP prices are approximated using Google forex rates.</small></p>
+
+  <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>
+
+  <p><a href="http://github.com/jsbin/jsbin/issues/new" class="issue">Problem? Feedback? Let us know!</a></p>
+</section>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('{{stripe.key}}');
+  // ...
+</script>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/vendor/jquery.payment.js"></script>
+<script src="{{static}}/js/account/pay.js"></script>

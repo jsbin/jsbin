@@ -1,8 +1,8 @@
 (function () {
   'use strict';
-
   /*globals $, jsbin, CodeMirror, template, ternDefinitions, ternBasicDefs */
-  if (!jsbin.settings.addons.tern || jsbin.embed) {
+
+  if (jsbin.embed) {
     return;
   }
 

@@ -113,3 +113,38 @@ tr.pro td.pro:after {
   padding-right: 30px;
   text-decoration: none;
 }
+
+
+.upgrade-feature-wrapper,
+.upgrade-form-wrapper {
+
+}
+
+.upgrade-feature-wrapper {
+  
+}
+
+.upgrade-form-wrapper {
+
+}
+
+.upgrade-fieldset {
+  padding: 20px 30px 40px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: none;
+  background-color: #fff;
+  margin: 0;
+}
+
+.form-container .tab.active {
+  opacity: 1;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 100;
+  border-bottom: none;
+}
+
+div.submit {
+  display: none;
+}

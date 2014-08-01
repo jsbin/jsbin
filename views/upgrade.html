@@ -1,57 +1,98 @@
-<link rel="stylesheet" type="text/css" href="{{static}}/css/account.css{{cachebust}}"/>
+<link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
-<h1>Features</h1>
-<table>
-  <thead>
-    <tr class="headings">
-      <th>&nbsp;</th>
-      <th>Anonymous</th>
-      <th>Signed-in</th>
-      <th>
-        Pro <small>@ £5/month*</small>
-      </th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>
-        <a class="actionButton actionButton-rounded actionButton-primary actionButton-jumbo" href="/account/upgrade/pay">Upgrade!</a>
-      </td>
-    </tr>
-  </tfoot>
-  <tbody>
-    {{#each featureList}}
-    <tr class="{{user}}">
-      <td class="feature">
-        {{name}}
-      </td>
-      <td class="anon">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-      </td>
-      <td class="free">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-        {{#equal user 'free'}}&#10003;{{/equal}}
-      </td>
-      <td class="pro">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-        {{#equal user 'free'}}&#10003;{{/equal}}
-        {{#equal user 'pro'}}&#10003;{{/equal}}
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="upgrade-feature-wrapper">
+  <h1>Features</h1>
+  <table>
+    <thead>
+      <tr class="headings">
+        <th>&nbsp;</th>
+        <th>Anonymous</th>
+        <th>Signed-in</th>
+        <th>
+          Pro <small>@ £5/month*</small>
+        </th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>
+          <a id="pay" href="/account/upgrade/pay"><button>Upgrade!</button></a>
+        </td>
+      </tr>
+    </tfoot>
+    <tbody>
+      {{#each featureList}}
+      <tr class="{{user}}">
+        <td class="feature">
+          {{name}}
+        </td>
+        <td class="anon">
+          {{#equal user 'anon'}}&#10003;{{/equal}}
+        </td>
+        <td class="free">
+          {{#equal user 'anon'}}&#10003;{{/equal}}
+          {{#equal user 'free'}}&#10003;{{/equal}}
+        </td>
+        <td class="pro">
+          {{#equal user 'anon'}}&#10003;{{/equal}}
+          {{#equal user 'free'}}&#10003;{{/equal}}
+          {{#equal user 'pro'}}&#10003;{{/equal}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
-<p><small>* £5 per month with a yearly subscription, £6 with a monthly subscription.</small></p>
+  <p><small>* £5 per month with a yearly subscription, £6 with a monthly subscription.</small></p>
+</div>
+
+<div class="upgrade-form-wrapper form-container">
+  <h2>Pro registration</h2>
+
+  <form action="">
+    <a class="btn-github" href="{{root}}/auth/github">
+      <img src="{{static}}/images/github-32.png">
+      Login or Register via GitHub
+    </a>
+    <span class="login-group">
+      Or
+      <a class="btn-login" href="/login">use your email address</a>
+    </span>
+
+    <div class="form-container">
+      <div class="tabs register">
+        <a class="tab register" href="{{root}}/register">
+          <span>New to JS Bin</span>
+          Register
+        </a>
+        <a class="tab login" href="{{root}}/login">
+          <span>Existing users</span>
+          Login
+        </a>
+      </div>
+      <fieldset class="upgrade-fieldset">
+        {{> register}}
+      </fieldset>
+      <fieldset class="upgrade-fieldset">
+        {{> login}}
+      </fieldset>
+
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{token}}">
+  </form>
+</div>
 
 
-<h2>Your Pro accounts keep JS Bin 100% free for education</h2>
-<p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>
+<div class="upgrade-info-wrapper">
+  <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
+  <p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>
 
-<p>Education is dear to our hearts, and pro accounts allows us to keep developing JS Bin with features we want to see land, and to help fix issues that cause problems for the general users and those students stuck working with limited access to technology (like the version of JS Bin that works without a web connection and entirely from a usb stick with zero install).</p>
+  <p>Education is dear to our hearts, and pro accounts allows us to keep developing JS Bin with features we want to see land, and to help fix issues that cause problems for the general users and those students stuck working with limited access to technology (like the version of JS Bin that works without a web connection and entirely from a usb stick with zero install).</p>
+</div>
 
 
 <!-- <h2> Supporters </h2>

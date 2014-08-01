@@ -6,6 +6,7 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
@@ -33,6 +34,7 @@ if(top != self) {
   document.write('<' + '!--');
 }
 </script>
+<a href="#enable-universal-text-editor" class="visuallyhidden focusable" id="enableUniversalEditorLabel">Enable universal text editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}

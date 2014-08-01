@@ -499,4 +499,16 @@ $('a.unarchivebin').on('click', function (e) {
   archive(false);
 });
 
+var $enableUniversalEditorLabel = $('#enableUniversalEditorLabel').on('click', function (e) {
+  e.preventDefault();
+
+  jsbin.settings.editor.simple = !!!jsbin.settings.editor.simple;
+  analytics.universalEditor(jsbin.settings.editor.simple);
+  window.location.reload();
+});
+
+if (jsbin.settings.editor.simple) {
+  $enableUniversalEditorLabel.text('Disable universal text editor');
+}
+
 }());

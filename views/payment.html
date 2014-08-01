@@ -53,14 +53,11 @@
     </div>
 
     <section class="buyer-type">
-      <span class="label">Paying as</span>
-      <div class="options">
-        <label for="individual"><input id="individual" type="radio" name="buyer_type" {{#equal values.buyer_type "individual"}}checked{{/equal}}{{#unless values.buyer_type}}checked{{/unless}} value="individual">Individual</label>
-        <label for="business"><input id="business" type="radio" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">Business</label>
-      </div>
+      <label for="business">Paying as a business?</label>
+      <input id="business" type="checkbox" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">
     </section>
 
-    <section class="business">
+    <section class="business{{#equal values.buyer_type "business"}}{{else}} disabled{{/equal}}">
       <div>
         <label for="country">Country of business</label>
         <select name="country" id="country" data-stripe="address_country">

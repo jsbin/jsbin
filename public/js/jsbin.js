@@ -126,6 +126,7 @@ function exposeSettings() {
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      embed: jsbin.embed,
       panels: {
         // FIXME decide whether this should be locked down further
         panels: mockPanels()

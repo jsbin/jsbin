@@ -141,6 +141,10 @@ var renderer = (function () {
     // specific change to handle reveal embedding
     try {
       if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
+        // reset the state of the panel visibility
+        jsbin.panels.allEditors(function (p) {
+          p.visible = false;
+        });
         jsbin.panels.restore();
         return;
       }

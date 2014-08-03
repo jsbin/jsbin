@@ -332,7 +332,8 @@ $('#lostpass').click(function (e) {
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
-if (sessionStorage.runnerPending) {
+// ignore for embed as there might be a lot of embeds on the page
+if (!jsbin.embed && sessionStorage.runnerPending) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
     type: 'error'

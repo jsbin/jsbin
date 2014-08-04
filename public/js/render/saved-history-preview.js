@@ -1,4 +1,10 @@
 ;(function () {
+  /*global jsbin, $, $document, analytics*/
+  'use strict';
+  if (!jsbin.user || !jsbin.user.name || jsbin.embed) {
+    return;
+  }
+
   var $body = $('body'),
       loaded = false,
       $history; // set in hookUserHistory()
@@ -14,9 +20,9 @@
   });
 
   var loadList = function () {
-    if (loaded) return;
-
-    if (!jsbin.user || !jsbin.user.name) return;
+    if (loaded) {
+      return;
+    }
 
     if ($('html').hasClass('public-listing')) {
       hookUserHistory();
@@ -69,7 +75,9 @@
   var hookUserHistory = function () {
     // Loading the HTML from the server may have failed
     $history = $('#history').detach();
-    if (!$history.length) return $history;
+    if (!$history.length) {
+      return $history;
+    }
 
     // Cache some useful elements
     var $iframe = $('iframe', $history),
@@ -77,20 +85,18 @@
         $bins = $history,
         $tbodys = $('tbody', $history),
         $trs = $('tr', $history),
-        $created = $('td.created a', $history),
         $toggle = $('.toggle_archive', $history),
         current = null,
-        hoverTimer = null,
-        layoutTimer = null;
+        hoverTimer = null;
 
     // Load bin from data-edit-url attribute when user clicks on a row
     $bins.delegate('tr:not(.spacer)', 'click', function () {
-      if (event.shiftKey || event.metaKey) return;
+      if (event.shiftKey || event.metaKey) { return; }
       window.location = this.getAttribute('data-edit-url');
     });
 
     // Archive & un-archive click handlers
-    $bins.delegate('.archive, .unarchive', 'click', function (e) {
+    $bins.delegate('.archive, .unarchive', 'click', function () {
       var $this = $(this),
           $row = $this.parents('tr');
       // Instantly update this row and the page layout
@@ -105,7 +111,7 @@
         url: $this.attr('href'),
         error: function () {
           // Undo if something went wrong
-          alert("Something went wrong, please try again");
+          alert('Something went wrong, please try again');
           $row.toggleClass('archived');
           updateLayout($tbodys, $history.hasClass('archive_mode'));
         },
@@ -124,7 +130,7 @@
 
 
     // Load a preview on tr mouseover (delayed by 400ms)
-    $bins.delegate('tr', 'mouseover', function (event) {
+    $bins.delegate('tr', 'mouseover', function () {
       var $this = $(this),
           url = $this.attr('data-url');
       clearTimeout(hoverTimer);
@@ -162,7 +168,9 @@
 
   // inside a ready call because history DOM is rendered *after* our JS to improve load times.
   $(document).on('jsbinReady', function ()  {
-    if (jsbin.embed) return;
+    if (jsbin.embed) {
+      return;
+    }
 
     var $panelButtons = $('#panels a'),
         $homebtn = $('.homebtn'),

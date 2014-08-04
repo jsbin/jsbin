@@ -7,6 +7,7 @@
 
   var $body = $('body'),
       loaded = false,
+      requestAttempts = 5,
       $history; // set in hookUserHistory()
 
   $document.on('history:open', function () {
@@ -31,8 +32,13 @@
         dataType: 'html',
         url: jsbin.root + '/list',
         error: function () {
-          $('#history').remove();
-          setTimeout(loadList, 500);
+          requestAttempts--;
+          if (requestAttempts > 0) {
+            $('#history').remove();
+            setTimeout(loadList, 500);
+          } else {
+            console.error('Giving up to load history');
+          }
         },
         success: function (html) {
           $('#history').remove();

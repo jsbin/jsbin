@@ -16,6 +16,8 @@
   var loadList = function () {
     if (loaded) return;
 
+    if (!jsbin.user || !jsbin.user.name) return;
+
     if ($('html').hasClass('public-listing')) {
       hookUserHistory();
     } else {

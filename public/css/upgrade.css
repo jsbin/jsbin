@@ -107,10 +107,23 @@ tr.pro td.pro:after {
 #pay {
   display: block;
   height: auto;
-  margin: 10px 0;
+  margin: 30px 0;
   width: 100%;
 }
 
+.btn-github {
+  width: 100%;
+  max-width: 280px;
+}
+.btn-login {
+  color: #949494;
+}
+.btn-login:hover {
+  color: #111;
+}
+.login-group {
+  font-size: 14px;
+}
 
 .upgrade-wrapper {
   font-size: 0;
@@ -143,7 +156,6 @@ tr.pro td.pro:after {
   border-top: none;
   background-color: #fff;
   margin: 0;
-  min-height: 275px;
 }
 .login .upgrade-fieldset.register,
 .register .upgrade-fieldset.login {
@@ -156,7 +168,7 @@ tr.pro td.pro:after {
 }
 #form-login {
   display: none;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .form-container .tab.active {
@@ -173,7 +185,6 @@ div.submit {
 }
 
 .upgrade-signin-wrapper {
-  border: 1px solid rgba(0, 0, 0, 0.5);
   text-align: center;
   padding: 20px 0;
 }
@@ -206,8 +217,32 @@ div.submit {
   width: auto;
 }
 
+.footnotes p {
+  margin: 8px 0;
+  line-height: 20px;
+}
+
 .ccy-note {
   color: rgb(180, 0, 72);
+}
+
+form label[for], form .label {
+  color: #666;
+  font-weight: 500;
+  font-size: 16px;
+}
+form .options label {
+  font-weight: normal;
+  padding: 0;
+}
+form .ccy label {
+  display: inline;
+  margin-left: 10px;
+  margin-right: 5px;
+  font-size: 13px;
+}
+form .ccy input {
+  font-size: 16px;
 }
 
 
@@ -311,6 +346,7 @@ button {
 
 select#country {
   width: 200px;
+  font-size: 16px;
 }
 
 .payment-errors:empty {
@@ -389,6 +425,14 @@ input.invalid {
   width: 100%;
 }
 
+.upgrade-payment-wrapper .business label {
+  display: inline;
+  margin-right: 5px;
+}
+.upgrade-payment-wrapper .business input {
+  margin: 2px 0;
+}
+
 
 div.vat {
 /*   margin-top: 30px; */
@@ -409,6 +453,7 @@ div.vat small {
 }
 .payment-details span input {
   font-size: 16px;
+  margin: 2px 0;
 }
 .payment-details-email {
   width: 100%;
@@ -422,6 +467,10 @@ div.vat small {
 .payment-details-card-cvc {
   width: 43%;
   margin-left: 2%;
+}
+.highlight {
+  color: rgb(0, 180, 0);
+  font-weight: 500;
 }
 
 

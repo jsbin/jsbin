@@ -111,6 +111,12 @@ var getPreparedCode = (function () {
           hasJS = !!js.trim().length,
           replaceWith = 'window.runnerWindow.proxyConsole.';
 
+      // this is used to capture errors with processors, sometimes their errors
+      // aren't useful (Script error. (line 0) #1354) so we try/catch and then
+      // throw the real error. This also works exactly as expected with non-
+      // processed JavaScript
+      js = 'try {' + js + '} catch (error) { throw error; }';
+
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
       // the start of each iteration.

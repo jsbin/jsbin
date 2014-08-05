@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.17.17",
+  "version": "3.17.18",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",

@@ -10,6 +10,9 @@ var analytics = {
 
     window._gaq && _gaq.push(data);
   },
+  universalEditor: function (value) {
+    analytics.track('menu', 'universalEditor', value);
+  },
   library: function (action, value) {
     analytics.track('menu', action, 'library', value);
   },

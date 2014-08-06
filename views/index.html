@@ -6,11 +6,13 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
   {{> analytics}}
   {{/if}}
+  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
@@ -33,6 +35,7 @@ if(top != self) {
   document.write('<' + '!--');
 }
 </script>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}

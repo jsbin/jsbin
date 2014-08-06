@@ -20,15 +20,21 @@
   // Show login/registration
   $formLoginTabs = $formLogin.find('.tabs');
   $formLoginTab = $formLogin.find('a.tab');
+  $formLoginLogin = $formLogin.find('.upgrade-fieldset.login');
+  $formLoginRegister = $formLogin.find('.upgrade-fieldset.register');
   $formLoginTab.on('click', function(event) {
     event.preventDefault();
     var $this = $(this);
     if ($this.hasClass('login')) {
       $formLogin.addClass('login');
       $formLogin.removeClass('register');
+      $formLoginRegister.attr('disabled', 'disabled');
+      $formLoginLogin.attr('disabled', false);
     } else {
       $formLogin.addClass('register');
       $formLogin.removeClass('login');
+      $formLoginRegister.attr('disabled', false);
+      $formLoginLogin.attr('disabled', 'disabled');
     }
   })
 }());

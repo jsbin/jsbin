@@ -4960,7 +4960,7 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  color: #6293D3;
+  color: rgb(98, 147, 211);
   display: block;
   padding: 6px 10px 6px 1px;
   text-decoration: none;
@@ -5031,6 +5031,20 @@ a.toppanel-hide {
   color: #6293D3;
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
+  text-indent: -9999px;
+  overflow: hidden;
+  /* height: 1%; */
+  width: 19px;
+}
+a.toppanel-hide:after {
+  content: '\d7';
+  position: absolute;
+  left: 4px;
+  /* top: 0; */
+  /* width: 20px; */
+  /* height: 20px; */
+  text-indent: 0;
+  /* display: block; */
 }
 .toppanel-actions .btn-github {
   font-size: 70%;
@@ -5424,15 +5438,19 @@ a[data-pro]:hover:after {
 }
 
 #enableUniversalEditorLabel {
-  color: #00e;
-  position: fixed;
-  top: 7px;
+  color: rgb(98, 147, 211);
+  position: relative;
+  /* top: 7px; */
   left: 0;
   z-index: 999999;
-  font-size: 24px;
-  background: white;
-  padding: 20px;
-  vertical-align: top;
+  line-height: 16px;
+/*   font-size: 16px; */
+  /* background: white; */
+  /* padding: 20px; */
+  /* vertical-align: top; */
   /*transform: scale(1.2);*/
-  transform-origin: 0 0;
+  /* transform-origin: 0 0; */
+  position: absolute;
+  bottom: 0px;
+  /* left: 210px; */
 }

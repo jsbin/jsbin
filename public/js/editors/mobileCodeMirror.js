@@ -62,6 +62,12 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     defaultTextHeight: function() {
       return 16;
     },
+    highlightLines: function () {
+      return {
+        string: ''
+      };
+    },
+    removeKeyMap: noop,
     addKeyMap: noop,
     indentLine: noop,
     cursorPosition: function () {

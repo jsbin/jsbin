@@ -12,6 +12,7 @@
   {{#if is_production}}
   {{> analytics}}
   {{/if}}
+  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
@@ -34,7 +35,7 @@ if(top != self) {
   document.write('<' + '!--');
 }
 </script>
-<a href="#enable-universal-text-editor" class="visuallyhidden focusable" id="enableUniversalEditorLabel">Enable universal text editor</a>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}

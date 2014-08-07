@@ -59,7 +59,7 @@
     "validate-vat": "~0.3.1",
     "stripe": "~2.7.3",
     "stylus": "^0.47.1",
-    "bin-to-file": "0.0.4",
+    "bin-to-file": "0.0.5",
     "validator": "^3.16.1",
     "sendy-api": "0.0.1"
   },

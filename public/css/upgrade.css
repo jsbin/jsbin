@@ -109,6 +109,8 @@ tr.pro td.pro:after {
   height: auto;
   margin: 30px 0;
   width: 100%;
+  font-size: 1.1em;
+  line-height: 2.5em;
 }
 
 .btn-github {
@@ -130,20 +132,21 @@ tr.pro td.pro:after {
 }
 .upgrade-feature-wrapper,
 .upgrade-form-wrapper {
-  display: inline-block;
+  /*display: inline-block;*/
+  display: table-cell;
   vertical-align: top;
   font-size: 16px;
 }
 
 .upgrade-feature-wrapper {
-  width: 56%;
+  /*width: 56%;*/
 }
 
 .upgrade-form-wrapper {
   float: right;
   margin: 0;
   width: 44%;
-  max-width: 100%;
+  width: 360px;
 }
 
 .upgrade-form-wrapper form {
@@ -152,7 +155,7 @@ tr.pro td.pro:after {
 
 .upgrade-fieldset {
   padding: 20px 30px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid #DDD;
   border-top: none;
   background-color: #fff;
   margin: 0;
@@ -160,6 +163,14 @@ tr.pro td.pro:after {
 .login .upgrade-fieldset.register,
 .register .upgrade-fieldset.login {
   display: none;
+}
+.form-container .tab,
+.form-container.login .tab.login, .form-container.register .tab.register {
+  border-color: #DDD;
+}
+.form-container.login,
+.form-container.register .tab.register {
+  box-shadow: none;
 }
 
 
@@ -195,8 +206,8 @@ div.submit {
 }
 
 .upgrade-payment-wrapper {
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 20px 30px 40px;
+  border: 1px solid #DDD;
+  padding: 0 30px;
   margin-top: 20px;
 }
 
@@ -237,12 +248,15 @@ form .options label {
 }
 form .ccy label {
   display: inline;
-  margin-left: 10px;
-  margin-right: 5px;
+  margin-right: 10px;
   font-size: 13px;
 }
-form .ccy input {
+form .ccy input[type=radio] {
   font-size: 16px;
+  margin-right: 5px;
+}
+.ccy-legend {
+  display: block;
 }
 
 
@@ -332,7 +346,7 @@ section.business.disabled {
 
 #vat {
   padding-left: 30px;
-  width: 200px;
+  width: 124px;
   font-size: 16px;
 }
 
@@ -345,7 +359,7 @@ button {
 }
 
 select#country {
-  width: 200px;
+  width: 150px;
   font-size: 16px;
 }
 
@@ -471,6 +485,7 @@ div.vat small {
 .highlight {
   color: rgb(0, 180, 0);
   font-weight: 500;
+  font-size: 12px;
 }
 
 
@@ -675,4 +690,26 @@ input.actionButton-large, button.actionButton-large {
 /* line 390, ../scss/partials/_buttons.scss */
 input.actionButton-small, button.actionButton-small {
   height: 27.6px;
+}
+
+
+@media (max-width: 767px) {
+  .upgrade-form-wrapper {
+    float: none;
+    width: 100%;
+    display: block;
+  }
+  .upgrade-feature-wrapper {
+    width: 100%;
+    display: block;
+  }
+  .upgrade-feature-wrapper table {
+    margin: 0 auto;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .upgrade-feature-wrapper table td:nth-child(2),
+  .upgrade-feature-wrapper table th:nth-child(2) {
+    display: none;
+  }
 }

@@ -9,8 +9,8 @@
 <section class="payment-type">
   <span class="label">Plan</span>
   <div class="options">
-    <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly @ <span data-price="60" id="price-yearly">£60</span><small>+VAT</small> <span class="highlight">&ndash; 2 months free</span> </label>
-    <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly @ <span id="price-monthly" data-price="6">£6</span><small>+VAT</small></label>
+    <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly <span data-price="60" id="price-yearly">£60</span><small>+VAT</small> <span class="highlight">&ndash; 2 months free</span> </label>
+    <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly <span id="price-monthly" data-price="6">£6</span><small>+VAT</small></label>
   </div>
 </section>
 
@@ -61,7 +61,7 @@
     <label for="vat">VAT</label>
     <span id="vatiso"></span>
     <input id="vat" name="vat" type="text" value="{{values.vat}}">
-    <button id="validateVat">Check</button>
+    <button id="validateVat">Validate</button>
     <br>
   </div>
 </section>
@@ -73,7 +73,7 @@
 </section>
 
 <section class="footnotes">
-  <p class="options ccy"><small>Show currency in <label for="ccy-gbp"><input type="radio" value="GBP" name="ccy" checked id="ccy-gbp"> GBP</label> <label for="ccy-usd"><input type="radio" value="USD" name="ccy" id="ccy-usd"> USD</label> <label for="ccy-eur"><input type="radio" name="ccy" value="EUR" id="ccy-eur"> EUR</label></small></p>
+  <p class="options ccy"><small><span class="ccy-legend">Show currency in</span> <label for="ccy-gbp"><input type="radio" value="GBP" name="ccy" checked id="ccy-gbp"> GBP</label> <label for="ccy-usd"><input type="radio" value="USD" name="ccy" id="ccy-usd"> USD</label> <label for="ccy-eur"><input type="radio" name="ccy" value="EUR" id="ccy-eur"> EUR</label></small></p>
   <p class="ccy-note" hidden><small>Note that you will be invoiced in GBP, and that non-GBP prices are approximated using Google forex rates.</small></p>
 
   <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>

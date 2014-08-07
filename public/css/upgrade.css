@@ -142,6 +142,11 @@ tr.pro td.pro:after {
   /*width: 56%;*/
 }
 
+.upgrade-info-wrapper {
+  font-size: 16px;
+  clear: both;
+}
+
 .upgrade-form-wrapper {
   float: right;
   margin: 0;
@@ -224,7 +229,7 @@ div.submit {
 }
 
 .upgrade-payment-wrapper input[type=checkbox] {
-  margin: 0 0 0 10px;
+  margin: 0 5px 0 0;
   width: auto;
 }
 
@@ -710,6 +715,6 @@ input.actionButton-small, button.actionButton-small {
 @media (min-width: 768px) and (max-width: 1023px) {
   .upgrade-feature-wrapper table td:nth-child(2),
   .upgrade-feature-wrapper table th:nth-child(2) {
-    display: none;
+    /*display: none;*/
   }
 }

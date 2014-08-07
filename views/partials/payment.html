@@ -7,7 +7,6 @@
 {{/if}}
 
 <section class="payment-type">
-  <span class="label">Plan</span>
   <div class="options">
     <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly <span data-price="60" id="price-yearly">£60</span><small>+VAT</small> <span class="highlight">&ndash; 2 months free</span> </label>
     <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly <span id="price-monthly" data-price="6">£6</span><small>+VAT</small></label>
@@ -45,8 +44,8 @@
 </div>
 
 <section class="buyer-type">
-  <label for="business">Paying as a business?</label>
   <input id="business" type="checkbox" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">
+  <label for="business">Paying as a business</label>
 </section>
 
 <section class="business{{#equal values.buyer_type "business"}}{{else}} disabled{{/equal}}">
@@ -77,6 +76,4 @@
   <p class="ccy-note" hidden><small>Note that you will be invoiced in GBP, and that non-GBP prices are approximated using Google forex rates.</small></p>
 
   <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>
-
-  <p><a href="http://github.com/jsbin/jsbin/issues/new" class="issue">Problem? Feedback? Let us know!</a></p>
 </section>

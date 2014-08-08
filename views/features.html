@@ -1,64 +1,16 @@
 <link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
 
-<div class="upgrade-wrapper">
-  <div class="upgrade-form-wrapper form-container">
-    <h1>Pro registration</h1>
-
-    <form action="" method="post">
-      
-        <div class="upgrade-signin-wrapper">
-          <a class="btn-github" href="{{root}}/auth/github">
-            <img src="{{static}}/images/github-32.png">
-            Login or Register via GitHub
-          </a>
-          <span class="login-group">
-            or
-            <a class="btn-login" href="{{root}}/login" id="btn-login">sign in with your email address</a>
-          </span>
-        </div>
-
-          <div class="form-container login" id="form-login">
-            <div class="tabs">
-              <a class="tab register" href="{{root}}/register">
-                <span>New to JS Bin</span>
-                Register
-              </a>
-              <a class="tab login" href="#">
-                <span>Existing users</span>
-                Login
-              </a>
-            </div>
-            <fieldset class="upgrade-fieldset register" disabled="disabled">
-              {{> register}}
-            </fieldset>
-            <fieldset class="upgrade-fieldset login">
-              {{> login}}
-            </fieldset>
-          </div>
-      
-
-      <div class="upgrade-payment-wrapper">
-        {{> payment}}
-      </div>
-
-      <input type="hidden" name="_csrf" value="{{token}}">
-    </form>
-  </div>
-
-  <div class="upgrade-feature-wrapper">
+<div>
     <h1>Features</h1>
     {{> features}}
-  </div>
 
-  <div class="upgrade-info-wrapper">
     <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
     <p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>
 
     <p>Education is dear to our hearts, and pro accounts allows us to keep developing JS Bin with features we want to see land, and to help fix issues that cause problems for the general users and those students stuck working with limited access to technology (like the version of JS Bin that works without a web connection and entirely from a usb stick with zero install).</p>
 
     <p><a href="http://github.com/jsbin/jsbin/issues/new" class="issue">Problem? Feedback? Let us know!</a></p>
-  </div>
 </div>
 
 <!-- <h2> Supporters </h2>

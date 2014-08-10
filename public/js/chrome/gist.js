@@ -82,6 +82,20 @@ var Gist = (function () { // jshint ignore:line
         content: index
       };
 
+      var desc = [];
+
+      if (jsbin.state.title) {
+        desc.push(jsbin.state.title);
+      }
+
+      if (jsbin.state.description) {
+        desc.push(jsbin.state.description);
+      }
+
+      desc.push('// source ' + jsbin.getURL());
+
+      gist.description = desc.join('\n\n');
+
       var token = '';
       if (jsbin.user && jsbin.user.github_token) { // jshint ignore:line
         token = '?access_token=' + jsbin.user.github_token; // jshint ignore:line

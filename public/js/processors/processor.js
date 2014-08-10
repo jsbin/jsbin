@@ -552,6 +552,46 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    haml: createProcessor({
+      id: 'haml',
+      target: 'html',
+      extensions: ['haml'],
+      init: function (ready) {
+        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/ruby/ruby.js', function(){
+          $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/haml/haml.js', ready)
+        });
+      },
+      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
+        $.ajax({
+          type: 'post',
+          url: '/processor',
+          data: {
+            language: 'haml',
+            source: source,
+            url: jsbin.state.code,
+            revision: jsbin.state.revision
+          },
+          success: function (data) {
+            if (data.errors) {
+              // console.log(data.errors);
+              var cm = jsbin.panels.panels.html.editor;
+              if (typeof cm.updateLinting !== 'undefined') {
+                hintingDone(cm);
+                var err = formatErrors(data.errors);
+                cm.updateLinting(err);
+              }
+            } else if (data.result) {
+              resolve(data.result);
+            }
+          },
+          error: function (jqxhr) {
+            reject(new Error(jqxhr.responseText));
+          },
+          complete: done
+        });
+      }), 500),
+    }),
+
     traceur: (function () {
       var SourceMapConsumer,
           SourceMapGenerator,

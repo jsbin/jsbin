@@ -26,6 +26,7 @@
     "/js/vendor/cm_addons/cm-highlight-line.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
+    "/js/vendor/bin-to-file.min.js",
     "/js/vendor/prettyprint.js",
     "/js/vendor/loop-protect.min.js",
     "/js/chrome/storage.js",

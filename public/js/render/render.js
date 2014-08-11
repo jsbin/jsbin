@@ -1,4 +1,4 @@
-/*globals jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
+/*globals $, jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
 var renderCodeWorking = false;
 

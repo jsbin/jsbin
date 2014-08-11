@@ -64,10 +64,16 @@ var Gist = (function () { // jshint ignore:line
       Object.keys(panels).forEach(function (key) {
         var ext = processors[key].extensions ? processors[key].extensions[0] : key;
         var file = ['jsbin', (jsbin.state.code || 'untitled'), ext].join('.');
-        gist.files[file] = {
-          content: panels[key]
-        };
+        if (panels[key].length) {
+          gist.files[file] = {
+            content: panels[key]
+          };
+        }
       });
+
+      if (!gist.files.javascript && !gist.files.css) {
+        delete gist.files[['jsbin', (jsbin.state.code || 'untitled'), 'html'].join('.')]
+      }
 
       if (jsbin.state.processors) {
         panels.source = jsbin.state.processors;
@@ -113,11 +119,14 @@ var Gist = (function () { // jshint ignore:line
             content: 'Gist created! <a href="' + data.html_url + '" target="_blank">Open in new tab.</a>' // jshint ignore:line
           });
         },
-        error: function (xhr, status) {
+        error: function (xhr, status, error) {
           $document.trigger('tip', {
             type: 'error',
-            content: 'Error: ' + status
+            content: 'There was a problem creating the gist: ' + error
           });
+          console.group('gist');
+          console.log(gist);
+          console.groupEnd('gist');
         }
       });
     }).catch(function (error) {

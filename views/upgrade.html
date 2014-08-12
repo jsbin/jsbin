@@ -5,8 +5,9 @@
   <div class="upgrade-form-wrapper form-container">
     <h1>Pro registration</h1>
 
-    <form action="" method="post">
+    <form action="/upgrade" method="post" id="payment-form">
       
+      {{#unless user}}
         <div class="upgrade-signin-wrapper">
           <a class="btn-github" href="{{root}}/auth/github">
             <img src="{{static}}/images/github-32.png">
@@ -18,31 +19,30 @@
           </span>
         </div>
 
-          <div class="form-container login" id="form-login">
-            <div class="tabs">
-              <a class="tab register" href="{{root}}/register">
-                <span>New to JS Bin</span>
-                Register
-              </a>
-              <a class="tab login" href="#">
-                <span>Existing users</span>
-                Login
-              </a>
-            </div>
-            <fieldset class="upgrade-fieldset register" disabled="disabled">
-              {{> register}}
-            </fieldset>
-            <fieldset class="upgrade-fieldset login">
-              {{> login}}
-            </fieldset>
+        <div class="form-container login" id="form-login">
+          <div class="tabs">
+            <a class="tab register" href="{{root}}/register">
+              <span>New to JS Bin</span>
+              Register
+            </a>
+            <a class="tab login" href="#">
+              <span>Existing users</span>
+              Login
+            </a>
           </div>
-      
+          <fieldset class="upgrade-fieldset register" disabled="disabled">
+            {{> register}}
+          </fieldset>
+          <fieldset class="upgrade-fieldset login">
+            {{> login}}
+          </fieldset>
+        </div>
+      {{/unless}}
 
       <div class="upgrade-payment-wrapper">
         {{> payment}}
       </div>
 
-      <input type="hidden" name="_csrf" value="{{token}}">
     </form>
   </div>
 

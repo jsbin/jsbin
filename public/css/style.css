@@ -4799,9 +4799,36 @@ html * {
   padding-right: 30px;
 }
 
-#profile .large-gravatar {
+div.large-gravatar {
+  display: inline-block;
+  width: 120px;
   float: left;
   margin-right: 10px;
+  position: relative;
+}
+
+div.small-gravatar {
+  display: inline-block;
+  with: 30px;
+  position: relative;
+}
+
+div.small-gravatar object,
+div.large-gravatar object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#profile img.large-gravatar {
+  float: left;
+  margin-right: 10px;
+  width: 120px;
+  z-index: 10;
+  position: relative;
 }
 
 .CodeMirror-highlight-line,

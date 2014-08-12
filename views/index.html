@@ -140,7 +140,8 @@ if(top != self) {
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  {{#if large_gravatar}}<img class="large-gravatar" src="{{large_gravatar}}">{{/if}}
+                  {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
                   <span class="input" id="username" readonly>
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>

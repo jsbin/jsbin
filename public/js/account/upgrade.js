@@ -40,18 +40,18 @@
   })
 
   // Steps
+  openClass = 'open';
   $upgradeSummaries = $('.upgrade-summary');
 
   $upgradeSummaries.on('click', function() {
-    $(this).next('.upgrade-details-content').toggle();
+    $(this).closest('.upgrade-details').toggleClass(openClass);
   });
 
-  $upgradeSummaries.not(':eq(0)').trigger('click');
+  $upgradeSummaries.eq(0).trigger('click');
 
   $('.upgrade-details-next').on('click', function(event) {
     event.preventDefault();
-    $(this).closest('.upgrade-details-content').hide()
-      .closest('.upgrade-details').nextAll('.upgrade-details')
-      .find('.upgrade-details-content').show();
+    $(this).closest('.upgrade-details').removeClass(openClass)
+      .nextAll('.upgrade-details').addClass(openClass);
   })
 }());

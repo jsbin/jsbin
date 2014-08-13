@@ -217,7 +217,7 @@ div.submit {
 .upgrade-payment-wrapper {
   border: 1px solid #DDD;
   padding: 0 30px;
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 
 .upgrade-payment-wrapper section {
@@ -704,6 +704,20 @@ input.actionButton-small, button.actionButton-small {
 /* accordion */
 .upgrade-summary {
   cursor: pointer;
+  text-align: left;
+}
+.upgrade-summary:before {
+  content: '\25b8';
+  padding-right: 5px;
+}
+.open .upgrade-summary:before {
+  content: '\25be';
+}
+.upgrade-details-content {
+  display: none;
+}
+.open .upgrade-details-content {
+  display: block;
 }
 .upgrade-details .upgrade-details-button {
   font-size: 0.75em;
@@ -716,6 +730,13 @@ input.actionButton-small, button.actionButton-small {
   cursor: pointer;
   font-weight: 600;
   width: auto;
+  margin: 10px 0 0;
+}
+.upgrade-next {
+  text-align: right;
+}
+.upgrade-center {
+  text-align: center;
 }
 
 

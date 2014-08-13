@@ -11,7 +11,7 @@
   });
 
   // Show/hide email login/registration block
-  $formLogin = $('#form-login');
+  var $formLogin = $('#form-login');
   $('#btn-login').on('click', function(event) {
     event.preventDefault();
     $formLogin.toggle();
@@ -19,10 +19,10 @@
   });
 
   // Show login/registration
-  $formLoginTabs = $formLogin.find('.tabs');
-  $formLoginTab = $formLogin.find('a.tab');
-  $formLoginLogin = $formLogin.find('.upgrade-fieldset.login');
-  $formLoginRegister = $formLogin.find('.upgrade-fieldset.register');
+  var $formLoginTabs = $formLogin.find('.tabs');
+  var $formLoginTab = $formLogin.find('a.tab');
+  var $formLoginLogin = $formLogin.find('.upgrade-fieldset.login');
+  var $formLoginRegister = $formLogin.find('.upgrade-fieldset.register');
   $formLoginTab.on('click', function(event) {
     event.preventDefault();
     var $this = $(this);
@@ -39,9 +39,14 @@
     }
   })
 
+  var hasFormValidation = false;
+  if (typeof document.createElement('input').checkValidity === 'function') {
+    hasFormValidation = true;
+  }
   // Steps
-  openClass = 'open';
-  $upgradeSummaries = $('.upgrade-summary');
+  var openClass = 'open';
+  var $upgradeSummaries = $('.upgrade-summary');
+  var $submit = $('#payment-form').find(':submit');
 
   $upgradeSummaries.on('click', function() {
     $(this).closest('.upgrade-details').toggleClass(openClass);
@@ -51,7 +56,19 @@
 
   $('.upgrade-details-next').on('click', function(event) {
     event.preventDefault();
-    $(this).closest('.upgrade-details').removeClass(openClass)
-      .nextAll('.upgrade-details').addClass(openClass);
+    var sendable = true;
+    if (hasFormValidation) {
+      $formLogin.find('input').each(function() {
+        if (!this.checkValidity()) {
+          $submit.click();
+          sendable = false;
+          return false;
+        }
+      });
+    }
+    if (sendable) {
+      $(this).closest('.upgrade-details').removeClass(openClass)
+        .nextAll('.upgrade-details').addClass(openClass);
+    }
   })
 }());

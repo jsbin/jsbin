@@ -2,7 +2,9 @@
 var noop = function () {},
     rootClassName = document.body.className;
 
-if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
+var simple = jsbin.settings.editor && jsbin.settings.editor.simple;
+
+if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
   $('body').addClass('mobile');
   jsbin.lameEditor = true;
   Editor = function (el, options) {
@@ -60,6 +62,12 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     defaultTextHeight: function() {
       return 16;
     },
+    highlightLines: function () {
+      return {
+        string: ''
+      };
+    },
+    removeKeyMap: noop,
     addKeyMap: noop,
     indentLine: noop,
     cursorPosition: function () {

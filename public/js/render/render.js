@@ -1,4 +1,4 @@
-/*globals jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
+/*globals $, jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
 var renderCodeWorking = false;
 
@@ -84,6 +84,7 @@ var getPreparedCode = (function () {
       code: /%code%/,
       csscode: /%css%/,
       title: /<title>(.*)<\/title>/i,
+      description: /<meta.*name=["']description['"].*?>/i,
       winLoad: /window\.onload\s*=/,
       scriptopen: /<script/gi
     };
@@ -111,6 +112,12 @@ var getPreparedCode = (function () {
           hasJS = !!js.trim().length,
           replaceWith = 'window.runnerWindow.proxyConsole.';
 
+      // this is used to capture errors with processors, sometimes their errors
+      // aren't useful (Script error. (line 0) #1354) so we try/catch and then
+      // throw the real error. This also works exactly as expected with non-
+      // processed JavaScript
+      js = 'try {' + js + '\n} catch (error) { throw error; }';
+
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
       // the start of each iteration.
@@ -125,7 +132,7 @@ var getPreparedCode = (function () {
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
-        js = js.replace(re.console, function (all, str, arg, pos) {
+        js = js.replace(re.console, function (all, str, arg) {
           return replaceWith + arg;
         });
       }
@@ -207,10 +214,18 @@ var getPreparedCode = (function () {
         });
       }
 
+      var description = (html.match(re.description) || [''])[0];
+      if (description) {
+        var i = description.indexOf('content=') + 'content='.length;
+        var quote = description.slice(i, i+1);
+        jsbin.state.description = description.substr(i + 1).replace(new RegExp(quote + '.*$'), '');
+      }
+
+
       // read the element out of the html code and plug it in to our document.title
-      var newDocTitle = html.match(re.title);
-      if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
-        documentTitle = newDocTitle[1].trim();
+      var newDocTitle = (html.match(re.title) || [,''])[1].trim();
+      if (newDocTitle && newDocTitle !== documentTitle) {
+        jsbin.state.title = documentTitle = newDocTitle;
         if (documentTitle) {
           document.title = documentTitle + ' - ' + 'JS Bin';
         } else {

@@ -1,12 +1,12 @@
 <link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
-<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
+<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
 
 <div class="upgrade-wrapper">
   <div class="upgrade-form-wrapper form-container">
     <h1>Pro registration</h1>
 
     <form action="/upgrade" method="post" id="payment-form">
-      
+
       {{#unless user}}
         <div class="upgrade-details">
           <h2 class="upgrade-summary">Authentication</h2>
@@ -21,7 +21,7 @@
                 <a class="btn-login" href="{{root}}/login" id="btn-login">sign in with your email address</a>
               </span>
             </div>
-            
+
             <div class="form-container login" id="form-login">
               <div class="tabs">
                 <a class="tab register" href="{{root}}/register">

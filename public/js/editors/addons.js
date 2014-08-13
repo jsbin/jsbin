@@ -201,7 +201,7 @@
                (typeof CSSLint !== 'undefined');
       },
       done: function(cm) {
-        if (cm.getOption('mode') !== 'css') {
+        if (cm.getOption('mode') !== 'css' || jsbin.state.processors.css !== undefined) {
           return;
         }
         hintingDone(cm);
@@ -214,7 +214,7 @@
                (typeof JSHINT !== 'undefined');
       },
       done: function(cm) {
-        if (cm.getOption('mode') !== 'javascript') {
+        if (cm.getOption('mode') !== 'javascript' || jsbin.state.processors.javascript !== undefined) {
           return;
         }
         hintingDone(cm, {
@@ -232,7 +232,7 @@
                (typeof HTMLHint !== 'undefined');
       },
       done: function(cm) {
-        if (cm.getOption('mode') !== 'htmlmixed') {
+        if (cm.getOption('mode') !== 'htmlmixed' || jsbin.state.processors.html !== undefined) {
           return;
         }
         hintingDone(cm);
@@ -248,7 +248,7 @@
                (typeof coffeelint !== 'undefined');
       },
       done: function(cm) {
-        if (cm.getOption('mode') !== 'coffeescript') {
+        if (cm.getOption('mode') !== 'coffeescript' || jsbin.state.processors.javascript !== 'coffeescript') {
           return;
         }
         hintingDone(cm);

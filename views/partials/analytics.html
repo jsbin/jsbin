@@ -1,7 +1,7 @@
 {{#if analyticsId}}
 <script>
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', '{{analyticsId}}']);
+_gaq.push(['_setAccount', '{{#if analyticsAltId}}{{analyticsAltId}}{{else}}{{analyticsId}}{{/if}}']);
 _gaq.push(['_trackPageview']);
 
 (function() {

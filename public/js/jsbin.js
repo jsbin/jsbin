@@ -96,16 +96,26 @@ function dedupe(array) {
 function exposeSettings() {
   'use strict';
 
+  function mockEditor (editor, methods) {
+    return methods.reduce(function (mockEditor, method) {
+      mockEditor[method] = editor[method].bind(editor);
+      return mockEditor;
+    }, {});
+  }
+
   function mockPanels() {
     var results = {};
     var panels = jsbin.panels.panels;
     ['css', 'javascript', 'html'].forEach(function (type) {
       results[type] = {
         setCode: panels[type].setCode.bind(panels[type]),
-        editor: {
-          setCursor: panels[type].editor.setCursor.bind(panels[type].editor),
-          getCursor: panels[type].editor.getCursor.bind(panels[type].editor)
-        }
+        getCode: panels[type].getCode.bind(panels[type]),
+        editor: mockEditor(panels[type].editor, [
+          'setCursor',
+          'getCursor',
+          'addKeyMap',
+          'on'
+        ])
       };
     });
 
@@ -116,6 +126,7 @@ function exposeSettings() {
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      embed: jsbin.embed,
       panels: {
         // FIXME decide whether this should be locked down further
         panels: mockPanels()

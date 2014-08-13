@@ -7,6 +7,7 @@
 {{/if}}
 
 <section class="payment-type">
+  <span class="label">Plan</span>
   <div class="options">
     <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly <span data-price="60" id="price-yearly">£60</span><small>+VAT</small> <span class="highlight">&ndash; 2 months free</span> </label>
     <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly <span id="price-monthly" data-price="6">£6</span><small>+VAT</small></label>

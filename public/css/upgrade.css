@@ -154,7 +154,8 @@ tr.pro td.pro:after {
   width: 360px;
 }
 
-.upgrade-feature-wrapper tfoot {
+.upgrade-feature-wrapper tfoot,
+.upgrade-feature-wrapper .upgrade-cost {
   display: none;
 }
 
@@ -701,6 +702,10 @@ input.actionButton-large, button.actionButton-large {
 /* line 390, ../scss/partials/_buttons.scss */
 input.actionButton-small, button.actionButton-small {
   height: 27.6px;
+}
+
+.upgrade-wrapper .payment-type .label {
+  display: none;
 }
 
 /* accordion */

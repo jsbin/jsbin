@@ -23,6 +23,9 @@
     {{#each featureList}}
     <tr class="{{user}}">
       <td class="feature">
+        {{#if tip}}
+        <span tabIndex="1" class="tip" data-tip="{{tip}}">?</span>
+        {{/if}}
         {{name}}
       </td>
       <td class="anon">

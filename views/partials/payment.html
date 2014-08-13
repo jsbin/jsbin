@@ -21,7 +21,7 @@
     <label for="email">Email</label>
     <span class="inputWithImage payment-details-email">
       <b class="icon-mail"></b>
-      <input {{#unless user}}disabled{{/unless}} id="email" value="{{values.email}}" autofocus placeholder="you@example.com" type="email" name="email" required>
+      <input {{#unless user}}disabled{{/unless}} id="email" value="{{values.email}}" {{#unless values.email}}autofocus{{/unless}} placeholder="you@example.com" type="email" name="email" required>
     </span>
   </div>
 
@@ -30,7 +30,7 @@
     <div class="carddetails">
       <span class="inputWithImage payment-details-card-number">
         <b class="icon-credit"></b>
-        <input {{#unless user}}disabled{{/unless}} id="cardnumber" placeholder="Card number" value="{{values.number}}" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
+        <input {{#unless user}}disabled{{/unless}} {{#if values.email}}autofocus{{/if}} id="cardnumber" placeholder="Card number" value="{{values.number}}" type="text" name="number" x-autocompletetype="cc-number" required data-stripe="number">
       </span>
       <span class="inputWithImage payment-details-card-date">
         <b class="icon-calendar-o"></b>

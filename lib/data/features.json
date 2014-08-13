@@ -1,58 +1,71 @@
 [
   {
     "name": "Vanity URLs",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Show off with you.jsbin.com"
   },
   {
     "name": "Private bins",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Protect your bins, and keep your data private"
   },
   {
     "name": "SSL",
-    "user": "pro"
+    "user": "pro",
+    "tip": "All of JS Bin served over SSL, including embeds"
   },
   {
     "name": "Dropbox sync",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Every bin, backed up to your Dropbox"
   },
   {
     "name": "Priority direct support",
     "user": "pro"
   },
   {
-    "name": "Read & write API access (very soon)",
-    "user": "pro"
+    "name": "Read & write API access*",
+    "user": "pro",
+    "tip": "Allows you to automate creating bins"
   },
   {
-    "name": "Asset hosting (coming soon)",
-    "user": "pro"
+    "name": "Asset hosting*",
+    "user": "pro",
+    "tip": "Drag & drop assets to get a URL in your bin"
   },
   {
     "name": "Full, unmodified output",
-    "user": "free"
+    "user": "free",
+    "tip": "Perfect for testing viewports on mobile and more"
   },
   {
     "name": "Save bins to Gist",
-    "user": "free"
+    "user": "free",
+    "tip": "Export the complete HTML to a Gist"
   },
   {
-    "name": "Codecasting (unlimited connections)",
-    "user": "anon"
+    "name": "Codecasting (unlimited)",
+    "user": "anon",
+    "tip": "Allow viewers to watch you code, in real-time"
   },
   {
-    "name": "Live reload (unlimited connections)",
-    "user": "anon"
+    "name": "Live reload (unlimited)",
+    "user": "anon",
+    "tip": "Output live reloads as you code, in real-time"
   },
   {
     "name": "Custom starting code",
-    "user": "anon"
+    "user": "anon",
+    "tip": "Start with only a doctype? Set your \"new\" template"
   },
   {
     "name": "Unlimited external resources",
-    "user": "anon"
+    "user": "anon",
+    "tip": "Add any number of external CSS, JS or other resources"
   },
   {
     "name": "Custom libraries",
-    "user": "anon"
+    "user": "anon",
+    "tip": "Add your own libraries to our vast selection"
   }
 ]

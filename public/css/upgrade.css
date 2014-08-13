@@ -381,7 +381,7 @@ select#country {
 }
 
 .payment-errors {
-  padding: 10px 20px;
+  padding: 5px 10px;
   color: #fff;
   background: #2ECC40;
   line-height: 24px;
@@ -759,7 +759,7 @@ input.actionButton-small, button.actionButton-small {
   }
   .upgrade-feature-wrapper table {
     margin: 0 auto;
-  
+
     width: 100%;
 }
 
@@ -773,7 +773,7 @@ input.actionButton-small, button.actionButton-small {
 
   .upgrade-feature-wrapper table td:nth-child(2),
   .upgrade-feature-wrapper table th:nth-child(2)
-  
+
 /*   .upgrade-feature-wrapper table td:nth-child(2), */
 /*   .upgrade-feature-wrapper table th:nth-child(2) */{
     display: none;
@@ -787,4 +787,79 @@ input.actionButton-small, button.actionButton-small {
     padding: 10px 5px 10px;
   }
 
+}
+
+input.valid {
+  background: #2ECC40;
+}
+
+input.invalid {
+  background: #FF4136;
+}
+
+.tip {
+  font-family: Times;
+  display: inline-block;
+  background: rgb(245, 241, 241);
+  border-radius: 10px;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  text-align: center;
+  line-height: 17px;
+  vertical-align: sub;
+  color: #000;
+  cursor: help;
+  vertical-align: baseline;
+  opacity: 1;
+  margin-right: 7px;
+  outline: none;
+}
+
+.tip:hover,
+.tip:focus {
+  background: rgb(159, 153, 153);
+  color: #fff;
+}
+
+.tip:focus:after,
+.tip:hover:after {
+  visibility: hidden;
+  content: attr(data-tip);
+  position: absolute;
+  font-family: 'helvetica neue', sans-serif;
+  background: inherit;
+  width: 190px;
+  font-size: 14px;
+  padding: 7px 10px;
+  /* bottom: 0; */
+  display: block;
+  left: 0px;
+  border-radius: 3px;
+  margin-top: -77px;
+  height: 50px;
+  text-align: left;
+}
+
+.tip:focus:after,
+.tip:hover:after {
+  visibility: visible;
+  -webkit-transition: visibility 0s linear 3s;
+  transition: visibility 0s linear 3s;
+}
+
+.tip:focus:before,
+.tip:hover:before {
+  position: absolute;
+  /* top: 45px; */ /* 42px */
+  left: 86px;
+  /* border-left: solid 1px #ccc; */
+  /* border-top: solid 1px #ccc; */
+  width: 1.1em;
+  height: 1.1em;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  background: inherit;
+  content: '';
+  margin-top: -16px;
 }

@@ -355,7 +355,7 @@ section.business.disabled {
 
 #vat {
   padding-left: 30px;
-  width: 124px;
+  width: 135px;
   font-size: 16px;
 }
 
@@ -368,8 +368,10 @@ button {
 }
 
 select#country {
-  width: 150px;
+  width: 165px;
   font-size: 16px;
+  /* margin-left: 80px; */
+  /* float: right; */
 }
 
 .payment-errors:empty {

@@ -704,6 +704,11 @@ h6:hover .anchor span:before {
   .status {
     display: none;
   }
+
+  nav {
+    width: 75%;
+  }
+
 }
 
 #comments {

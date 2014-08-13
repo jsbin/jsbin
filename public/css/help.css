@@ -700,6 +700,10 @@ h6:hover .anchor span:before {
   code {
     word-wrap: break-word;
   }
+
+  .status {
+    display: none;
+  }
 }
 
 #comments {

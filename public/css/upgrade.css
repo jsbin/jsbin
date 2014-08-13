@@ -759,11 +759,32 @@ input.actionButton-small, button.actionButton-small {
   }
   .upgrade-feature-wrapper table {
     margin: 0 auto;
-  }
+  
+    width: 100%;
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  .upgrade-feature-wrapper table td:nth-child(2),
-  .upgrade-feature-wrapper table th:nth-child(2) {
-    /*display: none;*/
+
+  .upgrade-feature-wrapper table td:nth-child(1),
+  .upgrade-feature-wrapper table th:nth-child(1) {
+    min-width: 150px;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
   }
+
+
+  .upgrade-feature-wrapper table td:nth-child(2),
+  .upgrade-feature-wrapper table th:nth-child(2)
+  
+/*   .upgrade-feature-wrapper table td:nth-child(2), */
+/*   .upgrade-feature-wrapper table th:nth-child(2) */{
+    display: none;
+  }
+
+  .upgrade-payment-wrapper {
+    padding: 0 10px;
+  }
+
+  .form-container form {
+    padding: 10px 5px 10px;
+  }
+
 }

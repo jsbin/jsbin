@@ -15,6 +15,7 @@
   $('#btn-login').on('click', function(event) {
     event.preventDefault();
     $formLogin.toggle();
+    $('.upgrade-signin-wrapper').toggle();
   });
 
   // Show login/registration
@@ -36,5 +37,21 @@
       $formLoginRegister.attr('disabled', false);
       $formLoginLogin.attr('disabled', 'disabled');
     }
+  })
+
+  // Steps
+  $upgradeSummaries = $('.upgrade-summary');
+
+  $upgradeSummaries.on('click', function() {
+    $(this).next('.upgrade-details-content').toggle();
+  });
+
+  $upgradeSummaries.not(':eq(0)').trigger('click');
+
+  $('.upgrade-details-next').on('click', function(event) {
+    event.preventDefault();
+    $(this).closest('.upgrade-details-content').hide()
+      .closest('.upgrade-details').nextAll('.upgrade-details')
+      .find('.upgrade-details-content').show();
   })
 }());

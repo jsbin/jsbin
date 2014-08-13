@@ -154,6 +154,10 @@ tr.pro td.pro:after {
   width: 360px;
 }
 
+.upgrade-feature-wrapper tfoot {
+  display: none;
+}
+
 .upgrade-form-wrapper form {
   border: 0 none;
 }
@@ -695,6 +699,23 @@ input.actionButton-large, button.actionButton-large {
 /* line 390, ../scss/partials/_buttons.scss */
 input.actionButton-small, button.actionButton-small {
   height: 27.6px;
+}
+
+/* accordion */
+.upgrade-summary {
+  cursor: pointer;
+}
+.upgrade-details .upgrade-details-button {
+  font-size: 0.75em;
+  background: #f0f0f0;
+  background: linear-gradient(0deg, #f0f0f0, #fefefe);
+  /*box-shadow: 0 3px 2px 0px #eee;*/
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 2px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: 600;
+  width: auto;
 }
 
 

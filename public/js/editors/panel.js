@@ -469,13 +469,10 @@ Panel.prototype = {
       if (panel.visible) {
         var height = panel.editor.scroller.closest('.panel').outerHeight();
         var offset = 0;
-        var lineHeight = panel.editor.defaultTextHeight();
         $error = panel.$el.find('details');
         offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
-          // show 50% more lines as blank
-          panel.editor.scroller.find('.CodeMirror-lines').css({ paddingBottom: height / 4 * 3 });
           editor.scroller.height(height - offset);
         }
         try { editor.refresh(); } catch (e) {}

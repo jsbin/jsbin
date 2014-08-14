@@ -807,7 +807,7 @@ input.invalid {
   border-radius: 10px;
   width: 16px;
   height: 16px;
-  font-size: 9px;
+  font-size: 11px;
   text-align: center;
   line-height: 17px;
   vertical-align: sub;
@@ -818,12 +818,13 @@ input.invalid {
   margin-right: 7px;
   outline: none;
   position: relative;
+  font-weight: bold;
 }
 
 .tip:hover,
 .tip:focus {
   background: rgb(159, 153, 153);
-  color: #fff;
+  color: rgb(255, 255, 255);
 }
 
 .tip:focus:after,
@@ -841,9 +842,11 @@ input.invalid {
   left: -14px;
   border-radius: 3px;
   /* margin-top: -77px; */
-  height: 50px;
+  /* height: 50px; */
   text-align: left;
-  top: -60px;
+  /* top: -60px; */
+  font-weight: normal;
+  bottom: 26px;
 }
 
 .tip:focus:after,

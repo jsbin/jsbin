@@ -17,9 +17,8 @@ h2 {
 
 table {
   border: 1;
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
-  margin-left:10%;
 }
 
 tbody tr {

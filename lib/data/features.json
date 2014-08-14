@@ -24,16 +24,6 @@
     "user": "pro"
   },
   {
-    "name": "Read & write API access*",
-    "user": "pro",
-    "tip": "Allows you to automate creating bins"
-  },
-  {
-    "name": "Asset hosting*",
-    "user": "pro",
-    "tip": "Drag & drop assets to get a URL in your bin"
-  },
-  {
     "name": "Full, unmodified output",
     "user": "free",
     "tip": "Perfect for testing viewports on mobile and more"

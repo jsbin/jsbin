@@ -745,6 +745,13 @@ input.actionButton-small, button.actionButton-small {
   text-align: center;
 }
 
+.upgrade-tweet {
+  display: inline-block;
+  margin: 0 5px;
+  vertical-align: top;
+  width: 300px;
+}
+
 
 @media (max-width: 767px) {
   #featureGrid {

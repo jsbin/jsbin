@@ -46,3 +46,11 @@
 </table>
 
 <p>We are also working on asset hosting and read & write API access.</p>
+
+<div class="upgrade-tweets-wrapper">
+  {{#each tweets}}
+    {{> tweet}}
+  {{/each}}
+</div>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

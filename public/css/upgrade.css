@@ -814,6 +814,7 @@ input.invalid {
   opacity: 1;
   margin-right: 7px;
   outline: none;
+  position: relative;
 }
 
 .tip:hover,
@@ -833,12 +834,13 @@ input.invalid {
   font-size: 14px;
   padding: 7px 10px;
   /* bottom: 0; */
-  display: block;
-  left: 0px;
+  /* display: block; */
+  left: -14px;
   border-radius: 3px;
-  margin-top: -77px;
+  /* margin-top: -77px; */
   height: 50px;
   text-align: left;
+  top: -60px;
 }
 
 .tip:focus:after,
@@ -852,7 +854,7 @@ input.invalid {
 .tip:hover:before {
   position: absolute;
   /* top: 45px; */ /* 42px */
-  left: 86px;
+  left: 3px;
   /* border-left: solid 1px #ccc; */
   /* border-top: solid 1px #ccc; */
   width: 1.1em;

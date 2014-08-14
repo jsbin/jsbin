@@ -6,14 +6,13 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
 
   {{> analytics}}
-  <script>
-  ga('set', 'dimension1', '{{user.id}}');
-  </script>
 
+  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
@@ -36,6 +35,7 @@ if(top != self) {
   document.write('<' + '!--');
 }
 </script>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}
@@ -140,13 +140,14 @@ if(top != self) {
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  {{#if large_gravatar}}<img class="large-gravatar" src="{{large_gravatar}}">{{/if}}
+                  {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
                   <span class="input" id="username" readonly>
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>
 
                   <ul>
-                    <li><a href="/account/profile">Update profile</a></li>
+                    <li><a href="/account/profile">Profile</a></li>
                     <li><a href="/account/editor">Editor settings</a></li>
                     <li><a href="/account/preferences">Preferences</a></li>
                     <li><a href="/logout">Logout</a></li>

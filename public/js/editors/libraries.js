@@ -5,8 +5,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': '//code.jquery.com/jquery-2.1.0.min.js',
-    'label': 'jQuery 2.1.0',
+    'url': '//code.jquery.com/jquery-2.1.1.min.js',
+    'label': 'jQuery 2.1.1',
     'group': 'jQuery'
   },
   {
@@ -15,8 +15,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': '//code.jquery.com/jquery-1.11.0.min.js',
-    'label': 'jQuery 1.11.0',
+    'url': '//code.jquery.com/jquery-1.11.1.min.js',
+    'label': 'jQuery 1.11.1',
     'group': 'jQuery'
   },
   {
@@ -35,11 +35,11 @@ var libraries = [
   },
   {
     'url': [
-      '//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.min.css',
+      '//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.min.css',
       '//code.jquery.com/jquery-1.11.0.min.js',
-      '//code.jquery.com/ui/1.11.0/jquery-ui.min.js'
+      '//code.jquery.com/ui/1.11.1/jquery-ui.min.js'
     ],
-    'label': 'jQuery UI 1.11.0',
+    'label': 'jQuery UI 1.11.1',
     'group': 'jQuery UI'
   },
   {

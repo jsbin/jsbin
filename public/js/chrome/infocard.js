@@ -69,7 +69,7 @@
       $header.click(function (e) {
         e.preventDefault();
         analytics.infocard('click', 'no-result');
-      //   $template.toggleClass('open');
+        // $template.toggleClass('open');
       });
 
       var viewers = 0;

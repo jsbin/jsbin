@@ -332,7 +332,8 @@ $('#lostpass').click(function (e) {
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
-if (sessionStorage.runnerPending) {
+// ignore for embed as there might be a lot of embeds on the page
+if (!jsbin.embed && sessionStorage.runnerPending) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
     type: 'error'
@@ -497,6 +498,26 @@ $('a.archivebin').on('click', function (e) {
 $('a.unarchivebin').on('click', function (e) {
   e.preventDefault();
   archive(false);
+});
+
+var $enableUniversalEditor = $('#enableUniversalEditor').on('change', function (e) {
+  e.preventDefault();
+
+  jsbin.settings.editor.simple = this.checked;
+  analytics.universalEditor(jsbin.settings.editor.simple);
+  window.location.reload();
+});
+
+if (jsbin.settings.editor.simple) {
+  $enableUniversalEditor.prop('checked', true);
+}
+
+$('#skipToEditor').click(function () {
+  if (jsbin.settings.editor.simple) {
+    $('#html').focus();
+  } else {
+    jsbin.panels.panels.html.editor.focus();
+  }
 });
 
 }());

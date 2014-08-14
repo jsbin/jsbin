@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 var memcache = require('memcached');
 var repl = require('repl');
@@ -28,9 +29,16 @@ function clear(user, callback) {
   m.set(user, false, 0, callback);
 }
 
+function show(user, callback) {
+  m.get(user, function (error, data) {
+    callback(JSON.stringify(data, '', 2));
+  });
+}
+
 var commands = {
   flag: flag,
-  clear: clear
+  clear: clear,
+  show: show
 };
 
 function run(raw, context, filename, callback) {

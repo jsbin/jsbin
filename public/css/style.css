@@ -275,6 +275,43 @@ div.CodeMirror-cursors {
   }
 }
 
+/* CodeMirror addons */
+
+/* Addon: dialog/dialog.css
+   ========================================================================== */
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  background: white;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+  color: #333;
+}
+
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid #eee;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid #eee;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
 
 /* CodeMirror themes */
 
@@ -2544,6 +2581,11 @@ body.streaming #bin {
   font-size: 13px;
 }
 
+.CodeMirror-dialog {
+  border-bottom-color: #E6E6E6;
+  z-index: 20;
+}
+
 .showtip #bin {
   /*bottom: 26px;*/
 }
@@ -2667,6 +2709,7 @@ details li, .details li {
 
 .keyboardHelp #keyboardHelp {
   display: block;
+  z-index: 999999;
 }
 
 .urlHelp #urlHelp {
@@ -2944,8 +2987,13 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 14px;
 }
-#bin .editbox .CodeMirror pre {
+#bin .editbox .CodeMirror pre,
+.mobile textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+}
+
+.mobile textarea {
+  background: transparent;
 }
 
 .editbox .CodeMirror,
@@ -3891,6 +3939,12 @@ left: 50%;
   top: 6px;
 }
 
+.toppanel.hideheader.ready #bin,
+.toppanel.hideheader #history,
+.toppanel.hideheader #history .preview {
+  top: 200px;
+}
+
 .hideheader #control:hover {
   top: 0;
   -webkit-transition: top ease-out 10ms;
@@ -4745,9 +4799,36 @@ html * {
   padding-right: 30px;
 }
 
-#profile .large-gravatar {
+div.large-gravatar {
+  display: inline-block;
+  width: 120px;
   float: left;
   margin-right: 10px;
+  position: relative;
+}
+
+div.small-gravatar {
+  display: inline-block;
+  with: 30px;
+  position: relative;
+}
+
+div.small-gravatar object,
+div.large-gravatar object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#profile img.large-gravatar {
+  float: left;
+  margin-right: 10px;
+  width: 120px;
+  z-index: 10;
+  position: relative;
 }
 
 .CodeMirror-highlight-line,
@@ -4906,7 +4987,7 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  color: #6293D3;
+  color: rgb(98, 147, 211);
   display: block;
   padding: 6px 10px 6px 1px;
   text-decoration: none;
@@ -4977,6 +5058,20 @@ a.toppanel-hide {
   color: #6293D3;
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
+  text-indent: -9999px;
+  overflow: hidden;
+  /* height: 1%; */
+  width: 19px;
+}
+a.toppanel-hide:after {
+  content: '\d7';
+  position: absolute;
+  left: 4px;
+  /* top: 0; */
+  /* width: 20px; */
+  /* height: 20px; */
+  text-indent: 0;
+  /* display: block; */
 }
 .toppanel-actions .btn-github {
   font-size: 70%;
@@ -5042,6 +5137,12 @@ a.toppanel-logo {
      -moz-transition:    -moz-transform linear 120ms 120ms;
        -o-transition:      -o-transform linear 120ms 120ms;
           transition:         transform linear 120ms 120ms;
+}
+.hideheader.ready a.toppanel-logo {
+  top: -35px;
+}
+.hideheader.ready.toppanel a.toppanel-logo {
+  top: 0;
 }
 /* slow to remove */
 #jsbin .toppanel-slow #bin,
@@ -5211,6 +5312,7 @@ a.toppanel-logo {
   padding: 0.2em;
   padding-left: 2.3em;
   /* padding-right: 0; */
+  position: relative;
 }
 .console-log-line:first-child {
   border-top: 0 none;
@@ -5335,4 +5437,48 @@ a[data-pro]:hover:after {
 
 .love {
   color: #FF4136;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+#enableUniversalEditorLabel {
+  color: rgb(98, 147, 211);
+  position: relative;
+  /* top: 7px; */
+  left: 0;
+  z-index: 999999;
+  line-height: 16px;
+/*   font-size: 16px; */
+  /* background: white; */
+  /* padding: 20px; */
+  /* vertical-align: top; */
+  /*transform: scale(1.2);*/
+  /* transform-origin: 0 0; */
+  position: absolute;
+  bottom: 0px;
+  /* left: 210px; */
 }

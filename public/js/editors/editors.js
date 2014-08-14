@@ -370,7 +370,7 @@ panels.distribute = function () {
         });
       }
     }
-  } else {
+  } else if (!jsbin.embed) {
     $('#history').show();
     setTimeout(function () {
       $body.removeClass('panelsVisible');

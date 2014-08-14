@@ -1,8 +1,8 @@
 <div id="toppanel" class="toppanel-wrapper" style="display:none;">
   <div class="toppanel-column toppanel-column-first">
-    <a href="#" class="toppanel-hide" title="Close">&times;</a>
+    <a href="#" class="toppanel-hide" title="Close">Close welcome panel</a>
     <a href="#" class="toppanel-logo">
-      <img src="{{static}}/images/dave.svg" width="100">
+      <img src="{{static}}/images/dave.min.svg" alt="Welcome to JS Bin">
     </a>
     <div class="toppanel-actions{{#unless home}} toppanel-actions-alone{{/unless}}">
       <div>
@@ -18,6 +18,7 @@
 {{#welcomePanel}}
 {{#features}}
   <div class="toppanel-column">
+    <div><label id="enableUniversalEditorLabel" for="enableUniversalEditor"><input type="checkbox" id="enableUniversalEditor">Textarea editor mode</label></div>
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
       {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
@@ -69,6 +70,10 @@
     {{#if ../user.pro}}
       <div class="toppanel-section toppanel-love">
         <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
+      </div>
+    {{else}}
+      <div class="toppanel-section toppanel-love">
+        <center><a href="/upgrade">Join the Pro users today</a></center>
       </div>
     {{/if}}
   </div>

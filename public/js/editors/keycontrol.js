@@ -45,7 +45,7 @@ if (!customKeys.disabled) {
     var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
         closekey = customKeys.closePanel ? customKeys.closePanel : 48;
 
-    if (event.ctrlKey) { event.metaKey = true; }
+    if (event.ctrlKey && $.browser.platform !== 'mac') { event.metaKey = true; }
 
     if (event.metaKey && event.which === 89) {
       archive(!event.shiftKey);

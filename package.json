@@ -44,7 +44,7 @@
     "semver": "~2.1.0",
     "rsvp": "~3.0.1",
     "undefsafe": "0.0.2",
-    "feature-gateway": "0.0.3",
+    "feature-gateway": "0.0.4",
     "hbs": "~2.7.0",
     "replify": "~1.2.0",
     "moment": "~2.5.1",
@@ -72,7 +72,8 @@
     "mocha": "~1.11.0",
     "sinon": "~1.7.3",
     "grunt-cli": "~0.1.11",
-    "mocha-casperjs": "~0.5.0"
+    "mocha-casperjs": "~0.5.0",
+    "hbs-utils": "0.0.3"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

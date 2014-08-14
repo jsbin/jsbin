@@ -254,7 +254,7 @@ article p {
 
 nav {
   float: right;
-  width: 50%;
+  width: 60%;
   text-align: right;
 }
 
@@ -700,6 +700,15 @@ h6:hover .anchor span:before {
   code {
     word-wrap: break-word;
   }
+
+  .status {
+    display: none;
+  }
+
+  nav {
+    width: 75%;
+  }
+
 }
 
 #comments {

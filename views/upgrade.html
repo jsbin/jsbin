@@ -1,6 +1,15 @@
 <link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
 
+{{#if analyticsId}}
+<script>
+ga('send', 'pageview', {
+  'title': '[2014-08-14] Upgrade to Pro - Account Management'
+});
+</script>
+{{/if}}
+
+
 <div class="upgrade-wrapper">
   <div class="upgrade-form-wrapper form-container">
     <h1>Pro Upgrade</h1>

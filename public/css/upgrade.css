@@ -358,6 +358,7 @@ section.business.disabled {
   padding-left: 30px;
   width: 135px;
   font-size: 16px;
+  line-height: 16px;
 }
 
 #vat.validating {
@@ -748,6 +749,10 @@ input.actionButton-small, button.actionButton-small {
 
 
 @media (max-width: 767px) {
+  #featureGrid {
+    margin-left: 0;
+  }
+
   .upgrade-form-wrapper {
     float: none;
     width: 100%;

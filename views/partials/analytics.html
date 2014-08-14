@@ -8,8 +8,6 @@ ga('create', '{{#if analyticsAltId}}{{analyticsAltId}}{{else}}{{analyticsId}}{{/
 ga('require', 'linkid', 'linkid.js');
 ga('require', 'displayfeatures');
 ga('send', 'pageview');
-{{#if user}}
-ga('set', 'dimension1', '{{user.id}}');
-{{/if}}
+{{#if user}}ga('set', 'dimension1', '{{user.id}}');{{/if}}
 </script>
 {{/if}}

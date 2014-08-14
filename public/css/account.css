@@ -210,7 +210,7 @@ form label.mini-desc a {
   font-size: 15px;
 }
 span.mini-desc {
-  color: #979A99;
+  /* color: rgb(101, 101, 101); */
   display: block;
   font-weight: normal;
   font-size: 14px;
@@ -455,7 +455,7 @@ section {
   width: 100px;
   display: inline;
   outline: none;
-  color: #979A99;
+  /* color: rgb(58, 61, 60); */
   cursor: pointer;
 }
 .hintOptWrapper summary + div {

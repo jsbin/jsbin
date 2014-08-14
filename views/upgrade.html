@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
 
-{{#if analyticsId}}
+{{#if is_production}}{{#if analyticsId}}
 <script>
 ga('send', 'pageview', {
   'title': '[2014-08-14] Upgrade to Pro - Account Management'
 });
 </script>
-{{/if}}
+{{/if}}{{/if}}
 
 
 <div class="upgrade-wrapper">
@@ -63,10 +63,6 @@ ga('send', 'pageview', {
           </div>
         </div>
       {{/unless}}
-
-      {{#if user}}
-        <input type="hidden" value="1" name="logged">
-      {{/if}}
 
       <div class="upgrade-details">
         {{#unless user}}<h3>2. Payment</h3>{{/unless}}

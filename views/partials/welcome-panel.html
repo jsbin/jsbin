@@ -28,7 +28,7 @@
 
 {{#pro-features}}
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{#if ../../user.pro}}/help/pro{{else}}/upgrade{{/if}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} (upgrade){{/unless}}</a></h2>
+    <h2 class="toppanel-title"><a href="{{#if ../../user.pro}}/help/pro{{else}}/upgrade{{/if}}" class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
       {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
@@ -72,8 +72,8 @@
         <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
       </div>
     {{else}}
-      <div class="toppanel-section toppanel-love">
-        <center><a href="/upgrade">Join the Pro users today</a></center>
+      <div class="toppanel-section toppanel-love toppanel-no-pro">
+        <center><a href="/upgrade">Upgrade to pro now</a></center>
       </div>
     {{/if}}
   </div>

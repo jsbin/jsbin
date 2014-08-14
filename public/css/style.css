@@ -4958,10 +4958,17 @@ body.ready.toppanel {
   padding: 5px 10px;
   border-radius: 3px;
   background: hsl(214, 52%, 98%);
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* box-sizing: border-box; */
   margin-top: 24px;
+}
+
+.toppanel-no-pro {
+  background: white;
+  padding: 0;
+}
+
+.toppanel-wrapper .toppanel-no-pro a {
+  padding: 10px 5px;
+  display: block;
 }
 
 .toppanel-actions {

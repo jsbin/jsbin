@@ -5,8 +5,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': '//code.jquery.com/jquery-2.1.0.min.js',
-    'label': 'jQuery 2.1.0',
+    'url': '//code.jquery.com/jquery-2.1.1.min.js',
+    'label': 'jQuery 2.1.1',
     'group': 'jQuery'
   },
   {
@@ -15,8 +15,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': '//code.jquery.com/jquery-1.11.0.min.js',
-    'label': 'jQuery 1.11.0',
+    'url': '//code.jquery.com/jquery-1.11.1.min.js',
+    'label': 'jQuery 1.11.1',
     'group': 'jQuery'
   },
   {

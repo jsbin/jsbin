@@ -10,7 +10,11 @@
     {{#feature request "pro"}}
     <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
     {{else}}
+      {{#feature request "upgradeWithFeatures"}}
+    <a class="sidebar-btn" href="{{root}}/upgrade">Upgrade</a>
+      {{else}}
     <a class="sidebar-btn" href="{{root}}/account/upgrade/pay">Upgrade</a>
+      {{/feature}}
     {{/feature}}
   {{/feature}}
 </div>

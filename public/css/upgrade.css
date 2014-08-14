@@ -154,8 +154,7 @@ tr.pro td.pro:after {
   width: 360px;
 }
 
-.upgrade-feature-wrapper tfoot,
-.upgrade-feature-wrapper .upgrade-cost {
+.upgrade-feature-wrapper tfoot.upgrade, .upgrade-feature-wrapper .upgrade-cost {
   display: none;
 }
 

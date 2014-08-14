@@ -10,7 +10,7 @@
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
-  {{> analytics}}
+    {{> analytics}}
   {{/if}}
   <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
@@ -60,7 +60,7 @@ if(top != self) {
               <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis="private">Make bin private</a>
               {{else}}
                 {{#feature request "upgrade"}}
-              <a data-desc="Set this bin to private" data-pro="true" class="button group" title="Set this bin to private" href="{{root}}/account/upgrade">Make bin private</a>
+              <a data-desc="Set this bin to private" data-pro="true" class="button group" title="Set this bin to private" href="{{root}}/upgrade">Make bin private</a>
                 {{/feature}}
               {{/feature}}
               {{#feature request "delete"}}
@@ -80,7 +80,7 @@ if(top != self) {
                 {{#feature request "vanity"}}
               <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/bookmark/vanity">Publish to vanity homepage</a>
                 {{else}}
-              <a data-pro="true" data-desc="Publish the current bin to {{vanity}}" class="button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/upgrade">Publish to vanity homepage</a>
+              <a data-pro="true" data-desc="Publish the current bin to {{vanity}}" class="button group" title="Publish the current bin to {{vanity}}" href="{{root}}/upgrade">Publish to vanity homepage</a>
                 {{/feature}}
               {{/feature}}
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
@@ -156,7 +156,7 @@ if(top != self) {
                 </div>
                 {{#feature request "upgrade"}}
                   {{#unless user.pro}}
-                <a href="/account/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+                <a href="/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
                   {{/unless}}
                 {{/feature}}
               </div>

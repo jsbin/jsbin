@@ -47,10 +47,13 @@
 
 <p><small>We're also working on asset hosting and a full read & write API for Pro users, so watch our <a href="/blog" target="_blank">blog</a> for the latest releases.</small></p>
 
+{{#if tweets}}
+<h3>What the web is saying about JS Bin</h3>
 <div class="upgrade-tweets-wrapper">
   {{#each tweets}}
     {{> tweet}}
   {{/each}}
 </div>
+{{/if}}
 
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

@@ -7,17 +7,20 @@
     event.preventDefault();
 
     var form = $(this);
-    var bin = form.find('input[name=bin]').val();
+    var url = form.find('input[name=bin]').val();
     var $responseFeedback = form.find('.responseFeedback');
+    var bin;
+    var revision;
 
-    console.log(bin);
+    console.log(url);
 
     // $responseFeedback.show().text('Checking...');
 
     // $.ajax({
     //   url: form.attr('action'),
     //   data: {
-    //     bin: bin
+    //     bin: bin,
+    //     revision: revision
     //   },
     //   type: 'POST',
     //   dataType: 'json',

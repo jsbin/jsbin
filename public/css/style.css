@@ -1640,6 +1640,7 @@ textarea:focus {
      -moz-user-select: -moz-none; /* if this is "none" you can't copy text */
       -ms-user-select: none;
           user-select: none;
+  /* padding-left: 4px; */
 }
 
 /* total faff, not sure why, but jsbin loads and selects all the text :-\ */
@@ -4899,33 +4900,47 @@ body.ready.toppanel {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   position: relative;
+  margin-right: 20px;
 }
 /* Pro column
    this could change in the future depending on the content */
 .toppanel-column:nth-child(3) {
-  max-width: 160px;
+  /* max-width: 180px; */
+  /* margin-right: 10px; */
 }
 
 @media (max-width: 1223px) { /* 5 */
   .toppanel-column {
-    width: calc((100% - 217px) / 4);
+    width: calc((100% - 240px) / 4);
     max-width: 100%;
-  }
+  
+    margin-right: 8px;
+}
   .toppanel-column:nth-child(n+6) {
     display: none;
   }
 }
 @media (max-width: 1023px) { /* 4 */
   .toppanel-column {
-    width: calc((100% - 217px) / 3);
-  }
+    width: calc((100% - 250px) / 3);
+  
+    margin-right: 10px;
+}
   .toppanel-column:nth-child(n+5) {
     display: none;
   }
 }
 @media (max-width: 816px) { /* 3 */
   .toppanel-column {
-    width: calc((100% - 217px) / 2);
+    width: calc((100% - 240px) / 3);
+  }
+  .toppanel-column:nth-child(n+4) {
+    /* display: none; */
+  }
+}
+@media (max-width: 700px) { /* 2 */
+  .toppanel-column {
+    width: calc((100% - 240px) / 2);
   }
   .toppanel-column:nth-child(n+4) {
     display: none;
@@ -5486,6 +5501,6 @@ a[data-pro]:hover:after {
   /*transform: scale(1.2);*/
   /* transform-origin: 0 0; */
   position: absolute;
-  bottom: 0px;
+  bottom: 2px;
   /* left: 210px; */
 }

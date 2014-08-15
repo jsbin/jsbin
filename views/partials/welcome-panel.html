@@ -32,6 +32,11 @@
       <ul class="toppanel-list">
       {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
+  {{#unless ../user.pro}}
+  <div class="toppanel-section toppanel-love toppanel-no-pro">
+    <center><a href="/upgrade">Upgrade to pro now</a></center>
+  </div>
+  {{/unless}}
   </div>
 {{/pro-features}}
 
@@ -70,10 +75,6 @@
     {{#if ../user.pro}}
       <div class="toppanel-section toppanel-love">
         <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
-      </div>
-    {{else}}
-      <div class="toppanel-section toppanel-love toppanel-no-pro">
-        <center><a href="/upgrade">Upgrade to pro now</a></center>
       </div>
     {{/if}}
   </div>

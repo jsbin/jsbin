@@ -3,24 +3,19 @@
 
   /* globals $ */
 
-  $('#flag-bin').submit(function (event) {
+  $('#flag-user').submit(function (event) {
     event.preventDefault();
 
     var form = $(this);
-    var url = form.find('input[name=bin]').val();
+    var username = form.find('input[name=username]').val();
     var $responseFeedback = form.find('.responseFeedback');
-    var bin;
-    var rev;
-
-    console.log(url);
 
     $responseFeedback.show().text('Checking...');
 
     $.ajax({
       url: form.attr('action'),
       data: {
-        bin: bin,
-        rev: rev
+        username: username
       },
       type: 'POST',
       dataType: 'json',

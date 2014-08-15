@@ -752,6 +752,15 @@ input.actionButton-small, button.actionButton-small {
   width: 300px;
 }
 
+@media (max-width: 850px) {
+  .upgrade-tweets-wrapper {
+/*     clear: both; */
+  }
+
+  h3.tweets {
+    font-size: 20px;
+  }
+}
 
 @media (max-width: 767px) {
   #featureGrid {
@@ -779,7 +788,6 @@ input.actionButton-small, button.actionButton-small {
     font-size: 0.9rem;
     line-height: 1.3rem;
   }
-
 
   .upgrade-feature-wrapper table td:nth-child(2),
   .upgrade-feature-wrapper table th:nth-child(2)

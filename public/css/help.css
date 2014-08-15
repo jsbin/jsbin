@@ -222,7 +222,7 @@ header nav a.selected:before {
 
 #back:before {
   content: '← ';
-  background: url(/images/favicon.png) no-repeat 28px center;
+  background: url(/images/favicon.svg) no-repeat 28px center;
   padding-right: 30px;
 }
 

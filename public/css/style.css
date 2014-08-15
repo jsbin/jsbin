@@ -2240,9 +2240,9 @@ body.preview #source select {
   left: 0.8em;
   right: 0.8em;
 }
-.mobile textarea,
-.ie6 textarea,
-.ie7 textarea {
+.mobile .editbox textarea,
+.ie6 .editbox textarea,
+.ie7 .editbox textarea {
   margin: 0;
   border: 0;
   font-family: Menlo, Monaco, consolas, monospace;

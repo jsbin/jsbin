@@ -54,9 +54,6 @@
         position = 0;
       }
 
-      console.log(position);
-      console.log(children.eq(position));
-
       children.eq(position).addClass('hover');
     } else if (key === 13) { // select
       var url = results.find('.hover')[0];

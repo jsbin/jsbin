@@ -3426,6 +3426,10 @@ a.active:hover {
   text-align: left;
 }
 
+#help {
+  max-width: 266px;
+}
+
 #registerLogin .dropdowncontent {
   padding: 20px;
 }
@@ -4920,7 +4924,7 @@ body.ready.toppanel {
   .toppanel-column {
     width: calc((100% - 240px) / 4);
     max-width: 100%;
-  
+
     margin-right: 8px;
 }
   .toppanel-column:nth-child(n+6) {
@@ -4930,7 +4934,7 @@ body.ready.toppanel {
 @media (max-width: 1023px) { /* 4 */
   .toppanel-column {
     width: calc((100% - 250px) / 3);
-  
+
     margin-right: 10px;
 }
   .toppanel-column:nth-child(n+5) {
@@ -5510,4 +5514,33 @@ a[data-pro]:hover:after {
   position: absolute;
   bottom: 2px;
   /* left: 210px; */
+}
+
+#helpsearch {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  font-size: 14px;
+  margin: 0;
+  padding: 6px 100px 6px 10px;
+  /* border-bottom: 1px solid #D5D5D5; */
+  line-height: 25px;
+  height: auto;
+  cursor: text;
+}
+
+#helpsearch:focus {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+#results a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 20px;
+  padding-right: 10px;
+  /* max-width: 191px; */
+  /* padding-right: 0; */
 }

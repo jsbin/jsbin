@@ -19,9 +19,7 @@ function hideOpen() {
     keyboardHelpVisible = false;
     analytics.closeMenu('keyboardHelp');
   } else if (dropdownOpen) {
-    var open = $('.menu.open').removeClass('open');
-    analytics.closeMenu(open.find('.button')[0].hash.substring(1));
-    dropdownOpen = false;
+    closedropdown();
   } else if (loginVisible) {
     $('#login').hide();
     analytics.closeMenu('login');

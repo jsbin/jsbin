@@ -182,6 +182,10 @@ function keycontrol(event) {
         analytics.track('keyboard', 'select', 'help');
       }
       event.stop();
+    } else if (event.which === 191 && event.metaKey && event.ctrlKey) {
+      // show help
+      opendropdown($('#help').prev()[0]);
+      event.stop();
     } else if (event.which === 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');
       keyboardHelpVisible = false;

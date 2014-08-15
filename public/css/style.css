@@ -4916,7 +4916,7 @@ body.ready.toppanel {
   /* margin-right: 10px; */
 }
 
-@media (max-width: 1223px) { /* 5 */
+@media (max-width: 1437px) { /* 5 */
   .toppanel-column {
     width: calc((100% - 240px) / 4);
     max-width: 100%;

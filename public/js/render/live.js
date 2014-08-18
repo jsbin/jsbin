@@ -262,6 +262,10 @@ var renderer = (function () {
 
     if (!window._console) {return;}
     if (!window._console[method]) {method = 'log';}
+
+    // skip the entire console rendering if the console is hidden
+    if (!jsbin.panels.panels.console.visible) { return; }
+
     window._console[method].apply(window._console, args);
   };
 

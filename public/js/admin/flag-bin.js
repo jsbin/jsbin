@@ -8,6 +8,7 @@
 
     var form = $(this);
     var url = form.find('input[name=bin]').val();
+    var $csrf = $('#_csrf');
     var $responseFeedback = form.find('.responseFeedback');
     var bin;
     var rev;
@@ -20,16 +21,15 @@
       url: form.attr('action'),
       data: {
         bin: bin,
-        rev: rev
+        rev: rev,
+        _csrf: $csrf.val()
       },
       type: 'POST',
       dataType: 'json',
       complete: function (jqXHR) {
         var data = $.parseJSON(jqXHR.responseText) || {};
         if (jqXHR.status === 200) {
-          if (data.message) {
-            $responseFeedback.text(data.message);
-          }
+          $responseFeedback.show().text('Bin flagged succesfully');
         }
       }
     });

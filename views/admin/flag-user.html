@@ -9,6 +9,8 @@
     <label for="username">User</label>
     <input type="text" name="username" id="username">
   </div>
+  
+  <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
   <input type="submit" value="flag as spammer">
 </form>
 <link href="{{static}}/css/account-profile.css" rel="stylesheet" type="text/css"/>

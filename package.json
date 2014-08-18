@@ -61,7 +61,8 @@
     "stylus": "^0.47.1",
     "bin-to-file": "0.0.5",
     "validator": "^3.16.1",
-    "sendy-api": "0.0.1"
+    "sendy-api": "0.0.1",
+    "clone": "~0.1.18"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

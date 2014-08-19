@@ -339,10 +339,8 @@ if (!Object.keys) {
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-if (!Array.prototype.map)
-{
-  Array.prototype.map = function(fun /*, thisArg */)
-  {
+if (!Array.prototype.map) {
+  Array.prototype.map = function(fun /*, thisArg */) {
     "use strict";
 
     if (this === void 0 || this === null)
@@ -355,8 +353,7 @@ if (!Array.prototype.map)
 
     var res = new Array(len);
     var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-    for (var i = 0; i < len; i++)
-    {
+    for (var i = 0; i < len; i++) {
       // NOTE: Absolute correctness would demand Object.defineProperty
       //       be used.  But this method is fairly new, and failure is
       //       possible only if Object.prototype or Array.prototype

@@ -134,9 +134,12 @@ function closedropdown() {
     // $body.removeClass('menuinfo');
     dropdownOpen = false;
     onhover = false;
-    if (jsbin.panels.focused) {
-      jsbin.panels.focused.focus();
-      jsbin.panels.focused.editor.focus();
+    var f = jsbin.panels.focused;
+    if (f) {
+      f.focus();
+      if (f.editor) {
+        f.editor.focus();
+      }
     }
   }
 }

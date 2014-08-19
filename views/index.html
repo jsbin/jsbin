@@ -46,12 +46,12 @@ if(top != self) {
     <div class="buttons">
       {{#if embed}}
         <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png">
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg">
           <h1>JS Bin</h1></a><a href="/clone" target="_blank" class="button">Save</a>
         </span>
       {{else}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/jsbin_16.png"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
+          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.svg"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
           <div class="dropdown" id="{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>

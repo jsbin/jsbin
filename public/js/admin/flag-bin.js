@@ -10,10 +10,13 @@
     var url = form.find('input[name=bin]').val();
     var $csrf = $('#_csrf');
     var $responseFeedback = form.find('.responseFeedback');
-    var bin;
-    var rev;
+    var reg = /(?:https*:\/\/jsbin.com\/)*([\w]+)\/*(\d+)*/i;
+    // var reg = new RegExp();
+    var match = url.match(reg);
+    var bin = match[1] || '';
+    var rev = match[2] || 0;
 
-    console.log(url);
+    // console.log(url, bin, rev);
 
     $responseFeedback.show().text('Checking...');
 

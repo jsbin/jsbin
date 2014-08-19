@@ -187,8 +187,7 @@ $body.bind('mousedown', function (event) {
 var fromClick = false;
 var $dropdownLinks = $('.dropdownmenu a, .dropdownmenu .button').mouseup(function (e) {
   if (e.target.nodeName === 'INPUT') {
-    e.preventDefault();
-    return false;
+    return;
   }
 
   setTimeout(closedropdown, 0);
@@ -212,8 +211,7 @@ var $dropdownLinks = $('.dropdownmenu a, .dropdownmenu .button').mouseup(functio
   $(this).addClass('hover');
 }).mousedown(function (e) {
   if (e.target.nodeName === 'INPUT') {
-    e.preventDefault();
-    return false;
+    return;
   }
   fromClick = true;
 });

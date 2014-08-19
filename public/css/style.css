@@ -5535,6 +5535,15 @@ a[data-pro]:hover:after {
   background: rgba(0, 0, 0, 0.04);
 }
 
+#result-count {
+  color: #aaa;
+  left: -80px;
+  position: relative;
+  text-align: right;
+  width: 60px;
+  display: inline-block;
+}
+
 #results a {
   display: block;
   overflow: hidden;

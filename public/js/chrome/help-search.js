@@ -1,16 +1,22 @@
 (function () {
   'use strict';
   var results = $('#results');
+  var resultCount = $('#result-count');
   var searchTerms = [];
   var search = $('#helpsearch');
   var position = -1;
 
   search.on('input', throttle(function () {
     if (searchTerms.length === 0) {
-      $.getJSON('/help/search.json', function (data) {
-        searchTerms = data;
-        searchFor(this.value, searchTerms);
-      }.bind(this));
+      $.ajax({
+        url: '/help/search.json?' + (new Date()).toString().split(' ').slice(0, 4).join('-'),
+        dataType: 'json',
+        cache: true,
+        success: function (data) {
+          searchTerms = data;
+          searchFor(this.value, searchTerms);
+        }.bind(this)
+      });
     } else {
       searchFor(this.value, searchTerms);
     }
@@ -64,9 +70,9 @@
     }
   });
 
-  search.on('focus', function () {
-    results.hide();
-  });
+  // search.on('focus', function () {
+  //   results.hide();
+  // });
 
   function wordmap(input) {
     var ignore = "a an and on in it of if for the i is i'm i'd it's or to me be not was do so at are what bin bins".split(' ');
@@ -121,6 +127,11 @@
     }).join('\n'));
 
     results.show();
+    var s = '';
+    if (matches.length !== 1) {
+      s = 's';
+    }
+    resultCount.html(matches.length + ' result' + s);
   }
 
 

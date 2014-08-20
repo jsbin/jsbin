@@ -18,6 +18,7 @@ body.source #source {
   -moz-box-flex: 1;
   flex: 1;
   position: relative;
+  border: 1px solid #ccc;
 }
 
 .layout1 #source {
@@ -44,6 +45,7 @@ body.source #source {
 .layout3b .panelwrapper {
   -moz-box-ordinal-group: 2;
   order: 2;
+  /*border-right: 1px solid #ccc;*/
 }
 .layout3b .panelwrapper:last-child {
   -moz-box-flex: 100%;

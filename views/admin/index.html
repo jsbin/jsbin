@@ -4,7 +4,7 @@
   var host = '{{host}}';
 </script>
 
-<h1>Flag bin</h1>
+<h1>Admin</h1>
 
 <section id="content">
   <form method="post" id="flag-bin" action="/admin/flag-bin">
@@ -15,10 +15,22 @@
       <input type="text" name="bin" id="bin" required>
     </div>
 
-    <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+    <input type="hidden" name="_csrf" value="{{token}}">
     <input type="submit" value="flag as active">
+  </form>
+
+  <form method="post" id="flag-user" action="/admin/flag-user">
+    <p class="responseFeedback"></p>
+
+    <div>
+      <label for="username">User</label>
+      <input type="text" name="username" id="username" required>
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{token}}">
+    <input type="submit" value="flag as spammer">
   </form>
 </section>
 <link href="{{static}}/css/account-profile.css" rel="stylesheet" type="text/css"/>
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/admin/flag-bin.js{{cacheBust}}"></script>
+<script src="{{static}}/js/admin/admin.js{{cacheBust}}"></script>

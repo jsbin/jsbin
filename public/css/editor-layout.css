@@ -8,25 +8,17 @@ div {
 }
 */
 
-.resize {
-  display: none !important;
-}
-
-#source {
+body.source #source {
   display: -moz-box;
   display: flex;
-  /* height: 200px; */
+  height: 100%;
 }
+
 .panelwrapper {
   -moz-box-flex: 1;
   flex: 1;
+  position: relative;
 }
-/*.panel1 { background: red; }
-.panel2 { background: orange; }
-.panel3 { background: yellow; }
-.panel4 { background: lime; }
-.panel5 { background: cyan; }
-*/
 
 .layout1 #source {
   -moz-flex-flow: row;

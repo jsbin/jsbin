@@ -1,76 +1,104 @@
-<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
-<h1> Upgrade </h1>
-<table>
-  <thead>
-    <tr class="headings">
-      <th>&nbsp;</th>
-      <th>Anonymous</th>
-      <th>Free</th>
-      <th>
-        Pro <small>@ $15/month</small>
-      </th>
-    </tr>
-  </thead>
-  <tfoot>
-    <tr>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>
-        <form id="stripe_pro_month" action="{{stripeProMonthURL}}" method="POST">
-          <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="{{stripeKey}}"
-            data-name="JB Bin Pro!"
-            data-description="Pro Account - $15 p/m"
-            data-amount="1500"
-            data-label="Upgrade">
-          </script>
-        </form>
-        {{#if showCoupon}}
-          <input id="coupon_code" placeholder="Enter your code here" type="text"/>
-        {{/if}}
-      </td>
-    </tr>
-  </tfoot>
-  <tbody>
-    {{#each featureList}}
-    <tr class="{{user}}">
-      <td class="feature">
-        {{name}}
-      </td>
-      <td class="anon">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-      </td>
-      <td class="free">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-        {{#equal user 'free'}}&#10003;{{/equal}}
-      </td>
-      <td class="pro">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-        {{#equal user 'free'}}&#10003;{{/equal}}
-        {{#equal user 'pro'}}&#10003;{{/equal}}
-      </td>
-    </tr>
+<link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
+<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
+
+{{#if is_production}}{{#if analyticsId}}
+<script>
+ga('send', 'pageview', {
+  'title': '[2014-08-14] Upgrade to Pro - Account Management'
+});
+</script>
+{{/if}}{{/if}}
+
+
+<div class="upgrade-wrapper">
+  <div class="upgrade-form-wrapper form-container">
+    <h1>Pro Upgrade</h1>
+
+    <form action="/upgrade" method="post" id="payment-form">
+
+      {{#unless user}}
+        <div class="upgrade-details">
+          <h3>1. Sign in</h3>
+          <div class="upgrade-signin-wrapper">
+            <a class="btn-github" href="{{root}}/auth/github">
+              <img src="{{static}}/images/github-32.png">
+              Login or Register via GitHub
+            </a>
+            <span class="login-group">
+              or
+              <a class="btn-login" href="{{root}}/login" id="btn-login">sign in with your email address</a>
+            </span>
+          </div>
+
+          <div class="form-container login" id="form-login">
+            <div class="tabs">
+              <a class="tab register" href="{{root}}/register">
+                <span>New to JS Bin</span>
+                Register
+              </a>
+              <a class="tab login" href="#">
+                <span>Existing users</span>
+                Login
+              </a>
+            </div>
+            <fieldset class="upgrade-fieldset register" disabled="disabled">
+              {{> register}}
+              <input type="hidden" value="1" name="register">
+            </fieldset>
+            <fieldset class="upgrade-fieldset login">
+              {{> login}}
+              <input type="hidden" value="1" name="login">
+            </fieldset>
+
+            <div class="upgrade-next">
+              <input type="button" value="next" class="upgrade-details-button upgrade-details-next">
+            </div>
+
+            <div class="upgrade-center">
+              <span class="login-group">
+                or
+                <a class="btn-login" href="{{root}}/auth/github">sign in via GitHub</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      {{/unless}}
+
+      <div class="upgrade-details">
+        {{#unless user}}<h3>2. Payment</h3>{{/unless}}
+        <div class="upgrade-payment-wrapper">
+          {{> payment}}
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="upgrade-feature-wrapper">
+    <h1>Features</h1>
+    {{> features}}
+  </div>
+
+  {{#if tweets}}
+  <h3 class="tweets">What the web is saying about JS Bin</h3>
+  <div class="upgrade-tweets-wrapper">
+    {{#each tweets}}
+      {{> tweet}}
     {{/each}}
-  </tbody>
-</table>
+  </div>
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  {{/if}}
 
 
-<h2>Your Pro accounts keep JS Bin 100% free for education</h2>
-<p>
-  Aside from the features listed above, your pro account will help keep
-  JS Bin 100% free for educational uses (schools, universities and community
-  training). Those good people will be able to get free training accounts
-  so they can continue to help young students and new-comers with JS Bin in
-  their tool belt.
-</p>
+  <div class="upgrade-info-wrapper">
+    <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
+    <p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>
 
-<p>Education is dear to our hearts, and pro accounts allows us to keep developing
-  JS Bin with feature i want to see land, and to help fix and issues that cause
-  problems for noth general users and those students stuck working with limited
-  access to tech (like the version of JS Bin that works without a web connection
-  and entirely from a usb stick with zero install).</p>
+    <p>Education is dear to our hearts, and pro accounts allows us to keep developing JS Bin with features we want to see land, and to help fix issues that cause problems for the general users and those students stuck working with limited access to technology (like the version of JS Bin that works without a web connection and entirely from a usb stick with zero install).</p>
+
+    <p><a href="http://github.com/jsbin/jsbin/issues/new" class="issue">Problem? Feedback? Let us know!</a></p>
+  </div>
+</div>
 
 <!-- <h2> Supporters </h2>
 <div class="backers">
@@ -80,5 +108,14 @@
     </a>
   {{/each}}
 </div>
- --><script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/account/upgrade.js"></script>
+ -->
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+ // This identifies your website in the createToken call below
+ Stripe.setPublishableKey('{{stripe.key}}');
+ // ...
+</script>
+<script src="{{static}}/js/vendor/polyfills.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/vendor/jquery.payment.js{{cacheBust}}"></script>
+<script src="{{static}}/js/account/pay.js{{cacheBust}}"></script>

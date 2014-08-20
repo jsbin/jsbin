@@ -222,7 +222,7 @@ header nav a.selected:before {
 
 #back:before {
   content: '← ';
-  background: url(/images/favicon.png) no-repeat 28px center;
+  background: url(/images/favicon.svg) no-repeat 28px center;
   padding-right: 30px;
 }
 
@@ -254,7 +254,7 @@ article p {
 
 nav {
   float: right;
-  width: 50%;
+  width: 60%;
   text-align: right;
 }
 
@@ -700,6 +700,15 @@ h6:hover .anchor span:before {
   code {
     word-wrap: break-word;
   }
+
+  .status {
+    display: none;
+  }
+
+  nav {
+    width: 75%;
+  }
+
 }
 
 #comments {

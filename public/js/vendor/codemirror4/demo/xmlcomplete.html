@@ -52,6 +52,10 @@
 
       var tags = {
         "!top": ["top"],
+        "!attrs": {
+          id: null,
+          class: ["A", "B", "C"]
+        },
         top: {
           attrs: {
             lang: ["en", "de", "fr", "nl"],
@@ -78,7 +82,7 @@
         var cur = cm.getCursor();
         if (!pred || pred()) setTimeout(function() {
           if (!cm.state.completionActive)
-            CodeMirror.showHint(cm, CodeMirror.hint.xml, {schemaInfo: tags, completeSingle: false});
+            cm.showHint({completeSingle: false});
         }, 100);
         return CodeMirror.Pass;
       }
@@ -107,10 +111,9 @@
           "'/'": completeIfAfterLt,
           "' '": completeIfInTag,
           "'='": completeIfInTag,
-          "Ctrl-Space": function(cm) {
-            CodeMirror.showHint(cm, CodeMirror.hint.xml, {schemaInfo: tags});
-          }
-        }
+          "Ctrl-Space": "autocomplete"
+        },
+        hintOptions: {schemaInfo: tags}
       });
     </script>
   </article>

@@ -1,4 +1,4 @@
-/*globals $, CodeMirror, jsbin, jshintEnabled */
+/*globals $, CodeMirror, jsbin, jshintEnabled, RSVP */
 
 var $document = $(document),
     $source = $('#source');
@@ -10,9 +10,13 @@ var editorModes = {
   typescript: 'javascript',
   markdown: 'markdown',
   coffeescript: 'coffeescript',
-  jsx: 'jsx',
-  less: 'less',
-  processing: 'text/x-csrc'
+  livescript: 'text/x-livescript',
+  jsx: 'javascript',
+  less: 'text/x-less',
+  sass: 'text/x-sass',
+  scss: 'text/x-scss',
+  processing: 'text/x-csrc',
+  jade: 'text/x-jade'
 };
 
 var badChars = new RegExp('[\u200B\u0080-\u00a0]', 'g');
@@ -38,7 +42,12 @@ var simpleJsHint = function(cm) {
 CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
-  return CodeMirror.snippets(cm);
+  'use strict';
+  if (['htmlmixed', 'javascript', 'css', editorModes['less']].indexOf(cm.options.mode) === -1) {
+    return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
+  } else {
+    return CodeMirror.snippets(cm);
+  }
 };
 
 var Panel = function (name, settings) {
@@ -174,7 +183,11 @@ var Panel = function (name, settings) {
     panelLanguage = settings.processors[settings.processor];
     jsbin.processors.set(panel, settings.processor);
   } else {
-    panel.processor = function (str) { return str; };
+    panel.processor = function (str) {
+      return new RSVP.Promise(function (resolve) {
+        resolve(str);
+      });
+    };
   }
 
   if (settings.beforeRender) {
@@ -260,7 +273,7 @@ Panel.prototype = {
         if (panel.virgin) {
           var top = panel.$el.find('.label').outerHeight();
           top += 8;
-          $(panel.editor.win).find('.CodeMirror-scroll .CodeMirror-lines').css('padding-top', top);
+          $(panel.editor.scroller).find('.CodeMirror-lines').css('padding-top', top);
 
           populateEditor(panel, panel.name);
         }
@@ -319,7 +332,7 @@ Panel.prototype = {
     //   panel.$el.hide();
     // }
     if (panel.editor) {
-      panel.controlButton.toggleClass('hasContent', !!$.trim(this.getCode()).length);
+      panel.controlButton.toggleClass('hasContent', !!this.getCode().trim().length);
     }
 
     panel.controlButton.removeClass('active');
@@ -377,15 +390,19 @@ Panel.prototype = {
     jsbin.panels.focus(this);
   },
   render: function () {
-    var panel = this,
-        ret = null;
-    if (panel.editor) {
-      return panel.processor(panel.getCode());
-    } else if (this.visible && this.settings.render) {
-      if (jsbin.panels.ready) {
-        this.settings.render.apply(this, arguments);
+    'use strict';
+    var args = [].slice.call(arguments);
+    var panel = this;
+    return new RSVP.Promise(function (resolve, reject) {
+      if (panel.editor) {
+        panel.processor(panel.getCode()).then(resolve, reject);
+      } else if (panel.visible && panel.settings.render) {
+        if (jsbin.panels.ready) {
+          panel.settings.render.apply(panel, args);
+        }
+        resolve();
       }
-    }
+    });
   },
   init: function () {
     if (this.settings.init) this.settings.init.call(this);
@@ -450,9 +467,8 @@ Panel.prototype = {
     var $error = null;
     $document.bind('sizeeditors', function () {
       if (panel.visible) {
-        var height = panel.editor.scroller.closest('.panel').outerHeight(),
-            offset = 0;
-            // offset = panel.$el.find('> .label').outerHeight();
+        var height = panel.editor.scroller.closest('.panel').outerHeight();
+        var offset = 0;
         $error = panel.$el.find('details');
         offset += ($error.filter(':visible').height() || 0);
 
@@ -537,13 +553,17 @@ function populateEditor(editor, panel) {
 
     if (template && cached == template[panel]) { // restored from original saved
       editor.setCode(cached);
-    } else if (cached && sessionURL == jsbin.getURL()) { // try to restore the session first - only if it matches this url
+    } else if (cached && sessionURL == jsbin.getURL() && sessionURL !== jsbin.root) { // try to restore the session first - only if it matches this url
       editor.setCode(cached);
       // tell the document that it's currently being edited, but check that it doesn't match the saved template
       // because sessionStorage gets set on a reload
       changed = cached != saved && cached != template[panel];
     } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
+      var processor = JSON.parse(localStorage.getItem('saved-processors') || '{}')[panel];
+      if (processor) {
+        jsbin.processors.set(jsbin.panels.panels[panel], processor);
+      }
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);
     }

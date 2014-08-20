@@ -85,6 +85,26 @@ function getQuery(qs) {
   return obj;
 }
 
+function stringAsPanelsToOpen(query) {
+  var validPanels = ['live', 'javascript', 'html', 'css', 'console'];
+
+  return query.split(',').reduce(function (toopen, key) {
+    if (key === 'js') {
+      key = 'javascript';
+    }
+
+    if (key === 'output') {
+      key = 'live';
+    }
+
+    if (validPanels.indexOf(key) !== -1) {
+      toopen.push(key);
+    }
+
+    return toopen;
+  }, []);
+}
+
 panels.restore = function () {
   'use strict';
   /*globals jsbin, editors, $window, $document*/
@@ -124,6 +144,11 @@ panels.restore = function () {
     if (query.indexOf('&') !== -1) {
       query = getQuery(search || hash);
       toopen = Object.keys(query).reduce(function (toopen, key) {
+        if (key.indexOf(',') !== -1 && query[key] === '') {
+          toopen = stringAsPanelsToOpen(key);
+          return toopen;
+        }
+
         if (key === 'js') {
           query.javascript = query.js;
           key = 'javascript';
@@ -145,21 +170,7 @@ panels.restore = function () {
         return toopen;
       }, []);
     } else {
-      toopen = query.split(',').reduce(function (toopen, key) {
-        if (key === 'js') {
-          key = 'javascript';
-        }
-
-        if (key === 'output') {
-          key = 'live';
-        }
-
-        if (validPanels.indexOf(key) !== -1) {
-          toopen.push(key);
-        }
-
-        return toopen;
-      }, []);
+      toopen = stringAsPanelsToOpen(query);
     }
   }
 
@@ -180,15 +191,7 @@ panels.restore = function () {
     toopen.push('live');
   }
 
-  // otherwise restore the user's regular settings
-  // also set a flag indicating whether or not we should save the panel settings
-  // this is based on whether they're on jsbin.com or if they're on an existing
-  // bin. Also, if they hit save - *always* save their layout.
-  if (location.pathname && location.pathname !== '/') {
-    panels.saveOnExit = false;
-  } else {
-    panels.saveOnExit = true;
-  }
+  panels.saveOnExit = true;
 
   /* Boot code */
   // then allow them to view specific panels based on comma separated hash fragment/query
@@ -378,7 +381,7 @@ panels.distribute = function () {
         });
       }
     }
-  } else {
+  } else if (!jsbin.embed) {
     $('#history').show();
     setTimeout(function () {
       $body.removeClass('panelsVisible');

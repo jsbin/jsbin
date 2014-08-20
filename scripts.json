@@ -1,6 +1,7 @@
 {
   "app": [
     "/js/chrome/hashbang-jump.js",
+    "/js/vendor/rsvp.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",
@@ -11,8 +12,11 @@
     "/js/vendor/codemirror4/mode/javascript/javascript.js",
     "/js/vendor/codemirror4/mode/htmlmixed/htmlmixed.js",
     "/js/vendor/cm_addons/emmet.js",
+    "/js/vendor/codemirror4/addon/dialog/dialog.js",
     "/js/vendor/codemirror4/addon/search/searchcursor.js",
+    "/js/vendor/codemirror4/addon/search/search.js",
     "/js/vendor/cm_addons/simple-hint.js",
+    "/js/vendor/codemirror4/addon/hint/anyword-hint.js",
     "/js/vendor/cm_addons/javascript-hint.js",
     "/js/vendor/codemirror4/addon/edit/matchbrackets.js",
     "/js/vendor/codemirror4/addon/comment/comment.js",
@@ -22,8 +26,9 @@
     "/js/vendor/cm_addons/cm-highlight-line.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
+    "/js/vendor/bin-to-file.min.js",
     "/js/vendor/prettyprint.js",
-    "/js/runner/loop-protect.js",
+    "/js/vendor/loop-protect.min.js",
     "/js/chrome/storage.js",
     "/js/jsbin.js",
     "/js/editors/mobileCodeMirror.js",
@@ -43,7 +48,6 @@
     "/js/editors/library.js",
     "/js/editors/addons.js",
     "/js/editors/snapshot.js",
-    "/js/editors/tern.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/share.js",
     "/js/chrome/esc.js",
@@ -61,13 +65,14 @@
     "/js/chrome/last-bin.js",
     "/js/chrome/archive.js",
     "/js/chrome/welcome-panel.js",
+    "/js/chrome/help-search.js",
     "/js/chrome/app.js"
   ],
   "runner": [
     "/js/vendor/polyfills.js",
     "/js/vendor/stringify.js",
     "/js/runner/utils.js",
-    "/js/runner/loop-protect.js",
+    "/js/vendor/loop-protect.min.js",
     "/js/runner/proxy-console.js",
     "/js/runner/processor.js",
     "/js/runner/sandbox.js",
@@ -87,7 +92,8 @@
       "/js/vendor/tern/lib/infer.js",
       "/js/vendor/tern/plugin/doc_comment.js",
       "/js/editors/defs.js",
-      "/js/editors/definitions.js"
+      "/js/editors/definitions.js",
+      "/js/editors/tern.js"
     ]
   }
 }

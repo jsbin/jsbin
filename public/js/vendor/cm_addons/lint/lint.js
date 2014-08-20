@@ -71,7 +71,10 @@
     if (!options.getAnnotations && cm.getOption('mode') === 'coffeescript') {
       options.getAnnotations = CodeMirror.helpers.lint.coffeescript;
     }
-    if (!options.getAnnotations) throw new Error('Required option "getAnnotations" missing (lint addon)');
+    // if (!options.getAnnotations) throw new Error('Required option "getAnnotations" missing (lint addon)');
+    if (!options.getAnnotations) {
+      options.getAnnotations = function() { return []; };
+    }
     return options;
   }
 
@@ -253,6 +256,8 @@
   function updateLinting(cm, annotationsNotSorted) {
     var state = cm.state.lint, options = state.options;
 
+    cm.state.lint.annotations = annotationsNotSorted;
+
     if (cm.options.lintOpt.under) {
       underClear(cm);
     }
@@ -417,9 +422,8 @@
     }
 
     // probably to improve according to real case scenarios
-    // cm.updateLinting = function(annotationsNotSorted) {
-    //   updateLinting(cm, annotationsNotSorted);
-    //   console.log('ciao');
-    // };
+    cm.updateLinting = function(annotationsNotSorted) {
+      updateLinting(cm, annotationsNotSorted);
+    };
   });
 });

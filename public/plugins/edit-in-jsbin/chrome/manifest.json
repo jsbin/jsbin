@@ -1,7 +1,7 @@
 {
   "name": "JS Bin - Right Click",
   "description": "Adds a context menu item when you select a code example on the page to immediate test and edit in JS Bin",
-  "version": "0.4",
+  "version": "0.5",
   "permissions": ["contextMenus", "tabs", "http://jsbin.com/"],
   "background": {
     "scripts": ["background.js"]

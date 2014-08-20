@@ -4,16 +4,12 @@
     "link": "http://jsbin.com/help/features",
     "data": [
       {
-        "title": "Getting started with JS Bin",
+        "title": "Getting started",
         "link": "http://jsbin.com/help/getting-started"
       },
       {
         "title": "Keyboard Shortcuts",
         "link": "http://jsbin.com/help/keyboard-shortcuts"
-      },
-      {
-        "title": "Test out code on other devices",
-        "link": "http://jsbin.com/help/test-code-on-other-devices"
       },
       {
         "title": "Exporting/importing gist",
@@ -23,23 +19,19 @@
   },
   "pro-features": {
     "title": "Pro features",
-    "link": "http://jsbin.com/help/features",
+    "//link": "/account/upgrade",
     "data": [
       {
-        "title": "Sync with Dropbox",
-        "link": "http://jsbin.com/help/features"
+        "title": "Private bins",
+        "link": "http://jsbin.com/help/private-bins"
       },
       {
-        "title": "Private bins",
-        "link": "http://jsbin.com/help/features"
+        "title": "Dropbox backup",
+        "link": "http://jsbin.com/help/dropbox"
       },
       {
         "title": "Vanity URLs",
-        "link": "http://jsbin.com/help/features"
-      },
-      {
-        "title": "Read & write API",
-        "link": "http://jsbin.com/help/features"
+        "link": "http://jsbin.com/help/vanity-urls"
       }
     ]
   },
@@ -72,8 +64,8 @@
     "link": "http://twitter.com/js_bin",
     "data": [
       {
-        "title": "We’re expecting to hit our 10 __millionth__ bin in around a week’s time. Wow.",
-        "link": "https://twitter.com/js_bin/status/479668198384865281"
+        "title": "Additional linters for HTML, CSS & CoffeeScript, changing output permission for anon users & SSL for pro users!",
+        "link": "https://twitter.com/js_bin"
       }
     ]
   },

@@ -33,6 +33,40 @@ function throttle(fn, delay) {
   return throttled;
 }
 
+function debounceAsync(fn) {
+  'use strict';
+  var waiting = false;
+  var last = null;
+
+  return function debouceRunner() {
+    var args = [].slice.call(arguments, 0);
+    // console.time('tracker');
+
+    var tracker = function () {
+      waiting = false;
+        // console.timeEnd('tracker');
+      if (last) {
+        // console.log('applying the last');
+        fn.apply(last.context, last.args);
+        // console.log('and now clear');
+        last = null;
+      }
+    };
+
+    // put the tracker in place of the callback
+    args.push(tracker);
+
+    if (!waiting) {
+      // console.log('running this time...');
+      waiting = true;
+      return fn.apply(this, args);
+    } else {
+      // console.log('going to wait...');
+      last = { args: args, context: this };
+    }
+  };
+}
+
 function escapeHTML(html){
   return String(html)
     .replace(/&(?!\w+;)/g, '&amp;')
@@ -61,9 +95,42 @@ function dedupe(array) {
 
 function exposeSettings() {
   'use strict';
+
+  function mockEditor (editor, methods) {
+    return methods.reduce(function (mockEditor, method) {
+      mockEditor[method] = editor[method].bind(editor);
+      return mockEditor;
+    }, {});
+  }
+
+  function mockPanels() {
+    var results = {};
+    var panels = jsbin.panels.panels;
+    ['css', 'javascript', 'html'].forEach(function (type) {
+      results[type] = {
+        setCode: panels[type].setCode.bind(panels[type]),
+        getCode: panels[type].getCode.bind(panels[type]),
+        editor: mockEditor(panels[type].editor, [
+          'setCursor',
+          'getCursor',
+          'addKeyMap',
+          'on'
+        ])
+      };
+    });
+
+    return results;
+  }
+
   if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
     window.jsbin = {
-      'static': jsbin['static']
+      'static': jsbin['static'],
+      version: jsbin.version,
+      embed: jsbin.embed,
+      panels: {
+        // FIXME decide whether this should be locked down further
+        panels: mockPanels()
+      }
     }; // create the holding object
 
     if (jsbin.state.metadata && jsbin.user && jsbin.state.metadata.name === jsbin.user.name && jsbin.user.name) {
@@ -97,8 +164,6 @@ jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}')
 if (jsbin.user) {
   jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
 }
-
-exposeSettings();
 
 // if the above code isn't dodgy, this for hellz bells is:
 jsbin.mobile = /WebKit.*Mobile.*|Android/.test(navigator.userAgent);
@@ -213,11 +278,18 @@ var $window = $(window),
 
       sessionStorage.setItem('url', jsbin.getURL());
       localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+
+      if (jsbin.panels.saveOnExit === false) {
+        return;
+      }
+
       jsbin.panels.save();
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
-      if (panel) sessionStorage.setItem('panel', panel.id);
+      if (panel) {
+        sessionStorage.setItem('panel', panel.id);
+      }
     };
 
 $window.unload(unload);
@@ -264,6 +336,7 @@ if (location.search.indexOf('api=') !== -1) {
 
 
 $document.one('jsbinReady', function () {
+  exposeSettings();
   $bin.removeAttr('style');
   $body.addClass('ready');
 });

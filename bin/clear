@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var memcache = require('memcached');
+var repl = require('repl');
+var m = new memcache('localhost:11211');
+
+repl.start({
+  prompt: 'memcache> ',
+  eval: run,
+});
+
+function run(cmd, context, filename, callback) {
+  var who = cmd.replace(/[\(\)]/g, '').trim();
+  m.set(who, false, 0, function() {});
+  callback(null, who + ' cleared.');
+}

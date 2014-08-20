@@ -1,0 +1,19 @@
+{{> account_sidebar}}
+
+<h1>Upgrade to Pro</h1>
+
+<img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="119">
+
+<section id="content">
+  <form id="payment-form" method="post" action="/account/upgrade/pay">
+    {{>payment}}
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+      // This identifies your website in the createToken call below
+      Stripe.setPublishableKey('{{stripe.key}}');
+      // ...
+    </script>
+    <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+    <script src="{{static}}/js/vendor/jquery.payment.js"></script>
+    <script src="{{static}}/js/account/pay.js"></script>
+</section>

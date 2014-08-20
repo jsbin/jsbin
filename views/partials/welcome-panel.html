@@ -1,8 +1,8 @@
 <div id="toppanel" class="toppanel-wrapper" style="display:none;">
   <div class="toppanel-column toppanel-column-first">
-    <a href="#" class="toppanel-hide" title="Close">&times;</a>
+    <a href="#" class="toppanel-hide" title="Close">Close welcome panel</a>
     <a href="#" class="toppanel-logo">
-      <img src="{{static}}/images/dave.svg" width="100">
+      <img src="{{static}}/images/dave.min.svg" alt="Welcome to JS Bin">
     </a>
     <div class="toppanel-actions{{#unless home}} toppanel-actions-alone{{/unless}}">
       <div>
@@ -15,56 +15,45 @@
       </div>
     </div>
   </div>
-
 {{#welcomePanel}}
 {{#features}}
   <div class="toppanel-column">
+    <div><label id="enableUniversalEditorLabel" for="enableUniversalEditor"><input type="checkbox" id="enableUniversalEditor">Textarea editor mode</label></div>
     <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
-      {{#data}}
-        {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-        {{/.}}
-      {{/data}}
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
   </div>
 {{/features}}
 
 {{#pro-features}}
   <div class="toppanel-column">
-    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}{{#unless ../../user.pro}} ($15/month){{/unless}}</a></h2>
+    <h2 class="toppanel-title"><a href="{{#if ../../user.pro}}/help/pro{{else}}/upgrade{{/if}}" class="toppanel-link">{{title}}</a></h2>
       <ul class="toppanel-list">
-      {{#data}}
-        {{#.}}
-          <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-        {{/.}}
-      {{/data}}
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
       </ul>
+  {{#unless ../../user.pro}}
+  <div class="toppanel-section toppanel-love toppanel-no-pro">
+    <center><a href="/upgrade">Upgrade to pro now</a></center>
+  </div>
+  {{/unless}}
   </div>
 {{/pro-features}}
 
-  <div class="toppanel-column">
+  <div class="toppanel-column toppanel-stretch">
   {{#blog}}
-    <div class="toppanel-section">
+    <div class="toppanel-blog toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
-        {{#data}}
-          {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-          {{/.}}
-        {{/data}}
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
         </ul>
     </div>
   {{/blog}}
   {{#help}}
-    <div class="toppanel-section">
+    <div class="toppanel-help toppanel-section">
       <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
         <ul class="toppanel-list">
-        {{#data}}
-          {{#.}}
-            <li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>
-          {{/.}}
-        {{/data}}
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
         </ul>
     </div>
   {{/help}}
@@ -83,6 +72,11 @@
           </ul>
       </div>
     {{/twitter}}
+    {{#if ../user.pro}}
+      <div class="toppanel-section toppanel-love">
+        <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
+      </div>
+    {{/if}}
   </div>
 
   <div class="toppanel-column">
@@ -104,6 +98,7 @@
   </div>
 {{/welcomePanel}}
 </div>
+
 <script>
 try {
   if (localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1) {

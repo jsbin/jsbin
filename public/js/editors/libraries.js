@@ -1,155 +1,155 @@
 var libraries = [
   {
-    'url': 'http://code.jquery.com/jquery-git2.js',
+    'url': '//code.jquery.com/jquery-git2.js',
     'label': 'jQuery 2.x WIP (via git)',
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-2.1.0.min.js',
-    'label': 'jQuery 2.1.0',
+    'url': '//code.jquery.com/jquery-2.1.1.min.js',
+    'label': 'jQuery 2.1.1',
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-git1.js',
+    'url': '//code.jquery.com/jquery-git1.js',
     'label': 'jQuery 1.x WIP (via git)',
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-1.11.0.min.js',
-    'label': 'jQuery 1.11.0',
+    'url': '//code.jquery.com/jquery-1.11.1.min.js',
+    'label': 'jQuery 1.11.1',
     'group': 'jQuery'
   },
   {
-    'url': 'http://code.jquery.com/jquery-1.9.1.min.js',
+    'url': '//code.jquery.com/jquery-1.9.1.min.js',
     'label': 'jQuery 1.9.1',
     'group': 'jQuery'
   },
   {
     'url': [
-      'http://code.jquery.com/ui/jquery-ui-git.css',
-      'http://code.jquery.com/jquery-git.js',
-      'http://code.jquery.com/ui/jquery-ui-git.js'
+      '//code.jquery.com/ui/jquery-ui-git.css',
+      '//code.jquery.com/jquery-git.js',
+      '//code.jquery.com/ui/jquery-ui-git.js'
     ],
     'label': 'jQuery UI WIP (via git)',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.min.css',
-      'http://code.jquery.com/jquery-1.11.0.min.js',
-      'http://code.jquery.com/ui/1.11.0/jquery-ui.min.js'
+      '//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.min.css',
+      '//code.jquery.com/jquery-1.11.0.min.js',
+      '//code.jquery.com/ui/1.11.1/jquery-ui.min.js'
     ],
-    'label': 'jQuery UI 1.11.0',
+    'label': 'jQuery UI 1.11.1',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
-      'http://code.jquery.com/jquery-1.11.0.min.js',
-      'http://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
+      '//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
+      '//code.jquery.com/jquery-1.11.0.min.js',
+      '//code.jquery.com/ui/1.10.4/jquery-ui.min.js'
     ],
     'label': 'jQuery UI 1.10.4',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css',
-      'http://code.jquery.com/jquery-1.8.3.min.js',
-      'http://code.jquery.com/ui/1.9.2/jquery-ui.js'
+      '//code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css',
+      '//code.jquery.com/jquery-1.8.3.min.js',
+      '//code.jquery.com/ui/1.9.2/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.9.2',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'http://code.jquery.com/jquery-1.11.0.min.js',
-      'http://code.jquery.com/mobile/git/jquery.mobile-git.js'
+      '//code.jquery.com/mobile/git/jquery.mobile-git.css',
+      '//code.jquery.com/jquery-1.11.0.min.js',
+      '//code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css',
-      'http://code.jquery.com/jquery-1.11.0.min.js',
-      'http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'
+      '//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css',
+      '//code.jquery.com/jquery-1.11.0.min.js',
+      '//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'
     ],
     'label': 'jQuery Mobile 1.4.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js'
+      '//code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css',
+      '//code.jquery.com/jquery-1.9.1.min.js',
+      '//code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js'
     ],
     'label': 'jQuery Mobile 1.3.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css',
-      'http://code.jquery.com/jquery-1.8.3.min.js',
-      'http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js'
+      '//code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css',
+      '//code.jquery.com/jquery-1.8.3.min.js',
+      '//code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js'
     ],
     'label': 'jQuery Mobile 1.2.1',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'http://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.css',
-      'http://code.jquery.com/jquery-1.6.4.min.js',
-      'http://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.js'
+      '//code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.css',
+      '//code.jquery.com/jquery-1.6.4.min.js',
+      '//code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.js'
     ],
     'label': 'jQuery Mobile 1.1.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'http://code.jquery.com/jquery.min.js',
-      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',
-      'http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
+      '//code.jquery.com/jquery.min.js',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
   },
   {
     'url': [
-      'http://code.jquery.com/jquery.min.js',
-      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
-      'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
+      '//code.jquery.com/jquery.min.js',
+      '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
+      '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap 2.3.2',
     'group': 'Bootstrap'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
+    'url': '//ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
     'label': 'Prototype latest',
     'group': 'Prototype'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js',
+    'url': '//ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js',
     'label': 'Prototype 1.7.1',
     'group': 'Prototype'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js',
+    'url': '//ajax.googleapis.com/ajax/libs/prototype/1.6.1.0/prototype.js',
     'label': 'Prototype 1.6.1.0',
     'group': 'Prototype'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-      'http://ajax.googleapis.com/ajax/libs/scriptaculous/1/scriptaculous.js'
+      '//ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
+      '//ajax.googleapis.com/ajax/libs/scriptaculous/1/scriptaculous.js'
     ],
     'label': 'script.aculo.us latest',
     'group': 'Prototype'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-      'http://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js'
+      '//ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
+      '//ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js'
     ],
     'label': 'script.aculo.us 1.8.3',
     'group': 'Prototype'
@@ -165,101 +165,101 @@ var libraries = [
     'group': 'YUI'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-yui-compressed.js',
+    'url': '//ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-yui-compressed.js',
     'label': 'MooTools 1.5.0',
     'group': 'MooTools'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-nocompat-yui-compressed.js',
+    'url': '//ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-nocompat-yui-compressed.js',
     'label': 'MooTools 1.5.0 (without 1.2+ compatibility layer)',
     'group': 'MooTools'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js',
+    'url': '//ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js',
     'label': 'MooTools 1.4.5',
     'group': 'MooTools'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js',
+    'url': '//ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js',
     'label': 'Dojo latest',
     'group': 'Dojo'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/dojo/1.8/dojo/dojo.js',
+    'url': '//ajax.googleapis.com/ajax/libs/dojo/1.8/dojo/dojo.js',
     'label': 'Dojo 1.8.4',
     'group': 'Dojo'
   },
   {
-    'url': 'http://ajax.googleapis.com/ajax/libs/dojo/1.7/dojo/dojo.js',
+    'url': '//ajax.googleapis.com/ajax/libs/dojo/1.7/dojo/dojo.js',
     'label': 'Dojo 1.7.4',
     'group': 'Dojo'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/dojo/1/dijit/themes/claro/claro.css',
-      'http://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js'
+      '//ajax.googleapis.com/ajax/libs/dojo/1/dijit/themes/claro/claro.css',
+      '//ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js'
     ],
     'label': 'Dijit latest (Claro)',
     'group': 'Dojo'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dijit/themes/claro/claro.css',
-      'http://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dojo/dojo.js'
+      '//ajax.googleapis.com/ajax/libs/dojo/1.8.4/dijit/themes/claro/claro.css',
+      '//ajax.googleapis.com/ajax/libs/dojo/1.8.4/dojo/dojo.js'
     ],
     'label': 'Dijit 1.8.4 (Claro)',
     'group': 'Dojo'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/dojo/1.7.4/dijit/themes/claro/claro.css',
-      'http://ajax.googleapis.com/ajax/libs/dojo/1.7.4/dojo/dojo.xd.js'
+      '//ajax.googleapis.com/ajax/libs/dojo/1.7.4/dijit/themes/claro/claro.css',
+      '//ajax.googleapis.com/ajax/libs/dojo/1.7.4/dojo/dojo.xd.js'
     ],
     'label': 'Dijit 1.7.4 (Claro)',
     'group': 'Dojo'
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2014.1.528/styles/kendo.default.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2014.1.528/js/kendo.ui.core.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
+      '//code.jquery.com/jquery-1.9.1.min.js',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI Core Q1 SP2',
+    'label': 'Kendo UI Core 2014.Q2',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2014.1.318/styles/kendo.mobile.all.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.rtl.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.mobile.all.min.css',
+      '//code.jquery.com/jquery-1.9.1.min.js',
+      '//da7xgjtj801h2.cloudfront.net/2013.2.716/js/kendo.all.min.js'
     ],
-    'label': 'Kendo UI Q1 2014',
+    'label': 'Kendo UI 2014.Q2',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.rtl.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.dataviz.default.min.css',
-      'http://cdn.kendostatic.com/2013.3.1119/styles/kendo.mobile.all.min.css',
-      'http://code.jquery.com/jquery-1.9.1.min.js',
-      'http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.rtl.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.mobile.all.min.css',
+      '//code.jquery.com/jquery-1.9.1.min.js',
+      '//da7xgjtj801h2.cloudfront.net/2014.1.318/js/kendo.all.min.js'
     ],
-    'label': 'Kendo UI Q3 2013',
+    'label': 'Kendo UI 2014.Q1',
     'group': 'Kendo UI'
   },
   {
     'url' : [
-      'http://code.jquery.com/qunit/qunit-git.css',
-      'http://code.jquery.com/qunit/qunit-git.js'
+      '//code.jquery.com/qunit/qunit-git.css',
+      '//code.jquery.com/qunit/qunit-git.js'
     ],
     'label': 'QUnit',
     'group': 'Testing'
@@ -270,38 +270,38 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js',
     'label': 'Zepto 1.0',
     'group': 'Zepto'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
+    'url':'//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
     'label': 'Angular 1.3.0 beta 1 Unstable',
     'group': 'Angular'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
+    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
     'label': 'Angular 1.2.14 Stable',
     'group': 'Angular'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
+    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
     'label': 'Angular 1.2.14 Uncompressed',
     'group': 'Angular'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js',
+    'url':'//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js',
     'label': 'Angular 1.0.7 Stable',
     'group': 'Angular'
   },
   {
-    'url': '//fb.me/react-0.9.0.js',
-    'label': 'React 0.9.0',
+    'url': '//fb.me/react-0.11.0.js',
+    'label': 'React 0.11.0',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-with-addons-0.9.0.js',
-    'label': 'React with Add-Ons 0.9.0',
+    'url': '//fb.me/react-with-addons-0.11.0.js',
+    'label': 'React with Add-Ons 0.11.0',
     'group': 'React'
   },
   {
@@ -357,69 +357,69 @@ var libraries = [
   },
   {
     'url': [
-      'http://jashkenas.github.io/underscore/underscore-min.js',
-      'http://jashkenas.github.io/backbone/backbone-min.js'
+      '//jashkenas.github.io/underscore/underscore-min.js',
+      '//jashkenas.github.io/backbone/backbone-min.js'
     ],
     'label': 'Backbone latest'
   },
   {
     'url': [
-      'http://jashkenas.github.io/underscore/underscore-min.js',
-      'http://jashkenas.github.io/backbone/backbone-min.js',
+      '//jashkenas.github.io/underscore/underscore-min.js',
+      '//jashkenas.github.io/backbone/backbone-min.js',
       'http://marionettejs.com/downloads/backbone.marionette.min.js'
     ],
     'label': 'MarionetteJS latest'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/bonsai/0.4/bonsai.min.js',
     'label': 'Bonsai 0.4.latest'
   },
   {
-    'url': 'http://jashkenas.github.io/coffee-script/extras/coffee-script.js',
+    'url': '//jashkenas.github.io/coffee-script/extras/coffee-script.js',
     'label': 'CoffeeScript'
   },
   {
     'url': [
-      'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-      'http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
+      '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
+      '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
       'http://builds.emberjs.com.s3.amazonaws.com/tags/v1.0.0/ember.js'
     ],
     'label': 'Ember.js 1.0.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
     'label': 'ES5 shim 2.0.8'
   },
   {
     'url': [
-      'http://extjs.cachefly.net/ext-3.1.0/resources/css/ext-all.css',
-      'http://cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.min.js'
+      '//extjs.cachefly.net/ext-3.1.0/resources/css/ext-all.css',
+      '//cdnjs.cloudflare.com/ajax/libs/ext-core/3.1.0/ext-core.min.js'
     ],
     'label': 'ext-core 3.1.0'
   },
   {
     'url': [
-      'http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/normalize.min.css',
-      'http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/foundation.min.css',
-      'http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/vendor/jquery.min.js',
-      'http://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/foundation.min.js'
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/normalize.min.css',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/foundation.min.css',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/vendor/jquery.min.js',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/foundation.min.js'
     ],
     'label': 'Foundation 5.0.3'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
     'label': 'Handlebars.js 1.0.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js',
     'label': 'Knockout 3.0.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js',
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js',
     'label': 'Lo-Dash 2.4.1'
   },
   {
@@ -428,17 +428,17 @@ var libraries = [
   },
   {
     'url': [
-      'http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
-      'http://cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
+      '//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js',
+      '//cdnjs.cloudflare.com/ajax/libs/detectizr/1.5.0/detectizr.min.js'
     ],
     'label': 'Detectizr 1.5.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js',
     'label': 'Prefixfree 1.0.7'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js',
     'label': 'Processing 1.4.1'
   },
   {
@@ -450,11 +450,11 @@ var libraries = [
     'label': 'Highcharts latest'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js',
     'label': 'Rapha&euml;l 2.1.0'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js',
     'label': 'Sammy 0.7.4'
   },
   {
@@ -471,41 +471,31 @@ var libraries = [
     'label': 'Traceur'
   },
   {
-    'url': 'http://remy.github.io/twitterlib/twitterlib.min.js',
+    'url': '//remy.github.io/twitterlib/twitterlib.min.js',
     'label': 'TwitterLib'
   },
   {
-    'url': 'http://jashkenas.github.io/underscore/underscore-min.js',
+    'url': '//jashkenas.github.io/underscore/underscore-min.js',
     'label': 'underscore'
   },
   {
     'url':[
-      'http://code.jquery.com/jquery.min.js',
+      '//code.jquery.com/jquery.min.js',
       '//canjs.com/release/2.0.3/can.jquery.min.js'
     ],
     'label': 'CanJS 2.0.3'
   },
   {
     'url':[
-      'http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js'
+      '//cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js'
     ],
-    'label': 'Three.js r61'
+    'label': 'Three.js r67'
   },
   {
     'url':[
-      'http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js'
+      '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js'
     ],
     'label': 'HTML5 shiv'
-  },
-  {
-    'url': [
-      'http://lungo.tapquo.com/demo/components/lungo/lungo.css',
-      'http://lungo.tapquo.com/demo/components/lungo/lungo.theme.css',
-      'http://lungo.tapquo.com/demo/components/lungo/lungo.icon.css',
-      'http://lungo.tapquo.com/demo/components/quojs/quo.js',
-      'http://lungo.tapquo.com/demo/components/lungo/lungo.js'
-    ],
-    'label': 'Lungo'
   },
   {
     'url': [
@@ -529,15 +519,22 @@ var libraries = [
       'data-sap-ui-theme': 'sap_bluecrystal',
       'data-sap-ui-libs': 'sap.m'
     },
-    'label': 'OpenUI5 1.18.8 Mobile BlueCrystal'
+    'label': 'OpenUI5 latest (Mobile BlueCrystal)'
   },
   {
-    'url': 'http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
+    'url': '//cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',
     'label': 'GSAP 1.11.7'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
     'label': 'Phaser 2.0.5'
+  },
+  {
+    'url': [
+      '//vjs.zencdn.net/4.6/video-js.css',
+      '//vjs.zencdn.net/4.6/video.js'
+    ],
+    'label': 'Video.js 4.6.x'
   }
 ];
 

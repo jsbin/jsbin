@@ -8,11 +8,16 @@ var analytics = {
       data.push(value);
     }
 
-    // console.log(data, (new Error()).stack);
     window._gaq && _gaq.push(data);
+  },
+  universalEditor: function (value) {
+    analytics.track('menu', 'universalEditor', value);
   },
   library: function (action, value) {
     analytics.track('menu', action, 'library', value);
+  },
+  infocard: function (action, value) {
+    analytics.track('infocard', action, value);
   },
   embed: function () {
     analytics.track('state', 'embed');
@@ -131,9 +136,3 @@ var analytics = {
     analytics.track('welcome-panel-link', url);
   }
 };
-
-/* TODO
-- run js
-- run console
-- final splitter and panel config & positions!!!
-*/

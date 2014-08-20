@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
+<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cachebust}}"/>
+
+<div>
+    <h1>Features</h1>
+    {{> features}}
+
+    <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
+    <p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>
+
+    <p>Education is dear to our hearts, and pro accounts allows us to keep developing JS Bin with features we want to see land, and to help fix issues that cause problems for the general users and those students stuck working with limited access to technology (like the version of JS Bin that works without a web connection and entirely from a usb stick with zero install).</p>
+
+    <p><a href="http://github.com/jsbin/jsbin/issues/new" class="issue">Problem? Feedback? Let us know!</a></p>
+</div>
+
+<!-- <h2> Supporters </h2>
+<div class="backers">
+  {{#each backersList}}
+    <a href="{{url}}">
+      <img class="backer-img" src="{{image}}"/>
+    </a>
+  {{/each}}
+</div>
+ -->
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+ // This identifies your website in the createToken call below
+ Stripe.setPublishableKey('{{stripe.key}}');
+ // ...
+</script>
+<script src="{{static}}/js/vendor/polyfills.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/account/upgrade.js{{cacheBust}}"></script>
+<script src="{{static}}/js/vendor/jquery.payment.js{{cacheBust}}"></script>
+<script src="{{static}}/js/account/pay.js{{cacheBust}}"></script>

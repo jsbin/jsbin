@@ -6,6 +6,12 @@ var $startingpoint = $('a.startingpoint').click(function (event) {
     localStorage.setItem('saved-html', editors.html.getCode());
     localStorage.setItem('saved-css', editors.css.getCode());
 
+    localStorage.setItem('saved-processors', JSON.stringify({
+      javascript: jsbin.panels.panels.javascript.processor.id,
+      html: jsbin.panels.panels.html.processor.id,
+      css: jsbin.panels.panels.css.processor.id,
+    }));
+
     $document.trigger('tip', {
       type: 'notification',
       content: 'Starting template updated and saved',
@@ -137,6 +143,13 @@ function closedropdown() {
     // $body.removeClass('menuinfo');
     dropdownOpen = false;
     onhover = false;
+    var f = jsbin.panels.focused;
+    if (f) {
+      f.focus();
+      if (f.editor) {
+        f.editor.focus();
+      }
+    }
   }
 }
 
@@ -184,7 +197,11 @@ $body.bind('mousedown', function (event) {
 });
 
 var fromClick = false;
-var $dropdownLinks = $('.dropdownmenu a, .dropdownmenu .button').mouseup(function () {
+var $dropdownLinks = $('.dropdownmenu a, .dropdownmenu .button').mouseup(function (e) {
+  if (e.target.nodeName === 'INPUT') {
+    return;
+  }
+
   setTimeout(closedropdown, 0);
   analytics.selectMenu(this.getAttribute('data-label') || this.hash.substring(1) || this.href);
   if (!fromClick) {
@@ -204,7 +221,10 @@ var $dropdownLinks = $('.dropdownmenu a, .dropdownmenu .button').mouseup(functio
 }).mouseover(function () {
   $dropdownLinks.removeClass('hover');
   $(this).addClass('hover');
-}).mousedown(function () {
+}).mousedown(function (e) {
+  if (e.target.nodeName === 'INPUT') {
+    return;
+  }
   fromClick = true;
 });
 
@@ -277,7 +297,7 @@ $('#createnew').click(function (event) {
   // clear out the write checksum too
   sessionStorage.removeItem('checksum');
 
-  jsbin.panels.saveOnExit = true;
+  jsbin.panels.saveOnExit = false;
 
   // first try to restore their default panels
   jsbin.panels.restore();
@@ -335,13 +355,22 @@ $('#lostpass').click(function (e) {
 
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
+// ignore for embed as there might be a lot of embeds on the page
+if (!jsbin.embed && sessionStorage.runnerPending) {
+  $document.trigger('tip', {
+    content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
+    type: 'error'
+  });
+  jsbin.settings.includejs = false;
+}
+
 $('#enablejs').change(function () {
   jsbin.settings.includejs = this.checked;
   analytics.enableLiveJS(jsbin.settings.includejs);
   editors.live.render();
 }).attr('checked', jsbin.settings.includejs);
 
-if (jsbin.settings.hideheader) {
+if (!jsbin.embed && jsbin.settings.hideheader) {
   $body.addClass('hideheader');
 }
 
@@ -525,6 +554,26 @@ $('a.archivebin').on('click', function (e) {
 $('a.unarchivebin').on('click', function (e) {
   e.preventDefault();
   archive(false);
+});
+
+var $enableUniversalEditor = $('#enableUniversalEditor').on('change', function (e) {
+  e.preventDefault();
+
+  jsbin.settings.editor.simple = this.checked;
+  analytics.universalEditor(jsbin.settings.editor.simple);
+  window.location.reload();
+});
+
+if (jsbin.settings.editor.simple) {
+  $enableUniversalEditor.prop('checked', true);
+}
+
+$('#skipToEditor').click(function () {
+  if (jsbin.settings.editor.simple) {
+    $('#html').focus();
+  } else {
+    jsbin.panels.panels.html.editor.focus();
+  }
 });
 
 }());

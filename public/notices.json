@@ -3,5 +3,11 @@
     "version": "3.13.16",
     "type": "error",
     "message": "We recommend <strong><a href=\"/help/change-your-password\">changing your password</a></strong> in light of the Heartbleed vulnerability. <strong><a href=\"/blog/heartbleed\">Read more about it on our blog</a></strong>"
+  },
+  {
+    "version": "3.17.19",
+    "type": "error",
+    "feature": "pro",
+    "message": "If you're using Dropbox backup please <a href=\"/auth/dropbox\">relink your account</a> as we've released some fixes."
   }
 ]

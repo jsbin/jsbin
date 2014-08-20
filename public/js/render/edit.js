@@ -14,12 +14,12 @@ function jsbinShowEdit(options) {
   btn.id = 'edit-with-js-bin';
   btn.href = path + (path.slice(-1) === '/' ? '' : '/') + 'edit';
   btn.innerHTML = 'Edit in JS Bin <img src="' + options['static'] + '/images/favicon.png" width="16" height="16">';
-  doc.body.appendChild(btn);
+  doc.documentElement.appendChild(btn);
 
   // Style button:
   style.setAttribute('rel', 'stylesheet');
   style.setAttribute('href', options['static'] + '/css/edit.css');
-  doc.getElementsByTagName('head')[0].appendChild(style);
+  doc.documentElement.appendChild(style);
 
 
   // show / hide button:

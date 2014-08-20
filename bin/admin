@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+'use strict';
+var memcache = require('memcached');
+var repl = require('repl');
+var Promise = require('promise');
+var m = new memcache('localhost:11211');
+var mysql = require('../lib/db/mysql');
+var config = require('../lib/config');
+var store = new mysql(config.store.mysql);
+
+repl.start({
+  prompt: '> ',
+  eval: run,
+});
+
+function flag(user, callback) {
+  store.updateOwnershipData([user], {
+    flagged: true
+  }, function (error) {
+    if (error) {
+      console.error(error);
+      return callback(error);
+    }
+    clear(user, callback);
+  });
+}
+
+function clear(user, callback) {
+  m.set(user, false, 0, callback);
+}
+
+function show(user, callback) {
+  m.get(user, function (error, data) {
+    callback(JSON.stringify(data, '', 2));
+  });
+}
+
+var commands = {
+  flag: flag,
+  clear: clear,
+  show: show
+};
+
+function run(raw, context, filename, callback) {
+  var statement = raw.replace(/[\(\)]/g, '').trim().split(' ');
+
+  var cmd = statement.shift();
+
+  if (commands[cmd]) {
+    commands[cmd](statement.join(' '), callback);
+  } else {
+    callback('Command unknown');
+  }
+}

@@ -13,40 +13,15 @@
   </div>
   <div class="info {{#if flash}}active{{/if}}"><p>{{{flash}}}</p></div>
   <form action="{{root}}/register" method="post" class="register">
-    <div>
-      <label for="signup-username">Username</label>
-      <input name="username" id="signup-username" type="text" required pattern="[a-zA-Z0-9_\-]+" oninvalid="setCustomValidity('Only numbers, letters, underscore and dash are allowed in the username')">
-    </div>
-    <div>
-      <label for="signup-email">Email address</label>
-      <input name="email" id="signup-email" type="email" required>
-    </div>
-    <div>
-      <label for="signup-key">Password</label>
-      <input name="key" id="signup-key" type="password" required>
-    </div>
-    <div>
-      <input type="submit" value="Register">
-      <input type="hidden" name="_csrf" value="{{token}}">
-      <input type="hidden" name="referrer" value="{{referrer}}">
-    </div>
+    {{> register}}
+    <input type="hidden" name="_csrf" value="{{token}}">
+    <input type="hidden" name="referrer" value="{{referrer}}">
   </form>
-  <form action="{{root}}/login" method="post" class="login" id="login">
-    <div>
-      <label for="login-username">Email address or username</label>
-      <input name="username" id="login-username" type="text" required>
-    </div>
-    <div>
-      <label for="login-key">Password</label>
-      <input name="key" id="login-key" type="password" required>
-    </div>
-    <div>
-      <input type="submit" value="Log in">
-      <input type="hidden" name="_csrf" value="{{token}}">
-      <input type="hidden" name="referrer" value="{{referrer}}">
-      <a id="lostpass" class="lostpass" href="{{root}}/forgot">I've forgotton my password</a>
-    </div>
-    </form>
+  <form action="{{root}}/login" method="post" class="login{{#if forgotten}} forgotten{{/if}}" id="login">
+    {{> login}}
+    <input type="hidden" name="_csrf" value="{{token}}">
+    <input type="hidden" name="referrer" value="{{referrer}}">
+  </form>
 
 </div>
 <a class="btn-github" href="{{root}}/auth/github">

@@ -6,11 +6,23 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
-  {{#if isProduction}}
-  {{{analytics}}}
+  {{#if is_production}}
+    {{> analytics}}
   {{/if}}
+  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
+  {{#if bin}}
+  <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
+  <meta property="og:title" content="JS Bin" />
+  <meta property="og:description" content="Sample of the bin: {{bin.metadata.summary}}" />
+  {{else}}
+  <meta property="og:url" content="{{root}}" />
+  <meta property="og:title" content="JS Bin" />
+  <meta property="og:description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
+  {{/if}}
+  <meta property="og:image" content="{{static}}/images/logo.png" />
 </head>
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
@@ -20,33 +32,36 @@
 <script>
 if(top != self) {
   window.location = '{{embedURL}}';
-  document.write('<!--');
+  document.write('<' + '!--');
 }
 </script>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
-{{/feature}}{{/unless}}
+{{/feature}}
+{{/unless}}
 <div id="control">
   <div class="control">
     <div id="menuinfo"><p></p></div>
     <div class="buttons">
       {{#if embed}}
         <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/jsbin_16.png">
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg">
           <h1>JS Bin</h1></a><a href="/clone" target="_blank" class="button">Save</a>
         </span>
       {{else}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/jsbin_16.png"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
+          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.svg"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
           <div class="dropdown" id="{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#feature request "private"}}
-              {{#if home}}
-              <a href="#" data-desc="Browse your previous created bins" data-shortcut="ctrl+o" class="button group homebtn" data-label="open">My Bins{{#if bincount}} <span class="meta">({{bincount}})</span>{{/if}}</a>
-              {{/if}}
-              <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis='public'>Make bin public</a>
-              <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis='private'>Make bin private</a>
+              <a id="public" data-desc="Set this bin to public" class="visibilityToggle button group"   title="Set this bin to public" href="{{root}}" data-label="public" data-vis="public">Make bin public</a>
+              <a id="private" data-desc="Set this bin to private" class="visibilityToggle button group" title="Set this bin to private" href="{{root}}" data-label="private" data-vis="private">Make bin private</a>
+              {{else}}
+                {{#feature request "upgrade"}}
+              <a data-desc="Set this bin to private" data-pro="true" class="button group" title="Set this bin to private" href="{{root}}/upgrade">Make bin private</a>
+                {{/feature}}
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
@@ -62,12 +77,17 @@ if(top != self) {
               <a title="Save snapshot" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Save snapshot</a>
               <a data-desc="Copy and create a new bin start at revision #1" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
-              {{#feature request "vanity"}}
-              <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="/account/bookmark/vanity">Publish to vanity homepage</a>
+              {{#feature request "upgrade"}}
+                {{#feature request "vanity"}}
+              <a data-desc="Publish the current bin to {{vanity}}" class="publish-to-vanity button group" title="Publish the current bin to {{vanity}}" href="{{root}}/account/bookmark/vanity">Publish to vanity homepage</a>
+                {{else}}
+              <a data-pro="true" data-desc="Publish the current bin to {{vanity}}" class="button group" title="Publish the current bin to {{vanity}}" href="{{root}}/upgrade">Publish to vanity homepage</a>
+                {{/feature}}
               {{/feature}}
               <a data-desc="Export individual panels to Github's gist{{#unless user.github_token}} as an anonymous user{{/unless}}" class="export-as-gist button group" title="Create a new {{#unless user.github_token}}anonymous {{/unless}}GitHub Gist from this bin" href="#export-to-gist">Export as gist</a>
               <a data-desc="Download a complete html file for this bin" id="download" title="Save to local drive" class="button download group" href="{{root}}/download" data-label="download">Download</a>
               <a data-desc="Use content from this bin when creating new bins" class="startingpoint button group" title="Set as starting code" href="{{root}}/save" data-label="save-as-template">Save as template</a>
+              <a hidden data-desc="How to embed a bin" target="_blank" title="How to embed a bin" data-label="how-to-embed" class="button group" href="http://jsbin.com/help/how-can-i-embed-jsbin">How to embed</a>
             </div>
           </div>
         </div><div class="menu">
@@ -181,18 +201,25 @@ if(top != self) {
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  {{#if large_gravatar}}<img class="large-gravatar" src="{{large_gravatar}}">{{/if}}
+                  {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
                   <span class="input" id="username" readonly>
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>
 
                   <ul>
-                    <li><a href="/account/profile">Update profile</a></li>
+                    <li><a href="/account/profile">Profile</a></li>
                     <li><a href="/account/editor">Editor settings</a></li>
                     <li><a href="/account/preferences">Preferences</a></li>
                     <li><a href="/logout">Logout</a></li>
                   </ul>
+
                 </div>
+                {{#feature request "upgrade"}}
+                  {{#unless user.pro}}
+                <a href="/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+                  {{/unless}}
+                {{/feature}}
               </div>
             </div>
             {{else}}
@@ -236,99 +263,97 @@ if(top != self) {
             </div>
             {{/feature}}
           {{else}}
-            {{#if client.user}}
-              {{#feature request "sslLogin"}}
-                <div class="menu">
-                  {{#feature request "github"}}
-                  <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
-                  <div class="dropdown login" id="registerLogin">
-                    <div class="dropdowncontent">
-                      <a class="btn-github" href="/auth/github">
-                        <img src="{{static}}/images/github-32.png">
-                        Login or Register via GitHub
-                      </a>
-                      <span class="login-group">
-                        Or
-                        <a class="btn-login" href="/login">use your email address</a>
-                      </span>
-                    </div>
-                  </div>
-                  {{else}}
-                  <a href="/login" class="button" id="loginbtn">Login or Register</a>
-                  {{/feature}}
-                </div>
-              {{else}}
+            {{#feature request "sslLogin"}}
               <div class="menu">
-                <a href="#login" class="button button-open" id="loginbtn">Log in</a>
-                <div class="dropdown dd-right" id="login">
+                {{#feature request "github"}}
+                <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
+                <div class="dropdown login" id="registerLogin">
                   <div class="dropdowncontent">
-                    <form class="forgot" action="{{root}}/forgot" method="post">
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Request password reset">
-                        <input type="hidden" name="_csrf" value="{{token}}">
-                        <input type="hidden" name="_redirect" value="home">
-                      </div>
-                    </form>
-                    <form class="login" action="{{root}}/login" method="post">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username or Email<br>
-                        <input name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Log in">
-                        <a id="lostpass" href="{{root}}/forgot">Reset password</a>
-                      </div>
-                      {{#feature request "github"}}
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
-                      </div>
-                      {{/feature}}
-                    </form>
+                    <a class="btn-github" href="/auth/github">
+                      <img src="{{static}}/images/github-32.png">
+                      Login or Register via GitHub
+                    </a>
+                    <span class="login-group">
+                      Or
+                      <a class="btn-login" href="/login">use your email address</a>
+                    </span>
                   </div>
                 </div>
-              </div><div class="menu">
-                <a href="#register" class="button button-open focusbtn" id="regbtn">Register</a>
-                <div class="dropdown dd-right" id="register">
-                  <div class="dropdowncontent">
-                    <p>Registration allows you to retrieve your saved files.</p>
-                    <form class="login" action="{{root}}/register" method="post">
-                      <p class="loginFeedback"></p>
-                      <div>
-                        <label>Username<br><input required name="username" type="text"></label>
-                      </div>
-                      <div>
-                        <label>Email<br>
-                        <input name="email" required type="email"></label>
-                      </div>
-                      <div>
-                        <label>Password<br>
-                        <input required name="password" type="password"></label>
-                      </div>
-                      <div>
-                        <input type=submit value="Register">
-                      </div>
-                      {{#feature request "github"}}
-                      <div>
-                        <span class="login-splitter">or</span>
-                        <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
-                      </div>
-                      {{/feature}}
-                    </form>
-                  </div>
+                {{else}}
+                <a href="/login" class="button" id="loginbtn">Login or Register</a>
+                {{/feature}}
+              </div>
+            {{else}}
+            <div class="menu">
+              <a href="#login" class="button button-open" id="loginbtn">Log in</a>
+              <div class="dropdown dd-right" id="login">
+                <div class="dropdowncontent">
+                  <form class="forgot" action="{{root}}/forgot" method="post">
+                    <div>
+                      <label>Email<br>
+                      <input name="email" required type="email"></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Request password reset">
+                      <input type="hidden" name="_csrf" value="{{token}}">
+                      <input type="hidden" name="_redirect" value="home">
+                    </div>
+                  </form>
+                  <form class="login" action="{{root}}/login" method="post">
+                    <p class="loginFeedback"></p>
+                    <div>
+                      <label>Username or Email<br>
+                      <input name="username" type="text"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input name="password" type="password"></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Log in">
+                      <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+                    </div>
+                    {{#feature request "github"}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                    </div>
+                    {{/feature}}
+                  </form>
                 </div>
               </div>
-              {{/feature}}
-            {{/if}}
+            </div><div class="menu">
+              <a href="#register" class="button button-open focusbtn" id="regbtn">Register</a>
+              <div class="dropdown dd-right" id="register">
+                <div class="dropdowncontent">
+                  <p>Registration allows you to retrieve your saved files.</p>
+                  <form class="login" action="{{root}}/register" method="post">
+                    <p class="loginFeedback"></p>
+                    <div>
+                      <label>Username<br><input required name="username" type="text"></label>
+                    </div>
+                    <div>
+                      <label>Email<br>
+                      <input name="email" required type="email"></label>
+                    </div>
+                    <div>
+                      <label>Password<br>
+                      <input required name="password" type="password"></label>
+                    </div>
+                    <div>
+                      <input type=submit value="Register">
+                    </div>
+                    {{#feature request "github"}}
+                    <div>
+                      <span class="login-splitter">or</span>
+                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                    </div>
+                    {{/feature}}
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/feature}}
           {{/if}}
         {{/unless}}
 
@@ -344,7 +369,12 @@ if(top != self) {
               <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
               <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
               <hr data-desc="">
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Documentation</a>
+              {{#if settings.[ui showblog]}}
+              <input placeholder="Search help..." class="button" id="helpsearch"><span id="result-count"></span><span id="results"></span>
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">All help topics</a>
+              {{else}}
+              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
+              {{/if}}
               <hr data-desc="">
               <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
               <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
@@ -381,6 +411,7 @@ if(top != self) {
             <a href="#javascript">JavaScript</a>
             <a href="#coffeescript">CoffeeScript</a>
             <a href="#jsx">JSX (React)</a>
+            <a href="#livescript">LiveScript</a>
             <a href="#processing">Processing</a>
             <a href="#traceur">Traceur</a>
             <a href="#typescript">TypeScript</a>
@@ -397,7 +428,13 @@ if(top != self) {
         <div class="dropdown" id="cssprocessors">
           <div class="dropdownmenu processorSelector" data-type="css">
             <a href="#css">CSS</a>
-            <a href="#less">LESS</a>
+            <a href="#less">Less</a>
+            <a href="#myth">Myth</a>
+            {{#feature request "processors"}}
+            <a href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
+            <a href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
+            {{/feature}}
+            <a href="#stylus">Stylus</a>
             <a href="#convert">Convert to CSS</a>
           </div>
         </div>
@@ -573,6 +610,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
     </table>
   </div>
 </div>
+{{#unless embed}}
 {{#feature request "infocard"}}
 <div hidden>
   <div class="card" id="infocard">
@@ -598,41 +636,32 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{/feature}}
+{{/unless}}
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
 <![endif]-->
-{{#unless embed}}
-<script>if(top != self) document.write('<!--');</script>
-{{/unless}}
-{{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
-<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
-{{else}}
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-  {{#if isProduction}}
+{{#if is_production}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 <script>
   start({{{json_template}}}, {{{jsbin}}}, this, document);
 </script>
-  {{else}}
+{{else}}
 <script>
 window.template = {{{json_template}}};
 window.jsbin = {{{jsbin}}};
 </script>
-    {{#if concat}}
+  {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
-    {{else}}
-      {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
-    {{/if}}
-      {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{else}}
+    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
   {{/if}}
+    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
-<script>
-</script>
 </body>
 </html>
 

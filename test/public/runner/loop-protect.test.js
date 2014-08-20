@@ -3,7 +3,7 @@
 var assert = require('assert');
 var sinon = require('sinon');
 var pwd = process.cwd();
-var loopProtect = require(pwd + '/public/js/runner/loop-protect');
+var loopProtect = require(pwd + '/public/js/vendor/loop-protect.min');
 
 // expose a window object for loopProtect compatibility
 global.window = {
@@ -40,7 +40,7 @@ var code = {
   onelineforinline: 'function init() {\n  for (var i=0;i<2;i++) (function(n) {\nconsole.log(i)})(i);\n}return true;',
   notlabels: 'var foo = {\n bar: 1\n };\n \n function doit(i){}\n \n for (var i=0; i<10; i++) {\n doit(i);\n }\n return i;',
   notlabels2: '// Weird:\nfor (var i = 0; i < 10; i++) {}\nreturn i;',
-  cs: 'var bar, foo;\n\nfoo = function(i) {\n  return {\n    id: i\n  };\n};\n\nbar = function(i) \n\n  var j, _i, _results;\n\n  _results = [];\n  for (j = _i = 1; 1 <= i ? _i < i : _i > i; j = 1 <= i ? ++_i : --_i) {\n    _results.push(j);\n  }\n  return _results;\n};',
+  cs: 'var bar, foo;\n\nfoo = function(i) {\n  return {\n    id: i\n  };\n};\n\nbar = function(i) {\n\n  var j, _i, _results;\n\n  _results = [];\n  for (j = _i = 1; 1 <= i ? _i < i : _i > i; j = 1 <= i ? ++_i : --_i) {\n    _results.push(j);\n  }\n  return _results;\n};',
 };
 
 var spy;

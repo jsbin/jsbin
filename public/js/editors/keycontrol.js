@@ -45,7 +45,7 @@ if (!customKeys.disabled) {
     var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
         closekey = customKeys.closePanel ? customKeys.closePanel : 48;
 
-    if (event.ctrlKey) { event.metaKey = true; }
+    if (event.ctrlKey && $.browser.platform !== 'mac') { event.metaKey = true; }
 
     if (event.metaKey && event.which === 89) {
       archive(!event.shiftKey);
@@ -185,6 +185,10 @@ function keycontrol(event) {
       if (keyboardHelpVisible) {
         analytics.track('keyboard', 'select', 'help');
       }
+      event.stop();
+    } else if (event.which === 191 && event.metaKey && event.ctrlKey) {
+      // show help
+      opendropdown($('#help').prev()[0]);
       event.stop();
     } else if (event.which === 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');

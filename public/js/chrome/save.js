@@ -230,9 +230,10 @@ if (!jsbin.saveDisabled) {
   });
 } else {
   $document.one('jsbinReady', function () {
+    'use strict';
     var shown = false;
     if (!jsbin.embed && !jsbin.sandbox) {
-      $document.on('codeChange', function (event, data) {
+      $document.on('codeChange.live', function (event, data) {
         if (!data.onload && !shown && data.origin !== 'setValue') {
           shown = true;
           var ismac = navigator.userAgent.indexOf(' Mac ') !== -1;

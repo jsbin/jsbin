@@ -275,6 +275,43 @@ div.CodeMirror-cursors {
   }
 }
 
+/* CodeMirror addons */
+
+/* Addon: dialog/dialog.css
+   ========================================================================== */
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  background: white;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+  color: #333;
+}
+
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid #eee;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid #eee;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
 
 /* CodeMirror themes */
 
@@ -1597,12 +1634,22 @@ textarea:focus {
 }
 
 
-#control, .label, #tip, #toppanel {
+#control, .label, #tip, #toppanel, .ready #toppanel .toppanel-column-first {
   -webkit-user-select: none;
    -khtml-user-select: none;
      -moz-user-select: -moz-none; /* if this is "none" you can't copy text */
       -ms-user-select: none;
           user-select: none;
+  /* padding-left: 4px; */
+}
+
+/* total faff, not sure why, but jsbin loads and selects all the text :-\ */
+.ready #toppanel {
+  -webkit-user-select: initial;
+   -khtml-user-select: initial;
+     -moz-user-select: initial;
+      -ms-user-select: initial;
+          user-select: initial;
 }
 
 .control, .help, .starting {
@@ -2186,15 +2233,21 @@ body.preview #source select {
   outline: 0;
 }
 
-.mobile textarea,
-.ie6 textarea,
-.ie7 textarea {
-  margin: 0.4em;
+.mobile .editbox {
+  top: 36px;
+  width: auto;
+  bottom: 0.8em;
+  left: 0.8em;
+  right: 0.8em;
+}
+.mobile .editbox textarea,
+.ie6 .editbox textarea,
+.ie7 .editbox textarea {
+  margin: 0;
   border: 0;
   font-family: Menlo, Monaco, consolas, monospace;
   color: black;
-  margin-top: 30px;
-  padding: 6px;
+  padding: 0;
   font-size: 12px;
   position: absolute;
   top: 0;
@@ -2204,6 +2257,7 @@ body.preview #source select {
   resize: none;
   outline: none;
   -webkit-appearance: none;
+  height: 100%;
 }
 
 .ie6 textarea,
@@ -2535,6 +2589,11 @@ body.streaming #bin {
   font-size: 13px;
 }
 
+.CodeMirror-dialog {
+  border-bottom-color: #E6E6E6;
+  z-index: 20;
+}
+
 .showtip #bin {
   /*bottom: 26px;*/
 }
@@ -2658,6 +2717,7 @@ details li, .details li {
 
 .keyboardHelp #keyboardHelp {
   display: block;
+  z-index: 999999;
 }
 
 .urlHelp #urlHelp {
@@ -2935,8 +2995,13 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 14px;
 }
-#bin .editbox .CodeMirror pre {
+#bin .editbox .CodeMirror pre,
+.mobile textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+}
+
+.mobile textarea {
+  background: transparent;
 }
 
 .editbox .CodeMirror,
@@ -3355,10 +3420,14 @@ a.active:hover {
   /* margin: 3px 5px; */
   background: white;
   box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
-  border: 1px solid #CCC;
+  border: 1px solid rgb(204, 204, 204);
   height: auto;
   /* border-radius: 5px; */
   text-align: left;
+}
+
+#help {
+  max-width: 266px;
 }
 
 #registerLogin .dropdowncontent {
@@ -3885,6 +3954,12 @@ left: 50%;
   top: 6px;
 }
 
+.toppanel.hideheader.ready #bin,
+.toppanel.hideheader #history,
+.toppanel.hideheader #history .preview {
+  top: 200px;
+}
+
 .hideheader #control:hover {
   top: 0;
   -webkit-transition: top ease-out 10ms;
@@ -3969,6 +4044,9 @@ left: 50%;
   padding: 6px 100px 6px 10px;
   /* font-weight: bold; */
 }
+.dropdownmenu .small {
+  color: rgba(0,0,0,0.7);
+}
 
 hr {
   border-style: solid;
@@ -3997,7 +4075,7 @@ form + hr {
 
   /* overflow: hidden; */
   position: relative;
-  width: 165px;
+  width: 210px;
   /* allow a black theme but for the text to still be readable */
   /*text-shadow: -2px 0 10px white, 2px 0 10px white, 0 2px 10px white, 0 -2px 10px white;*/
 }
@@ -4474,7 +4552,7 @@ html * {
   bottom: 12px;
   right: 12px;
   float: left;
-  font-family: 'helvetica neue';
+  font-family: "Helvetica Neue", sans-serif;
   font-weight: 400;
   background: #fafafa;
   background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */
@@ -4676,6 +4754,7 @@ html * {
   color: rgba(0,0,0,.4);
   font-weight: 800;
   font-size: 12px;
+  line-height:16px;
   display: block;
 }
 
@@ -4861,9 +4940,36 @@ tbody:hover .snapshot1 .url a span:before {
   padding-right: 30px;
 }
 
-#profile .large-gravatar {
+div.large-gravatar {
+  display: inline-block;
+  width: 120px;
   float: left;
   margin-right: 10px;
+  position: relative;
+}
+
+div.small-gravatar {
+  display: inline-block;
+  with: 30px;
+  position: relative;
+}
+
+div.small-gravatar object,
+div.large-gravatar object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#profile img.large-gravatar {
+  float: left;
+  margin-right: 10px;
+  width: 120px;
+  z-index: 10;
+  position: relative;
 }
 
 #share-preview .editor {
@@ -5022,7 +5128,7 @@ tbody:hover .snapshot1 .url a span:before {
 /* toppanel status */
 #toppanel {
   height: 200px;
-  background: #ecf2fa;
+  background: rgb(236, 242, 250);
   position: relative;
   z-index: 100000;
   border-bottom: rgb(191, 191, 191) solid 1px;
@@ -5030,6 +5136,7 @@ tbody:hover .snapshot1 .url a span:before {
 }
 .toppanel #toppanel {
   margin-top: 0;
+  line-height:16px;
 }
 
 .toppanel #bin,
@@ -5079,27 +5186,48 @@ body.ready.toppanel {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+  position: relative;
+  margin-right: 20px;
 }
-@media (max-width: 1223px) { /* 5 */
+/* Pro column
+   this could change in the future depending on the content */
+.toppanel-column:nth-child(3) {
+  /* max-width: 180px; */
+  /* margin-right: 10px; */
+}
+
+@media (max-width: 1437px) { /* 5 */
   .toppanel-column {
-    width: calc((100% - 217px) / 4);
+    width: calc((100% - 240px) / 4);
     max-width: 100%;
-  }
+
+    margin-right: 8px;
+}
   .toppanel-column:nth-child(n+6) {
     display: none;
   }
 }
 @media (max-width: 1023px) { /* 4 */
   .toppanel-column {
-    width: calc((100% - 217px) / 3);
-  }
+    width: calc((100% - 250px) / 3);
+
+    margin-right: 10px;
+}
   .toppanel-column:nth-child(n+5) {
     display: none;
   }
 }
 @media (max-width: 816px) { /* 3 */
   .toppanel-column {
-    width: calc((100% - 217px) / 2);
+    width: calc((100% - 240px) / 3);
+  }
+  .toppanel-column:nth-child(n+4) {
+    /* display: none; */
+  }
+}
+@media (max-width: 700px) { /* 2 */
+  .toppanel-column {
+    width: calc((100% - 240px) / 2);
   }
   .toppanel-column:nth-child(n+4) {
     display: none;
@@ -5123,9 +5251,28 @@ body.ready.toppanel {
   overflow: visible;
   width: 197px;
 }
-.toppanel-section + .toppanel-section {
-  margin-top: 13px;
+.toppanel-section {
+  margin-bottom: 12px;
 }
+
+.toppanel-love {
+  border: 1px solid hsl(214, 58%, 75%);
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: hsl(214, 52%, 98%);
+  margin-top: 24px;
+}
+
+.toppanel-no-pro {
+  background: white;
+  padding: 0;
+}
+
+.toppanel-wrapper .toppanel-no-pro a {
+  padding: 10px 5px;
+  display: block;
+}
+
 .toppanel-actions {
   position: relative;
   top: -12px;
@@ -5149,11 +5296,15 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  color: #6293D3;
+  color: rgb(98, 147, 211);
   display: block;
   padding: 6px 10px 6px 1px;
   text-decoration: none;
   text-shadow: none;
+}
+.toppanel-wrapper p a {
+  display: inline;
+  padding: inherit;
 }
 .toppanel-wrapper a:hover {
   background: #CCC;
@@ -5216,6 +5367,20 @@ a.toppanel-hide {
   color: #6293D3;
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
+  text-indent: -9999px;
+  overflow: hidden;
+  /* height: 1%; */
+  width: 19px;
+}
+a.toppanel-hide:after {
+  content: '\d7';
+  position: absolute;
+  left: 4px;
+  /* top: 0; */
+  /* width: 20px; */
+  /* height: 20px; */
+  text-indent: 0;
+  /* display: block; */
 }
 .toppanel-actions .btn-github {
   font-size: 70%;
@@ -5232,6 +5397,7 @@ a.toppanel-logo {
   width: 100px;
   padding: 4px 6px;
   text-align: center;
+  line-height:16px;
   position: relative;
   z-index: 1;
   -webkit-transform: translate(-94px, 112px) scale(0.25);
@@ -5281,10 +5447,16 @@ a.toppanel-logo {
        -o-transition:      -o-transform linear 120ms 120ms;
           transition:         transform linear 120ms 120ms;
 }
+.hideheader.ready a.toppanel-logo {
+  top: -35px;
+}
+.hideheader.ready.toppanel a.toppanel-logo {
+  top: 0;
+}
 /* slow to remove */
-.toppanel-slow #bin,
-.toppanel-slow #toppanel,
-.toppanel-slow a.toppanel-logo {
+#jsbin .toppanel-slow #bin,
+#jsbin .toppanel-slow #toppanel,
+#jsbin .toppanel-slow a.toppanel-logo {
   -webkit-transition-duration: 5s;
      -moz-transition-duration: 5s;
        -o-transition-duration: 5s;
@@ -5419,8 +5591,8 @@ a.toppanel-logo {
 }
 .console-log-head {
   background: #ecf2fa;
-  border: 1px solid #CCC;
-  border-top: 0 none;
+  border-top: 1px solid rgb(220, 220, 220);
+  /* border-top: 0 none; */
   color: #6293d3;
   cursor: pointer;
   float: none;
@@ -5431,9 +5603,14 @@ a.toppanel-logo {
   padding: 0.2em 0.2em 0.2em 1em;
   width: auto;
 }
+
+[open] .console-log-head {
+  border-bottom: 1px solid rgb(220, 220, 220);
+}
+
 .console-log {
-  border: 1px solid #CCC;
-  border-top: 0 none;
+  /* border: 1px solid rgb(204, 204, 204); */
+  /* border-top: 0 none; */
   font-size: 13px;
   height: 10.5em;
   overflow: auto;
@@ -5442,6 +5619,9 @@ a.toppanel-logo {
   border-top: 1px solid #CCC;
   cursor: pointer;
   padding: 0.2em;
+  padding-left: 2.3em;
+  /* padding-right: 0; */
+  position: relative;
 }
 .console-log-line:first-child {
   border-top: 0 none;
@@ -5449,8 +5629,10 @@ a.toppanel-logo {
 .console-log-line:before {
   display: inline-block;
   min-width: 1em;
-  padding-right: 0.5em;
+  /* padding-right: 0.5em; */
   text-align: center;
+  position: absolute;
+  left: 0.6em;
 }
 #console-log-line-selected {
   background: #AFF;
@@ -5495,4 +5677,155 @@ a.toppanel-logo {
 
 .embed .menu .brand img {
   margin-top: 2px;
+}
+
+a[data-pro]:after, .pro-required {
+  content: 'Pro';
+  color: #ccc;
+  position: absolute;
+  right: 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
+  /* letter-spacing: 0.1em; */
+  border: 1px solid #ccc;
+  line-height: 10px;
+  padding: 3px;
+  border-radius: 3px;
+  top: 11px;
+  text-align: center;
+  background: rgb(252, 252, 252);
+}
+
+a[data-pro]:hover:after {
+  color: #999;
+  border-color: #999;
+}
+
+.gopro { /* not the camera...silly */
+  text-decoration: none;
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0;
+  background: rgb(39, 192, 39);
+  font-size: 15px;
+  text-align: center;
+  margin-top: -2px;
+  color: white;
+  color: white;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-top: 0;
+  box-shadow: 1px 3px 7px rgba(0, 0, 0, 0.1);
+  line-height: 30px;
+}
+
+.gopro:hover {
+  background: rgb(3, 166, 3);
+}
+
+.blog a[data-count]:after {
+  content: attr(data-count);
+  position: absolute;
+  top: 3px;
+  font-size: 10px;
+  border: 1px solid rgb(216, 23, 23);
+  /* border-radius: 10px; */
+  display: block;
+  right: 0;
+  background: rgb(255, 0, 0);
+  color: white;
+  padding: 1px;
+  width: 9px;
+  line-height: 9px;
+  height: 8px;
+  text-align: center;
+  font-family: monospace;
+}
+
+.love {
+  color: #FF4136;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+#enableUniversalEditorLabel {
+  color: rgb(98, 147, 211);
+  position: relative;
+  /* top: 7px; */
+  left: 0;
+  z-index: 999999;
+  line-height: 16px;
+/*   font-size: 16px; */
+  /* background: white; */
+  /* padding: 20px; */
+  /* vertical-align: top; */
+  /*transform: scale(1.2);*/
+  /* transform-origin: 0 0; */
+  position: absolute;
+  bottom: 2px;
+  /* left: 210px; */
+}
+
+#helpsearch {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+  font-size: 14px;
+  margin: 0;
+  padding: 6px 100px 6px 10px;
+  /* border-bottom: 1px solid #D5D5D5; */
+  line-height: 25px;
+  height: auto;
+  cursor: text;
+}
+
+#helpsearch:focus {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+#result-count {
+  color: #aaa;
+  left: -80px;
+  position: relative;
+  text-align: right;
+  width: 60px;
+  display: inline-block;
+}
+
+#results a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 20px;
+  padding-right: 10px;
+  /* max-width: 191px; */
+  /* padding-right: 0; */
 }

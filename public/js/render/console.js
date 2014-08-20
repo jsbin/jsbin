@@ -592,22 +592,29 @@ function upgradeConsolePanel(console) {
       jsconsole.reset();
     };
     console.settings.render = function (withAlerts) {
-      var html = editors.html.render().trim();
+      var html = editors.html.getCode().trim();
       if (html === "") {
-        var echo = editors.javascript.render().trim();
-        var code = getPreparedCode().replace(/<pre>/, '').replace(/<\/pre>/, '');
+        editors.javascript.render().then(function (echo) {
+          echo = echo.trim();
+          return getPreparedCode().then(function (code) {
+            code = code.replace(/<pre>/, '').replace(/<\/pre>/, '');
+
+            setTimeout(function() {
+              jsconsole.run({
+                echo: echo,
+                cmd: code
+              });
+            }, 0);
+          });
+        }).catch(function (error) {
+          console.warn('Failed to render JavaScript');
+          console.warn(error);
+        });
 
         // Tell the iframe to reload
         renderer.postMessage('render', {
           source: '<html>'
         });
-
-        setTimeout(function() {
-          jsconsole.run({
-            echo: echo,
-            cmd: code
-          });
-        }, 0);
       } else {
         renderLivePreview(withAlerts || false);
       }

@@ -1,0 +1,49 @@
+<table id="featureGrid">
+  <thead>
+    <tr class="headings">
+      <th>&nbsp;</th>
+      <th>Anonymous</th>
+      <th>Signed-in</th>
+      <th>
+        Pro <small class="upgrade-cost">@ £5/month*</small>
+      </th>
+    </tr>
+  </thead>
+  <tfoot class="upgrade">
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>
+        <a class="actionButton actionButton-rounded actionButton-primary actionButton-jumbo" href="/account/upgrade/pay">Upgrade!</a>
+      </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    {{#each featureList}}
+    <tr class="{{user}}">
+      <td class="feature">
+        {{#if tip}}
+        <span tabIndex="1" class="tip" data-tip="{{tip}}">?</span>
+        {{/if}}
+        {{name}}
+      </td>
+      <td class="anon">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+      </td>
+      <td class="free">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+        {{#equal user 'free'}}&#10003;{{/equal}}
+      </td>
+      <td class="pro">
+        {{#equal user 'anon'}}&#10003;{{/equal}}
+        {{#equal user 'free'}}&#10003;{{/equal}}
+        {{#equal user 'pro'}}&#10003;{{/equal}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<p><small>We're also working on asset hosting and a full read & write API for Pro users, so watch our <a href="/blog" target="_blank">blog</a> for the latest releases.</small></p>
+

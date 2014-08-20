@@ -22,6 +22,21 @@
       <input id="key" name="password" type="password" autocomplete="false">
     </div>
 
+    {{#feature request "sendy"}}
+      {{#if request.mailError}}
+      <div>
+        <label for="subscribed">Email announcements</label>
+        <input id="subscribed" name="subscribed" type="checkbox" disabled checked>
+        <small>Unable to retrieve subscription status please try again later</small>
+      </div>
+      {{else}}
+      <div>
+        <label for="subscribed">Email announcements</label>
+        <input id="subscribed" name="subscribed" type="checkbox" {{#if user.subscribed}}checked{{/if}}>
+      </div>
+      {{/if}}
+    {{/feature}}
+
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">
   </form>
@@ -29,11 +44,23 @@
   <h2>Third party applications</h2>
   <ul>
   {{#feature request "github"}}
+    {{#if user.github_token}}
+    <li class="link-container success"><strong>Github for logging in</strong> &ndash; complete &#10004; (<a href="/auth/github">re-link</a>)</li>
+    {{else}}
     <li class="link-container"><strong>Use Github for logging in</strong> &ndash; <a href="/auth/github">link your Github account</a></li>
+    {{/if}}
   {{/feature}}
 
+  {{#feature request "upgrade"}}
   {{#feature request "dropbox"}}
+    {{#if user.dropbox_token}}
+    <li class="link-container success"><strong>Dropbox automatic exporting</strong> &ndash; complete &#10004; (<a href="{{root}}/auth/dropbox">re-link</a>)</li>
+    {{else}}
     <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
+    {{/if}}
+  {{else}}
+  <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a></li>
+  {{/feature}}
   {{/feature}}
   </ul>
 </section>

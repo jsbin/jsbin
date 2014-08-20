@@ -141,6 +141,10 @@ var renderer = (function () {
     // specific change to handle reveal embedding
     try {
       if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
+        // reset the state of the panel visibility
+        jsbin.panels.allEditors(function (p) {
+          p.visible = false;
+        });
         jsbin.panels.restore();
         return;
       }
@@ -175,6 +179,45 @@ var renderer = (function () {
   };
 
   /**
+   * When the renderer is complete, it means we didn't hit an initial
+   * infinite loop
+   */
+  renderer.complete = function () {
+    try {
+      delete sessionStorage.runnerPending;
+    } catch (e) {}
+  };
+
+  /**
+   * Pass loop protection hit calls up to the error UI
+   */
+  renderer.loopProtectHit = function (line) {
+    var cm = jsbin.panels.panels.javascript.editor;
+
+    // grr - more setTimeouts to the rescue. We need this to go in *after*
+    // jshint does it's magic, but jshint set on a setTimeout, so we have to
+    // schedule after.
+    setTimeout(function () {
+      var annotations = cm.state.lint.annotations || [];
+      if (typeof cm.updateLinting !== 'undefined') {
+        // note: this just updated the *source* reference
+        annotations = annotations.filter(function (a) {
+          return a.source !== 'loopProtectLine:' + line;
+        });
+        annotations.push({
+          from: CodeMirror.Pos(line-1, 0),
+          to: CodeMirror.Pos(line-1, 0),
+          message: 'Exiting potential infinite loop.\nTo disable loop protection: add "// noprotect" to your code',
+          severity: 'warning',
+          source: 'loopProtectLine:' + line
+        });
+
+        cm.updateLinting(annotations);
+      }
+    }, cm.state.lint.options.delay || 0);
+  };
+
+  /**
    * When the iframe resizes, update the size text
    */
   renderer.resize = (function () {
@@ -205,7 +248,7 @@ var renderer = (function () {
    * When the iframe focuses, simulate that here
    */
   renderer.focus = function () {
-    $('#live').focus();
+    jsbin.panels.focus(jsbin.panels.panels.live);
     // also close any open dropdowns
     closedropdown();
   };
@@ -219,6 +262,10 @@ var renderer = (function () {
 
     if (!window._console) {return;}
     if (!window._console[method]) {method = 'log';}
+
+    // skip the entire console rendering if the console is hidden
+    if (!jsbin.panels.panels.console.visible) { return; }
+
     window._console[method].apply(window._console, args);
   };
 
@@ -295,33 +342,47 @@ var renderLivePreview = (function () {
   // The big daddy that handles postmessaging the runner.
   var renderLivePreview = function (requested) {
     // No postMessage? Don't render – the event-stream will handle it.
-    if (!window.postMessage) return;
+    if (!window.postMessage) { return; }
 
-    var source = getPreparedCode(),
-        includeJsInRealtime = jsbin.settings.includejs;
     // Inform other pages event streaming render to reload
-    if (requested) sendReload();
+    if (requested) { sendReload(); }
+    getPreparedCode().then(function (source) {
+      var includeJsInRealtime = jsbin.settings.includejs;
 
-    // Tell the iframe to reload
-    var visiblePanels = jsbin.panels.getVisible();
-    var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
-    var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
-    if (!outputPanelOpen && !consolePanelOpen) {
-      return;
-    }
-    renderer.postMessage('render', {
-      source: source,
-      options: {
-        requested: requested,
-        debug: jsbin.settings.debug,
-        includeJsInRealtime: jsbin.settings.includejs
+      // Tell the iframe to reload
+      var visiblePanels = jsbin.panels.getVisible();
+      var outputPanelOpen = visiblePanels.indexOf(jsbin.panels.panels.live) > -1;
+      var consolePanelOpen = visiblePanels.indexOf(jsbin.panels.panels.console) > -1;
+      if (!outputPanelOpen && !consolePanelOpen) {
+        return;
       }
+      // this is a flag that helps detect crashed runners
+      if (jsbin.settings.includejs) {
+        sessionStorage.runnerPending = 1;
+      }
+
+      renderer.postMessage('render', {
+        source: source,
+        options: {
+          requested: requested,
+          debug: jsbin.settings.debug,
+          includeJsInRealtime: jsbin.settings.includejs
+        }
+      });
+
     });
   };
 
   /**
    * Events
    */
+
+  $document.on('codeChange.live', function (event, arg) {
+    if (arg.origin === 'setValue' || arg.origin === undefined) {
+      return;
+    }
+    delete sessionStorage.runnerPending;
+  });
 
   // Listen for console input and post it to the iframe
   $document.on('console:run', function (event, cmd) {

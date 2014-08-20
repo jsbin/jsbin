@@ -7,13 +7,21 @@
     <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
   </div>
   {{#feature request "upgrade"}}
-    <a class="sidebar-btn" href="{{root}}/account/upgrade">Upgrade</a>
+    {{#feature request "pro"}}
+    <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
+    {{else}}
+      {{#feature request "upgradeWithFeatures"}}
+    <a class="sidebar-btn" href="{{root}}/upgrade">Upgrade</a>
+      {{else}}
+    <a class="sidebar-btn" href="{{root}}/account/upgrade/pay">Upgrade</a>
+      {{/feature}}
+    {{/feature}}
   {{/feature}}
 </div>
 <script>
 var links = document.getElementById('sidebar').getElementsByTagName('a');
 [].forEach.call(links, function (el) {
-  if (el.href.indexOf(window.location.pathname) !== -1) {
+  if (window.location.pathname.indexOf(el.pathname) !== -1) {
     el.className += ' selected';
   }
 });

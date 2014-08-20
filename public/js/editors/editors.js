@@ -333,8 +333,14 @@ panels.focus = function (panel) {
   }
 }
 
+var userResizeable = !$('html').hasClass('layout');
+
 // evenly distribute the width of all the visible panels
 panels.distribute = function () {
+  if (!userResizeable) {
+    return;
+  }
+
   var visible = $('#source .panelwrapper:visible'),
       width = 100,
       height = 0,

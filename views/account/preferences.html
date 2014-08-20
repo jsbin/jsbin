@@ -38,6 +38,21 @@
       <label><input type="checkbox" name="open-panel" id="panel-live" checked> Output</label>
     </div>
 
+    {{#feature request "layouts"}}
+    <div>
+      <label for="layout">Layout</label>
+      <select id="layout" name="layout">
+        <option value="0">Resizable splitters</option>
+        <option value="1">All columns</option>
+        <option value="2">All rows</option>
+        <option value="3">Columns except output, output bottom</option>
+        <option value="3b">Columns except output, output top</option>
+        <option value="4">Rows except output, output right</option>
+        <option value="4b">Rows except output, output left</option>
+      </select>
+    </div>
+    {{/feature}}
+
     <div>
       <label for="focused-panel">Focused panel</label>
       <select id="focused-panel">

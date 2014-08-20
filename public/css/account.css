@@ -202,7 +202,7 @@ form label.hasinput:first-of-type input[type="radio"]{
 
 form label.mini-desc,
 form label.mini-desc a {
-  color: #979A99;
+  /* color: #979A99; */
   float: none;
   display: inline;
   font-weight: normal;

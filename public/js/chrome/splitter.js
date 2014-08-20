@@ -1,4 +1,4 @@
-  $.fn.splitter = function () {
+$.fn.splitter = function () {
   var $document = $(document),
       $blocker = $('<div class="block"></div>'),
       $body = $('body');

@@ -14,7 +14,7 @@
     // var reg = new RegExp();
     var match = url.match(reg);
     var bin = match[1] || '';
-    var rev = match[2] || 0;
+    var rev = match[2] || 'latest';
 
     // console.log(url, bin, rev);
 

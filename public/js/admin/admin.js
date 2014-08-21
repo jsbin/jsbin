@@ -10,8 +10,7 @@
     var url = form.find('input[name=bin]').val();
     var $csrf = form.find('input[name=_csrf]');
     var $responseFeedback = form.find('.responseFeedback');
-    var reg = /(?:https*:\/\/jsbin.com\/)*([\w]+)\/*(\d+)*\/*.*/i;
-    // var reg = new RegExp();
+    var reg = new RegExp('(?:https*:\\/\\/' + host + '\\/)*([\\w]+)\\/*(\\d+)*\\/*.*', 'i');
     var match = url.match(reg);
     var bin = match[1] || '';
     var rev = match[2] || 'latest';

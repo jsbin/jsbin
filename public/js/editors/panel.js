@@ -1,7 +1,8 @@
 /*globals $, CodeMirror, jsbin, jshintEnabled, RSVP */
 
 var $document = $(document),
-    $source = $('#source');
+    $source = $('#source'),
+    userResizeable = !$('html').hasClass('layout');
 
 var editorModes = {
   html: 'htmlmixed',
@@ -266,7 +267,7 @@ Panel.prototype = {
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
     setTimeout(function () {
-      if (panel.splitter.length) {
+      if (userResizeable) {
         if (x !== undefined) {
           panel.splitter.trigger('init', x);
         } else {
@@ -486,8 +487,8 @@ Panel.prototype = {
           $source[0].style.paddingLeft = '1px';
           setTimeout(function () {
             $source[0].style.paddingLeft = '0';
-          }, 0)
-        }, 0)
+          }, 0);
+        }, 0);
       }
     });
 

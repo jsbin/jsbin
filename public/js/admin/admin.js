@@ -41,7 +41,7 @@
   });
 
 
-  $('#flag-user').submit(function (event) {
+  $('#flag-user, #validate-user').submit(function (event) {
     event.preventDefault();
 
     var form = $(this);
@@ -62,7 +62,7 @@
       complete: function (jqXHR) {
         var data = $.parseJSON(jqXHR.responseText) || {};
         if (jqXHR.status === 200) {
-          $responseFeedback.show().text('User flagged succesfully');
+          $responseFeedback.show().text('Update succesful');
         }
         if (jqXHR.status === 400 && data.all) {
           $responseFeedback.show().text(data.all);

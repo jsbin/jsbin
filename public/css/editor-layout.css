@@ -80,3 +80,12 @@ body.source #source {
   -moz-box-ordinal-group: 1;
   order: 1;
 }
+
+.layout4 .panelwrapper:last-child,
+.layout4b .panelwrapper:last-child {
+  width: 100%;
+}
+.layout4 .panelwrapper[style*=block] ~ .panelwrapper:last-child,
+.layout4b .panelwrapper[style*=block] ~ .panelwrapper:last-child {
+  width: 50%;
+}

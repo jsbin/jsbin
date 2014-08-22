@@ -302,6 +302,11 @@ Panel.prototype = {
       panel.trigger('show');
 
       panel.virgin = false;
+
+      if ($('html').is('.layout')) {
+        var $a = $('.panelwrapper:last-child').get(0);
+        setTimeout(function(){ $a.style.zoom='1';$a.style.zoom='';}, 0);
+      }
   }, 0);
 
     // TODO save which panels are visible in their profile - but check whether it's their code
@@ -366,6 +371,11 @@ Panel.prototype = {
     // note: the history:open does first check whether there's an open panels
     // and if there are, it won't show the history, it'll just ignore the event
     $document.trigger('history:open');
+    
+    if ($('html').is('.layout')) {
+      var $a = $('.panelwrapper:last-child').get(0);
+      setTimeout(function(){ $a.style.zoom='1';$a.style.zoom='';}, 0);
+    }
   },
   toggle: function () {
     (this)[this.visible ? 'hide' : 'show']();

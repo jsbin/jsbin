@@ -127,9 +127,9 @@
         }});
         setOption(cm, 'foldGutter', true);
         var gutters = cm.getOption('gutters');
-        gutters.push('CodeMirror-linenumbers');
-        gutters.push('CodeMirror-foldgutter');
-        setOption(cm, 'gutters', gutters);
+        var copyGutters = gutters.slice();
+        copyGutters.push('CodeMirror-foldgutter');
+        setOption(cm, 'gutters', copyGutters);
       }
     },
     sublime: {
@@ -332,8 +332,9 @@
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
       if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
-        gutters.push('CodeMirror-lint-markers');
-        setOption(cm, 'gutters', gutters);
+        var copyGutters = gutters.slice();
+        copyGutters.push('CodeMirror-lint-markers');
+        setOption(cm, 'gutters', copyGutters);
       }
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');

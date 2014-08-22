@@ -168,7 +168,10 @@ var Panel = function (name, settings) {
     panel._setupEditor(panel.editor, name);
   }
 
-  if (!settings.nosplitter) {
+  if ($('html').is('.layout')) {
+    panel.splitter = $();
+    panel.$el.removeClass('stretch');
+  } else if (!settings.nosplitter) {
     panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
     panel.splitter.hide();
   } else {
@@ -263,10 +266,12 @@ Panel.prototype = {
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
     setTimeout(function () {
-      if (x !== undefined) {
-        panel.splitter.trigger('init', x);
-      } else {
-        panel.distribute();
+      if (panel.splitter.length) {
+        if (x !== undefined) {
+          panel.splitter.trigger('init', x);
+        } else {
+          panel.distribute();
+        }
       }
       if (panel.editor) {
         // populate the panel for the first time

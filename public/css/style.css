@@ -3714,6 +3714,7 @@ left: 50%;
 
 .ready #history {
   display: block;
+  z-index:9;
 }
 
 #history .preview {

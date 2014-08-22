@@ -5521,7 +5521,6 @@ a[data-pro]:hover:after {
   outline: 0;
   width: 100%;
   box-sizing: border-box;
-  padding: 6px;
   font-size: 14px;
   margin: 0;
   padding: 6px 100px 6px 10px;
@@ -5542,6 +5541,14 @@ a[data-pro]:hover:after {
   text-align: right;
   width: 60px;
   display: inline-block;
+}
+
+#help.dd-right {
+  right: 0;
+}
+
+#results {
+  display: block;
 }
 
 #results a {

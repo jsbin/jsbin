@@ -232,7 +232,8 @@ span.mini-desc a {
   opacity: 1;
 }
 
-.loginFeedback {
+.loginFeedback,
+.responseFeedback {
   display: none;
   padding: 3px;
   background: #EFF3B6;

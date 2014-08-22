@@ -41,7 +41,7 @@
 /*panel backgrounds*/  
 .panel {
  background: rgb(247, 247, 247);
- background: hsl(0, 0%, 97%);
+ background: rgb(247, 247, 247);
  }
 .panel.focus {
  background: #fff;

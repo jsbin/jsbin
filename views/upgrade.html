@@ -79,6 +79,17 @@ ga('send', 'pageview', {
     {{> features}}
   </div>
 
+  {{#if tweets}}
+  <h3 class="tweets">What the web is saying about JS Bin</h3>
+  <div class="upgrade-tweets-wrapper">
+    {{#each tweets}}
+      {{> tweet}}
+    {{/each}}
+  </div>
+  <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+  {{/if}}
+
+
   <div class="upgrade-info-wrapper">
     <h2>Your Pro accounts keep JS Bin 100% free for education</h2>
     <p>Aside from the features listed above, your pro account will help keep JS Bin 100% free for educational uses (schools, universities and community training). Those good people can get free training accounts so they can continue to help young students and new-comers with JS Bin in their tool belt.</p>

@@ -85,6 +85,26 @@ function getQuery(qs) {
   return obj;
 }
 
+function stringAsPanelsToOpen(query) {
+  var validPanels = ['live', 'javascript', 'html', 'css', 'console'];
+
+  return query.split(',').reduce(function (toopen, key) {
+    if (key === 'js') {
+      key = 'javascript';
+    }
+
+    if (key === 'output') {
+      key = 'live';
+    }
+
+    if (validPanels.indexOf(key) !== -1) {
+      toopen.push(key);
+    }
+
+    return toopen;
+  }, []);
+}
+
 panels.restore = function () {
   'use strict';
   /*globals jsbin, editors, $window, $document*/
@@ -124,6 +144,11 @@ panels.restore = function () {
     if (query.indexOf('&') !== -1) {
       query = getQuery(search || hash);
       toopen = Object.keys(query).reduce(function (toopen, key) {
+        if (key.indexOf(',') !== -1 && query[key] === '') {
+          toopen = stringAsPanelsToOpen(key);
+          return toopen;
+        }
+
         if (key === 'js') {
           query.javascript = query.js;
           key = 'javascript';
@@ -145,21 +170,7 @@ panels.restore = function () {
         return toopen;
       }, []);
     } else {
-      toopen = query.split(',').reduce(function (toopen, key) {
-        if (key === 'js') {
-          key = 'javascript';
-        }
-
-        if (key === 'output') {
-          key = 'live';
-        }
-
-        if (validPanels.indexOf(key) !== -1) {
-          toopen.push(key);
-        }
-
-        return toopen;
-      }, []);
+      toopen = stringAsPanelsToOpen(query);
     }
   }
 

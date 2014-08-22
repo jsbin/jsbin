@@ -4,16 +4,12 @@
     "link": "http://jsbin.com/help/features",
     "data": [
       {
-        "title": "Getting started with JS Bin",
+        "title": "Getting started",
         "link": "http://jsbin.com/help/getting-started"
       },
       {
         "title": "Keyboard Shortcuts",
         "link": "http://jsbin.com/help/keyboard-shortcuts"
-      },
-      {
-        "title": "Test out code on other devices",
-        "link": "http://jsbin.com/help/test-code-on-other-devices"
       },
       {
         "title": "Exporting/importing gist",
@@ -30,16 +26,12 @@
         "link": "http://jsbin.com/help/private-bins"
       },
       {
-        "title": "Vanity URLs",
-        "link": "http://jsbin.com/help/pro#vanityurls"
-      },
-      {
-        "title": "SSL",
-        "link": "http://jsbin.com/help/ssl-opt-in"
-      },
-      {
-        "title": "Dropbox",
+        "title": "Dropbox backup",
         "link": "http://jsbin.com/help/dropbox"
+      },
+      {
+        "title": "Vanity URLs",
+        "link": "http://jsbin.com/help/vanity-urls"
       }
     ]
   },

@@ -481,6 +481,14 @@ Panel.prototype = {
           editor.scroller.height(height - offset);
         }
         try { editor.refresh(); } catch (e) {}
+
+        setTimeout(function () {
+          console.log('recalc');
+          $source[0].style.paddingLeft = '1px';
+          setTimeout(function () {
+            $source[0].style.paddingLeft = '0';
+          }, 0)
+        }, 0)
       }
     });
 

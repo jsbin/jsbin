@@ -58,7 +58,7 @@ body.source #source {
 
 .layout4 .panelwrapper,
 .layout4b .panelwrapper {
-  width: 50%;
+  min-width: 50%;
 }
 
 

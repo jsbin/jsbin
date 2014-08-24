@@ -80,6 +80,9 @@ var getPreparedCode = (function () {
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
       console: /(^.|\b)console\.(\S+)/g,
+
+      // https://github.com/jsbin/jsbin/issues/1833
+      consoleReplace: /\b(console\.log\(('[^']*'|"[^"]*"|\([^)]*\)|[^\/\(\)'"]*|\/\/[^\n]*\n)*\))/g,
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
@@ -94,6 +97,7 @@ var getPreparedCode = (function () {
     re.docReady.lastIndex = 0;
     re.shortDocReady.lastIndex = 0;
     re.console.lastIndex = 0;
+    re.consoleReplace.lastIndex = 0;
     re.script.lastIndex = 0;
     re.code.lastIndex = 0;
     re.csscode.lastIndex = 0;
@@ -128,6 +132,11 @@ var getPreparedCode = (function () {
 
       // redirect console logged to our custom log while debugging
       if (re.console.test(js)) {
+
+        // first swap console.log('foo') to console.log('foo')() to get the right
+        // line number #1833. after /that/ replace the console with our proxy
+        js = js.replace(re.consoleReplace, '$1()');
+
         // yes, this code looks stupid, but in fact what it does is look for
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
@@ -174,7 +183,7 @@ var getPreparedCode = (function () {
               close = html.lastIndexOf('</script', pos);
 
           if (open > close) {
-            return replaceWith + arg;
+            return (replaceWith + arg).replace(re.consoleReplace, '$1()');
           } else {
             return all;
           }

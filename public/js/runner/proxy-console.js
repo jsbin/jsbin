@@ -58,7 +58,11 @@ var proxyConsole = (function () {
       if (window.console && method !== '_raw') {
         if (method !== 'clear' || (method === 'clear' && console['clear'])) {
           if (!console[method]) { method = 'log'; }
-          console[method].apply(console, originalArgs);
+          // console[method].apply(console, originalArgs);
+          var args = [].slice.call(arguments);
+
+          //return the native console bound to arguments:
+          return Function.prototype.apply.bind(window.console.log, window.console, args);
         }
       }
     };

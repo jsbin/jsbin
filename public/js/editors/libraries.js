@@ -535,6 +535,15 @@ var libraries = [
       '//vjs.zencdn.net/4.6/video.js'
     ],
     'label': 'Video.js 4.6.x'
+  },
+  {
+    'url': [
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.css',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui-experimental.js',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui-experimental.css'
+    ],
+    'label': 'AUI (Atlassian UI) 5.7.0'
   }
 ];
 

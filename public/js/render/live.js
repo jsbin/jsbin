@@ -83,7 +83,6 @@ function codeChangeLive(event, data) {
         line = editor.getLine(editor.getCursor().line);
         if (ignoreDuringLive.test(line) === true) {
           // ignore
-          throttledPreview.cancel();
           deferredLiveRender = setTimeout(function () {
             codeChangeLive(event, data);
           }, 1000);

@@ -87,10 +87,10 @@ function codeChangeLive(event, data) {
             codeChangeLive(event, data);
           }, 1000);
         } else {
-          throttledPreview();
+          renderLivePreview();
         }
       } else {
-        throttledPreview();
+        renderLivePreview();
       }
     }
   }
@@ -429,8 +429,7 @@ var renderLivePreview = (function () {
 
 // this needs to be after renderLivePreview is set (as it's defined using
 // var instead of a first class function).
-var throttledPreview = throttle(renderLivePreview, 200),
-    liveScrollTop = null;
+var liveScrollTop = null;
 
 // timer value: used in the delayed render (because iframes don't have
 // innerHeight/Width) in Chrome & WebKit

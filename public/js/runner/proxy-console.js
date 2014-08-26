@@ -5,6 +5,7 @@
 
 var proxyConsole = (function () {
   'use strict';
+  /*global stringify, runner*/
   var supportsConsole = true;
   try { window.console.log('d[ o_0 ]b'); } catch (e) { supportsConsole = false; }
 
@@ -37,6 +38,7 @@ var proxyConsole = (function () {
     'markTimeline', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp',
     'groupCollapsed'
   ];
+
   methods.forEach(function (method) {
     // Create console method
     proxyConsole.prototype[method] = function () {
@@ -50,15 +52,15 @@ var proxyConsole = (function () {
         args: method === '_raw' ? args.slice(1) : args
       });
 
-      // If the browner supports it, use the browser console but ignore _raw,
+      // If the browser supports it, use the browser console but ignore _raw,
       // as _raw should only go to the proxy console.
       // Ignore clear if it doesn't exist as it's beahviour is different than
       // log and we let it fallback to jsconsole for the panel and to nothing
       // for the browser console
       if (window.console && method !== '_raw') {
-        if (method !== 'clear' || (method === 'clear' && console['clear'])) {
+        if (method !== 'clear' || (method === 'clear' && console.clear)) {
           if (!console[method]) { method = 'log'; }
-          // console[method].apply(console, originalArgs);
+
           var args = [].slice.call(arguments);
 
           //return the native console bound to arguments:

@@ -398,19 +398,6 @@ var renderLivePreview = (function () {
 
   // When the iframe loads, swap round the callbacks and immediately invoke
   // if renderLivePreview was called already.
-  var throttle = function (fn, wait) {
-    var ready = true;
-    var throttled = function () {
-      if (ready) {
-        ready = false;
-        setTimeout(function () {
-          ready = true;
-        }, wait);
-        return fn.apply(null, arguments);
-      }
-    };
-    return throttled;
-  };
   return deferCallable(throttle(renderLivePreview, 200), function (done) {
     iframe.onload = function () {
       if (window.postMessage) {

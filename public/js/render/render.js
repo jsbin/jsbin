@@ -165,7 +165,7 @@ var getPreparedCode = (function () {
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
         var first = ' /* double call explained https://github.com/jsbin/jsbin/issues/1833 */';
-        html = html.replace(re.console, function (all, str, arg, pos) {
+        html = html.replace(re.consoleReplace, function (all, str, arg, pos) {
           var open = html.lastIndexOf('<script', pos),
               close = html.lastIndexOf('</script', pos),
               info = first;

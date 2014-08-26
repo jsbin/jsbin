@@ -52,19 +52,24 @@ var proxyConsole = (function () {
         args: method === '_raw' ? args.slice(1) : args
       });
 
-      // If the browser supports it, use the browser console but ignore _raw,
+      // If the browner supports it, use the browser console but ignore _raw,
       // as _raw should only go to the proxy console.
       // Ignore clear if it doesn't exist as it's beahviour is different than
       // log and we let it fallback to jsconsole for the panel and to nothing
       // for the browser console
-      if (window.console && method !== '_raw') {
-        if (method !== 'clear' || (method === 'clear' && console.clear)) {
-          if (!console[method]) { method = 'log'; }
+      if (window.console) {
+        if (!console[method]) {
+          method = 'log';
+        }
 
+        if (method === 'log') {
           var args = [].slice.call(arguments);
-
           //return the native console bound to arguments:
           return Function.prototype.apply.bind(window.console.log, window.console, args);
+        } else if (window.console && method !== '_raw') {
+          if (method !== 'clear' || (method === 'clear' && console.clear)) {
+            console[method].apply(console, originalArgs);
+          }
         }
       }
     };

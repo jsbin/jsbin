@@ -80,6 +80,9 @@ var getPreparedCode = (function () {
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
       console: /(^.|\b)console\.(\S+)/g,
+
+      // https://github.com/jsbin/jsbin/issues/1833
+      consoleReplace: /\b(console\.(?:log|warn|error)(?:.apply|.call)?\(('[^']*'|"[^"]*"|\([^)]*\)|[^\/\(\)'"]*|\/\/[^\n]*\n)*\))/g,
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
@@ -94,6 +97,7 @@ var getPreparedCode = (function () {
     re.docReady.lastIndex = 0;
     re.shortDocReady.lastIndex = 0;
     re.console.lastIndex = 0;
+    re.consoleReplace.lastIndex = 0;
     re.script.lastIndex = 0;
     re.code.lastIndex = 0;
     re.csscode.lastIndex = 0;
@@ -126,17 +130,6 @@ var getPreparedCode = (function () {
       // escape any script tags in the JS code, because that'll break the mushing together
       js = js.replace(re.script, '<\\/script');
 
-      // redirect console logged to our custom log while debugging
-      if (re.console.test(js)) {
-        // yes, this code looks stupid, but in fact what it does is look for
-        // 'console.' and then checks the position of the code. If it's inside
-        // an openning script tag, it'll change it to window.top._console,
-        // otherwise it'll leave it.
-        js = js.replace(re.console, function (all, str, arg) {
-          return replaceWith + arg;
-        });
-      }
-
       // note that I'm using split and reconcat instead of replace, because if the js var
       // contains '$$' it's replaced to '$' - thus breaking Prototype code. This method
       // gets around the problem.
@@ -160,6 +153,8 @@ var getPreparedCode = (function () {
         // js = "window.onload = function(){" + js + "\n}\n";
         var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
+        js += '\n\n//# sourceURL=' + jsbin.state.code + '.js';
+
         html += '<script' + type + '>' + js + '\n</script>\n' + close;
       }
 
@@ -169,12 +164,18 @@ var getPreparedCode = (function () {
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
-        html = html.replace(re.console, function (all, str, arg, pos) {
+        var first = ' /* double call explained https://github.com/jsbin/jsbin/issues/1833 */';
+        html = html.replace(re.consoleReplace, function (all, str, arg, pos) {
           var open = html.lastIndexOf('<script', pos),
-              close = html.lastIndexOf('</script', pos);
+              close = html.lastIndexOf('</script', pos),
+              info = first;
+
+          first = null;
 
           if (open > close) {
-            return replaceWith + arg;
+            // swap console.log('foo') to console.log('foo')() to get the right
+            // line number #1833.
+            return all.replace(re.consoleReplace, '$1()' + (info ? info : ''));
           } else {
             return all;
           }

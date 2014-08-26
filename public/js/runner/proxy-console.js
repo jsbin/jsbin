@@ -5,6 +5,7 @@
 
 var proxyConsole = (function () {
   'use strict';
+  /*global stringify, runner*/
   var supportsConsole = true;
   try { window.console.log('d[ o_0 ]b'); } catch (e) { supportsConsole = false; }
 
@@ -37,6 +38,7 @@ var proxyConsole = (function () {
     'markTimeline', 'profile', 'profileEnd', 'time', 'timeEnd', 'timeStamp',
     'groupCollapsed'
   ];
+
   methods.forEach(function (method) {
     // Create console method
     proxyConsole.prototype[method] = function () {
@@ -55,10 +57,19 @@ var proxyConsole = (function () {
       // Ignore clear if it doesn't exist as it's beahviour is different than
       // log and we let it fallback to jsconsole for the panel and to nothing
       // for the browser console
-      if (window.console && method !== '_raw') {
-        if (method !== 'clear' || (method === 'clear' && console['clear'])) {
-          if (!console[method]) { method = 'log'; }
-          console[method].apply(console, originalArgs);
+      if (window.console) {
+        if (!console[method]) {
+          method = 'log';
+        }
+
+        if (method === 'log' || method === 'warn' || method === 'error') {
+          var args = [].slice.call(arguments);
+          //return the native console bound to arguments:
+          return Function.prototype.apply.bind(window.console[method], window.console, args);
+        } else if (window.console && method !== '_raw') {
+          if (method !== 'clear' || (method === 'clear' && console.clear)) {
+            console[method].apply(console, originalArgs);
+          }
         }
       }
     };

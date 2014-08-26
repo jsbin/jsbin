@@ -103,6 +103,8 @@ var runner = (function () {
         protect: loopProtect.protect
       };
 
+      childWindow.console = proxyConsole;
+
       // Reset the loop protection before rendering
       loopProtect.reset();
 

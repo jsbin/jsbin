@@ -62,10 +62,10 @@ var proxyConsole = (function () {
           method = 'log';
         }
 
-        if (method === 'log') {
+        if (method === 'log' || method === 'warn' || method === 'error') {
           var args = [].slice.call(arguments);
           //return the native console bound to arguments:
-          return Function.prototype.apply.bind(window.console.log, window.console, args);
+          return Function.prototype.apply.bind(window.console[method], window.console, args);
         } else if (window.console && method !== '_raw') {
           if (method !== 'clear' || (method === 'clear' && console.clear)) {
             console[method].apply(console, originalArgs);

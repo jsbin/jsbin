@@ -82,7 +82,7 @@ var getPreparedCode = (function () {
       console: /(^.|\b)console\.(\S+)/g,
 
       // https://github.com/jsbin/jsbin/issues/1833
-      consoleReplace: /\b(console\.log\(('[^']*'|"[^"]*"|\([^)]*\)|[^\/\(\)'"]*|\/\/[^\n]*\n)*\))/g,
+      consoleReplace: /\b(console\.(?:log|warn|error)(?:.apply|.call)?\(('[^']*'|"[^"]*"|\([^)]*\)|[^\/\(\)'"]*|\/\/[^\n]*\n)*\))/g,
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,

@@ -72,7 +72,7 @@ var proxyConsole = (function () {
           //
           // When using console.log, we want the *right* line that the logging
           // happened on to appear in the native console. To achieve this, we
-          // need the *actual* log (or warn or error) fuction call to happen
+          // need the *actual* log (or warn or error) function call to happen
           // on the original line in the user's code.
           //
           // However, since we *also* need to send an update to our own logger,
@@ -101,7 +101,7 @@ var proxyConsole = (function () {
           // we *can't* run our regexp on (to apply the `._()()`).
           //
           // When the user code has a log, warn or error, we cache a function
-          // that can call the natve console log with their arguments. This is
+          // that can call the native console log with their arguments. This is
           // the `pending` variable.
           //
           // When the `_()` function is called, it clears the `pending`.
@@ -112,7 +112,7 @@ var proxyConsole = (function () {
           //
           // Finally, as a backup, a `setTimeout(0)` is used in case there's a
           // break in the event loop, which will check for any pending logging
-          // and flush if neccessary.
+          // and flush if necessary.
 
 
           // this is the native function call to console which is used in the

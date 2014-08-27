@@ -17,10 +17,10 @@ var processors = jsbin.processors = (function () {
   };
 
   var passthrough = function (ready) { return ready(); };
-  var defaultProcessor = function (source) {
+  var defaultProcessor = function (source, resolve, reject) {
     return new RSVP.Promise(function (resolve) {
       resolve(source);
-    });
+    }).then(resolve, reject);
   };
 
   /**

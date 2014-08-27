@@ -186,12 +186,16 @@ var Panel = function (name, settings) {
   } else if (settings.processor) { // FIXME is this even used?
     panelLanguage = settings.processors[settings.processor];
     jsbin.processors.set(panel, settings.processor);
+  } else if (processors[panel.id]) {
+    jsbin.processors.set(panel, panel.id);
   } else {
+    // this is just a dummy function for console & output...which makes no sense...
     panel.processor = function (str) {
       return new RSVP.Promise(function (resolve) {
         resolve(str);
       });
     };
+
   }
 
   if (settings.beforeRender) {

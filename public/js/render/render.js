@@ -175,7 +175,7 @@ var getPreparedCode = (function () {
           if (open > close) {
             // swap console.log('foo') to console.log('foo')() to get the right
             // line number #1833.
-            return all.replace(re.consoleReplace, '$1()' + (info ? info : ''));
+            return all.replace(re.consoleReplace, '$1._()()' + (info ? info : ''));
           } else {
             return all;
           }

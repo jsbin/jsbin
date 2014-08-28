@@ -265,6 +265,13 @@ var libraries = [
     'group': 'Testing'
   },
   {
+    'url' : [
+    '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.js',
+  ],
+    'label': 'RequireJS',
+    'group': 'AMD'
+  },
+  {
     'url': 'http://zeptojs.com/zepto.min.js',
     'label': 'Zepto latest',
     'group': 'Zepto'
@@ -539,9 +546,9 @@ var libraries = [
   {
     'url': [
       '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js',
-      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.css',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css',
       '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui-experimental.js',
-      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui-experimental.css'
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui-experimental.css'
     ],
     'label': 'AUI (Atlassian UI) 5.7.0'
   }

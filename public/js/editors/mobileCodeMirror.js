@@ -42,6 +42,7 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     setCode: function (code) {
       this.textarea.value = code;
     },
+    getOption: noop,
     getCode: function () {
       return this.textarea.value;
     },

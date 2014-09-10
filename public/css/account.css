@@ -200,11 +200,11 @@ form label.hasinput:first-of-type input[type="radio"]{
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace !important;
 }
 
-form label.mini-desc,
-form label.mini-desc a {
+form .mini-desc,
+form .mini-desc a {
   /* color: #979A99; */
   float: none;
-  display: inline;
+  display: inline-block;
   font-weight: normal;
   margin-right: 0;
   font-size: 15px;
@@ -218,6 +218,17 @@ span.mini-desc {
 span.mini-desc a {
   color: #979A99;
 }
+
+.mini-desc {
+  width: 430px;
+}
+
+input[aria-describedby] {
+  vertical-align: top;
+  margin-top: 5px;
+  margin-left: 0;
+}
+
 .mini-desc-error {
   border-radius: 4px;
   display: block;

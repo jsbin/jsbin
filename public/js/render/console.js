@@ -606,7 +606,7 @@ function upgradeConsolePanel(console) {
               });
             }, 0);
           });
-        }).catch(function (error) {
+        }, function (error) {
           console.warn('Failed to render JavaScript');
           console.warn(error);
         });

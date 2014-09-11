@@ -129,7 +129,7 @@ var Gist = (function () { // jshint ignore:line
           console.groupEnd('gist');
         }
       });
-    }).catch(function (error) {
+    }, function (error) {
       console.error(error.stack);
     });
 

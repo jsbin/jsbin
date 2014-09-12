@@ -577,9 +577,16 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 </div>
 {{/feature}}
 {{/unless}}
+
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
+<script> document.write('<!--'); </script>
 <![endif]-->
+
+<script src="{{static}}/js/vendor/jshint/jshint.min.js"></script>
+
+-->
+
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 {{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}

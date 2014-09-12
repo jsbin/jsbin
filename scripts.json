@@ -5,7 +5,6 @@
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",
-    "/js/vendor/jshint/jshint.js",
     "/js/vendor/codemirror4/lib/codemirror.js",
     "/js/vendor/codemirror4/mode/xml/xml.js",
     "/js/vendor/codemirror4/mode/css/css.js",

@@ -73,6 +73,8 @@ var Panel = function (name, settings) {
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
 
+  panel.label = (settings.label || name);
+
   panel.$el.data('panel', panel);
 
   this._eventHandlers = {};
@@ -83,20 +85,6 @@ var Panel = function (name, settings) {
   if (panel.order === 1) {
     settings.nosplitter = true;
   }
-
-  // this is nasty and wrong, but I'm going to put here anyway .i..
-  // removed as we have a different way to check for errors
-  // if (this.id === 'javascript') {
-  //   this.on('processor', function (e, preprocessor) {
-  //     if (preprocessor === 'none') {
-  //       jshintEnabled = true;
-  //       checkForErrors();
-  //     } else {
-  //       jshintEnabled = false;
-  //       $error.hide();
-  //     }
-  //   });
-  // }
 
   if (settings.editor) {
     cmSettings = {
@@ -212,7 +200,9 @@ var Panel = function (name, settings) {
   }
 
   if (showPanelButton) {
-    this.controlButton = $('<a class="button group" href="?' + name + '">' + (settings.label || name) + '</a>');
+    this.controlButton = $('<a role="button" class="button group" href="?' + name + '">' + panel.label + '</a>');
+    this.updateAriaState();
+
     this.controlButton.click(function () {
       panel.toggle();
       return false;
@@ -233,6 +223,9 @@ Panel.order = 0;
 Panel.prototype = {
   virgin: true,
   visible: false,
+  updateAriaState: function () {
+    this.controlButton.attr('aria-label', this.label + ' Panel: ' + (this.visible ? 'Active' : 'Inactive'));
+  },
   show: function (x) {
     if (this.visible) {
       return;
@@ -267,6 +260,7 @@ Panel.prototype = {
     }
     panel.controlButton.addClass('active');
     panel.visible = true;
+    this.updateAriaState();
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
@@ -315,6 +309,7 @@ Panel.prototype = {
     var panel = this;
     // panel.$el.hide();
     panel.visible = false;
+    this.updateAriaState();
     analytics.hidePanel(panel.id);
 
     // update all splitter positions

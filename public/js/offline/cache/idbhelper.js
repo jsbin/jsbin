@@ -1,3 +1,5 @@
+var IDBHelper = (function (module) {
+
 function IDBHelper(name, version, upgradeCallback) {
   var request = indexedDB.open(name, version);
   this.ready = IDBHelper.promisify(request);
@@ -92,4 +94,6 @@ IDBHelperProto.transaction = function(stores, callback, opts) {
   });
 };
 
-module.exports = IDBHelper;
+return IDBHelper;
+
+})();

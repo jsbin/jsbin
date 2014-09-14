@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/js/offline/serviceWorker.js').then(function(sw) {
+  navigator.serviceWorker.register(jsbin.root + '/js/offline/serviceWorker.js').then(function(sw) {
     // registration worked!
     console.log('service worker registered');
   }).catch(function(e) {

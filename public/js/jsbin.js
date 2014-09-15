@@ -93,6 +93,15 @@ function dedupe(array) {
   return results;
 }
 
+function isDOM(obj) {
+  'use strict';
+  var Node = window.Node || false;
+  if (Node) {
+    return obj instanceof Node;
+  }
+  return obj.nodeType === 1;
+}
+
 function exposeSettings() {
   'use strict';
 
@@ -122,7 +131,7 @@ function exposeSettings() {
     return results;
   }
 
-  if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
+  if (isDOM(window.jsbin) || !window.jsbin) { // because...STUPIDITY!!!
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,

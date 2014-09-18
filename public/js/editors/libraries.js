@@ -387,11 +387,11 @@ var libraries = [
   },
   {
     'url': [
-      '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-      '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
-      'http://builds.emberjs.com.s3.amazonaws.com/tags/v1.0.0/ember.js'
+      '//code.jquery.com/jquery-1.11.1.min.js',
+      '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js',
+      '//builds.emberjs.com/tags/v1.7.0/ember.js'
     ],
-    'label': 'Ember.js 1.0.0'
+    'label': 'Ember.js 1.7.0'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',

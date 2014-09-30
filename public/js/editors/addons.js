@@ -151,6 +151,7 @@
         delete CodeMirror.keyMap['sublime'][cmd + '-Enter'];
         delete CodeMirror.keyMap['sublime'][cmd + '-Up'];
         delete CodeMirror.keyMap['sublime'][cmd + '-Down'];
+        CodeMirror.keyMap['sublime']['Shift-Tab'] = 'indentAuto';
         cm.removeKeyMap('noEmmet');
       }
     },

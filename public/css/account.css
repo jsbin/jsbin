@@ -492,7 +492,7 @@ form label.hintOptions {
   display: block;
   float: none;
   text-align: left;
-  margin-top: -8px;
+/*   margin-top: -8px; */
   margin-bottom: 1em;
 }
 

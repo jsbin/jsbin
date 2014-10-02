@@ -4836,7 +4836,7 @@ div.large-gravatar object {
   z-index: 1;
 }
 
-#profile img.large-gravatar {
+#profile .large-gravatar {
   float: left;
   margin-right: 10px;
   width: 120px;

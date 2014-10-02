@@ -138,11 +138,17 @@ if(top != self) {
           {{#if home}}
             {{#feature request "accountPages"}}
             <div class="menu{{#if user.pro}} pro{{/if}}">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
+                <source srcset="{{gravatar}} 1x, {{gravatar}}&s=58 2x">
+                <img src="{{gravatar}}">
+              </picture>{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
-  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
+                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}&s=240 2x">
+                <img class="large-gravatar" src="{{large_gravatar}}">
+              </picture></div>{{/if}}
                   <span class="input" id="username" readonly>
                     @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
                   </span>

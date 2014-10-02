@@ -1,5 +1,10 @@
 { "features": [
   {
+    "name": "Support JS Bin's continued operation",
+    "user": "pro",
+    "tip": "Help keep JS Bin online and working to be awesome"
+  },
+  {
     "name": "Vanity URLs",
     "user": "pro",
     "tip": "Show off your Pro status with you.jsbin.com"
@@ -20,8 +25,9 @@
     "tip": "Every bin, backed up to your Dropbox"
   },
   {
-    "name": "Priority direct support",
-    "user": "pro"
+    "name": "Email support",
+    "user": "pro",
+    "tip": "For private support requests"
   },
   {
     "name": "Full, unmodified output",
@@ -47,16 +53,6 @@
     "name": "Custom starting code",
     "user": "anon",
     "tip": "Start with only a doctype? Set your \"new\" template"
-  },
-  {
-    "name": "Unlimited external resources",
-    "user": "anon",
-    "tip": "Add any number of external CSS, JS or other resources"
-  },
-  {
-    "name": "Custom libraries",
-    "user": "anon",
-    "tip": "Add your own libraries to our vast selection"
   }
 ],
 "tweets": ["499277531313631233", "492754486319140865", "492058646118158336", "491948444165365761", "491946894051270656", "491945957450612736", "459041574043664384", "450920759402434561"]

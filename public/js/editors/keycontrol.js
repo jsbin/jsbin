@@ -176,14 +176,6 @@ function keycontrol(event) {
 
     if (event.which === 191 && event.metaKey && event.shiftKey) {
       // show help
-      $body.toggleClass('keyboardHelp');
-      keyboardHelpVisible = $body.is('.keyboardHelp');
-      if (keyboardHelpVisible) {
-        analytics.track('keyboard', 'select', 'help');
-      }
-      event.stop();
-    } else if (event.which === 191 && event.metaKey && event.ctrlKey) {
-      // show help
       opendropdown($('#help').prev()[0]);
       event.stop();
     } else if (event.which === 27 && keyboardHelpVisible) {

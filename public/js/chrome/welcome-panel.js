@@ -2,7 +2,9 @@
   /*global jsbin, $, $body, $document, analytics, settings*/
   'use strict';
 
-  if (!$('#toppanel').length) {
+  var $toppanel = $('#toppanel');
+
+  if (!$toppanel.length) {
     return;
   }
 
@@ -28,6 +30,8 @@
     $body.addClass('toppanel-close');
     $body.removeClass('toppanel');
 
+    $toppanel.trigger('close');
+
     // $document.trigger('sizeeditors');
   };
 
@@ -36,6 +40,8 @@
     settings.save();
     $body.removeClass('toppanel-close');
     $body.addClass('toppanel');
+
+    $toppanel.trigger('open');
   };
 
   var goSlow = function(e) {
@@ -129,7 +135,7 @@
   })
 
   // analytics for links
-  $('#toppanel').find('.toppanel-link').mousedown(function() {
+  $toppanel.find('.toppanel-link').mousedown(function() {
     analytics.welcomePanelLink(this.href);
   });
 

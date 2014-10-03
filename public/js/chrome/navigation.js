@@ -144,7 +144,18 @@ function closedropdown() {
   }
 }
 
-var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e) {
+var dropdownButtons = $('.button-dropdown, .button-open').on('mousedown keydown', function (e) {
+  if (e.type === 'keydown') {
+    if (e.which === 13 || e.which === 32) { // enter or space
+      if (dropdownOpen && dropdownOpen === this) {
+        closedropdown();
+        return;
+      } // else: open dropdown
+    } else {
+      return;
+    }
+  }
+
   $dropdownLinks.removeClass('hover');
   if (dropdownOpen && dropdownOpen !== this) {
     closedropdown();

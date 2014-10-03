@@ -95,7 +95,7 @@ var Panel = function (name, settings) {
       lineWrapping: true,
       // gutters: ['line-highlight'],
       theme: jsbin.settings.theme || 'jsbin',
-      highlighLine: true
+      highlightLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});

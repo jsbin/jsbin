@@ -167,6 +167,8 @@
   }
 
   function gutterClick(cm, lineNumber, gutter, event) {
-    highlightLines(cm, lineNumber, event);
+    if ($(event.target).hasClass('CodeMirror-linenumber')) {
+      highlightLines(cm, lineNumber, event);
+    }
   }
 });

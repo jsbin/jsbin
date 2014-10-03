@@ -137,7 +137,7 @@ if(top != self) {
         {{#unless embed}}
           {{#if home}}
             {{#feature request "accountPages"}}
-            <div class="menu{{#if user.pro}} pro{{/if}}">
+            <div class="menu{{#feature request "pro"}} pro {{/feature}}">
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
                 <source srcset="{{gravatar}} 1x, {{gravatar}}&s=58 2x">
                 <img src="{{gravatar}}">
@@ -150,7 +150,7 @@ if(top != self) {
                 <img class="large-gravatar" src="{{large_gravatar}}">
               </picture></div>{{/if}}
                   <span class="input" id="username" readonly>
-                    @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                    @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                   </span>
 
                   <ul>
@@ -177,7 +177,7 @@ if(top != self) {
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                       </span>
                     </div>
                     <div>

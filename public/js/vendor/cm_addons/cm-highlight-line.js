@@ -23,7 +23,7 @@
   var WRAP_CLASS = 'CodeMirror-highlight-line';
   var BACK_CLASS = 'CodeMirror-highlight-line-background';
 
-  CodeMirror.defineOption('highlighLine', false, function(cm, val, old) {
+  CodeMirror.defineOption('highlightLine', false, function(cm, val, old) {
     var prev = old && old !== CodeMirror.Init;
     if (val && !prev) {
       cm.state.highlightedLines = [];

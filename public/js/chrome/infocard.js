@@ -63,33 +63,56 @@
       classes.push('public');
     } // TODO handle team
 
-    if (jsbin.state.code) {
-      $template.addClass(classes.join(' ')).parent().removeAttr('hidden');
+    $template.addClass(classes.join(' ')).parent().removeAttr('hidden');
 
-      $header.click(function (e) {
-        e.preventDefault();
-        analytics.infocard('click', 'no-result');
-        // $template.toggleClass('open');
+    $header.click(function (e) {
+      e.preventDefault();
+      analytics.infocard('click', 'no-result');
+      var toTrigger;
+      $template.toggleClass(function (index, klass) {
+        toTrigger = klass.indexOf('open') === -1 ? 'open' : 'close';
+        return 'open';
+      }).trigger(toTrigger);
+    });
+
+    $template.one('open', function () {
+      $.getJSON('/js/http-codes.json', function (codes) {
+        var html = '';
+        codes.forEach(function (code) {
+          html += '<option value="' + code.code + '">' + code.string + '</option>';
+        });
+        $('#status').html(html).val(200);
       });
+    }).on('close', function () {
 
-      var viewers = 0;
+    });
 
-      if (jsbin.state.streaming) {
-        if (window.EventSource && owner) {
-          listenStats();
-          handleVisibility();
-          var url = jsbin.getURL();
-          $document.on('saved', function () {
-            var newurl = window.location.toString();
-            if (url !== newurl) {
-              es.close();
-              listenStats();
-            }
-          });
-        } else if (jsbin.saveDisabled === true && window.location.pathname.slice(-5) === '/edit') {
-          $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
-          $document.on('stats', throttle(updateStats, 1000));
-        }
+    var $headers = $template.find('#headers');
+    $template.on('click', '#headers button', function (event) {
+      event.preventDefault();
+      var $fields = $headers.find('span:last');
+      var $clones = $fields.clone(true);
+      $fields.before($clones);
+      $fields.find('input').val('').eq(0).focus();
+    });
+
+    var viewers = 0;
+
+    if (jsbin.state.streaming) {
+      if (window.EventSource && owner) {
+        listenStats();
+        handleVisibility();
+        var url = jsbin.getURL();
+        $document.on('saved', function () {
+          var newurl = window.location.toString();
+          if (url !== newurl) {
+            es.close();
+            listenStats();
+          }
+        });
+      } else if (jsbin.saveDisabled === true && window.location.pathname.slice(-5) === '/edit') {
+        $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
+        $document.on('stats', throttle(updateStats, 1000));
       }
     }
 

@@ -1,0 +1,43 @@
+{{#feature request "infocard"}}
+<div hidden>
+  <div class="card" id="infocard">
+    <div class="body">
+      <form class="settings">
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <label for="description">Description</label>
+        <textarea rows="2" id="description"></textarea>
+        <details>
+          <summary>Headers</summary>
+          <label for="status">Status code</label>
+          <select id="status">
+            <option value=200>200 OK</option>
+          </select>
+          <div id="headers">
+            <label for="header-property">Custom headers</label>
+            <span class="row"><input type="text" placeholder="field" id="header-property" name="header-property">:
+            <input type="text" placeholder="value" name="header-value"></span> <button>+</button>
+          </div>
+        </details>
+      </form>
+      <ul class="controls">
+        <li><a href="/clone">Clone</a> </li>
+        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
+        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
+        <li class="owner"><a href="/download">Download</a> </li>
+        {{#feature request "delete"}}
+        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
+        {{/feature}}
+      </ul>
+    </div>
+    <header><img>
+      <div class="visibility"></div>
+      <div class="meta">
+        <div class="author">Bin info</div>
+        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
+      </div>
+      <div class="viewers"><b>0</b><span>viewers</span></div>
+    </header>
+  </div>
+</div>
+{{/feature}}

@@ -2683,7 +2683,7 @@ body.streaming #bin {
   display: block;
 }
 
-.details, details {
+#bin .details, #bin details {
   position: absolute;
   display: block;
   bottom: 0;
@@ -2695,7 +2695,7 @@ body.streaming #bin {
   z-index: 10;
 }
 
-.summary, summary {
+#bin .summary, #bin summary {
   cursor: pointer;
   padding: 3px 5px;
   display: block;
@@ -2704,13 +2704,13 @@ body.streaming #bin {
   border: 0;
 }
 
-details ol, .details ol {
+#bin details ol, #bin .details ol {
   padding-left: 21px;
   max-height: 150px;
   overflow: auto;
 }
 
-details li, .details li {
+#bin details li, #bin .details li {
   margin: 5px 0;
   cursor: pointer;
 }
@@ -4547,7 +4547,7 @@ html * {
   box-sizing: border-box;
   /*margin: 10px;*/
   border: 1px solid #fff;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
   font-size: 16px;
   /* min-width: 500px; */
 }
@@ -4599,17 +4599,62 @@ html * {
 .card .body {
   display: none;
   padding: 10px 20px;
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
 }
 
+.card .settings label {
+  font-weight: normal;
+  margin-left: 0;
+  color: #000;
+}
+
+.card .settings * {
+  font-size: 14px;
+}
+
+.card .settings summary {
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.card .settings {
+  display: none;
+  float: left;
+  margin-right: 20px;
+  width: 220px;
+}
+
+.card.author .settings {
+  display: block;
+}
+
+.card .settings h2 {
+  margin: 0;
+}
+
+.card .settings fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.card .settings #headers input {
+  width: 152px;
+}
+
 .card.open .body {
   display: block;
+  overflow: hidden;
 }
 
 .card .body select {
   margin: 0;
+  width: 100%;
+  display: block;
+  font-size: 16px;
 }
 
 .card .body a {
@@ -4621,10 +4666,19 @@ html * {
   list-style: none;
   padding: 0;
   margin: 0;
+  float: right;
 }
 
 .card .body li {
   margin: 10px 0
+}
+
+.card .body li:first-child {
+  margin-top: 0;
+}
+
+.card .body li:last-child {
+  margin-bottom: 0;
 }
 
 .card.private {
@@ -4639,6 +4693,7 @@ html * {
   white-space: nowrap;
   padding-right: 10px;
   margin: 5px 0;
+  float: right;
 }
 
 .card.author .meta,

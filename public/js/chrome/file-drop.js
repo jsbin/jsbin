@@ -1,41 +1,52 @@
 function allowDrop(holder) {
-  holder.ondragover = function () { 
-    return false; 
-  };
+  function uploadAsset(file) {
+    var s3upload = new S3Upload({
+      s3_object_name: file.name.replace(/\s+/g, '-'),
+      files: [file]
+    });
+  }
 
-  holder.ondragend = function () { 
-    return false; 
-  };
 
-  var jstypes = {
-    'javascript': 1,
-    'coffeescript': 1,
-    'coffee': 1,
-    'js' :1
-  },
-  csstypes = {
-    'css': 1,
-    'less': 1,
-    'sass': 1
-  };
+  // holder.ondragover = function () {
+  //   return false;
+  // };
+
+  // holder.ondragend = function () {
+  //   return false;
+  // };
+
+  var jstypes = ['javascript', 'coffeescript', 'coffee', 'js'];
+  var csstypes = ['css', 'less', 'sass', 'scss'];
+  var htmltypes = ['html', 'markdown', 'plain'];
 
   holder.ondrop = function (e) {
     e.preventDefault();
 
+
     var file = e.dataTransfer.files[0],
         reader = new FileReader();
+
+    console.log(file);
+
     reader.onload = function (event) {
       // put JS in the JavaScript panel
       var type = file.type ? file.type.toLowerCase().replace(/^(text|application)\//, '') : file.name.toLowerCase().replace(/.*\./g, ''),
-          panelId = 'html',
+          panelId = null,
           panel = editors[panelId],
           syncCode = event.target.result,
           scroller = null;
 
-      if (jstypes[type]) {
+      if (jstypes.indexOf(type) !== -1) {
         panelId = 'javascript';
-      } else if (csstypes[type]) {
+      } else if (csstypes.indexOf(type) !== -1) {
         panelId = 'css';
+      } else if (htmltypes.indexOf(type) !== -1) {
+        panelId = 'html';
+      }
+
+      if (panelId === null) {
+        // then we have an asset upload
+        return uploadAsset(file);
       }
 
       panel = editors[panelId];
@@ -60,18 +71,6 @@ function allowDrop(holder) {
           scroller.scrollTop = top;
           syncCode = event.data.body;
         };
-
-        /* FIXME for now, there's a bug in CodeMirror 2 whereby binding the
-          onKeyEvent causes all cursor keys to be ate :( */
-        // panel.editor.setOption('onKeyEvent', function (event) {
-        //   if (syncCode !== panel.editor.getCode()) {
-        //     worker.terminate();
-        //     console.log('terminate');
-        //     panel.$el.find('> .label small').remove();
-        //     panel.editor.setOption('onKeyEvent', function () { return true });
-        //   }
-        //   return event;
-        // });
       } catch (e) {
         // fail on the awesomeness...oh well
       }

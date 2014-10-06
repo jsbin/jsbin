@@ -4614,10 +4614,16 @@ html * {
   font-size: 14px;
 }
 
+.card .settings details {
+  width: 360px;
+}
+
 .card .settings summary {
   cursor: pointer;
   font-weight: bold;
   margin: 10px 0;
+  width: auto;
+  display: inline-block;
 }
 
 .card .settings {

@@ -41,16 +41,22 @@ function allowDrop(holder) {
       }
     };
 
-    panel.addWidget(cursorPosition || panel.getCursor(), loading);
+    if (!jsbin.lameEditor) {
+      panel.addWidget(cursorPosition || panel.getCursor(), loading);
+    } else {
+      insertTextArea(panel, 'Uploading ...', true);
+    }
 
     var s3upload = new S3Upload({
       s3_object_name: file.name.replace(/\s+/g, '-'),
       files: [file],
 
       onProgress: function (percent, status) {
-        requestAnimationFrame(function () {
-          progress(percent, status);
-        });
+        if (!jsbin.lameEditor) {
+          requestAnimationFrame(function () {
+            progress(percent, status);
+          });
+        }
       },
 
       onError: function (reason) {
@@ -60,18 +66,46 @@ function allowDrop(holder) {
         loading.style.color = 'red';
         panel = null;
         cursorPosition = null;
-        setTimeout(function () {
-          loading.parentNode.removeChild(loading);
-        }, 2000);
+        if (!jsbin.lameEditor) {
+          setTimeout(function () {
+            loading.parentNode.removeChild(loading);
+          }, 2000);
+        }
       },
 
       onFinishS3Put: function (url) {
-        loading.parentNode.removeChild(loading);
-        panel.replaceSelection(getInsertText(file.type, panel, url));
+        if (!jsbin.lameEditor) {
+          loading.parentNode.removeChild(loading);
+          panel.replaceSelection(getInsertText(file.type, panel, url));
+        } else {
+          insertTextArea(panel, getInsertText(file.type, panel, url));
+          $(document).trigger('codeChange', { panelId: panel.id });
+        }
         panel = null;
         cursorPosition = null;
       }
     });
+  }
+
+  function insertTextArea(el, string, select) {
+    var start = el.selectionStart;
+    var end = el.selectionEnd;
+
+    var target = el;
+    var value = target.value;
+
+    // set textarea value to: text before caret + tab + text after caret
+    target.value = value.substring(0, start) + string + value.substring(end);
+
+    // put caret at right position again (add one for the tab)
+    el.selectionStart = el.selectionEnd = start + 1;
+
+    if (select) {
+      el.selectionStart -= 1;
+      el.selectionEnd = el.selectionEnd + string.length;
+    } else {
+      el.selectionStart = el.selectionEnd = start + string.length;
+    }
   }
 
   function getInsertText(mime, cm, url) {
@@ -90,22 +124,6 @@ function allowDrop(holder) {
 
         return '<img src="' + url + '">';
       }
-
-      // if (mime.indexOf('application/javascript')) {
-      //   if (processor === 'jade') {
-      //     return 'script(src="' + url + '")';
-      //   }
-
-      //   return '<script src="' + url + '"></script>';
-      // }
-
-      // if (mime.indexOf('text/css')) {
-      //   if (processor === 'jade') {
-      //     return 'link(rel="stylesheet" href="' + url + '")';
-      //   }
-
-      //   return '<link rel="stylesheet" href="' + url + '">';
-      // }
 
       return url;
     }
@@ -147,36 +165,41 @@ function allowDrop(holder) {
   }
 
   $('#bin textarea').on('paste', function (jQueryEvent) {
-     panel = $(this).closest('.CodeMirror')[0].CodeMirror;
-     var event = jQueryEvent.originalEvent;
-     var items = event.clipboardData.items;
+    if ($(this).closest('.CodeMirror').length) {
+      panel = $(this).closest('.CodeMirror')[0].CodeMirror;
+    } else {
+      panel = this;
+    }
 
-     // this means we've copied a file that's an app icon, or it's just text
-     // which we don't want to kick in anyway.
-     if (!items || event.clipboardData.types[0].indexOf('text/') === 0) {
-       return;
-     }
+    var event = jQueryEvent.originalEvent;
+    var items = event.clipboardData.items;
 
-     var file = null;
-     var promises = [];
-     for (var i = 0; i < items.length; i++) {
-       promises.push(getFileData(items[i]));
-     }
+    // this means we've copied a file that's an app icon, or it's just text
+    // which we don't want to kick in anyway.
+    if (!items || event.clipboardData.types[0].indexOf('text/') === 0) {
+      return;
+    }
 
-     Promise.all(promises).then(function (data) {
-       var blobname = data.sort(function (a, b) {
-         return typeof a === 'string' ? 1 : -1;
-       });
-       var file = data[0];
-       file.name = data[1] || guid() + '.' + file.type.split('/')[1];
+    var file = null;
+    var promises = [];
+    for (var i = 0; i < items.length; i++) {
+      promises.push(getFileData(items[i]));
+    }
 
-       uploadAsset(file);
-     }).catch(function (error) {
-       console.log(error.stack);
-     });
+    Promise.all(promises).then(function (data) {
+      var blobname = data.sort(function (a, b) {
+        return typeof a === 'string' ? 1 : -1;
+      });
+      var file = data[0];
+      file.name = data[1] || guid() + '.' + file.type.split('/')[1];
 
-     // FIXME???
-     jQueryEvent.preventDefault();
+      uploadAsset(file);
+    }).catch(function (error) {
+      console.log(error.stack);
+    });
+
+    // FIXME???
+    jQueryEvent.preventDefault();
   });
 
   $('.CodeMirror').on('mousemove', function (e) {
@@ -197,7 +220,11 @@ function allowDrop(holder) {
     dragging = false;
     e.preventDefault();
 
-    panel = $(e.target).closest('.CodeMirror')[0].CodeMirror;
+    if ($(this).closest('.CodeMirror').length) {
+      panel = $(e.target).closest('.CodeMirror')[0].CodeMirror;
+    } else {
+      panel = e.target;
+    }
 
     var file = e.dataTransfer.files[0],
         reader = new FileReader();

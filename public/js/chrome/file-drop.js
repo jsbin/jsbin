@@ -44,7 +44,7 @@ function allowDrop(holder) {
     panel.addWidget(cursorPosition || panel.getCursor(), loading);
 
     var s3upload = new S3Upload({
-      s3_object_name: '/../dave/foobar.png', // file.name.replace(/\s+/g, '-'),
+      s3_object_name: file.name.replace(/\s+/g, '-'),
       files: [file],
 
       onProgress: function (percent, status) {

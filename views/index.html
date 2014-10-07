@@ -132,7 +132,7 @@ if(top != self) {
           <a href="{{code_id_path}}/save" class="save button group">Start saving your work</a>
         </div>
       {{/if}}
-      <div id="panels"></div>
+      <div id="panels" aria-label="Panels"></div>
       <div class="help">
         {{#unless embed}}
           {{#if home}}
@@ -339,7 +339,7 @@ if(top != self) {
   <div id="source" class="binview stretch">
   </div>
   <div id="panelswaiting">
-    <div class="code stretch html panel">
+    <div class="code stretch html panel" tabindex="0">
       <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
           <div class="dropdownmenu processorSelector" data-type="html">
             <a href="#html">HTML</a>
@@ -353,7 +353,7 @@ if(top != self) {
         <textarea aria-label="HTML Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
       </div>
     </div>
-    <div class="code stretch javascript panel">
+    <div class="code stretch javascript panel" tabindex="0">
       <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
         <div class="dropdown" id="javascriptprocessors">
           <div class="dropdownmenu processorSelector" data-type="javascript">
@@ -372,7 +372,7 @@ if(top != self) {
         <textarea aria-label="JavaScript Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
-    <div class="code stretch css panel">
+    <div class="code stretch css panel" tabindex="0">
       <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
         <div class="dropdown" id="cssprocessors">
           <div class="dropdownmenu processorSelector" data-type="css">
@@ -392,7 +392,7 @@ if(top != self) {
         <textarea aria-label="CSS Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
       </div>
     </div>
-    <div class="stretch console panel">
+    <div class="stretch console panel" tabindex="0">
       <div class="label">
         <span class="name"><strong>Console</strong></span>
         <span class="options">
@@ -404,7 +404,7 @@ if(top != self) {
           <textarea aria-label="Console Panel" id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
       </form></div>
     </div>
-    <div id="live" class="stretch live panel">
+    <div id="live" class="stretch live panel" tabindex="0">
       <div class="label">
         <span class="name"><strong>Output</strong></span>
         <span class="options">

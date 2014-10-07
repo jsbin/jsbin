@@ -38,6 +38,7 @@
     "/js/render/render.js",
     "/js/render/live.js",
     "/js/editors/keycontrol.js",
+    "/js/editors/focus.js",
     "/js/render/console.js",
     "/js/processors/processor.js",
     "/js/editors/panel.js",

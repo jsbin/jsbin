@@ -1698,7 +1698,7 @@ textarea:focus {
   /* font-size: 1em; */
 }
 .help a {
-  outline: 0;
+  /*outline: 0;*/
   /*border-right: 0;*/
 }
 
@@ -1947,7 +1947,7 @@ a.button:focus { /* , .button:active */
      -moz-box-shadow: #C8C8C8 0 0 3px;
           box-shadow: #C8C8C8 0 0 3px;
   border-color: #fff;
-  outline: 0;
+  /*outline: 0;*/
   text-shadow: none;
 }
 
@@ -2240,13 +2240,15 @@ body.preview #source select {
   left: 0.8em;
   right: 0.8em;
 }
-.mobile .editbox textarea,
-.ie6 .editbox textarea,
-.ie7 .editbox textarea {
+.editbox textarea {
+  tab-size: 4; /* because 12 spaces is silly */
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  white-space: pre-wrap;
   margin: 0;
   border: 0;
-  font-family: Menlo, Monaco, consolas, monospace;
   color: black;
+  background: #fff;
   padding: 0;
   font-size: 12px;
   position: absolute;
@@ -2260,8 +2262,7 @@ body.preview #source select {
   height: 100%;
 }
 
-.ie6 textarea,
-.ie7 textarea {
+.editbox textarea {
   width: 100%;
   height: 100%;
 }
@@ -2996,7 +2997,7 @@ input {
   font-size: 14px;
 }
 #bin .editbox .CodeMirror pre,
-.mobile textarea {
+.editbox textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
 }
 

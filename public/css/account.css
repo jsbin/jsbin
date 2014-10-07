@@ -931,6 +931,8 @@ input.actionButton-small, button.actionButton-small {
 
 #files a {
   text-decoration: none;
+  overflow: hidden;
+  display: block;
 }
 
 #files .filename {
@@ -944,6 +946,7 @@ input.actionButton-small, button.actionButton-small {
   text-overflow: ellipsis;
 }
 
-#files .size {
-  
+#files form {
+  display: inline;
+  margin-left: 5px;
 }

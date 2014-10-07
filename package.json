@@ -26,7 +26,6 @@
   "dependencies": {
     "async": "~0.1.22",
     "asyncjs": "0.0.7",
-    "aws-s3-size": "^0.1.0",
     "aws-sdk": "^2.0.18",
     "axon": "~2.0.0",
     "bcrypt-nodejs": "0.0.3",

@@ -1,7 +1,7 @@
 /*globals objectValue, $, jsbin, $body, $document*/
 var keyboardHelpVisible = false;
 
-var customKeys = objectValue('jsbin.settings.keys') || {};
+var customKeys = objectValue('settings.keys', jsbin) || {};
 
 function enableAltUse() {
   if (!jsbin.settings.keys) {

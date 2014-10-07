@@ -893,3 +893,57 @@ input.actionButton-small, button.actionButton-small {
   height: 27.6px;
 }
 
+#files {
+  padding: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+#files li {
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid rgb(213, 211, 211);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+  display: block;
+  width: 220px;
+  height: 200px;
+}
+
+#files li:nth-child(3n) {
+  margin-right: 0;
+}
+
+#files div {
+  height: 130px;
+  width: 200px;
+  background-repeat: no-repeat, repeat;
+  background-position: 50%, 50%;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+  background-size: , 10px;
+}
+
+#files img {
+  border: 1px solid #efefef;
+  width: 200px;
+}
+
+#files a {
+  text-decoration: none;
+}
+
+#files .filename {
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 16px;
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#files .size {
+  
+}

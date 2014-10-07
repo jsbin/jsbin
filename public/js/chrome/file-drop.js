@@ -220,7 +220,7 @@ function allowDrop(holder) {
     dragging = false;
     e.preventDefault();
 
-    if ($(this).closest('.CodeMirror').length) {
+    if ($(e.target).closest('.CodeMirror').length) {
       panel = $(e.target).closest('.CodeMirror')[0].CodeMirror;
     } else {
       panel = e.target;

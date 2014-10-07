@@ -18,16 +18,6 @@
     <p><small>Note that by enabling SSL for all of JS Bin, including non-https assets in your bins will cause the iframe <em>not</em> to render. This is the correct behaviour for https frames containing non-secure content. <a href="http://jsbin.com/help/ssl-opt-in">Read more</a>.</small></p>
     {{/feature}}
 
-    {{#feature request "assets"}}
-    <h3>Custom content</h3>
-    <p>If you want to link to images or additional assets, we redirect the <a href="#">/{{user.name}}/assets/</a> relative URL to <em>your asset URL</em>, so you can link to <a href="#">/{{user.name}}/assets/images/logo.png</a> for example.</p>
-
-    <div>
-      <label for="asset-url">Asset URL</label>
-      <input type="url" name="asset-url" id="asset-url" placeholder="http://... S3 bucket, public dropbox folder, etc" size="50">
-    </div>
-    {{/feature}}
-
     <h3>Panels</h3>
     <div>
       <span class="label">Open panels</span>

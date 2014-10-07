@@ -1,32 +1,212 @@
 function allowDrop(holder) {
+  var cursorPosition = null;
+  var panel = null;
+  var Promise = window.Promise || RSVP.Promise;
+
+  var guid = (function() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+    }
+    return function() {
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+           s4() + '-' + s4() + s4() + s4();
+    };
+  })();
+
   function uploadAsset(file) {
+    var loading = document.createElement('div');
+    loading.className = 'assetLoading';
+    loading.innerHTML = '0% uploading...';
+    var currentStatus = 0;
+
+    var progress = function progress(percent, status) {
+      if (percent - currentStatus < 10) {
+        currentStatus = percent;
+      } else {
+        currentStatus += 10;
+        requestAnimationFrame(function () {
+          progress(percent, status);
+        });
+      }
+
+      if (loading && currentStatus > 0) {
+        if (currentStatus > 97) {
+          loading.innerHTML = '97% uploaded...';
+          // because there's some lag between 100% and actually rendering
+        } else {
+          loading.innerHTML = currentStatus + '% uploaded...';
+        }
+      }
+    };
+
+    panel.addWidget(cursorPosition || panel.getCursor(), loading);
+
     var s3upload = new S3Upload({
-      s3_object_name: file.name.replace(/\s+/g, '-'),
-      files: [file]
+      s3_object_name: '/../dave/foobar.png', // file.name.replace(/\s+/g, '-'),
+      files: [file],
+
+      onProgress: function (percent, status) {
+        requestAnimationFrame(function () {
+          progress(percent, status);
+        });
+      },
+
+      onError: function (reason) {
+        currentStatus = -1;
+        console.error('Failed to upload', reason);
+        loading.innerHTML = 'Failed to complete';
+        loading.style.color = 'red';
+        panel = null;
+        cursorPosition = null;
+        setTimeout(function () {
+          loading.parentNode.removeChild(loading);
+        }, 2000);
+      },
+
+      onFinishS3Put: function (url) {
+        loading.parentNode.removeChild(loading);
+        panel.replaceSelection(getInsertText(file.type, panel, url));
+        panel = null;
+        cursorPosition = null;
+      }
     });
   }
 
+  function getInsertText(mime, cm, url) {
+    // var panel = jsbin.panels.panels[cm.id];
+    var processor = jsbin.state.processors[cm.id];
 
-  // holder.ondragover = function () {
-  //   return false;
-  // };
+    if (cm.id === 'html') {
+      if (mime.indexOf('image/') === 0) {
+        if (processor === 'markdown') {
+          return '![' + url + '](' + url + ')';
+        }
 
-  // holder.ondragend = function () {
-  //   return false;
-  // };
+        if (processor === 'jade') {
+          return 'img(src="' + url + '")';
+        }
+
+        return '<img src="' + url + '">';
+      }
+
+      // if (mime.indexOf('application/javascript')) {
+      //   if (processor === 'jade') {
+      //     return 'script(src="' + url + '")';
+      //   }
+
+      //   return '<script src="' + url + '"></script>';
+      // }
+
+      // if (mime.indexOf('text/css')) {
+      //   if (processor === 'jade') {
+      //     return 'link(rel="stylesheet" href="' + url + '")';
+      //   }
+
+      //   return '<link rel="stylesheet" href="' + url + '">';
+      // }
+
+      return url;
+    }
+
+    if (cm.id === 'css') {
+      if (mime.indexOf('image/') === 0) {
+        return 'url(' + url + ')';
+      }
+
+      return url;
+    }
+
+    // note: js just gets the url...
+    return url;
+  }
+
+  var dragging = false;
+
+  holder.ondragover = function () {
+    dragging = true;
+    return false;
+  };
+
+  holder.ondragend = function () {
+    dragging = false;
+    return false;
+  };
+
+  function getFileData(item) {
+    return new Promise(function (resolve, reject) {
+      if (item.kind === 'string') {
+        item.getAsString(function (filename) {
+          resolve(filename);
+        });
+      } else {
+        resolve(item.getAsFile());
+      }
+    });
+  }
+
+  $('#bin textarea').on('paste', function (jQueryEvent) {
+     panel = $(this).closest('.CodeMirror')[0].CodeMirror;
+     var event = jQueryEvent.originalEvent;
+     var items = event.clipboardData.items;
+
+     // this means we've copied a file that's an app icon, or it's just text
+     // which we don't want to kick in anyway.
+     if (!items || event.clipboardData.types[0].indexOf('text/') === 0) {
+       return;
+     }
+
+     var file = null;
+     var promises = [];
+     for (var i = 0; i < items.length; i++) {
+       promises.push(getFileData(items[i]));
+     }
+
+     Promise.all(promises).then(function (data) {
+       var blobname = data.sort(function (a, b) {
+         return typeof a === 'string' ? 1 : -1;
+       });
+       var file = data[0];
+       file.name = data[1] || guid() + '.' + file.type.split('/')[1];
+
+       uploadAsset(file);
+     }).catch(function (error) {
+       console.log(error.stack);
+     });
+
+     // FIXME???
+     jQueryEvent.preventDefault();
+  });
+
+  $('.CodeMirror').on('mousemove', function (e) {
+    if (!dragging) {
+      return;
+    }
+
+    panel = this.CodeMirror;
+    cursorPosition = this.CodeMirror.coordsChar({ top: event.y, left: event.x });
+    this.CodeMirror.setCursor(cursorPosition);
+  });
 
   var jstypes = ['javascript', 'coffeescript', 'coffee', 'js'];
   var csstypes = ['css', 'less', 'sass', 'scss'];
   var htmltypes = ['html', 'markdown', 'plain'];
 
   holder.ondrop = function (e) {
+    dragging = false;
     e.preventDefault();
 
+    panel = $(e.target).closest('.CodeMirror')[0].CodeMirror;
 
     var file = e.dataTransfer.files[0],
         reader = new FileReader();
 
-    console.log(file);
+    if (file.type.indexOf('text/') !== 0) {
+      // this isn't a text file for populating the panel, try uploading instead
+      uploadAsset(file);
+      return;
+    }
 
     reader.onload = function (event) {
       // put JS in the JavaScript panel

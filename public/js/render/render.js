@@ -117,7 +117,9 @@ var getPreparedCode = (function () {
       // aren't useful (Script error. (line 0) #1354) so we try/catch and then
       // throw the real error. This also works exactly as expected with non-
       // processed JavaScript
-      js = 'try {' + js + '\n} catch (error) { throw error; }';
+      if (hasHTML) {
+        js = 'try {' + js + '\n} catch (error) { throw error; }';
+      }
 
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at

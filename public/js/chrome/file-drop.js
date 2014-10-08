@@ -48,6 +48,7 @@ function allowDrop(holder) {
     }
 
     var s3upload = new S3Upload({
+      s3_sign_put_url: 'https://' + window.location.host + '/account/assets/sign',
       s3_object_name: file.name.replace(/\s+/g, '-'),
       files: [file],
 

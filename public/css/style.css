@@ -5563,7 +5563,13 @@ a[data-pro]:hover:after {
 }
 
 .assetLoading {
-  z-index: 1000;
-  /*background: rgb(255, 255, 255);*/
-  margin-top: -18px;
+  display: inline;
+  position: relative;
+  font-family: helvetica;
+  text-decoration: blink;
+}
+
+.assetLoading .pro-required {
+  top: 0;
+  right: 0;
 }

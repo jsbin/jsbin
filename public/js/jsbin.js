@@ -151,7 +151,7 @@ function exposeSettings() {
     Object.defineProperty(window, key, {
       get:function () {
         window.jsbin.settings = jsbin.settings;
-        console.log('jsbin.settings can how be modified on the console');
+        console.log('jsbin.settings can now be modified on the console');
       }
     });
     if (!jsbin.embed) {

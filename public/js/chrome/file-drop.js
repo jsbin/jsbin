@@ -41,8 +41,11 @@ function allowDrop(holder) {
       }
     };
 
+    var widget = null;
+    var insertPosition = cursorPosition || panel.getCursor();
     if (!jsbin.lameEditor) {
-      panel.addWidget(cursorPosition || panel.getCursor(), loading);
+      var line = cursorPosition ? cursorPosition.line : panel.getCursor().line;
+      widget = panel.addLineWidget(line, loading, {coverGutter: false, nohscroll: true});
     } else {
       insertTextArea(panel, 'Uploading ...', true);
     }
@@ -67,17 +70,17 @@ function allowDrop(holder) {
         loading.style.color = 'red';
         panel = null;
         cursorPosition = null;
-        if (!jsbin.lameEditor) {
+        if (widget) {
           setTimeout(function () {
-            loading.parentNode.removeChild(loading);
-          }, 2000);
+            widget.clear();
+          }, 4000);
         }
       },
 
       onFinishS3Put: function (url) {
         if (!jsbin.lameEditor) {
-          loading.parentNode.removeChild(loading);
-          panel.replaceSelection(getInsertText(file.type, panel, url));
+          widget.clear();
+          panel.replaceRange(getInsertText(file.type, panel, url), position);
         } else {
           insertTextArea(panel, getInsertText(file.type, panel, url));
           $(document).trigger('codeChange', { panelId: panel.id });

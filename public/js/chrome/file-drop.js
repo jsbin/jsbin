@@ -48,7 +48,7 @@ function allowDrop(holder) {
     }
 
     var s3upload = new S3Upload({
-      s3_sign_put_url: 'https://' + window.location.host + '/account/assets/sign',
+      s3_sign_put_url: '/account/assets/sign',
       s3_object_name: file.name.replace(/\s+/g, '-'),
       files: [file],
 
@@ -60,10 +60,10 @@ function allowDrop(holder) {
         }
       },
 
-      onError: function (reason) {
+      onError: function (reason, fromServer) {
         currentStatus = -1;
-        console.error('Failed to upload', reason);
-        loading.innerHTML = 'Failed to complete';
+        console.error('Failed to upload: ' + fromServer);
+        loading.innerHTML = fromServer || 'Failed to complete';
         loading.style.color = 'red';
         panel = null;
         cursorPosition = null;

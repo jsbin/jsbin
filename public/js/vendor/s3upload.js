@@ -72,7 +72,7 @@
           }
           return callback(result.signed_request, result.url);
         } else if (this.readyState === 4 && this.status !== 200) {
-          return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
+          return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status, this.responseText);
         }
       };
       return xhr.send();

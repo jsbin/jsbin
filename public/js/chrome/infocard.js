@@ -12,8 +12,108 @@
   var canvas = $header.find('canvas')[0];
   var s = spinner(canvas);
 
+  var re = {
+    head: /<head(.*)\n/i,
+    meta: /(<meta name="description" content=")([^"]*)/im,
+    title: /<title>(.*)<\/title>/im
+  };
+
   if ($template.length === 0) {
     return;
+  }
+
+  var htmlpanel = jsbin.panels.panels.html;
+
+  function insertTag(tag) {
+    var cm = htmlpanel.editor;
+    var html = htmlpanel.getCode();
+
+    if (tag === 'meta') {
+      tag = 'meta name="description';
+    }
+
+
+    if (html.indexOf('<' + tag) === -1) {
+      var userhtml = getPanelText(tag === 'title' ? 'title' : 'description', '');
+      if (re.head.test(html)) {
+        html = html.replace(re.head, '<head$1\n' + userhtml);
+      } else {
+        // slap in the top
+        html = userhtml + html;
+      }
+      htmlpanel.setCode(html);
+    }
+  }
+
+  function getPanelText(type, text) {
+    var processor = jsbin.state.processors.html;
+
+    text = text.replace(/"/g, '&quot;');
+
+    if (type === 'title') {
+      if (processor === 'jade') {
+        return 'title ' + text + '\n';
+      }
+
+      return '<title>' + text + '</title>\n';
+    }
+
+    if (type === 'description') {
+      if (processor === 'jade') {
+        return 'meta(name="description", content="' + text + '")\n';
+      }
+
+      return '<meta name="description" content="' + text + '">\n';
+    }
+
+    return text;
+  }
+
+
+  if ($template.find('.settings')) {
+    $template.find('#title').on('input', function () {
+      insertTag('title');
+      var html = htmlpanel.getCode();
+      var value = this.value;
+      var result = html.replace(re.title, function (all, capture) {
+        return '<title>' + value.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</title>';
+      });
+      updateCode(result);
+    });
+
+    $template.find('#description').on('input', function () {
+      insertTag('meta');
+      var html = htmlpanel.getCode();
+      var value = this.value;
+      var result = html.replace(re.meta, function (all, capture) {
+        return capture + value.replace(/"/g, '&quot;');
+      });
+      updateCode(result);
+    });
+  }
+
+  function updateCode(result) {
+    // capture selection and cursor
+    var state = null;
+    var cursor = null;
+    var cm = htmlpanel.editor;
+    var selected = cm.somethingSelected();
+    if (jsbin.panels.panels.html.visible) {
+      if (selected) {
+        state = cm.listSelections();
+      }
+      cursor = cm.getCursor();
+    }
+
+    htmlpanel.setCode(result);
+
+    // then restore
+    if (jsbin.panels.panels.html.visible) {
+      cm.setCursor(cursor);
+      if (selected) {
+        cm.setSelections(state);
+      }
+    }
   }
 
   function updateInfoCard(event) {

@@ -2,6 +2,7 @@
 <div hidden>
   <div class="card" id="infocard">
     <div class="body">
+      {{#feature request "metadata"}}
       <form class="settings">
         <label for="title">Title</label>
         <input type="text" id="title">
@@ -20,6 +21,7 @@
           </div>
         </details>
       </form>
+      {{/feature}}
       <ul class="controls">
         <li><a href="/clone">Clone</a> </li>
         <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>

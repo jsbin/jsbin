@@ -11,6 +11,9 @@
   var $header = $template.find('header');
   var canvas = $header.find('canvas')[0];
   var s = spinner(canvas);
+  var htmlpanel = jsbin.panels.panels.html;
+  var viewers = 0;
+  var es = null;
 
   var re = {
     head: /<head(.*)\n/i,
@@ -22,7 +25,40 @@
     return;
   }
 
-  var htmlpanel = jsbin.panels.panels.html;
+
+
+  function updateStats(event, _data) {
+    var data = _data ? JSON.parse(_data) : JSON.parse(event.data);
+
+    if (data.connections > 0 && viewers === 0) {
+      $template.addClass('viewers');
+    }
+
+    if (viewers !== data.connections) {
+      var $b = $header.find('.viewers b').removeClass('up down').html('<b>' + data.connections + '<br>' + viewers + '<br>' + data.connections + '</b>'),
+          c = viewers > data.connections ? 'down' : 'up';
+      setTimeout(function () {
+        $b.addClass(c);
+      }, 0);
+    }
+
+    viewers = data.connections;
+
+    if (viewers === 0) {
+      setTimeout(function () {
+        $template.removeClass('viewers');
+      }, 250);
+    }
+
+  }
+
+  function listenStats(owner) {
+    if (window.EventSource && owner) {
+      // TODO use pagevisibility api to close connection
+      es = new EventSource(jsbin.getURL() + '/stats?checksum=' + jsbin.state.checksum);
+      es.addEventListener('stats', throttle(updateStats, 1000));
+    }
+  }
 
   function insertTag(tag) {
     var cm = htmlpanel.editor;
@@ -119,7 +155,6 @@
   function updateInfoCard(event) {
     var meta = jsbin.state.metadata || {};
     var classes = [];
-    var es = null;
     var owner = false;
 
     if (meta.name) {
@@ -163,9 +198,54 @@
       classes.push('public');
     } // TODO handle team
 
-    $template.addClass(classes.join(' ')).parent().removeAttr('hidden');
+    if (jsbin.state.code) {
+      $template.addClass(classes.join(' ')).parent().removeAttr('hidden');
+    }
 
-    $header.click(function (e) {
+    if (jsbin.state.streaming) {
+      if (window.EventSource && owner) {
+        listenStats(owner);
+        handleVisibility(owner);
+        var url = jsbin.getURL();
+        $document.on('saved', function () {
+          var newurl = window.location.toString();
+          if (url !== newurl) {
+            es.close();
+            listenStats(owner);
+          }
+        });
+      } else if (jsbin.saveDisabled === true && window.location.pathname.slice(-5) === '/edit') {
+        $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
+        $document.on('stats', throttle(updateStats, 1000));
+      }
+    }
+  }
+
+  function handleVisibility(owner) {
+    var hiddenProperty = 'hidden' in document ? 'hidden' :
+      'webkitHidden' in document ? 'webkitHidden' :
+      'mozHidden' in document ? 'mozHidden' :
+      null;
+    var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' :
+      'webkitVisibilityState' in document ? 'webkitVisibilityState' :
+      'mozVisibilityState' in document ? 'mozVisibilityState' :
+      null;
+
+    if (visibilityStateProperty) {
+      var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+      document.addEventListener(visibilityChangeEvent, function visibilityChangeEvent() {
+        if (document[hiddenProperty]) { // hidden
+          es.close();
+        } else {
+          listenStats(owner);
+        }
+      });
+    }
+  }
+
+
+  function initHandlers() {
+    $header.on('mousedown touchstart', function (e) {
       e.preventDefault();
       analytics.infocard('click', 'no-result');
       var toTrigger;
@@ -195,83 +275,9 @@
       $fields.before($clones);
       $fields.find('input').val('').eq(0).focus();
     });
-
-    var viewers = 0;
-
-    if (jsbin.state.streaming) {
-      if (window.EventSource && owner) {
-        listenStats();
-        handleVisibility();
-        var url = jsbin.getURL();
-        $document.on('saved', function () {
-          var newurl = window.location.toString();
-          if (url !== newurl) {
-            es.close();
-            listenStats();
-          }
-        });
-      } else if (jsbin.saveDisabled === true && window.location.pathname.slice(-5) === '/edit') {
-        $.getScript(jsbin.static + '/js/spike.js?' + jsbin.version);
-        $document.on('stats', throttle(updateStats, 1000));
-      }
-    }
-
-    function handleVisibility() {
-      var hiddenProperty = 'hidden' in document ? 'hidden' :
-        'webkitHidden' in document ? 'webkitHidden' :
-        'mozHidden' in document ? 'mozHidden' :
-        null;
-      var visibilityStateProperty = 'visibilityState' in document ? 'visibilityState' :
-        'webkitVisibilityState' in document ? 'webkitVisibilityState' :
-        'mozVisibilityState' in document ? 'mozVisibilityState' :
-        null;
-
-      if (visibilityStateProperty) {
-        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
-        document.addEventListener(visibilityChangeEvent, function visibilityChangeEvent() {
-          if (document[hiddenProperty]) { // hidden
-            es.close();
-          } else {
-            listenStats();
-          }
-        });
-      }
-    }
-
-    function updateStats(event, _data) {
-      var data = _data ? JSON.parse(_data) : JSON.parse(event.data);
-
-      if (data.connections > 0 && viewers === 0) {
-        $template.addClass('viewers');
-      }
-
-      if (viewers !== data.connections) {
-        var $b = $header.find('.viewers b').removeClass('up down').html('<b>' + data.connections + '<br>' + viewers + '<br>' + data.connections + '</b>'),
-            c = viewers > data.connections ? 'down' : 'up';
-        setTimeout(function () {
-          $b.addClass(c);
-        }, 0);
-      }
-
-      viewers = data.connections;
-
-      if (viewers === 0) {
-        setTimeout(function () {
-          $template.removeClass('viewers');
-        }, 250);
-      }
-
-    }
-
-    function listenStats() {
-      if (window.EventSource && owner) {
-        // TODO use pagevisibility api to close connection
-        es = new EventSource(jsbin.getURL() + '/stats?checksum=' + jsbin.state.checksum);
-        es.addEventListener('stats', throttle(updateStats, 1000));
-      }
-    }
   }
 
+  initHandlers();
   updateInfoCard();
   $document.bind('saved', updateInfoCard);
 })();

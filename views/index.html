@@ -561,31 +561,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{#unless embed}}
-{{#feature request "infocard"}}
-<div hidden>
-  <div class="card" id="infocard">
-    <header><img>
-      <div class="visibility"></div>
-      <div class="meta">
-        <div class="author">Bin info</div>
-        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
-      </div>
-      <div class="viewers"><b>0</b><span>viewers</span></div>
-    </header>
-    <div class="body">
-      <ul>
-        <li><a href="/clone">Clone</a> </li>
-        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
-        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
-        <li class="owner"><a href="/download">Download</a> </li>
-        {{#feature request "delete"}}
-        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
-        {{/feature}}
-      </ul>
-    </div>
-  </div>
-</div>
-{{/feature}}
+{{>infocard}}
 {{/unless}}
 
 <!--[if lte IE 8]>

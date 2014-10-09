@@ -37,7 +37,6 @@
     "express-cookie-blacklist": "~2.0.0",
     "feature-gateway": "0.0.4",
     "file-db": "0.0.2",
-    "file-size": "0.0.5",
     "flatten.js": "0.1.0",
     "handlebars": "~2.0.0-alpha.2",
     "hbs": "~2.7.0",

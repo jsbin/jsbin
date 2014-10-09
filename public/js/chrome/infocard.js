@@ -1,5 +1,5 @@
 (function () {
-  /*global spinner, $, jsbin, prettyDate, EventSource, throttle, $document, analytics*/
+  /*global spinner, $, jsbin, prettyDate, EventSource, throttle, $document, analytics, throttle*/
   'use strict';
 
   // don't insert this on embeded views
@@ -243,6 +243,14 @@
     }
   }
 
+  var updateBinSettings = throttle(function updateBinSettingsInner(update) {
+    $.ajax({
+      type: 'post',
+      url: jsbin.getURL() + '/settings',
+      data: update
+    });
+  }, 500);
+
 
   function initHandlers() {
     $header.on('mousedown touchstart', function (e) {
@@ -261,19 +269,35 @@
         codes.forEach(function (code) {
           html += '<option value="' + code.code + '">' + code.string + '</option>';
         });
-        $('#status').html(html).val(200);
+        $('#status').html(html).val(objectValue('state.settings.statusCode', jsbin) || 200).on('change', function () {
+          updateBinSettings({ statusCode: this.value });
+        });
       });
     }).on('close', function () {
 
     });
 
+    function updateHeaders($fields) {
+      var header = { headers : {} };
+      var prop = $fields.find('[name=header-property]').val();
+      var value = $fields.find('[name=header-value]').val();
+      header.headers[prop] = value;
+      updateBinSettings(header);
+    }
+
     var $headers = $template.find('#headers');
     $template.on('click', '#headers button', function (event) {
       event.preventDefault();
       var $fields = $headers.find('span:last');
+      updateHeaders($fields);
+
       var $clones = $fields.clone(true);
       $fields.before($clones);
       $fields.find('input').val('').eq(0).focus();
+    });
+
+    $template.on('input', '.row input', function () {
+      updateHeaders($(this).closest('.row'));
     });
   }
 

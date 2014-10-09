@@ -273,17 +273,14 @@
 
     function updateHeaders() {
       // grab all the headers with values and send that instead
-      var header = $template.find('.row').filter(function () {
+      var headers = {};
+      $template.find('.row').each(function () {
         if ($(this).find('[name="header-value"]').val().trim()) {
-        return true;
+          headers[$(this).find('input:first').val()] = $(this).find('input:last').val();
         }
-      }).map(function () {
-        var o = {};
-        o[$(this).find('input:first').val()] = $(this).find('input:last').val();
-        return o;
-      }).get();
+      });
 
-      jsbin.state.updateSettings({ headers: header }, 'PUT');
+      jsbin.state.updateSettings({ headers: headers }, 'PUT');
     }
 
     var $headers = $template.find('#headers');

@@ -220,7 +220,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .CodeMirror-linewidget {
   position: relative;
-  z-index: 2;
+  z-index: 1647;
   overflow: auto;
 }
 
@@ -5624,7 +5624,21 @@ a[data-pro]:hover:after {
 }
 
 .assetLoading {
-  z-index: 1000;
-  /*background: rgb(255, 255, 255);*/
-  margin-top: -21px;
+  display: inline;
+  position: relative;
+  font-family: helvetica;
+  padding: 0 0.4em;
+}
+
+.assetLoading a {
+  text-decoration: none;
+  color: blue;
+}
+
+.assetLoading .pro-required {
+  top: 0;
+  right: 0;
+  position: initial;
+  text-decoration: none;
+  vertical-align: middle;
 }

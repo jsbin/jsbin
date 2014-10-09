@@ -115,6 +115,7 @@
         return '<title>' + value.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</title>';
       });
       updateCode(result);
+      jsbin.state.updateSettings({ title: this.value });
     });
 
     $template.find('#description').on('input', function () {
@@ -125,6 +126,7 @@
         return capture + value.replace(/"/g, '&quot;');
       });
       updateCode(result);
+      jsbin.state.updateSettings({ description: this.value });
     });
   }
 
@@ -269,35 +271,26 @@
 
     });
 
-    function updateHeaders($fields) {
-      var header = { headers : {} };
-      var prop = $fields.find('[name=header-property]').val();
-      var value = $fields.find('[name=header-value]').val();
+    function updateHeaders() {
+      // grab all the headers with values and send that instead
+      var header = $template.find('.row').filter(function () {
+        if ($(this).find('[name="header-value"]').val().trim()) {
+        return true;
+        }
+      }).map(function () {
+        var o = {};
+        o[$(this).find('input:first').val()] = $(this).find('input:last').val();
+        return o;
+      });
 
-      if (prop) {
-        header.headers[prop] = value;
-        jsbin.state.updateSettings(header);
-      } else {
-        // grab all the headers with values and send that instead
-        var header = $('.row').filter(function () {
-          if ($(this).find('[name="header-property"]').val()) {
-          return true;
-          }
-        }).map(function () {
-          var o = {};
-          o[$(this).find('input:first').val()] = $(this).find('input:last').val();
-          return o;
-        });
-        
-        jsbin.state.updateSettings({ headers: header }, 'PUT');
-      }
+      jsbin.state.updateSettings({ headers: header }, 'PUT');
     }
 
     var $headers = $template.find('#headers');
     $template.on('click', '#headers button', function (event) {
       event.preventDefault();
       var $fields = $headers.find('span:last');
-      updateHeaders($fields);
+      updateHeaders();
 
       var $clones = $fields.clone(true);
       $fields.before($clones);

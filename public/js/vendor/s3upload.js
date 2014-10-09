@@ -106,6 +106,7 @@
       }
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.setRequestHeader('x-amz-acl', 'public-read');
+      xhr.setRequestHeader('Cache-Control', 'public, max-age=' + (1000 * 60));
       return xhr.send(file);
     };
 

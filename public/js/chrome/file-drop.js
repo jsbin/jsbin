@@ -10,8 +10,7 @@ function allowDrop(holder) {
       .substring(1);
     }
     return function() {
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-           s4() + '-' + s4() + s4() + s4();
+      return s4() + s4();
     };
   })();
 
@@ -80,7 +79,7 @@ function allowDrop(holder) {
       onFinishS3Put: function (url) {
         if (!jsbin.lameEditor) {
           widget.clear();
-          panel.replaceRange(getInsertText(file.type, panel, url), position);
+          panel.replaceRange(getInsertText(file.type, panel, url), insertPosition);
         } else {
           insertTextArea(panel, getInsertText(file.type, panel, url));
           $(document).trigger('codeChange', { panelId: panel.id });

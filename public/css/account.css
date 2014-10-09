@@ -951,6 +951,15 @@ input.actionButton-small, button.actionButton-small {
   margin-left: 5px;
 }*/
 
+#files div {
+  height: 130px;
+  /* width: 200px; */
+  background-repeat: no-repeat, repeat;
+  background-position: 50%, 50%;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+  background-size: 100%, 10px;
+}
+
 #assets {
   position: relative;
 }
@@ -969,6 +978,7 @@ input.actionButton-small, button.actionButton-small {
 
 #assets a.asset {
   font-family: "Helvetica Neue";
+  position: relative;
   flex-direction: column;
   float: left;
   display: flex;
@@ -988,13 +998,13 @@ input.actionButton-small, button.actionButton-small {
   box-shadow: 0 0px 5px rgba(0,0,0,0.2);
 }
 
-#assets a.asset :first-child {
+#assets a.asset .flex {
   flex: 1; 
 }
 
 #assets img {
-  max-width: 100%;
-  max-height: 150px;
+  /* max-width: 100%; */
+  /* max-height: 150px; */
   border: 1px solid hsl(0, 0%, 75%);
   border: 1px solid white;
   box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.25);
@@ -1024,4 +1034,24 @@ input.actionButton-small, button.actionButton-small {
 #assets .weak a {
   font-weight: bold;
   color: rgba(0,0,0,0.25);
+}
+
+#assets button {
+  background: none;
+  border: none;
+  float: right;
+  display: inline-block;
+  
+  width: 18px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 20px;
+ 
+  top: 20px;
+}
+
+#assets button img {
+  box-shadow: none;
+  border: 0;
 }

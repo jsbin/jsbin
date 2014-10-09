@@ -281,7 +281,7 @@
         var o = {};
         o[$(this).find('input:first').val()] = $(this).find('input:last').val();
         return o;
-      });
+      }).get();
 
       jsbin.state.updateSettings({ headers: header }, 'PUT');
     }

@@ -1,0 +1,12 @@
+{{> account_sidebar}}
+
+<h1>Your hosted assets</h1>
+
+<section id="content" {{#feature request "pro"}}class="pro"{{/feature}}>
+  <h2>Files <span id="total-size"><em>loading...</em></span></h2>
+  <ul id="files"></ul>
+</section>
+<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/vendor/file-size.js{{cacheBust}}"></script>
+<script src="{{static}}/js/account/asset-manager.js{{cacheBust}}"></script>

@@ -5622,3 +5622,9 @@ a[data-pro]:hover:after {
   /* max-width: 191px; */
   /* padding-right: 0; */
 }
+
+.assetLoading {
+  z-index: 1000;
+  /*background: rgb(255, 255, 255);*/
+  margin-top: -21px;
+}

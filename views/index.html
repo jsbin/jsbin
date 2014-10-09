@@ -587,12 +587,12 @@ window.jsbin = {{{jsbin}}};
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
+  {{#scripts}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/scripts}}
   {{/if}}
-    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{#addons}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
+<script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
 </body>

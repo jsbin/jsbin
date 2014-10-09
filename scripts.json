@@ -28,6 +28,7 @@
     "/js/vendor/bin-to-file.min.js",
     "/js/vendor/prettyprint.js",
     "/js/vendor/loop-protect.min.js",
+    "/js/vendor/s3upload.js",
     "/js/chrome/storage.js",
     "/js/jsbin.js",
     "/js/editors/mobileCodeMirror.js",

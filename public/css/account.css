@@ -955,9 +955,9 @@ input.actionButton-small, button.actionButton-small {
   height: 130px;
   /* width: 200px; */
   background-repeat: no-repeat, repeat;
-  background-position: 50%, 50%;
+  background-position: 50% 100%, 50%;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
-  background-size: 100%, 10px;
+  background-size: contain, 10px;
 }
 
 #assets {
@@ -1037,12 +1037,16 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets button {
+  display: none;
+}
+
+#assets .asset:hover button {
   background: none;
   border: none;
   float: right;
   display: inline-block;
   
-  width: 18px;
+  width:32px;
   margin: 0;
   padding: 0;
   position: absolute;
@@ -1054,4 +1058,5 @@ input.actionButton-small, button.actionButton-small {
 #assets button img {
   box-shadow: none;
   border: 0;
+  cursor: pointer;
 }

@@ -243,15 +243,6 @@
     }
   }
 
-  var updateBinSettings = throttle(function updateBinSettingsInner(update) {
-    $.ajax({
-      type: 'post',
-      url: jsbin.getURL() + '/settings',
-      data: update
-    });
-  }, 500);
-
-
   function initHandlers() {
     $header.on('mousedown touchstart', function (e) {
       e.preventDefault();
@@ -264,13 +255,14 @@
     });
 
     $template.one('open', function () {
+      var statusCode = $('#status').data('status') || 200;
       $.getJSON('/js/http-codes.json', function (codes) {
         var html = '';
         codes.forEach(function (code) {
           html += '<option value="' + code.code + '">' + code.string + '</option>';
         });
-        $('#status').html(html).val(objectValue('state.settings.statusCode', jsbin) || 200).on('change', function () {
-          updateBinSettings({ statusCode: this.value });
+        $('#status').html(html).val(statusCode).on('change', function () {
+          jsbin.state.updateSettings({ statusCode: this.value });
         });
       });
     }).on('close', function () {
@@ -281,8 +273,24 @@
       var header = { headers : {} };
       var prop = $fields.find('[name=header-property]').val();
       var value = $fields.find('[name=header-value]').val();
-      header.headers[prop] = value;
-      updateBinSettings(header);
+
+      if (prop) {
+        header.headers[prop] = value;
+        jsbin.state.updateSettings(header);
+      } else {
+        // grab all the headers with values and send that instead
+        var header = $('.row').filter(function () {
+          if ($(this).find('[name="header-property"]').val()) {
+          return true;
+          }
+        }).map(function () {
+          var o = {};
+          o[$(this).find('input:first').val()] = $(this).find('input:last').val();
+          return o;
+        });
+        
+        jsbin.state.updateSettings({ headers: header }, 'PUT');
+      }
     }
 
     var $headers = $template.find('#headers');

@@ -237,6 +237,21 @@ jsbin.getURL = function (withoutRoot, share) {
   return url;
 };
 
+jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, method) {
+  if (!method) {
+    method = 'POST';
+  }
+  
+  if (jsbin.state.code) {
+    $.ajax({
+      type: method, // consistency ftw :-\
+      url: jsbin.getURL() + '/settings',
+      data: update
+    });
+  }
+}, 500);
+
+
 function objectValue(path, context) {
   var props = path.split('.'),
       length = props.length,

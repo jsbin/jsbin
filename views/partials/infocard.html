@@ -11,13 +11,18 @@
         <details>
           <summary>Headers</summary>
           <label for="status">Status code</label>
-          <select id="status">
+          <select id="status" data-status="{{{bin.settings.statusCode}}}">
             <option value=200>200 OK</option>
           </select>
           <div id="headers">
             <label for="header-property">Custom headers</label>
+            {{#eachkey bin.settings.headers}}
+            <span class="row"><input type="text" placeholder="field" name="header-property" value="{{{this.key}}}">:
+            <input type="text" placeholder="value" name="header-value" value="{{{this.value}}}"></span>
+            {{/eachkey}}
             <span class="row"><input type="text" placeholder="field" name="header-property">:
-            <input type="text" placeholder="value" name="header-value"></span> <button>+</button>
+            <input type="text" placeholder="value" name="header-value"></span>
+            <button>+</button>
           </div>
         </details>
       </form>

@@ -979,9 +979,9 @@ input.actionButton-small, button.actionButton-small {
 #assets a.asset {
   font-family: "Helvetica Neue";
   position: relative;
-  flex-direction: column;
+  /* flex-direction: column; */
   float: left;
-  display: flex;
+  /* display: flex; */
   width: 210px;
   height: 200px;
   text-decoration: none;
@@ -1011,6 +1011,7 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets .name {
+  line-height: 16px;
   overflow: hidden;
   margin-top: 0.5rem;
   width: 100%;
@@ -1020,6 +1021,7 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets .file-size {
+  line-height: 16px;
   font-weight: bold;
   color: hsl(0, 0%, 75%);
   margin-top: -0.5rem;

@@ -56,7 +56,7 @@
 
 
       html += '<a href="' + url + '" data-size="' + object.size + '" data-key="' + key + '" class="asset" target="_blank">';
-      html += '<span class="flex"></span>';
+//       html += '<span class="flex"></span>';
       html += '<button><img src="' + jsbin.static + '/images/close-x.png"></button>';
 //       html += '<img src="' + url + '">';
       html += '<div style="background-image: url(' + url.replace(/\s/g, '%20') + '), url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2P89evXfwY0wMbGxoguxjgUFKI7GsTH5m4M3w1ChQAneyesWb250wAAAABJRU5ErkJggg==)"></div>';

@@ -258,7 +258,7 @@
 
     $template.one('open', function () {
       var statusCode = $('#status').data('status') || 200;
-      $.getJSON('/js/http-codes.json', function (codes) {
+      $.getJSON(jsbin.static + '/js/http-codes.json', function (codes) {
         var html = '';
         codes.forEach(function (code) {
           html += '<option value="' + code.code + '">' + code.string + '</option>';

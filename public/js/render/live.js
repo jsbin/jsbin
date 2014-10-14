@@ -183,7 +183,7 @@ var renderer = (function () {
    */
   renderer.complete = function () {
     try {
-      delete sessionStorage.runnerPending;
+      store.sessionStorage.removeItem('runnerPending');
     } catch (e) {}
   };
 
@@ -357,7 +357,7 @@ var renderLivePreview = (function () {
       }
       // this is a flag that helps detect crashed runners
       if (jsbin.settings.includejs) {
-        sessionStorage.runnerPending = 1;
+        store.sessionStorage.setItem('runnerPending', 1);
       }
 
       renderer.postMessage('render', {
@@ -380,7 +380,7 @@ var renderLivePreview = (function () {
     if (arg.origin === 'setValue' || arg.origin === undefined) {
       return;
     }
-    delete sessionStorage.runnerPending;
+    store.sessionStorage.removeItem('runnerPending');
   });
 
   // Listen for console input and post it to the iframe

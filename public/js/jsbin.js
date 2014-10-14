@@ -160,7 +160,7 @@ function exposeSettings() {
   }
 }
 
-var storedSettings = localStorage.getItem('settings');
+var storedSettings = store.localStorage.getItem('settings');
 if (storedSettings === "undefined") {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
@@ -193,7 +193,7 @@ jsbin.ie = (function(){
 
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
-  localStorage.setItem('settings', '{}');
+  store.localStorage.setItem('settings', '{}');
 }
 
 if (!jsbin.settings.editor) {
@@ -241,7 +241,7 @@ jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, me
   if (!method) {
     method = 'POST';
   }
-  
+
   if (jsbin.state.code) {
     $.ajax({
       type: method, // consistency ftw :-\
@@ -285,21 +285,21 @@ var $window = $(window),
     documentTitle = 'JS Bin',
     $bin = $('#bin'),
     loadGist,
-    // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
+    // splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
-      // sessionStorage.setItem('javascript', editors.javascript.getCode());
+      // store.sessionStorage.setItem('javascript', editors.javascript.getCode());
       if (jsbin.panels.focused.editor) {
         try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-          sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
-          sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
+          store.sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
+          store.sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
         } catch (e) {
-          sessionStorage.setItem('line', 0);
-          sessionStorage.setItem('character', 0);
+          store.sessionStorage.setItem('line', 0);
+          store.sessionStorage.setItem('character', 0);
         }
       }
 
-      sessionStorage.setItem('url', jsbin.getURL());
-      localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+      store.sessionStorage.setItem('url', jsbin.getURL());
+      store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       if (jsbin.panels.saveOnExit === false) {
         return;
@@ -309,7 +309,7 @@ var $window = $(window),
 
       var panel = jsbin.panels.focused;
       if (panel) {
-        sessionStorage.setItem('panel', panel.id);
+        store.sessionStorage.setItem('panel', panel.id);
       }
     };
 
@@ -318,8 +318,8 @@ $window.unload(unload);
 // window.addEventListener('storage', function (e) {
 //   if (e.storageArea === localStorage && e.key === 'settings') {
 //     console.log('updating from storage');
-//     console.log(JSON.parse(localStorage.settings));
-//     jsbin.settings = JSON.parse(localStorage.settings);
+//     console.log(JSON.parse(store.localStorage.settings));
+//     jsbin.settings = JSON.parse(store.localStorage.settings);
 //   }
 // });
 

@@ -18,23 +18,23 @@ var store = (function () {
   if (!hasStore('sessionStorage')) {
     polyfill = true;
     sessionStorage = (function () {
-      var data = window.top.name ? JSON.parse(window.top.name) : {};
+      var data = window.name ? JSON.parse(window.name) : {};
 
       return {
         clear: function () {
           data = {};
-          window.top.name = '';
+          window.name = '';
         },
         getItem: function (key) {
           return data[key] || null;
         },
         removeItem: function (key) {
           delete data[key];
-          window.top.name = JSON.stringify(data);
+          window.name = JSON.stringify(data);
         },
         setItem: function (key, value) {
           data[key] = value;
-          window.top.name = JSON.stringify(data);
+          window.name = JSON.stringify(data);
         }
       };
     })();
@@ -45,6 +45,15 @@ var store = (function () {
     localStorage = $.extend({}, sessionStorage);
   } else if (hasStore('localStorage')) {
     localStorage = window.localStorage;
+  }
+
+  if (!jsbin.embed && polyfill) {
+    $(document).one('jsbinReady', function () {
+      $(document).trigger('tip', {
+        type: 'error',
+        content: 'JS Bin uses local data stores to maintain state, but this browser has cookies & 3rd party data disabled. Things might not work!'
+      });
+    });
   }
 
   return { polyfill: polyfill, sessionStorage: sessionStorage, localStorage: localStorage };
@@ -61,7 +70,7 @@ store.backup = {};
 
 // var sessionStorage = {}, localStorage = {};
 
-if (store.polyfill === true) {
-  window.sessionStorage = store.sessionStorage;
-  window.localStorage = store.localStorage;
-}
+// if (store.polyfill === true) {
+//   window.sessionStorage = store.sessionStorage;
+//   window.localStorage = store.localStorage;
+// }

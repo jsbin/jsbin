@@ -556,7 +556,7 @@ var libraries = [
 
 window.libraries = libraries; // expose a command line API
 
-libraries.userSpecified = JSON.parse(localStorage.getItem('libraries') || '[]');
+libraries.userSpecified = JSON.parse(store.localStorage.getItem('libraries') || '[]');
 for (var i = 0; i < libraries.userSpecified.length; i++) {
   libraries.push(libraries.userSpecified[i]);
 }
@@ -577,14 +577,14 @@ libraries.add = function (lib) {
     libraries.push(lib);
   }
   try {
-    localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
+    store.localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
   } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
   $('#library').trigger('init');
 };
 
 libraries.clear = function () {
   libraries.userSpecified = [];
-  localStorage.removeItem('libraries');
+  store.localStorage.removeItem('libraries');
   var length = libraries.length;
   for (var i = 0; i < length; i++) {
     if (libraries[i].group === 'Custom') {

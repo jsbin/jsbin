@@ -33,7 +33,7 @@
   "getUserForForgotToken": "SELECT `ownership`.*, expires FROM `ownership` INNER JOIN `forgot_tokens` ON `name` = `owner_name` WHERE `token` = ? AND `forgot_tokens`.`expires` >= ?",
   "setForgotToken": "INSERT INTO `forgot_tokens` (`owner_name`, `token`, `expires`, `created`) VALUES (?, ?, ?, ?)",
   "deleteExpiredForgotToken": "DELETE FROM `forgot_tokens` WHERE `expires` <= ? OR `token`=? OR `owner_name`=?",
-  "reportBin": "UPDATE `sandbox` SET `reported`=? WHERE `url`=? AND `revision`=? AND `active`='y'",
+  "reportBin": "UPDATE `sandbox` SET `reported`=?, `active`='n' WHERE `url`=? AND `revision`=? AND `reported` IS NULL",
   "updateBinData": "UPDATE `sandbox` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "updateOwnersData": "UPDATE `owners` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "updateOwnershipData": "UPDATE `ownership` SET `:field`=? WHERE `name`=?",

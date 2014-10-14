@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>JS Bin - reported content</title>
+    <link rel="stylesheet" type="text/css" href="{{static}}/css/static-page.css?{{version}}">
+  </head>
+  <body>
+    <img id="dave" src="{{static}}/images/dave.min.svg?{{version}}" height="128" alt="Dave, the JS Bin bot">
+    <div class="wrapper">
+      <h1>This bin has been reported</h1>
+      <p>This bin has been reported as suspicious in content, and has been forbidden from being part of the web.</p>
+      <p>If you believe this to be a mistake, please raise an <a href="http://github.com/jsbin/reports/issues/new?title={{#encodeURIComponent}}Incorrectly reported bin{{/encodeURIComponent}}&body={{#encodeURIComponent}}Bin url: {{root}}{{request.url}}{{/encodeURIComponent}}">issue</a> and add any additional information you can to help diagnose this atrocity.</p>
+      <p><a href="{{root}}{{request.url}}source">View the original source of this bin</a></p>
+    </div>
+  </body>
+</html>

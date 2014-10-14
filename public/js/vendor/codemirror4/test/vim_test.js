@@ -828,6 +828,15 @@ testVim('dd_lastline', function(cm, vim, helpers) {
   eq(expectedLineCount, cm.lineCount());
   helpers.assertCursorAt(cm.lineCount() - 1, 0);
 });
+testVim('dd_only_line', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  var expectedRegister = cm.getValue() + "\n";
+  helpers.doKeys('d','d');
+  eq(1, cm.lineCount());
+  eq('', cm.getValue());
+  var register = helpers.getRegisterController().getRegister();
+  eq(expectedRegister, register.toString());
+}, { value: "thisistheonlyline" });
 // Yank commands should behave the exact same as d commands, expect that nothing
 // gets deleted.
 testVim('yw_repeat', function(cm, vim, helpers) {
@@ -902,6 +911,7 @@ testVim('c_visual_block', function(cm, vim, helpers) {
   replacement.pop();
   cm.replaceSelections(replacement);
   eq('1hello\n5hello\nahellofg', cm.getValue());
+  helpers.doKeys('<Esc>');
   cm.setCursor(2, 3);
   helpers.doKeys('<C-v>', '2', 'k', 'h', 'C');
   replacement = new Array(cm.listSelections().length+1).join('world ').split(' ');
@@ -909,6 +919,19 @@ testVim('c_visual_block', function(cm, vim, helpers) {
   cm.replaceSelections(replacement);
   eq('1hworld\n5hworld\nahworld', cm.getValue());
 }, {value: '1234\n5678\nabcdefg'});
+testVim('c_visual_block_replay', function(cm, vim, helpers) {
+  cm.setCursor(0, 1);
+  helpers.doKeys('<C-v>', '2', 'j', 'l', 'c');
+  var replacement = new Array(cm.listSelections().length+1).join('fo ').split(' ');
+  replacement.pop();
+  cm.replaceSelections(replacement);
+  eq('1fo4\n5fo8\nafodefg', cm.getValue());
+  helpers.doKeys('<Esc>');
+  cm.setCursor(0, 0);
+  helpers.doKeys('.');
+  eq('foo4\nfoo8\nfoodefg', cm.getValue());
+}, {value: '1234\n5678\nabcdefg'});
+
 // Swapcase commands edit in place and do not modify registers.
 testVim('g~w_repeat', function(cm, vim, helpers) {
   // Assert that dw does delete newline if it should go to the next line, and
@@ -1102,6 +1125,39 @@ testEdit('di]_middle_spc', 'a\t[\n\tbar\n]b', /r/, 'di]', 'a\t[]b');
 testEdit('da[_middle_spc', 'a\t[\n\tbar\n]b', /r/, 'da[', 'a\tb');
 testEdit('da]_middle_spc', 'a\t[\n\tbar\n]b', /r/, 'da]', 'a\tb');
 
+function testSelection(name, before, pos, keys, sel) {
+  return testVim(name, function(cm, vim, helpers) {
+             var ch = before.search(pos)
+             var line = before.substring(0, ch).split('\n').length - 1;
+             if (line) {
+               ch = before.substring(0, ch).split('\n').pop().length;
+             }
+             cm.setCursor(line, ch);
+             helpers.doKeys.apply(this, keys.split(''));
+             eq(sel, cm.getSelection());
+           }, {value: before});
+}
+testSelection('viw_middle_spc', 'foo \tbAr\t baz', /A/, 'viw', 'bAr');
+testSelection('vaw_middle_spc', 'foo \tbAr\t baz', /A/, 'vaw', 'bAr\t ');
+testSelection('viw_middle_punct', 'foo \tbAr,\t baz', /A/, 'viw', 'bAr');
+testSelection('vaW_middle_punct', 'foo \tbAr,\t baz', /A/, 'vaW', 'bAr,\t ');
+testSelection('viw_start_spc', 'foo \tbAr\t baz', /b/, 'viw', 'bAr');
+testSelection('viw_end_spc', 'foo \tbAr\t baz', /r/, 'viw', 'bAr');
+testSelection('viw_eol', 'foo \tbAr', /r/, 'viw', 'bAr');
+testSelection('vi{_middle_spc', 'a{\n\tbar\n\t}b', /r/, 'vi{', '\n\tbar\n\t');
+testSelection('va{_middle_spc', 'a{\n\tbar\n\t}b', /r/, 'va{', '{\n\tbar\n\t}');
+
+testVim('mouse_select', function(cm, vim, helpers) {
+  cm.setSelection(Pos(0, 2), Pos(0, 4), {origin: '*mouse'});
+  is(cm.state.vim.visualMode);
+  is(!cm.state.vim.visualLine);
+  is(!cm.state.vim.visualBlock);
+  helpers.doKeys('<Esc>');
+  is(!cm.somethingSelected());
+  helpers.doKeys('g', 'v');
+  eq('cd', cm.getSelection());
+}, {value: 'abcdef'});
+
 // Operator-motion tests
 testVim('D', function(cm, vim, helpers) {
   cm.setCursor(0, 3);
@@ -1197,7 +1253,7 @@ testVim('i', function(cm, vim, helpers) {
 testVim('i_repeat', function(cm, vim, helpers) {
   helpers.doKeys('3', 'i');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   eq('testtesttest', cm.getValue());
   helpers.assertCursorAt(0, 11);
 }, { value: '' });
@@ -1205,7 +1261,8 @@ testVim('i_repeat_delete', function(cm, vim, helpers) {
   cm.setCursor(0, 4);
   helpers.doKeys('2', 'i');
   cm.replaceRange('z', cm.getCursor());
-  helpers.doInsertModeKeys('Backspace', 'Backspace', 'Esc');
+  helpers.doInsertModeKeys('Backspace', 'Backspace');
+  helpers.doKeys('<Esc>');
   eq('abe', cm.getValue());
   helpers.assertCursorAt(0, 1);
 }, { value: 'abcde' });
@@ -1214,6 +1271,14 @@ testVim('A', function(cm, vim, helpers) {
   helpers.assertCursorAt(0, lines[0].length);
   eq('vim-insert', cm.getOption('keyMap'));
 });
+testVim('A_visual_block', function(cm, vim, helpers) {
+  cm.setCursor(0, 1);
+  helpers.doKeys('<C-v>', '2', 'j', 'l', 'l', 'A');
+  var replacement = new Array(cm.listSelections().length+1).join('hello ').split(' ');
+  replacement.pop();
+  cm.replaceSelections(replacement);
+  eq('testhello\nmehello\npleahellose', cm.getValue());
+}, {value: 'test\nme\nplease'});
 testVim('I', function(cm, vim, helpers) {
   cm.setCursor(0, 4);
   helpers.doKeys('I');
@@ -1224,10 +1289,18 @@ testVim('I_repeat', function(cm, vim, helpers) {
   cm.setCursor(0, 1);
   helpers.doKeys('3', 'I');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   eq('testtesttestblah', cm.getValue());
   helpers.assertCursorAt(0, 11);
 }, { value: 'blah' });
+testVim('I_visual_block', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '2', 'j', 'l', 'l', 'I');
+  var replacement = new Array(cm.listSelections().length+1).join('hello ').split(' ');
+  replacement.pop();
+  cm.replaceSelections(replacement);
+  eq('hellotest\nhellome\nhelloplease', cm.getValue());
+}, {value: 'test\nme\nplease'});
 testVim('o', function(cm, vim, helpers) {
   cm.setCursor(0, 4);
   helpers.doKeys('o');
@@ -1239,7 +1312,7 @@ testVim('o_repeat', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('3', 'o');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   eq('\ntest\ntest\ntest', cm.getValue());
   helpers.assertCursorAt(3, 3);
 }, { value: '' });
@@ -1355,7 +1428,7 @@ testVim('r_visual_block', function(cm, vim, helpers) {
   eq('1  l\n5  l\nalllefg', cm.getValue());
   cm.setCursor(2, 0);
   helpers.doKeys('o');
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.replaceRange('\t\t', cm.getCursor());
   helpers.doKeys('<C-v>', 'h', 'h', 'r', 'r');
   eq('1  l\n5  l\nalllefg\nrrrrrrrr', cm.getValue());
@@ -1622,6 +1695,11 @@ testVim('visual', function(cm, vim, helpers) {
   helpers.doKeys('d');
   eq('15', cm.getValue());
 }, { value: '12345' });
+testVim('visual_exit', function(cm, vim, helpers) {
+  helpers.doKeys('<C-v>', 'l', 'j', 'j', '<Esc>');
+  eq(cm.getCursor('anchor'), cm.getCursor('head'));
+  eq(vim.visualMode, false);
+}, { value: 'hello\nworld\nfoo' });
 testVim('visual_line', function(cm, vim, helpers) {
   helpers.doKeys('l', 'V', 'l', 'j', 'j', 'd');
   eq(' 4\n 5', cm.getValue());
@@ -1638,7 +1716,7 @@ testVim('visual_block', function(cm, vim, helpers) {
   cm.replaceRange('hello world\n{\nthis is\nsparta!', cm.getCursor());
   cm.setCursor(3, 4);
   helpers.doKeys('<C-v>', 'l', 'k', 'k', 'd');
-  eq('hello world\n{\nt is\nsta!', cm.getValue());
+  eq('hello world\n{\ntis\nsa!', cm.getValue());
   cm.replaceRange('12345\n67891\nabcde', {line: 0, ch: 0}, {line: cm.lastLine(), ch: 6});
   cm.setCursor(1, 2);
   helpers.doKeys('<C-v>', '2', 'l', 'k');
@@ -1670,6 +1748,22 @@ testVim('visual_block', function(cm, vim, helpers) {
   selections = cm.getSelections();
   eq('67891\nabcde', selections.join(''));
 }, {value: '1234\n5678\nabcdefg'});
+testVim('visual_block_crossing_short_line', function(cm, vim, helpers) {
+  // visual block with long and short lines
+  cm.setCursor(0, 3);
+  helpers.doKeys('<C-v>', 'j', 'j', 'j');
+  var selections = cm.getSelections().join();
+  eq('4,,d,b', selections);
+  helpers.doKeys('3', 'k');
+  selections = cm.getSelections().join();
+  eq('4', selections);
+}, {value: '123456\n78\nabcdefg\nfoobar'});
+testVim('visual_block_curPos_on_exit', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '3' , 'l', '<Esc>');
+  eqPos(makeCursor(0, 3), cm.getCursor());
+}, {value: '123456\n78\nabcdefg\nfoobar'});
+
 testVim('visual_marks', function(cm, vim, helpers) {
   helpers.doKeys('l', 'v', 'l', 'l', 'j', 'j', 'v');
   // Test visual mode marks
@@ -1737,13 +1831,13 @@ testVim('reselect_visual_block', function(cm, vim, helpers) {
 testVim('s_normal', function(cm, vim, helpers) {
   cm.setCursor(0, 1);
   helpers.doKeys('s');
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   eq('ac', cm.getValue());
 }, { value: 'abc'});
 testVim('s_visual', function(cm, vim, helpers) {
   cm.setCursor(0, 1);
   helpers.doKeys('v', 's');
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.assertCursorAt(0, 0);
   eq('ac', cm.getValue());
 }, { value: 'abc'});
@@ -1827,14 +1921,57 @@ testVim('v_paste_from_register', function(cm, vim, helpers) {
 testVim('S_normal', function(cm, vim, helpers) {
   cm.setCursor(0, 1);
   helpers.doKeys('j', 'S');
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.assertCursorAt(1, 0);
   eq('aa\n\ncc', cm.getValue());
 }, { value: 'aa\nbb\ncc'});
+testVim('blockwise_paste', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '3', 'j', 'l', 'y');
+  cm.setCursor(0, 2);
+  // paste one char after the current cursor position
+  helpers.doKeys('p');
+  eq('helhelo\nworwold\nfoofo\nbarba', cm.getValue());
+  cm.setCursor(0, 0);
+  helpers.doKeys('v', '4', 'l', 'y');
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '3', 'j', 'p');
+  eq('helheelhelo\norwold\noofo\narba', cm.getValue());
+}, { value: 'hello\nworld\nfoo\nbar'});
+testVim('blockwise_paste_long/short_line', function(cm, vim, helpers) {
+  // extend short lines in case of different line lengths.
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', 'j', 'j', 'y');
+  cm.setCursor(0, 3);
+  helpers.doKeys('p');
+  eq('hellho\nfoo f\nbar b', cm.getValue());
+}, { value: 'hello\nfoo\nbar'});
+testVim('blockwise_paste_cut_paste', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '2', 'j', 'x');
+  cm.setCursor(0, 0);
+  helpers.doKeys('P');
+  eq('cut\nand\npaste\nme', cm.getValue());
+}, { value: 'cut\nand\npaste\nme'});
+testVim('blockwise_paste_from_register', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '2', 'j', '"', 'a', 'y');
+  cm.setCursor(0, 3);
+  helpers.doKeys('"', 'a', 'p');
+  eq('foobfar\nhellho\nworlwd', cm.getValue());
+}, { value: 'foobar\nhello\nworld'});
+testVim('blockwise_paste_last_line', function(cm, vim, helpers) {
+  cm.setCursor(0, 0);
+  helpers.doKeys('<C-v>', '2', 'j', 'l', 'y');
+  cm.setCursor(3, 0);
+  helpers.doKeys('p');
+  eq('cut\nand\npaste\nmcue\n an\n pa', cm.getValue());
+}, { value: 'cut\nand\npaste\nme'});
+
 testVim('S_visual', function(cm, vim, helpers) {
   cm.setCursor(0, 1);
   helpers.doKeys('v', 'j', 'S');
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.assertCursorAt(0, 0);
   eq('\ncc', cm.getValue());
 }, { value: 'aa\nbb\ncc'});
@@ -2016,7 +2153,7 @@ testVim('macro_insert', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('q', 'a', '0', 'i');
   cm.replaceRange('foo', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q', '@', 'a');
   eq('foofoo', cm.getValue());
 }, { value: ''});
@@ -2024,14 +2161,14 @@ testVim('macro_insert_repeat', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('q', 'a', '$', 'a');
   cm.replaceRange('larry.', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('a');
   cm.replaceRange('curly.', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   helpers.doKeys('a');
   cm.replaceRange('moe.', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('@', 'a');
   // At this point, the most recent edit should be the 2nd insert change
   // inside the macro, i.e. "curly.".
@@ -2093,10 +2230,10 @@ testVim('macro_parens', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('q', 'z', 'i');
   cm.replaceRange('(', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('e', 'a');
   cm.replaceRange(')', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   helpers.doKeys('w', '@', 'z');
   helpers.doKeys('w', '@', 'z');
@@ -2106,13 +2243,13 @@ testVim('macro_overwrite', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('q', 'z', '0', 'i');
   cm.replaceRange('I ', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   helpers.doKeys('e');
   // Now replace the macro with something else.
   helpers.doKeys('q', 'z', 'a');
   cm.replaceRange('.', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   helpers.doKeys('e', '@', 'z');
   helpers.doKeys('e', '@', 'z');
@@ -2203,11 +2340,11 @@ testVim('macro_register', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('q', 'a', 'i');
   cm.replaceRange('gangnam', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   helpers.doKeys('q', 'b', 'o');
   cm.replaceRange('style', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('q');
   cm.openDialog = helpers.fakeOpenDialog('registers');
   cm.openNotification = helpers.fakeOpenNotification(function(text) {
@@ -2220,7 +2357,7 @@ testVim('._register', function(cm,vim,helpers) {
   cm.setCursor(0,0);
   helpers.doKeys('i');
   cm.replaceRange('foo',cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.openDialog = helpers.fakeOpenDialog('registers');
   cm.openNotification = helpers.fakeOpenNotification(function(text) {
     is(/\.\s+foo/.test(text));
@@ -2371,7 +2508,7 @@ testVim('._repeat', function(cm, vim, helpers) {
 testVim('._insert', function(cm, vim, helpers) {
   helpers.doKeys('i');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('.');
   eq('testestt', cm.getValue());
   helpers.assertCursorAt(0, 6);
@@ -2380,7 +2517,7 @@ testVim('._insert_repeat', function(cm, vim, helpers) {
   helpers.doKeys('i');
   cm.replaceRange('test', cm.getCursor());
   cm.setCursor(0, 4);
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('2', '.');
   eq('testesttestt', cm.getValue());
   helpers.assertCursorAt(0, 10);
@@ -2389,7 +2526,7 @@ testVim('._repeat_insert', function(cm, vim, helpers) {
   helpers.doKeys('3', 'i');
   cm.replaceRange('te', cm.getCursor());
   cm.setCursor(0, 2);
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('.');
   eq('tetettetetee', cm.getValue());
   helpers.assertCursorAt(0, 10);
@@ -2398,7 +2535,7 @@ testVim('._insert_o', function(cm, vim, helpers) {
   helpers.doKeys('o');
   cm.replaceRange('z', cm.getCursor());
   cm.setCursor(1, 1);
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('.');
   eq('\nz\nz', cm.getValue());
   helpers.assertCursorAt(2, 0);
@@ -2406,7 +2543,7 @@ testVim('._insert_o', function(cm, vim, helpers) {
 testVim('._insert_o_repeat', function(cm, vim, helpers) {
   helpers.doKeys('o');
   cm.replaceRange('z', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.setCursor(1, 0);
   helpers.doKeys('2', '.');
   eq('\nz\nz\nz', cm.getValue());
@@ -2415,7 +2552,7 @@ testVim('._insert_o_repeat', function(cm, vim, helpers) {
 testVim('._insert_o_indent', function(cm, vim, helpers) {
   helpers.doKeys('o');
   cm.replaceRange('z', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.setCursor(1, 2);
   helpers.doKeys('.');
   eq('{\n  z\n  z', cm.getValue());
@@ -2424,7 +2561,7 @@ testVim('._insert_o_indent', function(cm, vim, helpers) {
 testVim('._insert_cw', function(cm, vim, helpers) {
   helpers.doKeys('c', 'w');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.setCursor(0, 3);
   helpers.doKeys('2', 'l');
   helpers.doKeys('.');
@@ -2436,7 +2573,7 @@ testVim('._insert_cw_repeat', function(cm, vim, helpers) {
   // changes. Will conform to that behavior.
   helpers.doKeys('c', 'w');
   cm.replaceRange('test', cm.getCursor());
-  helpers.doInsertModeKeys('Esc');
+  helpers.doKeys('<Esc>');
   cm.setCursor(0, 4);
   helpers.doKeys('l');
   helpers.doKeys('2', '.');
@@ -2446,7 +2583,8 @@ testVim('._insert_cw_repeat', function(cm, vim, helpers) {
 testVim('._delete', function(cm, vim, helpers) {
   cm.setCursor(0, 5);
   helpers.doKeys('i');
-  helpers.doInsertModeKeys('Backspace', 'Esc');
+  helpers.doInsertModeKeys('Backspace');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('.');
   eq('zace', cm.getValue());
   helpers.assertCursorAt(0, 1);
@@ -2454,7 +2592,8 @@ testVim('._delete', function(cm, vim, helpers) {
 testVim('._delete_repeat', function(cm, vim, helpers) {
   cm.setCursor(0, 6);
   helpers.doKeys('i');
-  helpers.doInsertModeKeys('Backspace', 'Esc');
+  helpers.doInsertModeKeys('Backspace');
+  helpers.doKeys('<Esc>');
   helpers.doKeys('2', '.');
   eq('zzce', cm.getValue());
   helpers.assertCursorAt(0, 1);
@@ -2571,7 +2710,7 @@ testVim('fc,;', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('f', '4');
   cm.setCursor(0, 0);
-  helpers.doKeys('c', ';', 'Esc');
+  helpers.doKeys('c', ';', '<Esc>');
   eq('56789', cm.getValue());
   helpers.doKeys('u');
   cm.setCursor(0, 9);
@@ -2582,7 +2721,7 @@ testVim('Fc,;', function(cm, vim, helpers) {
   cm.setCursor(0, 9);
   helpers.doKeys('F', '4');
   cm.setCursor(0, 9);
-  helpers.doKeys('c', ';', 'Esc');
+  helpers.doKeys('c', ';', '<Esc>');
   eq('01239', cm.getValue());
   helpers.doKeys('u');
   cm.setCursor(0, 0);
@@ -2593,7 +2732,7 @@ testVim('tc,;', function(cm, vim, helpers) {
   cm.setCursor(0, 0);
   helpers.doKeys('t', '4');
   cm.setCursor(0, 0);
-  helpers.doKeys('c', ';', 'Esc');
+  helpers.doKeys('c', ';', '<Esc>');
   eq('456789', cm.getValue());
   helpers.doKeys('u');
   cm.setCursor(0, 9);
@@ -2604,7 +2743,7 @@ testVim('Tc,;', function(cm, vim, helpers) {
   cm.setCursor(0, 9);
   helpers.doKeys('T', '4');
   cm.setCursor(0, 9);
-  helpers.doKeys('c', ';', 'Esc');
+  helpers.doKeys('c', ';', '<Esc>');
   eq('012349', cm.getValue());
   helpers.doKeys('u');
   cm.setCursor(0, 0);
@@ -3395,6 +3534,13 @@ testVim('ex_map_key2key_visual_api', function(cm, vim, helpers) {
 
   CodeMirror.commands.save = tmp;
 });
+testVim('ex_imap', function(cm, vim, helpers) {
+  CodeMirror.Vim.map('jk', '<Esc>', 'insert');
+  helpers.doKeys('i');
+  is(vim.insertMode);
+  helpers.doKeys('j', 'k');
+  is(!vim.insertMode);
+})
 
 // Testing registration of functions as ex-commands and mapping to <Key>-keys
 testVim('ex_api_test', function(cm, vim, helpers) {

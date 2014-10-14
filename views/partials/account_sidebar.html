@@ -5,13 +5,24 @@
     <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
     <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
     <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
+    {{#feature request "assets"}}
+    <a class="sidebar-btn" href="{{root}}/account/assets">Assets</a>
+    {{/feature}}
   </div>
   {{#feature request "upgrade"}}
     {{#feature request "pro"}}
     <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
     {{else}}
+      {{#feature request "upgradeWithFeatures"}}
+    <a class="sidebar-btn" href="{{root}}/upgrade">Upgrade</a>
+      {{else}}
     <a class="sidebar-btn" href="{{root}}/account/upgrade/pay">Upgrade</a>
+      {{/feature}}
     {{/feature}}
+  {{/feature}}
+
+  {{#feature request "admin"}}
+    <a class="sidebar-btn" href="{{root}}/admin">Admin</a>
   {{/feature}}
 </div>
 <script>

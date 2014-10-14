@@ -5,7 +5,7 @@
 /*global jsbin:true*/
 var font = (function (document) {
   var head = document.getElementsByTagName('head')[0],
-      selectors = '#output li, #exec, .fakeInput, #history, .fakeInput:before, #exec:before, #bin .editbox .CodeMirror',
+      selectors = '#output li, #exec, .fakeInput, #history, .fakeInput:before, #exec:before, #bin .editbox .CodeMirror, .mobile .editbox textarea',
       size = jsbin.settings.font || 14;
 
   // via http://stackoverflow.com/questions/2041495/create-dynamic-inline-stylesheet

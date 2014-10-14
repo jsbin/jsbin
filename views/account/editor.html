@@ -108,50 +108,50 @@
 
     <div>
       <label for="activeline">Active line</label>
-      <input id="activeline" name="activeline" type="checkbox">
-      <label for="activeline" class="mini-desc">Style the current cursor line</label>
+      <input id="activeline" name="activeline" type="checkbox" aria-describedby="activeline-desc">
+      <div id="activeline-desc" class="mini-desc">Style the current cursor line</div>
     </div>
 
     <div>
       <label for="closebrackets">Close brackets</label>
-      <input id="closebrackets" name="closebrackets" type="checkbox">
-      <label for="closebrackets" class="mini-desc">Auto-close brackets and quotes</label>
+      <input id="closebrackets" name="closebrackets" type="checkbox" aria-describedby="closebrackets-desc">
+      <div id="closebrackets-desc" class="mini-desc">Auto-close brackets and quotes</div>
     </div>
 
     <div>
       <label for="matchbrackets">Match brackets</label>
-      <input id="matchbrackets" name="matchbrackets" type="checkbox">
-      <label for="matchbrackets" class="mini-desc">Highlights matching brackets whenever the cursor is next to them</label>
+      <input id="matchbrackets" name="matchbrackets" type="checkbox" aria-describedby="matchbrackets-desc">
+      <div id="matchbrackets-desc" class="mini-desc">Highlights matching brackets whenever the cursor is next to them</div>
     </div>
 
     <div>
       <label for="highlight">Highlight</label>
-      <input id="highlight" name="highlight" type="checkbox">
-      <label for="highlight" class="mini-desc">Highlight all instances of a currently selected word</label>
+      <input id="highlight" name="highlight" type="checkbox" aria-describedby="highlight-desc">
+      <div id="highlight-desc" class="mini-desc">Highlight all instances of a currently selected word</div>
     </div>
 
     <div>
       <label for="matchtags">Match tags</label>
-      <input id="matchtags" name="matchtags" type="checkbox">
-      <label for="matchtags" class="mini-desc">Highlight matching tags under the cursor (useful with HTML)</label>
+      <input id="matchtags" name="matchtags" type="checkbox" aria-describedby="">
+      <div id="matchtags-desc" class="mini-desc">Highlight matching tags under the cursor (useful with HTML)</div>
     </div>
 
     <div>
       <label for="trailingspace">Trailing space</label>
-      <input id="trailingspace" name="trailingspace" type="checkbox">
-      <label for="trailingspace" class="mini-desc">Visualise trailing whitespace</label>
+      <input id="trailingspace" name="trailingspace" type="checkbox"  aria-describedby="trailingspace-desc">
+      <div id="trailingspace-desc" class="mini-desc">Visualise trailing whitespace</div>
     </div>
 
     <div>
       <label for="fold">Code folding</label>
-      <input id="fold" name="fold" type="checkbox">
-      <label for="fold" class="mini-desc">Fold and unfold matching code blocks</label>
+      <input id="fold" name="fold" type="checkbox" aria-describedby="fold-desc">
+      <div id="fold-desc" class="mini-desc">Fold and unfold matching code blocks</div>
     </div>
 
     <div>
       <label for="tern">Tern</label>
-      <input id="tern" name="tern" type="checkbox">
-      <label for="tern" class="mini-desc"><a href="http://ternjs.net/" target="_blank">Tern.js</a> code-analysis engine (not available in the preview below)</label>
+      <input id="tern" name="tern" type="checkbox" aria-describedby="tern-desc">
+      <div id="tern-desc" class="mini-desc"><a href="http://ternjs.net/" target="_blank">Tern.js</a> code-analysis engine (not available in the preview below)</div>
     </div>
 
   	<input type="hidden" id="_csrf" name="_csrf" value="{{token}}">

@@ -1,4 +1,4 @@
-/*globals jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
+/*globals $, jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
 var renderCodeWorking = false;
 
@@ -80,10 +80,12 @@ var getPreparedCode = (function () {
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
       console: /(^.|\b)console\.(\S+)/g,
+
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
       title: /<title>(.*)<\/title>/i,
+      description: /<meta.*name=["']description['"].*?>/i,
       winLoad: /window\.onload\s*=/,
       scriptopen: /<script/gi
     };
@@ -111,6 +113,14 @@ var getPreparedCode = (function () {
           hasJS = !!js.trim().length,
           replaceWith = 'window.runnerWindow.proxyConsole.';
 
+      // this is used to capture errors with processors, sometimes their errors
+      // aren't useful (Script error. (line 0) #1354) so we try/catch and then
+      // throw the real error. This also works exactly as expected with non-
+      // processed JavaScript
+      if (hasHTML) {
+        js = 'try {' + js + '\n} catch (error) { throw error; }';
+      }
+
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
       // the start of each iteration.
@@ -119,13 +129,14 @@ var getPreparedCode = (function () {
       // escape any script tags in the JS code, because that'll break the mushing together
       js = js.replace(re.script, '<\\/script');
 
+
       // redirect console logged to our custom log while debugging
       if (re.console.test(js)) {
         // yes, this code looks stupid, but in fact what it does is look for
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
-        js = js.replace(re.console, function (all, str, arg, pos) {
+        js = js.replace(re.console, function (all, str, arg) {
           return replaceWith + arg;
         });
       }
@@ -153,6 +164,8 @@ var getPreparedCode = (function () {
         // js = "window.onload = function(){" + js + "\n}\n";
         var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
+        js += '\n\n//# sourceURL=' + jsbin.state.code + '.js';
+
         html += '<script' + type + '>' + js + '\n</script>\n' + close;
       }
 
@@ -162,9 +175,13 @@ var getPreparedCode = (function () {
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
+        var first = ' /* double call explained https://github.com/jsbin/jsbin/issues/1833 */';
         html = html.replace(re.console, function (all, str, arg, pos) {
           var open = html.lastIndexOf('<script', pos),
-              close = html.lastIndexOf('</script', pos);
+              close = html.lastIndexOf('</script', pos),
+              info = first;
+
+          first = null;
 
           if (open > close) {
             return replaceWith + arg;
@@ -207,10 +224,18 @@ var getPreparedCode = (function () {
         });
       }
 
+      var description = (html.match(re.description) || [''])[0];
+      if (description) {
+        var i = description.indexOf('content=') + 'content='.length;
+        var quote = description.slice(i, i+1);
+        jsbin.state.description = description.substr(i + 1).replace(new RegExp(quote + '.*$'), '');
+      }
+
+
       // read the element out of the html code and plug it in to our document.title
-      var newDocTitle = html.match(re.title);
-      if (newDocTitle !== null && newDocTitle[1] !== documentTitle) {
-        documentTitle = newDocTitle[1].trim();
+      var newDocTitle = (html.match(re.title) || [,''])[1].trim();
+      if (newDocTitle && newDocTitle !== documentTitle) {
+        jsbin.state.title = documentTitle = newDocTitle;
         if (documentTitle) {
           document.title = documentTitle + ' - ' + 'JS Bin';
         } else {

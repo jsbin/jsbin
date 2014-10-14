@@ -5,7 +5,6 @@
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
     "/js/vendor/polyfills.js",
-    "/js/vendor/jshint/jshint.js",
     "/js/vendor/codemirror4/lib/codemirror.js",
     "/js/vendor/codemirror4/mode/xml/xml.js",
     "/js/vendor/codemirror4/mode/css/css.js",
@@ -26,8 +25,10 @@
     "/js/vendor/cm_addons/cm-highlight-line.js",
     "/js/editors/snippets.cm.js",
     "/js/vendor/json2.js",
+    "/js/vendor/bin-to-file.min.js",
     "/js/vendor/prettyprint.js",
     "/js/vendor/loop-protect.min.js",
+    "/js/vendor/s3upload.js",
     "/js/chrome/storage.js",
     "/js/jsbin.js",
     "/js/editors/mobileCodeMirror.js",
@@ -60,6 +61,7 @@
     "/js/chrome/last-bin.js",
     "/js/chrome/archive.js",
     "/js/chrome/welcome-panel.js",
+    "/js/chrome/help-search.js",
     "/js/chrome/app.js"
   ],
   "runner": [

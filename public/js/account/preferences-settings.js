@@ -45,6 +45,7 @@
     htmlhintOptions: '',
     coffeescripthint: false,
     coffeescripthintOptions: '',
+    layout: 0,
   };
   var $saveStatus = $('span.status');
   var saveTimer = null;
@@ -53,6 +54,7 @@
   var $panels = {};
   var $includejs = $('#includejs').prop('checked', currentSettings.includejs);
   var $focusedPanel = $('#focused-panel').val(currentSettings.focusedPanel);
+  var $layout = $('#layout').val(currentSettings.layout);
   var $assetUrl = $('#asset-url').val(currentSettings.assetUrl);
   var hints = ['js', 'css', 'html', 'coffeescript'];
   var $ssl = $('#ssl'); // .prop('checked', currentSettings.ssl); // checking happens server side
@@ -150,6 +152,7 @@
     localStorageSettings.focusedPanel = $focusedPanel.val();
     localStorageSettings.assetUrl = $assetUrl.val();
     localStorageSettings.ssl = $ssl.prop('checked');
+    localStorageSettings.layout = $layout.val();
 
     localStorage.settings = JSON.stringify(localStorageSettings);
 

@@ -2,7 +2,9 @@
 var noop = function () {},
     rootClassName = document.body.className;
 
-if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
+var simple = jsbin.settings.editor && jsbin.settings.editor.simple;
+
+if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
   $('body').addClass('mobile');
   jsbin.lameEditor = true;
   Editor = function (el, options) {
@@ -18,8 +20,12 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
 
+    var old = null;
     $(this.textarea)[jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup'](throttle(function () {
-      $(document).trigger('codeChange', { panelId: el.id });
+      if (old !== this.value) {
+        old = this.value;
+        $(document).trigger('codeChange', { panelId: el.id });
+      }
     }, 200));
 
     options.initCallback && $(options.initCallback);
@@ -40,6 +46,7 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     setCode: function (code) {
       this.textarea.value = code;
     },
+    getOption: noop,
     getCode: function () {
       return this.textarea.value;
     },
@@ -60,6 +67,12 @@ if (jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootC
     defaultTextHeight: function() {
       return 16;
     },
+    highlightLines: function () {
+      return {
+        string: ''
+      };
+    },
+    removeKeyMap: noop,
     addKeyMap: noop,
     indentLine: noop,
     cursorPosition: function () {

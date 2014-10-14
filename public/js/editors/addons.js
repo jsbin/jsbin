@@ -7,6 +7,8 @@
     return;
   }
 
+  var processors = jsbin.state.processors;
+
   var defaults = {
     closebrackets: true,
     highlight: false,
@@ -127,9 +129,9 @@
         }});
         setOption(cm, 'foldGutter', true);
         var gutters = cm.getOption('gutters');
-        gutters.push('CodeMirror-linenumbers');
-        gutters.push('CodeMirror-foldgutter');
-        setOption(cm, 'gutters', gutters);
+        var copyGutters = gutters.slice();
+        copyGutters.push('CodeMirror-foldgutter');
+        setOption(cm, 'gutters', copyGutters);
       }
     },
     sublime: {
@@ -151,6 +153,7 @@
         delete CodeMirror.keyMap['sublime'][cmd + '-Enter'];
         delete CodeMirror.keyMap['sublime'][cmd + '-Up'];
         delete CodeMirror.keyMap['sublime'][cmd + '-Down'];
+        CodeMirror.keyMap['sublime']['Shift-Tab'] = 'indentAuto';
         cm.removeKeyMap('noEmmet');
       }
     },
@@ -204,6 +207,10 @@
         if (cm.getOption('mode') !== 'css') {
           return;
         }
+
+        if (processors.css !== undefined && processors.css !== 'css') {
+          return;
+        }
         hintingDone(cm);
       }
     },
@@ -217,6 +224,11 @@
         if (cm.getOption('mode') !== 'javascript') {
           return;
         }
+
+        if (processors.javascript !== undefined && processors.javascript !== 'javascript') {
+          return;
+        }
+
         hintingDone(cm, {
           'eqnull': true
         });
@@ -235,6 +247,11 @@
         if (cm.getOption('mode') !== 'htmlmixed') {
           return;
         }
+
+        if (processors.html !== undefined && processors.html !== 'html') {
+          return;
+        }
+
         hintingDone(cm);
       }
     },
@@ -248,7 +265,7 @@
                (typeof coffeelint !== 'undefined');
       },
       done: function(cm) {
-        if (cm.getOption('mode') !== 'coffeescript') {
+        if (cm.getOption('mode') !== 'coffeescript' || jsbin.state.processors.javascript !== 'coffeescript') {
           return;
         }
         hintingDone(cm);
@@ -332,8 +349,9 @@
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
       if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
-        gutters.push('CodeMirror-lint-markers');
-        setOption(cm, 'gutters', gutters);
+        var copyGutters = gutters.slice();
+        copyGutters.push('CodeMirror-lint-markers');
+        setOption(cm, 'gutters', copyGutters);
       }
       setOption(cm, 'lint', true);
       var ln = cm.getOption('lineNumbers');

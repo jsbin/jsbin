@@ -17,10 +17,10 @@ var processors = jsbin.processors = (function () {
   };
 
   var passthrough = function (ready) { return ready(); };
-  var defaultProcessor = function (source) {
+  var defaultProcessor = function (source, resolve, reject) {
     return new RSVP.Promise(function (resolve) {
       resolve(source);
-    });
+    }).then(resolve, reject);
   };
 
   /**
@@ -28,6 +28,19 @@ var processors = jsbin.processors = (function () {
    */
   var processorBy = {
     extension: {}
+  };
+
+  /**
+   * A version of $.getScript, but using our jsbin version
+   * as the cachebuster
+   */
+  var getScript = function (url, callback) {
+    $.ajax({
+      cache: true,
+      url: url + '?' + jsbin.version,
+      dataType: 'script',
+      success: callback
+    });
   };
 
   /**
@@ -86,7 +99,7 @@ var processors = jsbin.processors = (function () {
 
       if (url) {
         // Load the processor's script
-        $.getScript(url, scriptCB);
+        getScript(url, scriptCB);
       } else {
         // No url, go straight on
         init(function () {
@@ -148,7 +161,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['coffee'],
       url: jsbin.static + '/js/vendor/coffee-script.js',
       init: function coffeescript(ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -200,7 +213,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['ls'],
       url: jsbin.static + '/js/vendor/livescript.js',
       init: function livescript(ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/livescript/livescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/livescript/livescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -287,7 +300,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['md', 'markdown', 'mdown'],
       url: jsbin.static + '/js/vendor/marked.min.js',
       init: function markdown(ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
       },
       handler: function (source, resolve, reject) {
         try {
@@ -305,7 +318,7 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/processing.min.js',
       init: function (ready) {
         $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
       },
       handler: function processing(source, resolve, reject) {
         try {
@@ -335,7 +348,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['jade'],
       url: jsbin.static + '/js/vendor/jade.js?1.4.2',
       init: function jade(ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
       },
       handler: function jade(source, resolve, reject) {
         try {
@@ -364,7 +377,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
+      url: jsbin.static + '/js/vendor/less.min.js',
       init: passthrough,
       handler: function less(source, resolve, reject) {
         window.less.Parser().parse(source, function (error, result) {
@@ -398,7 +411,7 @@ var processors = jsbin.processors = (function () {
       // url: jsbin.static + '/js/vendor/sass/dist/sass.worker.js',
       init: passthrough,
         /* keeping old code for local version of scss if we ever want it again */
-        // $.getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
+        // getScript(jsbin.static + '/js/vendor/codemirror3/mode/sass/sass.js', function () {
         // Sass.initialize(jsbin.static + '/js/vendor/sass/dist/worker.min.js');
       handler: throttle(debounceAsync(function sass(source, resolve, reject, done) {
         $.ajax({
@@ -444,7 +457,7 @@ var processors = jsbin.processors = (function () {
       target: 'sass',
       extensions: ['sass'],
       init: function (ready) {
-        $.getScript(jsbin.static + '/js/vendor/codemirror4/mode/sass/sass.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/sass/sass.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({

@@ -1,7 +1,8 @@
 /*globals $, CodeMirror, jsbin, jshintEnabled, RSVP */
 
 var $document = $(document),
-    $source = $('#source');
+    $source = $('#source'),
+    userResizeable = !$('html').hasClass('layout');
 
 var editorModes = {
   html: 'htmlmixed',
@@ -43,7 +44,7 @@ CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   'use strict';
-  if (['htmlmixed', 'javascript', 'css', editorModes['less']].indexOf(cm.options.mode) === -1) {
+  if (['htmlmixed', 'javascript', 'css', editorModes['less'], editorModes['sass'], editorModes['scss']].indexOf(cm.options.mode) === -1) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
   } else {
     return CodeMirror.snippets(cm);
@@ -72,6 +73,8 @@ var Panel = function (name, settings) {
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
 
+  panel.label = (settings.label || name);
+
   panel.$el.data('panel', panel);
 
   this._eventHandlers = {};
@@ -83,20 +86,6 @@ var Panel = function (name, settings) {
     settings.nosplitter = true;
   }
 
-  // this is nasty and wrong, but I'm going to put here anyway .i..
-  // removed as we have a different way to check for errors
-  // if (this.id === 'javascript') {
-  //   this.on('processor', function (e, preprocessor) {
-  //     if (preprocessor === 'none') {
-  //       jshintEnabled = true;
-  //       checkForErrors();
-  //     } else {
-  //       jshintEnabled = false;
-  //       $error.hide();
-  //     }
-  //   });
-  // }
-
   if (settings.editor) {
     cmSettings = {
       parserfile: [],
@@ -106,7 +95,7 @@ var Panel = function (name, settings) {
       lineWrapping: true,
       // gutters: ['line-highlight'],
       theme: jsbin.settings.theme || 'jsbin',
-      highlighLine: true
+      highlightLine: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -168,7 +157,10 @@ var Panel = function (name, settings) {
     panel._setupEditor(panel.editor, name);
   }
 
-  if (!settings.nosplitter) {
+  if ($('html').is('.layout')) {
+    panel.splitter = $();
+    panel.$el.removeClass('stretch');
+  } else if (!settings.nosplitter) {
     panel.splitter = panel.$el.splitter(splitterSettings).data('splitter');
     panel.splitter.hide();
   } else {
@@ -182,12 +174,16 @@ var Panel = function (name, settings) {
   } else if (settings.processor) { // FIXME is this even used?
     panelLanguage = settings.processors[settings.processor];
     jsbin.processors.set(panel, settings.processor);
+  } else if (processors[panel.id]) {
+    jsbin.processors.set(panel, panel.id);
   } else {
+    // this is just a dummy function for console & output...which makes no sense...
     panel.processor = function (str) {
       return new RSVP.Promise(function (resolve) {
         resolve(str);
       });
     };
+
   }
 
   if (settings.beforeRender) {
@@ -204,7 +200,9 @@ var Panel = function (name, settings) {
   }
 
   if (showPanelButton) {
-    this.controlButton = $('<a class="button group" href="?' + name + '">' + (settings.label || name) + '</a>');
+    this.controlButton = $('<a role="button" class="button group" href="?' + name + '">' + panel.label + '</a>');
+    this.updateAriaState();
+
     this.controlButton.click(function () {
       panel.toggle();
       return false;
@@ -225,6 +223,9 @@ Panel.order = 0;
 Panel.prototype = {
   virgin: true,
   visible: false,
+  updateAriaState: function () {
+    this.controlButton.attr('aria-label', this.label + ' Panel: ' + (this.visible ? 'Active' : 'Inactive'));
+  },
   show: function (x) {
     if (this.visible) {
       return;
@@ -259,14 +260,17 @@ Panel.prototype = {
     }
     panel.controlButton.addClass('active');
     panel.visible = true;
+    this.updateAriaState();
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
     setTimeout(function () {
-      if (x !== undefined) {
-        panel.splitter.trigger('init', x);
-      } else {
-        panel.distribute();
+      if (userResizeable) {
+        if (x !== undefined) {
+          panel.splitter.trigger('init', x);
+        } else {
+          panel.distribute();
+        }
       }
       if (panel.editor) {
         // populate the panel for the first time
@@ -305,6 +309,7 @@ Panel.prototype = {
     var panel = this;
     // panel.$el.hide();
     panel.visible = false;
+    this.updateAriaState();
     analytics.hidePanel(panel.id);
 
     // update all splitter positions
@@ -408,7 +413,7 @@ Panel.prototype = {
     if (this.settings.init) this.settings.init.call(this);
   },
   _setupEditor: function () {
-    var focusedPanel = sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
+    var focusedPanel = store.sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
         panel = this,
         editor = panel.editor;
 
@@ -469,16 +474,20 @@ Panel.prototype = {
       if (panel.visible) {
         var height = panel.editor.scroller.closest('.panel').outerHeight();
         var offset = 0;
-        var lineHeight = panel.editor.defaultTextHeight();
         $error = panel.$el.find('details');
         offset += ($error.filter(':visible').height() || 0);
 
         if (!jsbin.lameEditor) {
-          // show 50% more lines as blank
-          panel.editor.scroller.find('.CodeMirror-lines').css({ paddingBottom: height / 4 * 3 });
           editor.scroller.height(height - offset);
         }
         try { editor.refresh(); } catch (e) {}
+
+        setTimeout(function () {
+          $source[0].style.paddingLeft = '1px';
+          setTimeout(function () {
+            $source[0].style.paddingLeft = '0';
+          }, 0);
+        }, 0);
       }
     });
 
@@ -512,7 +521,7 @@ Panel.prototype = {
               }
             }
 
-            editor.setCursor({ line: (sessionStorage.getItem('line') || blank || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+            editor.setCursor({ line: (store.sessionStorage.getItem('line') || blank || 0) * 1, ch: (store.sessionStorage.getItem('character') || 0) * 1 });
           }
         }, 110); // This is totally arbitrary
       }
@@ -541,16 +550,16 @@ Panel.prototype = {
 function populateEditor(editor, panel) {
   if (!editor.codeSet) {
     // populate - should eventually use: session, saved data, local storage
-    var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
-        saved = jsbin.embed ? null : localStorage.getItem('saved-' + panel), // user template
-        sessionURL = sessionStorage.getItem('url'),
+    var cached = store.sessionStorage.getItem('jsbin.content.' + panel), // session code
+        saved = jsbin.embed ? null : store.localStorage.getItem('saved-' + panel), // user template
+        sessionURL = store.sessionStorage.getItem('url'),
         changed = false;
 
     // if we clone the bin, there will be a checksum on the state object
     // which means we happily have write access to the bin
     if (sessionURL !== jsbin.getURL() && !jsbin.state.checksum) {
       // nuke the live saving checksum
-      sessionStorage.removeItem('checksum');
+      store.sessionStorage.removeItem('checksum');
       saveChecksum = false;
     }
 
@@ -563,7 +572,7 @@ function populateEditor(editor, panel) {
       changed = cached != saved && cached != template[panel];
     } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
-      var processor = JSON.parse(localStorage.getItem('saved-processors') || '{}')[panel];
+      var processor = JSON.parse(store.localStorage.getItem('saved-processors') || '{}')[panel];
       if (processor) {
         jsbin.processors.set(jsbin.panels.panels[panel], processor);
       }

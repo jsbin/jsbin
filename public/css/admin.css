@@ -1,0 +1,16 @@
+form label.inline {
+  width: 80px;
+}
+
+form input[type="text"] {
+  width: 250px;
+}
+
+form input[type="submit"] {
+  margin: 0;
+}
+
+form > div {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

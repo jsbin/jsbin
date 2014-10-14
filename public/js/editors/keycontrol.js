@@ -1,7 +1,7 @@
 /*globals objectValue, $, jsbin, $body, $document*/
 var keyboardHelpVisible = false;
 
-var customKeys = objectValue('jsbin.settings.keys') || {};
+var customKeys = objectValue('settings.keys', jsbin) || {};
 
 function enableAltUse() {
   if (!jsbin.settings.keys) {
@@ -176,11 +176,7 @@ function keycontrol(event) {
 
     if (event.which === 191 && event.metaKey && event.shiftKey) {
       // show help
-      $body.toggleClass('keyboardHelp');
-      keyboardHelpVisible = $body.is('.keyboardHelp');
-      if (keyboardHelpVisible) {
-        analytics.track('keyboard', 'select', 'help');
-      }
+      opendropdown($('#help').prev()[0]);
       event.stop();
     } else if (event.which === 27 && keyboardHelpVisible) {
       $body.removeClass('keyboardHelp');

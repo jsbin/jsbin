@@ -104,7 +104,7 @@ $document.on('saved', function () {
   $('#clone').removeClass('hidden');
 });
 
-var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
+var saveChecksum = jsbin.state.checksum || store.sessionStorage.getItem('checksum') || false;
 
 // store it back on state
 jsbin.state.checksum = saveChecksum;
@@ -370,7 +370,7 @@ function saveCode(method, ajax, ajaxCallback) {
           ajaxCallback(data);
         }
 
-        sessionStorage.setItem('checksum', data.checksum);
+        store.sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
         jsbin.state.checksum = saveChecksum;
@@ -384,7 +384,7 @@ function saveCode(method, ajax, ajaxCallback) {
           var hash = panels.getHighlightLines();
           if (hash) hash = '#' + hash;
           window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
-          sessionStorage.setItem('url', jsbin.getURL());
+          store.sessionStorage.setItem('url', jsbin.getURL());
         } else {
           window.location.hash = data.edit;
         }

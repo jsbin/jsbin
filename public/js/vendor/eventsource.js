@@ -5,8 +5,8 @@ if ("EventSource" in global) return;
 var reTrim = /^(\s|\u00A0)+|(\s|\u00A0)+$/g;
 
 var EventSource = function (url) {
-  var eventsource = this,  
-      interval = 500, // polling interval  
+  var eventsource = this,
+      interval = 500, // polling interval
       lastEventId = null,
       cache = '';
 
@@ -18,13 +18,15 @@ var EventSource = function (url) {
   this.readyState = this.CONNECTING;
   this._pollTimer = null;
   this._xhr = null;
-  
-  function pollAgain() {
-    eventsource._pollTimer = setTimeout(function () {
-      poll.call(eventsource);
-    }, interval);
+
+  function pollAgain(xhr) {
+    if (xhr.status === 200) {
+      eventsource._pollTimer = setTimeout(function () {
+        poll.call(eventsource);
+      }, interval);
+    }
   }
-  
+
   function poll() {
     try { // force hiding of the error message... insane?
       if (eventsource.readyState == eventsource.CLOSED) return;
@@ -34,20 +36,20 @@ var EventSource = function (url) {
       xhr.open('GET', eventsource.URL, true);
       xhr.setRequestHeader('Accept', 'text/event-stream');
       xhr.setRequestHeader('Cache-Control', 'no-cache');
-      // we must make use of this on the server side if we're working with Android - because they don't trigger 
+      // we must make use of this on the server side if we're working with Android - because they don't trigger
       // readychange until the server connection is closed
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
       if (lastEventId != null) xhr.setRequestHeader('Last-Event-ID', lastEventId);
       cache = '';
-    
+
       xhr.timeout = 50000;
       xhr.onreadystatechange = function () {
         var status = 0;
         try {
           status = xhr.status;
         } catch (e) {}
-        
+
         if ((this.readyState == 3 || this.readyState == 4) && status == 200) {
           // on success
           if (eventsource.readyState == eventsource.CONNECTING) {
@@ -59,16 +61,16 @@ var EventSource = function (url) {
           try {
             responseText = this.responseText || '';
           } catch (e) {}
-        
+
           // process this.responseText
           var parts = responseText.substr(cache.length).split("\n"),
               eventType = 'message',
               data = [],
               i = 0,
               line = '';
-            
+
           cache = responseText;
-        
+
           // TODO handle 'event' (for buffer name), retry
           for (; i < parts.length; i++) {
             line = parts[i].replace(reTrim, '');
@@ -90,34 +92,34 @@ var EventSource = function (url) {
             }
           }
 
-          if (this.readyState == 4) pollAgain();
+          if (this.readyState == 4) pollAgain(this);
           // don't need to poll again, because we're long-loading
         } else if (eventsource.readyState !== eventsource.CLOSED) {
           if (this.readyState == 4) { // and some other status
             // dispatch error
             eventsource.readyState = eventsource.CONNECTING;
             eventsource.dispatchEvent('error', { type: 'error' });
-            pollAgain();
+            pollAgain(this);
           } else if (this.readyState == 0) { // likely aborted
-            pollAgain();
+            pollAgain(this);
           } else {
           }
         }
       };
-    
+
       xhr.send();
-    
+
       setTimeout(function () {
         if (true || xhr.readyState == 3) xhr.abort();
       }, xhr.timeout);
-      
+
       eventsource._xhr = xhr;
-    
+
     } catch (e) { // in an attempt to silence the errors
       eventsource.dispatchEvent('error', { type: 'error', data: e.message }); // ???
-    } 
+    }
   };
-  
+
   poll(); // init now
 };
 
@@ -147,7 +149,7 @@ EventSource.prototype = {
     if (!this['_' + type + 'Handlers']) {
       this['_' + type + 'Handlers'] = [];
     }
-    
+
     this['_' + type + 'Handlers'].push(handler);
   },
   removeEventListener: function () {
@@ -175,5 +177,5 @@ MessageEvent.prototype = {
 
 if ('module' in global) module.exports = EventSource;
 global.EventSource = EventSource;
- 
+
 })(this);

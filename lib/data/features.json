@@ -1,58 +1,59 @@
-[
+{ "features": [
+  {
+    "name": "Support JS Bin's continued operation",
+    "user": "pro",
+    "tip": "Help keep JS Bin online, working, and awesome"
+  },
   {
     "name": "Vanity URLs",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Show off your Pro status with you.jsbin.com"
   },
   {
     "name": "Private bins",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Keep your ideas private, and easily toggle privacy"
   },
   {
     "name": "SSL",
-    "user": "pro"
+    "user": "pro",
+    "tip": "All of JS Bin served over SSL, including embeds"
   },
   {
     "name": "Dropbox sync",
-    "user": "pro"
+    "user": "pro",
+    "tip": "Every bin, backed up to your Dropbox"
   },
   {
-    "name": "Priority direct support",
-    "user": "pro"
-  },
-  {
-    "name": "Read & write API access (very soon)",
-    "user": "pro"
-  },
-  {
-    "name": "Asset hosting (coming soon)",
-    "user": "pro"
+    "name": "Email support",
+    "user": "pro",
+    "tip": "For private support requests"
   },
   {
     "name": "Full, unmodified output",
-    "user": "free"
+    "user": "free",
+    "tip": "Perfect for testing viewports on mobile and more"
   },
   {
     "name": "Save bins to Gist",
-    "user": "free"
+    "user": "free",
+    "tip": "Export the complete HTML to a Gist"
   },
   {
-    "name": "Codecasting (unlimited connections)",
-    "user": "anon"
+    "name": "Codecasting (unlimited)",
+    "user": "anon",
+    "tip": "Allow viewers to watch you code, in real-time"
   },
   {
-    "name": "Live reload (unlimited connections)",
-    "user": "anon"
+    "name": "Live reload (unlimited)",
+    "user": "anon",
+    "tip": "Output live reloads as you code, in real-time"
   },
   {
     "name": "Custom starting code",
-    "user": "anon"
-  },
-  {
-    "name": "Unlimited external resources",
-    "user": "anon"
-  },
-  {
-    "name": "Custom libraries",
-    "user": "anon"
+    "user": "anon",
+    "tip": "Start with only a doctype? Set your \"new\" template"
   }
-]
+],
+"tweets": ["499277531313631233", "492754486319140865", "492058646118158336", "491948444165365761", "491946894051270656", "491945957450612736", "459041574043664384", "450920759402434561"]
+}

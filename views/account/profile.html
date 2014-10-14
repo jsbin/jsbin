@@ -2,7 +2,7 @@
 
 <h1>Your profile</h1>
 
-<section id="content" {{#if user.pro}}class="pro"{{/if}}>
+<section id="content" {{#feature request "pro"}}class="pro"{{/feature}}>
   <form class="login" method="post" action="/account/update">
     <p class="loginFeedback"></p>
 
@@ -59,7 +59,7 @@
     <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
     {{/if}}
   {{else}}
-  <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/account/upgrade"><span class="pro-required">Pro</span></a> <a href="/account/upgrade">account required</a></li>
+  <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a></li>
   {{/feature}}
   {{/feature}}
   </ul>

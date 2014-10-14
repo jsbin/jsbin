@@ -1,0 +1,82 @@
+
+body.source #source {
+  display: -moz-box;
+  display: flex;
+  height: 100%;
+}
+
+.panelwrapper {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-box-flex: 1;
+  flex: 1;
+  position: relative;
+  border: 1px solid rgb(234, 234, 234);
+}
+
+.panelwrapper .panel {
+  border: 1px solid rgb(234, 234, 234);
+}
+
+.layout1 #source {
+  -moz-flex-flow: row;
+  flex-flow: row;
+}
+
+.layout2 #source {
+  -moz-flex-flow: column;
+  flex-flow: column;
+}
+
+.layout3 #source {
+  flex-flow: row wrap;
+}
+.layout3 .panelwrapper:last-child {
+  -moz-box-flex: 100%;
+  flex: 100%;
+}
+
+.layout3b #source {
+  flex-flow: row wrap;
+}
+.layout3b .panelwrapper {
+  -moz-box-ordinal-group: 2;
+  order: 2;
+  /*border-right: 1px solid #ccc;*/
+}
+.layout3b .panelwrapper:last-child {
+  -moz-box-flex: 100%;
+  flex: 100%;
+  -moz-box-ordinal-group: 1;
+  order: 1;
+}
+
+.layout4 #source {
+  flex-flow: column wrap;
+}
+
+.layout4 .panelwrapper,
+.layout4b .panelwrapper {
+  min-width: 50%;
+}
+
+
+.layout4 .panelwrapper:last-child {
+  -moz-box-flex: 100%;
+  flex: 100%;
+}
+
+.layout4b #source {
+  flex-flow: column wrap;
+}
+.layout4b .panelwrapper {
+  -moz-box-ordinal-group: 2;
+  order: 2;
+}
+.layout4b .panelwrapper:last-child {
+  -moz-box-flex: 100%;
+  flex: 100%;
+  -moz-box-ordinal-group: 1;
+  order: 1;
+}

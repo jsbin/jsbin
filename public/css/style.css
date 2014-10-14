@@ -220,7 +220,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .CodeMirror-linewidget {
   position: relative;
-  z-index: 2;
+  z-index: 1647;
   overflow: auto;
 }
 
@@ -1640,6 +1640,7 @@ textarea:focus {
      -moz-user-select: -moz-none; /* if this is "none" you can't copy text */
       -ms-user-select: none;
           user-select: none;
+  /* padding-left: 4px; */
 }
 
 /* total faff, not sure why, but jsbin loads and selects all the text :-\ */
@@ -2232,15 +2233,21 @@ body.preview #source select {
   outline: 0;
 }
 
-.mobile textarea,
-.ie6 textarea,
-.ie7 textarea {
-  margin: 0.4em;
+.mobile .editbox {
+  top: 36px;
+  width: auto;
+  bottom: 0.8em;
+  left: 0.8em;
+  right: 0.8em;
+}
+.mobile .editbox textarea,
+.ie6 .editbox textarea,
+.ie7 .editbox textarea {
+  margin: 0;
   border: 0;
   font-family: Menlo, Monaco, consolas, monospace;
   color: black;
-  margin-top: 30px;
-  padding: 6px;
+  padding: 0;
   font-size: 12px;
   position: absolute;
   top: 0;
@@ -2250,6 +2257,7 @@ body.preview #source select {
   resize: none;
   outline: none;
   -webkit-appearance: none;
+  height: 100%;
 }
 
 .ie6 textarea,
@@ -2259,7 +2267,7 @@ body.preview #source select {
 }
 
 #javascript {
-  margin-top: 26px;
+  /*margin-top: 26px;*/
 }
 
 /*div.javascript {
@@ -2675,7 +2683,7 @@ body.streaming #bin {
   display: block;
 }
 
-.details, details {
+#bin .details, #bin details {
   position: absolute;
   display: block;
   bottom: 0;
@@ -2687,7 +2695,7 @@ body.streaming #bin {
   z-index: 10;
 }
 
-.summary, summary {
+#bin .summary, #bin summary {
   cursor: pointer;
   padding: 3px 5px;
   display: block;
@@ -2696,13 +2704,13 @@ body.streaming #bin {
   border: 0;
 }
 
-details ol, .details ol {
+#bin details ol, #bin .details ol {
   padding-left: 21px;
   max-height: 150px;
   overflow: auto;
 }
 
-details li, .details li {
+#bin details li, #bin .details li {
   margin: 5px 0;
   cursor: pointer;
 }
@@ -2987,8 +2995,13 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 14px;
 }
-#bin .editbox .CodeMirror pre {
+#bin .editbox .CodeMirror pre,
+.mobile textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
+}
+
+.mobile textarea {
+  background: transparent;
 }
 
 .editbox .CodeMirror,
@@ -3413,6 +3426,10 @@ a.active:hover {
   text-align: left;
 }
 
+#help {
+  max-width: 266px;
+}
+
 #registerLogin .dropdowncontent {
   padding: 20px;
 }
@@ -3697,6 +3714,7 @@ left: 50%;
 
 .ready #history {
   display: block;
+  z-index:9;
 }
 
 #history .preview {
@@ -4529,7 +4547,7 @@ html * {
   box-sizing: border-box;
   /*margin: 10px;*/
   border: 1px solid #fff;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
   font-size: 16px;
   /* min-width: 500px; */
 }
@@ -4581,17 +4599,68 @@ html * {
 .card .body {
   display: none;
   padding: 10px 20px;
-  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
 }
 
+.card .settings label {
+  font-weight: normal;
+  margin-left: 0;
+  color: #000;
+}
+
+.card .settings * {
+  font-size: 14px;
+}
+
+.card .settings details {
+  width: 360px;
+}
+
+.card .settings summary {
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px 0;
+  width: auto;
+  display: inline-block;
+}
+
+.card .settings {
+  display: none;
+  float: left;
+  margin-right: 20px;
+  width: 220px;
+}
+
+.card.author .settings {
+  display: block;
+}
+
+.card .settings h2 {
+  margin: 0;
+}
+
+.card .settings fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.card .settings #headers input {
+  width: 152px;
+}
+
 .card.open .body {
   display: block;
+  overflow: hidden;
 }
 
 .card .body select {
   margin: 0;
+  width: 100%;
+  display: block;
+  font-size: 16px;
 }
 
 .card .body a {
@@ -4603,10 +4672,19 @@ html * {
   list-style: none;
   padding: 0;
   margin: 0;
+  float: right;
 }
 
 .card .body li {
   margin: 10px 0
+}
+
+.card .body li:first-child {
+  margin-top: 0;
+}
+
+.card .body li:last-child {
+  margin-bottom: 0;
 }
 
 .card.private {
@@ -4621,6 +4699,7 @@ html * {
   white-space: nowrap;
   padding-right: 10px;
   margin: 5px 0;
+  float: right;
 }
 
 .card.author .meta,
@@ -4794,9 +4873,36 @@ html * {
   padding-right: 30px;
 }
 
+div.large-gravatar {
+  display: inline-block;
+  width: 120px;
+  float: left;
+  margin-right: 10px;
+  position: relative;
+}
+
+div.small-gravatar {
+  display: inline-block;
+  with: 30px;
+  position: relative;
+}
+
+div.small-gravatar object,
+div.large-gravatar object {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
 #profile .large-gravatar {
   float: left;
   margin-right: 10px;
+  width: 120px;
+  z-index: 10;
+  position: relative;
 }
 
 .CodeMirror-highlight-line,
@@ -4867,33 +4973,47 @@ body.ready.toppanel {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   position: relative;
+  margin-right: 20px;
 }
 /* Pro column
    this could change in the future depending on the content */
 .toppanel-column:nth-child(3) {
-  max-width: 160px;
+  /* max-width: 180px; */
+  /* margin-right: 10px; */
 }
 
-@media (max-width: 1223px) { /* 5 */
+@media (max-width: 1437px) { /* 5 */
   .toppanel-column {
-    width: calc((100% - 217px) / 4);
+    width: calc((100% - 240px) / 4);
     max-width: 100%;
-  }
+
+    margin-right: 8px;
+}
   .toppanel-column:nth-child(n+6) {
     display: none;
   }
 }
 @media (max-width: 1023px) { /* 4 */
   .toppanel-column {
-    width: calc((100% - 217px) / 3);
-  }
+    width: calc((100% - 250px) / 3);
+
+    margin-right: 10px;
+}
   .toppanel-column:nth-child(n+5) {
     display: none;
   }
 }
 @media (max-width: 816px) { /* 3 */
   .toppanel-column {
-    width: calc((100% - 217px) / 2);
+    width: calc((100% - 240px) / 3);
+  }
+  .toppanel-column:nth-child(n+4) {
+    /* display: none; */
+  }
+}
+@media (max-width: 700px) { /* 2 */
+  .toppanel-column {
+    width: calc((100% - 240px) / 2);
   }
   .toppanel-column:nth-child(n+4) {
     display: none;
@@ -4926,10 +5046,17 @@ body.ready.toppanel {
   padding: 5px 10px;
   border-radius: 3px;
   background: hsl(214, 52%, 98%);
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* box-sizing: border-box; */
   margin-top: 24px;
+}
+
+.toppanel-no-pro {
+  background: white;
+  padding: 0;
+}
+
+.toppanel-wrapper .toppanel-no-pro a {
+  padding: 10px 5px;
+  display: block;
 }
 
 .toppanel-actions {
@@ -4955,7 +5082,7 @@ body.ready.toppanel {
   padding: 0;
 }
 .toppanel-wrapper a {
-  color: #6293D3;
+  color: rgb(98, 147, 211);
   display: block;
   padding: 6px 10px 6px 1px;
   text-decoration: none;
@@ -5026,6 +5153,20 @@ a.toppanel-hide {
   color: #6293D3;
   color: rgba(98, 147, 211, 0.5);
   font-weight: 200;
+  text-indent: -9999px;
+  overflow: hidden;
+  /* height: 1%; */
+  width: 19px;
+}
+a.toppanel-hide:after {
+  content: '\d7';
+  position: absolute;
+  left: 4px;
+  /* top: 0; */
+  /* width: 20px; */
+  /* height: 20px; */
+  text-indent: 0;
+  /* display: block; */
 }
 .toppanel-actions .btn-github {
   font-size: 70%;
@@ -5266,6 +5407,7 @@ a.toppanel-logo {
   padding: 0.2em;
   padding-left: 2.3em;
   /* padding-right: 0; */
+  position: relative;
 }
 .console-log-line:first-child {
   border-top: 0 none;
@@ -5392,3 +5534,111 @@ a[data-pro]:hover:after {
   color: #FF4136;
 }
 
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+#enableUniversalEditorLabel {
+  color: rgb(98, 147, 211);
+  position: relative;
+  /* top: 7px; */
+  left: 0;
+  z-index: 999999;
+  line-height: 16px;
+/*   font-size: 16px; */
+  /* background: white; */
+  /* padding: 20px; */
+  /* vertical-align: top; */
+  /*transform: scale(1.2);*/
+  /* transform-origin: 0 0; */
+  position: absolute;
+  bottom: 2px;
+  /* left: 210px; */
+}
+
+#helpsearch {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin: 0;
+  padding: 6px 100px 6px 10px;
+  /* border-bottom: 1px solid #D5D5D5; */
+  line-height: 25px;
+  height: auto;
+  cursor: text;
+}
+
+#helpsearch:focus {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+#result-count {
+  color: #aaa;
+  left: -80px;
+  position: relative;
+  text-align: right;
+  width: 60px;
+  display: inline-block;
+}
+
+#help.dd-right {
+  right: 0;
+}
+
+#results {
+  display: block;
+}
+
+#results a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 20px;
+  padding-right: 10px;
+  /* max-width: 191px; */
+  /* padding-right: 0; */
+}
+
+.assetLoading {
+  display: inline;
+  position: relative;
+  font-family: helvetica;
+  padding: 0 0.4em;
+}
+
+.assetLoading a {
+  text-decoration: none;
+  color: blue;
+}
+
+.assetLoading .pro-required {
+  top: 0;
+  right: 0;
+  position: initial;
+  text-decoration: none;
+  vertical-align: middle;
+}

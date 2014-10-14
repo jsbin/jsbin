@@ -1,10 +1,10 @@
-  $.fn.splitter = function () {
+$.fn.splitter = function () {
   var $document = $(document),
       $blocker = $('<div class="block"></div>'),
       $body = $('body');
       // blockiframe = $blocker.find('iframe')[0];
 
-  var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
+  var splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[]');
   return this.each(function () {
     var $el = $(this),
         $originalContainer = $(this),
@@ -129,7 +129,7 @@
         $handle.css(css);
         settings[type] = pos;
         splitterSettings[guid] = settings;
-        localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
+        store.localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
 
         // wait until animations have completed!
         if (moveSplitter.timer) clearTimeout(moveSplitter.timer);

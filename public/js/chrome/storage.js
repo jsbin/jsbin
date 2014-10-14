@@ -18,26 +18,43 @@ var store = (function () {
   if (!hasStore('sessionStorage')) {
     polyfill = true;
     sessionStorage = (function () {
-      var data = window.top.name ? JSON.parse(window.top.name) : {};
+      var data = window.name ? JSON.parse(window.name) : {};
+      var keys = Object.keys(data);
+      var length = keys.length;
 
-      return {
+      var s = {
+        key: function (i) {
+          return Object.keys(data)[i] || null;
+        },
+        length: length,
         clear: function () {
           data = {};
-          window.top.name = '';
+          window.name = '';
+          s.length = 0;
         },
         getItem: function (key) {
           return data[key] || null;
         },
         removeItem: function (key) {
           delete data[key];
-          window.top.name = JSON.stringify(data);
+          window.name = JSON.stringify(data);
+          s.length--;
         },
         setItem: function (key, value) {
           data[key] = value;
-          window.top.name = JSON.stringify(data);
+          window.name = JSON.stringify(data);
+          s.length++;
         }
       };
+
+      keys.forEach(function (key) {
+        s[key] = data[key];
+      });
+
+      return s;
     })();
+  } else {
+    sessionStorage = window.sessionStorage;
   }
 
   if (!hasStore('localStorage')) {
@@ -47,21 +64,18 @@ var store = (function () {
     localStorage = window.localStorage;
   }
 
+  if (!jsbin.embed && polyfill) {
+    $(document).one('jsbinReady', function () {
+      $(document).trigger('tip', {
+        type: 'error',
+        content: 'JS Bin uses cookies to protect against CSRF attacks, so with cookies disabled, you will not be able to save your work'
+      });
+    });
+    jsbin.saveDisabled = true;
+    jsbin.sandbox = true;
+  }
+
   return { polyfill: polyfill, sessionStorage: sessionStorage, localStorage: localStorage };
 
 })();
 
-// because: I want to hurt you firefox, that's why.
-store.backup = {};
-
-// if (hasStore('localStorage')) {
-//   store.backup.localStorage = window.localStorage;
-//   store.backup.sessionStorage = window.sessionStorage;
-// }
-
-// var sessionStorage = {}, localStorage = {};
-
-if (store.polyfill === true) {
-  window.sessionStorage = store.sessionStorage;
-  window.localStorage = store.localStorage;
-}

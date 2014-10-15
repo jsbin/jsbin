@@ -63,7 +63,8 @@
     "undefsafe": "0.0.2",
     "underscore": "~1.4.4",
     "validate-vat": "~0.3.1",
-    "validator": "^3.16.1"
+    "validator": "^3.16.1",
+    "heapdump": "~0.2.10"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

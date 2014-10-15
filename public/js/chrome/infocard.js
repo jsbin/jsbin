@@ -1,4 +1,4 @@
-;(function () {
+;(function (global) {
   if ('EventSource' in global) {
     return setupInfocard()
   } else {
@@ -309,4 +309,4 @@
     updateInfoCard();
     $document.bind('saved', updateInfoCard);
   }
-}());
+}(this));

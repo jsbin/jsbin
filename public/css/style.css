@@ -3893,39 +3893,46 @@ left: 50%;
 
 /* The archive buttons */
 
-#history .archive_action {
+#history .action {
   text-align: right;
   padding-right: 10px;
   width: 100px;
 }
 
-#history .archive_action span {
+#history .action span {
   visibility: hidden;
+  font-size: 12px;
 }
-#history .archived .archive_action span {
-  visibility: visible;
+#history .archived .action span {
+  /* visibility: visible; */
 }
 
-#history .archive_action a {
-  padding-left: 10%;
+#history .action a {
+  padding-left: 10px;
 }
-#history .archive_action a,
-#history .archive_action span {
+#history .action a:first-child {
+  padding-left: 0;
+}
+#history .action a,
+#history .action span {
   color: #ccc !important;
 }
 
-#history .archive_action a:hover,
-#history .archive_action a:hover span {
+#history .action:hover,
+#history .action:hover span,
+#history tr:hover .action a,
+#history tr:hover .action span {
   color: black !important;
 }
 
-#history .archive_action a:hover span {
+#history .action:hover span,
+#history tr:hover .action span  {
   visibility: visible;
 }
 
 /* public history */
 .public-listing .menu,
-.public-listing .archive_action {
+.public-listing .action {
   display: none;
 }
 

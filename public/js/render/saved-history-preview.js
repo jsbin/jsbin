@@ -128,34 +128,24 @@
       updateLayout($tbodys, archive);
     });
 
-
-    // Load a preview on tr mouseover (delayed by 400ms)
-    $bins.delegate('tr', 'mouseover', function () {
-      var $this = $(this),
-          url = $this.attr('data-url');
-      clearTimeout(hoverTimer);
-      if (!$this.hasClass('spacer') && current !== url) {
-        // hoverTimer = setTimeout(function () {
-        //   $trs.removeClass('selected');
-        //   $this.addClass('selected');
-        //   current = url;
-        //   updatePreview(url, $iframe);
-        //   updateViewing(url, $viewing);
-        // }, 400);
-      }
-      return false;
-    });
-
     var selected = null;
     $bins.delegate('a', 'click', function (event) {
+      console.count('a.click')
+      var $this = $(this);
+
+      if ($this.closest('.action').length) {
+        // let the existing handlers deal with action links
+        return;
+      }
+
       if (selected === this) {
         return true;
       } else {
         event.preventDefault();
         event.stopPropagation(); // prevent further delegates
         $trs.removeClass('selected');
-        var $this = $(this).closest('tr').addClass('selected');
-        var url = jsbin.root + $this.data('url');
+        var $tr = $this.closest('tr').addClass('selected');
+        var url = jsbin.root + $tr.data('url');
         updatePreview(url, $iframe);
         updateViewing(url, $viewing);
 

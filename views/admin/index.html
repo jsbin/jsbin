@@ -1,0 +1,50 @@
+{{> account_sidebar}}
+
+<script>
+  var host = '{{host}}';
+</script>
+
+<h1>Admin</h1>
+
+<section id="content">
+  <form method="post" id="flag-bin" action="/admin/flag-bin">
+    <h2>Unblock bin</h2>
+    <p class="responseFeedback"></p>
+    <div>
+      <label for="bin" class="inline">Bin url</label>
+      <input type="text" name="bin" id="bin" required>
+      <input type="submit" value="update">
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{token}}">
+  </form>
+
+  <form method="post" id="validate-user" action="/admin/user-verified">
+    <h2>Set verified flag for user</h2>
+    <p class="responseFeedback"></p>
+
+    <div>
+      <label for="vuser" class="inline">Username</label>
+      <input type="text" name="username" id="vuser" required>
+      <input type="submit" value="update">
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{token}}">
+  </form>
+
+  <form method="post" id="flag-user" action="/admin/flag-user">
+    <h2>Hellban user</h2>
+    <p class="responseFeedback"></p>
+
+    <div>
+      <label for="username" class="inline">Username</label>
+      <input type="text" name="username" id="username" required>
+      <input type="submit" value="update">
+    </div>
+
+    <input type="hidden" name="_csrf" value="{{token}}">
+  </form>
+</section>
+<link href="{{static}}/css/admin.css{{cacheBust}}" rel="stylesheet" type="text/css"/>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/admin/admin.js{{cacheBust}}"></script>

@@ -230,14 +230,14 @@ var libraries = [
   },
   {
     'url': [
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.common.min.css',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.rtl.min.css',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.default.min.css',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.min.css',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.dataviz.default.min.css',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/styles/kendo.mobile.all.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.rtl.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.default.min.css',
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.mobile.all.min.css',
       '//code.jquery.com/jquery-1.9.1.min.js',
-      '//da7xgjtj801h2.cloudfront.net/2013.2.716/js/kendo.all.min.js'
+      '//da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.all.min.js'
     ],
     'label': 'Kendo UI 2014.Q2',
     'group': 'Kendo UI'
@@ -263,6 +263,13 @@ var libraries = [
     ],
     'label': 'QUnit',
     'group': 'Testing'
+  },
+  {
+    'url' : [
+    '//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.js',
+  ],
+    'label': 'RequireJS',
+    'group': 'AMD'
   },
   {
     'url': 'http://zeptojs.com/zepto.min.js',
@@ -380,11 +387,11 @@ var libraries = [
   },
   {
     'url': [
-      '//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js',
-      '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
-      'http://builds.emberjs.com.s3.amazonaws.com/tags/v1.0.0/ember.js'
+      '//code.jquery.com/jquery-1.11.1.min.js',
+      '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js',
+      '//builds.emberjs.com/tags/v1.7.0/ember.js'
     ],
-    'label': 'Ember.js 1.0.0'
+    'label': 'Ember.js 1.7.0'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
@@ -535,12 +542,21 @@ var libraries = [
       '//vjs.zencdn.net/4.6/video.js'
     ],
     'label': 'Video.js 4.6.x'
+  },
+  {
+    'url': [
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui.js',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui.css',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/js/aui-experimental.js',
+      '//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui-experimental.css'
+    ],
+    'label': 'AUI (Atlassian UI) 5.7.0'
   }
 ];
 
 window.libraries = libraries; // expose a command line API
 
-libraries.userSpecified = JSON.parse(localStorage.getItem('libraries') || '[]');
+libraries.userSpecified = JSON.parse(store.localStorage.getItem('libraries') || '[]');
 for (var i = 0; i < libraries.userSpecified.length; i++) {
   libraries.push(libraries.userSpecified[i]);
 }
@@ -561,14 +577,14 @@ libraries.add = function (lib) {
     libraries.push(lib);
   }
   try {
-    localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
+    store.localStorage.setItem('libraries', JSON.stringify(this.userSpecified));
   } catch (e) {} // just in case of DOM_22 error, makes me so sad to use this :(
   $('#library').trigger('init');
 };
 
 libraries.clear = function () {
   libraries.userSpecified = [];
-  localStorage.removeItem('libraries');
+  store.localStorage.removeItem('libraries');
   var length = libraries.length;
   for (var i = 0; i < length; i++) {
     if (libraries[i].group === 'Custom') {

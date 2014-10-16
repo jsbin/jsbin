@@ -51,10 +51,10 @@ $('a.logout').click(function (event) {
   // remove that and just let the form submit itself...
   $(this.hash).submit();
   // Clear session storage so private bins wont be cached.
-  for (i = 0; i < sessionStorage.length; i++) {
-    key = sessionStorage.key(i);
+  for (i = 0; i < store.sessionStorage.length; i++) {
+    key = store.sessionStorage.key(i);
     if (key.indexOf('jsbin.content.') === 0) {
-      sessionStorage.removeItem(key);
+      store.sessionStorage.removeItem(key);
     }
   }
 });
@@ -287,15 +287,15 @@ $('#createnew').click(function (event) {
   analytics.createNew();
   // FIXME this is out and out [cr]lazy....
   jsbin.panels.savecontent = function(){};
-  for (i = 0; i < sessionStorage.length; i++) {
-    key = sessionStorage.key(i);
+  for (i = 0; i < store.sessionStorage.length; i++) {
+    key = store.sessionStorage.key(i);
     if (key.indexOf('jsbin.content.') === 0) {
-      sessionStorage.removeItem(key);
+      store.sessionStorage.removeItem(key);
     }
   }
 
   // clear out the write checksum too
-  sessionStorage.removeItem('checksum');
+  store.sessionStorage.removeItem('checksum');
 
   jsbin.panels.saveOnExit = false;
 
@@ -356,7 +356,7 @@ $('#lostpass').click(function (e) {
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
 // ignore for embed as there might be a lot of embeds on the page
-if (!jsbin.embed && sessionStorage.runnerPending) {
+if (!jsbin.embed && store.sessionStorage.getItem('runnerPending')) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
     type: 'error'

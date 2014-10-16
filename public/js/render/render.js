@@ -80,6 +80,7 @@ var getPreparedCode = (function () { // jshint ignore:line
       docReady: /\$\(document\)\.ready/,
       shortDocReady: /\$\(function/,
       console: /(^.|\b)console\.(\S+)/g,
+
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
@@ -116,7 +117,9 @@ var getPreparedCode = (function () { // jshint ignore:line
       // aren't useful (Script error. (line 0) #1354) so we try/catch and then
       // throw the real error. This also works exactly as expected with non-
       // processed JavaScript
-      js = 'try {' + js + '\n} catch (error) { throw error; }';
+      if (hasHTML) {
+        js = 'try {' + js + '\n} catch (error) { throw error; }';
+      }
 
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
@@ -125,6 +128,7 @@ var getPreparedCode = (function () { // jshint ignore:line
 
       // escape any script tags in the JS code, because that'll break the mushing together
       js = js.replace(re.script, '<\\/script');
+
 
       // redirect console logged to our custom log while debugging
       if (re.console.test(js)) {
@@ -160,6 +164,8 @@ var getPreparedCode = (function () { // jshint ignore:line
         // js = "window.onload = function(){" + js + "\n}\n";
         var type = jsbin.panels.panels.javascript.type ? ' type="text/' + jsbin.panels.panels.javascript.type + '"' : '';
 
+        js += '\n\n//# sourceURL=' + jsbin.state.code + '.js';
+
         html += '<script' + type + '>' + js + '\n</script>\n' + close;
       }
 
@@ -169,9 +175,13 @@ var getPreparedCode = (function () { // jshint ignore:line
         // 'console.' and then checks the position of the code. If it's inside
         // an openning script tag, it'll change it to window.top._console,
         // otherwise it'll leave it.
+        var first = ' /* double call explained https://github.com/jsbin/jsbin/issues/1833 */';
         html = html.replace(re.console, function (all, str, arg, pos) {
           var open = html.lastIndexOf('<script', pos),
-              close = html.lastIndexOf('</script', pos);
+              close = html.lastIndexOf('</script', pos),
+              info = first;
+
+          first = null;
 
           if (open > close) {
             return replaceWith + arg;

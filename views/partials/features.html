@@ -1,9 +1,8 @@
 <table id="featureGrid">
   <thead>
     <tr class="headings">
-      <th>&nbsp;</th>
-      <th>Anonymous</th>
-      <th>Signed-in</th>
+      <td>&nbsp;</td>
+      <th>Free account</th>
       <th>
         Pro <small class="upgrade-cost">@ £5/month*</small>
       </th>
@@ -11,7 +10,6 @@
   </thead>
   <tfoot class="upgrade">
     <tr>
-      <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>
@@ -24,12 +22,9 @@
     <tr class="{{user}}">
       <td class="feature">
         {{#if tip}}
-        <span tabIndex="1" class="tip" data-tip="{{tip}}">?</span>
+        <span tabIndex="0" class="tip" data-tip="{{tip}}">?</span>
         {{/if}}
         {{name}}
-      </td>
-      <td class="anon">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
       </td>
       <td class="free">
         {{#equal user 'anon'}}&#10003;{{/equal}}
@@ -44,6 +39,8 @@
     {{/each}}
   </tbody>
 </table>
+
+<p>...and many other features including preprocessors, linting and <a href="http://jsbin.com/help/features">more</a>.</p>
 
 <p><small>We're also working on asset hosting and a full read & write API for Pro users, so watch our <a href="/blog" target="_blank">blog</a> for the latest releases.</small></p>
 

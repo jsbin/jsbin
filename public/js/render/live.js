@@ -83,15 +83,14 @@ function codeChangeLive(event, data) {
         line = editor.getLine(editor.getCursor().line);
         if (ignoreDuringLive.test(line) === true) {
           // ignore
-          throttledPreview.cancel();
           deferredLiveRender = setTimeout(function () {
             codeChangeLive(event, data);
           }, 1000);
         } else {
-          throttledPreview();
+          renderLivePreview();
         }
       } else {
-        throttledPreview();
+        renderLivePreview();
       }
     }
   }
@@ -184,7 +183,7 @@ var renderer = (function () {
    */
   renderer.complete = function () {
     try {
-      delete sessionStorage.runnerPending;
+      store.sessionStorage.removeItem('runnerPending');
     } catch (e) {}
   };
 
@@ -358,7 +357,7 @@ var renderLivePreview = (function () {
       }
       // this is a flag that helps detect crashed runners
       if (jsbin.settings.includejs) {
-        sessionStorage.runnerPending = 1;
+        store.sessionStorage.setItem('runnerPending', 1);
       }
 
       renderer.postMessage('render', {
@@ -381,7 +380,7 @@ var renderLivePreview = (function () {
     if (arg.origin === 'setValue' || arg.origin === undefined) {
       return;
     }
-    delete sessionStorage.runnerPending;
+    store.sessionStorage.removeItem('runnerPending');
   });
 
   // Listen for console input and post it to the iframe
@@ -399,7 +398,7 @@ var renderLivePreview = (function () {
 
   // When the iframe loads, swap round the callbacks and immediately invoke
   // if renderLivePreview was called already.
-  return deferCallable(renderLivePreview, function (done) {
+  return deferCallable(throttle(renderLivePreview, 200), function (done) {
     iframe.onload = function () {
       if (window.postMessage) {
         // Setup postMessage listening to the runner
@@ -417,8 +416,7 @@ var renderLivePreview = (function () {
 
 // this needs to be after renderLivePreview is set (as it's defined using
 // var instead of a first class function).
-var throttledPreview = throttle(renderLivePreview, 200),
-    liveScrollTop = null;
+var liveScrollTop = null;
 
 // timer value: used in the delayed render (because iframes don't have
 // innerHeight/Width) in Chrome & WebKit

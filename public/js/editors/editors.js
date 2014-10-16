@@ -32,7 +32,7 @@ panels.save = function () {
     state[panel.name] = left;
   }
 
-  sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
+  store.sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
 };
 
 function getQuery(qs) {
@@ -116,7 +116,7 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = [],
-      state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
+      state = jsbin.embed ? null : JSON.parse(store.sessionStorage.getItem('jsbin.panels') || 'null'),
       hasContent = { javascript: editors.javascript.getCode().length,
         css: editors.css.getCode().length,
         html: editors.html.getCode().length
@@ -129,7 +129,7 @@ panels.restore = function () {
       openWithSameDimensions = false,
       width = $window.width(),
       deferredCodeInsert = '',
-      focused = !!sessionStorage.getItem('panel'),
+      focused = !!store.sessionStorage.getItem('panel'),
       validPanels = 'live javascript html css console'.split(' '),
       cachedHash = '';
 
@@ -282,7 +282,7 @@ panels.restore = function () {
   // for (name in this.panels) {
   //   panel = this.panels[name];
   //   if (panel.editor) {
-  //     // panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
+  //     // panel.setCode(store.sessionStorage.getItem('jsbin.content.' + name) || template[name]);
   //   }
   // }
 
@@ -305,7 +305,7 @@ panels.savecontent = function () {
   var name, panel;
   for (name in this.panels) {
     panel = this.panels[name];
-    if (panel.editor) sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
+    if (panel.editor) store.sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
   }
 };
 
@@ -333,8 +333,18 @@ panels.focus = function (panel) {
   }
 }
 
+var userResizeable = !$('html').hasClass('layout');
+
+if (!userResizeable) {
+  $('#source').removeClass('stretch');
+}
+
 // evenly distribute the width of all the visible panels
 panels.distribute = function () {
+  if (!userResizeable) {
+    return;
+  }
+
   var visible = $('#source .panelwrapper:visible'),
       width = 100,
       height = 0,

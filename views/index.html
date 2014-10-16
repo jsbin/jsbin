@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}">
+<html id="jsbin" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}{{#equal editorLayout "0"}}{{else}} layout layout{{editorLayout}}{{/equal}}">
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
+  <link rel="alternate" type="application/json+oembed" href="{{root}}/oembed?url={{root}}{{request.url}}">
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="{{static}}/css/editor-layout.css{{cacheBust}}">{{/equal}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
     {{> analytics}}
@@ -46,7 +48,7 @@ if(top != self) {
     <div class="buttons">
       {{#if embed}}
         <span class="menu">
-          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg">
+          <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg" alt="">
           <h1>JS Bin</h1></a><a href="/clone" target="_blank" class="button">Save</a>
         </span>
       {{else}}
@@ -197,14 +199,20 @@ if(top != self) {
         {{#unless embed}}
           {{#if home}}
             {{#feature request "accountPages"}}
-            <div class="menu{{#if user.pro}} pro{{/if}}">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+            <div class="menu{{#feature request "pro"}} pro {{/feature}}">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
+                <source srcset="{{gravatar}} 1x, {{gravatar}}&s=58 2x">
+                <img src="{{gravatar}}">
+              </picture>{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
-  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
+                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}&s=240 2x">
+                <img class="large-gravatar" src="{{large_gravatar}}">
+              </picture></div>{{/if}}
                   <span class="input" id="username" readonly>
-                    @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                    @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                   </span>
 
                   <ul>
@@ -231,7 +239,7 @@ if(top != self) {
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                       </span>
                     </div>
                     <div>
@@ -376,6 +384,9 @@ if(top != self) {
               <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
               {{/if}}
               <hr data-desc="">
+              {{#feature request "pro"}}
+              <a data-desc="Email support" href="mailto:support@jsbin.com?subject=Pro%20user%20support%20request">Pro user email support</a>
+              {{/feature}}
               <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
               <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
               <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
@@ -401,7 +412,7 @@ if(top != self) {
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
+        <textarea aria-label="HTML Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
@@ -420,7 +431,7 @@ if(top != self) {
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
+        <textarea aria-label="JavaScript Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
@@ -440,7 +451,7 @@ if(top != self) {
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
+        <textarea aria-label="CSS Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
@@ -452,7 +463,7 @@ if(top != self) {
         </span>
       </div>
       <div id="console" class="stretch"><ul id="output"></ul><form>
-          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
+          <textarea aria-label="Console Panel" id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
       </form></div>
     </div>
     <div id="live" class="stretch live panel">
@@ -611,37 +622,21 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{#unless embed}}
-{{#feature request "infocard"}}
-<div hidden>
-  <div class="card" id="infocard">
-    <header><img>
-      <div class="visibility"></div>
-      <div class="meta">
-        <div class="author">Bin info</div>
-        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
-      </div>
-      <div class="viewers"><b>0</b><span>viewers</span></div>
-    </header>
-    <div class="body">
-      <ul>
-        <li><a href="/clone">Clone</a> </li>
-        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
-        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
-        <li class="owner"><a href="/download">Download</a> </li>
-        {{#feature request "delete"}}
-        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
-        {{/feature}}
-      </ul>
-    </div>
-  </div>
-</div>
-{{/feature}}
+{{>infocard}}
 {{/unless}}
+
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
+<script> document.write('<!--'); </script>
 <![endif]-->
+
+<script src="{{static}}/js/vendor/jshint/jshint.min.js"></script>
+
+-->
+
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-{{#if is_production}}
+{{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
+{{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 <script>
   start({{{json_template}}}, {{{jsbin}}}, this, document);
@@ -654,12 +649,12 @@ window.jsbin = {{{jsbin}}};
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
+  {{#scripts}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/scripts}}
   {{/if}}
-    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{#addons}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
+<script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
 </body>

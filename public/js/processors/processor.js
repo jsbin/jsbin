@@ -17,10 +17,10 @@ var processors = jsbin.processors = (function () {
   };
 
   var passthrough = function (ready) { return ready(); };
-  var defaultProcessor = function (source) {
+  var defaultProcessor = function (source, resolve, reject) {
     return new RSVP.Promise(function (resolve) {
       resolve(source);
-    });
+    }).then(resolve, reject);
   };
 
   /**
@@ -379,7 +379,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
+      url: jsbin.static + '/js/vendor/less.min.js',
       init: passthrough,
       handler: function less(source, resolve, reject) {
         window.less.Parser().parse(source, function (error, result) {
@@ -704,7 +704,8 @@ var processors = jsbin.processors = (function () {
       panel.editor.setOption('smartIndent', smartIndent);
 
       panel.processor = defaultProcessor;
-      delete jsbin.state.processors[panelId];
+      // delete jsbin.state.processors[panelId];
+      jsbin.state.processors[panelId] = panelId;
       delete panel.type;
     }
 

@@ -702,7 +702,8 @@ var processors = jsbin.processors = (function () {
       panel.editor.setOption('smartIndent', smartIndent);
 
       panel.processor = defaultProcessor;
-      delete jsbin.state.processors[panelId];
+      // delete jsbin.state.processors[panelId];
+      jsbin.state.processors[panelId] = panelId;
       delete panel.type;
     }
 

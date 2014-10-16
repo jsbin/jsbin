@@ -38,7 +38,7 @@
   "updateOwnersData": "UPDATE `owners` SET `:field`=? WHERE `url`=? AND `revision`=?",
   "updateOwnershipData": "UPDATE `ownership` SET `:field`=? WHERE `name`=?",
   "isOwnerOf": "SELECT name=? as `owner`, s.active FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.url=s.url AND o.revision=s.revision AND o.url=? AND o.revision=1",
-  "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=?",
+  "getUserBinCount": "SELECT COUNT(*) as total FROM `owners` WHERE `name`=? AND archive=0",
   "setProAccount": "UPDATE ownership SET `pro`=?, `updated`=? WHERE `name`=?",
   "setCustomer" : "REPLACE INTO `customers` (`stripe_id`, `user_id`, `name`, `plan`) VALUES (?, ?, ?, ?)",
   "setCustomerActive": "UPDATE `customers` SET `active`=? WHERE `name`=?",

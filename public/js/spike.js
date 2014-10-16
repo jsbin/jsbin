@@ -229,7 +229,12 @@ var id = location.pathname.replace(/\/(preview|edit|watch).*$/, ''),
     es = null;
 
 function startStream() {
-  es = new EventSource(id + '?' + Math.random());
+  var parts = jsbin.root.split('://');
+  var root = parts[1];
+  //         generate random 4 char string (can include numbers)
+  parts[1] = Math.random().toString(36).slice(2, 6) + '.stream.' + root;
+  var url = parts.join('://') + id + '?' + Math.random();
+  es = new EventSource(url);
   if (codecasting) {
     codecastStream();
   } else {

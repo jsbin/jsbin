@@ -3714,7 +3714,7 @@ left: 50%;
 
 .ready #history {
   display: block;
-  z-index:9;
+  z-index: 10;
 }
 
 #history .preview {
@@ -3730,6 +3730,11 @@ left: 50%;
   height: 100%;
   padding-top: 10px;
   background: #fff;
+}
+
+#history .preview a {
+  text-decoration: underline;
+  color: blue;
 }
 
 #history .header {
@@ -3840,6 +3845,8 @@ left: 50%;
 #history #viewing {
   font-size: 10px;
   margin: 0 10px 10px 20px;
+  text-decoration: underline;
+  color: blue;
 }
 
 #history.archive_mode tr.spacer,
@@ -4904,7 +4911,8 @@ tbody:hover .snapshot1 .url a span:before {
   opacity: 0.3;
 }
 
-.snapshot:hover td {
+.snapshot:hover td,
+.snapshot.selected td {
   opacity: 1;
 }
 

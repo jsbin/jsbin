@@ -56,7 +56,7 @@
   };
 
   var updateViewing = function (url, $viewing) {
-    $viewing.text(url);
+    $viewing.html('<a href="' + url + '">' + url + '</a>');
   };
 
   var updateLayout = function ($tbodys, archiveMode) {
@@ -94,12 +94,6 @@
         $toggle = $('.toggle_archive', $history),
         current = null,
         hoverTimer = null;
-
-    // Load bin from data-edit-url attribute when user clicks on a row
-    $bins.delegate('tr:not(.spacer)', 'click', function () {
-      if (event.shiftKey || event.metaKey) { return; }
-      window.location = this.getAttribute('data-edit-url');
-    });
 
     // Archive & un-archive click handlers
     $bins.delegate('.archive, .unarchive', 'click', function () {
@@ -141,15 +135,38 @@
           url = $this.attr('data-url');
       clearTimeout(hoverTimer);
       if (!$this.hasClass('spacer') && current !== url) {
-        hoverTimer = setTimeout(function () {
-          $trs.removeClass('selected');
-          $this.addClass('selected');
-          current = url;
-          updatePreview(url, $iframe);
-          updateViewing(url, $viewing);
-        }, 400);
+        // hoverTimer = setTimeout(function () {
+        //   $trs.removeClass('selected');
+        //   $this.addClass('selected');
+        //   current = url;
+        //   updatePreview(url, $iframe);
+        //   updateViewing(url, $viewing);
+        // }, 400);
       }
       return false;
+    });
+
+    var selected = null;
+    $bins.delegate('a', 'click', function (event) {
+      if (selected === this) {
+        return true;
+      } else {
+        event.preventDefault();
+        event.stopPropagation(); // prevent further delegates
+        $trs.removeClass('selected');
+        var $this = $(this).closest('tr').addClass('selected');
+        var url = jsbin.root + $this.data('url');
+        updatePreview(url, $iframe);
+        updateViewing(url, $viewing);
+
+        selected = this;
+      }
+    });
+
+    // Load bin from data-edit-url attribute when user clicks on a row
+    $bins.delegate('tr:not(.spacer)', 'click', function () {
+      if (event.shiftKey || event.metaKey) { return; }
+      $(this).find('.url a:first').click();
     });
 
     // Update the time every 30 secs
@@ -158,11 +175,8 @@
     $('a[pubdate]', $history).attr('pubdate', function (i, val) {
       return val.replace('Z', '+0000');
     }).prettyDate();
-    // setInterval(function(){
-    //   $created.prettyDate();
-    // }, 30 * 1000);
 
-    // Update the layout straign away
+    // Update the layout straight away
     setTimeout(function () {
       updateLayout($tbodys, false);
     }, 0);

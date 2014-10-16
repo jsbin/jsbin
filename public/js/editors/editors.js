@@ -134,7 +134,7 @@ panels.restore = function () {
       cachedHash = '';
 
   if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
-    history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit') + (hash ? '#' + hash : ''));
+    // history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit') + (hash ? '#' + hash : ''));
   }
 
   if (search || hash) {
@@ -332,6 +332,20 @@ panels.focus = function (panel) {
     $('.panel').removeClass('focus').filter('.' + panel.id).addClass('focus');
   }
 }
+
+panels.updateQuery = throttle(function updateQuery() {
+  var alt = {
+    javascript: 'js',
+    live: 'output'
+  };
+
+  var visible = panels.getVisible().map(function (p) {
+    return alt[p.id] || p.id;
+  });
+  if (history.replaceState) {
+    history.replaceState(null, null, '?' + visible.join(','));
+  }
+}, 100);
 
 var userResizeable = !$('html').hasClass('layout');
 

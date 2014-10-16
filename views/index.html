@@ -98,8 +98,8 @@ if(top != self) {
           </span>
         </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
           <a href="#share"  class="button button-dropdown group">Share</a>
-          <div class="dropdown" id="share">
-            <div class="dropdowncontent{{#feature request "revisionless"}} share-split{{/feature}}">
+          <div class="dropdown{{#feature request "revisionless"}} share-split{{/feature}}" id="share">
+            <div class="dropdowncontent">
               <form>
                 {{#feature request "revisionless"}}
                 <div class="controls">

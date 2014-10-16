@@ -52,7 +52,7 @@ var $shareLinks = $('#share .link');
 var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
 // TODO remove split when live
-var split = $('#sharemenu').find('.share-split').length;
+var split = $('#sharemenu .share-split').length;
 
 // TODO candidate for removal
 function updateSavedState() {

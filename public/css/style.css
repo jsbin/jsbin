@@ -3986,6 +3986,12 @@ left: 50%;
   left: -10px;
 }
 
+#share input[type=text],
+#share textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
+
 #share .lockoption {
   margin: 10px -10px -10px;
   cursor: pointer;
@@ -4259,6 +4265,7 @@ pre .highlight:last-of-type {
   line-height: 20px;
   cursor: text;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .ie span.icon {
@@ -4396,6 +4403,10 @@ pre .highlight:last-of-type {
 }
 
 #share {
+  width: 325px;
+}
+
+#share.share-split {
   width: 433.6px;
   box-sizing: border-box;
 }
@@ -4899,7 +4910,7 @@ tbody:hover .snapshot1 .url a span:before {
 
 /** share menu **/
 
-.share-split {
+.share-split .dropdowncontent {
   min-width: 350px;
   overflow: hidden;
 }
@@ -4972,7 +4983,7 @@ tbody:hover .snapshot1 .url a span:before {
   line-height: 1.2;
 }
 
-#share .share-split a.link {
+#share.share-split a.link {
   text-decoration: underline;
 }
 

@@ -3,7 +3,7 @@
   /*globals $, saveChecksum, jsbin, $document, documentTitle*/
 
   // only continue if the new share is enabled
-  if ($('#sharemenu').find('.share-split').length === 0) {
+  if ($('#sharemenu .share-split').length === 0) {
     return;
   }
 
@@ -177,6 +177,9 @@
 
     if (jsbin.panels.panels.css.getCode().trim()) {
       ext = processors[jsbin.state.processors.css || 'css'].extensions[0];
+      if (ext !== 'css') {
+        directLinksHTML.push('<a href="' + url + '.css">css</a>');
+      }
       directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
     }
 
@@ -184,12 +187,18 @@
 
     if (code) {
       ext = processors[jsbin.state.processors.javascript || 'javascript'].extensions[0];
+
+      if (ext !== 'js') {
+        directLinksHTML.push('<a href="' + url + '.js">js</a>');
+      }
+
       try {
         JSON.parse(code);
         directLinksHTML.push('<a href="' + url + '.json">json</a>');
       } catch (e) {
         directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
       }
+
     }
 
     $directLinks.html(directLinksHTML.join(''));

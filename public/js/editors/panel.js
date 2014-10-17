@@ -79,6 +79,9 @@ var Panel = function (name, settings) {
 
   this._eventHandlers = {};
 
+  panel.on('show', panels.updateQuery);
+  panel.on('hide', panels.updateQuery);
+
   // keyboard shortcut (set in keyboardcontrol.js)
   panelShortcuts[panelShortcuts.start + panel.order] = panel.id;
 
@@ -223,10 +226,10 @@ Panel.order = 0;
 Panel.prototype = {
   virgin: true,
   visible: false,
-  updateAriaState: function () {
+  updateAriaState: function updateAriaState() {
     this.controlButton.attr('aria-label', this.label + ' Panel: ' + (this.visible ? 'Active' : 'Inactive'));
   },
-  show: function (x) {
+  show: function show(x) {
     if (this.visible) {
       return;
     }

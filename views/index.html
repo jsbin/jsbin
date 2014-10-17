@@ -67,6 +67,7 @@ if(top != self) {
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              <!-- <a class="deleteallbins button group" data-desc="Delete all bin snapshots" title="Delete all bin snapshots" href="{{root}}/delete-all">Delete all snapshots</a> -->
               {{/feature}}
               <a class="archivebin button group" data-desc="Archive bin" title="Archive this bin" href="{{code_id_path}}/archive" data-shortcut="ctrl+y">Archive</a>
               <a class="unarchivebin button group" data-desc="Unrchive bin" title="Restore this bin from the archive" href="{{code_id_path}}/unarchive" data-shortcut="ctrl+shift+y">Unarchive</a>
@@ -75,8 +76,8 @@ if(top != self) {
               {{/if}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
-              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
+              <a title="Save snapshot" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Save snapshot</a>
+              <a data-desc="Copy and create a new bin start at revision #1" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
               {{#feature request "upgrade"}}
                 {{#feature request "vanity"}}
@@ -96,10 +97,68 @@ if(top != self) {
           <select id="library"></select>
           </span>
         </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
-          <a href="#share" class="button button-dropdown group">Share</a>
-          <div class="dropdown" id="share">
+          <a href="#share"  class="button button-dropdown group">Share</a>
+          <div class="dropdown{{#feature request "revisionless"}} share-split{{/feature}}" id="share">
             <div class="dropdowncontent">
               <form>
+                {{#feature request "revisionless"}}
+                <div class="controls">
+                  <strong>State</strong>
+                  <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
+                    <ul>
+                      <li><label><input type="radio" name="state" checked value="realtime"> Latest<span id="andlive"><br><small>with codecasting</small></span></label></li>
+                      <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot <!-- <select name="snapshot" id="snapshot">
+                        <option>1</option>
+                      </select> --></label></li>
+                    </ul>
+                  </div>
+                  <div id="sharepanels">
+                    <strong>View</strong>
+                    <label><input checked type="radio" name="view" value="editor"> Show</label>
+                    <ul>
+                      <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
+                      <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="js">JS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="console">Console</label></li>
+                      <li><label><input name="panel" type="checkbox" value="output">Output</label></li>
+                    </ul>
+                  </div>
+                  <label for="output-view"><input id="output-view" type="radio" name="view" value="output"> Output only<br><small>with live reload</small></label>
+                </div>
+                <div class="result">
+                  <div data-desc="This bin's full output without the JS Bin editor">
+                    <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Link</a></strong><br>
+                    <input name="url" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                  </div>
+                  <div data-desc="Direct links to specific sources of the bin">
+                    <!-- <span class="heading">Sources:</span> -->
+                    <span class="direct-links"></span>
+                  </div>
+                  <div data-desc="Embed this bin with the live output on your site">
+                    <span class="heading">Embed</span><br><textarea id="embedfield" name="embed" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                  </div>
+                  <div data-desc="The preview of JS Bin when you share your bin">
+                    <span class="heading">What they'll see</span><br>
+                    <!-- <img src="http://placehold.it/200x113"> -->
+                    <div id="share-preview">
+                      <div class="output"></div>
+                      <span class="header"></span>
+                      <div class="editor">
+                        <div class="html">
+                        </div>
+                        <div class="css">
+                        </div>
+                        <div class="js">
+                        </div>
+                        <div class="console">
+                        </div>
+                        <div class="output">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{else}}
                 <div data-desc="This bin's full output without the JS Bin editor">
                   <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
                 </div>
@@ -123,7 +182,9 @@ if(top != self) {
                 <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
                   <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
                 </div>
-                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
+                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div>
+                {{/feature}}
+                </div>
               </form>
             </div>
 
@@ -489,7 +550,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
         </tr>
         <tr>
           <td>ctrl + shift + s</td>
-          <td>Clone Bin</td>
+          <td>Open the share options</td>
         </tr>
         <tr>
           <td>ctrl + y</td>

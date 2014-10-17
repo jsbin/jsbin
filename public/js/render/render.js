@@ -69,7 +69,7 @@ var getRenderedCode = function () {
   return RSVP.hash(promises);
 };
 
-var getPreparedCode = (function () {
+var getPreparedCode = (function () { // jshint ignore:line
   'use strict';
 
   var escapeMap = {
@@ -235,7 +235,7 @@ var getPreparedCode = (function () {
       // read the element out of the html code and plug it in to our document.title
       var newDocTitle = (html.match(re.title) || [,''])[1].trim();
       if (newDocTitle && newDocTitle !== documentTitle) {
-        jsbin.state.title = documentTitle = newDocTitle;
+        jsbin.state.title = documentTitle = newDocTitle; // jshint ignore:line
         if (documentTitle) {
           document.title = documentTitle + ' - ' + 'JS Bin';
         } else {

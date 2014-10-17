@@ -10,7 +10,7 @@
   }
 
   function save() {
-    var url = jsbin.getURL(true) + '/edit';
+    var url = jsbin.getURL({ withRevision: true }) + '/edit';
     if (url) {
       document.cookie = 'last=' + encodeURIComponent(url) + '; expires=' + getExpires() + '; path=/';
     } else {

@@ -1,4 +1,4 @@
-/*globals objectValue, $, jsbin, $body, $document*/
+/*globals objectValue, $, jsbin, $body, $document, saveChecksum, jsconsole*/
 var keyboardHelpVisible = false;
 
 var customKeys = objectValue('settings.keys', jsbin) || {};
@@ -67,8 +67,12 @@ if (!customKeys.disabled) {
           $('a.save:first').click();
         }
         event.preventDefault();
-      } else if (event.shiftKey === true) { // shift+s = clone
-        $('a.clone').click();
+      } else if (event.shiftKey === true) { // shift+s = open share menu
+        var $sharemenu = $('#sharemenu');
+        if ($sharemenu.hasClass('open')) {
+
+        }
+        $('#sharemenu a').trigger('mousedown');
         event.preventDefault();
       }
     } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {

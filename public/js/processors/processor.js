@@ -143,11 +143,13 @@ var processors = jsbin.processors = (function () {
   var processors = {
 
     html: createProcessor({
-      id: 'html'
+      id: 'html',
+      extensions: ['html']
     }),
 
     css: createProcessor({
-      id: 'css'
+      id: 'css',
+      extensions: ['css']
     }),
 
     javascript: createProcessor({

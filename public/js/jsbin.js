@@ -223,15 +223,18 @@ jsbin.owner = function () {
   return jsbin.user && jsbin.user.name && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
 };
 
-jsbin.getURL = function (withoutRoot, share) {
-  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
-      state = jsbin.state;
+jsbin.getURL = function (options) {
+  if (!options) { options = {}; }
+
+  var withoutRoot = options.withoutRoot;
+  var url = withoutRoot ? '' : jsbin.root;
+  var state = jsbin.state;
 
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision) { //} && state.revision !== 1) {
-      url += '/' + state.revision;
+    if (!state.latest || options.revision) { //} && state.revision !== 1) {
+      url += '/' + (state.revision || 1);
     }
   }
   return url;
@@ -287,23 +290,13 @@ var $window = $(window),
     loadGist,
     // splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
-      // store.sessionStorage.setItem('javascript', editors.javascript.getCode());
-      if (jsbin.panels.focused.editor) {
-        try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-          store.sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
-          store.sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
-        } catch (e) {
-          store.sessionStorage.setItem('line', 0);
-          store.sessionStorage.setItem('character', 0);
-        }
-      }
-
       store.sessionStorage.setItem('url', jsbin.getURL());
       store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       if (jsbin.panels.saveOnExit === false) {
         return;
       }
+
       jsbin.panels.save();
       jsbin.panels.savecontent();
 

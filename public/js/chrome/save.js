@@ -1,3 +1,6 @@
+/*jshint strict: false */
+/*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
+
 var saving = {
   todo: {
     html: false,
@@ -12,8 +15,7 @@ var saving = {
 
     saving._inprogress = inprogress;
     if (inprogress === false) {
-      var panels = ['html','css','javascript'],
-          todo;
+      var panels = ['html','css','javascript'];
 
       var save = function () {
         var todo = panels.pop();
@@ -47,11 +49,18 @@ $('a.save').click(function (event) {
 });
 
 var $shareLinks = $('#share .link');
+var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
-$panelCheckboxes = $('#sharemenu #sharepanels input');
+// TODO remove split when live
+var split = $('#sharemenu .share-split').length;
 
+// TODO candidate for removal
 function updateSavedState() {
   'use strict';
+  if (split) {
+    return;
+  }
+
   var mapping = {
     live: 'output',
     javascript: 'js',
@@ -59,12 +68,15 @@ function updateSavedState() {
     html: 'html',
     console: 'console'
   };
+
+  var withRevision = true;
+
   var query = $panelCheckboxes.filter(':checked').map(function () {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
     var path = this.getAttribute('data-path');
-    var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var url = jsbin.getURL({ revision: withRevision }) + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     var hash = panels.getHighlightLines();
 
@@ -92,12 +104,20 @@ function updateSavedState() {
   });
 }
 
-$('#sharemenu').bind('open', function () {
+$('#sharemenu').bind('open', updateSavedState);
+$('#sharebintype input[type=radio]').on('click', function () {
+  if (this.value === 'snapshot') {
+    jsbin.state.checksum = false;
+    saveChecksum = false;
+  }
   updateSavedState();
 });
 
 $document.on('saved', function () {
   updateSavedState();
+
+  $('#sharebintype input[type=radio][value="realtime"]').prop('checked', true);
+
   $shareLinks.closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
@@ -134,7 +154,7 @@ function onSaveError(jqXHR, panelId) {
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
   } else if (panelId) {
-    if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
+    if (panelId) { savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100); }
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
   }
 }
@@ -260,7 +280,7 @@ function updateCode(panelId, callback) {
   }
 
   $.ajax({
-    url: jsbin.getURL() + '/save',
+    url: jsbin.getURL({ revision: true }) + '/save',
     data: data,
     type: 'post',
     dataType: 'json',
@@ -268,9 +288,11 @@ function updateCode(panelId, callback) {
     success: function (data) {
       $document.trigger('saveComplete', { panelId: panelId });
       if (data.error) {
-        saveCode('save', true, function (data) {
+        saveCode('save', true, function () {
           // savedAlready = data.checksum;
         });
+      } else {
+        jsbin.state.latest = true;
       }
     },
     error: function (jqXHR) {
@@ -278,7 +300,7 @@ function updateCode(panelId, callback) {
     },
     complete: function () {
       saving.inprogress(false);
-      callback && callback();
+      if (callback) { callback(); }
     }
   });
 }
@@ -306,7 +328,8 @@ var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="css" />')
     .append('<input type="hidden" name="method" />')
     .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />')
-    .append('<input type="hidden" name="settings" />');
+    .append('<input type="hidden" name="settings" />')
+    .append('<input type="hidden" name="checksum" />');
 
   var settings = {};
 
@@ -325,12 +348,13 @@ var $form = $('form#saveform').empty()
   $form.find('input[name=css]').val(editors.css.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);
+  $form.find('input[name=checksum]').val(jsbin.state.checksum);
 
   return $form;
 }
 
 function pad(n){
-  return n<10 ? '0'+n : n
+  return n<10 ? '0'+n : n;
 }
 
 function ISODateString(d){
@@ -339,7 +363,7 @@ function ISODateString(d){
     + pad(d.getDate())+'T'
     + pad(d.getHours())+':'
     + pad(d.getMinutes())+':'
-    + pad(d.getSeconds())+'Z'
+    + pad(d.getSeconds())+'Z';
 }
 
 function saveCode(method, ajax, ajaxCallback) {
@@ -366,9 +390,6 @@ function saveCode(method, ajax, ajaxCallback) {
       type: 'post',
       headers: {'Accept': 'application/json'},
       success: function (data) {
-        var $binGroup,
-            edit;
-
         if (ajaxCallback) {
           ajaxCallback(data);
         }
@@ -379,13 +400,14 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.latest = true; // this is never not true...end of conversation!
         jsbin.state.metadata = { name: jsbin.user.name };
-        $form.attr('action', jsbin.getURL() + '/save');
+        $form.attr('action', jsbin.getURL({ revision: true }) + '/save');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
           var hash = panels.getHighlightLines();
-          if (hash) hash = '#' + hash;
+          if (hash) {hash = '#' + hash;}
           window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
           store.sessionStorage.setItem('url', jsbin.getURL());
         } else {
@@ -405,64 +427,3 @@ function saveCode(method, ajax, ajaxCallback) {
     $form.submit();
   }
 }
-
-/**
- * Returns the similar part of two strings
- * @param  {String} a first string
- * @param  {String} b second string
- * @return {String}   common substring
- */
-function sameStart(a, b) {
-  if (a == b) return a;
-
-  var tmp = b.slice(0, 1);
-  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
-    tmp = b.slice(0, tmp.length + 1);
-  }
-
-  return tmp;
-}
-
-/*
-
-// refresh the window when we popstate, because for now we don't do an xhr to
-// inject the panel content...yet.
-window.onpopstate = function onpopstate(event) {
-  // ignore the first popstate event, because that comes from the browser...
-  if (!onpopstate.first) window.location.reload();
-  else onpopstate.first = false;
-};
-
-onpopstate.first = true;
-
-function updateURL(path) {
-  var old = location.pathname,
-      back = true,
-      same = sameStart(old, path);
-      sameAt = same.length;
-
-  if (updateURL.timer) window.cancelAnimationFrame(updateURL.timer);
-
-  var run = function () {
-    if (location.pathname !== path) {
-      updateURL.timer = window.requestAnimationFrame(run);
-    }
-
-    if (location.pathname !== same) {
-      if (back) {
-        history.replaceState({ path: path }, '', location.pathname.slice(0, -1));
-      } else {
-        history.replaceState({ path: path }, '', path.slice(0, location.pathname.length + 1));
-      }
-    } else {
-      back = false;
-      history.replaceState({ path: path }, '', path.slice(0, sameAt + 2));
-    }
-  };
-
-  history.pushState({ path: path }, '', location.pathname.slice(0, -1));
-
-  run();
-}
-
-*/

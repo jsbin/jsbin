@@ -9,17 +9,22 @@
     {{#bins}}
     <tbody>
       {{#.}}
-      <tr class="{{#if archive}}archived{{/if}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
+      <tr class="{{#if archive}}archived{{/if}} {{#unless is_first}}snapshot snapshot{{@index}}{{/unless}}" data-url="{{url}}" data-edit-url="{{edit_url}}">
         <td class="url">
           <a href="{{edit_url}}">
-            <span{{#is_first}} class="first"{{/is_first}}>{{code}}/</span>{{revision}}/
+            {{#if is_first}}
+            <span class="first">{{code}}</span>
+            {{else}}
+            <span class="snapshot">{{revision}}</span>
+            {{/if}}
           </a>
         </td>
         <td class="last_updated">
           <a pubdate="{{last_updated}}" href="{{edit_url}}">{{pretty_last_updated}}</a>
         </td>
-        <td class="archive_action">
-          <a href="{{url}}/archive" class="archive"><span>Archive</span> x</a>
+        <td class="action">
+          <!-- <a href="{{url}}/edit" class="edit"><span>Edit</span></a> -->
+          <a href="{{url}}/archive" class="archive"><span>Archive</span></a>
           <a href="{{url}}/unarchive" class="unarchive"><span>Un-archive</span></a>
         </td>
         <td class="title">

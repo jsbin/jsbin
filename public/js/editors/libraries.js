@@ -461,6 +461,13 @@ var libraries = [
     'label': 'Rapha&euml;l 2.1.0'
   },
   {
+    'url': [
+      '//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js',
+      '//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css'
+    ],
+    'label': 'Chartist.js latest'
+  },
+  {
     'url': '//cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js',
     'label': 'Sammy 0.7.4'
   },

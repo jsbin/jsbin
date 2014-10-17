@@ -339,11 +339,21 @@ panels.updateQuery = throttle(function updateQuery() {
     live: 'output'
   };
 
-  var visible = panels.getVisible().map(function (p) {
+  var visible = panels.getVisible();
+
+  var query = visible.map(function (p) {
     return alt[p.id] || p.id;
+  }).join(',');
+
+  $.ajax({
+    url: jsbin.getURL() + '/settings',
+    type: 'PUT',
+    data: { panels: visible.map(function (p) { return p.id; }) },
+    success: function () {}
   });
+
   if (history.replaceState) {
-    history.replaceState(null, null, '?' + visible.join(','));
+    history.replaceState(null, null, '?' + query);
   }
 }, 100);
 

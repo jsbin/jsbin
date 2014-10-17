@@ -169,18 +169,18 @@
     if (code) {
       ext = processors[jsbin.state.processors.html || 'html'].extensions[0];
       if (ext !== 'html') {
-        directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.' + ext + '">' + ext + '</a>');
       } else if (code.toLowerCase().indexOf('<svg') === 0) {
-        directLinksHTML.push('<a href="' + url + '.svg">svg</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.svg">svg</a>');
       }
     }
 
     if (jsbin.panels.panels.css.getCode().trim()) {
       ext = processors[jsbin.state.processors.css || 'css'].extensions[0];
       if (ext !== 'css') {
-        directLinksHTML.push('<a href="' + url + '.css">css</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.css">css</a>');
       }
-      directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+      directLinksHTML.push('<a target="_blank" href="' + url + '.' + ext + '">' + ext + '</a>');
     }
 
     code = jsbin.panels.panels.javascript.getCode().trim();
@@ -189,14 +189,14 @@
       ext = processors[jsbin.state.processors.javascript || 'javascript'].extensions[0];
 
       if (ext !== 'js') {
-        directLinksHTML.push('<a href="' + url + '.js">js</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.js">js</a>');
       }
 
       try {
         JSON.parse(code);
-        directLinksHTML.push('<a href="' + url + '.json">json</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.json">json</a>');
       } catch (e) {
-        directLinksHTML.push('<a href="' + url + '.' + ext + '">' + ext + '</a>');
+        directLinksHTML.push('<a target="_blank" href="' + url + '.' + ext + '">' + ext + '</a>');
       }
 
     }

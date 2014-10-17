@@ -223,7 +223,7 @@ if (!jsbin.saveDisabled) {
 
           $document.trigger('tip', {
             type: 'notification',
-            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a class="clone" href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
           });
         }
       });
@@ -283,7 +283,10 @@ function updateCode(panelId, callback) {
   });
 }
 
-$('a.clone').click(function (event) {
+$('a.clone').click(clone);
+$('#tip').delegate('a.clone', 'click', clone);
+
+function clone(event) {
   event.preventDefault();
 
   // save our panel layout - assumes our user is happy with this layout
@@ -294,7 +297,7 @@ $('a.clone').click(function (event) {
   $form.submit();
 
   return false;
-});
+}
 
 function setupform(method) {
 var $form = $('form#saveform').empty()

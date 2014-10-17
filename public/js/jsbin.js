@@ -248,7 +248,7 @@ jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, me
   if (jsbin.state.code) {
     $.ajax({
       type: method, // consistency ftw :-\
-      url: jsbin.getURL() + '/settings',
+      url: jsbin.getURL({ revision: true }) + '/settings',
       data: update
     });
   }

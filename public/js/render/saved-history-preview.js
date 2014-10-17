@@ -130,7 +130,6 @@
 
     var selected = null;
     $bins.delegate('a', 'click', function (event) {
-      console.count('a.click')
       var $this = $(this);
 
       if ($this.closest('.action').length) {
@@ -138,14 +137,17 @@
         return;
       }
 
+      event.preventDefault();
+      event.stopPropagation(); // prevent further delegates
+      var $tr = $this.closest('tr');
+      var data = $tr.data();
+      var url = jsbin.root + data.url;
+
       if (selected === this) {
-        return true;
+        window.location = data.editUrl;
       } else {
-        event.preventDefault();
-        event.stopPropagation(); // prevent further delegates
         $trs.removeClass('selected');
-        var $tr = $this.closest('tr').addClass('selected');
-        var url = jsbin.root + $tr.data('url');
+        $tr.addClass('selected');
         updatePreview(url, $iframe);
         updateViewing(url, $viewing);
 

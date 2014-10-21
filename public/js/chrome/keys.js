@@ -11,7 +11,7 @@ jsbin.keys = (function () {
   var keys = {};
 
   var find = function (url) {
-    var key = keys[url || jsbin.getURL({ revision: true, withoutRoot: true })] || {};
+    var key = keys[url || jsbin.getURL({ withRevision: true, withoutRoot: true })] || {};
     return key.c;
   };
 
@@ -28,7 +28,7 @@ jsbin.keys = (function () {
   }
 
   $document.on('saved', function () {
-    keys[jsbin.getURL({ revision: false, withoutRoot: true })] = { s: jsbin.state.revsion, c: jsbin.state.checksum, d: (new Date()).getTime() };
+    keys[jsbin.getURL({ withRevision: false, withoutRoot: true })] = { s: jsbin.state.revsion, c: jsbin.state.checksum, d: (new Date()).getTime() };
     localStorage.keys = JSON.stringify(keys);
   });
 

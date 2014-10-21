@@ -347,7 +347,7 @@ panels.updateQuery = throttle(function updateQuery() {
 
   if (jsbin.state.code) {
     $.ajax({
-      url: jsbin.getURL({ revision: true }) + '/settings',
+      url: jsbin.getURL({ withRevision: true }) + '/settings',
       type: 'PUT',
       data: { panels: visible.map(function (p) { return p.id; }) },
       success: function () {}

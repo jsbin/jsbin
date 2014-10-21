@@ -76,7 +76,7 @@ function updateSavedState() {
   }).get().join(',');
   $shareLinks.each(function () {
     var path = this.getAttribute('data-path');
-    var url = jsbin.getURL({ revision: withRevision }) + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var url = jsbin.getURL({ withRevision: withRevision }) + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     var hash = panels.getHighlightLines();
 
@@ -280,7 +280,7 @@ function updateCode(panelId, callback) {
   }
 
   $.ajax({
-    url: jsbin.getURL({ revision: true }) + '/save',
+    url: jsbin.getURL({ withRevision: true }) + '/save',
     data: data,
     type: 'post',
     dataType: 'json',
@@ -402,7 +402,7 @@ function saveCode(method, ajax, ajaxCallback) {
         jsbin.state.revision = data.revision;
         jsbin.state.latest = true; // this is never not true...end of conversation!
         jsbin.state.metadata = { name: jsbin.user.name };
-        $form.attr('action', jsbin.getURL({ revision: true }) + '/save');
+        $form.attr('action', jsbin.getURL({ withRevision: true }) + '/save');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);

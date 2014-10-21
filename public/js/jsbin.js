@@ -233,8 +233,10 @@ jsbin.getURL = function (options) {
   if (state.code) {
     url += '/' + state.code;
 
-    if (!state.latest || options.revision) { //} && state.revision !== 1) {
-      url += '/' + (state.revision || 1);
+    if (!state.latest || options.withRevision) { //} && state.revision !== 1) {
+      if (options.withRevision !== false) {
+        url += '/' + (state.revision || 1);
+      }
     }
   }
   return url;
@@ -248,7 +250,7 @@ jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, me
   if (jsbin.state.code) {
     $.ajax({
       type: method, // consistency ftw :-\
-      url: jsbin.getURL({ revision: true }) + '/settings',
+      url: jsbin.getURL({ withRevision: true }) + '/settings',
       data: update
     });
   }

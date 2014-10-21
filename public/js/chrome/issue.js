@@ -11,7 +11,7 @@ var githubIssue = (function () {
                (jsbin.user && jsbin.user.name ? '* ' + jsbin.user.name : ''),
                '\n'].join('');
 
-    return url + '?body=' + encodeURIComponent(body.replace(/%url%/g, jsbin.getURL({ revision: true })));
+    return url + '?body=' + encodeURIComponent(body.replace(/%url%/g, jsbin.getURL({ withRevision: true })));
   }
 
   var $newissue = $('#newissue');

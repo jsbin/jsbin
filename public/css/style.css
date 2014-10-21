@@ -3788,6 +3788,10 @@ left: 50%;
   text-shadow: none;
 }
 
+#history .snapshot a {
+  color: #ccc;
+}
+
 #history .url {
   text-align: right;
   width: 15%;
@@ -3796,7 +3800,7 @@ left: 50%;
 }
 
 #history .url .snapshot {
-  color: #0097fe;
+  color: rgb(161, 216, 253);
 }
 
 #history .url a span {
@@ -4911,11 +4915,13 @@ tbody:hover .snapshot1 .url a span:before {
 }
 
 .snapshot td {
-  opacity: 0.3;
+  /* opacity: 0.3; */
+  /* color: #ccc !important; */
 }
 
 .snapshot td.url {
-  opacity: 0.3;
+/*   opacity: 0.3; */
+  color: rgb(0, 151, 254);
 }
 
 .snapshot:hover td,

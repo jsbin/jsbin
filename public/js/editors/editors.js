@@ -345,7 +345,7 @@ panels.updateQuery = throttle(function updateQuery() {
     return alt[p.id] || p.id;
   }).join(',');
 
-  if (jsbin.state.code) {
+  if (jsbin.state.code && jsbin.state.owner) {
     $.ajax({
       url: jsbin.getURL({ revision: true }) + '/settings',
       type: 'PUT',

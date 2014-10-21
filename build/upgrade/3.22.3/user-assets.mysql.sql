@@ -1,13 +1,13 @@
 CREATE TABLE IF NOT EXISTS `assets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `name` char(255) NOT NULL,
+  `username` char(255) NOT NULL,
   `asset_url` char(255) NOT NULL,
   `size` int(11) NOT NULL,
   `mime` char(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `asset_url` (`asset_url`),
   KEY `user_id` (`user_id`),
-  KEY `username` (`name`),
+  KEY `username` (`username`),
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 

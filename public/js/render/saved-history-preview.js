@@ -130,6 +130,8 @@
 
     var selected = null;
     $bins.delegate('a', 'click', function (event) {
+      if (event.shiftKey || event.metaKey) { return; }
+      
       var $this = $(this);
 
       if ($this.closest('.action').length) {
@@ -156,7 +158,7 @@
     });
 
     // Load bin from data-edit-url attribute when user clicks on a row
-    $bins.delegate('tr:not(.spacer)', 'click', function () {
+    $bins.delegate('tr:not(.spacer)', 'click', function (event) {
       if (event.shiftKey || event.metaKey) { return; }
       $(this).find('.url a:first').click();
     });

@@ -408,8 +408,10 @@ function saveCode(method, ajax, ajaxCallback) {
           // updateURL(edit);
           var hash = panels.getHighlightLines();
           if (hash) {hash = '#' + hash;}
-          window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
-          store.sessionStorage.setItem('url', jsbin.getURL());
+          // If split is truthy (> 0) then we are using the revisonless feature
+          // this is temporary until we release the feature!
+          window.history.pushState(null, '', jsbin.getURL({withRevision: !split}) + '/edit' + hash);
+          store.sessionStorage.setItem('url', jsbin.getURL({withRevision: !split}));
         } else {
           window.location.hash = data.edit;
         }

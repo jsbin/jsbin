@@ -73,7 +73,7 @@ $('.homebtn').click(function (event, data) {
   return false;
 });
 
-var $lockrevision = $('a.lockrevision').on('click', function (event) {
+var $lockrevision = $('div.lockrevision').on('click', function (event) {
   event.preventDefault();
   saveChecksum = false;
   $document.trigger('locked');

@@ -42,9 +42,8 @@
       <input id="beta" name="beta" type="checkbox" {{#if user.beta}}checked{{/if}}>
       {{#feature request "!pro"}}
       <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a>
-      {{else}}
-      <p><a href="http://jsbin.com/help/beta-features">Current list of beta features</a> &ndash; <em>Note: not all beta features make it to production.</em></p>
       {{/feature}}
+      <p><a href="http://jsbin.com/help/beta-features">Current list of beta features</a> &ndash; <em>Note: not all beta features make it to production.</em></p>
     </div>
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">

@@ -11,6 +11,7 @@
     var key = form.find('input[name=password]').val();
     var email = form.find('input[name=email]').val();
     var subscribed = form.find('input[name=subscribed]').prop('checked');
+    var beta = form.find('input[name=beta]').prop('checked');
     var $loginFeedback = form.find('.loginFeedback');
     var $csrf = $('#_csrf');
 
@@ -23,6 +24,7 @@
         key: key,
         email: email,
         subscribed: subscribed,
+        beta: beta,
         _csrf: $csrf.val()
       },
       type: 'POST',

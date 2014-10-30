@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS `assets` (
   PRIMARY KEY (`id`),
   KEY `asset_url` (`asset_url`),
   KEY `user_id` (`user_id`),
-  KEY `username` (`username`),
+  KEY `username` (`username`)
 ) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 

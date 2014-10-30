@@ -51,7 +51,7 @@
   "getBookmark": "SELECT * FROM owner_bookmarks WHERE `name`=? AND `type`=? ORDER BY `created` DESC",
   "getAssetsForUser": "SELECT * FROM assets WHERE `username`=?",
   "deleteAsset": "DELETE FROM assets WHERE `asset_url`=? AND `username`=?",
-  "saveAsset": "INSERT INTO assets (`user_id`, `username`, `asset_url`, `size`, `mime`) VALUES (?,?,?,?,?)",
+  "saveAsset": "INSERT INTO assets (`username`, `asset_url`, `size`, `mime`) VALUES (?,?,?,?)",
   "sandboxColumns": [
     "created",
     "last_viewed",

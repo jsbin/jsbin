@@ -146,13 +146,20 @@
   }
 
   function addImage(object) {
+    var images = ['png', 'jpg', 'peg', 'gif'];
     var url = 'https://jsbin-user-assets.s3.amazonaws.com/' + object.filename;
+    var bg = url;
+    var ext = url.slice(-3);
     var key = object.filename.replace(/^(.*\/)?/, '');
     var html = '';
 
+    if (images.indexOf(ext) === -1) {
+      bg = jsbin.static + '/images/document.svg';
+    }
+
     html += '<a href="' + url + '" data-size="' + object.size + '" data-key="' + key + '" class="asset" target="_blank">';
     html += '<button><img src="' + jsbin.static + '/images/close-x.png"></button>';
-    html += '<div style="background-image: url(' + url.replace(/\s/g, '%20') + '), url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2P89evXfwY0wMbGxoguxjgUFKI7GsTH5m4M3w1ChQAneyesWb250wAAAABJRU5ErkJggg==)"></div>';
+    html += '<div style="background-image: url(' + bg.replace(/\s/g, '%20') + '), url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJUlEQVQYV2P89evXfwY0wMbGxoguxjgUFKI7GsTH5m4M3w1ChQAneyesWb250wAAAABJRU5ErkJggg==)"></div>';
     html += '<p class="name">' + key + '</p>';
     html += '<p class="file-size">' + object.human + '</p>';
     html += '</a>';

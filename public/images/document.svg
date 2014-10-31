@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="145px" height="145px" viewBox="0 0 145 145" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.1.1 (8761) - http://www.bohemiancoding.com/sketch -->
+    <title>Untitled 4</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M42.109375,16.84375 L42.109375,0 L0,0 L0,77 L58.953125,77 L58.953125,16.84375 L42.109375,16.84375 L42.109375,16.84375 Z M7.21875,34.890625 L43.3125,34.890625 L43.3125,37.296875 L7.21875,37.296875 L7.21875,34.890625 L7.21875,34.890625 Z M7.21875,56.546875 L48.125,56.546875 L48.125,58.953125 L7.21875,58.953125 L7.21875,56.546875 L7.21875,56.546875 Z M51.734375,69.78125 L7.21875,69.78125 L7.21875,67.375 L51.734375,67.375 L51.734375,69.78125 L51.734375,69.78125 Z M51.734375,48.125 L7.21875,48.125 L7.21875,45.71875 L51.734375,45.71875 L51.734375,48.125 L51.734375,48.125 Z M51.734375,26.46875 L7.21875,26.46875 L7.21875,24.0625 L51.734375,24.0625 L51.734375,26.46875 L51.734375,26.46875 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="document" sketch:type="MSLayerGroup" transform="translate(23.000000, 23.000000)">
+            <g id="Document"></g>
+            <g id="Group" transform="translate(21.023438, 12.000000)">
+                <g id="Clipped">
+                    <mask id="mask-2" sketch:name="Shape" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Shape"></g>
+                    <path d="M58.0507812,77 L0.90234375,77 C0.40425,77 0,76.59575 0,76.0976562 L0,0.90234375 C0,0.40425 0.40425,0 0.90234375,0 L58.0507812,0 C58.548875,0 58.953125,0.40425 58.953125,0.90234375 L58.953125,76.0976562 C58.953125,76.59575 58.548875,77 58.0507812,77 L58.0507812,77 Z" id="Shape" fill="#EEEFF0" sketch:type="MSShapeGroup" mask="url(#mask-2)"></path>
+                </g>
+                <path d="M58.953125,14.4375 L44.515625,0 L44.515625,14.4375 L58.953125,14.4375 Z" id="Shape" fill="#EEEFF0" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

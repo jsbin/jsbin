@@ -38,12 +38,12 @@
     {{/feature}}
 
     <div>
-      <label for="beta">Enable beta features</label>
+      <label for="beta">Experimental features</label>
       <input id="beta" name="beta" type="checkbox" {{#if user.beta}}checked{{/if}}>
       {{#feature request "!pro"}}
       <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a>
       {{/feature}}
-      <p><a href="http://jsbin.com/help/beta-features">Current list of beta features</a> &ndash; <em>Note: not all beta features make it to production.</em></p>
+      <p><a href="http://jsbin.com/help/beta-features">Current list of experiments</a> &ndash; <em>Note: not all features make it to production.</em></p>
     </div>
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">

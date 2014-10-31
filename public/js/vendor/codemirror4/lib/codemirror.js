@@ -96,21 +96,20 @@
     registerEventHandlers(this);
     ensureGlobalHandlers();
 
-    var cm = this;
-    runInOp(this, function() {
-      cm.curOp.forceUpdate = true;
-      attachDoc(cm, doc);
+    startOperation(this);
+    this.curOp.forceUpdate = true;
+    attachDoc(this, doc);
 
-      if ((options.autofocus && !mobile) || activeElt() == display.input)
-        setTimeout(bind(onFocus, cm), 20);
-      else
-        onBlur(cm);
+    if ((options.autofocus && !mobile) || activeElt() == display.input)
+      setTimeout(bind(onFocus, this), 20);
+    else
+      onBlur(this);
 
-      for (var opt in optionHandlers) if (optionHandlers.hasOwnProperty(opt))
-        optionHandlers[opt](cm, options[opt], Init);
-      maybeUpdateLineNumberWidth(cm);
-      for (var i = 0; i < initHooks.length; ++i) initHooks[i](cm);
-    });
+    for (var opt in optionHandlers) if (optionHandlers.hasOwnProperty(opt))
+      optionHandlers[opt](this, options[opt], Init);
+    maybeUpdateLineNumberWidth(this);
+    for (var i = 0; i < initHooks.length; ++i) initHooks[i](this);
+    endOperation(this);
   }
 
   // DISPLAY CONSTRUCTOR
@@ -4864,7 +4863,7 @@
   // are simply ignored.
   keyMap.pcDefault = {
     "Ctrl-A": "selectAll", "Ctrl-D": "deleteLine", "Ctrl-Z": "undo", "Shift-Ctrl-Z": "redo", "Ctrl-Y": "redo",
-    "Ctrl-Home": "goDocStart", "Ctrl-Up": "goDocStart", "Ctrl-End": "goDocEnd", "Ctrl-Down": "goDocEnd",
+    "Ctrl-Home": "goDocStart", "Ctrl-End": "goDocEnd", "Ctrl-Up": "goLineUp", "Ctrl-Down": "goLineDown",
     "Ctrl-Left": "goGroupLeft", "Ctrl-Right": "goGroupRight", "Alt-Left": "goLineStart", "Alt-Right": "goLineEnd",
     "Ctrl-Backspace": "delGroupBefore", "Ctrl-Delete": "delGroupAfter", "Ctrl-S": "save", "Ctrl-F": "find",
     "Ctrl-G": "findNext", "Shift-Ctrl-G": "findPrev", "Shift-Ctrl-F": "replace", "Shift-Ctrl-R": "replaceAll",
@@ -4879,7 +4878,7 @@
     "Ctrl-Alt-Backspace": "delGroupAfter", "Alt-Delete": "delGroupAfter", "Cmd-S": "save", "Cmd-F": "find",
     "Cmd-G": "findNext", "Shift-Cmd-G": "findPrev", "Cmd-Alt-F": "replace", "Shift-Cmd-Alt-F": "replaceAll",
     "Cmd-[": "indentLess", "Cmd-]": "indentMore", "Cmd-Backspace": "delWrappedLineLeft", "Cmd-Delete": "delWrappedLineRight",
-    "Cmd-U": "undoSelection", "Shift-Cmd-U": "redoSelection",
+    "Cmd-U": "undoSelection", "Shift-Cmd-U": "redoSelection", "Ctrl-Up": "goDocStart", "Ctrl-Down": "goDocEnd",
     fallthrough: ["basic", "emacsy"]
   };
   // Very basic readline/emacs-style bindings, which are standard on Mac.
@@ -7825,7 +7824,7 @@
 
   // THE END
 
-  CodeMirror.version = "4.6.1";
+  CodeMirror.version = "4.7.0";
 
   return CodeMirror;
 });

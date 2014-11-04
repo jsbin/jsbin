@@ -492,6 +492,28 @@ var processors = jsbin.processors = (function () {
       }), 500),
     }),
 
+    to5: createProcessor({
+      id: 'to5',
+      target: 'js',
+      extensions: ['es6'],
+      url: jsbin.static + '/js/vendor/6to5.min.js',
+      init: function (ready) {
+        ready();
+      },
+      handler: function to5handle(source, resolve, reject) {
+        try {
+          resolve(to5(source).code);
+        } catch (e) {
+          console.error(e.message);
+          reject([{
+            line: e.loc.line - 1,
+            ch: e.loc.column,
+            msg: e.message.split('\n')[0].replace(new RegExp('\\\(' + e.loc.line + ':' + e.loc.column + '\\\)'), '(' + e.loc.column + ')')
+          }]);
+        }
+      }
+    }),
+
     myth: createProcessor({
       id: 'myth',
       target: 'css',

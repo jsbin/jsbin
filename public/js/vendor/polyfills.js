@@ -31,6 +31,23 @@ if (!Array.prototype.indexOf) {
   }
 }
 
+// monkey patch captureStackTrace for 6to5 - this isn't a polyfill at all!
+Error.captureStackTrace = Error.captureStackTrace || function (obj) {
+  if (Error.prepareStackTrace) {
+    var frame = {
+      isEval: function () { return false; },
+      getFileName: function () { return "filename"; },
+      getLineNumber: function () { return 1; },
+      getColumnNumber: function () { return 1; },
+      getFunctionName: function () { return "functionName" }
+    };
+
+    obj.stack = Error.prepareStackTrace(obj, [frame, frame, frame]);
+  } else {
+    obj.stack = obj.stack || obj.name || "Error";
+  }
+};
+
 // ES5 15.4.4.21
 // http://es5.github.com/#x15.4.4.21
 // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Objects/Array/reduce

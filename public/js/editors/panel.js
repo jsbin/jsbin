@@ -582,6 +582,9 @@ function populateEditor(editor, panel) {
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);
     }
+
+    editor.editor.clearHistory();
+
   } else {
     // this means it was set via the url
     changed = true;

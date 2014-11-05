@@ -353,12 +353,16 @@
         copyGutters.push('CodeMirror-lint-markers');
         setOption(cm, 'gutters', copyGutters);
       }
-      setOption(cm, 'lint', true);
+      setOption(cm, 'lint', {
+        delay: 800
+      });
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
       setOption(cm, 'lineNumbers', ln);
     } else {
-      setOption(cm, 'lint', true);
+      setOption(cm, 'lint', {
+        delay: 800
+      });
     }
     if (opt.console) {
       $document.trigger('sizeeditors');

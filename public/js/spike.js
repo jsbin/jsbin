@@ -85,8 +85,8 @@ To test: curl --header "Accept: text/event-stream" <jsbinurl>
 
   function error(error, cmd) {
     var msg = JSON.stringify({ response: error.message, cmd: cmd, type: 'error' });
-    if (remoteWindow) {
-      remoteWindow.postMessage(msg, origin);
+    if (global.remoteWindow) {
+      global.remoteWindow.postMessage(msg, origin);
     } else {
       queue.push(msg);
     }

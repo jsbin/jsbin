@@ -18,7 +18,7 @@ To test: curl --header "Accept: text/event-stream" <jsbinurl>
 
 */
 
-;(function () {
+;(function (global) {
 
   function sortci(a, b) {
     return a.toLowerCase() < b.toLowerCase() ? -1 : 1;
@@ -284,4 +284,4 @@ To test: curl --header "Accept: text/event-stream" <jsbinurl>
     restore();
   }
 
-}());
+}(this));

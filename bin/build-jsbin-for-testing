@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+
+var scripts = require('../scripts.json');
+
+var base = path.resolve(__dirname + '/../public/');
+
+var built = scripts.app.reduce(function (str, path) {
+  return str + fs.readFileSync(base + path)
+}, '');
+
+console.log(built);

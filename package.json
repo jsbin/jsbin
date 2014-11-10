@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "npm run test:mocha && npm run test:tape",
-    "test:tape": "node_modules/tape/bin/tape.js test/tape/**/*.js",
+    "test:tape": "node_modules/tape/bin/tape test/tape/**/*.js",
     "test:mocha": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",

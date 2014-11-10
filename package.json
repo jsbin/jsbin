@@ -76,6 +76,7 @@
     "hbs-utils": "0.0.3",
     "mocha": "~1.21.4",
     "mocha-casperjs": "~0.5.0",
+    "request": "^2.47.0",
     "should": "~1.2.2",
     "sinon": "~1.7.3",
     "tape": "^3.0.2"

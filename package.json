@@ -18,7 +18,9 @@
     "url": "git://github.com/jsbin/jsbin.git"
   },
   "scripts": {
-    "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
+    "test": "npm run test:mocha && npm run test:tape",
+    "test:tape": "node_modules/tape/bin/tape.js test/tape/**/*.js",
+    "test:mocha": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit"

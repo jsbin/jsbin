@@ -67,15 +67,16 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.11",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-uglify": "~0.2.2",
+    "hbs-utils": "0.0.3",
+    "mocha": "~1.21.4",
+    "mocha-casperjs": "~0.5.0",
     "should": "~1.2.2",
     "sinon": "~1.7.3",
-    "grunt-cli": "~0.1.11",
-    "mocha-casperjs": "~0.5.0",
-    "hbs-utils": "0.0.3",
-    "mocha": "~1.21.4"
+    "tape": "^3.0.2"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

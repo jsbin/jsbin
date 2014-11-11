@@ -2,6 +2,10 @@ var test = require('tape');
 
 var request = require('request');
 
+test.skip('setup', function (setup) {
+  // put some bins in the db etc...
+});
+
 test('jsbin', function (jsbin) {
 
   jsbin.test('can connect', function (t) {

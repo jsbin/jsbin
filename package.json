@@ -80,7 +80,8 @@
     "should": "~1.2.2",
     "sinon": "~1.7.3",
     "tape": "^3.0.2",
-    "tap-spec": "~1.0.1"
+    "tap-spec": "~1.0.1",
+    "browserify": "~6.3.2"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

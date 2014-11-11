@@ -6,7 +6,7 @@ test.skip('setup', function (setup) {
   // put some bins in the db etc...
 });
 
-test('jsbin', function (jsbin) {
+test.skip('jsbin', function (jsbin) {
 
   jsbin.test('can connect', function (t) {
     t.plan(1);

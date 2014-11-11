@@ -1,37 +1,46 @@
 /*jshint strict: false */
 /*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
 
-var saving = {
-  todo: {
+
+var saving = (function (undef) {
+
+  var todo = {
     html: false,
     css: false,
-    javascript: false
-  },
-  _inprogress: false,
-  inprogress: function (inprogress) {
-    if (typeof inprogress === 'undefined') {
-      return saving._inprogress;
+    javascript: false 
+  };
+  
+  var _inprogress = false;
+
+  var inprogress = function (inprogress) {
+    if (inprogress === undef) {
+      return _inprogress; 
+    }
+    _inprogress = inprogress;
+    if (_inprogress) {
+      return; 
     }
 
-    saving._inprogress = inprogress;
-    if (inprogress === false) {
-      var panels = ['html','css','javascript'];
+    var panels = Object.keys(todo);
 
-      var save = function () {
-        var todo = panels.pop();
-        if (todo && saving.todo[todo]) {
-          saving._inprogress = true;
-          updateCode(todo, save);
-          saving.todo[todo] = false;
-        } else if (todo) {
-          save();
-        }
-      };
+    var language;
 
-      save();
+    while (language = panels.pop()) {
+      if (todo[language]) {
+        _inprogess = true;
+        updateCode(todo);
+        todo[langauge] = false;
+      }
     }
+
+  };
+
+  return {
+    inprogress: inprogress
   }
-};
+
+}());
+
 
 // to allow for download button to be introduced via beta feature
 $('a.save').click(function (event) {

@@ -4,6 +4,7 @@ config.*.json
 public/js/jsbin*.js
 .nodemonignore
 public/js/prod
+public/js/modules/*/bundle.js
 !config.default.json
 statsd.js
 .allow-devtools-edit

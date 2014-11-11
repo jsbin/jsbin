@@ -6,7 +6,7 @@ test('sanity', function (sanity) {
     t.plan(1); 
     var one = 1;
     var two = 2;
-    t.ok(one + one, two, '1 + 1 = 2');
+    t.ok(one + one === two, 'They are equal');
   });
   
 });

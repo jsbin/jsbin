@@ -19,7 +19,7 @@
   },
   "scripts": {
     "test": "npm run test:mocha && npm run test:tape",
-    "test:tape": "node_modules/tape/bin/tape test/tape/**/*.js",
+    "test:tape": "node_modules/.bin/tape test/tape/**/*.js | node_modules/.bin/tap-spec",
     "test:mocha": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",
@@ -79,7 +79,8 @@
     "request": "^2.47.0",
     "should": "~1.2.2",
     "sinon": "~1.7.3",
-    "tape": "^3.0.2"
+    "tape": "^3.0.2",
+    "tap-spec": "~1.0.1"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

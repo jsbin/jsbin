@@ -1,5 +1,5 @@
 /*jshint strict: false */
-/*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
+/*globals $, analytics, jsbin, documentTitle, $document, throttle, editors, compress*/
 
 
 var saving = (function (undef) {
@@ -260,13 +260,6 @@ if (!jsbin.saveDisabled) {
   });
 }
 
-function compressKeys(keys, obj) {
-  obj.compressed = keys;
-  keys.split(',').forEach(function (key) {
-    obj[key] = LZString.compressToUTF16(obj[key]);
-  });
-}
-
 function updateCode(panelId, callback) {
   var panelSettings = {};
 
@@ -285,7 +278,7 @@ function updateCode(panelId, callback) {
   };
 
   if (jsbin.settings.useCompression) {
-    compressKeys('content', data);
+    data = compress.keys('content', data);
   }
 
   $.ajax({
@@ -388,7 +381,7 @@ function saveCode(method, ajax, ajaxCallback) {
   }, {});
 
   if (jsbin.settings.useCompression) {
-    compressKeys('html,css,javascript', data);
+    data = compress.keys('html,css,javascript', data);
   }
 
   if (ajax) {

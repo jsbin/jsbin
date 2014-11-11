@@ -26,7 +26,9 @@ var server;
 
 test('BinHandler::setup', function (setup) {
   
-  server = http.createServer();
+  server = http.createServer(function (req, res) {
+    res.end();
+  });
   server.listen(1234, function () {
     setup.end(); 
   });

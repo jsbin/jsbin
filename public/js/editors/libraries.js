@@ -282,23 +282,18 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url':'//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.1/angular.min.js',
-    'label': 'Angular 1.3.0 beta 1 Unstable',
+    'url':'//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js',
+    'label': 'Angular 1.3.2 Stable',
     'group': 'Angular'
   },
   {
-    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js',
-    'label': 'Angular 1.2.14 Stable',
+    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.js',
+    'label': 'Angular 1.3.2 Stable Uncompressed',
     'group': 'Angular'
   },
   {
-    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js',
-    'label': 'Angular 1.2.14 Uncompressed',
-    'group': 'Angular'
-  },
-  {
-    'url':'//ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js',
-    'label': 'Angular 1.0.7 Stable',
+    'url': '//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js',
+    'label': 'Angular 1.2.26 Legacy',
     'group': 'Angular'
   },
   {

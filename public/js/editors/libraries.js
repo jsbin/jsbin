@@ -558,6 +558,13 @@ var libraries = [
     'url': '//cdn.firebase.com/js/client/2.0.2/firebase.js',
     'label': 'Firebase 2.0.2'
   },
+  {
+    'url': [
+      '//code.ionicframework.com/1.0.0-beta.13/js/ionic.bundle.min.js',
+      '//code.ionicframework.com/1.0.0-beta.13/css/ionic.min.css'
+    ],
+    'label': 'Ionic 1.0.0-beta-13'
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

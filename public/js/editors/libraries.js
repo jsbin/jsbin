@@ -558,7 +558,11 @@ var libraries = [
       '//aui-cdn.atlassian.com/aui-adg/5.7.0/css/aui-experimental.css'
     ],
     'label': 'AUI (Atlassian UI) 5.7.0'
-  }
+  },
+  {
+    'url': '//cdn.firebase.com/js/client/2.0.2/firebase.js',
+    'label': 'Firebase 2.0.2'
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

@@ -558,6 +558,10 @@ var libraries = [
     'url': '//cdn.firebase.com/js/client/2.0.2/firebase.js',
     'label': 'Firebase 2.0.2'
   },
+  {
+    'url': '//static.opentok.com/webrtc/v2.2/js/opentok.min.js',
+    'label': 'OpenTok 2.2'
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

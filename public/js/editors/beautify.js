@@ -9,40 +9,59 @@
   function initBeautify(editor) {
     var keyMap = {
       'Ctrl-Shift-L': function () {
-        beautify(jsbin.panels.focused);
+        beautify();
       }
     };
     editor.addKeyMap(keyMap);
   }
 
-  function beautify(focusedPanel) {
+  function beautify() {
+
+    var focusedPanel = jsbin.panels.focused,
+      beautifyUrls = {
+        html: '/js/vendor/beautify/beautify-html.js',
+        css: '/js/vendor/beautify/beautify-css.js',
+        js: '/js/vendor/beautify/beautify.js'
+      };
 
     if (jsbin.state.processors[focusedPanel.id] === 'html') {
       if (!window.html_beautify) {
-        $.getScript('/js/vendor/beautify/beautify-html.js').done(function runHtmlBeautify() {
-          runBeautifier(focusedPanel, window.html_beautify);
-        });
+        lazyLoadAndRun(beautifyUrls.html, beautifyHTML);
       } else {
-        runBeautifier(focusedPanel, window.html_beautify);
+        beautifyHTML();
       }
     } else if (jsbin.state.processors[focusedPanel.id] === 'css') {
       if (!window.css_beautify) {
-        $.getScript('/js/vendor/beautify/beautify-css.js').done(function runCssBeautify() {
-          runBeautifier(focusedPanel, window.css_beautify);
-        });
+        lazyLoadAndRun(beautifyUrls.css, beautifyCSS);
       } else {
-        runBeautifier(focusedPanel, window.css_beautify);
+        beautifyCSS();
       }
     } else if (jsbin.state.processors[focusedPanel.id] === 'javascript') {
       if (!window.js_beautify) {
-        $.getScript('/js/vendor/beautify/beautify.js').done(function runJsBeautify() {
-          runBeautifier(focusedPanel, window.js_beautify);
-        });
+        lazyLoadAndRun(beautifyUrls.js, beautifyJS);
       } else {
-        runBeautifier(focusedPanel, window.js_beautify);
+        beautifyJS();
       }
     }
 
+  }
+
+  function lazyLoadAndRun(url, callback) {
+    $.getScript(url).done(function () {
+      callback();
+    });
+  }
+
+  function beautifyHTML() {
+    runBeautifier(jsbin.panels.focused, window.html_beautify);
+  }
+
+  function beautifyCSS() {
+    runBeautifier(jsbin.panels.focused, window.css_beautify);
+  }
+
+  function beautifyJS() {
+    runBeautifier(jsbin.panels.focused, window.js_beautify);
   }
 
   function runBeautifier(panel, beautifier) {
@@ -54,7 +73,7 @@
   }
 
   window.testBeautify = function () {
-    beautify(jsbin.panels.focused);
+    beautify();
   };
 
   initBeautify(jsbin.panels.panels.html.editor);

@@ -307,6 +307,16 @@ var libraries = [
     'group': 'React'
   },
   {
+    'url': '//cdn.rawgit.com/yyx990803/vue/0.11.0/dist/vue.min.js',
+    'label': 'Vue.js 0.11.0',
+    'group': 'Vue'
+  },
+  {
+    'url': '//cdn.rawgit.com/yyx990803/vue/0.10.6/dist/vue.min.js',
+    'label': 'Vue.js 0.10.6',
+    'group': 'Vue'
+  },
+  {
     'url': [
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.css',
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.js',

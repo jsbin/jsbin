@@ -6,15 +6,6 @@
     return;
   }
 
-  function initBeautify(editor) {
-    var keyMap = {
-      'Ctrl-Shift-L': function () {
-        beautify();
-      }
-    };
-    editor.addKeyMap(keyMap);
-  }
-
   function beautify() {
 
     var focusedPanel = jsbin.panels.focused,
@@ -72,11 +63,11 @@
     );
   }
 
-  window.testBeautify = function () {
-    beautify();
-  };
+  $(document).on('keydown', function beautifyKeyBinding(e) {
+    if (e.ctrlKey && e.shiftKey && e.which == 76) {
+      // ctrl/command + shift + L
+      beautify();
+    }
+  });
 
-  initBeautify(jsbin.panels.panels.html.editor);
-  initBeautify(jsbin.panels.panels.css.editor);
-  initBeautify(jsbin.panels.panels.javascript.editor);
 })();

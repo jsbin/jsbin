@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*globals $, jsbin, js_beautify, html_beautify, css_beautify*/
+  /*globals $, jsbin */
 
   if (jsbin.embed) {
     return;
@@ -10,9 +10,9 @@
 
     var focusedPanel = jsbin.panels.focused,
       beautifyUrls = {
-        html: '/js/vendor/beautify/beautify-html.js',
-        css: '/js/vendor/beautify/beautify-css.js',
-        js: '/js/vendor/beautify/beautify.js'
+        html: jsbin['static'] + '/js/vendor/beautify/beautify-html.js',
+        css: jsbin['static'] + '/js/vendor/beautify/beautify-css.js',
+        js: jsbin['static'] + '/js/vendor/beautify/beautify.js'
       };
 
     if (jsbin.state.processors[focusedPanel.id] === 'html') {
@@ -38,9 +38,7 @@
   }
 
   function lazyLoadAndRun(url, callback) {
-    $.getScript(url).done(function () {
-      callback();
-    });
+    $.getScript(url).done(callback);
   }
 
   function beautifyHTML() {

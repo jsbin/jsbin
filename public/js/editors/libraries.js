@@ -307,6 +307,10 @@ var libraries = [
     'group': 'React'
   },
   {
+    'url': 'http://vuejs.org/js/vue.js',
+    'label': 'Vue.js',
+  },
+  {
     'url': [
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.css',
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.js',

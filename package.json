@@ -18,6 +18,7 @@
     "url": "git://github.com/jsbin/jsbin.git"
   },
   "scripts": {
+    "start": "(sleep 2 && open http://localhost:3000) & ./bin/jsbin",
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "preupdate": "node build/pre-update.js",

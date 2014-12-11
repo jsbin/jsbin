@@ -141,6 +141,10 @@
 
       event.preventDefault();
       event.stopPropagation(); // prevent further delegates
+      if ($this.data('toggle') === 'history') {
+        window.location.reload();
+        return;
+      }
       var $tr = $this.closest('tr');
       var data = $tr.data();
       var url = jsbin.root + data.url;

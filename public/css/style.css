@@ -3738,6 +3738,17 @@ left: 50%;
   float: left;
 }
 
+#history .header a {
+  color: rgb(161, 216, 253);
+  font-weight: inherit;
+}
+
+#history .header a:active,
+#history .header a:hover,
+#history .header a:focus {
+  text-decoration: underline;
+}
+
 #history h2 {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial;

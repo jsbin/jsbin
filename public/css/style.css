@@ -3711,6 +3711,10 @@ left: 50%;
   z-index: 10;
 }
 
+.panelsVisible #history {
+  display: none !important;
+}
+
 #history .preview {
   -webkit-transition: right ease-out 200ms;
      -moz-transition: right ease-out 200ms;
@@ -3736,6 +3740,17 @@ left: 50%;
 }
 #history .header h2 {
   float: left;
+}
+
+#history .header a {
+  color: rgb(161, 216, 253);
+  font-weight: inherit;
+}
+
+#history .header a:active,
+#history .header a:hover,
+#history .header a:focus {
+  text-decoration: underline;
 }
 
 #history h2 {

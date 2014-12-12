@@ -426,6 +426,10 @@ $('#addmeta').click(function () {
       cm = editor.editor,
       html = editor.getCode();
 
+  if (!editor.visible) {
+    editor.show();
+  }
+
   if (!re.meta.test(html)) {
     if (re.head.test(html)) {
       html = html.replace(re.head, '<head$1\n' + metatag);

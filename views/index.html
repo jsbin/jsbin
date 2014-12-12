@@ -49,7 +49,7 @@ if(top != self) {
       {{#if embed}}
         <span class="menu">
           <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg" alt="">
-          <h1>JS Bin</h1></a><a href="/clone" target="_blank" class="button">Save</a>
+            <h1>JS Bin</h1></a><a href="{{root}}/clone" target="_blank" class="button">Save</a>
         </span>
       {{else}}
         <div class="menu">
@@ -114,7 +114,7 @@ if(top != self) {
                   </div>
                   <div id="sharepanels">
                     <strong>View</strong>
-                    <label><input checked type="radio" name="view" value="editor"> Show</label>
+                    <label><input checked type="radio" name="view" value="editor"> Editor</label>
                     <ul>
                       <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
                       <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
@@ -216,16 +216,16 @@ if(top != self) {
                   </span>
 
                   <ul>
-                    <li><a href="/account/profile">Profile</a></li>
-                    <li><a href="/account/editor">Editor settings</a></li>
-                    <li><a href="/account/preferences">Preferences</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="{{root}}/account/profile">Profile</a></li>
+                    <li><a href="{{root}}/account/editor">Editor settings</a></li>
+                    <li><a href="{{root}}/account/preferences">Preferences</a></li>
+                    <li><a href="{{root}}/logout">Logout</a></li>
                   </ul>
 
                 </div>
                 {{#feature request "upgrade"}}
                   {{#unless user.pro}}
-                <a href="/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+                  <a href="{{root}}/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
                   {{/unless}}
                 {{/feature}}
               </div>
@@ -257,7 +257,7 @@ if(top != self) {
                     {{#feature request "github"}}{{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                      <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
                     </div>
                     {{/unless}}{{/feature}}
                   </form>
@@ -274,21 +274,21 @@ if(top != self) {
             {{#feature request "sslLogin"}}
               <div class="menu">
                 {{#feature request "github"}}
-                <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
+                <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
                 <div class="dropdown login" id="registerLogin">
                   <div class="dropdowncontent">
-                    <a class="btn-github" href="/auth/github">
+                    <a class="btn-github" href="{{root}}/auth/github">
                       <img src="{{static}}/images/github-32.png">
                       Login or Register via GitHub
                     </a>
                     <span class="login-group">
                       Or
-                      <a class="btn-login" href="/login">use your email address</a>
+                      <a class="btn-login" href="{{root}}/login">use your email address</a>
                     </span>
                   </div>
                 </div>
                 {{else}}
-                <a href="/login" class="button" id="loginbtn">Login or Register</a>
+                <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
                 {{/feature}}
               </div>
             {{else}}
@@ -324,7 +324,7 @@ if(top != self) {
                     {{#feature request "github"}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
                     </div>
                     {{/feature}}
                   </form>
@@ -354,7 +354,7 @@ if(top != self) {
                     {{#feature request "github"}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                      <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                     </div>
                     {{/feature}}
                   </form>
@@ -546,6 +546,10 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Code complete &amp; <a href="http://docs.emmet.io/" target="_blank">Emmet</a> expand</td>
         </tr>
         <tr>
+          <td>ctrl + shift + L</td>
+          <td>Beautify code in active panel</td>
+        </tr>
+        <tr>
           <td>ctrl + s</td>
           <td>Save &amp; lock current Bin from further changes</td>
         </tr>
@@ -557,7 +561,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>ctrl + y</td>
           <td>Archive Bin</td>
         </tr>
-        <tr><td colspan="2"><small><br><a href="/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
+        <tr><td colspan="2"><small><br><a href="{{root}}/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
       </tbody>
     </table>
   </div>

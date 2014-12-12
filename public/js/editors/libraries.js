@@ -108,8 +108,8 @@ var libraries = [
   {
     'url': [
       '//code.jquery.com/jquery.min.js',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js'
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -305,6 +305,10 @@ var libraries = [
     'url': '//fb.me/react-with-addons-0.12.0.js',
     'label': 'React with Add-Ons 0.12.0',
     'group': 'React'
+  },
+  {
+    'url': 'http://vuejs.org/js/vue.js',
+    'label': 'Vue.js',
   },
   {
     'url': [
@@ -557,6 +561,13 @@ var libraries = [
   {
     'url': '//cdn.firebase.com/js/client/2.0.2/firebase.js',
     'label': 'Firebase 2.0.2'
+  },
+  {
+    'url': [
+      '//code.ionicframework.com/1.0.0-beta.13/js/ionic.bundle.min.js',
+      '//code.ionicframework.com/1.0.0-beta.13/css/ionic.min.css'
+    ],
+    'label': 'Ionic 1.0.0-beta-13'
   },
   {
     'url': '//static.opentok.com/webrtc/v2.2/js/opentok.min.js',

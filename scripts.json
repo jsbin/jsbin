@@ -48,6 +48,7 @@
     "/js/editors/library.js",
     "/js/editors/addons.js",
     "/js/editors/snapshot.js",
+    "/js/editors/beautify.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/share.js",
     "/js/chrome/esc.js",

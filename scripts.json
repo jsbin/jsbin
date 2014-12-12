@@ -48,6 +48,7 @@
     "/js/editors/library.js",
     "/js/editors/addons.js",
     "/js/editors/snapshot.js",
+    "/js/editors/beautify.js",
     "/js/render/saved-history-preview.js",
     "/js/chrome/share.js",
     "/js/chrome/esc.js",
@@ -93,8 +94,7 @@
       "/js/vendor/tern/plugin/doc_comment.js",
       "/js/editors/defs.js",
       "/js/editors/definitions.js",
-      "/js/editors/tern.js",
-      "/js/editors/beautify.js"
+      "/js/editors/tern.js"
     ]
   }
 }

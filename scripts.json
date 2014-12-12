@@ -93,7 +93,8 @@
       "/js/vendor/tern/plugin/doc_comment.js",
       "/js/editors/defs.js",
       "/js/editors/definitions.js",
-      "/js/editors/tern.js"
+      "/js/editors/tern.js",
+      "/js/editors/beautify.js"
     ]
   }
 }

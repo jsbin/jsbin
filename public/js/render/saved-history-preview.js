@@ -142,7 +142,11 @@
       event.preventDefault();
       event.stopPropagation(); // prevent further delegates
       if ($this.data('toggle') === 'history') {
-        window.location.reload();
+        jsbin.panels.allEditors(function (panel) {
+          if (panel.editor.getCode().trim().length) {
+            panel.show();
+          }
+        });
         return;
       }
       var $tr = $this.closest('tr');

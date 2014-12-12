@@ -3711,6 +3711,10 @@ left: 50%;
   z-index: 10;
 }
 
+.panelsVisible #history {
+  display: none !important;
+}
+
 #history .preview {
   -webkit-transition: right ease-out 200ms;
      -moz-transition: right ease-out 200ms;

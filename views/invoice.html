@@ -1,17 +1,54 @@
-<h1> Invoice </h1>
+<html>
+  <head>
+    <title> Invoice - {{invoice.id}} </title>
+    <style>
+      body {
+        font-family: Helvetica Neue;
+        max-width: 600px;
+        width: 100%;
+        margin: 30px auto 0px;
+      }
+      h1 small {
+        margin-left: 30px;
+        font-size: 20px;
+        text-align: right;
+        float: right;
+        line-height: 2.2;
+      }
+      ul {
+        padding: 0;
+        list-style: outside none none;
+        text-align: right;
+      }
 
-<h2> Summary </h2>
+      hr {
+        border: 0;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
 
-<ul> 
-  <li> Subtotal: £{{#divide invoice.subtotal 100 2}}{{/divide}} </li>
-  <li> Total: £{{#divide invoice.total 100 2}}{{/divide}} </li>
-  <li> Paid: £{{#if paid}}{{#divide invoice.total 100 2}}{{/divide}}{{else}}0.00{{/if}}
-</ul>
+  <h1>
+    Invoice <small>{{invoice.receipt_number}}</small>
+  </h1>
 
-<h2> Invoice Items </h2>
+  <h2> Invoice Items </h2>
 
-<ul>
-  {{#each invoice.lines.data}} 
-    <li> {{plan.statement_description}} - £{{#divide amount 100 2}}{{/divide}}</li>
-  {{/each}}
-</ul>
+  <ul>
+    {{#each invoice.lines.data}}
+      <li>
+      <p>{{plan.statement_description}} - £{{#divide amount 100 2}}{{/divide}}</p>
+        <hr>
+      </li>
+    {{/each}}
+  </ul>
+
+  <ul>
+    <li> Subtotal: £{{#divide invoice.subtotal 100 2}}{{/divide}} </li>
+    <li> Total: £{{#divide invoice.total 100 2}}{{/divide}} </li>
+    <li> Paid: £{{#if paid}}{{#divide invoice.total 100 2}}{{/divide}}{{else}}0.00{{/if}} </li>
+  </ul>
+
+  </body>
+</html>

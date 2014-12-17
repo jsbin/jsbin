@@ -1,0 +1,17 @@
+<h1> Invoice </h1>
+
+<h2> Summary </h2>
+
+<ul> 
+  <li> Subtotal: £{{#divide invoice.subtotal 100 2}}{{/divide}} </li>
+  <li> Total: £{{#divide invoice.total 100 2}}{{/divide}} </li>
+  <li> Paid: £{{#if paid}}{{#divide invoice.total 100 2}}{{/divide}}{{else}}0.00{{/if}}
+</ul>
+
+<h2> Invoice Items </h2>
+
+<ul>
+  {{#each invoice.lines.data}} 
+    <li> {{plan.statement_description}} - £{{#divide amount 100 2}}{{/divide}}</li>
+  {{/each}}
+</ul>

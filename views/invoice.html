@@ -4,10 +4,12 @@
     <style>
       body {
         font-family: Helvetica Neue;
-        max-width: 600px;
-        width: 100%;
+        max-width: 900px;
+        width: 90%;
         margin: 30px auto 0px;
+        padding: 5%;
       }
+
       h1 small {
         margin-left: 30px;
         font-size: 20px;
@@ -15,16 +17,17 @@
         float: right;
         line-height: 2.2;
       }
+
       ul {
         padding: 0;
         list-style: outside none none;
         text-align: right;
       }
 
-      hr {
-        border: 0;
+      li {
         border-bottom: 1px solid #ccc;
       }
+
     </style>
   </head>
   <body>
@@ -37,10 +40,7 @@
 
   <ul>
     {{#each invoice.lines.data}}
-      <li>
-      <p>{{plan.statement_description}} - £{{#divide amount 100 2}}{{/divide}}</p>
-        <hr>
-      </li>
+      <li> {{plan.statement_description}} - £{{#divide amount 100 2}}{{/divide}}> </li>
     {{/each}}
   </ul>
 
@@ -50,5 +50,11 @@
     <li> Paid: £{{#if paid}}{{#divide invoice.total 100 2}}{{/divide}}{{else}}0.00{{/if}} </li>
   </ul>
 
+    <footer>
+      <p>Charges on your credit card bill will be from "JSBIN PRO".</p>
+      <p>
+        <small>JS Bin Ltd. Company No. 8998555, VAT No. GB189688326. Office 1, 44 Burstead Close, Brighton BN1 7HT</small>
+       </p>
+    </footer>
   </body>
 </html>

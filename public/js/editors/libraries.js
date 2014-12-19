@@ -387,10 +387,10 @@ var libraries = [
   {
     'url': [
       '//code.jquery.com/jquery-1.11.1.min.js',
-      '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js',
-      '//builds.emberjs.com/tags/v1.7.0/ember.js'
+      '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js',
+      '//builds.emberjs.com/tags/v1.9.0/ember.js'
     ],
-    'label': 'Ember.js 1.7.0'
+    'label': 'Ember.js 1.9.0'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',

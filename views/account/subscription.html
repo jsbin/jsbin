@@ -19,7 +19,7 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
   <div class="invoices">
     <h3> Invoices </h3>
     {{#each invoices}}
-    <a href="/account/invoices/{{id}}">Invoice for {{#stripeTimestampAsDate lines.data.[0].period.start "D MMM, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate lines.data.[0].period.end "D MMM, YYYY"}}{{/stripeTimestampAsDate}}</a>
+    <p><a href="/account/invoices/{{id}}">Invoice for {{#stripeTimestampAsDate lines.data.[0].period.start "D MMM, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate lines.data.[0].period.end "D MMM, YYYY"}}{{/stripeTimestampAsDate}}</a></p>
     {{/each}}
   </div>
 

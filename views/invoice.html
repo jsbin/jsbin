@@ -70,6 +70,14 @@
         <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Subtotal:</td>
         <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide invoice.subtotal 100 2}}{{/divide}}</td>
       </tr>
+
+      {{#if invoice.discount}}
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Discount:</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{percent invoice.subtotal invoice.discount.coupon.percent_off 2}}</td>
+      </tr>
+      {{/if}}
+
       <tr style="vertical-align:top;padding:0">
         <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Total:</td>
         <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide invoice.total 100 2}}{{/divide}}</td>

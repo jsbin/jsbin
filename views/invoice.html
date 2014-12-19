@@ -44,10 +44,8 @@
   <body>
 
   <h1>
-    Invoice <small>#{{invoice.receipt_number}}</small>
+    Invoice{{#if invoice.receipt_number}} <small>#{{invoice.receipt_number}}</small>{{/if}}
   </h1>
-
-
 
   <h2>{{#stripeTimestampAsDate invoice.date "MMMM D, YYYY"}}{{/stripeTimestampAsDate}}</h2>
 
@@ -59,7 +57,7 @@
       </tr>
       {{#each invoice.lines.data}}
       <tr style="vertical-align:top;padding:0">
-        <td style="vertical-align:top;text-align:left;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0"><strong>{{#equal type "subscription"}}Subscription to {{plan.name}} (£{{#divide amount 100 2}}{{/divide}}/{{plan.interval}}){{else}}{{statement_description}}{{/equal}}</strong></td>
+        <td style="vertical-align:top;text-align:left;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0"><strong>{{#equal type "subscription"}}Subscription to {{plan.name}} (£{{#divide amount 100 2}}{{/divide}}/{{plan.interval}}){{else}}{{description}}{{/equal}}</strong></td>
         <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide amount 100 2}}{{/divide}}</td>
       </tr>
       {{/each}}

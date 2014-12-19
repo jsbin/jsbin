@@ -569,6 +569,10 @@ var libraries = [
     ],
     'label': 'Ionic 1.0.0-beta-13'
   },
+  {
+    'url': '//static.opentok.com/webrtc/v2.2/js/opentok.min.js',
+    'label': 'OpenTok 2.2'
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

@@ -42,6 +42,7 @@
     "/js/editors/keycontrol.js",
     "/js/render/console.js",
     "/js/processors/processor.js",
+    "/js/editors/panels.js",
     "/js/editors/panel.js",
     "/js/editors/editors.js",
     "/js/editors/libraries.js",

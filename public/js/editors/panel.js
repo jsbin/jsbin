@@ -396,6 +396,7 @@ Panel.prototype = {
   focus: function () {
     this.$panel.removeClass('blur');
     jsbin.panels.focus(this);
+    $(jsbin.panels.panels[this.name].$el).find('textarea').focus();
   },
   render: function () {
     'use strict';

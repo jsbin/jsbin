@@ -39,7 +39,6 @@ if (ua.indexOf(' Mac ') !== -1) {
   $.browser.platform = '';
 }
 
-
 if (!customKeys.disabled) {
   $document.keydown(function (event) {
     var includeAltKey = customKeys.useAlt ? event.altKey : !event.altKey,
@@ -47,9 +46,18 @@ if (!customKeys.disabled) {
 
     if (event.ctrlKey && $.browser.platform !== 'mac') { event.metaKey = true; }
 
+    // ctrl + y -> archive
     if (event.metaKey && event.which === 89) {
       archive(!event.shiftKey);
       return event.preventDefault();
+    }
+
+    if (event.metaKey && event.which === 37) {
+      Panels.left_panel().focus();
+    }
+
+    if (event.metaKey && event.which === 39) {
+      Panels.right_panel().focus();
     }
 
     if (event.metaKey && event.which === 79) { // open

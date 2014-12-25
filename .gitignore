@@ -10,3 +10,9 @@ statsd.js
 jsbin.sqlite
 node_modules
 tmp/*
+
+.tern-port
+\#*
+.#*
+*.log
+build/config.gypi

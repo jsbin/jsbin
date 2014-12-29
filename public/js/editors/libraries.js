@@ -630,7 +630,7 @@ var libraries = [
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.js',
-    'label': 'rx.blah',
+    'label': 'rx',
     'group': 'RxJS'
   },
   {

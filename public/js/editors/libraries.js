@@ -574,98 +574,13 @@ var libraries = [
     'label': 'OpenTok 2.2'
   },
   {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.aggregates.js',
-    'label': 'rx.aggregates',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.compat.js',
-    'label': 'rx.all.compat',
-    'group': 'RxJS'
-  },
-  {
     'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',
     'label': 'rx.all',
     'group': 'RxJS'
   },
   {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.async.compat.js',
-    'label': 'rx.async.compat',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.async.js',
-    'label': 'rx.async',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.backpressure.js',
-    'label': 'rx.backpressure',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.binding.js',
-    'label': 'rx.binding',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.coincidence.js',
-    'label': 'rx.coincidence',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.compat.js',
-    'label': 'rx.compat',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.experimental.js',
-    'label': 'rx.experimental',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.joinpatterns.js',
-    'label': 'rx.joinpatterns',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.js',
-    'label': 'rx',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.lite.compat.js',
-    'label': 'rx.lite.compat',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.lite.extras.js',
-    'label': 'rx.lite.extras',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.lite.js',
-    'label': 'rx.lite',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.sorting.js',
-    'label': 'rx.sorting',
-    'group': 'RxJS'
-  },
-  {
     'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.testing.js',
     'label': 'rx.testing',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.time.js',
-    'label': 'rx.time',
-    'group': 'RxJS'
-  },
-  {
-    'url': '//cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.virtualtime.js',
-    'label': 'rx.virtualtime',
     'group': 'RxJS'
   },
   {

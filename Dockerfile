@@ -15,4 +15,4 @@ WORKDIR /var/www
 RUN cp config.default.json config.local.json
 
 # Setup ENV vars and run application
-RUN (sleep 5 && echo "JSBIN server started on localhost:8000") PORT=8000 JSBIN_CONFIG=./config.local.json ./bin/jsbin
+# RUN (sleep 5 && echo "JSBIN server started on localhost:8000") PORT=8000 JSBIN_CONFIG=./config.local.json ./bin/jsbin

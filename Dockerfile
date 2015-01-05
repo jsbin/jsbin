@@ -12,6 +12,12 @@ ADD . /var/www
 
 # Create local config
 WORKDIR /var/www
+
+# Setup Enviroment
+RUN npm install --dev
+
+EXPOSE 8000
+
 RUN cp config.default.json config.local.json
 
 # Setup ENV vars and run application

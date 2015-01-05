@@ -7,6 +7,10 @@ RUN curl -sL https://deb.nodesource.com/setup | sudo bash -
 RUN sudo apt-get install nodejs
 RUN sudo apt-get install build-essential
 
+# Install SQLite
+RUN sudo apt-get install sqlite3
+RUN sudo apt-get install libsqlite3-dev
+
 # Add application to container filesystem
 ADD . /var/www
 

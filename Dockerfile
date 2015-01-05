@@ -12,7 +12,7 @@ ADD . /var/www
 
 # Create local config
 WORKDIR /var/www
-CMD cp config.default.json config.local.json
+RUN cp config.default.json config.local.json
 
 # Setup ENV vars and run application
-
+RUN (sleep 5 && echo "JSBIN server started on localhost:8000") PORT=8000 JSBIN_CONFIG=./config.local.json ./bin/jsbin

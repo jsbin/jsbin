@@ -1,4 +1,4 @@
-FROM ubuntu:15.04
+FROM ubuntu:14.10
 MAINTAINER Josh Burns <mail@joshburns.ml>
 
 # Install Node
@@ -9,4 +9,10 @@ RUN sudo apt-get install build-essential
 
 # Add application to container filesystem
 ADD . /var/www
+
+# Create local config
+WORKDIR /var/www
+CMD cp config.default.json config.local.json
+
+# Setup ENV vars and run application
 

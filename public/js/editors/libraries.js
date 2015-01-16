@@ -108,8 +108,8 @@ var libraries = [
   {
     'url': [
       '//code.jquery.com/jquery.min.js',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css',
-      '//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'
+      '//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css',
+      '//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'

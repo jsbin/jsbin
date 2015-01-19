@@ -393,7 +393,7 @@ var libraries = [
     'label': 'Ember.js 1.9.0'
   },
   {
-    'url': 'https://rawgit.com/necolas/normalize.css/3.0.2/normalize.css',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css',
     'label': 'Normalize.css 3.0.2'
   },
   {

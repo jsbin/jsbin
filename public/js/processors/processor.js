@@ -580,22 +580,18 @@ var processors = jsbin.processors = (function () {
       id: 'clojurescript',
       target: 'javascript',
       extensions: ['clj', 'cljs'],
-      //url: jsbin.static + '/js/vendor/clojurescript.js',
       url: "http://himera-emh.herokuapp.com/js/repl.js",
       //url: "http://192.168.100.128:8080/js/repl.js",
       init: function clojurescript(ready) {
         getScript(jsbin.static + '/js/vendor/codemirror4/mode/clojure/clojure.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
-        console.log("making clojure ajax request");
         $.ajax({
           type: 'post',
           url: 'http://himera-emh.herokuapp.com/compile',
-          //url: "http://192.168.100.128:8080/compile",
           contentType: "application/clojure",
-          data: "{ :expr " + source + " }",
+          data: "{ :expr (let [] (ns cljs.user) " + source + ") }",
           success: function (data) {
-            console.log("clojure data", data)
             var result = cljs.reader.read_string(data);
             result = (new cljs.core.Keyword("\uFDD0:js")).call(null, result);
             if (result) {

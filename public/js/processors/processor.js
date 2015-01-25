@@ -576,6 +576,50 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    clojurescript: createProcessor({
+      id: 'clojurescript',
+      target: 'javascript',
+      extensions: ['clj', 'cljs'],
+      //url: jsbin.static + '/js/vendor/clojurescript.js',
+      url: "http://himera-emh.herokuapp.com/js/repl.js",
+      //url: "http://192.168.100.128:8080/js/repl.js",
+      init: function clojurescript(ready) {
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clojure/clojure.js', ready);
+      },
+      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
+        console.log("making clojure ajax request");
+        $.ajax({
+          type: 'post',
+          url: 'http://himera-emh.herokuapp.com/compile',
+          //url: "http://192.168.100.128:8080/compile",
+          contentType: "application/clojure",
+          data: "{ :expr " + source + " }",
+          success: function (data) {
+            console.log("clojure data", data)
+            var result = cljs.reader.read_string(data);
+            result = (new cljs.core.Keyword("\uFDD0:js")).call(null, result);
+            if (result) {
+              resolve(result);
+            } else {
+              console.log(data);
+              var errors = data; // TODO: return errors and parse
+              var cm = jsbin.panels.panels.css.editor;
+              if (typeof cm.updateLinting !== 'undefined') {
+                hintingDone(cm);
+                var err = formatErrors(errors);
+                cm.updateLinting(err);
+              }
+            }
+          },
+          error: function (jqxhr) {
+            reject(new Error(jqxhr.responseText));
+          },
+          complete: done
+        });
+      }), 500),
+    }),
+
+
     traceur: (function () {
       var SourceMapConsumer,
           SourceMapGenerator,

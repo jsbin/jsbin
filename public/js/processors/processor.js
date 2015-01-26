@@ -588,27 +588,34 @@ var processors = jsbin.processors = (function () {
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
           type: 'post',
-          url: 'http://himera-emh.herokuapp.com/compile',
+          url: 'http://himera-emh.herokuapp.com/compile-string',
+          //url: "http://192.168.100.128:8080/compile-string",
           contentType: "application/clojure",
-          data: "{ :expr (let [] (ns cljs.user) " + source + ") }",
+          data: "{ :expr \"(let [] (ns cljs.user) " + source.replace(/"/g, "\\\"") + ")\" }",
           success: function (data) {
-            var result = cljs.reader.read_string(data);
-            result = (new cljs.core.Keyword("\uFDD0:js")).call(null, result);
-            if (result) {
+            var readstring = cljs.reader.read_string(data);
+            var result = (new cljs.core.Keyword("\uFDD0:js")).call(null, readstring);
+            var clojureError = (new cljs.core.Keyword("\uFDD0:error")).call(null, readstring);
+            if (!clojureError) {
               resolve(result);
             } else {
-              console.log(data);
-              var errors = data; // TODO: return errors and parse
-              var cm = jsbin.panels.panels.css.editor;
-              if (typeof cm.updateLinting !== 'undefined') {
-                hintingDone(cm);
-                var err = formatErrors(errors);
-                cm.updateLinting(err);
-              }
+              var clojureErrors = {
+                line: 0,
+                ch: 0,
+                msg: clojureError
+              };
+              console.log("clojureErrors", clojureErrors);
+              reject([clojureErrors]);
             }
           },
-          error: function (jqxhr) {
-            reject(new Error(jqxhr.responseText));
+          error: function (data) {
+            var clojureErrors2 = {
+              line: 0,
+              ch: 0,
+              msg: data.responseText
+            };
+            console.log("clojureErrors", clojureErrors2);
+            reject([clojureErrors2]);
           },
           complete: done
         });

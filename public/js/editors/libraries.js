@@ -393,6 +393,10 @@ var libraries = [
     'label': 'Ember.js 1.9.0'
   },
   {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css',
+    'label': 'Normalize.css 3.0.2'
+  },
+  {
     'url': '//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
     'label': 'ES5 shim 2.0.8'
   },

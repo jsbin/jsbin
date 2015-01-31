@@ -303,7 +303,7 @@ var libraries = [
   },
   {
     'url': '//fb.me/react-with-addons-0.12.2.js',
-    'label': 'React with Add-Ons 0.12.0',
+    'label': 'React with Add-Ons 0.12.2',
     'group': 'React'
   },
   {

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}
   {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="{{static}}/css/editor-layout.css{{cacheBust}}">{{/equal}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
@@ -201,14 +201,14 @@ if(top != self) {
             {{#feature request "accountPages"}}
             <div class="menu{{#feature request "pro"}} pro {{/feature}}">
               <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
-                <source srcset="{{gravatar}} 1x, {{gravatar}}&s=58 2x">
+                <source srcset="{{gravatar}} 1x, {{gravatar}}?&s=58 2x">
                 <img src="{{gravatar}}">
               </picture>{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
   <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
-                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}&s=240 2x">
+                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}?&s=240 2x">
                 <img class="large-gravatar" src="{{large_gravatar}}">
               </picture></div>{{/if}}
                   <span class="input" id="username" readonly>
@@ -661,6 +661,9 @@ window.jsbin = {{{jsbin}}};
 {{#if live}}
 <script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{/if}}
+{{#if custom_js}}
+<script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
 {{/if}}
 </body>
 </html>

@@ -1757,7 +1757,7 @@ ul.flat li {
 
 #control > *, a {
   color: #232323;
-  text-shadow: #fff 0 1px 1px;
+/*   text-shadow: #fff 0 1px 1px; */
 }
 
 a:hover {
@@ -1856,7 +1856,6 @@ iframe.javascript {
   min-width: 100%;
   float: left;
   display: block;
-  /*margin-right: 10px;*/
 }
 
 .dropdownmenu a,
@@ -3508,24 +3507,12 @@ left: 50%;
   line-height: 34px;
 }
 
-.help .open.menu > a.avatar {
-  /*height: 26px;*/
-}
-
 #panels {
-  /*width: 480px;*/
-  /*margin: 3px auto 0 auto;*/
   text-align: center;
   overflow: hidden;
-  /*background-color: #fff;*/
-  /*background-image: -webkit-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
-  /*background-image:    -moz-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
-  /*background-image:      -o-linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
-  /*background-image:         linear-gradient(top, transparent 0, rgba(0, 0, 0, 0.15) 50%);*/
   position: absolute;
   top: 0;
   width: 100%;
-  /*z-index: 99;*/
   padding-top: 2px;
   padding-bottom: 1px;
 }
@@ -3601,9 +3588,6 @@ left: 50%;
 }
 
 .label {
-  /*overflow: hidden;*/
-  /*min-height: 34px;*/
-  /*line-height: 34px;*/
   padding: 10px 10px 0 10px;
   line-height: 20px;
 }
@@ -3622,7 +3606,6 @@ left: 50%;
 }
 
 .label .options label {
-  /*height: 35px;*/
   display: inline-block;
   cursor: pointer;
 }
@@ -3670,32 +3653,19 @@ left: 50%;
   border: 0;
   display: block;
   margin: 0 auto;
-  /*width: 90%;*/
 }
 
 .panelsVisible #history {
   display: none;
-  /*top: 2000px;  :( can't do 100% */
-}
-
-.panelsVisible #history .preview {
-  /*right: -1000px;*/
 }
 
 #history {
   z-index: 0;
-  /*position: absolute;*/
-  /*top: 31px;*/
-  /*-webkit-transition: top ease-out 200ms;*/
-     /*-moz-transition: top ease-out 200ms;*/
-       /*-o-transition: top ease-out 200ms;*/
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   text-shadow: none;
-  /*-webkit-transition-delay: 100ms;*/
   font-size: 14px;
   padding: 0 0 10px 0;
   position: absolute;
-  /*height: 100%;*/
   top: 36px;
   left: 0;
   right: 0;
@@ -3814,12 +3784,7 @@ left: 50%;
 
 #history .url a span {
   color: #000;
-  /*visibility: hidden;*/
 }
-
-/*#history .url a span.first {*/
-  /*visibility: visible;*/
-/*}*/
 
 #history .created {
   width: 25%;
@@ -4493,10 +4458,6 @@ pre .highlight:last-of-type {
 .cm-s-jsbin span.cm-bracket {color: #cc7;}
 .cm-s-jsbin span.cm-tag {color: #881280;}
 .cm-s-jsbin span.cm-attribute {color: #994500;}
-
-/* jsbin - based on web inspector */
-/*.panel:not(.focus) .cm-s-jsbin span {color: #666 !important; }*/
-/*.activeline {background: #e8f2ff !important;}*/
 
 html * {
   color-profile: sRGB;

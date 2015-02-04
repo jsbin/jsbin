@@ -1,4 +1,4 @@
-var analytics = {
+var analytics = jsbin.analytics = {
   track: function (category, action, label, value) {
     var data = ['_trackEvent', category, action];
     if (label) {

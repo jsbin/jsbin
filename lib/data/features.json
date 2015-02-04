@@ -5,9 +5,9 @@
     "tip": "Help keep JS Bin online, working, and awesome"
   },
   {
-    "name": "Vanity URLs",
+    "name": "Asset uploading",
     "user": "pro",
-    "tip": "Show off your Pro status with you.jsbin.com"
+    "tip": "Just drag and drop assets into your bins for quick & easy use"
   },
   {
     "name": "Private bins",
@@ -15,14 +15,19 @@
     "tip": "Keep your ideas private, and easily toggle privacy"
   },
   {
+    "name": "Dropbox sync",
+    "user": "pro",
+    "tip": "Every bin, backed up to your Dropbox"
+  },
+  {
     "name": "SSL",
     "user": "pro",
     "tip": "All of JS Bin served over SSL, including embeds"
   },
   {
-    "name": "Dropbox sync",
+    "name": "Vanity URLs",
     "user": "pro",
-    "tip": "Every bin, backed up to your Dropbox"
+    "tip": "Show off your Pro status with you.jsbin.com"
   },
   {
     "name": "Email support",

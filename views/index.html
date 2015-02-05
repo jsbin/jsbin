@@ -377,19 +377,19 @@ if(top != self) {
               <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
               <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
               <hr data-desc="">
-              {{#if settings.[ui showblog]}}
+              {{#if settings.[ui inlinehelp]}}
               <input placeholder="Search help..." class="button" id="helpsearch"><span id="result-count"></span><span id="results"></span>
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">All help topics</a>
+              <a id="menu-all-help" data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">All help topics</a>
               {{else}}
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
+              <a id="menu-help-tips" data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
               {{/if}}
               <hr data-desc="">
               {{#feature request "pro"}}
-              <a data-desc="Email support" href="mailto:support@jsbin.com?subject=Pro%20user%20support%20request">Pro user email support</a>
+              <a id="menu-pro-support" data-desc="Email support" href="mailto:support@jsbin.com?subject=Pro%20user%20support%20request">Pro user email support</a>
               {{/feature}}
-              <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
-              <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
-              <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+              <a id="menu-feedback" data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
+              <a id="menu-fork" data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
+              <a id="menu-follow-jsbin" data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
             </div>
           </div>
         </div>

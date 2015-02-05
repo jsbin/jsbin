@@ -52,6 +52,7 @@
   "getAssetsForUser": "SELECT * FROM assets WHERE `username`=?",
   "deleteAsset": "DELETE FROM assets WHERE `asset_url`=? AND `username`=?",
   "saveAsset": "INSERT INTO assets (`username`, `asset_url`, `size`, `mime`) VALUES (?,?,?,?)",
+  "userListing": "SELECT s.url, s.revision, s.created, s.settings FROM `owners` AS `o`, `sandbox` AS `s` WHERE o.name=? AND s.revision=o.revision AND s.url=o.url",
   "sandboxColumns": [
     "created",
     "last_viewed",

@@ -33,6 +33,34 @@ var saving = {
   }
 };
 
+function getTagContent(tag) {
+  var html = jsbin.panels.panels.html.getCode();
+  var result = '';
+
+  // if we don't have the tag, bail with an empty string
+  if (html.indexOf('<' + tag) === -1) {
+    return result;
+  }
+
+  if (tag !== 'title' && tag !== 'meta') {
+    console.error('getTagContent for ' + tag + ' is not supported');
+    return result;
+  }
+
+  // grab the content based on the earlier defined regexp
+  html.replace(getTagContent.re[tag], function (all, capture1, capture2) {
+    result = tag === 'title' ? capture1 : capture2;
+  });
+
+  return result;
+}
+
+getTagContent.re = {
+  meta: /(<meta name="description" content=")([^"]*)/im,
+  title: /<title>(.*)<\/title>/im
+};
+
+
 // to allow for download button to be introduced via beta feature
 $('a.save').click(function (event) {
   event.preventDefault();
@@ -113,6 +141,45 @@ $('#sharebintype input[type=radio]').on('click', function () {
   updateSavedState();
 });
 
+var lastHTML = null;
+
+function updateDocMeta(event, data) {
+  if (data) {
+    if (data.panelId !== 'html') {
+      console.log('bail');
+      return; // ignore non-html updates
+    }
+  }
+
+  var currentHTML = jsbin.panels.panels.html.getCode();
+  if (lastHTML !== currentHTML) {
+    lastHTML = currentHTML;
+
+    var description = getTagContent('meta');
+    if (description !== jsbin.state.description) {
+      jsbin.state.description = description;
+      jsbin.state.updateSettings({ description: description });
+    }
+
+    var title = getTagContent('title');
+    if (title !== jsbin.state.title) {
+      jsbin.state.title = title;
+      jsbin.state.updateSettings({ title: title });
+
+      documentTitle = title;
+      if (documentTitle) {
+        document.title = documentTitle + ' - ' + jsbin.name;
+      } else {
+        document.title = jsbin.name;
+      }
+    }
+
+    console.log(jsbin.state.title, jsbin.state.description);
+  }
+}
+
+$document.on('saveComplete', updateDocMeta); // update, not create
+
 $document.on('saved', function () {
   updateSavedState();
 
@@ -122,6 +189,8 @@ $document.on('saved', function () {
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
   $('#clone').removeClass('hidden');
+
+  updateDocMeta();
 });
 
 var saveChecksum = jsbin.state.checksum || store.sessionStorage.getItem('checksum') || false;

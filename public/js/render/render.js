@@ -84,8 +84,9 @@ var getPreparedCode = (function () { // jshint ignore:line
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
-      title: /<title>(.*)<\/title>/i,
-      description: /<meta.*name=["']description['"].*?>/i,
+
+      description: /(<meta name="description" content=")([^"]*)/im,
+      title: /<title>(.*)<\/title>/im,
       winLoad: /window\.onload\s*=/,
       scriptopen: /<script/gi
     };
@@ -222,25 +223,6 @@ var getPreparedCode = (function () { // jshint ignore:line
             return '<script defer' + match + '>';
           }
         });
-      }
-
-      var description = (html.match(re.description) || [''])[0];
-      if (description) {
-        var i = description.indexOf('content=') + 'content='.length;
-        var quote = description.slice(i, i+1);
-        jsbin.state.description = description.substr(i + 1).replace(new RegExp(quote + '.*$'), '');
-      }
-
-
-      // read the element out of the html code and plug it in to our document.title
-      var newDocTitle = (html.match(re.title) || [,''])[1].trim();
-      if (newDocTitle && newDocTitle !== documentTitle) {
-        jsbin.state.title = documentTitle = newDocTitle; // jshint ignore:line
-        if (documentTitle) {
-          document.title = documentTitle + ' - ' + 'JS Bin';
-        } else {
-          document.title = 'JS Bin';
-        }
       }
 
       return html;

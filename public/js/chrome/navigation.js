@@ -104,14 +104,14 @@ $document.on('saved', function () {
 //   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
 // });
 
-if (!split) {
+if (!$('#sharemenu .share-split').length) {
   var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
     updateSavedState();
   });
   $('#sharemenu').bind('open', function () {
     $panelCheckboxes.attr('checked', false);
     jsbin.panels.getVisible().forEach(function (panel) {
-      $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();
+      $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').prop('checked', true).change();
     });
 
   });
@@ -416,7 +416,7 @@ var re = {
   metaContent: /content=".*?"/i
 };
 
-var metatag = '<meta name="description" content="[add your bin description]" />\n';
+var metatag = '<meta name="description" content="[add your bin description]">\n';
 
 $('#addmeta').click(function () {
   // if not - insert

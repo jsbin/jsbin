@@ -135,6 +135,10 @@ function exposeSettings() {
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      state: {
+        title: jsbin.state.title,
+        description: jsbin.state.description
+      },
       embed: jsbin.embed,
       panels: {
         // FIXME decide whether this should be locked down further

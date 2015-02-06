@@ -104,7 +104,7 @@ $document.on('saved', function () {
 //   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
 // });
 
-if (!split) {
+if (!$('#sharemenu .share-split').length) {
   var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
     updateSavedState();
   });

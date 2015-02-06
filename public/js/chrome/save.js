@@ -146,7 +146,6 @@ var lastHTML = null;
 function updateDocMeta(event, data) {
   if (data) {
     if (data.panelId !== 'html') {
-      console.log('bail');
       return; // ignore non-html updates
     }
   }
@@ -173,8 +172,6 @@ function updateDocMeta(event, data) {
         document.title = jsbin.name;
       }
     }
-
-    console.log(jsbin.state.title, jsbin.state.description);
   }
 }
 

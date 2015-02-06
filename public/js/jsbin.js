@@ -252,6 +252,7 @@ jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, me
   }
 
   if (jsbin.state.code) {
+    update.checksum = jsbin.state.checksum;
     $.ajax({
       type: method, // consistency ftw :-\
       url: jsbin.getURL({ withRevision: true }) + '/settings',

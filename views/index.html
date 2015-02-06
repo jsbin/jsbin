@@ -159,7 +159,7 @@ if(top != self) {
                   </div>
                 </div>
                 {{else}}
-                <div data-desc="This bin's full output without the JS Bin editor">
+                <div data-desc="This bin's full output without the JS Bin editor" class="ui-full-output">
                   <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
                 </div>
                 <hr>
@@ -173,13 +173,13 @@ if(top != self) {
                     <li><label><input type="checkbox" data-panel="live">Output</label></li>
                   </ul>
                 </div>
-                <div data-desc="The url to this bin with the JS Bin editor">
+                <div data-desc="The url to this bin with the JS Bin editor" class="ui-binurl">
                   <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                 </div>
-                <div data-desc="Embed this bin with the live output on your site">
+                <div data-desc="Embed this bin with the live output on your site" class="ui-embed">
                   <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
                 </div>
-                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
+                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled ui-codecast">
                   <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
                 </div>
                 <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div>

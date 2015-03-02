@@ -35,11 +35,11 @@ var libraries = [
   },
   {
     'url': [
-      '//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.min.css',
+      '//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.min.css',
       '//code.jquery.com/jquery-1.11.0.min.js',
-      '//code.jquery.com/ui/1.11.2/jquery-ui.min.js'
+      '//code.jquery.com/ui/1.11.3/jquery-ui.min.js'
     ],
-    'label': 'jQuery UI 1.11.2',
+    'label': 'jQuery UI 1.11.3',
     'group': 'jQuery UI'
   },
   {
@@ -548,10 +548,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/4.6/video-js.css',
-      '//vjs.zencdn.net/4.6/video.js'
+      '//vjs.zencdn.net/4.12/video-js.css',
+      '//vjs.zencdn.net/4.12/video.js'
     ],
-    'label': 'Video.js 4.6.x'
+    'label': 'Video.js 4.12.x'
   },
   {
     'url': [

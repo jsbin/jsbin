@@ -135,6 +135,7 @@ function exposeSettings() {
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      analytics: jsbin.analytics,
       state: {
         title: jsbin.state.title,
         description: jsbin.state.description

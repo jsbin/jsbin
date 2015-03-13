@@ -8,7 +8,7 @@
   "getUserByGithubId": "SELECT * FROM `ownership` WHERE `github_id`=? LIMIT 1",
   "getUserByApiKey": "SELECT * FROM `ownership` WHERE `api_key`=? LIMIT 1",
   "getByEmail": "SELECT * FROM `ownership` WHERE `email`=? LIMIT 1",
-  "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`, `github_token`, `github_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+  "setUser": "INSERT INTO `ownership` (`name`, `key`, `email`, `last_login`, `created`, `updated`, `github_token`, `github_id`, `flagged`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
   "touchLogin": "UPDATE `ownership` SET `last_login`=? WHERE `name`=?",
   "updateUserKey": "UPDATE ownership SET `key`=?, `updated`=? WHERE `name`=?",
   "updateUserSettings": "UPDATE ownership SET `settings`=? WHERE `name`=?",

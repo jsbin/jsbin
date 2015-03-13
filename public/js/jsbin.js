@@ -135,6 +135,7 @@ function exposeSettings() {
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      analytics: jsbin.analytics,
       state: {
         title: jsbin.state.title,
         description: jsbin.state.description
@@ -175,7 +176,10 @@ if (storedSettings === "undefined") {
 jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
-  jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
+  jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
+  if (jsbin.user.settings.font) {
+    jsbin.settings.font = parseInt(jsbin.user.settings.font, 10);
+  }
 }
 
 // if the above code isn't dodgy, this for hellz bells is:

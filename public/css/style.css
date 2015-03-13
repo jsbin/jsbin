@@ -4849,12 +4849,12 @@ html * {
 }
 
 .menu > a.focusbtn {
-  background-color: #FFDC00;
+  background-color: #FFEB3B;
   padding: 2px 7px;
   border-radius: 0px;
   margin: 4px 3px;
   color: #111;
-  font-weight: 500;
+  /*font-weight: 500;*/
 }
 
 .menu.open a.focusbtn,
@@ -5328,13 +5328,15 @@ body.ready.toppanel {
 }
 
 .toppanel-no-pro {
-  background: white;
+  background: #4CAF50;
+  border-color: #4CAF50;
   padding: 0;
 }
 
 .toppanel-wrapper .toppanel-no-pro a {
   padding: 10px 5px;
   display: block;
+  color: #fff;
 }
 
 .toppanel-actions {
@@ -5745,25 +5747,25 @@ a.toppanel-logo {
 
 a[data-pro]:after, .pro-required {
   content: 'Pro';
-  color: #ccc;
+  color: #fff;
   position: absolute;
   right: 6px;
   font-size: 10px;
   text-transform: uppercase;
   font-weight: 500;
   /* letter-spacing: 0.1em; */
-  border: 1px solid #ccc;
+  border: 1px solid #4CAF50;
   line-height: 10px;
   padding: 3px;
   border-radius: 3px;
   top: 11px;
   text-align: center;
-  background: rgb(252, 252, 252);
+  background: #4CAF50;
 }
 
 a[data-pro]:hover:after {
-  color: #999;
-  border-color: #999;
+  background-color: #2E7D32;
+  border-color: #2E7D32;
 }
 
 .gopro { /* not the camera...silly */

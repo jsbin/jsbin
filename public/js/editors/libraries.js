@@ -387,15 +387,15 @@ var libraries = [
   {
     'url': [
       '//code.jquery.com/jquery-1.11.1.min.js',
-      '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js',
-      '//builds.emberjs.com/tags/v1.9.0/ember.js'
+      '//builds.emberjs.com/tags/v1.11.1/ember-template-compiler.js',
+      '//builds.emberjs.com/tags/v1.11.1/ember.debug.js'
     ],
-    'label': 'Ember.js 1.9.0',
+    'label': 'Ember.js 1.11.1',
     'group': 'Ember'
   },
   {
-    'url': '//builds.emberjs.com/tags/v1.0.0-beta.16/ember-data.js',
-    'label': 'Ember Data 1.0.0-beta.16',
+    'url': '//builds.emberjs.com/tags/v1.0.0-beta.16.1/ember-data.js',
+    'label': 'Ember Data 1.0.0-beta.16.1',
     'group': 'Ember'
   },
   {

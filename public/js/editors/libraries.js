@@ -390,7 +390,13 @@ var libraries = [
       '//builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v2.0.0.js',
       '//builds.emberjs.com/tags/v1.9.0/ember.js'
     ],
-    'label': 'Ember.js 1.9.0'
+    'label': 'Ember.js 1.9.0',
+    'group': 'Ember'
+  },
+  {
+    'url': '//builds.emberjs.com/tags/v1.0.0-beta.16/ember-data.js',
+    'label': 'Ember Data 1.0.0-beta.16',
+    'group': 'Ember'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css',

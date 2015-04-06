@@ -5,8 +5,8 @@
   <title>Ember Starter Kit</title>
   <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://builds.emberjs.com/tags/v1.11.0/ember-template-compiler.js"></script>
-  <script src="http://builds.emberjs.com/tags/v1.11.0/ember.debug.js"></script>
+  <script src="http://builds.emberjs.com/tags/v1.11.1/ember-template-compiler.js"></script>
+  <script src="http://builds.emberjs.com/tags/v1.11.1/ember.debug.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/ember-data.js/1.0.0-beta.16.1/ember-data.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-mockjax/1.5.3/jquery.mockjax.js"></script>
 </head>
@@ -20,7 +20,7 @@
 
   <script type="text/x-handlebars" data-template-name="index">
     <ul>
-      {{#each color in model}}
+      {{#each model as |color|}}
         <li>{{color.name}}</li>
       {{/each}}
     </ul>

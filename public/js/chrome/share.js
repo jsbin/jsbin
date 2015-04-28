@@ -125,7 +125,7 @@
 
   function update() {
     var data = formData(form);
-    var url = jsbin.getURL();
+    var url = jsbin.getURL({ root: jsbin.shareRoot });
 
     if (data.state === 'snapshot' && jsbin.state.latest) {
       url += '/' + selectedSnapshot;

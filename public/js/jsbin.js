@@ -235,7 +235,8 @@ jsbin.getURL = function (options) {
   if (!options) { options = {}; }
 
   var withoutRoot = options.withoutRoot;
-  var url = withoutRoot ? '' : jsbin.root;
+  var root = options.root || jsbin.root;
+  var url = withoutRoot ? '' : root;
   var state = jsbin.state;
 
   if (state.code) {

@@ -422,12 +422,13 @@ var libraries = [
   },
   {
     'url': [
-      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/normalize.min.css',
-      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/foundation.min.css',
-      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/vendor/jquery.min.js',
-      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/foundation.min.js'
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/normalize.min.css',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/css/foundation.min.css',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/modernizr.js',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/vendor/jquery.js',
+      '//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.min.js'
     ],
-    'label': 'Foundation 5.0.3'
+    'label': 'Foundation 5.5.2'
   },
   {
     'url': '//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',

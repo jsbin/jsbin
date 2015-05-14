@@ -588,8 +588,8 @@ var libraries = [
     'label': 'Ionic 1.0.0-beta-13'
   },
   {
-    'url': '//static.opentok.com/webrtc/v2.2/js/opentok.min.js',
-    'label': 'OpenTok 2.2'
+    'url': '//static.opentok.com/v2/js/opentok.min.js',
+    'label': 'OpenTok v2.x (latest)'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',

@@ -622,6 +622,16 @@ var libraries = [
     'label': 'rx.dom',
     'group': 'RxJS'
   },
+  {
+    'url': 'http://cdn.popcornjs.org/code/dist/popcorn.min.js',
+    'label': 'Popcorn.js 1.5.6 (Core)',
+    'group': 'Popcorn.js'
+  },
+  {
+    'url': 'http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js',
+    'label': 'Popcorn.js 1.5.6 (Core + Extensions)',
+    'group': 'Popcorn.js'
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

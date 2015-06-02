@@ -324,6 +324,16 @@ var libraries = [
     'group': 'React'
   },
   {
+    'url': 'https://cdn.rawgit.com/zloirock/core-js/master/client/shim.min.js',
+    'label': 'core-js',
+    'group': 'shims'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
+    'label': 'ES5 shim 2.0.8',
+    'group': 'shims'
+  },
+  {
     'url': 'http://vuejs.org/js/vue.js',
     'label': 'Vue.js',
   },
@@ -418,10 +428,6 @@ var libraries = [
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.min.css',
     'label': 'Normalize.css 3.0.2'
-  },
-  {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js',
-    'label': 'ES5 shim 2.0.8'
   },
   {
     'url': [

@@ -4,7 +4,7 @@ jsbin.keys = (function () {
   'use strict';
 
   // don't store the keys if they're logged in, since we have this on the server
-  if (jsbin.user.name) {
+  if (jsbin.user && jsbin.user.name) {
     return;
   }
 

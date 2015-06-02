@@ -314,6 +314,36 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js',
+    'label': 'Angular Animate 1.3.15',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js',
+    'label': 'Angular Aria 1.3.15',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js',
+    'label': 'Angular Messages 1.3.15',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-resource.min.js',
+    'label': 'Angular Resource 1.3.15',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js',
+    'label': 'Angular Route 1.3.15',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.min.js',
+    'label': 'Angular Sanitize 1.3.15',
+    'group': 'Angular'
+  },
+  {
     'url': '//fb.me/react-0.13.1.js',
     'label': 'React 0.13.1',
     'group': 'React'

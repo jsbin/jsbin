@@ -453,7 +453,7 @@ var libraries = [
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'https://rawgit.com/lodash/lodash/3.0.1/lodash.min.js',
+    'url': 'https://cdn.rawgit.com/lodash/lodash/3.0.1/lodash.min.js',
     'label': 'lodash 3.0.1'
   },
   {

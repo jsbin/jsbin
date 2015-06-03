@@ -13,7 +13,7 @@ var font = (function (document) {
     var cssText = selectors + '{ font-size: ' + size + 'px; }',
         el = document.createElement('style');
 
-    el.type= 'text/css';
+    el.type = 'text/css';
     if (el.styleSheet) {
       el.styleSheet.cssText = cssText;//IE only
     } else {
@@ -44,3 +44,55 @@ var font = (function (document) {
 
   return font;
 })(document);
+
+(function () {
+  'use strict';
+  var md5 = 'a3a02e450f1f79f4c3482279d113b07e';
+  var key = 'fonts';
+  var cache;
+
+  function insertFont(value) {
+    var style = document.createElement('style');
+    style.innerHTML = value;
+    document.head.appendChild(style);
+  }
+
+  try {
+    cache = window.localStorage.getItem(key);
+    if (cache) {
+      cache = JSON.parse(cache);
+      if (cache.md5 === md5) {
+        insertFont(cache.value);
+      } else {
+        // busting cache when md5 doesn't match
+        window.localStorage.removeItem(key);
+        cache = null;
+      }
+    }
+  } catch (e) {
+    // most likely LocalStorage disabled
+    return;
+  }
+
+  if (!cache) {
+    // fonts not in LocalStorage or md5 did not match
+    window.addEventListener('load', function () {
+      var request = new XMLHttpRequest();
+      var response;
+      var url = jsbin.static + '/css/fonts.a3a02e450f1f79f4c3482279d113b07e.woff.json';
+      request.open('GET', url, true);
+      request.onload = function () {
+        if (this.status == 200) {
+          try {
+            response = JSON.parse(this.response);
+            insertFont(response.value);
+            window.localStorage.setItem(key, this.response);
+          } catch (e) {
+            // localStorage is probably full
+          }
+        }
+      };
+      request.send();
+    });
+  }
+})();

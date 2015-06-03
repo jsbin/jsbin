@@ -1,6 +1,7 @@
 {
   "app": [
     "/js/chrome/hashbang-jump.js",
+    "/js/chrome/font.js",
     "/js/vendor/rsvp.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
@@ -35,7 +36,6 @@
     "/js/chrome/splitter.js",
     "/js/chrome/analytics.js",
     "/js/chrome/settings.js",
-    "/js/chrome/font.js",
     "/js/render/title.js",
     "/js/render/render.js",
     "/js/render/live.js",

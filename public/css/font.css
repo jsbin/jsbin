@@ -10,7 +10,7 @@
 }
 */
 
-@font-face {
+/*@font-face {
     font-family: 'SourceCodeProRegular';
     src: url('../font/SourceCodePro-Regular-webfont.eot');
     src: url('../font/SourceCodePro-Regular-webfont.eot?#iefix') format('embedded-opentype'),
@@ -30,7 +30,7 @@
     font-weight: bold;
     font-style: normal;
 }
-
+*/
 @font-face {
   font-family: 'icons';
   src:url('fonts/icons.eot');

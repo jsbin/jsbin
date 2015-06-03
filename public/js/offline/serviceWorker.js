@@ -1,10 +1,9 @@
 /* global importScripts, ctr */
-importScripts('/js/offline/cache/idbhelper.js');
-importScripts('/js/offline/cache/cachedb.js');
-importScripts('/js/offline/cache/cache.js');
-importScripts('/js/offline/cache/caches.js');
 
-var version = 'v2';
+ // polyfill via https://github.com/coonsta/cache-polyfill
+importScripts('/js/offline/cache/index.js');
+
+var CACHE_NAME = 'jsbin-v3';
 
 function log() {
   var args = [].slice.call(arguments);
@@ -15,19 +14,20 @@ function log() {
   }
 }
 
-console.log('loaded');
+console.log('loaded %s', CACHE_NAME);
 
 this.addEventListener('install', function(event) {
   event.waitUntil(
-    polyfillCaches.get(version).then(function (cache) {
-      return cache || polyfillCaches.create(version);
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache || caches.create(CACHE_NAME);
     })
   );
 });
 
 this.addEventListener('fetch', function(event) {
+  console.log('fetch', event);
   event.respondWith(
-    polyfillCaches.match(event.request).then(function (res) {
+    caches.match(event.request).then(function (res) {
       if (res) {
         log(event, 'returned from cache');
       } else {
@@ -40,7 +40,7 @@ this.addEventListener('fetch', function(event) {
 
         log(event, 'fetch complete for ' + event.request.url);
 
-        polyfillCaches.get(version).then(function (cache) {
+        caches.open(CACHE_NAME).then(function (cache) {
           log(event, 'Added ' + event.request.url + ' to cache');
           cache.put(event.request, res).then(function () {
             log(event, 'put was good');

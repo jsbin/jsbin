@@ -2,8 +2,7 @@
   <thead>
     <tr class="headings">
       <td>&nbsp;</td>
-      <th>Anonymous</th>
-      <th>Signed-in</th>
+      <th>Free account</th>
       <th>
         Pro <small class="upgrade-cost">@ £5/month*</small>
       </th>
@@ -11,7 +10,6 @@
   </thead>
   <tfoot class="upgrade">
     <tr>
-      <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>
@@ -28,9 +26,6 @@
         {{/if}}
         {{name}}
       </td>
-      <td class="anon">
-        {{#equal user 'anon'}}&#10003;{{/equal}}
-      </td>
       <td class="free">
         {{#equal user 'anon'}}&#10003;{{/equal}}
         {{#equal user 'free'}}&#10003;{{/equal}}
@@ -45,5 +40,7 @@
   </tbody>
 </table>
 
-<p><small>We're also working on asset hosting and a full read & write API for Pro users, so watch our <a href="/blog" target="_blank">blog</a> for the latest releases.</small></p>
+<p>...and many other features including preprocessors, linting and <a href="http://jsbin.com/help/features">more</a>.</p>
+
+<p><small>We're also working on a full read & write API for Pro users, so watch our <a href="/blog" target="_blank">blog</a> for the latest releases.</small></p>
 

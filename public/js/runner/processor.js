@@ -74,11 +74,6 @@ var processor = (function () {
     source = doctypeObj.tail;
     combinedSource.push(doctype);
 
-    // this ensures that requests are bounced away from
-    // jsbin when they're relative. They shouldn't be
-    // hitting jsbin directly for broken images, etc.
-    combinedSource.push('<base href="//null.jsbin.com/">');
-
     // Kill the blocking functions
     // IE requires that this is done in the script, rather than off the window
     // object outside of the doc.write.

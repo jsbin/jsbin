@@ -1,6 +1,6 @@
 <div>
   <label for="signup-username">Username</label>
-  <input name="username" id="signup-username" type="text" required pattern="[a-zA-Z0-9_\-]+" oninvalid="setCustomValidity('Only numbers, letters, underscore and dash are allowed in the username')">
+  <input name="username" id="signup-username" type="text" required pattern="[a-zA-Z0-9_\-]+" oninput="setCustomValidity('')" oninvalid="setCustomValidity('Only numbers, letters, underscore and dash are allowed in the username')">
 </div>
 <div>
   <label for="signup-email">Email address</label>

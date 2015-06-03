@@ -403,11 +403,14 @@ function whichKey(event) {
 
 function setCursorTo(str) {
   str = enableCC ? cleanse(str) : str;
+  var old = exec.value;
   exec.value = str;
 
   if (enableCC) {
-    document.execCommand('selectAll', false, null);
-    document.execCommand('delete', false, null);
+    if (exec.textContent.length) {
+      document.execCommand('selectAll', false, null);
+      document.execCommand('delete', false, null);
+    }
     document.execCommand('insertHTML', false, str);
     getCursor().focus();
   } else {

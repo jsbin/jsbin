@@ -93,6 +93,15 @@ function dedupe(array) {
   return results;
 }
 
+function isDOM(obj) {
+  'use strict';
+  var Node = window.Node || false;
+  if (Node) {
+    return obj instanceof Node;
+  }
+  return obj.nodeType === 1;
+}
+
 function exposeSettings() {
   'use strict';
 
@@ -122,10 +131,15 @@ function exposeSettings() {
     return results;
   }
 
-  if (window.jsbin instanceof Node || !window.jsbin) { // because...STUPIDITY!!!
+  if (isDOM(window.jsbin) || !window.jsbin) { // because...STUPIDITY!!!
     window.jsbin = {
       'static': jsbin['static'],
       version: jsbin.version,
+      analytics: jsbin.analytics,
+      state: {
+        title: jsbin.state.title,
+        description: jsbin.state.description
+      },
       embed: jsbin.embed,
       panels: {
         // FIXME decide whether this should be locked down further
@@ -142,7 +156,7 @@ function exposeSettings() {
     Object.defineProperty(window, key, {
       get:function () {
         window.jsbin.settings = jsbin.settings;
-        console.log('jsbin.settings can how be modified on the console');
+        console.log('jsbin.settings can now be modified on the console');
       }
     });
     if (!jsbin.embed) {
@@ -151,7 +165,7 @@ function exposeSettings() {
   }
 }
 
-var storedSettings = localStorage.getItem('settings');
+var storedSettings = store.localStorage.getItem('settings');
 if (storedSettings === "undefined") {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
@@ -162,7 +176,10 @@ if (storedSettings === "undefined") {
 jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
-  jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
+  jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
+  if (jsbin.user.settings.font) {
+    jsbin.settings.font = parseInt(jsbin.user.settings.font, 10);
+  }
 }
 
 // if the above code isn't dodgy, this for hellz bells is:
@@ -184,7 +201,7 @@ jsbin.ie = (function(){
 
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
-  localStorage.setItem('settings', '{}');
+  store.localStorage.setItem('settings', '{}');
 }
 
 if (!jsbin.settings.editor) {
@@ -214,19 +231,41 @@ jsbin.owner = function () {
   return jsbin.user && jsbin.user.name && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
 };
 
-jsbin.getURL = function (withoutRoot, share) {
-  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
-      state = jsbin.state;
+jsbin.getURL = function (options) {
+  if (!options) { options = {}; }
+
+  var withoutRoot = options.withoutRoot;
+  var root = options.root || jsbin.root;
+  var url = withoutRoot ? '' : root;
+  var state = jsbin.state;
 
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision) { //} && state.revision !== 1) {
-      url += '/' + state.revision;
+    if (!state.latest || options.withRevision) { //} && state.revision !== 1) {
+      if (options.withRevision !== false) {
+        url += '/' + (state.revision || 1);
+      }
     }
   }
   return url;
 };
+
+jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, method) {
+  if (!method) {
+    method = 'POST';
+  }
+
+  if (jsbin.state.code) {
+    update.checksum = jsbin.state.checksum;
+    $.ajax({
+      type: method, // consistency ftw :-\
+      url: jsbin.getURL({ withRevision: true }) + '/settings',
+      data: update
+    });
+  }
+}, 500);
+
 
 function objectValue(path, context) {
   var props = path.split('.'),
@@ -261,31 +300,21 @@ var $window = $(window),
     documentTitle = 'JS Bin',
     $bin = $('#bin'),
     loadGist,
-    // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
+    // splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
-      // sessionStorage.setItem('javascript', editors.javascript.getCode());
-      if (jsbin.panels.focused.editor) {
-        try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-          sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
-          sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
-        } catch (e) {
-          sessionStorage.setItem('line', 0);
-          sessionStorage.setItem('character', 0);
-        }
-      }
-
-      sessionStorage.setItem('url', jsbin.getURL());
-      localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+      store.sessionStorage.setItem('url', jsbin.getURL());
+      store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       if (jsbin.panels.saveOnExit === false) {
         return;
       }
+
       jsbin.panels.save();
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
       if (panel) {
-        sessionStorage.setItem('panel', panel.id);
+        store.sessionStorage.setItem('panel', panel.id);
       }
     };
 
@@ -294,8 +323,8 @@ $window.unload(unload);
 // window.addEventListener('storage', function (e) {
 //   if (e.storageArea === localStorage && e.key === 'settings') {
 //     console.log('updating from storage');
-//     console.log(JSON.parse(localStorage.settings));
-//     jsbin.settings = JSON.parse(localStorage.settings);
+//     console.log(JSON.parse(store.localStorage.settings));
+//     jsbin.settings = JSON.parse(store.localStorage.settings);
 //   }
 // });
 

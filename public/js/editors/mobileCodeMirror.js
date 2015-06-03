@@ -20,8 +20,12 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
 
+    var old = null;
     $(this.textarea)[jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup'](throttle(function () {
-      $(document).trigger('codeChange', { panelId: el.id });
+      if (old !== this.value) {
+        old = this.value;
+        $(document).trigger('codeChange', { panelId: el.id });
+      }
     }, 200));
 
     options.initCallback && $(options.initCallback);

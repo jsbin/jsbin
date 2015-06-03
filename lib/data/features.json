@@ -1,8 +1,13 @@
 { "features": [
   {
-    "name": "Vanity URLs",
+    "name": "Support JS Bin's continued operation",
     "user": "pro",
-    "tip": "Show off your Pro status with you.jsbin.com"
+    "tip": "Help keep JS Bin online, working, and awesome"
+  },
+  {
+    "name": "Asset uploading",
+    "user": "pro",
+    "tip": "Just drag and drop assets into your bins for quick & easy use"
   },
   {
     "name": "Private bins",
@@ -10,18 +15,24 @@
     "tip": "Keep your ideas private, and easily toggle privacy"
   },
   {
-    "name": "SSL",
-    "user": "pro",
-    "tip": "All of JS Bin served over SSL, including embeds"
-  },
-  {
     "name": "Dropbox sync",
     "user": "pro",
     "tip": "Every bin, backed up to your Dropbox"
   },
   {
-    "name": "Priority direct support",
-    "user": "pro"
+    "name": "SSL",
+    "user": "pro",
+    "tip": "All of JS Bin served over SSL, including embeds"
+  },
+  {
+    "name": "Vanity URLs",
+    "user": "pro",
+    "tip": "Show off your Pro status with you.jsbin.com"
+  },
+  {
+    "name": "Email support",
+    "user": "pro",
+    "tip": "For private support requests"
   },
   {
     "name": "Full, unmodified output",
@@ -47,16 +58,6 @@
     "name": "Custom starting code",
     "user": "anon",
     "tip": "Start with only a doctype? Set your \"new\" template"
-  },
-  {
-    "name": "Unlimited external resources",
-    "user": "anon",
-    "tip": "Add any number of external CSS, JS or other resources"
-  },
-  {
-    "name": "Custom libraries",
-    "user": "anon",
-    "tip": "Add your own libraries to our vast selection"
   }
 ],
 "tweets": ["499277531313631233", "492754486319140865", "492058646118158336", "491948444165365761", "491946894051270656", "491945957450612736", "459041574043664384", "450920759402434561"]

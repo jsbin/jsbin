@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "panels": ["javascript", "live"]
+  },
+  "processors": {
+    "javascript": "jsx"
+  },
+  "name": "React"
+}

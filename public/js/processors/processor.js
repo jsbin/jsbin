@@ -143,11 +143,13 @@ var processors = jsbin.processors = (function () {
   var processors = {
 
     html: createProcessor({
-      id: 'html'
+      id: 'html',
+      extensions: ['html']
     }),
 
     css: createProcessor({
-      id: 'css'
+      id: 'css',
+      extensions: ['css']
     }),
 
     javascript: createProcessor({
@@ -377,7 +379,7 @@ var processors = jsbin.processors = (function () {
       id: 'less',
       target: 'css',
       extensions: ['less'],
-      url: jsbin.static + '/js/vendor/less-1.7.3.min.js',
+      url: jsbin.static + '/js/vendor/less.min.js',
       init: passthrough,
       handler: function less(source, resolve, reject) {
         window.less.Parser().parse(source, function (error, result) {
@@ -490,6 +492,28 @@ var processors = jsbin.processors = (function () {
       }), 500),
     }),
 
+    babel: createProcessor({
+      id: 'babel',
+      target: 'js',
+      extensions: ['es6'],
+      url: jsbin.static + '/js/vendor/babel.min.js',
+      init: function (ready) {
+        ready();
+      },
+      handler: function babelhandle(source, resolve, reject) {
+        try {
+          resolve(babel.transform(source, { stage: 0 }).code);
+        } catch (e) {
+          console.error(e.message);
+          reject([{
+            line: e.loc.line - 1,
+            ch: e.loc.column,
+            msg: e.message.split('\n')[0].replace(new RegExp('\\\(' + e.loc.line + ':' + e.loc.column + '\\\)'), '(' + e.loc.column + ')')
+          }]);
+        }
+      }
+    }),
+
     myth: createProcessor({
       id: 'myth',
       target: 'css',
@@ -551,6 +575,53 @@ var processors = jsbin.processors = (function () {
         });
       }
     }),
+
+    clojurescript: createProcessor({
+      id: 'clojurescript',
+      target: 'javascript',
+      extensions: ['clj', 'cljs'],
+      url: "http://himera-emh.herokuapp.com/js/repl.js",
+      //url: "http://192.168.100.128:8080/js/repl.js",
+      init: function clojurescript(ready) {
+        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clojure/clojure.js', ready);
+      },
+      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
+        $.ajax({
+          type: 'post',
+          url: 'http://himera-emh.herokuapp.com/compile-string',
+          //url: "http://192.168.100.128:8080/compile-string",
+          contentType: "application/clojure",
+          data: "{ :expr \"(let [] (ns cljs.user) " + source.replace(/"/g, "\\\"") + ")\" }",
+          success: function (data) {
+            var readstring = cljs.reader.read_string(data);
+            var result = (new cljs.core.Keyword("\uFDD0:js")).call(null, readstring);
+            var clojureError = (new cljs.core.Keyword("\uFDD0:error")).call(null, readstring);
+            if (!clojureError) {
+              resolve(result);
+            } else {
+              var clojureErrors = {
+                line: 0,
+                ch: 0,
+                msg: clojureError
+              };
+              console.log("clojureErrors", clojureErrors);
+              reject([clojureErrors]);
+            }
+          },
+          error: function (data) {
+            var clojureErrors2 = {
+              line: 0,
+              ch: 0,
+              msg: data.responseText
+            };
+            console.log("clojureErrors", clojureErrors2);
+            reject([clojureErrors2]);
+          },
+          complete: done
+        });
+      }), 500),
+    }),
+
 
     traceur: (function () {
       var SourceMapConsumer,
@@ -702,7 +773,8 @@ var processors = jsbin.processors = (function () {
       panel.editor.setOption('smartIndent', smartIndent);
 
       panel.processor = defaultProcessor;
-      delete jsbin.state.processors[panelId];
+      // delete jsbin.state.processors[panelId];
+      jsbin.state.processors[panelId] = panelId;
       delete panel.type;
     }
 

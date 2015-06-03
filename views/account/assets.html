@@ -1,0 +1,14 @@
+{{> account_sidebar}}
+
+<div id="assets">
+  <h1>Assets</h1>
+  <span id="total-size"><em>loading...</em></span>
+
+  <section id="content">
+    <div id="files"></div>
+  </section>
+  <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+  <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+  <script src="{{static}}/js/vendor/s3upload.js{{cacheBust}}"></script>
+  <script src="{{static}}/js/account/assets.js{{cacheBust}}"></script>
+</div>

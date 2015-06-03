@@ -3,11 +3,12 @@
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
+  <link rel="alternate" type="application/json+oembed" href="{{root}}/oembed?url={{root}}{{request.url}}">
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  {{#if custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}{{cacheBust}}">{{/if}}
+  {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}
   {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="{{static}}/css/editor-layout.css{{cacheBust}}">{{/equal}}
   <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
@@ -48,7 +49,7 @@ if(top != self) {
       {{#if embed}}
         <span class="menu">
           <a target="_blank" href="{{code_id_path}}/edit" class="brand button group"><img src="{{static}}/images/favicon.svg" alt="">
-          <h1>JS Bin</h1></a><a href="/clone" target="_blank" class="button">Save</a>
+            <h1>JS Bin</h1></a><a href="{{root}}/clone" target="_blank" class="button">Save</a>
         </span>
       {{else}}
         <div class="menu">
@@ -66,6 +67,7 @@ if(top != self) {
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
+              <!-- <a class="deleteallbins button group" data-desc="Delete all bin snapshots" title="Delete all bin snapshots" href="{{root}}/delete-all">Delete all snapshots</a> -->
               {{/feature}}
               <a class="archivebin button group" data-desc="Archive bin" title="Archive this bin" href="{{code_id_path}}/archive" data-shortcut="ctrl+y">Archive</a>
               <a class="unarchivebin button group" data-desc="Unrchive bin" title="Restore this bin from the archive" href="{{code_id_path}}/unarchive" data-shortcut="ctrl+shift+y">Unarchive</a>
@@ -74,8 +76,8 @@ if(top != self) {
               {{/if}}
               <hr data-desc="">
               <a id="addmeta" data-desc="Insert a description shown in My Bins" title="Add meta data to bin" class="button group" href="#add-description">Add description</a>
-              <a title="Create milestone" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Create milestone</a>
-              <a data-desc="Copy and create a new bin start at revision #1" data-shortcut="ctrl+shift+s" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
+              <a title="Save snapshot" data-desc="Save current work, and begin new revision on next change" data-shortcut="ctrl+s" class="button save group" data-label="save" href="{{root}}/save">Save snapshot</a>
+              <a data-desc="Copy and create a new bin start at revision #1" id="clone" title="Create a new copy" class="button clone group" data-label="clone" href="{{root}}/clone">Clone</a>
               <hr data-desc="">
               {{#feature request "upgrade"}}
                 {{#feature request "vanity"}}
@@ -95,11 +97,69 @@ if(top != self) {
           <select id="library"></select>
           </span>
         </div><div id="sharemenu" class="menu {{#unless code_id}}hidden{{/unless}}">
-          <a href="#share" class="button button-dropdown group">Share</a>
-          <div class="dropdown" id="share">
+          <a href="#share"  class="button button-dropdown group">Share</a>
+          <div class="dropdown{{#feature request "revisionless"}} share-split{{/feature}}" id="share">
             <div class="dropdowncontent">
               <form>
-                <div data-desc="This bin's full output without the JS Bin editor">
+                {{#feature request "revisionless"}}
+                <div class="controls">
+                  <strong>State</strong>
+                  <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
+                    <ul>
+                      <li><label><input type="radio" name="state" checked value="realtime"> Latest<span id="andlive"><br><small>with codecasting</small></span></label></li>
+                      <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot <!-- <select name="snapshot" id="snapshot">
+                        <option>1</option>
+                      </select> --></label></li>
+                    </ul>
+                  </div>
+                  <div id="sharepanels">
+                    <strong>View</strong>
+                    <label><input checked type="radio" name="view" value="editor"> Editor</label>
+                    <ul>
+                      <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
+                      <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="js">JS</label></li>
+                      <li><label><input name="panel" type="checkbox" value="console">Console</label></li>
+                      <li><label><input name="panel" type="checkbox" value="output">Output</label></li>
+                    </ul>
+                  </div>
+                  <label for="output-view"><input id="output-view" type="radio" name="view" value="output"> Output only<br><small>with live reload</small></label>
+                </div>
+                <div class="result">
+                  <div data-desc="This bin's full output without the JS Bin editor">
+                    <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Link</a></strong><br>
+                    <input name="url" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
+                  </div>
+                  <div data-desc="Direct links to specific sources of the bin">
+                    <!-- <span class="heading">Sources:</span> -->
+                    <span class="direct-links"></span>
+                  </div>
+                  <div data-desc="Embed this bin with the live output on your site">
+                    <span class="heading">Embed</span><br><textarea id="embedfield" name="embed" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
+                  </div>
+                  <div data-desc="The preview of JS Bin when you share your bin">
+                    <span class="heading">What they'll see</span><br>
+                    <!-- <img src="http://placehold.it/200x113"> -->
+                    <div id="share-preview">
+                      <div class="output"></div>
+                      <span class="header"></span>
+                      <div class="editor">
+                        <div class="html">
+                        </div>
+                        <div class="css">
+                        </div>
+                        <div class="js">
+                        </div>
+                        <div class="console">
+                        </div>
+                        <div class="output">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{else}}
+                <div data-desc="This bin's full output without the JS Bin editor" class="ui-full-output">
                   <strong><a class="link" data-path="/" target="_blank" href="{{root}}{{code_id_path}}">Output only (with live reload)</a></strong><br><input data-path="/" class="link" id="livepreview" value="{{root}}{{code_id_path}}/" type="text">
                 </div>
                 <hr>
@@ -113,16 +173,18 @@ if(top != self) {
                     <li><label><input type="checkbox" data-panel="live">Output</label></li>
                   </ul>
                 </div>
-                <div data-desc="The url to this bin with the JS Bin editor">
+                <div data-desc="The url to this bin with the JS Bin editor" class="ui-binurl">
                   <a class="link heading" data-path="/edit" target="_blank" href="{{root}}{{code_id_path}}/edit">Link</a><br><input data-path="/edit" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                 </div>
-                <div data-desc="Embed this bin with the live output on your site">
+                <div data-desc="Embed this bin with the live output on your site" class="ui-embed">
                   <span class="heading">Embed</span><br><textarea id="embedfield" data-path="/embed" class="link">&lt;a class=&quot;jsbin-embed&quot; href=&quot;{{root}}{{code_id_path}}/embed?live&quot;&gt;JS Bin demo&lt;/a&gt;&lt;script src=&quot;{{static}}/js/embed.js&quot;&gt;&lt;/script&gt;</textarea>
                 </div>
-                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled">
+                <div data-desc="Training/Viewer mode: codecast your bin to any viewers" class="disabled ui-codecast">
                   <a class="link heading" target="_blank" data-path="/watch" href="{{root}}{{code_id_path}}/watch">Codecast</a><br><input data-path="/watch" class="link" value="{{root}}{{code_id_path}}/watch" type="text">
                 </div>
-                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div></div>
+                <div data-desc="Disallow further changes to this specific revision" data-shortcut="ctrl+s" class="lockoption" id="enablelock"><div title="Locks the bin's content so no more changes will be made this URL, and typing will create a new bin as if you 'created milestone'" class="icon-unlocked lockrevision"><span>Click to lock and prevent further changes</span></div>
+                {{/feature}}
+                </div>
               </form>
             </div>
 
@@ -137,27 +199,33 @@ if(top != self) {
         {{#unless embed}}
           {{#if home}}
             {{#feature request "accountPages"}}
-            <div class="menu{{#if user.pro}} pro{{/if}}">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<img src="{{gravatar}}">{{/if}} Account</a>
+            <div class="menu{{#feature request "pro"}} pro {{/feature}}">
+              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
+                <source srcset="{{gravatar}} 1x, {{gravatar}}?&s=58 2x">
+                <img src="{{gravatar}}">
+              </picture>{{/if}} Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
                   {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
-  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><img class="large-gravatar" src="{{large_gravatar}}"></div>{{/if}}
+  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
+                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}?&s=240 2x">
+                <img class="large-gravatar" src="{{large_gravatar}}">
+              </picture></div>{{/if}}
                   <span class="input" id="username" readonly>
-                    @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                    @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                   </span>
 
                   <ul>
-                    <li><a href="/account/profile">Profile</a></li>
-                    <li><a href="/account/editor">Editor settings</a></li>
-                    <li><a href="/account/preferences">Preferences</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="{{root}}/account/profile">Profile</a></li>
+                    <li><a href="{{root}}/account/editor">Editor settings</a></li>
+                    <li><a href="{{root}}/account/preferences">Preferences</a></li>
+                    <li><a href="{{root}}/logout">Logout</a></li>
                   </ul>
 
                 </div>
                 {{#feature request "upgrade"}}
                   {{#unless user.pro}}
-                <a href="/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+                  <a href="{{root}}/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
                   {{/unless}}
                 {{/feature}}
               </div>
@@ -171,7 +239,7 @@ if(top != self) {
                     <p class="loginFeedback"></p>
                     <div>
                       <span class="input" id="username" readonly>
-                        @{{home}}{{#if user.pro}}<sup class="pro">pro</sup>{{/if}}
+                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
                       </span>
                     </div>
                     <div>
@@ -189,7 +257,7 @@ if(top != self) {
                     {{#feature request "github"}}{{#unless user.github_token}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+                      <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
                     </div>
                     {{/unless}}{{/feature}}
                   </form>
@@ -206,21 +274,21 @@ if(top != self) {
             {{#feature request "sslLogin"}}
               <div class="menu">
                 {{#feature request "github"}}
-                <a href="/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
+                <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
                 <div class="dropdown login" id="registerLogin">
                   <div class="dropdowncontent">
-                    <a class="btn-github" href="/auth/github">
+                    <a class="btn-github" href="{{root}}/auth/github">
                       <img src="{{static}}/images/github-32.png">
                       Login or Register via GitHub
                     </a>
                     <span class="login-group">
                       Or
-                      <a class="btn-login" href="/login">use your email address</a>
+                      <a class="btn-login" href="{{root}}/login">use your email address</a>
                     </span>
                   </div>
                 </div>
                 {{else}}
-                <a href="/login" class="button" id="loginbtn">Login or Register</a>
+                <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
                 {{/feature}}
               </div>
             {{else}}
@@ -256,7 +324,7 @@ if(top != self) {
                     {{#feature request "github"}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
+                      <a title="To sign in using Github and export gists to your Github profile" class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Sign in with Github</a>
                     </div>
                     {{/feature}}
                   </form>
@@ -286,7 +354,7 @@ if(top != self) {
                     {{#feature request "github"}}
                     <div>
                       <span class="login-splitter">or</span>
-                      <a class="btn-github" href="/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
+                      <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Register with Github</a>
                     </div>
                     {{/feature}}
                   </form>
@@ -309,16 +377,22 @@ if(top != self) {
               <a data-shortcut="ctrl+shift+?" data-desc="Discover poweruser keyboard shortcuts" id="showhelp" href="#keyboardHelp">Keyboard shortcuts</a>
               <a data-desc="Shortcut & direct access JS Bin URLs" id="showurls" href="#urls">JS Bin URLs</a>
               <hr data-desc="">
-              {{#if settings.[ui showblog]}}
+              {{#if settings.[ui inlinehelp]}}
               <input placeholder="Search help..." class="button" id="helpsearch"><span id="result-count"></span><span id="results"></span>
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">All help topics</a>
+              <a id="menu-all-help" data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">All help topics</a>
               {{else}}
-              <a data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
+              <a id="menu-help-tips" data-desc="Learn about JS Bin features & tricks" target="_blank" href="http://jsbin.com/help">Help topics</a>
               {{/if}}
               <hr data-desc="">
-              <a data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
-              <a data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
-              <a data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+              {{#feature request "pro"}}
+              <a id="menu-pro-support" data-desc="Email support" href="mailto:support@jsbin.com?subject=Pro%20user%20support%20request">Pro user email support</a>
+              {{/feature}}
+              <a id="menu-feedback" data-desc="Help make JS Bin better" id="newissue" target="_blank" href="http://github.com/jsbin/jsbin/issues/new">Send feedback &amp; file bugs</a>
+              <a id="menu-fork" data-desc="Help make JS Bin better" target="_blank" href="http://github.com/jsbin/jsbin/">Fork on Github</a>
+              <a id="menu-follow-jsbin" data-desc="Find out the latest news & info" target="_blank" href="http://twitter.com/js_bin">Follow @js_bin</a>
+              {{#feature request "!pro"}}
+              <a class="" data-pro="true" id="menu-pro" data-desc="Upgrade" href="/upgrade">Support JS Bin: upgrade now</a>
+              {{/feature}}
             </div>
           </div>
         </div>
@@ -341,7 +415,7 @@ if(top != self) {
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
+        <textarea aria-label="HTML Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="html"></textarea>
       </div>
     </div>
     <div class="code stretch javascript panel">
@@ -351,16 +425,18 @@ if(top != self) {
             <a href="#javascript">JavaScript</a>
             <a href="#coffeescript">CoffeeScript</a>
             <a href="#jsx">JSX (React)</a>
-            <a href="#livescript">LiveScript</a>
-            <a href="#processing">Processing</a>
+            <a href="#babel">Babel</a>
             <a href="#traceur">Traceur</a>
             <a href="#typescript">TypeScript</a>
+            <a href="#processing">Processing</a>
+            <a href="#livescript">LiveScript</a>
+            <a href="#clojurescript">ClojureScript</a>
             <a href="#convert">Convert to JavaScript</a>
           </div>
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
+        <textarea aria-label="JavaScript Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="javascript"></textarea>
       </div>
     </div>
     <div class="code stretch css panel">
@@ -380,7 +456,7 @@ if(top != self) {
         </div>
       </div>
       <div class="editbox">
-        <textarea spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
+        <textarea aria-label="CSS Code Panel" spellcheck="false" autocapitalize="none" autocorrect="off" id="css"></textarea>
       </div>
     </div>
     <div class="stretch console panel">
@@ -392,7 +468,7 @@ if(top != self) {
         </span>
       </div>
       <div id="console" class="stretch"><ul id="output"></ul><form>
-          <textarea id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
+          <textarea aria-label="Console Panel" id="exec" spellcheck="false" autocapitalize="none" rows="1" autocorrect="off"></textarea>
       </form></div>
     </div>
     <div id="live" class="stretch live panel">
@@ -474,18 +550,22 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <td>Code complete &amp; <a href="http://docs.emmet.io/" target="_blank">Emmet</a> expand</td>
         </tr>
         <tr>
+          <td>ctrl + shift + L</td>
+          <td>Beautify code in active panel</td>
+        </tr>
+        <tr>
           <td>ctrl + s</td>
           <td>Save &amp; lock current Bin from further changes</td>
         </tr>
         <tr>
           <td>ctrl + shift + s</td>
-          <td>Clone Bin</td>
+          <td>Open the share options</td>
         </tr>
         <tr>
           <td>ctrl + y</td>
           <td>Archive Bin</td>
         </tr>
-        <tr><td colspan="2"><small><br><a href="/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
+        <tr><td colspan="2"><small><br><a href="{{root}}/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
       </tbody>
     </table>
   </div>
@@ -551,35 +631,18 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </div>
 </div>
 {{#unless embed}}
-{{#feature request "infocard"}}
-<div hidden>
-  <div class="card" id="infocard">
-    <header><img>
-      <div class="visibility"></div>
-      <div class="meta">
-        <div class="author">Bin info</div>
-        <div class="name"><b></b><span class="pro">pro</span></div><span class="when"><canvas></canvas><time></time></span>
-      </div>
-      <div class="viewers"><b>0</b><span>viewers</span></div>
-    </header>
-    <div class="body">
-      <ul>
-        <li><a href="/clone">Clone</a> </li>
-        <li><a class="startingpoint" href="/save-as-template">Save as template</a> </li>
-        <li><a class="export-as-gist" href="#export-gist">Export gist</a> </li>
-        <li class="owner"><a href="/download">Download</a> </li>
-        {{#feature request "delete"}}
-        <li class="owner"><a class="deletebin" href="/delete">Delete</a></li>
-        {{/feature}}
-      </ul>
-    </div>
-  </div>
-</div>
-{{/feature}}
+{{>infocard}}
 {{/unless}}
+
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
+<script> document.write('<!--'); </script>
 <![endif]-->
+
+<script src="{{static}}/js/vendor/jshint/jshint.min.js"></script>
+
+-->
+
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 {{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
@@ -595,14 +658,24 @@ window.jsbin = {{{jsbin}}};
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
-    {{#scripts}}<script src="{{../static}}{{.}}"></script>{{/scripts}}
+  {{#scripts}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/scripts}}
   {{/if}}
-    {{#addons}}<script src="{{../static}}{{.}}"></script>{{/addons}}
+  {{#addons}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js"></script>
+<script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
 <script src="{{static}}/js/spike.js{{cacheBust}}"></script>
 {{/if}}
+{{#if custom_js}}
+<script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
+{{/if}}
+{{#feature request "intercom"}}
+{{#unless embed}}{{#if user.name}}
+<script>
+window.intercomSettings = {name: "{{user.name}}", email: "{{user.email}}", created_at: {{moment user.created "X"}}, pro: {{#if user.pro}}true{{else}}false{{/if}}, bins: {{bincount}}, app_id: "{{settings.[features intercom]}}"};
+(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/k8fltmtp';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+{{/if}}{{/unless}}
+{{/feature}}
 </body>
 </html>
 

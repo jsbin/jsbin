@@ -492,7 +492,7 @@ form label.hintOptions {
   display: block;
   float: none;
   text-align: left;
-  margin-top: -8px;
+/*   margin-top: -8px; */
   margin-bottom: 1em;
 }
 
@@ -893,3 +893,172 @@ input.actionButton-small, button.actionButton-small {
   height: 27.6px;
 }
 
+#files {
+  padding: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+/*#files li {
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid rgb(213, 211, 211);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  float: left;
+  display: block;
+  width: 220px;
+  height: 200px;
+}
+
+#files li:nth-child(3n) {
+  margin-right: 0;
+}
+
+#files div {
+  height: 130px;
+  width: 200px;
+  background-repeat: no-repeat, repeat;
+  background-position: 50%, 50%;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+  background-size: , 10px;
+}
+
+#files img {
+  border: 1px solid #efefef;
+  width: 200px;
+}
+
+#files a {
+  text-decoration: none;
+  overflow: hidden;
+  display: block;
+}
+
+#files .filename {
+  box-sizing: border-box;
+  font-size: 14px;
+  line-height: 16px;
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#files form {
+  display: inline;
+  margin-left: 5px;
+}*/
+
+#files div {
+  height: 130px;
+  /* width: 200px; */
+  background-repeat: no-repeat, repeat;
+  background-position: 50% 100%, 50%;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2) inset;
+  background-size: contain, 10px;
+}
+
+#assets {
+  position: relative;
+}
+
+#assets #total-size {
+  position: absolute;
+  right: 0;
+  top: 20px;
+  color: #ababab;
+ 
+}
+
+#assets #content {
+  clear: right;
+}
+
+#assets a.asset {
+  font-family: "Helvetica Neue";
+  position: relative;
+  /* flex-direction: column; */
+  float: left;
+  /* display: flex; */
+  width: 210px;
+  height: 200px;
+  text-decoration: none;
+  text-align: center;
+  margin: 0;
+  color: black;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin: 5px;
+}
+
+#assets a.asset:hover {
+  background: white;
+  box-shadow: 0 0px 5px rgba(0,0,0,0.2);
+}
+
+#assets a.asset .flex {
+  flex: 1; 
+}
+
+#assets img {
+  /* max-width: 100%; */
+  /* max-height: 150px; */
+  border: 1px solid hsl(0, 0%, 75%);
+  border: 1px solid white;
+  box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.25);
+}
+
+#assets .name {
+  line-height: 16px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  width: 100%;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#assets .file-size {
+  line-height: 16px;
+  font-weight: bold;
+  color: hsl(0, 0%, 75%);
+  margin-top: -0.5rem;
+  font-size: 0.75rem;
+}
+
+#assets .weak {
+  font-weight: bold;
+  color: rgba(0,0,0,0.25);
+}
+
+#assets .weak a {
+  font-weight: bold;
+  color: rgba(0,0,0,0.25);
+}
+
+#assets button {
+  display: none;
+}
+
+#assets .asset:hover button {
+  background: none;
+  border: none;
+  float: right;
+  display: inline-block;
+  
+  width:32px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 20px;
+ 
+  top: 20px;
+}
+
+#assets button img {
+  box-shadow: none;
+  border: 0;
+  cursor: pointer;
+}

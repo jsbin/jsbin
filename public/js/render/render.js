@@ -69,7 +69,7 @@ var getRenderedCode = function () {
   return RSVP.hash(promises);
 };
 
-var getPreparedCode = (function () {
+var getPreparedCode = (function () { // jshint ignore:line
   'use strict';
 
   var escapeMap = {
@@ -84,8 +84,9 @@ var getPreparedCode = (function () {
       script: /<\/script/ig,
       code: /%code%/,
       csscode: /%css%/,
-      title: /<title>(.*)<\/title>/i,
-      description: /<meta.*name=["']description['"].*?>/i,
+
+      description: /(<meta name="description" content=")([^"]*)/im,
+      title: /<title>(.*)<\/title>/im,
       winLoad: /window\.onload\s*=/,
       scriptopen: /<script/gi
     };
@@ -117,7 +118,9 @@ var getPreparedCode = (function () {
       // aren't useful (Script error. (line 0) #1354) so we try/catch and then
       // throw the real error. This also works exactly as expected with non-
       // processed JavaScript
-      js = 'try {' + js + '\n} catch (error) { throw error; }';
+      if (hasHTML) {
+        js = 'try {' + js + '\n} catch (error) { throw error; }';
+      }
 
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
@@ -220,25 +223,6 @@ var getPreparedCode = (function () {
             return '<script defer' + match + '>';
           }
         });
-      }
-
-      var description = (html.match(re.description) || [''])[0];
-      if (description) {
-        var i = description.indexOf('content=') + 'content='.length;
-        var quote = description.slice(i, i+1);
-        jsbin.state.description = description.substr(i + 1).replace(new RegExp(quote + '.*$'), '');
-      }
-
-
-      // read the element out of the html code and plug it in to our document.title
-      var newDocTitle = (html.match(re.title) || [,''])[1].trim();
-      if (newDocTitle && newDocTitle !== documentTitle) {
-        jsbin.state.title = documentTitle = newDocTitle;
-        if (documentTitle) {
-          document.title = documentTitle + ' - ' + 'JS Bin';
-        } else {
-          document.title = 'JS Bin';
-        }
       }
 
       return html;

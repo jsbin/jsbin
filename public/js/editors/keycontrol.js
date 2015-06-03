@@ -1,7 +1,7 @@
-/*globals objectValue, $, jsbin, $body, $document*/
+/*globals objectValue, $, jsbin, $body, $document, saveChecksum, jsconsole*/
 var keyboardHelpVisible = false;
 
-var customKeys = objectValue('jsbin.settings.keys') || {};
+var customKeys = objectValue('settings.keys', jsbin) || {};
 
 function enableAltUse() {
   if (!jsbin.settings.keys) {
@@ -67,8 +67,12 @@ if (!customKeys.disabled) {
           $('a.save:first').click();
         }
         event.preventDefault();
-      } else if (event.shiftKey === true) { // shift+s = clone
-        $('a.clone').click();
+      } else if (event.shiftKey === true) { // shift+s = open share menu
+        var $sharemenu = $('#sharemenu');
+        if ($sharemenu.hasClass('open')) {
+
+        }
+        $('#sharemenu a').trigger('mousedown');
         event.preventDefault();
       }
     } else if (event.which === closekey && event.metaKey && includeAltKey && jsbin.panels.focused) {
@@ -175,14 +179,6 @@ function keycontrol(event) {
     }
 
     if (event.which === 191 && event.metaKey && event.shiftKey) {
-      // show help
-      $body.toggleClass('keyboardHelp');
-      keyboardHelpVisible = $body.is('.keyboardHelp');
-      if (keyboardHelpVisible) {
-        analytics.track('keyboard', 'select', 'help');
-      }
-      event.stop();
-    } else if (event.which === 191 && event.metaKey && event.ctrlKey) {
       // show help
       opendropdown($('#help').prev()[0]);
       event.stop();

@@ -11,7 +11,7 @@
   }
   if (jsbin.settings.gui.toppanel === undefined) {
     jsbin.settings.gui.toppanel = true;
-    localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+    store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
   }
 
   if ($body.hasClass('toppanel') && jsbin.settings.gui.toppanel === false) {
@@ -100,7 +100,7 @@
       var last = null;
       var count = 1;
       try {
-        last = localStorage.lastpost || null;
+        last = store.localStorage.getItem('lastpost') || null;
       } catch (e) {}
 
       if (last !== null) {

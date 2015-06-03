@@ -2,7 +2,7 @@
 
 <h1>Your profile</h1>
 
-<section id="content" {{#if user.pro}}class="pro"{{/if}}>
+<section id="content" {{#feature request "pro"}}class="pro"{{/feature}}>
   <form class="login" method="post" action="/account/update">
     <p class="loginFeedback"></p>
 
@@ -36,6 +36,15 @@
       </div>
       {{/if}}
     {{/feature}}
+
+    <div>
+      <label for="beta">Experimental features</label>
+      <input id="beta" name="beta" type="checkbox" {{#if user.beta}}checked{{/if}}>
+      {{#feature request "!pro"}}
+      <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a>
+      {{/feature}}
+      <p><a href="http://jsbin.com/help/experimental-features">Current list of experiments</a> &ndash; <em>Note: not all features make it to production.</em></p>
+    </div>
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
     <input type="submit" value="Update account">

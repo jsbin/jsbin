@@ -5,6 +5,7 @@
 
   // create fake jsbin object
   $.extend(jsbin, {
+    state: {},
     panels: {
       panels: {
         javascript: {

@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title> Invoice - {{invoice.id}} </title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        max-width: 600px;
+        margin: 30px auto 0px;
+        padding: 5%;
+        color: rgb(76, 76, 76);
+      }
+
+      body, td {
+        font-size: 18px;
+      }
+
+      h1 small {
+        margin-left: 30px;
+        font-size: 20px;
+        text-align: right;
+        float: right;
+        line-height: 2.2;
+      }
+
+      ul {
+        padding: 0;
+        list-style: outside none none;
+        text-align: right;
+      }
+
+      li {
+        border-bottom: 1px solid #ccc;
+      }
+
+      footer {
+        font-size: 14px;
+        color: #757575;
+        text-align: center;
+        margin: 40px 0;
+      }
+
+    </style>
+  </head>
+  <body>
+
+  <h1>
+    Invoice{{#if invoice.receipt_number}} <small>#{{invoice.receipt_number}}</small>{{/if}}
+  </h1>
+
+  <h2>{{#stripeTimestampAsDate invoice.date "MMMM D, YYYY"}}{{/stripeTimestampAsDate}}</h2>
+
+  <table style="border-spacing:0;border-collapse:collapse;font-family:proxima-nova,'helvetica neue',helvetica,arial,geneva,sans-serif;width:100%;background:#ffffff;margin:0;padding:0;border:0">
+    <tbody>
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:left;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0;color:#757575;">Charges</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0;color:#757575;" align="right">Amount</td>
+      </tr>
+      {{#each invoice.lines.data}}
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:left;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0"><strong>{{#equal type "subscription"}}Subscription to {{plan.name}} (£{{#divide amount 100 2}}{{/divide}}/{{plan.interval}}){{else}}{{description}}{{/equal}}</strong></td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide amount 100 2}}{{/divide}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <table style="border-spacing:0;border-collapse:collapse;font-family:proxima-nova,'helvetica neue',helvetica,arial,geneva,sans-serif;width:100%;border-top-color:#ebeaef;border-top-style:solid;background:#ffffff;margin:0;padding:0;border-width:1px 0 0">
+    <tbody>
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Subtotal:</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide invoice.subtotal 100 2}}{{/divide}}</td>
+      </tr>
+
+      {{#if invoice.discount}}
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Discount:</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{percent invoice.subtotal invoice.discount.coupon.percent_off 2}}</td>
+      </tr>
+      {{/if}}
+
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Total:</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#divide invoice.total 100 2}}{{/divide}}</td>
+      </tr>
+      <tr style="vertical-align:top;padding:0">
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0">Amount paid:</td>
+        <td style="vertical-align:top;text-align:right;border-bottom-width:1px;border-bottom-color:#ebeaef;border-bottom-style:solid;padding:1em 0" align="right">£ {{#if invoice.paid}}{{#divide invoice.total 100 2}}{{/divide}}{{else}}0.00{{/if}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+    <footer>
+      <p>Charges on your credit card bill will be from "JSBIN PRO".</p>
+      <p>
+        <small>JS Bin Ltd. Company No. 8998555, VAT No. GB189688326. Office 1, 44 Burstead Close, Brighton BN1 7HT</small>
+       </p>
+    </footer>
+  </body>
+</html>

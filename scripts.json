@@ -1,7 +1,6 @@
 {
   "app": [
     "/js/chrome/hashbang-jump.js",
-    "/js/chrome/font.js",
     "/js/vendor/rsvp.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",
@@ -32,6 +31,7 @@
     "/js/vendor/s3upload.js",
     "/js/chrome/storage.js",
     "/js/jsbin.js",
+    "/js/chrome/font.js",
     "/js/editors/mobileCodeMirror.js",
     "/js/chrome/splitter.js",
     "/js/chrome/analytics.js",

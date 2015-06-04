@@ -163,7 +163,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['coffee'],
       url: jsbin.static + '/js/vendor/coffee-script.js',
       init: function coffeescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/coffeescript/coffeescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -215,7 +215,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['ls'],
       url: jsbin.static + '/js/vendor/livescript.js',
       init: function livescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/livescript/livescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/livescript/livescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -302,7 +302,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['md', 'markdown', 'mdown'],
       url: jsbin.static + '/js/vendor/marked.min.js',
       init: function markdown(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/markdown/markdown.js', ready);
       },
       handler: function (source, resolve, reject) {
         try {
@@ -320,7 +320,7 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/processing.min.js',
       init: function (ready) {
         $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clike/clike.js', ready);
       },
       handler: function processing(source, resolve, reject) {
         try {
@@ -350,7 +350,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['jade'],
       url: jsbin.static + '/js/vendor/jade.js?1.4.2',
       init: function jade(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/jade/jade.js', ready);
       },
       handler: function jade(source, resolve, reject) {
         try {
@@ -459,7 +459,7 @@ var processors = jsbin.processors = (function () {
       target: 'sass',
       extensions: ['sass'],
       init: function (ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/sass/sass.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/sass/sass.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
@@ -583,7 +583,7 @@ var processors = jsbin.processors = (function () {
       url: "http://himera-emh.herokuapp.com/js/repl.js",
       //url: "http://192.168.100.128:8080/js/repl.js",
       init: function clojurescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clojure/clojure.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({

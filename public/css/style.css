@@ -8,10 +8,7 @@ CodeMirror
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
   height: 300px;
-}
-.CodeMirror-scroll {
-  /* Set scrolling behaviour here */
-  overflow: auto;
+  color: black;
 }
 
 /* PADDING */
@@ -40,8 +37,7 @@ CodeMirror
   min-width: 20px;
   text-align: right;
   color: #999;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
+  white-space: nowrap;
 }
 
 .CodeMirror-guttermarker { color: black; }
@@ -56,12 +52,12 @@ CodeMirror
 .CodeMirror div.CodeMirror-secondarycursor {
   border-left: 1px solid silver;
 }
-.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursor {
+.CodeMirror.cm-fat-cursor div.CodeMirror-cursor {
   width: auto;
   border: 0;
   background: #7e7;
 }
-.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursors {
+.CodeMirror.cm-fat-cursor div.CodeMirror-cursors {
   z-index: 1;
 }
 
@@ -129,9 +125,12 @@ div.CodeMirror-overwrite div.CodeMirror-cursor {}
 .cm-header, .cm-strong {font-weight: bold;}
 .cm-em {font-style: italic;}
 .cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
 
 .cm-s-default .cm-error {color: #f00;}
 .cm-invalidchar {color: #f00;}
+
+.CodeMirror-composing { border-bottom: 2px solid; }
 
 /* Default styles for common addons */
 
@@ -143,17 +142,16 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 /* STOP */
 
 /* The rest of this file contains styles related to the mechanics of
- *    the editor. You probably shouldn't touch them. */
+   the editor. You probably shouldn't touch them. */
 
 .CodeMirror {
-  line-height: 1;
   position: relative;
   overflow: hidden;
   background: white;
-  color: black;
 }
 
 .CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
   /* 30px is the magic margin used to hide the element's real scrollbars */
   /* See overflow: hidden in .CodeMirror */
   margin-bottom: -30px; margin-right: -30px;
@@ -161,19 +159,15 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   height: 100%;
   outline: none; /* Prevent dragging from highlighting the element */
   position: relative;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 .CodeMirror-sizer {
   position: relative;
   border-right: 30px solid transparent;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 /* The fake, visible scrollbars. Used to force redraw during scrolling
- *    before actuall scrolling happens, thus preventing shaking and
- *       flickering artifacts. */
+   before actuall scrolling happens, thus preventing shaking and
+   flickering artifacts. */
 .CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
   position: absolute;
   z-index: 6;
@@ -198,132 +192,156 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .CodeMirror-gutters {
   position: absolute; left: 0; top: 0;
-  padding-bottom: 30px;
   z-index: 3;
 }
 .CodeMirror-gutter {
   white-space: normal;
   height: 100%;
+  display: inline-block;
+  margin-bottom: -30px;
+  /* Hack to make IE7 behave */
+  *zoom:1;
+  *display:inline;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  height: 100%;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+}
+.CodeMirror-wrap pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  overflow: auto;
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  padding-bottom: 30px;
-  margin-bottom: -32px;
-  display: inline-block;
-  /* Hack to make IE7 behave */
-           *zoom:1;
-           *display:inline;
-         }
-         .CodeMirror-gutter-elt {
-           position: absolute;
-           cursor: default;
-           z-index: 4;
-         }
+}
 
-         .CodeMirror-lines {
-           cursor: text;
-           min-height: 1px; /* prevents collapsing before first draw */
-         }
-         .CodeMirror pre {
-           /* Reset some styles that the rest of the page might have set */
-           -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
-           border-width: 0;
-           background: transparent;
-           font-family: inherit;
-           font-size: inherit;
-           margin: 0;
-           white-space: pre;
-           word-wrap: normal;
-           line-height: inherit;
-           color: inherit;
-           z-index: 2;
-           position: relative;
-           overflow: visible;
-         }
-         .CodeMirror-wrap pre {
-           word-wrap: break-word;
-           white-space: pre-wrap;
-           word-break: normal;
-         }
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+.CodeMirror-measure pre { position: static; }
 
-         .CodeMirror-linebackground {
-           position: absolute;
-           left: 0; right: 0; top: 0; bottom: 0;
-           z-index: 0;
-         }
+.CodeMirror div.CodeMirror-cursor {
+  position: absolute;
+  border-right: none;
+  width: 0;
+}
 
-         .CodeMirror-linewidget {
-           position: relative;
-           z-index: 2;
-           overflow: auto;
-         }
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
 
-         .CodeMirror-widget {}
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror ::selection { background: #d7d4f0; }
+.CodeMirror ::-moz-selection { background: #d7d4f0; }
 
-         .CodeMirror-wrap .CodeMirror-scroll {
-           overflow-x: hidden;
-         }
+.cm-searching {
+  background: #ffa;
+  background: rgba(255, 255, 0, .4);
+}
 
-         .CodeMirror-measure {
-           position: absolute;
-           width: 100%;
-           height: 0;
-           overflow: hidden;
-           visibility: hidden;
-         }
-         .CodeMirror-measure pre { position: static; }
+/* IE7 hack to prevent it from returning funny offsetTops on the spans */
+.CodeMirror span { *vertical-align: text-bottom; }
 
-         .CodeMirror div.CodeMirror-cursor {
-           position: absolute;
-           border-right: none;
-           width: 0;
-         }
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
 
-         div.CodeMirror-cursors {
-           visibility: hidden;
-           position: relative;
-           z-index: 3;
-         }
-         .CodeMirror-focused div.CodeMirror-cursors {
-           visibility: visible;
-         }
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
 
-         .CodeMirror-selected { background: #d9d9d9; }
-         .CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
-         .CodeMirror-crosshair { cursor: crosshair; }
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
 
-         .cm-searching {
-           background: #ffa;
-           background: rgba(255, 255, 0, .4);
-         }
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
 
-         /* IE7 hack to prevent it from returning funny offsetTops on the spans */
-         .CodeMirror span { *vertical-align: text-bottom; }
+/*
 
-         /* Used to force a border model for a node */
-         .cm-force-border { padding-right: .1px; }
+    Name:       3024 day
+    Author:     Jan T. Sott (http://github.com/idleberg)
 
-         @media print {
-           /* Hide the cursor when printing */
-           .CodeMirror div.CodeMirror-cursors {
-             visibility: hidden;
-           }
-         }
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
 
-         /* Help users use markselection to safely style text background */
-         span.CodeMirror-selectedtext { background: none; }
-
-         /*
-          *
-          *     Name:       3024 day
-          *         Author:     Jan T. Sott (http://github.com/idleberg)
-          *
-          *             CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
-          *                 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
-          *
-          *                 */
+*/
 
 .cm-s-3024-day.CodeMirror {background: #f7f7f7; color: #3a3432;}
 .cm-s-3024-day div.CodeMirror-selected {background: #d6d5d4 !important;}
+.cm-s-3024-day.CodeMirror ::selection { background: #d6d5d4; }
+.cm-s-3024-day.CodeMirror ::-moz-selection { background: #d9d9d9; }
 
 .cm-s-3024-day .CodeMirror-gutters {background: #f7f7f7; border-right: 0px;}
 .cm-s-3024-day .CodeMirror-guttermarker { color: #db2d20; }
@@ -349,19 +367,21 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-3024-day span.cm-error {background: #db2d20; color: #5c5855;}
 
 .cm-s-3024-day .CodeMirror-activeline-background {background: #e8f2ff !important;}
-.cm-s-3024-day .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
+.cm-s-3024-day .CodeMirror-matchingbracket { text-decoration: underline; color: #a16a94 !important;}
 /*
- *
- *     Name:       3024 night
- *         Author:     Jan T. Sott (http://github.com/idleberg)
- *
- *             CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
- *                 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
- *
- *                 */
+
+    Name:       3024 night
+    Author:     Jan T. Sott (http://github.com/idleberg)
+
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
 
 .cm-s-3024-night.CodeMirror {background: #090300; color: #d6d5d4;}
 .cm-s-3024-night div.CodeMirror-selected {background: #3a3432 !important;}
+.cm-s-3024-night.CodeMirror ::selection { background: rgba(58, 52, 50, .99); }
+.cm-s-3024-night.CodeMirror ::-moz-selection { background: rgba(58, 52, 50, .99); }
 .cm-s-3024-night .CodeMirror-gutters {background: #090300; border-right: 0px;}
 .cm-s-3024-night .CodeMirror-guttermarker { color: #db2d20; }
 .cm-s-3024-night .CodeMirror-guttermarker-subtle { color: #5c5855; }
@@ -424,12 +444,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-ambiance .CodeMirror-matchingbracket { color: #0f0; }
 .cm-s-ambiance .CodeMirror-nonmatchingbracket { color: #f22; }
 
-.cm-s-ambiance .CodeMirror-selected {
-  background: rgba(255, 255, 255, 0.15);
-}
-.cm-s-ambiance.CodeMirror-focused .CodeMirror-selected {
-  background: rgba(255, 255, 255, 0.10);
-}
+.cm-s-ambiance .CodeMirror-selected { background: rgba(255, 255, 255, 0.15); }
+.cm-s-ambiance.CodeMirror-focused .CodeMirror-selected { background: rgba(255, 255, 255, 0.10); }
+.cm-s-ambiance.CodeMirror ::selection { background: rgba(255, 255, 255, 0.10); }
+.cm-s-ambiance.CodeMirror ::-moz-selection { background: rgba(255, 255, 255, 0.10); }
 
 /* Editor styling */
 
@@ -470,17 +488,19 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   background-image: url("data:image/png;base64,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");
 }
 /*
- *
- *     Name:       Base16 Default Dark
- *         Author:     Chris Kempson (http://chriskempson.com)
- *
- *             CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
- *                 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
- *
- *                 */
+
+    Name:       Base16 Default Dark
+    Author:     Chris Kempson (http://chriskempson.com)
+
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
 
 .cm-s-base16-dark.CodeMirror {background: #151515; color: #e0e0e0;}
 .cm-s-base16-dark div.CodeMirror-selected {background: #303030 !important;}
+.cm-s-base16-dark.CodeMirror ::selection { background: rgba(48, 48, 48, .99); }
+.cm-s-base16-dark.CodeMirror ::-moz-selection { background: rgba(48, 48, 48, .99); }
 .cm-s-base16-dark .CodeMirror-gutters {background: #151515; border-right: 0px;}
 .cm-s-base16-dark .CodeMirror-guttermarker { color: #ac4142; }
 .cm-s-base16-dark .CodeMirror-guttermarker-subtle { color: #505050; }
@@ -506,17 +526,19 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-base16-dark .CodeMirror-activeline-background {background: #202020 !important;}
 .cm-s-base16-dark .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
 /*
- *
- *     Name:       Base16 Default Light
- *         Author:     Chris Kempson (http://chriskempson.com)
- *
- *             CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
- *                 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
- *
- *                 */
+
+    Name:       Base16 Default Light
+    Author:     Chris Kempson (http://chriskempson.com)
+
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-chrome-devtools)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
 
 .cm-s-base16-light.CodeMirror {background: #f5f5f5; color: #202020;}
 .cm-s-base16-light div.CodeMirror-selected {background: #e0e0e0 !important;}
+.cm-s-base16-light.CodeMirror ::selection { background: #e0e0e0; }
+.cm-s-base16-light.CodeMirror ::-moz-selection { background: #e0e0e0; }
 .cm-s-base16-light .CodeMirror-gutters {background: #f5f5f5; border-right: 0px;}
 .cm-s-base16-light .CodeMirror-guttermarker { color: #ac4142; }
 .cm-s-base16-light .CodeMirror-guttermarker-subtle { color: #b0b0b0; }
@@ -545,6 +567,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .cm-s-blackboard.CodeMirror { background: #0C1021; color: #F8F8F8; }
 .cm-s-blackboard .CodeMirror-selected { background: #253B76 !important; }
+.cm-s-blackboard.CodeMirror ::selection { background: rgba(37, 59, 118, .99); }
+.cm-s-blackboard.CodeMirror ::-moz-selection { background: rgba(37, 59, 118, .99); }
 .cm-s-blackboard .CodeMirror-gutters { background: #0C1021; border-right: 0; }
 .cm-s-blackboard .CodeMirror-guttermarker { color: #FBDE2D; }
 .cm-s-blackboard .CodeMirror-guttermarker-subtle { color: #888; }
@@ -572,6 +596,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-blackboard .CodeMirror-activeline-background {background: #3C3636 !important;}
 .cm-s-blackboard .CodeMirror-matchingbracket {outline:1px solid grey;color:white !important}.cm-s-cobalt.CodeMirror { background: #002240; color: white; }
 .cm-s-cobalt div.CodeMirror-selected { background: #b36539 !important; }
+.cm-s-cobalt.CodeMirror ::selection { background: rgba(179, 101, 57, .99); }
+.cm-s-cobalt.CodeMirror ::-moz-selection { background: rgba(179, 101, 57, .99); }
 .cm-s-cobalt .CodeMirror-gutters { background: #002240; border-right: 1px solid #aaa; }
 .cm-s-cobalt .CodeMirror-guttermarker { color: #ffee80; }
 .cm-s-cobalt .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
@@ -593,6 +619,39 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .cm-s-cobalt .CodeMirror-activeline-background {background: #002D57 !important;}
 .cm-s-cobalt .CodeMirror-matchingbracket {outline:1px solid grey;color:white !important}
+.cm-s-colorforth.CodeMirror { background: #000000; color: #f8f8f8; }
+.cm-s-colorforth .CodeMirror-gutters { background: #0a001f; border-right: 1px solid #aaa; }
+.cm-s-colorforth .CodeMirror-guttermarker { color: #FFBD40; }
+.cm-s-colorforth .CodeMirror-guttermarker-subtle { color: #78846f; }
+.cm-s-colorforth .CodeMirror-linenumber { color: #bababa; }
+.cm-s-colorforth .CodeMirror-cursor { border-left: 1px solid white !important; }
+
+.cm-s-colorforth span.cm-comment     { color: #ededed; }
+.cm-s-colorforth span.cm-def         { color: #ff1c1c; font-weight:bold; }
+.cm-s-colorforth span.cm-keyword     { color: #ffd900; }
+.cm-s-colorforth span.cm-builtin     { color: #00d95a; }
+.cm-s-colorforth span.cm-variable    { color: #73ff00; }
+.cm-s-colorforth span.cm-string      { color: #007bff; }
+.cm-s-colorforth span.cm-number      { color: #00c4ff; }
+.cm-s-colorforth span.cm-atom        { color: #606060; }
+
+.cm-s-colorforth span.cm-variable-2  { color: #EEE; }
+.cm-s-colorforth span.cm-variable-3  { color: #DDD; }
+.cm-s-colorforth span.cm-property    {}
+.cm-s-colorforth span.cm-operator    {}
+
+.cm-s-colorforth span.cm-meta        { color: yellow; }
+.cm-s-colorforth span.cm-qualifier   { color: #FFF700; }
+.cm-s-colorforth span.cm-bracket     { color: #cc7; }
+.cm-s-colorforth span.cm-tag         { color: #FFBD40; }
+.cm-s-colorforth span.cm-attribute   { color: #FFF700; }
+.cm-s-colorforth span.cm-error       { color: #f00; }
+
+.cm-s-colorforth .CodeMirror-selected { background: #333d53 !important; }
+
+.cm-s-colorforth span.cm-compilation { background: rgba(255, 255, 255, 0.12); }
+
+.cm-s-colorforth .CodeMirror-activeline-background {background: #253540 !important;}
 .cm-s-eclipse span.cm-meta {color: #FF1717;}
 .cm-s-eclipse span.cm-keyword { line-height: 1em; font-weight: bold; color: #7F0055; }
 .cm-s-eclipse span.cm-atom {color: #219;}
@@ -631,6 +690,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-elegant .CodeMirror-matchingbracket {outline:1px solid grey; color:black !important;}
 .cm-s-erlang-dark.CodeMirror { background: #002240; color: white; }
 .cm-s-erlang-dark div.CodeMirror-selected { background: #b36539 !important; }
+.cm-s-erlang-dark.CodeMirror ::selection { background: rgba(179, 101, 57, .99); }
+.cm-s-erlang-dark.CodeMirror ::-moz-selection { background: rgba(179, 101, 57, .99); }
 .cm-s-erlang-dark .CodeMirror-gutters { background: #002240; border-right: 1px solid #aaa; }
 .cm-s-erlang-dark .CodeMirror-guttermarker { color: white; }
 .cm-s-erlang-dark .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
@@ -662,14 +723,16 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-erlang-dark .CodeMirror-activeline-background {background: #013461 !important;}
 .cm-s-erlang-dark .CodeMirror-matchingbracket {outline:1px solid grey; color:white !important;}
 /*
- * http://lesscss.org/ dark theme
- * Ported to CodeMirror by Peter Kroon
- * */
+http://lesscss.org/ dark theme
+Ported to CodeMirror by Peter Kroon
+*/
 .cm-s-lesser-dark {
   line-height: 1.3em;
 }
 .cm-s-lesser-dark.CodeMirror { background: #262626; color: #EBEFE7; text-shadow: 0 -1px 1px #262626; }
 .cm-s-lesser-dark div.CodeMirror-selected {background: #45443B !important;} /* 33322B*/
+.cm-s-lesser-dark.CodeMirror ::selection { background: rgba(69, 68, 59, .99); }
+.cm-s-lesser-dark.CodeMirror ::-moz-selection { background: rgba(69, 68, 59, .99); }
 .cm-s-lesser-dark .CodeMirror-cursor { border-left: 1px solid white !important; }
 .cm-s-lesser-dark pre { padding: 0 8px; }/*editable code holder*/
 
@@ -706,6 +769,101 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .cm-s-lesser-dark .CodeMirror-activeline-background {background: #3C3A3A !important;}
 .cm-s-lesser-dark .CodeMirror-matchingbracket {outline:1px solid grey; color:white !important;}
+.cm-s-liquibyte.CodeMirror {
+  background-color: #000;
+  color: #fff;
+  line-height: 1.2em;
+  font-size: 1em;
+}
+.CodeMirror-focused .cm-matchhighlight {
+  text-decoration: underline;
+  text-decoration-color: #0f0;
+  text-decoration-style: wavy;
+}
+.cm-trailingspace {
+  text-decoration: line-through;
+  text-decoration-color: #f00;
+  text-decoration-style: dotted;
+}
+.cm-tab {
+  text-decoration: line-through;
+  text-decoration-color: #404040;
+  text-decoration-style: dotted;
+}
+.cm-s-liquibyte .CodeMirror-gutters { background-color: #262626; border-right: 1px solid #505050; padding-right: 0.8em; }
+.cm-s-liquibyte .CodeMirror-gutter-elt div{ font-size: 1.2em; }
+.cm-s-liquibyte .CodeMirror-guttermarker {  }
+.cm-s-liquibyte .CodeMirror-guttermarker-subtle {  }
+.cm-s-liquibyte .CodeMirror-linenumber { color: #606060; padding-left: 0;}
+.cm-s-liquibyte .CodeMirror-cursor { border-left: 1px solid #eee !important; }
+
+.cm-s-liquibyte span.cm-comment     { color: #008000; }
+.cm-s-liquibyte span.cm-def         { color: #ffaf40; font-weight: bold; }
+.cm-s-liquibyte span.cm-keyword     { color: #c080ff; font-weight: bold; }
+.cm-s-liquibyte span.cm-builtin     { color: #ffaf40; font-weight: bold; }
+.cm-s-liquibyte span.cm-variable    { color: #5967ff; font-weight: bold; }
+.cm-s-liquibyte span.cm-string      { color: #ff8000; }
+.cm-s-liquibyte span.cm-number      { color: #0f0; font-weight: bold; }
+.cm-s-liquibyte span.cm-atom        { color: #bf3030; font-weight: bold; }
+
+.cm-s-liquibyte span.cm-variable-2  { color: #007f7f; font-weight: bold; }
+.cm-s-liquibyte span.cm-variable-3  { color: #c080ff; font-weight: bold; }
+.cm-s-liquibyte span.cm-property    { color: #999; font-weight: bold; }
+.cm-s-liquibyte span.cm-operator    { color: #fff; }
+
+.cm-s-liquibyte span.cm-meta        { color: #0f0; }
+.cm-s-liquibyte span.cm-qualifier   { color: #fff700; font-weight: bold; }
+.cm-s-liquibyte span.cm-bracket     { color: #cc7; }
+.cm-s-liquibyte span.cm-tag         { color: #ff0; font-weight: bold; }
+.cm-s-liquibyte span.cm-attribute   { color: #c080ff; font-weight: bold; }
+.cm-s-liquibyte span.cm-error       { color: #f00; }
+
+.cm-s-liquibyte .CodeMirror-selected { background-color: rgba(255, 0, 0, 0.25) !important; }
+
+.cm-s-liquibyte span.cm-compilation { background-color: rgba(255, 255, 255, 0.12); }
+
+.cm-s-liquibyte .CodeMirror-activeline-background {background-color: rgba(0, 255, 0, 0.15) !important;}
+
+/* Default styles for common addons */
+div.CodeMirror span.CodeMirror-matchingbracket { color: #0f0; font-weight: bold; }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: #f00; font-weight: bold; }
+.CodeMirror-matchingtag { background-color: rgba(150, 255, 0, .3); }
+/* Scrollbars */
+/* Simple */
+div.CodeMirror-simplescroll-horizontal div:hover, div.CodeMirror-simplescroll-vertical div:hover {
+  background-color: rgba(80, 80, 80, .7);
+}
+div.CodeMirror-simplescroll-horizontal div, div.CodeMirror-simplescroll-vertical div {
+  background-color: rgba(80, 80, 80, .3);
+  border: 1px solid #404040;
+  border-radius: 5px;
+}
+div.CodeMirror-simplescroll-vertical div {
+  border-top: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+}
+div.CodeMirror-simplescroll-horizontal div {
+  border-left: 1px solid #404040;
+  border-right: 1px solid #404040;
+}
+div.CodeMirror-simplescroll-vertical {
+  background-color: #262626;
+}
+div.CodeMirror-simplescroll-horizontal {
+  background-color: #262626;
+  border-top: 1px solid #404040;
+}
+/* Overlay */
+div.CodeMirror-overlayscroll-horizontal div, div.CodeMirror-overlayscroll-vertical div {
+  background-color: #404040;
+  border-radius: 5px;
+}
+div.CodeMirror-overlayscroll-vertical div {
+  border: 1px solid #404040;
+}
+div.CodeMirror-overlayscroll-horizontal div {
+  border: 1px solid #404040;
+}
 /****************************************************************/
 /*   Based on mbonaci's Brackets mbo theme                      */
 /*   https://github.com/mbonaci/global/blob/master/Mbo.tmTheme  */
@@ -714,6 +872,8 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 .cm-s-mbo.CodeMirror {background: #2c2c2c; color: #ffffec;}
 .cm-s-mbo div.CodeMirror-selected {background: #716C62 !important;}
+.cm-s-mbo.CodeMirror ::selection { background: rgba(113, 108, 98, .99); }
+.cm-s-mbo.CodeMirror ::-moz-selection { background: rgba(113, 108, 98, .99); }
 .cm-s-mbo .CodeMirror-gutters {background: #4e4e4e; border-right: 0px;}
 .cm-s-mbo .CodeMirror-guttermarker { color: white; }
 .cm-s-mbo .CodeMirror-guttermarker-subtle { color: grey; }
@@ -742,19 +902,21 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .cm-s-mbo .CodeMirror-matchingbracket {color: #222 !important;}
 .cm-s-mbo .CodeMirror-matchingtag {background: rgba(255, 255, 255, .37);}
 /*
- *   MDN-LIKE Theme - Mozilla
- *     Ported to CodeMirror by Peter Kroon <plakroon@gmail.com>
- *       Report bugs/issues here: https://github.com/codemirror/CodeMirror/issues
- *         GitHub: @peterkroon
- *
- *           The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
- *
- *           */
+  MDN-LIKE Theme - Mozilla
+  Ported to CodeMirror by Peter Kroon <plakroon@gmail.com>
+  Report bugs/issues here: https://github.com/codemirror/CodeMirror/issues
+  GitHub: @peterkroon
+
+  The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+
+*/
 .cm-s-mdn-like.CodeMirror { color: #999; background-color: #fff; }
 .cm-s-mdn-like .CodeMirror-selected { background: #cfc !important; }
+.cm-s-mdn-like.CodeMirror ::selection { background: #cfc; }
+.cm-s-mdn-like.CodeMirror ::-moz-selection { background: #cfc; }
 
 .cm-s-mdn-like .CodeMirror-gutters { background: #f8f8f8; border-left: 6px solid rgba(0,83,159,0.65); color: #333; }
-.cm-s-mdn-like .CodeMirror-linenumber { color: #aaa; margin-left: 3px; }
+.cm-s-mdn-like .CodeMirror-linenumber { color: #aaa; padding-left: 8px; }
 div.cm-s-mdn-like .CodeMirror-cursor { border-left: 2px solid #222; }
 
 .cm-s-mdn-like .cm-keyword {  color: #6262FF; }
@@ -795,19 +957,21 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-midnight .CodeMirror-activeline-background {background: #253540 !important;}
 
 .cm-s-midnight.CodeMirror {
-  background: #0F192A;
-  color: #D1EDFF;
+    background: #0F192A;
+    color: #D1EDFF;
 }
 
 .cm-s-midnight.CodeMirror {border-top: 1px solid black; border-bottom: 1px solid black;}
 
 .cm-s-midnight div.CodeMirror-selected {background: #314D67 !important;}
+.cm-s-midnight.CodeMirror ::selection { background: rgba(49, 77, 103, .99); }
+.cm-s-midnight.CodeMirror ::-moz-selection { background: rgba(49, 77, 103, .99); }
 .cm-s-midnight .CodeMirror-gutters {background: #0F192A; border-right: 1px solid;}
 .cm-s-midnight .CodeMirror-guttermarker { color: white; }
 .cm-s-midnight .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
 .cm-s-midnight .CodeMirror-linenumber {color: #D0D0D0;}
 .cm-s-midnight .CodeMirror-cursor {
-  border-left: 1px solid #F8F8F0 !important;
+    border-left: 1px solid #F8F8F0 !important;
 }
 
 .cm-s-midnight span.cm-comment {color: #428BDD;}
@@ -834,6 +998,8 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-monokai.CodeMirror {background: #272822; color: #f8f8f2;}
 .cm-s-monokai div.CodeMirror-selected {background: #49483E !important;}
+.cm-s-monokai.CodeMirror ::selection { background: rgba(73, 72, 62, .99); }
+.cm-s-monokai.CodeMirror ::-moz-selection { background: rgba(73, 72, 62, .99); }
 .cm-s-monokai .CodeMirror-gutters {background: #272822; border-right: 0px;}
 .cm-s-monokai .CodeMirror-guttermarker { color: white; }
 .cm-s-monokai .CodeMirror-guttermarker-subtle { color: #d0d0d0; }
@@ -848,8 +1014,9 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-monokai span.cm-keyword {color: #f92672;}
 .cm-s-monokai span.cm-string {color: #e6db74;}
 
-.cm-s-monokai span.cm-variable {color: #a6e22e;}
+.cm-s-monokai span.cm-variable {color: #f8f8f2;}
 .cm-s-monokai span.cm-variable-2 {color: #9effff;}
+.cm-s-monokai span.cm-variable-3 {color: #66d9ef;}
 .cm-s-monokai span.cm-def {color: #fd971f;}
 .cm-s-monokai span.cm-bracket {color: #f8f8f2;}
 .cm-s-monokai span.cm-tag {color: #f92672;}
@@ -920,6 +1087,8 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-night.CodeMirror { background: #0a001f; color: #f8f8f8; }
 .cm-s-night div.CodeMirror-selected { background: #447 !important; }
+.cm-s-night.CodeMirror ::selection { background: rgba(68, 68, 119, .99); }
+.cm-s-night.CodeMirror ::-moz-selection { background: rgba(68, 68, 119, .99); }
 .cm-s-night .CodeMirror-gutters { background: #0a001f; border-right: 1px solid #aaa; }
 .cm-s-night .CodeMirror-guttermarker { color: white; }
 .cm-s-night .CodeMirror-guttermarker-subtle { color: #bbb; }
@@ -943,17 +1112,19 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-night .CodeMirror-activeline-background {background: #1C005A !important;}
 .cm-s-night .CodeMirror-matchingbracket {outline:1px solid grey; color:white !important;}
 /*
- *
- *     Name:       Paraíso (Dark)
- *         Author:     Jan T. Sott
- *
- *             Color scheme by Jan T. Sott (https://github.com/idleberg/Paraiso-CodeMirror)
- *                 Inspired by the art of Rubens LP (http://www.rubenslp.com.br)
- *
- *                 */
+
+    Name:       Paraíso (Dark)
+    Author:     Jan T. Sott
+
+    Color scheme by Jan T. Sott (https://github.com/idleberg/Paraiso-CodeMirror)
+    Inspired by the art of Rubens LP (http://www.rubenslp.com.br)
+
+*/
 
 .cm-s-paraiso-dark.CodeMirror {background: #2f1e2e; color: #b9b6b0;}
 .cm-s-paraiso-dark div.CodeMirror-selected {background: #41323f !important;}
+.cm-s-paraiso-dark.CodeMirror ::selection { background: rgba(65, 50, 63, .99); }
+.cm-s-paraiso-dark.CodeMirror ::-moz-selection { background: rgba(65, 50, 63, .99); }
 .cm-s-paraiso-dark .CodeMirror-gutters {background: #2f1e2e; border-right: 0px;}
 .cm-s-paraiso-dark .CodeMirror-guttermarker { color: #ef6155; }
 .cm-s-paraiso-dark .CodeMirror-guttermarker-subtle { color: #776e71; }
@@ -979,17 +1150,19 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-paraiso-dark .CodeMirror-activeline-background {background: #4D344A !important;}
 .cm-s-paraiso-dark .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
 /*
- *
- *     Name:       Paraíso (Light)
- *         Author:     Jan T. Sott
- *
- *             Color scheme by Jan T. Sott (https://github.com/idleberg/Paraiso-CodeMirror)
- *                 Inspired by the art of Rubens LP (http://www.rubenslp.com.br)
- *
- *                 */
+
+    Name:       Paraíso (Light)
+    Author:     Jan T. Sott
+
+    Color scheme by Jan T. Sott (https://github.com/idleberg/Paraiso-CodeMirror)
+    Inspired by the art of Rubens LP (http://www.rubenslp.com.br)
+
+*/
 
 .cm-s-paraiso-light.CodeMirror {background: #e7e9db; color: #41323f;}
 .cm-s-paraiso-light div.CodeMirror-selected {background: #b9b6b0 !important;}
+.cm-s-paraiso-light.CodeMirror ::selection { background: #b9b6b0; }
+.cm-s-paraiso-light.CodeMirror ::-moz-selection { background: #b9b6b0; }
 .cm-s-paraiso-light .CodeMirror-gutters {background: #e7e9db; border-right: 0px;}
 .cm-s-paraiso-light .CodeMirror-guttermarker { color: black; }
 .cm-s-paraiso-light .CodeMirror-guttermarker-subtle { color: #8d8687; }
@@ -1015,13 +1188,13 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-paraiso-light .CodeMirror-activeline-background {background: #CFD1C4 !important;}
 .cm-s-paraiso-light .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
 /**
- *  * Pastel On Dark theme ported from ACE editor
- *   * @license MIT
- *    * @copyright AtomicPages LLC 2014
- *     * @author Dennis Thompson, AtomicPages LLC
- *      * @version 1.1
- *       * @source https://github.com/atomicpages/codemirror-pastel-on-dark-theme
- *        */
+ * Pastel On Dark theme ported from ACE editor
+ * @license MIT
+ * @copyright AtomicPages LLC 2014
+ * @author Dennis Thompson, AtomicPages LLC
+ * @version 1.1
+ * @source https://github.com/atomicpages/codemirror-pastel-on-dark-theme
+ */
 
 .cm-s-pastel-on-dark.CodeMirror {
   background: #2c2827;
@@ -1030,6 +1203,9 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
   font-size: 14px;
 }
 .cm-s-pastel-on-dark div.CodeMirror-selected { background: rgba(221,240,255,0.2) !important; }
+.cm-s-pastel-on-dark.CodeMirror ::selection { background: rgba(221,240,255,0.2); }
+.cm-s-pastel-on-dark.CodeMirror ::-moz-selection { background: rgba(221,240,255,0.2); }
+
 .cm-s-pastel-on-dark .CodeMirror-gutters {
   background: #34302f;
   border-right: 0px;
@@ -1066,6 +1242,8 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 }
 .cm-s-rubyblue.CodeMirror { background: #112435; color: white; }
 .cm-s-rubyblue div.CodeMirror-selected { background: #38566F !important; }
+.cm-s-rubyblue.CodeMirror ::selection { background: rgba(56, 86, 111, 0.99); }
+.cm-s-rubyblue.CodeMirror ::-moz-selection { background: rgba(56, 86, 111, 0.99); }
 .cm-s-rubyblue .CodeMirror-gutters { background: #1F4661; border-right: 7px solid #3E7087; }
 .cm-s-rubyblue .CodeMirror-guttermarker { color: white; }
 .cm-s-rubyblue .CodeMirror-guttermarker-subtle { color: #3E7087; }
@@ -1088,14 +1266,14 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-rubyblue .CodeMirror-activeline-background {background: #173047 !important;}
 /*
- * Solarized theme for code-mirror
- * http://ethanschoonover.com/solarized
- * */
+Solarized theme for code-mirror
+http://ethanschoonover.com/solarized
+*/
 
 /*
- * Solarized color pallet
- * http://ethanschoonover.com/solarized/img/solarized-palette.png
- * */
+Solarized color pallet
+http://ethanschoonover.com/solarized/img/solarized-palette.png
+*/
 
 .solarized.base03 { color: #002b36; }
 .solarized.base02 { color: #073642; }
@@ -1142,7 +1320,7 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-solarized .cm-number { color: #d33682; }
 .cm-s-solarized .cm-def { color: #2aa198; }
 
-.cm-s-solarized .cm-variable { color: #268bd2; }
+.cm-s-solarized .cm-variable { color: #839496; }
 .cm-s-solarized .cm-variable-2 { color: #b58900; }
 .cm-s-solarized .cm-variable-3 { color: #6c71c4; }
 
@@ -1177,24 +1355,19 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
   text-decoration-style: dotted;
 }
 .cm-s-solarized .cm-strong { color: #eee; }
-.cm-s-solarized .cm-tab:before {
-  content: "➤";   /*visualize tab character*/
-  color: #586e75;
-  position:absolute;
-}
 .cm-s-solarized .cm-error,
 .cm-s-solarized .cm-invalidchar {
   color: #586e75;
   border-bottom: 1px dotted #dc322f;
 }
 
-.cm-s-solarized.cm-s-dark .CodeMirror-selected {
-  background: #073642;
-}
+.cm-s-solarized.cm-s-dark .CodeMirror-selected { background: #073642; }
+.cm-s-solarized.cm-s-dark.CodeMirror ::selection { background: rgba(7, 54, 66, 0.99); }
+.cm-s-solarized.cm-s-dark.CodeMirror ::-moz-selection { background: rgba(7, 54, 66, 0.99); }
 
-.cm-s-solarized.cm-s-light .CodeMirror-selected {
-  background: #eee8d5;
-}
+.cm-s-solarized.cm-s-light .CodeMirror-selected { background: #eee8d5; }
+.cm-s-solarized.cm-s-light.CodeMirror ::selection { background: #eee8d5; }
+.cm-s-solarized.cm-s-lightCodeMirror ::-moz-selection { background: #eee8d5; }
 
 /* Editor styling */
 
@@ -1248,9 +1421,9 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 }
 
 /*
- * Active line. Negative margin compensates left padding of the text in the
- * view-port
- * */
+Active line. Negative margin compensates left padding of the text in the
+view-port
+*/
 .cm-s-solarized.cm-s-dark .CodeMirror-activeline-background {
   background: rgba(255, 255, 255, 0.10);
 }
@@ -1259,6 +1432,8 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 }
 .cm-s-the-matrix.CodeMirror { background: #000000; color: #00FF00; }
 .cm-s-the-matrix div.CodeMirror-selected { background: #2D2D2D !important; }
+.cm-s-the-matrix.CodeMirror ::selection { background: rgba(45, 45, 45, 0.99); }
+.cm-s-the-matrix.CodeMirror ::-moz-selection { background: rgba(45, 45, 45, 0.99); }
 .cm-s-the-matrix .CodeMirror-gutters { background: #060; border-right: 2px solid #00FF00; }
 .cm-s-the-matrix .CodeMirror-guttermarker { color: #0f0; }
 .cm-s-the-matrix .CodeMirror-guttermarker-subtle { color: white; }
@@ -1286,17 +1461,54 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-the-matrix .CodeMirror-activeline-background {background: #040;}
 /*
- *
- *     Name:       Tomorrow Night - Eighties
- *         Author:     Chris Kempson
- *
- *             CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
- *                 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
- *
- *                 */
+
+    Name:       Tomorrow Night - Bright
+    Author:     Chris Kempson
+
+    Port done by Gerard Braad <me@gbraad.nl>
+
+*/
+
+.cm-s-tomorrow-night-bright.CodeMirror {background: #000000; color: #eaeaea;}
+.cm-s-tomorrow-night-bright div.CodeMirror-selected {background: #424242 !important;}
+.cm-s-tomorrow-night-bright .CodeMirror-gutters {background: #000000; border-right: 0px;}
+.cm-s-tomorrow-night-bright .CodeMirror-guttermarker { color: #e78c45; }
+.cm-s-tomorrow-night-bright .CodeMirror-guttermarker-subtle { color: #777; }
+.cm-s-tomorrow-night-bright .CodeMirror-linenumber {color: #424242;}
+.cm-s-tomorrow-night-bright .CodeMirror-cursor {border-left: 1px solid #6A6A6A !important;}
+
+.cm-s-tomorrow-night-bright span.cm-comment {color: #d27b53;}
+.cm-s-tomorrow-night-bright span.cm-atom {color: #a16a94;}
+.cm-s-tomorrow-night-bright span.cm-number {color: #a16a94;}
+
+.cm-s-tomorrow-night-bright span.cm-property, .cm-s-tomorrow-night-bright span.cm-attribute {color: #99cc99;}
+.cm-s-tomorrow-night-bright span.cm-keyword {color: #d54e53;}
+.cm-s-tomorrow-night-bright span.cm-string {color: #e7c547;}
+
+.cm-s-tomorrow-night-bright span.cm-variable {color: #b9ca4a;}
+.cm-s-tomorrow-night-bright span.cm-variable-2 {color: #7aa6da;}
+.cm-s-tomorrow-night-bright span.cm-def {color: #e78c45;}
+.cm-s-tomorrow-night-bright span.cm-bracket {color: #eaeaea;}
+.cm-s-tomorrow-night-bright span.cm-tag {color: #d54e53;}
+.cm-s-tomorrow-night-bright span.cm-link {color: #a16a94;}
+.cm-s-tomorrow-night-bright span.cm-error {background: #d54e53; color: #6A6A6A;}
+
+.cm-s-tomorrow-night-bright .CodeMirror-activeline-background {background: #2a2a2a !important;}
+.cm-s-tomorrow-night-bright .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
+/*
+
+    Name:       Tomorrow Night - Eighties
+    Author:     Chris Kempson
+
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+
+*/
 
 .cm-s-tomorrow-night-eighties.CodeMirror {background: #000000; color: #CCCCCC;}
 .cm-s-tomorrow-night-eighties div.CodeMirror-selected {background: #2D2D2D !important;}
+.cm-s-tomorrow-night-eighties.CodeMirror ::selection { background: rgba(45, 45, 45, 0.99); }
+.cm-s-tomorrow-night-eighties.CodeMirror ::-moz-selection { background: rgba(45, 45, 45, 0.99); }
 .cm-s-tomorrow-night-eighties .CodeMirror-gutters {background: #000000; border-right: 0px;}
 .cm-s-tomorrow-night-eighties .CodeMirror-guttermarker { color: #f2777a; }
 .cm-s-tomorrow-night-eighties .CodeMirror-guttermarker-subtle { color: #777; }
@@ -1321,8 +1533,76 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-tomorrow-night-eighties .CodeMirror-activeline-background {background: #343600 !important;}
 .cm-s-tomorrow-night-eighties .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
+/* DEFAULT THEME */
+.cm-atom {color: #219;}
+.cm-attribute {color: #00c;}
+.cm-bracket {color: #997;}
+.cm-comment {color: #333333;}
+.cm-def {color: #00f;}
+.cm-em {font-style: italic;}
+.cm-error {color: #f00;}
+.cm-header {color: #00f; font-weight: bold;}
+.cm-hr {color: #999;}
+.cm-invalidchar {color: #f00;}
+.cm-keyword {font-weight:bold}
+.cm-link {color: #00c; text-decoration: underline;}
+.cm-meta {color: #555;}
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-qualifier {color: #555;}
+.cm-quote {color: #090;}
+.cm-strikethrough {text-decoration: line-through;}
+.cm-string {color: #006400;}
+.cm-string-2 {color: #f50;}
+.cm-strong {font-weight: bold;}
+.cm-tag {color: #170;}
+.cm-variable {color: #8B2252;}
+.cm-variable-2 {color: #05a;}
+.cm-variable-3 {color: #085;}
+
+.cm-negative {color: #d44;}
+.cm-positive {color: #292;}
+.cm-header, .cm-strong {font-weight: bold;}
+.cm-em {font-style: italic;}
+.cm-link {text-decoration: underline;}
+.cm-strikethrough {text-decoration: line-through;}
+
+.cm-s-default .cm-error {color: #f00;}
+.cm-invalidchar {color: #f00;}
+
+/* ASN */
+.cm-s-ttcn .cm-accessTypes,
+.cm-s-ttcn .cm-compareTypes {color: #27408B}
+.cm-s-ttcn .cm-cmipVerbs {color: #8B2252}
+.cm-s-ttcn .cm-modifier {color:#D2691E}
+.cm-s-ttcn .cm-status {color:#8B4545}
+.cm-s-ttcn .cm-storage {color:#A020F0}
+.cm-s-ttcn .cm-tags {color:#006400}
+
+/* CFG */
+.cm-s-ttcn .cm-externalCommands {color: #8B4545; font-weight:bold}
+.cm-s-ttcn .cm-fileNCtrlMaskOptions,
+.cm-s-ttcn .cm-sectionTitle {color: #2E8B57; font-weight:bold}
+
+/* TTCN */
+.cm-s-ttcn .cm-booleanConsts,
+.cm-s-ttcn .cm-otherConsts,
+.cm-s-ttcn .cm-verdictConsts {color: #006400}
+.cm-s-ttcn .cm-configOps,
+.cm-s-ttcn .cm-functionOps,
+.cm-s-ttcn .cm-portOps,
+.cm-s-ttcn .cm-sutOps,
+.cm-s-ttcn .cm-timerOps,
+.cm-s-ttcn .cm-verdictOps {color: #0000FF}
+.cm-s-ttcn .cm-preprocessor,
+.cm-s-ttcn .cm-templateMatch,
+.cm-s-ttcn .cm-ttcn3Macros {color: #27408B}
+.cm-s-ttcn .cm-types {color: #A52A2A; font-weight:bold}
+.cm-s-ttcn .cm-visibilityModifiers {font-weight:bold}
 .cm-s-twilight.CodeMirror { background: #141414; color: #f7f7f7; } /**/
 .cm-s-twilight .CodeMirror-selected { background: #323232 !important; } /**/
+.cm-s-twilight.CodeMirror ::selection { background: rgba(50, 50, 50, 0.99); }
+.cm-s-twilight.CodeMirror ::-moz-selection { background: rgba(50, 50, 50, 0.99); }
 
 .cm-s-twilight .CodeMirror-gutters { background: #222; border-right: 1px solid #aaa; }
 .cm-s-twilight .CodeMirror-guttermarker { color: white; }
@@ -1355,6 +1635,8 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 
 .cm-s-vibrant-ink.CodeMirror { background: black; color: white; }
 .cm-s-vibrant-ink .CodeMirror-selected { background: #35493c !important; }
+.cm-s-vibrant-ink.CodeMirror ::selection { background: rgba(53, 73, 60, 0.99); }
+.cm-s-vibrant-ink.CodeMirror ::-moz-selection { background: rgba(53, 73, 60, 0.99); }
 
 .cm-s-vibrant-ink .CodeMirror-gutters { background: #002240; border-right: 1px solid #aaa; }
 .cm-s-vibrant-ink .CodeMirror-guttermarker { color: white; }
@@ -1384,29 +1666,31 @@ div.cm-s-mdn-like span.CodeMirror-matchingbracket {outline:1px solid grey; color
 .cm-s-vibrant-ink .CodeMirror-activeline-background {background: #27282E !important;}
 .cm-s-vibrant-ink .CodeMirror-matchingbracket {outline:1px solid grey; color:white !important;}
 /*
- * Copyright (C) 2011 by MarkLogic Corporation
- * Author: Mike Brevoort <mike@brevoort.com>
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * */
+Copyright (C) 2011 by MarkLogic Corporation
+Author: Mike Brevoort <mike@brevoort.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
 .cm-s-xq-dark.CodeMirror { background: #0a001f; color: #f8f8f8; }
 .cm-s-xq-dark .CodeMirror-selected { background: #27007A !important; }
+.cm-s-xq-dark.CodeMirror ::selection { background: rgba(39, 0, 122, 0.99); }
+.cm-s-xq-dark.CodeMirror ::-moz-selection { background: rgba(39, 0, 122, 0.99); }
 .cm-s-xq-dark .CodeMirror-gutters { background: #0a001f; border-right: 1px solid #aaa; }
 .cm-s-xq-dark .CodeMirror-guttermarker { color: #FFBD40; }
 .cm-s-xq-dark .CodeMirror-guttermarker-subtle { color: #f8f8f8; }
@@ -1454,7 +1738,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-                                                                                            */
+*/
 .cm-s-xq-light span.cm-keyword {line-height: 1em; font-weight: bold; color: #5A5CAD; }
 .cm-s-xq-light span.cm-atom {color: #6C8CD5;}
 .cm-s-xq-light span.cm-number {color: #164;}
@@ -1475,7 +1759,49 @@ THE SOFTWARE.
 .cm-s-xq-light span.cm-error {color: #f00;}
 
 .cm-s-xq-light .CodeMirror-activeline-background {background: #e8f2ff !important;}
-.cm-s-xq-light .CodeMirror-matchingbracket {outline:1px solid grey;color:black !important;background:yellow;}
+.cm-s-xq-light .CodeMirror-matchingbracket {outline:1px solid grey;color:black !important;background:yellow;}/**
+ * "
+ *  Using Zenburn color palette from the Emacs Zenburn Theme
+ *  https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el
+ *
+ *  Also using parts of https://github.com/xavi/coderay-lighttable-theme
+ * "
+ * From: https://github.com/wisenomad/zenburn-lighttable-theme/blob/master/zenburn.css
+ */
+
+.cm-s-zenburn .CodeMirror-gutters { background: #3f3f3f !important; }
+.cm-s-zenburn .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded { color: #999; }
+.cm-s-zenburn .CodeMirror-cursor { border-left: 1px solid white !important; }
+.cm-s-zenburn { background-color: #3f3f3f; color: #dcdccc; }
+.cm-s-zenburn span.cm-builtin { color: #dcdccc; font-weight: bold; }
+.cm-s-zenburn span.cm-comment { color: #7f9f7f; }
+.cm-s-zenburn span.cm-keyword { color: #f0dfaf; font-weight: bold; }
+.cm-s-zenburn span.cm-atom { color: #bfebbf; }
+.cm-s-zenburn span.cm-def { color: #dcdccc; }
+.cm-s-zenburn span.cm-variable { color: #dfaf8f; }
+.cm-s-zenburn span.cm-variable-2 { color: #dcdccc; }
+.cm-s-zenburn span.cm-string { color: #cc9393; }
+.cm-s-zenburn span.cm-string-2 { color: #cc9393; }
+.cm-s-zenburn span.cm-number { color: #dcdccc; }
+.cm-s-zenburn span.cm-tag { color: #93e0e3; }
+.cm-s-zenburn span.cm-property { color: #dfaf8f; }
+.cm-s-zenburn span.cm-attribute { color: #dfaf8f; }
+.cm-s-zenburn span.cm-qualifier { color: #7cb8bb; }
+.cm-s-zenburn span.cm-meta { color: #f0dfaf; }
+.cm-s-zenburn span.cm-header { color: #f0efd0; }
+.cm-s-zenburn span.cm-operator { color: #f0efd0; }
+.cm-s-zenburn span.CodeMirror-matchingbracket { box-sizing: border-box; background: transparent; border-bottom: 1px solid; }
+.cm-s-zenburn span.CodeMirror-nonmatchingbracket { border-bottom: 1px solid; background: none; }
+.cm-s-zenburn .CodeMirror-activeline { background: #000000; }
+.cm-s-zenburn .CodeMirror-activeline-background { background: #000000; }
+.cm-s-zenburn .CodeMirror-selected { background: #545454; }
+.cm-s-zenburn .CodeMirror-focused .CodeMirror-selected { background: #4f4f4f; }
+
+
+
+
+
+
 
 /* Don't you dare to write any css code above this line!! */
 /* === /end CodeMirror === */

@@ -583,7 +583,9 @@ function populateEditor(editor, panel) {
       editor.setCode(template[panel]);
     }
 
-    editor.editor.clearHistory();
+    if (editor.editor && editor.editor.clearHistory) {
+      editor.editor.clearHistory();
+    }
 
   } else {
     // this means it was set via the url

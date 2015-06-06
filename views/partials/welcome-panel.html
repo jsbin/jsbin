@@ -100,8 +100,9 @@
 </div>
 
 <script>
+// {{topPanel}}
 try {
-  if (localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1) {
+  if ({{#if_null topPanel}}localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1{{else}}{{#if topPanel}}true{{else}}false{{/if}}{{/if_null}}) {
     document.body.className += ' toppanel';
   }
 } catch (e) {

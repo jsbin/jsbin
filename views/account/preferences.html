@@ -12,7 +12,7 @@
 
     <div>
       <label for="ssl">Use SSL by default</label>
-      <input type="checkbox" name="ssl" id="ssl" {{#feature request "sslForAll"}}checked{{/feature}}> {{#feature request "pro"}}{{else}}<a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a> {{/feature}}
+      <input type="checkbox" name="ssl" id="ssl" {{#feature request "sslForAll"}}checked{{/feature}}>
     </div>
 
     <p><small>Note that by using SSL by default, including non-https assets in your bins will cause the iframe <em>not</em> to render. This is the correct behaviour for https frames containing non-secure content. <a href="http://jsbin.com/help/ssl-opt-in">Read more</a>.</small></p>

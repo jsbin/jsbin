@@ -9,5 +9,10 @@
     "type": "error",
     "feature": "pro",
     "message": "If you're using Dropbox backup please <a href=\"/auth/dropbox\">relink your account</a> as we've released some fixes."
+  },
+  {
+    "version": "0.26.0",
+    "type": "notification",
+    "message": "HTTPS is now freely available to all users, if you have an account, you can enable https as <a href=\"/account/preferences\">your default preference</a> on jsbin.com"
   }
 ]

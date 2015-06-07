@@ -36,3 +36,9 @@
   border: 0;
   margin: -1px 0 0 3px;
 }
+
+@media print {
+  #edit-with-js-bin {
+    display: none;
+  }
+}

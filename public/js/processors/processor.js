@@ -492,17 +492,17 @@ var processors = jsbin.processors = (function () {
       }), 500),
     }),
 
-    to5: createProcessor({
-      id: 'to5',
+    babel: createProcessor({
+      id: 'babel',
       target: 'js',
       extensions: ['es6'],
-      url: jsbin.static + '/js/vendor/6to5.min.js',
+      url: jsbin.static + '/js/vendor/babel.min.js',
       init: function (ready) {
         ready();
       },
-      handler: function to5handle(source, resolve, reject) {
+      handler: function babelhandle(source, resolve, reject) {
         try {
-          resolve(to5(source).code);
+          resolve(babel.transform(source, { stage: 0 }).code);
         } catch (e) {
           console.error(e.message);
           reject([{

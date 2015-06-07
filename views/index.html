@@ -7,6 +7,7 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/flat-ui.css{{cacheBust}}">
+  <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}
   {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="{{static}}/css/editor-layout.css{{cacheBust}}">{{/equal}}
@@ -385,7 +386,7 @@ if(top != self) {
             <a href="#javascript">JavaScript</a>
             <a href="#coffeescript">CoffeeScript</a>
             <a href="#jsx">JSX (React)</a>
-            <a href="#to5">6to5</a>
+            <a href="#babel">Babel</a>
             <a href="#traceur">Traceur</a>
             <a href="#typescript">TypeScript</a>
             <a href="#processing">Processing</a>

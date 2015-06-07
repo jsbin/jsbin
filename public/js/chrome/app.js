@@ -33,11 +33,11 @@ if (CodeMirror.keyMap && CodeMirror.keyMap['default']) {
   delete CodeMirror.keyMap['default'][cmd + '-R'];
 }
 
-var link = document.createElement('link');
-link.rel = 'stylesheet';
-link.href = jsbin['static'] + '/css/font.css?' + jsbin.version;
-link.type = 'text/css';
-document.getElementsByTagName('head')[0].appendChild(link);
+// var link = document.createElement('link');
+// link.rel = 'stylesheet';
+// link.href = jsbin['static'] + '/css/font.css?' + jsbin.version;
+// link.type = 'text/css';
+// document.getElementsByTagName('head')[0].appendChild(link);
 
 if (jsbin.embed) {
   analytics.embed();

@@ -5922,3 +5922,26 @@ a[data-pro]:hover:after {
   text-decoration: none;
   vertical-align: middle;
 }
+
+/* if the user is pro, hide the "pro" hints */
+html.pro a[data-pro]:after,
+html.pro .toppanel-no-pro {
+  display: none;
+}
+
+.haspro {
+  display: none;
+}
+
+html.pro .haspro {
+  display: auto;
+}
+
+div.loggedin,
+div.loggedout {
+  display: none;
+}
+
+.embed .label .size {
+  display: none !important;
+}

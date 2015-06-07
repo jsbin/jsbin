@@ -1,0 +1,38 @@
+<div class="menu">
+  <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
+  <div class="dropdown dd-right" id="profile">
+    <div class="dropdowncontent">
+      <form method="post" class="login" action="{{root}}/sethome">
+        <p class="loginFeedback"></p>
+        <div>
+          <span class="input" id="username" readonly>
+            @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+          </span>
+        </div>
+        <div>
+          <label>Email<br>
+          <input name="email" type="email" value="{{email}}"></label>
+        </div>
+        <div>
+          <label>Password<br>
+          <input name="password" type="password" value=""></label>
+        </div>
+        <div>
+          <input type=submit value="Update account">
+          <a class="logout" href="#logout">Logout</a>
+        </div>
+        {{#feature request "github"}}{{#unless user.github_token}}
+        <div>
+          <span class="login-splitter">or</span>
+          <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
+        </div>
+        {{/unless}}{{/feature}}
+      </form>
+
+      <form action="{{root}}/logout" method="POST" id="logout">
+        <input type="hidden" name="_csrf" value="{{token}}">
+        <button hidden>Logout</button>
+      </form>
+    </div>
+  </div>
+</div>

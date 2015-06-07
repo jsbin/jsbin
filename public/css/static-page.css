@@ -58,6 +58,12 @@ pre {
   border-radius: 3px;
 }
 
+@media screen and (max-width: 680px) {
+  body {
+    margin: 10px auto;
+  }
+}
+
 @media screen and (max-width: 660px) {
   html {
     width: auto;

@@ -53,8 +53,8 @@ if(top != self) {
         </span>
       {{else}}
         <div class="menu">
-          <a href="{{root}}{{code_id_path}}/edit#{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.svg"> {{#feature request "fileMenuTest"}}File{{else}}Bins{{/feature}}</a>
-          <div class="dropdown" id="{{#feature request "fileMenuTest"}}file{{else}}bins{{/feature}}">
+          <a href="{{root}}{{code_id_path}}/edit#file" target="_blank" class="brand button button-dropdown group button-dropdown-arrow"><img src="{{static}}/images/favicon.svg"> File</a>
+          <div class="dropdown" id="file">
             <div class="dropdownmenu">
               <a id="createnew" data-desc="Create a brand new bin" class="button group" title="Create fresh bin" href="{{root}}" data-label="new">New</a>
               {{#feature request "private"}}
@@ -197,22 +197,43 @@ if(top != self) {
       <div id="panels"></div>
       <div class="help">
         {{#unless embed}}
-          {{#if home}}
-            {{#feature request "accountPages"}}
-            <div class="menu{{#feature request "pro"}} pro {{/feature}}">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar" id="accountBtn">{{#if gravatar}}<picture>
-                <source srcset="{{gravatar}} 1x, {{gravatar}}?&s=58 2x">
-                <img src="{{gravatar}}">
-              </picture>{{/if}} Account</a>
+          {{#feature request "accountPages"}}
+          <!-- logged out item -->
+          <div class="loggedout menu">
+            {{#feature request "github"}}
+            <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
+            <div class="dropdown login" id="registerLogin">
+              <div class="dropdowncontent">
+                <a class="btn-github" href="{{root}}/auth/github">
+                  <img src="{{static}}/images/github-32.png">
+                  Login or Register via GitHub
+                </a>
+                <span class="login-group">
+                  Or
+                  <a class="btn-login" href="{{root}}/login">use your email address</a>
+                </span>
+              </div>
+            </div>
+            {{else}}
+            <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
+            {{/feature}}
+          </div>
+          <!-- logged in item -->
+          <div class="loggedin menu{{#feature request "pro"}} pro {{/feature}}">
+            <script type="template/text" id="profile-template">
+              <a title="@{name}" href="#profile" class="button button-dropdown avatar" id="accountBtn"><picture>
+                <source srcset="{avatar} 1x, {avatar}?&s=58 2x">
+                <img src="{avatar}">
+              </picture> Account</a>
               <div class="dropdown dd-right" id="profile">
                 <div class="dropdowncontent">
-                  {{#if large_gravatar}}<div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{{user.name}}&{{version}}" type="image/svg+xml">
-  <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
-                <source srcset="{{large_gravatar}} 1x, {{large_gravatar}}?&s=240 2x">
-                <img class="large-gravatar" src="{{large_gravatar}}">
-              </picture></div>{{/if}}
+                  <div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{name}&{{version}}" type="image/svg+xml">
+                <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
+                <source srcset="{large_avatar} 1x, {large_avatar}?&s=240 2x">
+                <img class="large-gravatar" src="{large_avatar}">
+              </picture></div>
                   <span class="input" id="username" readonly>
-                    @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
+                    @{name}<sup class="pro">pro</sup>
                   </span>
 
                   <ul>
@@ -223,74 +244,13 @@ if(top != self) {
                   </ul>
 
                 </div>
-                {{#feature request "upgrade"}}
-                  {{#unless user.pro}}
-                  <a href="{{root}}/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
-                  {{/unless}}
-                {{/feature}}
+                <a href="{{root}}/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
               </div>
-            </div>
-            {{else}}
-            <div class="menu">
-              <a title="@{{home}}" href="#profile" class="button button-dropdown avatar">{{#if gravatar}}<img src="{{gravatar}}">{{/if}}</a>
-              <div class="dropdown dd-right" id="profile">
-                <div class="dropdowncontent">
-                  <form method="post" class="login" action="{{root}}/sethome">
-                    <p class="loginFeedback"></p>
-                    <div>
-                      <span class="input" id="username" readonly>
-                        @{{home}}{{#feature request "pro"}}<sup class="pro">pro</sup>{{/feature}}
-                      </span>
-                    </div>
-                    <div>
-                      <label>Email<br>
-                      <input name="email" type="email" value="{{email}}"></label>
-                    </div>
-                    <div>
-                      <label>Password<br>
-                      <input name="password" type="password" value=""></label>
-                    </div>
-                    <div>
-                      <input type=submit value="Update account">
-                      <a class="logout" href="#logout">Logout</a>
-                    </div>
-                    {{#feature request "github"}}{{#unless user.github_token}}
-                    <div>
-                      <span class="login-splitter">or</span>
-                      <a class="btn-github" href="{{root}}/auth/github"><img src="{{static}}/images/github-32.png"> Link your Github account</a>
-                    </div>
-                    {{/unless}}{{/feature}}
-                  </form>
-
-                  <form action="{{root}}/logout" method="POST" id="logout">
-                    <input type="hidden" name="_csrf" value="{{token}}">
-                    <button hidden>Logout</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            {{/feature}}
+            </script>
+          </div>
           {{else}}
-            {{#feature request "sslLogin"}}
-              <div class="menu">
-                {{#feature request "github"}}
-                <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
-                <div class="dropdown login" id="registerLogin">
-                  <div class="dropdowncontent">
-                    <a class="btn-github" href="{{root}}/auth/github">
-                      <img src="{{static}}/images/github-32.png">
-                      Login or Register via GitHub
-                    </a>
-                    <span class="login-group">
-                      Or
-                      <a class="btn-login" href="{{root}}/login">use your email address</a>
-                    </span>
-                  </div>
-                </div>
-                {{else}}
-                <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
-                {{/feature}}
-              </div>
+            {{#if home}}
+              {{> account/old-profiles}}
             {{else}}
             <div class="menu">
               <a href="#login" class="button button-open" id="loginbtn">Log in</a>
@@ -361,8 +321,8 @@ if(top != self) {
                 </div>
               </div>
             </div>
-            {{/feature}}
-          {{/if}}
+            {{/if}}
+          {{/feature}}
         {{/unless}}
 
         {{#if settings.[ui showblog]}}
@@ -634,6 +594,9 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{>infocard}}
 {{/unless}}
 
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{root}}/bin/user.js"></script>
+
 <!--[if lte IE 8]>
 <script src="{{static}}/js/vendor/jshint/jshint.old.min.js"></script>
 <script> document.write('<!--'); </script>
@@ -641,9 +604,11 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 
 <script src="{{static}}/js/vendor/jshint/jshint.min.js"></script>
 
--->
+<!--[if lte IE 8]>
+<script> document.write('--' + '>'); </script>
+<![endif]-->
 
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+
 {{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>

@@ -51,7 +51,7 @@ var processor = (function () {
    */
   processor.render = function (source, options) {
 
-    options = options || [];
+    options = options || {};
     source = source || '';
 
     var combinedSource = [],

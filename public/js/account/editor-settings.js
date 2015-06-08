@@ -88,10 +88,6 @@
   ];
   var $addons = {};
 
-  var $saveStatus = $('span.status');
-  var saveTimer = null;
-
-
   // setup variables;
   var $saveStatus = $('span.status');
   var saveTimer = null;

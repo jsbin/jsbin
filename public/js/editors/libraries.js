@@ -632,6 +632,16 @@ var libraries = [
     'label': 'Popcorn.js 1.5.6 (Core + Extensions)',
     'group': 'Popcorn.js'
   },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.3/immutable.min.js',
+    'label': 'Immutable 3.7.3',
+    'group': 'Data structures'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/mori/0.3.2/mori.js',
+    'label': 'mori 0.3.2',
+    'group': 'Data structures'
+  }
 ];
 
 window.libraries = libraries; // expose a command line API

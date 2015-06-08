@@ -166,7 +166,7 @@ function exposeSettings() {
 }
 
 var storedSettings = store.localStorage.getItem('settings');
-if (storedSettings === "undefined") {
+if (storedSettings === "undefined" || jsbin.embed) {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
 }

@@ -26,7 +26,11 @@
   var $style = $('<style>');
   iframe.contentDocument.body.appendChild($style[0]);
 
-  $('#panels', iframe.contentDocument.body).append($('#panels-template').html())
+  $('#panels', iframe.contentDocument.body)
+    .append($('#panels-template').html());
+  $(iframe.contentDocument.body).on('click', 'a', function () {
+    return false;
+  });
 
   // editor settings
   var settings = Object.keys(embed).length ? embed : jsbin.user.settings || {};

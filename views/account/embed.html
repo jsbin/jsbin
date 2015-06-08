@@ -74,6 +74,10 @@
     <h3>CSS</h3>
     <p>Apply your own CSS to the embedded editor.</p>
     <textarea id="css">/* some default CSS, by sure to inspect the DOM for 100% customisability! */
+/* main JS Bin editor */
+.embed #bin {
+  top: 28px;
+}
 
 /* top navigation bar */
 .control {
@@ -114,11 +118,11 @@
     <h3>Preview</h3>
 
     <script type="text/template" id="navigation-template">
-      {{> control_navigation embed=true}}
+      {{> control_navigation embed=true }}
     </script>
 
     <script type="text/template" id="panels-template">
-<a role="button" class="button group hasContent active" href="?html" aria-label="HTML Panel: Active">HTML</a><a role="button" class="button group" href="?css" aria-label="CSS Panel: Inactive">CSS</a><a role="button" class="button group hasContent" href="?javascript" aria-label="JavaScript Panel: Inactive">Babel</a><a role="button" class="button group" href="?console" aria-label="Console Panel: Inactive">Console</a><a role="button" class="button group active" href="?live" aria-label="Output Panel: Active">Output</a></script>
+<a role="button" class="button group hasContent active" href="?html" aria-label="HTML Panel: Active">HTML</a><a role="button" class="button group" href="?css" aria-label="CSS Panel: Inactive">CSS</a><a role="button" class="button group hasContent" href="?javascript" aria-label="JavaScript Panel: Inactive">JavaScript</a><a role="button" class="button group" href="?console" aria-label="Console Panel: Inactive">Console</a><a role="button" class="button group active" href="?live" aria-label="Output Panel: Active">Output</a></script>
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
 </form>

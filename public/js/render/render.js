@@ -1,26 +1,25 @@
 /*globals $, jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
 var renderCodeWorking = false;
+function formatErrors(res) {
+  var errors = [];
+  var line = 0;
+  var ch = 0;
+  for (var i = 0; i < res.length; i++) {
+    line = res[i].line || 0;
+    ch = res[i].ch || 0;
+    errors.push({
+      from: CodeMirror.Pos(line, ch),
+      to: CodeMirror.Pos(line, ch),
+      message: res[i].msg,
+      severity: 'error',
+    });
+  }
+  return errors;
+};
 
 var getRenderedCode = function () {
   'use strict';
-
-  var formatErrors = function(res) {
-    var errors = [];
-    var line = 0;
-    var ch = 0;
-    for (var i = 0; i < res.length; i++) {
-      line = res[i].line || 0;
-      ch = res[i].ch || 0;
-      errors.push({
-        from: CodeMirror.Pos(line, ch),
-        to: CodeMirror.Pos(line, ch),
-        message: res[i].msg,
-        severity : 'error'
-      });
-    }
-    return errors;
-  };
 
   if (renderCodeWorking) {
     // cancel existing jobs, and replace with this job
@@ -28,46 +27,57 @@ var getRenderedCode = function () {
 
   renderCodeWorking = true;
 
-  function render(language) {
-    return new RSVP.Promise(function (resolve, reject) {
-      editors[language].render().then(resolve, function (error) {
-        console.warn(editors[language].processor.id + ' processor compilation failed');
-        if (!error) {
-          error = {};
-        }
-
-        if ($.isArray(error)) { // then this is for our hinter
-          // console.log(data.errors);
-          var cm = jsbin.panels.panels[language].editor;
-
-          // if we have the error reporting function (called updateLinting)
-          if (typeof cm.updateLinting !== 'undefined') {
-            hintingDone(cm);
-            var err = formatErrors(error);
-            cm.updateLinting(err);
-          } else {
-            // otherwise dump to the console
-            console.warn(error);
-          }
-        } else if (error.message) {
-          console.warn(error.message, error.stack);
-        } else {
-          console.warn(error);
-        }
-
-        reject(error);
-      });
-    });
-  }
-
-  var promises = {
-    html: render('html'),
-    javascript: render('javascript'),
-    css: render('css')
-  };
+  // this allows us to make use of a promise's result instead of recompiling
+  // the language each time
+  var promises = ['html', 'javascript', 'css'].reduce(function (prev, curr) {
+    if (curr === jsbin.panels.focused.id) {
+      prev[curr] = getRenderedCode.render(curr);
+    } else {
+      prev[curr] = getRenderedCode[curr];
+    }
+    return prev;
+  }, {});
 
   return RSVP.hash(promises);
 };
+
+getRenderedCode.render = function render (language) {
+  return new RSVP.Promise(function (resolve, reject) {
+    editors[language].render().then(resolve, function (error) {
+      console.warn(editors[language].processor.id + ' processor compilation failed');
+      if (!error) {
+        error = {};
+      }
+
+      if ($.isArray(error)) { // then this is for our hinter
+        // console.log(data.errors);
+        var cm = jsbin.panels.panels[language].editor;
+
+        // if we have the error reporting function (called updateLinting)
+        if (typeof cm.updateLinting !== 'undefined') {
+          hintingDone(cm);
+          var err = formatErrors(error);
+          cm.updateLinting(err);
+        } else {
+          // otherwise dump to the console
+          console.warn(error);
+        }
+      } else if (error.message) {
+        console.warn(error.message, error.stack);
+      } else {
+        console.warn(error);
+      }
+
+      reject(error);
+    });
+  });
+};
+
+$(document).on('jsbinReady', function () {
+  getRenderedCode.html = getRenderedCode.render('html');
+  getRenderedCode.javascript = getRenderedCode.render('javascript');
+  getRenderedCode.css = getRenderedCode.render('css');
+});
 
 var getPreparedCode = (function () { // jshint ignore:line
   'use strict';
@@ -208,7 +218,13 @@ var getPreparedCode = (function () { // jshint ignore:line
           html = parts[0];
           close = parts.length === 2 && parts[1] ? parts[1] : '';
         }
-        html += '<style>\n' + css + '\n</style>\n' + close;
+
+        // if the focused panel is CSS, then just return the css NOW
+        if (jsbin.state.hasBody && jsbin.panels.focused.id === 'css') {
+          return css;
+        }
+
+        html += '<style id="jsbin-css">\n' + css + '\n</style>\n' + close;
       }
 
       // Add defer to all inline script tags in IE.

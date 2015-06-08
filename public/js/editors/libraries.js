@@ -314,6 +314,46 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url':'https://rawgit.com/angular/bower-angular/master/angular.min.js',
+    'label': 'Angular Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular/master/angular.js',
+    'label': 'Angular Latest Uncompressed',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-animate/master/angular-animate.min.js',
+    'label': 'Angular Animate Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-aria/master/angular-aria.min.js',
+    'label': 'Angular Aria Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-messages/master/angular-messages.min.js',
+    'label': 'Angular Messages Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-resource/master/angular-resource.min.js',
+    'label': 'Angular Resource Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-route/master/angular-route.min.js',
+    'label': 'Angular Route Latest',
+    'group': 'Angular'
+  },
+  {
+    'url': 'https://rawgit.com/angular/bower-angular-sanitize/master/angular-sanitize.min.js',
+    'label': 'Angular Sanitize Latest',
+    'group': 'Angular'
+  },
+  {
     'url': '//fb.me/react-0.13.1.js',
     'label': 'React 0.13.1',
     'group': 'React'

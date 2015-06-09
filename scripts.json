@@ -1,6 +1,8 @@
 {
   "app": [
+    "/js/offline/index.js",
     "/js/chrome/hashbang-jump.js",
+    "/js/chrome/font.js",
     "/js/vendor/rsvp.js",
     "/js/vendor/jquery-migrate.js",
     "/js/vendor/pretty-date.js",

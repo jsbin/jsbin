@@ -53,6 +53,8 @@
   float:left;
   margin-right: 0px;
   margin-top: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 #sidebar .sidebar-btn-group,
@@ -969,7 +971,6 @@ input.actionButton-small, button.actionButton-small {
   right: 0;
   top: 20px;
   color: #ababab;
- 
 }
 
 #assets #content {
@@ -999,7 +1000,7 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets a.asset .flex {
-  flex: 1; 
+  flex: 1;
 }
 
 #assets img {
@@ -1047,13 +1048,13 @@ input.actionButton-small, button.actionButton-small {
   border: none;
   float: right;
   display: inline-block;
-  
+
   width:32px;
   margin: 0;
   padding: 0;
   position: absolute;
   right: 20px;
- 
+
   top: 20px;
 }
 

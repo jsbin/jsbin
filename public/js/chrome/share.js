@@ -126,6 +126,7 @@
   function update() {
     var data = formData(form);
     var url = jsbin.getURL({ root: jsbin.shareRoot });
+    var OGurl = jsbin.getURL();
 
     if (data.state === 'snapshot' && jsbin.state.latest) {
       url += '/' + selectedSnapshot;
@@ -204,7 +205,7 @@
     $directLinks.html(directLinksHTML.join(''));
 
     linkselect.value = link.href = shareurl + query;
-    embed.value = ('<a class="jsbin-embed" href="' + url + '/embed' + query + '">' + documentTitle + ' on jsbin.com</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
+    embed.value = ('<a class="jsbin-embed" href="' + OGurl + '/embed' + query + '">' + documentTitle + ' on jsbin.com</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
         return {
           '<': '&lt;',
           '>': '&gt;',

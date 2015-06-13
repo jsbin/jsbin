@@ -886,3 +886,7 @@ input.invalid {
   content: '';
   margin-top: -16px;
 }
+
+small {
+  font-size: smaller;
+}

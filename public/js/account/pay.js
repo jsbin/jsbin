@@ -74,11 +74,13 @@ jQuery(function ($) {
   });
 
 
-  var price = { yearly: {}, monthly: {} };
+  var price = { yearly: {}, monthly: {}, discount: {} };
   price.yearly.el = $('#price-yearly');
   price.yearly.value = price.yearly.el.data('price') * 1;
   price.monthly.el = $('#price-monthly');
   price.monthly.value = price.monthly.el.data('price') * 1;
+  price.discount.el = $('#discount');
+  price.discount.value = price.discount.el.data('price') * 1;
 
   var fx = {
     USD: { rate: 0, symbol: '$' },
@@ -89,9 +91,20 @@ jQuery(function ($) {
   function updatePricesTo(ccy) {
     price.yearly.el.html(fx[ccy].symbol + (price.yearly.value * fx[ccy].rate | 0));
     price.monthly.el.html(fx[ccy].symbol + (price.monthly.value * fx[ccy].rate | 0));
+    price.discount.el.html(fx[ccy].symbol + (price.discount.value * fx[ccy].rate | 0));
   }
 
   var $ccynote = $('.ccy-note');
+
+  $.ajax({
+    url: 'https://api.fixer.io/latest?symbols=GBP,USD',
+    dataType: 'jsonp',
+    success: function (data) {
+      var rates = data.rates;
+      fx.EUR.rate = 1 / rates.GBP;
+      fx.USD.rate = fx.EUR.rate / (1 / rates.USD);
+    },
+  });
 
   $('.ccy input').change(function () {
     var ccy = this.value;
@@ -102,19 +115,7 @@ jQuery(function ($) {
       $ccynote.prop('hidden', false);
     }
 
-    if (!fx[ccy].rate) {
-      // get via ajax
-      $.ajax({
-        url: 'https://rate-exchange.appspot.com/currency?from=GBP&to=' + ccy,
-        dataType: 'jsonp',
-        success: function (data) {
-          fx[ccy].rate = data.rate;
-          updatePricesTo(ccy);
-        }
-      })
-    } else {
-      updatePricesTo(ccy);
-    }
+    updatePricesTo(ccy);
   })
 
 

@@ -15,14 +15,14 @@
     "tip": "Keep your ideas private, and easily toggle privacy"
   },
   {
+    "name": "Embeds: SSL & custom CSS",
+    "user": "pro",
+    "tip": "SSL support, complete CSS customisation and control over editor settings"
+  },
+  {
     "name": "Dropbox sync",
     "user": "pro",
     "tip": "Every bin, backed up to your Dropbox"
-  },
-  {
-    "name": "SSL",
-    "user": "pro",
-    "tip": "All of JS Bin served over SSL, including embeds"
   },
   {
     "name": "Vanity URLs",

@@ -33,7 +33,7 @@ var sandbox = (function () {
    * the old one.
    */
   sandbox.use = function (iframe, done) {
-    if (!sandbox.target) throw new Error("Sandbox has no target element.");
+    if (!sandbox.target) throw new Error('Sandbox has no target element.');
     sandbox.old = sandbox.active;
     var state = sandbox.saveState(sandbox.old);
     sandbox.active = iframe;

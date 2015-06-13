@@ -1,0 +1,140 @@
+{{> account_sidebar}}
+<link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
+<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/lib/codemirror.css{{cacheBust}}">
+{{#if user.settings.editor.theme}}<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/{{user.settings.editor.theme}}.css{{cacheBust}}">{{/if}}
+<link rel="stylesheet" href="{{static}}/css/jsbin-cm-theme.css{{cacheBust}}">
+<form>
+<h1>Embed Style {{#feature request "!pro"}}
+  <a href="/upgrade"><span class="pro-required">Pro</span></a>{{/feature}}</h1>
+
+<section id="content">
+
+  <p>Style and customise the appearance of your JS Bin embeds. {{#feature request "!pro"}}
+  <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a>
+  {{/feature}}</p>
+
+  <form>
+  <form id="embed-settings">
+    <h3>Editor</h3>
+    <div><label><input type="checkbox" id="override-settings" name="override-settings"> Override the user's default editor settings whilst viewing your embeds?</label></div>
+    <div>
+      <label for="font-size">Font size</label>
+      <input name="font" id="font-size" type="number">
+    </div>
+    <div>
+      <label for="theme">Theme</label>
+      <select id="theme" name="theme">
+        <option selected>jsbin</option>
+        <option value="default">codemirror</option>
+        <option>3024-day</option>
+        <option>3024-night</option>
+        <option>ambiance</option>
+        <option>base16-dark</option>
+        <option>base16-light</option>
+        <option>blackboard</option>
+        <option>cobalt</option>
+        <option>eclipse</option>
+        <option>elegant</option>
+        <option>erlang-dark</option>
+        <option>lesser-dark</option>
+        <option>mbo</option>
+        <option>mdn-like</option>
+        <option>midnight</option>
+        <option>monokai</option>
+        <option>neat</option>
+        <option>night</option>
+        <option>paraiso-dark</option>
+        <option>paraiso-light</option>
+        <option>pastel-on-dark</option>
+        <option>rubyblue</option>
+        <option>solarized dark</option>
+        <option>solarized light</option>
+        <option>the-matrix</option>
+        <option>tomorrow-night-eighties</option>
+        <option>twilight</option>
+        <option>vibrant-ink</option>
+        <option>xq-dark</option>
+        <option>xq-light</option>
+      </select>
+    </div>
+    <div>
+      <span class="label">Spacing</span>
+      <label><input type="radio" id="indentWithTabs" value="tabs" name="spacing"> tabs</label>
+      <label><input type="radio" id="indentWithSpaces" value="spaces" name="spacing"> spaces</label>
+    </div>
+    <div>
+      <label for="tabSize">Indent width</label>
+      <input id="tabSize" name="tabSize" min="1" type="number">
+    </div>
+    <div>
+      <label for="lineWrapping">Wrap lines</label>
+      <input id="lineWrapping" name="lineWrapping" type="checkbox">
+    </div>
+    <div>
+      <label for="lineNumbers">Line numbers</label>
+      <input id="lineNumbers" name="lineNumbers" type="checkbox">
+    </div>
+
+    <h3>CSS</h3>
+    <p>Apply your own CSS to the embedded editor (<kbd>cmd</kbd>+<kbd>s</kbd> to save).</p>
+    <textarea id="css">/* some default CSS, by sure to inspect the DOM for 100% customisability! */
+/* main JS Bin editor */
+.embed #bin {
+  top: 28px;
+}
+
+/* top navigation bar */
+.control {
+  background: rgb(237, 237, 237);
+  border-bottom: rgb(191, 191, 191) solid 1px;
+}
+
+/* JS Bin "Dave" icon & title edit link "JS Bin" */
+.menu a.brand img {}
+.menu .brand h1 {}
+
+
+/* generic menu items in navigation */
+.button {
+  font-size: 13px;
+  padding: 6px 10px;
+}
+
+/* panel menu items: HTML, CSS, etc */
+#panels .button:first-child {
+  border-left: 1px solid rgb(204, 204, 204);
+}
+
+#panels .button {
+  border-right: 1px solid rgb(204, 204, 204);
+}
+
+/* open panel button state */
+#panels .button.active {
+  background-color: rgb(235, 243, 255);
+}
+
+/* button for panel that has content */
+#panels .button.hasContent {
+
+}</textarea>
+
+    <h3>Preview</h3>
+
+    <script type="text/template" id="navigation-template">
+      {{> control_navigation embed=true }}
+    </script>
+
+    <script type="text/template" id="panels-template">
+<a role="button" class="button group hasContent active" href="?html" aria-label="HTML Panel: Active">HTML</a><a role="button" class="button group" href="?css" aria-label="CSS Panel: Inactive">CSS</a><a role="button" class="button group hasContent" href="?javascript" aria-label="JavaScript Panel: Inactive">JavaScript</a><a role="button" class="button group" href="?console" aria-label="Console Panel: Inactive">Console</a><a role="button" class="button group active" href="?live" aria-label="Output Panel: Active">Output</a></script>
+
+    <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
+</form>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="{{static}}/js/vendor/codemirror4/lib/codemirror.js"></script>
+<script src="{{static}}/js/vendor/codemirror4/mode/css/css.js"></script>
+<script src="{{root}}/bin/user.js"></script>
+<script>
+var embed = {{{dump user.embed null}}};
+</script>
+<script src="{{static}}/js/account/embed-settings.js{{cacheBust}}"></script>

@@ -344,7 +344,10 @@ var renderLivePreview = (function () {
     if (!window.postMessage) { return; }
 
     // Inform other pages event streaming render to reload
-    if (requested) { sendReload(); }
+    if (requested) {
+      sendReload();
+      jsbin.state.hasBody = false;
+    }
     getPreparedCode().then(function (source) {
       var includeJsInRealtime = jsbin.settings.includejs;
 
@@ -363,11 +366,14 @@ var renderLivePreview = (function () {
       renderer.postMessage('render', {
         source: source,
         options: {
+          injectCSS: jsbin.state.hasBody && jsbin.panels.focused.id === 'css',
           requested: requested,
           debug: jsbin.settings.debug,
-          includeJsInRealtime: jsbin.settings.includejs
-        }
+          includeJsInRealtime: jsbin.settings.includejs,
+        },
       });
+
+      jsbin.state.hasBody = true;
 
     });
   };

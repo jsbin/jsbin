@@ -166,20 +166,20 @@ function exposeSettings() {
 }
 
 var storedSettings = store.localStorage.getItem('settings');
-if (storedSettings === "undefined") {
+if (storedSettings === "undefined" || jsbin.embed) {
   // yes, equals the *string* "undefined", then something went wrong
   storedSettings = null;
 }
-
-// In all cases localStorage takes precedence over user settings so users can
-// configure it from the console and overwrite the server delivered settings
-jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 
 if (jsbin.user) {
   jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
   if (jsbin.user.settings.font) {
     jsbin.settings.font = parseInt(jsbin.user.settings.font, 10);
   }
+} else {
+  // In all cases localStorage takes precedence over user settings so users can
+  // configure it from the console and overwrite the server delivered settings
+  jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 }
 
 // if the above code isn't dodgy, this for hellz bells is:

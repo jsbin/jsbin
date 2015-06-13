@@ -4679,7 +4679,7 @@ html * {
 }
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 680px) {
   .help .menu {
     display: none;
   }
@@ -6086,4 +6086,125 @@ a[data-pro]:hover:after {
   position: initial;
   text-decoration: none;
   vertical-align: middle;
+}
+
+/* if the user is pro, hide the "pro" hints */
+html.pro a[data-pro]:after,
+html.pro .toppanel-no-pro {
+  display: none;
+}
+
+.haspro {
+  display: none;
+}
+
+html.pro .haspro {
+  display: auto;
+}
+
+div.loggedin,
+div.loggedout {
+  display: none;
+}
+
+.embed .label .size {
+  display: none !important;
+}
+
+/* nav */
+#control,
+.control {
+ background: rgb(237, 237, 237);
+ background: hsl(0, 0%, 93%);
+ border-bottom: rgb(191, 191, 191) solid 1px;
+ border-bottom: hsl(0, 0%, 75%) solid 1px;
+}
+#control *,
+.control * {
+ text-shadow: none;
+}
+
+/* toggles */
+.hasContent {
+ font-weight: bold;
+ background: none;
+ }
+.hasContent:after {
+ display: none;
+ }
+.hasContent.active {
+ font-weight: normal;
+ }
+
+/* thick line at the top of the panel */
+.panel:before,
+.focus.panel:before {
+ background: none !important;
+ }
+
+/*panel backgrounds*/
+.panel {
+ background: rgb(247, 247, 247);
+ background: rgb(247, 247, 247);
+ }
+.panel.focus {
+ background: #fff;
+ }
+/*panel borders*/
+.stretch.panelwrapper {
+ border-left-color: rgb(230, 230, 230) !important;
+ border-left-color: hsl(60, 0%, 90%) !important;
+ background: white !important;
+ }
+/* panel borders hovered */
+.resize:hover + .stretch.panelwrapper {
+ border-left-color: #39f !important;
+ border-left-style: dashed !important;
+ }
+.resize {
+ cursor:move !important;
+ }
+
+/* panel menus */
+.label.menu span strong a {
+ color: rgb(0, 170, 255);
+ color: hsla(200, 100%, 50%, 1);
+ font-weight: normal;
+ }
+.label .name {
+ color: rgba(0,0,0,0.5);
+ }
+
+/* avatar */
+.avatar img {
+  box-shadow: none;
+  vertical-align: middle;
+}
+#accountBtn img {
+  margin-top: -4px;
+}
+
+.open .avatar img,
+.avatar:hover img {
+  -webkit-filter: brightness(125%) saturate(125%);
+  -moz-filter: brightness(125%) saturate(125%);
+  -ms-filter: brightness(125%) saturate(125%);
+  filter: brightness(125%) saturate(125%);
+}
+
+.pro1 .dropdowncontent {
+  background: #FFFBDF;
+  color: white !important;
+}
+
+.pro1 .dropdowncontent:after {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 0 0 40px 40px;
+  border-color: transparent transparent gold transparent;
+  bottom: 1px;
+  right: 1px;
+  content: '';
 }

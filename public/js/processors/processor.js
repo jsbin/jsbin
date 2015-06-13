@@ -114,6 +114,13 @@ var processors = jsbin.processors = (function () {
         source: '',
         result: ''
       };
+
+      if (processorData.target) {
+        if (!jsbin.state.cache) {
+          jsbin.state.cache = {};
+        }
+        jsbin.state.cache[processorData.target] = cache;
+      }
       var proxyCallback = function (source) {
         return new RSVP.Promise(function (resolve, reject) {
           source = source.trim();
@@ -382,7 +389,7 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/less.min.js',
       init: passthrough,
       handler: function less(source, resolve, reject) {
-        window.less.Parser().parse(source, function (error, result) {
+        window.less.render(source, function (error, result) {
           if (error) {
             // index starts at 1
             var line = parseInt(error.line, 10) || 0;
@@ -401,7 +408,7 @@ var processors = jsbin.processors = (function () {
 
             return reject([errors]);
           }
-          resolve(result.toCSS().trim());
+          resolve(result.css.trim());
         });
       }
     }),

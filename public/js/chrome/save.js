@@ -345,6 +345,12 @@ function updateCode(panelId, callback) {
     compressKeys('content', data);
   }
 
+  if (jsbin.state.processors[panelId] &&
+    jsbin.state.processors[panelId] !== panelId &&
+    jsbin.state.cache[panelId]) {
+    data.processed = jsbin.state.cache[panelId].result;
+  }
+
   $.ajax({
     url: jsbin.getURL({ withRevision: true }) + '/save',
     data: data,

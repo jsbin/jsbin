@@ -114,6 +114,13 @@ var processors = jsbin.processors = (function () {
         source: '',
         result: ''
       };
+
+      if (processorData.target) {
+        if (!jsbin.state.cache) {
+          jsbin.state.cache = {};
+        }
+        jsbin.state.cache[processorData.target] = cache;
+      }
       var proxyCallback = function (source) {
         return new RSVP.Promise(function (resolve, reject) {
           source = source.trim();

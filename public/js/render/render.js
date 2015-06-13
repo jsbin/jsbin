@@ -31,14 +31,15 @@ var getRenderedCode = function () {
   // the language each time
   var promises = ['html', 'javascript', 'css'].reduce(function (prev, curr) {
     if (curr === jsbin.panels.focused.id) {
-      prev[curr] = getRenderedCode.render(curr);
-    } else {
-      prev[curr] = getRenderedCode[curr];
+      getRenderedCode[curr] = getRenderedCode.render(curr);
     }
+    prev[curr] = getRenderedCode[curr];
     return prev;
   }, {});
 
-  return RSVP.hash(promises);
+  return RSVP.hash(promises).catch(function (e) {
+    // swallow
+  });
 };
 
 getRenderedCode.render = function render (language) {

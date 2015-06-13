@@ -1,0 +1,18 @@
+{
+  "name": "codemirror",
+  "version":"5.3.0",
+  "main": ["lib/codemirror.js", "lib/codemirror.css"],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bin",
+    "demo",
+    "doc",
+    "test",
+    "index.html",
+    "package.json",
+    "mode/*/*test.js",
+    "mode/*/*.html"
+  ]
+}

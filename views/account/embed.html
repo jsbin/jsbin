@@ -4,10 +4,14 @@
 {{#if user.settings.editor.theme}}<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/{{user.settings.editor.theme}}.css{{cacheBust}}">{{/if}}
 <link rel="stylesheet" href="{{static}}/css/jsbin-cm-theme.css{{cacheBust}}">
 <form>
-<h1>Embed Style</h1>
+<h1>Embed Style {{#feature request "!pro"}}
+  <a href="/upgrade"><span class="pro-required">Pro</span></a>{{/feature}}</h1>
 
 <section id="content">
-  <p>Style and customise the appearance of your JS Bin embeds.</p>
+
+  <p>Style and customise the appearance of your JS Bin embeds. {{#feature request "!pro"}}
+  <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a>
+  {{/feature}}</p>
 
   <form>
   <form id="embed-settings">
@@ -72,7 +76,7 @@
     </div>
 
     <h3>CSS</h3>
-    <p>Apply your own CSS to the embedded editor (cmd + s to save).</p>
+    <p>Apply your own CSS to the embedded editor (<kbd>cmd</kbd>+<kbd>s</kbd> to save).</p>
     <textarea id="css">/* some default CSS, by sure to inspect the DOM for 100% customisability! */
 /* main JS Bin editor */
 .embed #bin {

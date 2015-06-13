@@ -510,14 +510,21 @@ form label.hintOptions {
   border-radius: 3px;
   display: inline-block;
   background: rgb(238, 239, 242);
+  letter-spacing: 0px;
+  vertical-align: middle;
+  border: 1px solid #4CAF50;
+  background: #4CAF50;
+  color: white;
   font-family: 'Helvetica Neue', Helvetica, Arial;
 }
 
 .pro-required:hover {
-  color: rgb(77, 76, 76);
+/*   color: rgb(77, 76, 76); */
   border-color: rgb(77, 76, 76);
   box-shadow: 0px 0px 4px rgba(98, 147, 211, 0.3);
   background: rgba(98, 147, 211, 0.1);
+  background-color: #2E7D32;
+  border-color: #2E7D32;
 }
 
 a[data-pro]:after {

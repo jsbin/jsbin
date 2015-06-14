@@ -76,7 +76,7 @@
   var form = $sharemenu.find('form')[0];
   var $directLinks = $sharemenu.find('.direct-links');
   var $andlive = $('#andlive');
-  var $withLiveReload = $sharemenu.find('label[for="output-view"] small');
+  var $withLiveReload = $sharemenu.find('.codecasting');
 
   // get an object representation of a form's state
   function formData(form) {

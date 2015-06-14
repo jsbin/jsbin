@@ -62,7 +62,7 @@
                   <strong>State</strong>
                   <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
                     <ul>
-                      <li><label><input type="radio" name="state" checked value="realtime"> Latest<span id="andlive"><br><small>with codecasting</small></span></label></li>
+                      <li><label><input type="radio" name="state" checked value="realtime"> Latest<span id="andlive"></span></label></li>
                       <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot <!-- <select name="snapshot" id="snapshot">
                         <option>1</option>
                       </select> --></label></li>
@@ -70,7 +70,7 @@
                   </div>
                   <div id="sharepanels">
                     <strong>View</strong>
-                    <label><input checked type="radio" name="view" value="editor"> Editor</label>
+                    <label><input checked type="radio" name="view" value="editor"> Editor<span class="codecasting"><br><small>with codecasting</small></span></label>
                     <ul>
                       <li><label><input name="panel" type="checkbox" value="html">HTML</label></li>
                       <li><label><input name="panel" type="checkbox" value="css">CSS</label></li>
@@ -79,7 +79,7 @@
                       <li><label><input name="panel" type="checkbox" value="output">Output</label></li>
                     </ul>
                   </div>
-                  <label for="output-view"><input id="output-view" type="radio" name="view" value="output"> Output only<br><small>with live reload</small></label>
+                  <label for="output-view"><input id="output-view" type="radio" name="view" value="output"> Output only<span class="codecasting"><br><small>with live reload</small></span></label>
                 </div>
                 <div class="result">
                   <div data-desc="This bin's full output without the JS Bin editor">

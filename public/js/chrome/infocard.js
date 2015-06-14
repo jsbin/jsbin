@@ -61,6 +61,9 @@
     function listenStats(owner) {
       if (window.EventSource && owner) {
         // TODO use pagevisibility api to close connection
+        if (es) {
+          es.close();
+        }
         es = new EventSource(jsbin.getURL() + '/stats?checksum=' + jsbin.state.checksum);
         es.addEventListener('stats', throttle(updateStats, 1000));
       }

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  /*globals $, saveChecksum, jsbin, $document, documentTitle*/
+  /*globals $, panels, saveChecksum, jsbin, $document, documentTitle*/
 
   // only continue if the new share is enabled
   if ($('#sharemenu .share-split').length === 0) {
@@ -28,6 +28,13 @@
 
   $document.on('saved', function () {
     selectedSnapshot = jsbin.state.revision;
+  });
+
+  $document.on('snapshot', function () {
+    jsbin.state.changed = false;
+    if (window.history.replaceState) {
+      window.history.replaceState(null, '', jsbin.getURL({ withRevision: true }) + '/edit?' + panels.getQuery());
+    }
   });
 
   var $sharemenu = $('#sharemenu').bind('open', function () {

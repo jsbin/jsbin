@@ -62,6 +62,7 @@ if (!customKeys.disabled) {
       if (event.shiftKey === false) {
         if (saveChecksum) {
           saveChecksum = false;
+          $document.trigger('snapshot');
         } else {
           // trigger an initial save
           $('a.save:first').click();

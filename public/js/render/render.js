@@ -1,5 +1,10 @@
 /*globals $, jsbin, editors, RSVP, loopProtect, documentTitle, CodeMirror, hintingDone*/
 
+// quasi polyfill
+if (typeof window.Promise === 'undefined') {
+  window.Promise = RSVP.Promise;
+}
+
 var renderCodeWorking = false;
 function formatErrors(res) {
   var errors = [];
@@ -33,11 +38,18 @@ var getRenderedCode = function () {
     if (jsbin.panels.focused && curr === jsbin.panels.focused.id) {
       getRenderedCode[curr] = getRenderedCode.render(curr);
     }
-    prev[curr] = getRenderedCode[curr];
+    prev.push(getRenderedCode[curr]);
     return prev;
-  }, {});
+  }, []);
 
-  return RSVP.hash(promises).catch(function (e) {
+  return Promise.all(promises).then(function (data) {
+    var res = {
+      html: data[0],
+      javascript: data[1],
+      css: data[2],
+    };
+    return res;
+  }).catch(function (e) {
     // swallow
   });
 };
@@ -209,7 +221,7 @@ var getPreparedCode = (function () { // jshint ignore:line
         }) + '</pre>';
       } else if (re.csscode.test(html)) {
         html = html.split('%css%').join(css);
-      } else if (css && hasHTML) {
+      } else if (hasHTML) {
         parts = [];
         close = '';
         if (html.indexOf('</head>') !== -1) {

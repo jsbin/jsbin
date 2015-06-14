@@ -71,7 +71,10 @@ $('a.save').click(function (event) {
   if (jsbin.saveDisabled === true) {
     ajax = false;
   }
-  saveCode('save', ajax);
+
+  if (jsbin.state.changed || !jsbin.owner()) {
+    saveCode('save', ajax);
+  }
 
   return false;
 });
@@ -178,6 +181,7 @@ function updateDocMeta(event, data) {
 $document.on('saveComplete', updateDocMeta); // update, not create
 
 $document.on('saved', function () {
+  jsbin.state.changed = false;
   updateSavedState();
 
   $('#sharebintype input[type=radio][value="realtime"]').prop('checked', true);
@@ -238,6 +242,7 @@ if (!jsbin.saveDisabled) {
   };
 
   $document.bind('jsbinReady', function () {
+    jsbin.state.changed = false;
     jsbin.panels.allEditors(function (panel) {
       panel.on('processor', function () {
         // if the url doesn't match the root - i.e. they've actually saved something then save on processor change
@@ -248,6 +253,7 @@ if (!jsbin.saveDisabled) {
     });
 
     $document.bind('codeChange', function (event, data) {
+      jsbin.state.changed = true;
       // savingLabels[data.panelId].text('Saving');
       if (savingLabels[data.panelId]) {
         savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
@@ -456,7 +462,7 @@ function saveCode(method, ajax, ajaxCallback) {
 
   if (ajax) {
     $.ajax({
-      url: $form.attr('action'),
+      url: jsbin.getURL({ withRevision: true }) + '/save',
       data: data,
       dataType: 'json',
       type: 'post',
@@ -479,10 +485,12 @@ function saveCode(method, ajax, ajaxCallback) {
         if (window.history && window.history.pushState) {
           // updateURL(edit);
           var hash = panels.getHighlightLines();
-          if (hash) {hash = '#' + hash;}
+          if (hash) { hash = '#' + hash; }
+          var query = panels.getQuery();
+          if (query) { query = '?' + query; }
           // If split is truthy (> 0) then we are using the revisonless feature
           // this is temporary until we release the feature!
-          window.history.pushState(null, '', jsbin.getURL({withRevision: !split}) + '/edit' + hash);
+          window.history.pushState(null, '', jsbin.getURL({withRevision: !split}) + '/edit' + query + hash);
           store.sessionStorage.setItem('url', jsbin.getURL({withRevision: !split}));
         } else {
           window.location.hash = data.edit;

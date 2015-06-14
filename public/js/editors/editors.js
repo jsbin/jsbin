@@ -333,7 +333,7 @@ panels.focus = function (panel) {
   }
 }
 
-panels.updateQuery = throttle(function updateQuery() {
+panels.getQuery = function () {
   var alt = {
     javascript: 'js',
     live: 'output'
@@ -341,9 +341,13 @@ panels.updateQuery = throttle(function updateQuery() {
 
   var visible = panels.getVisible();
 
-  var query = visible.map(function (p) {
+  return visible.map(function (p) {
     return alt[p.id] || p.id;
   }).join(',');
+}
+
+panels.updateQuery = throttle(function updateQuery() {
+  var query = panels.getQuery();
 
   if (jsbin.state.code && jsbin.state.owner) {
     $.ajax({

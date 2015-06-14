@@ -270,6 +270,9 @@ To test: curl --header "Accept: text/event-stream" <jsbinurl>
 
   // Wait for a bit, then set up the EventSource stream
   setTimeout(function() {
+    if (es) {
+      es.close();
+    }
     es = startStream();
     handleVisibility(es, startStream);
   }, 500);

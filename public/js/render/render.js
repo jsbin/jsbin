@@ -35,7 +35,7 @@ var getRenderedCode = function () {
   // this allows us to make use of a promise's result instead of recompiling
   // the language each time
   var promises = ['html', 'javascript', 'css'].reduce(function (prev, curr) {
-    if (jsbin.panels.focused && curr === jsbin.panels.focused.id) {
+    if (!jsbin.owner() || jsbin.panels.focused && curr === jsbin.panels.focused.id) {
       getRenderedCode[curr] = getRenderedCode.render(curr);
     }
     prev.push(getRenderedCode[curr]);

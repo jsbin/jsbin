@@ -172,7 +172,7 @@ if (storedSettings === "undefined" || jsbin.embed) {
   storedSettings = null;
 }
 
-if (jsbin.user) {
+if (jsbin.user && jsbin.user.name) {
   jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
   if (jsbin.user.settings.font) {
     jsbin.settings.font = parseInt(jsbin.user.settings.font, 10);

@@ -79,7 +79,7 @@ var font = (function (document) {
     window.addEventListener('load', function () {
       var request = new XMLHttpRequest();
       var response;
-      var url = jsbin.static + '/css/fonts.a3a02e450f1f79f4c3482279d113b07e.woff.json';
+      var url = jsbin.static + '/css/fonts.a3a02e450f1f79f4c3482279d113b07e.woff.json?' + jsbin.version;
       request.open('GET', url, true);
       request.onload = function () {
         if (this.status == 200) {

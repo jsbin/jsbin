@@ -9,6 +9,7 @@
     "runner": false
   },
   "max-request-size": "1MB",
+  "max-age": 86400,
   "store": {
     "adapter": "sqlite",
     "sqlite": {

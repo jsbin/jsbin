@@ -33,6 +33,7 @@
     "bin-to-file": "0.0.5",
     "clone": "~0.1.18",
     "commander": "1.0.0",
+    "debug": "^2.2.0",
     "dropbox": "~0.10.2",
     "express": "3.0.x",
     "express-cookie-blacklist": "~2.0.0",
@@ -63,6 +64,7 @@
     "stylus": "^0.47.1",
     "undefsafe": "0.0.3",
     "underscore": "~1.4.4",
+    "uuid": "^2.0.1",
     "validate-vat": "~0.3.1",
     "validator": "^3.16.1"
   },

@@ -6099,7 +6099,7 @@ html.pro .toppanel-no-pro {
 }
 
 html.pro .haspro {
-  display: auto;
+  display: inherit;
 }
 
 div.loggedin,

@@ -84,6 +84,7 @@
   var $directLinks = $sharemenu.find('.direct-links');
   var $andlive = $('#andlive');
   var $withLiveReload = $sharemenu.find('.codecasting');
+  var $qrcode = $sharemenu.find('.qrcode');
 
   // get an object representation of a form's state
   function formData(form) {
@@ -212,6 +213,11 @@
     $directLinks.html(directLinksHTML.join(''));
 
     linkselect.value = link.href = shareurl + query;
+    $qrcode.empty();
+    $qrcode.qrcode({
+      'size': 120,
+      'text': linkselect.value
+    });
     embed.value = ('<a class="jsbin-embed" href="' + OGurl + '/embed' + query + '">' + documentTitle + ' on jsbin.com</a><' + 'script src="' + jsbin.static + '/js/embed.js"><' + '/script>').replace(/<>"&/g, function (m) {
         return {
           '<': '&lt;',

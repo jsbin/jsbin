@@ -215,7 +215,13 @@
       }
     },
     jshint: {
-      url: [],
+      url: [
+        // because jshint uses new style set/get - so we sniff for IE8 or lower
+        // since it's the only one that doesn't have it
+        $.browser.msie && $.browser.version < 9 ?
+        '/js/vendor/jshint/jshint.old.min.js' :
+        '/js/vendor/jshint/jshint.min.js',
+      ],
       test: function() {
         return hintingTest('javascript') &&
                (typeof JSHINT !== 'undefined');

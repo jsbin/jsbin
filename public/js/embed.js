@@ -1,6 +1,49 @@
 (function (window, document, undefined) {
+  'use strict';
+  var jsbinEmbed = {};
+  var addEventListener = window.addEventListener ? 'addEventListener' : 'attachEvent';
+
+  // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+  // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+  // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+  // MIT license
+  (function () {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+      window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+      window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame) {
+      window.requestAnimationFrame = function (callback) {
+        var currTime = new Date().getTime();
+        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+        var id = window.setTimeout(function () { callback(currTime + timeToCall); },
+          timeToCall);
+        lastTime = currTime + timeToCall;
+        return id;
+      };
+    }
+
+    if (!window.cancelAnimationFrame) {
+      window.cancelAnimationFrame = function (id) {
+        clearTimeout(id);
+      };
+    }
+  }());
+
+  /*!
+   * verge 1.9.1+201402130803
+   * https://github.com/ryanve/verge
+   * MIT License 2013 Ryan Van Etten
+   */
+  !function (a, b, c) {"undefined" != typeof module && module.exports?module.exports = c():a[b] = c()}(jsbinEmbed, "verge", function () {function a() {return {width: k(), height: l()}}function b(a, b) {var c = {};return b = +b || 0, c.width = (c.right = a.right + b) - (c.left = a.left - b), c.height = (c.bottom = a.bottom + b) - (c.top = a.top - b), c}function c(a, c) {return a = a && !a.nodeType?a[0]:a, a && 1 === a.nodeType?b(a.getBoundingClientRect(), c):!1}function d(b) {b = null == b?a():1 === b.nodeType?c(b):b;var d = b.height, e = b.width;return d = "function" == typeof d?d.call(b):d, e = "function" == typeof e?e.call(b):e, e / d}var e = {}, f = "undefined" != typeof window && window, g = "undefined" != typeof document && document, h = g && g.documentElement, i = f.matchMedia || f.msMatchMedia, j = i?function (a) {return !!i.call(f, a).matches}:function () {return !1}, k = e.viewportW = function () {var a = h.clientWidth, b = f.innerWidth;return b > a?b:a}, l = e.viewportH = function () {var a = h.clientHeight, b = f.innerHeight;return b > a?b:a};return e.mq = j, e.matchMedia = i?function () {return i.apply(f, arguments)}:function () {return {}}, e.viewport = a, e.scrollX = function () {return f.pageXOffset || h.scrollLeft}, e.scrollY = function () {return f.pageYOffset || h.scrollTop}, e.rectangle = c, e.aspect = d, e.inX = function (a, b) {var d = c(a, b);return !!d && d.right >= 0 && d.left <= k()}, e.inY = function (a, b) {var d = c(a, b);return !!d && d.bottom >= 0 && d.top <= l()}, e.inViewport = function (a, b) {var d = c(a, b);return !!d && d.bottom >= 0 && d.right >= 0 && d.top <= l() && d.left <= k()}, e}); // jshint ignore:line
+
   // exit if we already have a script in place doing this task
-  if (window.jsbinified !== undefined) return;
+  if (window.jsbinified !== undefined) {
+    return;
+  }
 
   // flag to say we don't need this script again
   window.jsbinified = true;
@@ -8,57 +51,26 @@
   /*!
     * domready (c) Dustin Diaz 2012 - License MIT
     */
-  !function (name, definition) {
-    if (typeof module != 'undefined') module.exports = definition()
-    else if (typeof define == 'function' && typeof define.amd == 'object') define(definition)
-    else this[name] = definition()
-  }('domready', function (ready) {
+  var domready = (function domready() {
 
-    var fns = [], fn, f = false
+    var fns = [], listener
       , doc = document
-      , testEl = doc.documentElement
-      , hack = testEl.doScroll
+      , hack = doc.documentElement.doScroll
       , domContentLoaded = 'DOMContentLoaded'
-      , addEventListener = 'addEventListener'
-      , onreadystatechange = 'onreadystatechange'
-      , readyState = 'readyState'
-      , loaded = /^loade|c/.test(doc[readyState])
+      , loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState)
 
-    function flush(f) {
+
+    if (!loaded)
+    doc.addEventListener(domContentLoaded, listener = function () {
+      doc.removeEventListener(domContentLoaded, listener)
       loaded = 1
-      while (f = fns.shift()) f()
-    }
-
-    doc[addEventListener] && doc[addEventListener](domContentLoaded, fn = function () {
-      doc.removeEventListener(domContentLoaded, fn, f)
-      flush()
-    }, f)
-
-
-    hack && doc.attachEvent(onreadystatechange, fn = function () {
-      if (/^c/.test(doc[readyState])) {
-        doc.detachEvent(onreadystatechange, fn)
-        flush()
-      }
+      while (listener = fns.shift()) listener()
     })
 
-    return (ready = hack ?
-      function (fn) {
-        self != top ?
-          loaded ? fn() : fns.push(fn) :
-          function () {
-            try {
-              testEl.doScroll('left')
-            } catch (e) {
-              return setTimeout(function() { ready(fn) }, 50)
-            }
-            fn()
-          }()
-      } :
-      function (fn) {
-        loaded ? fn() : fns.push(fn)
-      })
-  });
+    return function (fn) {
+      loaded ? setTimeout(fn, 0) : fns.push(fn)
+    }
+  })()
 
   function getQuery(querystring) {
     var query = {};
@@ -107,7 +119,7 @@
   function findCodeInParent(element) {
     var match = element;
 
-    while (match = match.previousSibling) {
+    while (match = match.previousSibling) { // jshint ignore:line
       if (match.nodeName === 'PRE') {
         break;
       }
@@ -120,7 +132,9 @@
       }
     }
 
-    if (match) return match;
+    if (match) {
+      return match;
+    }
 
     match = element.parentNode.getElementsByTagName('pre');
 
@@ -137,10 +151,8 @@
 
   function findCode(link) {
     var rel = link.rel,
-        query = link.search.substring(1),
         element,
-        code,
-        panels = [];
+        code;
 
     if (rel && (element = document.getElementById(rel.substring(1)))) {
       code = element[innerText];
@@ -163,9 +175,9 @@
   }
 
   function detectLanguage(code) {
-    var htmlcount = (code.split("<").length - 1),
-        csscount = (code.split("{").length - 1),
-        jscount = (code.split(".").length - 1);
+    var htmlcount = (code.split('<').length - 1),
+        csscount = (code.split('{').length - 1),
+        jscount = (code.split('.').length - 1);
 
     if (htmlcount > csscount && htmlcount > jscount) {
       return 'html';
@@ -195,12 +207,29 @@
     link.search = '?' + query;
   }
 
-  function embed(link) {
-    var iframe = document.createElement('iframe'),
-        resize = document.createElement('div'),
-        url = link.href.replace(/edit/, 'embed');
+  function hookMessaging(iframe) {
+    console.log('fully loaded ' + iframe.src);
+    var onmessage = function (event) {
+      if (!event) { event = window.event; }
+      // * 1 to coerse to number, and + 2 to compensate for border
+      iframe.style.height = (event.data.height * 1 + 2) + 'px';
+    };
+
+    window[addEventListener]('message', onmessage);
+  }
+
+  function loadRealEmbed(iframe) {
+    var url = iframe.getAttribute('data-url');
+
     iframe.src = url.split('&')[0];
     iframe._src = url.split('&')[0]; // support for google slide embed
+    hookMessaging(iframe);
+  }
+
+  function embed(link) {
+    var iframe = document.createElement('iframe');
+    var url = link.href.replace(/edit/, 'embed');
+
     iframe.className = link.className; // inherit all the classes from the link
     iframe.id = link.id; // also inherit, giving more style control to the user
     iframe.style.border = '1px solid #aaa';
@@ -211,19 +240,25 @@
     if (query.height) {
       iframe.style.maxHeight = query.height;
     }
-    link.parentNode.replaceChild(iframe, link);
 
-    var onmessage = function (event) {
-      event || (event = window.event);
-      // * 1 to coerse to number, and + 2 to compensate for border
-      iframe.style.height = (event.data.height * 1 + 2) + 'px';
-    };
+    console.log('is link %s in view? %s', link, inview(link), link);
 
-    if (window.addEventListener) {
-      window.addEventListener('message', onmessage, false);
+    console.log(viewportH());
+
+    // track when it comes into view and reload
+    if (inview(link, 100)) {
+      // the iframe is full view, let's render it
+      iframe.src = url.split('&')[0];
+      iframe._src = url.split('&')[0]; // support for google slide embed
+      hookMessaging(iframe);
     } else {
-      window.attachEvent('onmessage', onmessage);
+      iframe.setAttribute('data-url', url);
+      iframe.src = 'https://jsbin.com/embed-holding';
+
+      pending.push(iframe);
     }
+
+    link.parentNode.replaceChild(iframe, link);
   }
 
   function readLinks() {
@@ -242,18 +277,71 @@
         embed(links[i]);
       }
     }
-
   }
 
-  var useDOMReady = true,
-      scripts = document.getElementsByTagName('script'),
-      last = scripts[scripts.length - 1],
-      link;
+  var docElem = document && document.documentElement;
+
+  function viewportW() {
+    var a = docElem['clientWidth'];
+    var b = window.innerWidth;
+    return a < b ? b : a;
+  };
+
+  function viewportH() {
+    var a = docElem['clientHeight'];
+    var b = window.innerHeight;
+    return a < b ? a : b;
+  };
+
+  function calibrate(coords, cushion) {
+    var o = {};
+    cushion = +cushion || 0;
+    o['width'] = (o['right'] = coords['right'] + cushion) - (o['left'] = coords['left'] - cushion);
+    o['height'] = (o['bottom'] = coords['bottom'] + cushion) - (o['top'] = coords['top'] - cushion);
+    return o;
+  }
+
+  function inview(el, cushion) {
+    var r = calibrate(el.getBoundingClientRect(), cushion);
+    // var bottom = (window.innerHeight || document.documentElement.clientHeight);
+    return !!r && r.bottom >= 0 && r.right >= 0 && r.top <= viewportH() && r.left <= viewportW();
+  }
+
+  function checkForPending() {
+    var i = 0;
+    var todo = [];
+    for (i = 0; i < pending.length; i++) {
+      if (inview(pending[i], 100)) {
+        todo.unshift({ iframe: pending[i], i: i });
+      }
+    }
+
+    for (i = 0; i < todo.length; i++) {
+      pending.splice(todo[i].i, 1);
+      loadRealEmbed(todo[i].iframe);
+    }
+  }
+
+  var pending = [];
 
   // this supports early embeding - probably only applies to Google's slides.js
   readLinks();
 
+  window.verge = jsbinEmbed.verge;
+
   // try to read more links once the DOM is done
-  domready(readLinks);
+  domready(function () {
+    readLinks();
+    var id = null;
+    function handler() {
+      if (pending.length) {
+        cancelAnimationFrame(id);
+        id = requestAnimationFrame(checkForPending);
+      } else {
+        // detatch the scroll handler
+      }
+    }
+    window[addEventListener]('scroll', handler);
+  });
 
 }(this, document));

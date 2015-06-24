@@ -1,6 +1,5 @@
 (function (window, document, undefined) {
   'use strict';
-  var jsbinEmbed = {};
   var addEventListener = window.addEventListener ? 'addEventListener' : 'attachEvent';
 
   // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -33,13 +32,6 @@
     }
   }());
 
-  /*!
-   * verge 1.9.1+201402130803
-   * https://github.com/ryanve/verge
-   * MIT License 2013 Ryan Van Etten
-   */
-  !function (a, b, c) {"undefined" != typeof module && module.exports?module.exports = c():a[b] = c()}(jsbinEmbed, "verge", function () {function a() {return {width: k(), height: l()}}function b(a, b) {var c = {};return b = +b || 0, c.width = (c.right = a.right + b) - (c.left = a.left - b), c.height = (c.bottom = a.bottom + b) - (c.top = a.top - b), c}function c(a, c) {return a = a && !a.nodeType?a[0]:a, a && 1 === a.nodeType?b(a.getBoundingClientRect(), c):!1}function d(b) {b = null == b?a():1 === b.nodeType?c(b):b;var d = b.height, e = b.width;return d = "function" == typeof d?d.call(b):d, e = "function" == typeof e?e.call(b):e, e / d}var e = {}, f = "undefined" != typeof window && window, g = "undefined" != typeof document && document, h = g && g.documentElement, i = f.matchMedia || f.msMatchMedia, j = i?function (a) {return !!i.call(f, a).matches}:function () {return !1}, k = e.viewportW = function () {var a = h.clientWidth, b = f.innerWidth;return b > a?b:a}, l = e.viewportH = function () {var a = h.clientHeight, b = f.innerHeight;return b > a?b:a};return e.mq = j, e.matchMedia = i?function () {return i.apply(f, arguments)}:function () {return {}}, e.viewport = a, e.scrollX = function () {return f.pageXOffset || h.scrollLeft}, e.scrollY = function () {return f.pageYOffset || h.scrollTop}, e.rectangle = c, e.aspect = d, e.inX = function (a, b) {var d = c(a, b);return !!d && d.right >= 0 && d.left <= k()}, e.inY = function (a, b) {var d = c(a, b);return !!d && d.bottom >= 0 && d.top <= l()}, e.inViewport = function (a, b) {var d = c(a, b);return !!d && d.bottom >= 0 && d.right >= 0 && d.top <= l() && d.left <= k()}, e}); // jshint ignore:line
-
   // exit if we already have a script in place doing this task
   if (window.jsbinified !== undefined) {
     return;
@@ -52,25 +44,32 @@
     * domready (c) Dustin Diaz 2012 - License MIT
     */
   var domready = (function domready() {
+    var fns = [],
+        listener,
+        doc = document,
+        hack = doc.documentElement.doScroll,
+        domContentLoaded = 'DOMContentLoaded',
+        loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
-    var fns = [], listener
-      , doc = document
-      , hack = doc.documentElement.doScroll
-      , domContentLoaded = 'DOMContentLoaded'
-      , loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState)
 
-
-    if (!loaded)
-    doc.addEventListener(domContentLoaded, listener = function () {
-      doc.removeEventListener(domContentLoaded, listener)
-      loaded = 1
-      while (listener = fns.shift()) listener()
-    })
+    if (!loaded) {
+      doc.addEventListener(domContentLoaded, listener = function () {
+        doc.removeEventListener(domContentLoaded, listener);
+        loaded = 1;
+        while (listener = fns.shift()) { // jshint ignore:line
+          listener();
+        }
+      });
+    }
 
     return function (fn) {
-      loaded ? setTimeout(fn, 0) : fns.push(fn)
-    }
-  })()
+      if (loaded) {
+        setTimeout(fn, 0);
+      } else {
+        fns.push(fn);
+      }
+    };
+  })();
 
   function getQuery(querystring) {
     var query = {};
@@ -208,7 +207,6 @@
   }
 
   function hookMessaging(iframe) {
-    console.log('fully loaded ' + iframe.src);
     var onmessage = function (event) {
       if (!event) { event = window.event; }
       // * 1 to coerse to number, and + 2 to compensate for border
@@ -241,10 +239,6 @@
       iframe.style.maxHeight = query.height;
     }
 
-    console.log('is link %s in view? %s', link, inview(link), link);
-
-    console.log(viewportH());
-
     // track when it comes into view and reload
     if (inview(link, 100)) {
       // the iframe is full view, let's render it
@@ -272,7 +266,6 @@
       if (className.indexOf(' jsbin-scoop ') !== -1) {
         scoop(links[i]);
       } else if (className.indexOf(' jsbin-embed ') !== -1) {
-        console.log('embed', links[i]);
         links[i].className = links[i].className.replace(/jsbin\-embed/, '');
         embed(links[i]);
       }
@@ -282,28 +275,27 @@
   var docElem = document && document.documentElement;
 
   function viewportW() {
-    var a = docElem['clientWidth'];
+    var a = docElem.clientWidth;
     var b = window.innerWidth;
     return a < b ? b : a;
-  };
+  }
 
   function viewportH() {
-    var a = docElem['clientHeight'];
+    var a = docElem.clientHeight;
     var b = window.innerHeight;
     return a < b ? a : b;
-  };
+  }
 
   function calibrate(coords, cushion) {
     var o = {};
     cushion = +cushion || 0;
-    o['width'] = (o['right'] = coords['right'] + cushion) - (o['left'] = coords['left'] - cushion);
-    o['height'] = (o['bottom'] = coords['bottom'] + cushion) - (o['top'] = coords['top'] - cushion);
+    o.width = (o.right = coords.right + cushion) - (o.left = coords.left - cushion);
+    o.height = (o.bottom = coords.bottom + cushion) - (o.top = coords.top - cushion);
     return o;
   }
 
   function inview(el, cushion) {
     var r = calibrate(el.getBoundingClientRect(), cushion);
-    // var bottom = (window.innerHeight || document.documentElement.clientHeight);
     return !!r && r.bottom >= 0 && r.right >= 0 && r.top <= viewportH() && r.left <= viewportW();
   }
 
@@ -326,8 +318,6 @@
 
   // this supports early embeding - probably only applies to Google's slides.js
   readLinks();
-
-  window.verge = jsbinEmbed.verge;
 
   // try to read more links once the DOM is done
   domready(function () {

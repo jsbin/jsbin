@@ -137,6 +137,7 @@
 
     if (data.state === 'snapshot' && jsbin.state.latest) {
       url += '/' + selectedSnapshot;
+      OGurl += '/' + selectedSnapshot;
     }
 
     var shareurl = url;

@@ -173,7 +173,7 @@ var getPreparedCode = (function () { // jshint ignore:line
           return escapeMap[m];
         }) + '</pre>';
       } else if (re.code.test(html)) {
-        html = html.split('%code%').join(js);
+        html = html.split('%code%').join(code.javascript);
       } else if (hasJS) {
         close = '';
         if (html.indexOf('</body>') !== -1) {

@@ -154,6 +154,24 @@ var renderer = (function () {
     } catch (e) {
       return renderer.error('Error parsing event data:', e.message);
     }
+
+    if (data.type.indexOf('code:') === 0 && jsbin.embed) {
+      var panel = data.type.substr(5);
+      if (panel === 'js') { panel = 'javascript'; }
+      if (' css javascript html '.indexOf(' ' + panel + ' ') === -1) {
+        return renderer.error('No matching event handler:', data.type);
+      }
+
+      if (!jsbin.state.metadata.pro) {
+        return renderer.error('Code injection is only supported on pro created bins');
+      }
+
+      jsbin.panels.panels[panel].setCode(data.data);
+      renderLivePreview();
+
+      return;
+    }
+
     if (typeof renderer[data.type] !== 'function') {
       return renderer.error('No matching event handler:', data.type);
     }
@@ -407,7 +425,7 @@ var renderLivePreview = (function () {
   return deferCallable(throttle(renderLivePreview, 200), function (done) {
     iframe.onload = function () {
       if (window.postMessage) {
-        // Setup postMessage listening to the runner
+        // setup postMessage listening to the runner
         $window.on('message', function (event) {
           renderer.handleMessage(event.originalEvent);
         });

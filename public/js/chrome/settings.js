@@ -1,8 +1,11 @@
 /*global jsbin, $*/
 
 var settings = {
-  save: function () {
+  save: function (callback) {
     localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+    if (!callback) {
+      callback = function () {};
+    }
 
     $.ajax({
       url: '/account/editor',
@@ -12,15 +15,14 @@ var settings = {
         settings: localStorage.settings,
         _csrf: jsbin.state.token
       },
-      success: function() {
+      success: function () {
         if (console && console.log) {
-          console.log('Success on saving settings');
+          console.log('settings saved');
         }
+        callback(true);
       },
-      error: function(xhr, status) {
-        if (console && console.log) {
-          console.log('Error: ' + status);
-        }
+      error: function (xhr, status) {
+        callback(false);
       }
     });
   }

@@ -565,7 +565,9 @@ var $enableUniversalEditor = $('#enableUniversalEditor').on('change', function (
 
   jsbin.settings.editor.simple = this.checked;
   analytics.universalEditor(jsbin.settings.editor.simple);
-  window.location.reload();
+  settings.save(function () {
+    window.location.reload();
+  });
 });
 
 if (jsbin.settings.editor.simple) {

@@ -8,6 +8,7 @@ function enableAltUse() {
     jsbin.settings.keys = {};
   }
   jsbin.settings.keys.useAlt = this.checked;
+  settings.save();
 }
 
 $('input.enablealt').attr('checked', customKeys.useAlt ? true : false).change(enableAltUse);

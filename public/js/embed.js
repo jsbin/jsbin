@@ -303,7 +303,7 @@
     var i = 0;
     var todo = [];
     for (i = 0; i < pending.length; i++) {
-      if (inview(pending[i], 100)) {
+      if (inview(pending[i], 400)) {
         todo.unshift({ iframe: pending[i], i: i });
       }
     }
@@ -331,7 +331,7 @@
         // detatch the scroll handler
       }
     }
-    window[addEventListener]('scroll', handler);
+    docElem[addEventListener]('scroll', handler, true);
   });
 
 }(this, document));

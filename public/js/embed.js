@@ -332,6 +332,7 @@
       }
     }
     docElem[addEventListener]('scroll', handler, true);
+    window[addEventListener]('scroll', handler, true);
   });
 
 }(this, document));

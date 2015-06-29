@@ -23,7 +23,7 @@
               {{/feature}}
               {{#feature request "delete"}}
               <a class="deletebin button group" data-desc="Delete bin" title="Delete this bin" href="{{root}}/delete" data-shortcut="ctrl+shift+del">Delete</a>
-              <!-- <a class="deleteallbins button group" data-desc="Delete all bin snapshots" title="Delete all bin snapshots" href="{{root}}/delete-all">Delete all snapshots</a> -->
+              {{!--<!-- <a class="deleteallbins button group" data-desc="Delete all bin snapshots" title="Delete all bin snapshots" href="{{root}}/delete-all">Delete all snapshots</a> -->--}}
               {{/feature}}
               <a class="archivebin button group" data-desc="Archive bin" title="Archive this bin" href="{{code_id_path}}/archive" data-shortcut="ctrl+y">Archive</a>
               <a class="unarchivebin button group" data-desc="Unrchive bin" title="Restore this bin from the archive" href="{{code_id_path}}/unarchive" data-shortcut="ctrl+shift+y">Unarchive</a>
@@ -63,9 +63,9 @@
                   <div id="sharebintype" data-desc="Streaming state of the bin when it's shared">
                     <ul>
                       <li><label><input type="radio" name="state" checked value="realtime"> Latest<span id="andlive"></span></label></li>
-                      <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot <!-- <select name="snapshot" id="snapshot">
+                      <li><label><input type="radio" name="state" class="lockrevision" value="snapshot"> Snapshot {{!--<!-- <select name="snapshot" id="snapshot">
                         <option>1</option>
-                      </select> --></label></li>
+                      </select> -->--}}</label></li>
                     </ul>
                   </div>
                   <div id="sharepanels">
@@ -87,7 +87,6 @@
                     <input name="url" class="link" value="{{root}}{{code_id_path}}/edit" type="text">
                   </div>
                   <div data-desc="Direct links to specific sources of the bin">
-                    <!-- <span class="heading">Sources:</span> -->
                     <span class="direct-links"></span>
                   </div>
                   <div data-desc="Embed this bin with the live output on your site">
@@ -95,7 +94,6 @@
                   </div>
                   <div data-desc="The preview of JS Bin when you share your bin">
                     <span class="heading">What they'll see</span><br>
-                    <!-- <img src="http://placehold.it/200x113"> -->
                     <div id="share-preview">
                       <div class="output"></div>
                       <span class="header"></span>
@@ -154,7 +152,6 @@
       <div class="help">
         {{#unless embed}}
           {{#feature request "accountPages"}}
-          <!-- logged out item -->
           <div class="loggedout menu">
             {{#feature request "github"}}
             <a href="{{root}}/login" class="button button-dropdown focusbtn" id="loginbtn">Login or Register</a>
@@ -174,7 +171,6 @@
             <a href="{{root}}/login" class="button" id="loginbtn">Login or Register</a>
             {{/feature}}
           </div>
-          <!-- logged in item -->
           <div class="loggedin menu{{#feature request "pro"}} pro {{/feature}}">
           </div>
           {{else}}

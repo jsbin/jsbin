@@ -681,6 +681,16 @@ var libraries = [
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/mori/0.3.2/mori.js',
     'label': 'mori 0.3.2',
     'group': 'Data structures'
+  },
+  {
+    'url': 'http://cdn.jsdelivr.net/ramda/0.15.1/ramda.min.js',
+    'label': 'Ramda 0.15.1',
+    'group': 'Ramda'
+  },
+  {
+    'url': 'http://cdn.jsdelivr.net/ramda/latest/ramda.min.js',
+    'label': 'Ramda Latest',
+    'group': 'Ramda'
   }
 ];
 

@@ -22,6 +22,13 @@
       <input id="key" name="password" type="password" autocomplete="false">
     </div>
 
+    {{#feature request "api"}}
+    <div>
+      <label for="api_key">API key</label>
+      <span id="api_key">{{user.api_key}}</span>
+    </div>
+    {{/feature}}
+
     {{#feature request "sendy"}}
       {{#if request.mailError}}
       <div>

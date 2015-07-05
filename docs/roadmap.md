@@ -1,11 +1,14 @@
 # Roadmap
 
-Priority features
+- Update subscription page to allow for card changes/expiry
+- Email notification of failed Stripe payments
+- Design in slimline ad at top of page
+- API support
+- Organisation support (complex)
+- 4.0 release: single user npm install via semantic-release
 
-- Validation of email address (user to confirm their email before they can publish full bins) [security]
-- Email evil bit checking [security]
 
-# Features
+# Legacy ideas
 
 In no specific order
 

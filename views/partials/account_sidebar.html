@@ -5,11 +5,11 @@
     <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
     <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
     <a class="sidebar-btn" href="{{root}}/account/embed">Embed Style</a>
-    <!-- <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a> -->
     {{#feature request "assets"}}
     <a class="sidebar-btn" href="{{root}}/account/assets">Assets</a>
     {{/feature}}
   </div>
+  <div class="sidebar-btn-group">
   {{#feature request "upgrade"}}
     {{#feature request "pro"}}
     <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
@@ -21,6 +21,8 @@
       {{/feature}}
     {{/feature}}
   {{/feature}}
+    <a class="sidebar-btn" href="{{root}}/account/delete">Delete my account</a>
+  </div>
 
   {{#feature request "admin"}}
     <a class="sidebar-btn" href="{{root}}/admin">Admin</a>

@@ -1,0 +1,31 @@
+{{> account_sidebar}}
+
+<h1>Delete your account</h1>
+
+
+<section id="content">
+  <p>So you're thinking of leaving. Okay, that makes us sad, but JS Bin won't stop you - we're all sure you're destined to do great things, with JS Bin or not.</p>
+  <div class="cancel">
+    <h3>The Cancellation Zone</h3>
+    <p>This will delete your profile, your settings, your history of bins <em>and</em> all the bins you've created (all {{user.bincount}} of them). It will leave a permanent hole in the interwebs.</p>
+    <p>Proceed with caution, as this process cannot, under any circumstances, be reversed.</p>
+    <form id="cancel" method="post" action="/account/delete">
+      <input type="hidden" name="_csrf" value="{{token}}">
+      <input type="hidden" name="confirm" id="confirm" value="">
+      <button>Delete my entire JS Bin account!</button>
+    </form>
+    <script>
+document.getElementById('cancel').onsubmit = function (event) {
+  event = event || window.event;
+  var result = (prompt("Enter your username to confirm the deletion\n(it's \"{{@root.user.name}}\" by the way).\n\nWe'll miss you :(") || '').toLowerCase().trim();
+  if (!result || result !== '{{@root.user.name}}'.toLowerCase()) {
+    if (event.preventDefault) event.preventDefault();
+    return false;
+  }
+  document.getElementById('confirm').value = result;
+};
+</script>
+  </div>
+</section>
+<link href="{{static}}/css/account-profile.css" rel="stylesheet" type="text/css"/>
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>

@@ -83,10 +83,6 @@
   "optionalDependencies": {
     "zmq": "~2.6.0"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://rem.mit-license.org"
-    }
-  ]
+  "engines": { "node": ">=0.10.* <0.12" },
+  "license": "MIT"
 }

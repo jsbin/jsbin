@@ -436,15 +436,15 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/jquery-1.11.1.min.js',
-      '//builds.emberjs.com/tags/v1.13.2/ember-template-compiler.js',
-      '//builds.emberjs.com/tags/v1.13.2/ember.debug.js'
+      '//builds.emberjs.com/tags/v1.13.4/ember-template-compiler.js',
+      '//builds.emberjs.com/tags/v1.13.4/ember.debug.js'
     ],
-    'label': 'Ember.js 1.13.2',
+    'label': 'Ember.js 1.13.4',
     'group': 'Ember'
   },
   {
-    'url': '//builds.emberjs.com/tags/v1.13.2/ember-data.js',
-    'label': 'Ember Data 1.13.4',
+    'url': '//builds.emberjs.com/tags/v1.13.5/ember-data.js',
+    'label': 'Ember Data 1.13.5',
     'group': 'Ember'
   },
   {

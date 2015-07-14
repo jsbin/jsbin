@@ -227,40 +227,22 @@ var libraries = [
   },
   {
     'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.ui.core.min.js'
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/styles/kendo.common.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/styles/kendo.silver.min.css',
+      'https://code.jquery.com/jquery-2.1.4.min.js',
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI Core 2014.Q2',
+    'label': 'Kendo UI Core 2015.2.624',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.rtl.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.mobile.all.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/styles/kendo.common.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/styles/kendo.default.min.css',
       'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.all.min.js'
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI 2014.Q2',
-    'group': 'Kendo UI'
-  },
-  {
-    'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.rtl.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.mobile.all.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/js/kendo.all.min.js'
-    ],
-    'label': 'Kendo UI 2014.Q1',
+    'label': 'Kendo UI Core 2014.3.1411',
     'group': 'Kendo UI'
   },
   {

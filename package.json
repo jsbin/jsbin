@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.30.3",
+  "version": "3.33.1",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -83,10 +83,8 @@
   "optionalDependencies": {
     "zmq": "~2.6.0"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://rem.mit-license.org"
-    }
-  ]
+  "engines": {
+    "node": ">=0.10.* <0.12"
+  },
+  "license": "MIT"
 }

@@ -65,6 +65,7 @@
     "/js/chrome/infocard.js",
     "/js/chrome/last-bin.js",
     "/js/chrome/archive.js",
+    "/js/chrome/transfer.js",
     "/js/chrome/welcome-panel.js",
     "/js/chrome/help-search.js",
     "/js/chrome/app.js"

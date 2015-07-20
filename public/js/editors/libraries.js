@@ -5,13 +5,13 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.0.0-alpha1.min.js',
+    'url': 'https://code.jquery.com/jquery-3.0.0-alpha1.js',
     'label': 'jQuery 3.0.0-alpha1',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-2.1.1.min.js',
-    'label': 'jQuery 2.1.1',
+    'url': 'https://code.jquery.com/jquery-2.1.4.js',
+    'label': 'jQuery 2.1.4',
     'group': 'jQuery'
   },
   {
@@ -20,18 +20,33 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-compat-3.0.0-alpha1.min.js',
+    'url': 'https://code.jquery.com/jquery-compat-3.0.0-alpha1.js',
     'label': 'jQuery Compat 3.0.0-alpha1',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-1.11.1.min.js',
-    'label': 'jQuery 1.11.1',
+    'url': 'https://code.jquery.com/jquery-1.11.3.js',
+    'label': 'jQuery 1.11.3',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-1.9.1.min.js',
+    'url': 'https://code.jquery.com/jquery-1.9.1.js',
     'label': 'jQuery 1.9.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.8.3.js',
+    'label': 'jQuery 1.8.3',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.7.2.js',
+    'label': 'jQuery 1.7.2',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.6.4.js',
+    'label': 'jQuery 1.6.4',
     'group': 'jQuery'
   },
   {
@@ -45,18 +60,18 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js'
+      'https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/ui/1.11.4/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.11.4',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
+      'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/ui/1.10.4/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.10.4',
     'group': 'jQuery UI'
@@ -64,7 +79,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css',
-      'https://code.jquery.com/jquery-1.8.3.min.js',
+      'https://code.jquery.com/jquery-1.8.3.js',
       'https://code.jquery.com/ui/1.9.2/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.9.2',
@@ -73,7 +88,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
+      'https://code.jquery.com/jquery-1.11.3.js',
       'https://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
@@ -81,36 +96,36 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'
+      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.css',
+      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.js'
     ],
     'label': 'jQuery Mobile 1.4.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js'
+      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.css',
+      'https://code.jquery.com/jquery-1.9.1.js',
+      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.js'
     ],
     'label': 'jQuery Mobile 1.3.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css',
-      'https://code.jquery.com/jquery-1.8.3.min.js',
-      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js'
+      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.css',
+      'https://code.jquery.com/jquery-1.8.3.js',
+      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.js'
     ],
     'label': 'jQuery Mobile 1.2.1',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.css',
-      'https://code.jquery.com/jquery-1.6.4.min.js',
-      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.js'
+      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.css',
+      'https://code.jquery.com/jquery-1.6.4.js',
+      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.js'
     ],
     'label': 'jQuery Mobile 1.1.2',
     'group': 'jQuery Mobile'

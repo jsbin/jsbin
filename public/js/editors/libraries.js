@@ -5,6 +5,11 @@ var libraries = [
     'group': 'jQuery'
   },
   {
+    'url': 'https://code.jquery.com/jquery-3.0.0-alpha1.min.js',
+    'label': 'jQuery 3.0.0-alpha1',
+    'group': 'jQuery'
+  },
+  {
     'url': 'https://code.jquery.com/jquery-2.1.1.min.js',
     'label': 'jQuery 2.1.1',
     'group': 'jQuery'
@@ -12,6 +17,11 @@ var libraries = [
   {
     'url': 'https://code.jquery.com/jquery-compat-git.js',
     'label': 'jQuery Compat WIP (via git)',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-compat-3.0.0-alpha1.min.js',
+    'label': 'jQuery Compat 3.0.0-alpha1',
     'group': 'jQuery'
   },
   {

@@ -453,8 +453,8 @@ var libraries = [
     'group': 'Ember'
   },
   {
-    'url': '//builds.emberjs.com/tags/v1.13.5/ember-data.js',
-    'label': 'Ember Data 1.13.5',
+    'url': '//builds.emberjs.com/tags/v1.13.6/ember-data.js',
+    'label': 'Ember Data 1.13.6',
     'group': 'Ember'
   },
   {

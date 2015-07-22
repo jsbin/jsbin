@@ -12,12 +12,11 @@ try {
 }
 
 // required because jQuery 1.4.4 lost ability to search my object property :( (i.e. a[host=foo.com])
-jQuery.expr[':'].host = function(obj, index, meta, stack) {
-  return obj.host == meta[3];
+jQuery.expr[':'].host = function(obj, index, meta) {
+  return obj.host === meta[3];
 };
 
 function throttle(fn, delay) {
-  var timer = null;
   var throttled = function () {
     var context = this, args = arguments;
     throttled.cancel();
@@ -73,7 +72,7 @@ function escapeHTML(html){
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
-};
+}
 
 function dedupe(array) {
   var hash    = {},
@@ -167,8 +166,8 @@ function exposeSettings() {
 }
 
 var storedSettings = store.localStorage.getItem('settings');
-if (storedSettings === "undefined" || jsbin.embed) {
-  // yes, equals the *string* "undefined", then something went wrong
+if (storedSettings === 'undefined' || jsbin.embed) {
+  // yes, equals the *string* 'undefined', then something went wrong
   storedSettings = null;
 }
 
@@ -196,7 +195,7 @@ jsbin.ie = (function(){
   while (
     div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
     all[0]
-  );
+  ) {}
   return v > 4 ? v : undef;
 }());
 
@@ -334,6 +333,7 @@ if ($.browser.opera) {
   setInterval(unload, 500);
 }
 
+// TODO remove this entirely, it's kinda stupid - RS 2015-07-19
 if (location.search.indexOf('api=') !== -1) {
   (function () {
     var urlParts = location.search.substring(1).split(','),
@@ -361,17 +361,18 @@ if (location.search.indexOf('api=') !== -1) {
   }());
 }
 
-
 $document.one('jsbinReady', function () {
   exposeSettings();
   $bin.removeAttr('style');
   $body.addClass('ready');
 });
 
-if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
+if (navigator.userAgent.indexOf(' Mac ') !== -1) {
+  (function () {
   var el = $('#keyboardHelp')[0];
   el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd').replace(/Ctrl/g, 'ctrl');
 })();
+}
 
 if (jsbin.embed) {
   $window.on('focus', function () {

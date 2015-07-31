@@ -583,52 +583,42 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
-    clojurescript: createProcessor({
-      id: 'clojurescript',
-      target: 'javascript',
-      extensions: ['clj', 'cljs'],
-      url: "http://himera-emh.herokuapp.com/js/repl.js",
-      //url: "http://192.168.100.128:8080/js/repl.js",
-      init: function clojurescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
-      },
-      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
-        $.ajax({
-          type: 'post',
-          url: 'http://himera-emh.herokuapp.com/compile-string',
-          //url: "http://192.168.100.128:8080/compile-string",
-          contentType: "application/clojure",
-          data: "{ :expr \"(let [] (ns cljs.user) " + source.replace(/"/g, "\\\"") + ")\" }",
-          success: function (data) {
-            var readstring = cljs.reader.read_string(data);
-            var result = (new cljs.core.Keyword("\uFDD0:js")).call(null, readstring);
-            var clojureError = (new cljs.core.Keyword("\uFDD0:error")).call(null, readstring);
-            if (!clojureError) {
-              resolve(result);
-            } else {
-              var clojureErrors = {
-                line: 0,
-                ch: 0,
-                msg: clojureError
-              };
-              console.log("clojureErrors", clojureErrors);
-              reject([clojureErrors]);
-            }
-          },
-          error: function (data) {
-            var clojureErrors2 = {
-              line: 0,
-              ch: 0,
-              msg: data.responseText
-            };
-            console.log("clojureErrors", clojureErrors2);
-            reject([clojureErrors2]);
-          },
-          complete: done
-        });
-      }), 500),
-    }),
+    clojurescript: (function() {
 
+      function cb(a, res, rej) {
+        var b = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ?
+          cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map, a) : a;
+        a = cljs.core.get.cljs$core$IFn$_invoke$arity$2(b, cljs.core.constant$keyword$error);
+        b = cljs.core.get.cljs$core$IFn$_invoke$arity$2(b, cljs.core.constant$keyword$value);
+        if (cljs.core.not(a)) {
+          res('\''+(b ? b.toString() : '')+'\'');
+        }
+        return rej(a);
+      }
+
+      return createProcessor({
+        id: 'clojurescript',
+        target: 'js',
+        extensions: ['clj', 'cljs'],
+        url: jsbin.static + '/js/vendor/cljs.js',
+        init: function clojurescript(ready) {
+          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
+        },
+        handler: function (source, resolve, reject) {
+          try {
+            cljs.js.eval_str(cljs_next.core.st, source,
+              new cljs.core.Symbol(null ,'ex0.core','ex0.core',50536478,null),
+              new cljs.core.PersistentArrayMap(null,2,[
+                cljs.core.constant$keyword$eval,
+                cljs.js.js_eval,
+                cljs.core.constant$keyword$source_DASH_map,!0
+              ],null), function(result) { cb(result, resolve, reject); });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      });
+    })(),
 
     traceur: (function () {
       var SourceMapConsumer,

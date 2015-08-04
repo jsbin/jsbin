@@ -583,42 +583,24 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
-    clojurescript: (function() {
-
-      function cb(a, res, rej) {
-        var b = null != a && (a.cljs$lang$protocol_mask$partition0$ & 64 || a.cljs$core$ISeq$) ?
-          cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.hash_map, a) : a;
-        a = cljs.core.get.cljs$core$IFn$_invoke$arity$2(b, cljs.core.constant$keyword$error);
-        b = cljs.core.get.cljs$core$IFn$_invoke$arity$2(b, cljs.core.constant$keyword$value);
-        if (cljs.core.not(a)) {
-          res('\''+(b ? b.toString() : '')+'\'');
+    clojurescript: createProcessor({
+      id: 'clojurescript',
+      target: 'js',
+      extensions: ['clj', 'cljs'],
+      url: jsbin.static + '/js/vendor/cljs.js',
+      init: function clojurescript(ready) {
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
+      },
+      handler: function (source, resolve, reject) {
+        try {
+          jsbin_cljs.core.eval_expr(source, function(err, code) {
+            return err ? reject(err) : resolve(eval(code) + '');
+          });
+        } catch (e) {
+          console.error(e);
         }
-        return rej(a);
       }
-
-      return createProcessor({
-        id: 'clojurescript',
-        target: 'js',
-        extensions: ['clj', 'cljs'],
-        url: jsbin.static + '/js/vendor/cljs.js',
-        init: function clojurescript(ready) {
-          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
-        },
-        handler: function (source, resolve, reject) {
-          try {
-            cljs.js.eval_str(cljs_next.core.st, source,
-              new cljs.core.Symbol(null ,'ex0.core','ex0.core',50536478,null),
-              new cljs.core.PersistentArrayMap(null,2,[
-                cljs.core.constant$keyword$eval,
-                cljs.js.js_eval,
-                cljs.core.constant$keyword$source_DASH_map,!0
-              ],null), function(result) { cb(result, resolve, reject); });
-          } catch (e) {
-            console.error(e);
-          }
-        }
-      });
-    })(),
+    }),
 
     traceur: (function () {
       var SourceMapConsumer,

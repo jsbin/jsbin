@@ -583,24 +583,58 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
-    clojurescript: createProcessor({
-      id: 'clojurescript',
-      target: 'js',
-      extensions: ['clj', 'cljs'],
-      url: jsbin.static + '/js/vendor/cljs.js',
-      init: function clojurescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
-      },
-      handler: function (source, resolve, reject) {
-        try {
-          jsbin_cljs.core.eval_expr(source, function(err, code) {
-            return err ? reject(err) : resolve(eval(code) + '');
-          });
-        } catch (e) {
-          console.error(e);
+    clojurescript: (function() {
+
+      var worker, resolveWorker, rejectWorker, initReady;
+
+      /* do stuff after worker has finished setup */
+      function workerReady(event) {
+        if (event.data.name === 'ready') {
+          worker.removeEventListener('message', workerReady, false);
+          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', initReady);
         }
       }
-    }),
+
+      /* get result of evaluation
+       * and wrap with quotes to prevent attempt to eval a string */
+      function workerEval(event) {
+        if (event.data.name === 'eval') {
+          worker.removeEventListener('message', workerEval, false);
+          resolveWorker('"' + event.data.result + '"');
+        }
+      }
+
+      return createProcessor({
+        id: 'clojurescript',
+        target: 'js',
+        extensions: ['clj', 'cljs'],
+        init: function clojurescript(ready) {
+
+          // init worker
+          if (window.Worker) {
+            initReady = ready;
+            worker = new Worker(jsbin.static + '/js/workers/cljs-worker.js');
+            worker.addEventListener('error', rejectWorker, false);
+            worker.addEventListener('message', workerReady, false);
+            worker.postMessage({ name: 'cljs', path: jsbin.static + '/js/vendor/cljs.js' });
+          } else {
+            console.error('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
+          }
+        },
+        handler: function (source, resolve, reject) {
+          try {
+            /* send code to worker
+             * and alias promise functions to be used in upper scope */
+            resolveWorker = resolve;
+            rejectWorker = reject;
+            worker.addEventListener('message', workerEval, false);
+            worker.postMessage({ name: 'eval', code: source });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      })
+    })(),
 
     traceur: (function () {
       var SourceMapConsumer,

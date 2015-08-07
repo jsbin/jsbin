@@ -618,7 +618,7 @@ var processors = jsbin.processors = (function () {
             worker.addEventListener('message', workerReady, false);
             worker.postMessage({ name: 'cljs', path: jsbin.static + '/js/vendor/cljs.js' });
           } else {
-            console.error('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
+            alert('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
           }
         },
         handler: function (source, resolve, reject) {

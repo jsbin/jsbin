@@ -47,6 +47,7 @@ onmessage = function(event) {
   if (event.data.name === 'eval') {
     jsbin_cljs.core.eval_expr(event.data.code, function(err, result) {
       if (err) {
+        log = [];
         throw Error(err);
       } else {
         postMessage({ name: 'eval', result: appendLog(eval(result)) });

@@ -3,6 +3,38 @@
 // alias for cljs runtime
 var window = this;
 
+var log = [];
+
+// intercept and collect console calls from within ClojureScript source
+console.log = function() {
+  log.push({ sev: 'log', args: toArgsStr(arguments) });
+};
+
+console.error = function() {
+  log.push({ sev: 'error', args: toArgsStr(arguments) });
+};
+
+var consoleSev = {
+  log: function(args) {
+    return 'console.log("' + args + '");';
+  },
+  error: function(args) {
+    return 'console.error("' + args + '");';
+  }
+};
+
+function toArgsStr(args) {
+  return Array.prototype.slice.call(args).join(',');
+}
+
+function appendLog(result) {
+  return [
+    '(function(){',
+    log.map(function(l) { return consoleSev[l.sev](l.args); }),
+    '})();'
+  ].join('');
+}
+
 onmessage = function(event) {
 
   // load self-hoasted ClojureScript
@@ -17,7 +49,8 @@ onmessage = function(event) {
       if (err) {
         throw Error(err);
       } else {
-        postMessage({ name: 'eval', result: eval(result) + '' });
+        postMessage({ name: 'eval', result: appendLog(eval(result)) });
+        log = []; // reset collected log
       }
     });
   }

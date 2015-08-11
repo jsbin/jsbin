@@ -600,7 +600,7 @@ var processors = jsbin.processors = (function () {
       function workerEval(event) {
         if (event.data.name === 'eval') {
           worker.removeEventListener('message', workerEval, false);
-          resolveWorker('"' + event.data.result + '"');
+          resolveWorker(event.data.result);
         }
       }
 

@@ -28,11 +28,9 @@ function toArgsStr(args) {
 }
 
 function appendLog(result) {
-  return [
-    '(function(){',
-    log.map(function(l) { return consoleSev[l.sev](l.args); }),
-    '})();'
-  ].join('');
+  return '(function(){' +
+         log.map(function(l) { return consoleSev[l.sev](l.args); }).join('') +
+         '})();';
 }
 
 onmessage = function(event) {

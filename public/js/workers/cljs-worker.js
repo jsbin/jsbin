@@ -33,6 +33,10 @@ function appendLog(result) {
          '})();';
 }
 
+function resetNS(code) {
+  return '(ns cljs.user)' + code;
+}
+
 onmessage = function(event) {
 
   // load self-hoasted ClojureScript
@@ -43,7 +47,8 @@ onmessage = function(event) {
 
   // evaluate code
   if (event.data.name === 'eval') {
-    jsbin_cljs.core.eval_expr(event.data.code, function(err, result) {
+    jsbin_cljs.core.eval_expr(resetNS(event.data.code), function(err, result) {
+      cljs.user = null;
       if (err) {
         log = [];
         throw Error(err);

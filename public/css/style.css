@@ -1996,8 +1996,8 @@ a:hover {
   width: 100%;
 }
 */
-#library {
-  padding: 0px;
+
+.button-library {
   right: 0;
   margin-left: 5px;
   position: relative;
@@ -2005,40 +2005,48 @@ a:hover {
   left: -5px;
   cursor: pointer;
   display: inline-block;
-  height: 37px;
   outline: none;
+  padding: 0;
+  height: auto;
   width: auto;
 }
 
-#library > label{
+.button-library > label{
  cursor: pointer;
  position: absolute;
  left: 0;
+ line-height: 28px;
  top: 0;
- padding: 0;
+ padding: 6px 10px;
  z-index: 9;
 }
 
-#library > input{
- opacity: 0;
+.button-library > input{
  background: none;
  margin: 0;
  font-size: 13px;
- line-height: 25px;
  transition: 300ms;
  border: none;
- width: 83px;
- padding: .2em .5em;
- border: 1px solid #CCC;
+ width: 85px;
+ padding: 6px 10px;
+ border-left: 1px solid transparent;
+ border-right: 1px solid transparent;
+ line-height: 24px;
  box-sizing: border-box;
 }
-#library > input:focus{
- opacity: 1;
- background: #fff;
- width: 250px;
+
+.button-library > input:hover{
+ background: rgba(0, 0, 0, 0.04);
+ border-color: #ccc;
 }
 
-#library > ul{
+.button-library > input:focus{
+ background: #fff;
+ width: 250px;
+ border-color: #ccc;
+}
+
+.button-library > ul{
  max-height: 0px;
  opacity: 0;
  transition: 300ms;
@@ -2047,28 +2055,29 @@ a:hover {
  margin: 0;
  padding: 0;
  position: absolute;
+ box-sizing: border-box;
  list-style: none;
  border: 1px solid #ccc;
  left: 0;
 }
 
-#library > ul li{
+.button-library > ul li{
  background: #fff;
- padding: .2em .5em;
+ padding: .3em .8em;
  border-bottom: 1px solid #ccc;
 }
 
-#library > ul li:hover,
-#library > ul li.selected{
+.button-library > ul li:hover,
+.button-library > ul li.selected{
  background: #EBF3FF;
 }
 
-#library > ul li:last-child{
+.button-library > ul li:last-child{
  border-bottom: none;
 }
 
-#library.open > ul{
- max-height: 400px;
+.button-library.open > ul{
+ max-height: 200px;
  opacity: 1;
 }
 

@@ -50,6 +50,9 @@
   "client": {
     "user": true
   },
+  "libs": {
+    "jsLibPath": "jslibs.default.json"
+  },
   "github": {
     "id": "",
     "secret": ""

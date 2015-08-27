@@ -306,6 +306,20 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{/unless}}
 
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script>
+  // Load libraries from a server config file
+  // This method is used so we can both expand vars, and support <script> in the json strings
+  window.libraries = window.libraries || [];
+  $.ajax({
+    url: '{{root}}/{{config.libs.jsLibPath}}',
+    async: false,
+    dataType: 'json',
+    success: function (response) {
+      // Allow for variable replacement
+      window.libraries = window.libraries.concat(JSON.parse(JSON.stringify(response).replace(/#{jsbin.static}/g, "{{static}}")));
+    }
+  });
+</script>
 <script src="{{root}}/bin/user.js?{{bust}}"></script>
 {{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}

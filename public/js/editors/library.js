@@ -6,15 +6,13 @@ var $library = $('#library'),
     $libraryLabel = $('#library > label'),
     $libraryOptions = $('#library > ul'),
     librarySearch = '',
-    groupOrder = [],
     selectedItem = 0,
     groups = {};
-
-console.log(libraries);
 
 function selectItem($option){
   var library = _.find(libraries, {label: $option.data('label')});
   if(library !== undefined){
+    analytics.library('select', library.label);
     insertResources(library.url);
   }
 }
@@ -24,6 +22,7 @@ $libraryOptions.on('click li', function(e){
 });
 
 $libraryInput.bind('focus', function(){
+  analytics.library('open');
   $library.addClass('open');
   $libraryLabel.hide();
 });
@@ -107,23 +106,6 @@ $library.bind('render', function(){
 $library.bind('init', function () {
   $library.trigger('render');
 }).trigger('init');
-
-
-$library.bind('change', function () {
-  if (!this.value) { return; }
-
-  var selected = this.value.split(':'),
-      group = groups[selected[0]],
-      library = group.libraries[selected[1]];
-
-  analytics.library('select', group.libraries[selected[1]].label);
-  insertResources(library.url);
-  if (library.snippet) {
-    insertSnippet(library.snippet);
-  }
-}).on('click', function () {
-  analytics.library('open');
-});
 
 function insertResources(urls) {
   if (!$.isArray(urls)) {

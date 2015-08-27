@@ -2,50 +2,110 @@
 // 'use strict'; // this causes bigger issues :-\
 
 var $library = $('#library'),
+    $libraryInput = $('#library > input'),
+    $libraryLabel = $('#library > label'),
+    $libraryOptions = $('#library > ul'),
+    librarySearch = '',
+    groupOrder = [],
+    selectedItem = 0,
     groups = {};
 
+console.log(libraries);
+
+function selectItem($option){
+  var library = _.find(libraries, {label: $option.data('label')});
+  if(library !== undefined){
+    insertResources(library.url);
+  }
+}
+
+$libraryOptions.on('click li', function(e){
+  selectItem($(e.target));
+});
+
+$libraryInput.bind('focus', function(){
+  $library.addClass('open');
+  $libraryLabel.hide();
+});
+
+$libraryInput.bind('blur', function(){
+  $libraryLabel.show();
+  $library.removeClass('open');
+  $libraryInput.val('');
+});
+
+$libraryInput.bind('cut', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+$libraryInput.bind('paste', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+$libraryInput.bind('keydown', function(e){
+  // if user pressed enter don't rerender dropdown
+  if(e.keyCode === 13){
+    selectItem($libraryOptions.find('.selected'));
+
+  // if user pressses escape, close the dropdown
+  }else if(e.keyCode === 27){
+    $libraryInput.trigger('blur');
+  }else{
+    if(e.keyCode === 40){
+      selectedItem++;
+    }else if(e.keyCode === 38 && selectedItem > 0){
+      selectedItem--;
+    }
+
+    librarySearch = e.target.value;
+    $library.trigger('render');
+  }
+});
+
+$libraryInput.bind('keyup', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+
+$library.bind('render', function(){
+  var token = librarySearch.toLowerCase().trim();
+
+  // save libraries whose label match the search
+  var filteredLibraries = _.filter(libraries, function(library){
+    return library.label.toLowerCase().indexOf(token) > -1 || 
+      librarySearch.trim().length < 1
+  });
+
+  var optionsCount = filteredLibraries.length-1
+
+  // reset the selected item if we've moved beyond the array
+  if(selectedItem > optionsCount && optionsCount > 1){
+    selectedItem = filteredLibraries.length-1;
+  }else if(optionsCount === 0){
+    selectedItem = 0;
+  }
+
+  var renderedOptions = _.map(filteredLibraries, function(library, i){
+    if(selectedItem === i){
+      return '<li class="selected" data-label="'+library.label+'">' + library.label + '</li>';
+    }else{
+      return '<li data-label="'+library.label+'">' + library.label + '</li>';
+    }
+  });
+
+  if(renderedOptions.length < 1){
+    renderedOptions.push('<li class="library-option">No matches for <strong>' + token + '</strong></li>');
+  }
+
+  $libraryOptions.empty();
+  $libraryOptions.html( renderedOptions.join('') );
+});
+
 $library.bind('init', function () {
-  var i = 0,
-    j = 0,
-    k = 0,
-    library = {},
-    groupOrder = [],
-    group = {},
-    groupLabel = '',
-    lcGroup = '';
-
-  // reset
-  groups = {};
-  $library.empty();
-
-  for (i = 0; i < libraries.length; i++) {
-    library = libraries[i];
-    groupLabel = library.group || 'Other';
-    lcGroup = groupLabel.toLowerCase().replace(/[^a-z0-9]/ig, '');
-    if (groupOrder.indexOf(lcGroup) === -1) {
-      group = { label: groupLabel, libraries: [], key: lcGroup };
-      groups[lcGroup] = group;
-      groupOrder.push(lcGroup);
-    } else {
-      group = groups[lcGroup];
-    }
-
-    group.libraries.push(library);
-  }
-
-  var html = ['<option value="none">None</option>'];
-
-  for (i = 0; i < groupOrder.length; i++) {
-    group = groups[groupOrder[i]];
-    html.push('<option value="" data-group="' + group.label + '" class="heading">-------------</option>');
-
-    for (j = 0; j < group.libraries.length; j++) {
-      library = group.libraries[j];
-      html.push('<option value="' + group.key + ':' + j + '">' + library.label + '</option>');
-    }
-  }
-
-  $library.html( html.join('') );
+  $library.trigger('render');
 }).trigger('init');
 
 

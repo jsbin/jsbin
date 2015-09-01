@@ -132,13 +132,6 @@ var libraries = [
   },
   {
     'url': [
-      '//himera-emh.herokuapp.com/js/repl.js'
-    ],
-    'label': 'ClojureScript',
-    'group': 'ClojureScript'
-  },
-  {
-    'url': [
       'https://code.jquery.com/jquery.min.js',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'

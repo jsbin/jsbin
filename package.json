@@ -65,7 +65,7 @@
     "undefsafe": "0.0.3",
     "underscore": "~1.4.4",
     "uuid": "^2.0.1",
-    "validate-vat": "~0.3.1",
+    "validate-vat": "^0.3.2",
     "validator": "^3.16.1"
   },
   "devDependencies": {

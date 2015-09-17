@@ -688,7 +688,12 @@ var libraries = [
   }
 ];
 
-window.libraries = libraries; // expose a command line API
+window.libraries = libraries.sort(function(a, b) {
+  if (a.label < b.label) return -1;
+  if (b.label < a.label) return 1;
+  return 0;
+});
+
 
 libraries.userSpecified = JSON.parse(store.localStorage.getItem('libraries') || '[]');
 for (var i = 0; i < libraries.userSpecified.length; i++) {

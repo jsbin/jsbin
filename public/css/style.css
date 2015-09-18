@@ -2064,7 +2064,6 @@ a:hover {
 .button-library > ul li{
  background: #fff;
  padding: .3em .8em;
- border-bottom: 1px solid #ccc;
 }
 
 .button-library > ul li:hover,

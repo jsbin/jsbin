@@ -6,7 +6,7 @@ var $library = $('#library'),
     $libraryLabel = $('#library > label'),
     $libraryOptions = $('#library > ul'),
     librarySearch = '',
-    selectedItem = 0,
+    highlightedItem = 0,
     groups = {};
 
 function selectItem($option){
@@ -51,11 +51,13 @@ $libraryInput.bind('keydown', function(e){
   // if user pressses escape, close the dropdown
   }else if(e.keyCode === 27){
     $libraryInput.trigger('blur');
+
+  // If user presses up or down move highlighted item
   }else{
     if(e.keyCode === 40){
-      selectedItem++;
-    }else if(e.keyCode === 38 && selectedItem > 0){
-      selectedItem--;
+      highlightedItem++;
+    }else if(e.keyCode === 38 && highlightedItem > 0){
+      highlightedItem--;
     }
 
     librarySearch = e.target.value;
@@ -81,14 +83,14 @@ $library.bind('render', function(){
   var optionsCount = filteredLibraries.length-1
 
   // reset the selected item if we've moved beyond the array
-  if(selectedItem > optionsCount && optionsCount > 1){
-    selectedItem = filteredLibraries.length-1;
+  if(highlightedItem > optionsCount && optionsCount > 1){
+    highlightedItem = filteredLibraries.length-1;
   }else if(optionsCount === 0){
-    selectedItem = 0;
+    highlightedItem = 0;
   }
 
   var renderedOptions = _.map(filteredLibraries, function(library, i){
-    if(selectedItem === i){
+    if(highlightedItem === i){
       return '<li class="selected" data-label="'+library.label+'">' + library.label + '</li>';
     }else{
       return '<li data-label="'+library.label+'">' + library.label + '</li>';

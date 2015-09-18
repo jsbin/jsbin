@@ -14,6 +14,9 @@ function selectItem($option){
   if(library !== undefined){
     analytics.library('select', library.label);
     insertResources(library.url);
+    if(library.snippet){
+      insertResources(library.snippet);
+    }
   }
 }
 

@@ -63,6 +63,7 @@ $libraryInput.bind('keydown', function(e){
     librarySearch = e.target.value;
     $library.trigger('render');
   }
+  scrollHighlightIntoView();
 });
 
 function scrollHighlightIntoView(){
@@ -94,7 +95,6 @@ function scrollHighlightIntoView(){
 $libraryInput.bind('keyup', function(e){
   librarySearch = e.target.value;
   $library.trigger('render');
-  scrollHighlightIntoView();
 });
 
 
@@ -102,10 +102,10 @@ $library.bind('render', function(){
   var token = librarySearch.toLowerCase().trim();
 
   // save libraries whose label match the search
-  var filteredLibraries = _.filter(libraries, function(library){
+  var filteredLibraries = _(libraries).filter(function(library){
     return library.label.toLowerCase().indexOf(token) > -1 || 
       librarySearch.trim().length < 1
-  });
+  }).sortBy('label').value();
 
   var optionsCount = filteredLibraries.length-1
 

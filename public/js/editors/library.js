@@ -65,9 +65,36 @@ $libraryInput.bind('keydown', function(e){
   }
 });
 
+function scrollHighlightIntoView(){
+  var $highlightedOption = $libraryOptions.find('.selected');
+  var elTop = $highlightedOption.position().top;
+  var containerScrollTop = $libraryOptions.scrollTop();
+  var elHeight = $highlightedOption.outerHeight();
+  var containerHeight = $libraryOptions.outerHeight();
+
+  // If the highlighted option is beyond the boundaries
+  // of the scrollable container, adjust the scroll position
+  // of the container
+
+  // if it is it above the boundaries
+  if( elTop < 0 ){
+    // then align the top of the scrollable container with
+    // the top of the highlighted element
+    var scrollTo = containerScrollTop + elTop;
+    $libraryOptions.scrollTop(scrollTo);
+
+  // if it is below the boundaries
+  }else if( elTop + elHeight > containerHeight){
+    // then align the bottom of the scrollable container with
+    // the bottom of the highlighted element
+    $libraryOptions.scrollTop(containerScrollTop + ((elTop + elHeight) - containerHeight));
+  }
+}
+
 $libraryInput.bind('keyup', function(e){
   librarySearch = e.target.value;
   $library.trigger('render');
+  scrollHighlightIntoView();
 });
 
 

@@ -34,6 +34,8 @@ $libraryInput.bind('blur', function(){
   $libraryLabel.show();
   $library.removeClass('open');
   $libraryInput.val('');
+  librarySearch = '';
+  $library.trigger('render');
 });
 
 $libraryInput.bind('cut', function(e){
@@ -46,6 +48,7 @@ $libraryInput.bind('paste', function(e){
   $library.trigger('render');
 });
 
+
 $libraryInput.bind('keydown', function(e){
   // if user pressed enter don't rerender dropdown
   if(e.keyCode === 13){
@@ -54,7 +57,6 @@ $libraryInput.bind('keydown', function(e){
   // if user pressses escape, close the dropdown
   }else if(e.keyCode === 27){
     $libraryInput.trigger('blur');
-
   // If user presses up or down move highlighted item
   }else{
     if(e.keyCode === 40){

@@ -3794,6 +3794,11 @@ left: 50%;
   padding-bottom: 2px;
   max-width: 1280px;
   margin: 0 auto;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+}
+
+#history .filter label {
+  font-size: 14px;
 }
 
 #history .filter input[type="text"] {
@@ -3801,12 +3806,12 @@ left: 50%;
  font-size: 14px;
 }
 
-/* Bin tags used in the history view */
-#history .tags {
+/* Bin keywords used in the history view */
+#history .keywords {
   font-size: 12px;
 }
 
-#history .tags a {
+#history .keywords a {
   color: rgb(161, 216, 253);
 }
 

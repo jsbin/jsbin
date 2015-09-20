@@ -1,8 +1,22 @@
 <div id="history">
-  <div class="header">
-    <h2>Open previously saved <em>bins</em>{{by_user}} or <a href="#" data-toggle="history">continue with current one</a>:</h2>
-    <div class="menu">
-      <input type="checkbox" name="toggle_archive" id="toggleArchive" class="toggle_archive"> <label for="toggleArchive">Archive view</label>
+  <div class="control">
+    <div class="header">
+      <h2>Open previously saved <em>bins</em>{{by_user}} or <a href="#" data-toggle="history">continue with current one</a>:</h2>
+      <div class="menu">
+        <input type="checkbox" name="toggle_archive" id="toggleArchive" class="toggle_archive"> <label for="toggleArchive">Archive view</label>
+      </div>
+    </div>
+    <div class="filter">
+      <input type="text" placeholder="filter on tags" />
+      <label>select tag
+        <select>
+          <option selected>--select--</option>
+          <option>Angular</option>
+          <option>jQuery</option>
+          <option>directives</option>
+          <option>gaming</option>
+        </select>
+      </label>
     </div>
   </div>
   <table>
@@ -22,13 +36,16 @@
         <td class="last_updated">
           <a pubdate="{{last_updated}}" href="{{edit_url}}">{{pretty_last_updated}}</a>
         </td>
-        <td class="action">
-          <!-- <a href="{{url}}/edit" class="edit"><span>Edit</span></a> -->
-          <a href="{{url}}/archive" class="archive"><span>Archive</span></a>
-          <a href="{{url}}/unarchive" class="unarchive"><span>Un-archive</span></a>
-        </td>
         <td class="title">
           <a href="{{edit_url}}">{{summary}}</a>
+        </td>
+        <td class="tags">
+          <a href="#">jQuery</a>,<a href="#">Angular</a>,<a href="#">scss</a>, <a href="#">directives</a>, <a href="#">gaming</a>
+        </td>
+        <td class="action">
+          <!-- <a href="{{url}}/edit" class="edit"><span>Edit</span></a> -->
+          <a href="{{url}}/archive" class="archive" title="Archive this bin"><span>Archive</span></a>
+          <a href="{{url}}/unarchive" class="unarchive" title="Unarchive this bin"><span>Un-archive</span></a>
         </td>
       </tr>
       {{/.}}

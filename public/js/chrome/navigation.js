@@ -466,6 +466,65 @@ $('#addmeta').click(function () {
   return false;
 });
 
+
+
+var kre = {
+  head: /<head(.*)\n/i,
+  meta: /<meta name="keywords".*?>/i,
+  metaContent: /content=".*?"/i
+};
+
+var keywords = '<meta name="keywords" content="[add your comma separated keywords]">\n';
+
+$('#addkeywords').click(function() {
+  // if not - insert
+  // <meta name="description" content="" />
+  // if meta description is in the HTML, highlight it
+  var editor = jsbin.panels.panels.html,
+      cm = editor.editor,
+      html = editor.getCode();
+
+  if (!editor.visible) {
+    editor.show();
+  }
+
+  if (!kre.meta.test(html)) {
+    if (kre.head.test(html)) {
+      html = html.replace(kre.head, '<head$1\n' + keywords);
+    } else {
+      // slap in the top
+      html = keywords + html;
+    }
+  }
+
+  editor.setCode(html);
+
+  // now select the text
+  // editor.editor is the CM object...yeah, sorry about that...
+  var cursor = cm.getSearchCursor(kre.meta);
+  cursor.findNext();
+
+  var contentCursor = cm.getSearchCursor(kre.metaContent);
+  contentCursor.findNext();
+
+  var from = { line: cursor.pos.from.line, ch: cursor.pos.from.ch + '<meta name="keywords" content="'.length },
+      to = { line: contentCursor.pos.to.line, ch: contentCursor.pos.to.ch - 1 };
+
+  cm.setCursor(from);
+  cm.setSelection(from, to);
+  cm.on('cursoractivity', function () {
+    cm.on('cursoractivity', null);
+    mark.clear();
+  });
+
+  var mark = cm.markText(from, to, { className: 'highlight' });
+
+  cm.focus();
+
+  return false;
+});
+
+
 $('a.publish-to-vanity').on('click', function (event) {
   event.preventDefault();
   analytics.publishVanity();

@@ -522,8 +522,8 @@ var libraries = [
     'label': 'Processing 1.4.1'
   },
   {
-    'url': 'http://d3js.org/d3.v3.min.js',
-    'label': 'D3 3.x'
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js',
+    'label': 'D3 3.5.6'
   },
   {
     'url': '//code.highcharts.com/highcharts.js',

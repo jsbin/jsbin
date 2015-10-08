@@ -327,6 +327,31 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{#if custom_js}}
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
 {{/if}}
+<script>
+  var libFile = '{{static}}/{{config.libs.jsLibPath}}';
+  // Load libraries from a server config file
+  // This method is used so we can both expand vars, and support <script> in the json strings
+  window.libraries = window.libraries || [];
+  $.ajax({
+    url: libFile,
+    async: true,
+    dataType: 'json',
+    success: function (response) {
+      // Anything that has a relative path for it's url should be fixed with the static path
+      var regexp = /^\/[^\/]/g;
+      $.each(response, function( index, value ) {
+        if(value.url && typeof(value.url) == "string" && regexp.test(value.url)) {
+          value.url = "{{static}}" + value.url;
+        }
+      });
+      window.libraries = window.libraries.concat(response);
+      $('#library').trigger('init'); // Refresh the list
+    },
+    error: function(xhr, status, error) {
+      console.log("Error loading " + libFile + ": " + error);
+    }
+  });
+</script>
 </body>
 </html>
 

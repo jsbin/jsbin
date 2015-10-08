@@ -583,52 +583,58 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
-    clojurescript: createProcessor({
-      id: 'clojurescript',
-      target: 'javascript',
-      extensions: ['clj', 'cljs'],
-      url: "http://himera-emh.herokuapp.com/js/repl.js",
-      //url: "http://192.168.100.128:8080/js/repl.js",
-      init: function clojurescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
-      },
-      handler: throttle(debounceAsync(function (source, resolve, reject, done) {
-        $.ajax({
-          type: 'post',
-          url: 'http://himera-emh.herokuapp.com/compile-string',
-          //url: "http://192.168.100.128:8080/compile-string",
-          contentType: "application/clojure",
-          data: "{ :expr \"(let [] (ns cljs.user) " + source.replace(/"/g, "\\\"") + ")\" }",
-          success: function (data) {
-            var readstring = cljs.reader.read_string(data);
-            var result = (new cljs.core.Keyword("\uFDD0:js")).call(null, readstring);
-            var clojureError = (new cljs.core.Keyword("\uFDD0:error")).call(null, readstring);
-            if (!clojureError) {
-              resolve(result);
-            } else {
-              var clojureErrors = {
-                line: 0,
-                ch: 0,
-                msg: clojureError
-              };
-              console.log("clojureErrors", clojureErrors);
-              reject([clojureErrors]);
-            }
-          },
-          error: function (data) {
-            var clojureErrors2 = {
-              line: 0,
-              ch: 0,
-              msg: data.responseText
-            };
-            console.log("clojureErrors", clojureErrors2);
-            reject([clojureErrors2]);
-          },
-          complete: done
-        });
-      }), 500),
-    }),
+    clojurescript: (function() {
 
+      var worker, resolveWorker, rejectWorker, initReady;
+
+      /* do stuff after worker has finished setup */
+      function workerReady(event) {
+        if (event.data.name === 'ready') {
+          worker.removeEventListener('message', workerReady, false);
+          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', initReady);
+        }
+      }
+
+      /* get result of evaluation
+       * and wrap with quotes to prevent attempt to eval a string */
+      function workerEval(event) {
+        if (event.data.name === 'eval') {
+          worker.removeEventListener('message', workerEval, false);
+          resolveWorker(event.data.result);
+        }
+      }
+
+      return createProcessor({
+        id: 'clojurescript',
+        target: 'js',
+        extensions: ['clj', 'cljs'],
+        init: function clojurescript(ready) {
+
+          // init worker
+          if (window.Worker) {
+            initReady = ready;
+            worker = new Worker(jsbin.static + '/js/workers/cljs-worker.js');
+            worker.addEventListener('error', rejectWorker, false);
+            worker.addEventListener('message', workerReady, false);
+            worker.postMessage({ name: 'cljs', path: jsbin.static + '/js/vendor/cljs.js' });
+          } else {
+            alert('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
+          }
+        },
+        handler: function (source, resolve, reject) {
+          try {
+            /* send code to worker
+             * and alias promise functions to be used in upper scope */
+            resolveWorker = resolve;
+            rejectWorker = reject;
+            worker.addEventListener('message', workerEval, false);
+            worker.postMessage({ name: 'eval', code: source });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      })
+    })(),
 
     traceur: (function () {
       var SourceMapConsumer,

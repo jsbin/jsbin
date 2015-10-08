@@ -132,13 +132,6 @@
   },
   {
     "url": [
-      "//himera-emh.herokuapp.com/js/repl.js"
-    ],
-    "label": "ClojureScript",
-    "group": "ClojureScript"
-  },
-  {
-    "url": [
       "https://code.jquery.com/jquery.min.js",
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css",
       "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
@@ -361,13 +354,13 @@
     "group": "Angular"
   },
   {
-    "url": "//fb.me/react-0.13.1.js",
-    "label": "React 0.13.1",
+    "url": "//fb.me/react-0.13.3.js",
+    "label": "React 0.13.3",
     "group": "React"
   },
   {
-    "url": "//fb.me/react-with-addons-0.13.1.js",
-    "label": "React with Add-Ons 0.13.1",
+    "url": "//fb.me/react-with-addons-0.13.3.js",
+    "label": "React with Add-Ons 0.13.3",
     "group": "React"
   },
   {
@@ -581,9 +574,9 @@
   },
   {
     "url": [
-      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js"
+      "https://cdnjs.cloudflare.com/ajax/libs/three.js/r72/three.min.js"
     ],
-    "label": "Three.js r67"
+    "label": "Three.js r72"
   },
   {
     "url": [

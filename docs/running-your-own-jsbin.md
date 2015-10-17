@@ -100,6 +100,6 @@ This will generate the `public/js/prod/` directory and read the version in the `
 
 Finally, ensure either the config.local.json's `env` property is set to "production" or you can run JS Bin in production via the environment:
 
-    $ NODE_ENV=production node .
+    $ JSBIN_ENV=production node .
 
 And that's it.

@@ -16,3 +16,8 @@ key for you, you can choose to use this or one of your own. Just place it into y
     }
   }
 ```
+
+If you are running JS Bin in a OpenShift cloud instance, set the `JSBIN_SESSION_SECRET` [environment variable](https://developers.openshift.com/en/managing-environment-variables.html#custom-variables) instead, like so:
+```
+rhc env set JSBIN_SESSION_SECRET=mekYkYMlseZo6F8lOOgny2nA
+```

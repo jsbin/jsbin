@@ -685,6 +685,19 @@ var libraries = [
   {
     'url': 'https://cdn.jsdelivr.net/ramda/0.15.1/ramda.min.js',
     'label': 'Ramda 0.15.1'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
+    'label': 'Moment 2.10.6',
+    'group': 'Moment.js'
+  },
+  {
+    'url': [
+      'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
+      'https://cdn.jsdelivr.net/momentjs/2.10.6/locales.min.js'
+    ],
+    'label': 'Moment 2.10.6 (with locales)',
+    'group': 'Moment.js'
   }
 ];
 

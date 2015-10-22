@@ -683,8 +683,8 @@ var libraries = [
     'group': 'Data structures'
   },
   {
-    'url': 'https://cdn.jsdelivr.net/ramda/0.15.1/ramda.min.js',
-    'label': 'Ramda 0.15.1'
+    'url': 'https://cdn.jsdelivr.net/ramda/0.18.0/ramda.min.js',
+    'label': 'Ramda 0.18.0'
   },
   {
     'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',

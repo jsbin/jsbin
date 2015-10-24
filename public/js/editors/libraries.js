@@ -649,17 +649,17 @@ var libraries = [
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',
-    'label': 'rx.all',
+    'label': 'rx.all 2.3.22',
     'group': 'RxJS'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.testing.js',
-    'label': 'rx.testing',
+    'label': 'rx.testing 2.3.22',
     'group': 'RxJS'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js',
-    'label': 'rx.dom',
+    'label': 'rx.dom 2.0.7',
     'group': 'RxJS'
   },
   {

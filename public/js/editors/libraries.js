@@ -648,6 +648,11 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
+    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
+    'label': 'RxJS 5.0.0-alpha.8',
+    'group': 'RxJS'
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.js',
     'label': 'rx.all 4.0.6',
     'group': 'RxJS'

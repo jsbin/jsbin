@@ -663,6 +663,11 @@ var libraries = [
     'group': 'RxJS'
   },
   {
+    'url': 'https://npmcdn.com/rx-dom@7.0.3/dist/rx.dom.js',
+    'label': 'rx.dom 7.0.3 (requires 4.x)',
+    'group': 'RxJS'
+  },
+  {
     'url': 'http://cdn.popcornjs.org/code/dist/popcorn.min.js',
     'label': 'Popcorn.js 1.5.6 (Core)',
     'group': 'Popcorn.js'

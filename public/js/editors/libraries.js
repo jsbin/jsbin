@@ -713,6 +713,24 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
++ {
++   'url': [
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/framework7.ios.min.css',
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/framework7.ios.colors.min.css',
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/js/framework7.min.js'
++   ],
++   'label' : 'Framework7 (iOS Design)',
++   'group' : 'Framework7'
++ },
++ {
++  'url': [
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/framework7.material.min.css',
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/css/framework7.material.colors.min.css',
++    'https://raw.githubusercontent.com/nolimits4web/Framework7/master/dist/js/framework7.min.js'
++  ],
++  'label' : 'Framework7 (Material Design)',
++  'group' : 'Framework7'
   }
 ];
 

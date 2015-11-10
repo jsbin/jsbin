@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: jsbin
 -- ------------------------------------------------------
--- Server version	5.5.29-0ubuntu0.12.04.1
+-- Server version  5.5.29-0ubuntu0.12.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,9 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `assets`
+--
+
+DROP TABLE IF EXISTS `assets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `assets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` char(255) NOT NULL,
+  `asset_url` char(255) NOT NULL,
+  `size` int(11) NOT NULL,
+  `mime` char(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `asset_url` (`asset_url`),
+  KEY `username` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `customers`
 --
 
+DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customers` (
@@ -28,18 +48,20 @@ CREATE TABLE `customers` (
   `name` char(255) NOT NULL,
   `expiry` datetime DEFAULT NULL,
   `active` tinyint(1) DEFAULT '1',
+  `plan` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `stripe_id` (`stripe_id`),
   KEY `name` (`name`),
   KEY `user_id` (`user_id`),
   KEY `expired` (`expiry`,`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `forgot_tokens`
 --
 
+DROP TABLE IF EXISTS `forgot_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `forgot_tokens` (
@@ -56,6 +78,7 @@ CREATE TABLE `forgot_tokens` (
 -- Table structure for table `owner_bookmarks`
 --
 
+DROP TABLE IF EXISTS `owner_bookmarks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `owner_bookmarks` (
@@ -68,13 +91,14 @@ CREATE TABLE `owner_bookmarks` (
   PRIMARY KEY (`id`),
   KEY `name` (`name`,`type`,`created`),
   KEY `revision` (`url`(191),`revision`)
-) ENGINE=InnoDB CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=295 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `owners`
 --
 
+DROP TABLE IF EXISTS `owners`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `owners` (
@@ -93,13 +117,14 @@ CREATE TABLE `owners` (
   KEY `name_url` (`name`,`url`,`revision`),
   KEY `last_updated` (`name`,`last_updated`),
   KEY `url` (`url`,`revision`)
-) ENGINE=InnoDB CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2637880 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `ownership`
 --
 
+DROP TABLE IF EXISTS `ownership`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ownership` (
@@ -117,18 +142,24 @@ CREATE TABLE `ownership` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `settings` text,
   `dropbox_token` varchar(255) DEFAULT NULL,
+  `dropbox_id` int(11) DEFAULT NULL,
+  `beta` tinyint(1) DEFAULT NULL,
+  `flagged` char(16) DEFAULT NULL,
+  `last_seen` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `name_key` (`name`,`key`),
   KEY `created` (`created`),
-  KEY `ownership_api_key` (`api_key`)
-) ENGINE=InnoDB CHARSET=utf8;
+  KEY `ownership_api_key` (`api_key`),
+  KEY `last_seen` (`last_seen`)
+) ENGINE=InnoDB AUTO_INCREMENT=132146 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `sandbox`
 --
 
+DROP TABLE IF EXISTS `sandbox`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sandbox` (
@@ -154,7 +185,7 @@ CREATE TABLE `sandbox` (
   KEY `streaming_key` (`streaming_key`),
   KEY `spam` (`created`,`last_viewed`),
   KEY `revision` (`url`(191),`revision`)
-) ENGINE=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14551004 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -166,4 +197,4 @@ CREATE TABLE `sandbox` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-05  7:45:41
+-- Dump completed on 2015-01-30 16:46:09

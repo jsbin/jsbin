@@ -183,7 +183,7 @@ var renderer = (function () {
    */
   renderer.complete = function () {
     try {
-      delete sessionStorage.runnerPending;
+      store.sessionStorage.removeItem('runnerPending');
     } catch (e) {}
   };
 
@@ -323,7 +323,7 @@ var renderLivePreview = (function () {
   if (!$live.find('iframe').length) {
     iframe = document.createElement('iframe');
     iframe.setAttribute('class', 'stretch');
-    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', '<proxy>');
     $live.prepend(iframe);
@@ -344,7 +344,10 @@ var renderLivePreview = (function () {
     if (!window.postMessage) { return; }
 
     // Inform other pages event streaming render to reload
-    if (requested) { sendReload(); }
+    if (requested) {
+      sendReload();
+      jsbin.state.hasBody = false;
+    }
     getPreparedCode().then(function (source) {
       var includeJsInRealtime = jsbin.settings.includejs;
 
@@ -357,17 +360,20 @@ var renderLivePreview = (function () {
       }
       // this is a flag that helps detect crashed runners
       if (jsbin.settings.includejs) {
-        sessionStorage.runnerPending = 1;
+        store.sessionStorage.setItem('runnerPending', 1);
       }
 
       renderer.postMessage('render', {
         source: source,
         options: {
+          injectCSS: jsbin.state.hasBody && jsbin.panels.focused.id === 'css',
           requested: requested,
           debug: jsbin.settings.debug,
-          includeJsInRealtime: jsbin.settings.includejs
-        }
+          includeJsInRealtime: jsbin.settings.includejs,
+        },
       });
+
+      jsbin.state.hasBody = true;
 
     });
   };
@@ -380,7 +386,7 @@ var renderLivePreview = (function () {
     if (arg.origin === 'setValue' || arg.origin === undefined) {
       return;
     }
-    delete sessionStorage.runnerPending;
+    store.sessionStorage.removeItem('runnerPending');
   });
 
   // Listen for console input and post it to the iframe

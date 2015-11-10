@@ -11,7 +11,7 @@ window.onload = function () {
    */
   if (!window.postMessage) {
     var iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     document.body.appendChild(iframe);
     iframe.src = window.name;

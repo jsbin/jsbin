@@ -11,7 +11,7 @@
   }
   if (jsbin.settings.gui.toppanel === undefined) {
     jsbin.settings.gui.toppanel = true;
-    localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+    store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
   }
 
   if ($body.hasClass('toppanel') && jsbin.settings.gui.toppanel === false) {
@@ -100,7 +100,7 @@
       var last = null;
       var count = 1;
       try {
-        last = localStorage.lastpost || null;
+        last = store.localStorage.getItem('lastpost') || null;
       } catch (e) {}
 
       if (last !== null) {
@@ -118,7 +118,15 @@
       }
 
       if (count) {
-        $('.blog a').attr('href', root + '/' + data.blog[count-1].slug).attr('data-count', count);
+        $('.blog a').attr('href', root + '/' + data.blog[count-1].slug).attr('data-count', count).on('click', function () {
+          // this is a weird hack work around to try to clear the storage
+          // item that says which was the last post viewed. so we update
+          // the timestamp when the user clicks the link, because we know
+          // they'll land on the latest post
+          try {
+            localStorage.lastpost = data.blog[count-1].timestamp;
+          } catch (e) {}
+        });
       }
 
       var help = shuffle(data.help);

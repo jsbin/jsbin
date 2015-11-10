@@ -1,0 +1,109 @@
+<div id="toppanel" class="toppanel-wrapper" style="display:none;">
+  <div class="toppanel-column toppanel-column-first">
+    <a href="#" class="toppanel-hide" title="Close">Close welcome panel</a>
+    <a href="#" class="toppanel-logo">
+      <img src="{{static}}/images/dave.min.svg" alt="Welcome to JS Bin">
+    </a>
+    <div class="toppanel-actions{{#unless home}} toppanel-actions-alone{{/unless}}">
+      <div>
+        <a id="createnew" href="{{root}}" class="toppanel-button">New bin</a>
+      </div>
+      <div>
+        {{#if home}}
+        <a href="#" class="toppanel-button homebtn">Open bin...</a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+{{#welcomePanel}}
+{{#features}}
+  <div class="toppanel-column">
+    <div><label id="enableUniversalEditorLabel" for="enableUniversalEditor"><input type="checkbox" id="enableUniversalEditor">Textarea editor mode</label></div>
+    <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
+      <ul class="toppanel-list">
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
+      </ul>
+  </div>
+{{/features}}
+
+{{#pro-features}}
+  <div class="toppanel-column">
+    <h2 class="toppanel-title"><a href="{{#if ../../user.pro}}/help/pro{{else}}/upgrade{{/if}}" class="toppanel-link">{{title}}</a></h2>
+      <ul class="toppanel-list">
+      {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
+      </ul>
+  {{#unless ../../user.pro}}
+  <div class="toppanel-section toppanel-love toppanel-no-pro">
+    <center><a href="/upgrade">Upgrade to pro now</a></center>
+  </div>
+  {{/unless}}
+  </div>
+{{/pro-features}}
+
+  <div class="toppanel-column toppanel-stretch">
+  {{#blog}}
+    <div class="toppanel-blog toppanel-section">
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
+        <ul class="toppanel-list">
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
+        </ul>
+    </div>
+  {{/blog}}
+  {{#help}}
+    <div class="toppanel-help toppanel-section">
+      <h2 class="toppanel-title"><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></h2>
+        <ul class="toppanel-list">
+        {{#data}}{{#.}}<li><a href="{{link}}"{{#if ext}} target="_blank"{{/if}} class="toppanel-link">{{title}}</a></li>{{/.}}{{/data}}
+        </ul>
+    </div>
+  {{/help}}
+  </div>
+
+  <div class="toppanel-column">
+    {{#twitter}}
+      <div class="toppanel-section">
+        <h2 class="toppanel-title"><a href="{{link}}" target="_blank" class="toppanel-link">{{title}}</a></h2>
+          <ul class="toppanel-list">
+          {{#data}}
+            {{#.}}
+              <li><a href="{{link}}">{{{title}}}</a></li>
+            {{/.}}
+          {{/data}}
+          </ul>
+      </div>
+    {{/twitter}}
+    <div class="toppanel-section toppanel-love haspro">
+      <p><a target="_blank" href="http://jsbin.com/dave/last/edit">Dave</a> loves you <span class="love">&hearts;</span> because you're a Pro.</p>
+    </div>
+  </div>
+
+  <div class="toppanel-column">
+  {{#quote}}
+    <div class="toppanel-section">
+      <div class="toppanel-quote">{{{.}}}</div>
+    </div>
+  {{/quote}}
+    {{!--
+      <div class="toppanel-section">
+        <h2 class="toppanel-title"><a href="#">Recent bins</a></h2>
+        <ul class="toppanel-list">
+          <li><a href="#"><span class="toppanel-bin-name">sdcwww</span> <span class="toppanel-bin-date">yesterday</span></a></li>
+          <li><a href="#"><span class="toppanel-bin-name">uhsjj</span> <span class="toppanel-bin-date">last Wednesday</span></a></li>
+          <li><a href="#"><span class="toppanel-bin-name">jiooo</span> <span class="toppanel-bin-date">2 weeks ago</span></a></li>
+        </ul>
+      </div>
+    --}}
+  </div>
+{{/welcomePanel}}
+</div>
+
+<script>
+// {{topPanel}}
+try {
+  if ({{#if_null topPanel}}localStorage.settings === undefined || localStorage.settings.indexOf('"toppanel":false') === -1{{else}}{{#if topPanel}}true{{else}}false{{/if}}{{/if_null}}) {
+    document.body.className += ' toppanel';
+  }
+} catch (e) {
+  // if there is no localStorage
+}
+</script>

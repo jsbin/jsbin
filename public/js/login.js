@@ -9,7 +9,7 @@
   if ( !pushState) {
     return;
   }
-  
+
   var $forms = $('#login-register-page.form-container form');
   var $info = $('#login-register-page.form-container .info');
   var currentPath = null;
@@ -105,7 +105,7 @@
         window.location.href = res.referrer;
       },
       error: function(res) {
-        showInfo().find('p').text(res.responseJSON.message);
+        showInfo().find('p').html(res.responseJSON.message);
       }
     });
 

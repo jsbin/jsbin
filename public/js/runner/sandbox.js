@@ -20,7 +20,7 @@ var sandbox = (function () {
    */
   sandbox.create = function () {
     var iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', 'JS Bin Output ');
     iframe.id = sandbox.guid++;
@@ -33,7 +33,7 @@ var sandbox = (function () {
    * the old one.
    */
   sandbox.use = function (iframe, done) {
-    if (!sandbox.target) throw new Error("Sandbox has no target element.");
+    if (!sandbox.target) throw new Error('Sandbox has no target element.');
     sandbox.old = sandbox.active;
     var state = sandbox.saveState(sandbox.old);
     sandbox.active = iframe;

@@ -4,7 +4,7 @@ $.fn.splitter = function () {
       $body = $('body');
       // blockiframe = $blocker.find('iframe')[0];
 
-  var splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[]');
+  var splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[]');
   return this.each(function () {
     var $el = $(this),
         $originalContainer = $(this),
@@ -129,7 +129,7 @@ $.fn.splitter = function () {
         $handle.css(css);
         settings[type] = pos;
         splitterSettings[guid] = settings;
-        localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
+        store.localStorage.setItem('splitterSettings', JSON.stringify(splitterSettings));
 
         // wait until animations have completed!
         if (moveSplitter.timer) clearTimeout(moveSplitter.timer);
@@ -213,86 +213,6 @@ $.fn.splitter = function () {
         moveSplitter(x !== undefined ? x : $el.offset()[props[type].cssProp]);
       }
     }); //.trigger('init', settings.x || $el.offset().left);
-
-    $handle.bind('change', function (event, toType, value) {
-      $el.css(props[type].cssProp, '0');
-      $prev.css(props[type].otherCssProp, '0');
-      $el.css('border-' + props[type].cssProp, '0');
-
-      if (toType === 'y') {
-        // 1. drop inside of a new div that encompases the elements
-        $el = $el.find('> *');
-        $handle.appendTo($prev);
-        $el.appendTo($prev);
-        $prev.css('height', '100%');
-        $originalContainer.hide();
-        $handle.css('margin-left', 0);
-        $handle.css('margin-top', 5);
-
-        $handle.addClass('vertical');
-
-        delete settings.x;
-
-        $originalContainer.nextAll(':visible:first').trigger('init');
-        // 2. change splitter to the right to point to new block div
-      } else {
-        $el = $prev;
-        $prev = $tmp;
-
-        $el.appendTo($originalContainer);
-        $handle.insertBefore($originalContainer);
-        $handle.removeClass('vertical');
-        $el.css('border-top', 0);
-        $el = $originalContainer;
-        $originalContainer.show();
-        $handle.css('margin-top', 0);
-        $handle.css('margin-left', -4);
-        delete settings.y;
-
-        setTimeout(function() {
-          $originalContainer.nextAll(':visible:first').trigger('init');
-        }, 0);
-      }
-
-      resetPrev();
-
-      type = toType;
-
-      // if (type == 'y') {
-        // FIXME $prev should check visible
-        var $tmp = $el;
-        $el = $prev;
-        $prev = $tmp;
-      // } else {
-
-      // }
-
-      $el.css(props[type].otherCssProp, '0');
-      $prev.css(props[type].cssProp, '0');
-      // TODO
-      // reset top/bottom positions
-      // reset left/right positions
-
-      if ($el.is(':visible')) {
-        // find all other handles and recalc their height
-        if (type === 'y') {
-          var otherhandles = $el.find('.resize');
-
-          otherhandles.each(function (i) {
-            // find the top of the
-            var $h = $(this);
-            if (this === $handle[0]) {
-              // ignore
-            } else {
-              // TODO change to real px :(
-              $h.trigger('init', 100 / (otherhandles - i - 1));
-            }
-          });
-        }
-        $handle.trigger('init', value || $el.offset()[props[type].cssProp] || props[type].size / 2);
-      }
-    });
-
 
     $prev.css('width', 'auto');
     $prev.css('height', 'auto');

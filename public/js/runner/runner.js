@@ -70,6 +70,18 @@ var runner = (function () {
    * Render a new preview iframe using the posted source
    */
   runner.render = function (data) {
+    // if we're just changing CSS, let's try to inject the change
+    // instead of doing a full render
+    if (data.options.injectCSS) {
+      if (sandbox.active) {
+        var style = sandbox.active.contentDocument.getElementById('jsbin-css');
+        if (style) {
+          style.innerHTML = data.source;
+          return;
+        }
+      }
+    }
+
     var iframe = sandbox.create(data.options);
     sandbox.use(iframe, function () {
       var childDoc = iframe.contentDocument,

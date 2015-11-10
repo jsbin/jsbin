@@ -32,7 +32,7 @@ panels.save = function () {
     state[panel.name] = left;
   }
 
-  sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
+  store.sessionStorage.setItem('jsbin.panels', JSON.stringify(state));
 };
 
 function getQuery(qs) {
@@ -116,7 +116,7 @@ panels.restore = function () {
       search = location.search.substring(1),
       hash = location.hash.substring(1),
       toopen = [],
-      state = jsbin.embed ? null : JSON.parse(sessionStorage.getItem('jsbin.panels') || 'null'),
+      state = jsbin.embed ? null : JSON.parse(store.sessionStorage.getItem('jsbin.panels') || 'null'),
       hasContent = { javascript: editors.javascript.getCode().length,
         css: editors.css.getCode().length,
         html: editors.html.getCode().length
@@ -129,12 +129,12 @@ panels.restore = function () {
       openWithSameDimensions = false,
       width = $window.width(),
       deferredCodeInsert = '',
-      focused = !!sessionStorage.getItem('panel'),
+      focused = !!store.sessionStorage.getItem('panel'),
       validPanels = 'live javascript html css console'.split(' '),
       cachedHash = '';
 
   if (history.replaceState && (location.pathname.indexOf('/edit') !== -1) || ((location.origin + location.pathname) === jsbin.getURL() + '/')) {
-    history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit') + (hash ? '#' + hash : ''));
+    // history.replaceState(null, '', jsbin.getURL() + (jsbin.getURL() === jsbin.root ? '' : '/edit') + (hash ? '#' + hash : ''));
   }
 
   if (search || hash) {
@@ -282,7 +282,7 @@ panels.restore = function () {
   // for (name in this.panels) {
   //   panel = this.panels[name];
   //   if (panel.editor) {
-  //     // panel.setCode(sessionStorage.getItem('jsbin.content.' + name) || template[name]);
+  //     // panel.setCode(store.sessionStorage.getItem('jsbin.content.' + name) || template[name]);
   //   }
   // }
 
@@ -305,7 +305,7 @@ panels.savecontent = function () {
   var name, panel;
   for (name in this.panels) {
     panel = this.panels[name];
-    if (panel.editor) sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
+    if (panel.editor) store.sessionStorage.setItem('jsbin.content.' + name, panel.getCode());
   }
 };
 
@@ -332,6 +332,36 @@ panels.focus = function (panel) {
     $('.panel').removeClass('focus').filter('.' + panel.id).addClass('focus');
   }
 }
+
+panels.getQuery = function () {
+  var alt = {
+    javascript: 'js',
+    live: 'output'
+  };
+
+  var visible = panels.getVisible();
+
+  return visible.map(function (p) {
+    return alt[p.id] || p.id;
+  }).join(',');
+}
+
+panels.updateQuery = throttle(function updateQuery() {
+  var query = panels.getQuery();
+
+  if (jsbin.state.code && jsbin.state.owner) {
+    $.ajax({
+      url: jsbin.getURL({ withRevision: true }) + '/settings',
+      type: 'PUT',
+      data: { panels: visible.map(function (p) { return p.id; }) },
+      success: function () {}
+    });
+  }
+
+  if (history.replaceState) {
+    history.replaceState(null, null, '?' + query);
+  }
+}, 100);
 
 var userResizeable = !$('html').hasClass('layout');
 
@@ -525,39 +555,6 @@ editors.live.settings.render = function (showAlerts) {
   }
 };
 
-// IMPORTANT this is nasty, but the sequence is important, because the
-// show/hide method is being called as the panels are being called as
-// the panel is setup - so we hook these handlers on *afterwards*.
-// panels.update = function () {
-//   var visiblePanels = panels.getVisible(),
-//       visible = [],
-//       i = 0;
-//   for (i = 0; i < visiblePanels.length; i++) {
-//     visible.push(visiblePanels[i].name);
-//   }
-
-//   if (history.replaceState) {
-//     history.replaceState(null, null, '?' + visible.join(','));
-//   } else {
-//     // :( this will break jquery mobile - but we're talking IE only at this point, right?
-//     location.hash = '#' + visible.join(',');
-//   }
-// }
-
-
-// Panel.prototype._show = Panel.prototype.show;
-// Panel.prototype.show = function () {
-//   this._show.apply(this, arguments);
-//   panels.update();
-// }
-
-// Panel.prototype._hide = Panel.prototype.hide;
-// Panel.prototype.hide = function () {
-//   this._hide.apply(this, arguments);
-//   panels.update();
-// }
-
-
 panels.allEditors = function (fn) {
   var panelId, panel;
   for (panelId in panels.panels) {
@@ -570,40 +567,6 @@ setTimeout(function () {
   panels.restore();
 }, 10);
 panels.focus(panels.getVisible()[0] || null);
-
-// allow panels to be reordered - TODO re-enable
-(function () {
-  return; // disabled for now
-
-  var panelsEl = document.getElementById('panels'),
-      moving = null;
-
-  panelsEl.ondragstart = function (e) {
-    if (e.target.nodeName == 'A') {
-      moving = e.target;
-    } else {
-      return false;
-    }
-  };
-
-  panelsEl.ondragover = function (e) {
-    return false;
-  };
-
-  panelsEl.ondragend = function () {
-    moving = false;
-    return false;
-  };
-
-  panelsEl.ondrop = function (e) {
-    if (moving) {
-
-    }
-    return false;
-  };
-
-});
-
 
 var editorsReady = setInterval(function () {
   var ready = true,
@@ -635,9 +598,6 @@ var editorsReady = setInterval(function () {
     });
 
     clearInterval(editorsReady);
-    // panels.ready = true;
-    // if (typeof editors.onReady == 'function') editors.onReady();
-    // panels.distribute();
 
     // if the console is visible, it'll handle rendering of the output and console
     if (panels.panels.console.visible) {

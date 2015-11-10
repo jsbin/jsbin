@@ -1,3 +1,6 @@
+/*jshint strict: false */
+/*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
+
 var saving = {
   todo: {
     html: false,
@@ -12,8 +15,7 @@ var saving = {
 
     saving._inprogress = inprogress;
     if (inprogress === false) {
-      var panels = ['html','css','javascript'],
-          todo;
+      var panels = ['html','css','javascript'];
 
       var save = function () {
         var todo = panels.pop();
@@ -31,6 +33,34 @@ var saving = {
   }
 };
 
+function getTagContent(tag) {
+  var html = jsbin.panels.panels.html.getCode();
+  var result = '';
+
+  // if we don't have the tag, bail with an empty string
+  if (html.indexOf('<' + tag) === -1) {
+    return result;
+  }
+
+  if (tag !== 'title' && tag !== 'meta') {
+    console.error('getTagContent for ' + tag + ' is not supported');
+    return result;
+  }
+
+  // grab the content based on the earlier defined regexp
+  html.replace(getTagContent.re[tag], function (all, capture1, capture2) {
+    result = tag === 'title' ? capture1 : capture2;
+  });
+
+  return result;
+}
+
+getTagContent.re = {
+  meta: /(<meta name="description" content=")([^"]*)/im,
+  title: /<title>(.*)<\/title>/im
+};
+
+
 // to allow for download button to be introduced via beta feature
 $('a.save').click(function (event) {
   event.preventDefault();
@@ -41,17 +71,27 @@ $('a.save').click(function (event) {
   if (jsbin.saveDisabled === true) {
     ajax = false;
   }
-  saveCode('save', ajax);
+
+  if (jsbin.state.changed || !jsbin.owner()) {
+    saveCode('save', ajax);
+  }
 
   return false;
 });
 
 var $shareLinks = $('#share .link');
+var $panelCheckboxes = $('#sharemenu #sharepanels input');
 
-$panelCheckboxes = $('#sharemenu #sharepanels input');
+// TODO remove split when live
+var split = $('#sharemenu .share-split').length;
 
+// TODO candidate for removal
 function updateSavedState() {
   'use strict';
+  if (split) {
+    return;
+  }
+
   var mapping = {
     live: 'output',
     javascript: 'js',
@@ -59,12 +99,15 @@ function updateSavedState() {
     html: 'html',
     console: 'console'
   };
+
+  var withRevision = true;
+
   var query = $panelCheckboxes.filter(':checked').map(function () {
     return mapping[this.getAttribute('data-panel')];
   }).get().join(',');
   $shareLinks.each(function () {
     var path = this.getAttribute('data-path');
-    var url = jsbin.getURL(false, path === '/') + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
+    var url = jsbin.getURL({ withRevision: withRevision }) + path + (query && this.id !== 'livepreview' ? '?' + query : ''),
         nodeName = this.nodeName;
     var hash = panels.getHighlightLines();
 
@@ -92,19 +135,66 @@ function updateSavedState() {
   });
 }
 
-$('#sharemenu').bind('open', function () {
+$('#sharemenu').bind('open', updateSavedState);
+$('#sharebintype input[type=radio]').on('click', function () {
+  if (this.value === 'snapshot') {
+    jsbin.state.checksum = false;
+    saveChecksum = false;
+  }
   updateSavedState();
 });
 
+var lastHTML = null;
+
+function updateDocMeta(event, data) {
+  if (data) {
+    if (data.panelId !== 'html') {
+      return; // ignore non-html updates
+    }
+  }
+
+  var currentHTML = jsbin.panels.panels.html.getCode();
+  if (lastHTML !== currentHTML) {
+    lastHTML = currentHTML;
+
+    var description = getTagContent('meta');
+    if (description !== jsbin.state.description) {
+      jsbin.state.description = description;
+      jsbin.state.updateSettings({ description: description });
+    }
+
+    var title = getTagContent('title');
+    if (title !== jsbin.state.title) {
+      jsbin.state.title = title;
+      jsbin.state.updateSettings({ title: title });
+
+      documentTitle = title;
+      if (documentTitle) {
+        document.title = documentTitle + ' - ' + jsbin.name;
+      } else {
+        document.title = jsbin.name;
+      }
+    }
+  }
+}
+
+$document.on('saveComplete', updateDocMeta); // update, not create
+
 $document.on('saved', function () {
+  jsbin.state.changed = false;
   updateSavedState();
+
+  $('#sharebintype input[type=radio][value="realtime"]').prop('checked', true);
+
   $shareLinks.closest('.menu').removeClass('hidden');
 
   $('#jsbinurl').attr('href', jsbin.getURL()).removeClass('hidden');
   $('#clone').removeClass('hidden');
+
+  updateDocMeta();
 });
 
-var saveChecksum = jsbin.state.checksum || sessionStorage.getItem('checksum') || false;
+var saveChecksum = jsbin.state.checksum || store.sessionStorage.getItem('checksum') || false;
 
 // store it back on state
 jsbin.state.checksum = saveChecksum;
@@ -134,7 +224,7 @@ function onSaveError(jqXHR, panelId) {
       content: 'I think there\'s something wrong with your session and I\'m unable to save. <a href="' + window.location + '"><strong>Refresh to fix this</strong></a>, you <strong>will not</strong> lose your code.'
     });
   } else if (panelId) {
-    if (panelId) savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100);
+    if (panelId) { savingLabels[panelId].text('Saving...').animate({ opacity: 1 }, 100); }
     window._console.error({message: 'Warning: Something went wrong while saving. Your most recent work is not saved.'});
   }
 }
@@ -152,6 +242,7 @@ if (!jsbin.saveDisabled) {
   };
 
   $document.bind('jsbinReady', function () {
+    jsbin.state.changed = false;
     jsbin.panels.allEditors(function (panel) {
       panel.on('processor', function () {
         // if the url doesn't match the root - i.e. they've actually saved something then save on processor change
@@ -162,6 +253,7 @@ if (!jsbin.saveDisabled) {
     });
 
     $document.bind('codeChange', function (event, data) {
+      jsbin.state.changed = true;
       // savingLabels[data.panelId].text('Saving');
       if (savingLabels[data.panelId]) {
         savingLabels[data.panelId].css({ 'opacity': 0 }).stop(true, true);
@@ -223,7 +315,7 @@ if (!jsbin.saveDisabled) {
 
           $document.trigger('tip', {
             type: 'notification',
-            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
+            content: 'You\'re currently viewing someone else\'s live stream, but you can <strong><a class="clone" href="' + jsbin.root + '/clone">clone your own copy</a></strong> (' + cmd + plus + shift + plus + 'S) at any time to save your edits'
           });
         }
       });
@@ -259,8 +351,14 @@ function updateCode(panelId, callback) {
     compressKeys('content', data);
   }
 
+  if (jsbin.state.processors[panelId] &&
+    jsbin.state.processors[panelId] !== panelId &&
+    jsbin.state.cache[panelId]) {
+    data.processed = jsbin.state.cache[panelId].result;
+  }
+
   $.ajax({
-    url: jsbin.getURL() + '/save',
+    url: jsbin.getURL({ withRevision: true }) + '/save',
     data: data,
     type: 'post',
     dataType: 'json',
@@ -268,9 +366,11 @@ function updateCode(panelId, callback) {
     success: function (data) {
       $document.trigger('saveComplete', { panelId: panelId });
       if (data.error) {
-        saveCode('save', true, function (data) {
+        saveCode('save', true, function () {
           // savedAlready = data.checksum;
         });
+      } else {
+        jsbin.state.latest = true;
       }
     },
     error: function (jqXHR) {
@@ -278,12 +378,15 @@ function updateCode(panelId, callback) {
     },
     complete: function () {
       saving.inprogress(false);
-      callback && callback();
+      if (callback) { callback(); }
     }
   });
 }
 
-$('a.clone').click(function (event) {
+$('a.clone').click(clone);
+$('#tip').delegate('a.clone', 'click', clone);
+
+function clone(event) {
   event.preventDefault();
 
   // save our panel layout - assumes our user is happy with this layout
@@ -294,7 +397,7 @@ $('a.clone').click(function (event) {
   $form.submit();
 
   return false;
-});
+}
 
 function setupform(method) {
 var $form = $('form#saveform').empty()
@@ -303,7 +406,8 @@ var $form = $('form#saveform').empty()
     .append('<input type="hidden" name="css" />')
     .append('<input type="hidden" name="method" />')
     .append('<input type="hidden" name="_csrf" value="' + jsbin.state.token + '" />')
-    .append('<input type="hidden" name="settings" />');
+    .append('<input type="hidden" name="settings" />')
+    .append('<input type="hidden" name="checksum" />');
 
   var settings = {};
 
@@ -322,12 +426,13 @@ var $form = $('form#saveform').empty()
   $form.find('input[name=css]').val(editors.css.getCode());
   $form.find('input[name=html]').val(editors.html.getCode());
   $form.find('input[name=method]').val(method);
+  $form.find('input[name=checksum]').val(jsbin.state.checksum);
 
   return $form;
 }
 
 function pad(n){
-  return n<10 ? '0'+n : n
+  return n<10 ? '0'+n : n;
 }
 
 function ISODateString(d){
@@ -336,7 +441,7 @@ function ISODateString(d){
     + pad(d.getDate())+'T'
     + pad(d.getHours())+':'
     + pad(d.getMinutes())+':'
-    + pad(d.getSeconds())+'Z'
+    + pad(d.getSeconds())+'Z';
 }
 
 function saveCode(method, ajax, ajaxCallback) {
@@ -357,34 +462,36 @@ function saveCode(method, ajax, ajaxCallback) {
 
   if (ajax) {
     $.ajax({
-      url: $form.attr('action'),
+      url: jsbin.getURL({ withRevision: true }) + '/save',
       data: data,
       dataType: 'json',
       type: 'post',
       headers: {'Accept': 'application/json'},
       success: function (data) {
-        var $binGroup,
-            edit;
-
         if (ajaxCallback) {
           ajaxCallback(data);
         }
 
-        sessionStorage.setItem('checksum', data.checksum);
+        store.sessionStorage.setItem('checksum', data.checksum);
         saveChecksum = data.checksum;
 
         jsbin.state.checksum = saveChecksum;
         jsbin.state.code = data.code;
         jsbin.state.revision = data.revision;
+        jsbin.state.latest = true; // this is never not true...end of conversation!
         jsbin.state.metadata = { name: jsbin.user.name };
-        $form.attr('action', jsbin.getURL() + '/save');
+        $form.attr('action', jsbin.getURL({ withRevision: true }) + '/save');
 
         if (window.history && window.history.pushState) {
           // updateURL(edit);
           var hash = panels.getHighlightLines();
-          if (hash) hash = '#' + hash;
-          window.history.pushState(null, '', jsbin.getURL() + '/edit' + hash);
-          sessionStorage.setItem('url', jsbin.getURL());
+          if (hash) { hash = '#' + hash; }
+          var query = panels.getQuery();
+          if (query) { query = '?' + query; }
+          // If split is truthy (> 0) then we are using the revisonless feature
+          // this is temporary until we release the feature!
+          window.history.pushState(null, '', jsbin.getURL({withRevision: !split}) + '/edit' + query + hash);
+          store.sessionStorage.setItem('url', jsbin.getURL({withRevision: !split}));
         } else {
           window.location.hash = data.edit;
         }
@@ -402,64 +509,3 @@ function saveCode(method, ajax, ajaxCallback) {
     $form.submit();
   }
 }
-
-/**
- * Returns the similar part of two strings
- * @param  {String} a first string
- * @param  {String} b second string
- * @return {String}   common substring
- */
-function sameStart(a, b) {
-  if (a == b) return a;
-
-  var tmp = b.slice(0, 1);
-  while (a.indexOf(b.slice(0, tmp.length + 1)) === 0) {
-    tmp = b.slice(0, tmp.length + 1);
-  }
-
-  return tmp;
-}
-
-/*
-
-// refresh the window when we popstate, because for now we don't do an xhr to
-// inject the panel content...yet.
-window.onpopstate = function onpopstate(event) {
-  // ignore the first popstate event, because that comes from the browser...
-  if (!onpopstate.first) window.location.reload();
-  else onpopstate.first = false;
-};
-
-onpopstate.first = true;
-
-function updateURL(path) {
-  var old = location.pathname,
-      back = true,
-      same = sameStart(old, path);
-      sameAt = same.length;
-
-  if (updateURL.timer) window.cancelAnimationFrame(updateURL.timer);
-
-  var run = function () {
-    if (location.pathname !== path) {
-      updateURL.timer = window.requestAnimationFrame(run);
-    }
-
-    if (location.pathname !== same) {
-      if (back) {
-        history.replaceState({ path: path }, '', location.pathname.slice(0, -1));
-      } else {
-        history.replaceState({ path: path }, '', path.slice(0, location.pathname.length + 1));
-      }
-    } else {
-      back = false;
-      history.replaceState({ path: path }, '', path.slice(0, sameAt + 2));
-    }
-  };
-
-  history.pushState({ path: path }, '', location.pathname.slice(0, -1));
-
-  run();
-}
-
-*/

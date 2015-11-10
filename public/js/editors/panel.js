@@ -17,7 +17,8 @@ var editorModes = {
   sass: 'text/x-sass',
   scss: 'text/x-scss',
   processing: 'text/x-csrc',
-  jade: 'text/x-jade'
+  jade: 'text/x-jade',
+  clojurescript: 'clojure'
 };
 
 var badChars = new RegExp('[\u200B\u0080-\u00a0]', 'g');
@@ -78,6 +79,9 @@ var Panel = function (name, settings) {
   panel.$el.data('panel', panel);
 
   this._eventHandlers = {};
+
+  panel.on('show', panels.updateQuery);
+  panel.on('hide', panels.updateQuery);
 
   // keyboard shortcut (set in keyboardcontrol.js)
   panelShortcuts[panelShortcuts.start + panel.order] = panel.id;
@@ -223,10 +227,10 @@ Panel.order = 0;
 Panel.prototype = {
   virgin: true,
   visible: false,
-  updateAriaState: function () {
+  updateAriaState: function updateAriaState() {
     this.controlButton.attr('aria-label', this.label + ' Panel: ' + (this.visible ? 'Active' : 'Inactive'));
   },
-  show: function (x) {
+  show: function show(x) {
     if (this.visible) {
       return;
     }
@@ -413,7 +417,7 @@ Panel.prototype = {
     if (this.settings.init) this.settings.init.call(this);
   },
   _setupEditor: function () {
-    var focusedPanel = sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
+    var focusedPanel = store.sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
         panel = this,
         editor = panel.editor;
 
@@ -521,7 +525,7 @@ Panel.prototype = {
               }
             }
 
-            editor.setCursor({ line: (sessionStorage.getItem('line') || blank || 0) * 1, ch: (sessionStorage.getItem('character') || 0) * 1 });
+            editor.setCursor({ line: (store.sessionStorage.getItem('line') || blank || 0) * 1, ch: (store.sessionStorage.getItem('character') || 0) * 1 });
           }
         }, 110); // This is totally arbitrary
       }
@@ -550,16 +554,16 @@ Panel.prototype = {
 function populateEditor(editor, panel) {
   if (!editor.codeSet) {
     // populate - should eventually use: session, saved data, local storage
-    var cached = sessionStorage.getItem('jsbin.content.' + panel), // session code
-        saved = jsbin.embed ? null : localStorage.getItem('saved-' + panel), // user template
-        sessionURL = sessionStorage.getItem('url'),
+    var cached = store.sessionStorage.getItem('jsbin.content.' + panel), // session code
+        saved = jsbin.embed ? null : store.localStorage.getItem('saved-' + panel), // user template
+        sessionURL = store.sessionStorage.getItem('url'),
         changed = false;
 
     // if we clone the bin, there will be a checksum on the state object
     // which means we happily have write access to the bin
     if (sessionURL !== jsbin.getURL() && !jsbin.state.checksum) {
       // nuke the live saving checksum
-      sessionStorage.removeItem('checksum');
+      store.sessionStorage.removeItem('checksum');
       saveChecksum = false;
     }
 
@@ -572,13 +576,18 @@ function populateEditor(editor, panel) {
       changed = cached != saved && cached != template[panel];
     } else if (!template.post && saved !== null && !/(edit|embed)$/.test(window.location) && !window.location.search) { // then their saved preference
       editor.setCode(saved);
-      var processor = JSON.parse(localStorage.getItem('saved-processors') || '{}')[panel];
+      var processor = JSON.parse(store.localStorage.getItem('saved-processors') || '{}')[panel];
       if (processor) {
         jsbin.processors.set(jsbin.panels.panels[panel], processor);
       }
     } else { // otherwise fall back on the JS Bin default
       editor.setCode(template[panel]);
     }
+
+    if (editor.editor && editor.editor.clearHistory) {
+      editor.editor.clearHistory();
+    }
+
   } else {
     // this means it was set via the url
     changed = true;

@@ -12,12 +12,11 @@ try {
 }
 
 // required because jQuery 1.4.4 lost ability to search my object property :( (i.e. a[host=foo.com])
-jQuery.expr[':'].host = function(obj, index, meta, stack) {
-  return obj.host == meta[3];
+jQuery.expr[':'].host = function(obj, index, meta) {
+  return obj.host === meta[3];
 };
 
 function throttle(fn, delay) {
-  var timer = null;
   var throttled = function () {
     var context = this, args = arguments;
     throttled.cancel();
@@ -73,7 +72,7 @@ function escapeHTML(html){
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
-};
+}
 
 function dedupe(array) {
   var hash    = {},
@@ -131,10 +130,16 @@ function exposeSettings() {
     return results;
   }
 
-  if (isDOM(window.jsbin) || !window.jsbin) { // because...STUPIDITY!!!
+  if (isDOM(window.jsbin) || !window.jsbin || !window.jsbin.version) { // because...STUPIDITY!!!
     window.jsbin = {
+      user: window.jsbin.user,
       'static': jsbin['static'],
       version: jsbin.version,
+      analytics: jsbin.analytics,
+      state: {
+        title: jsbin.state.title,
+        description: jsbin.state.description
+      },
       embed: jsbin.embed,
       panels: {
         // FIXME decide whether this should be locked down further
@@ -151,7 +156,7 @@ function exposeSettings() {
     Object.defineProperty(window, key, {
       get:function () {
         window.jsbin.settings = jsbin.settings;
-        console.log('jsbin.settings can how be modified on the console');
+        console.log('jsbin.settings can now be modified on the console');
       }
     });
     if (!jsbin.embed) {
@@ -160,18 +165,21 @@ function exposeSettings() {
   }
 }
 
-var storedSettings = localStorage.getItem('settings');
-if (storedSettings === "undefined") {
-  // yes, equals the *string* "undefined", then something went wrong
+var storedSettings = store.localStorage.getItem('settings');
+if (storedSettings === 'undefined' || jsbin.embed) {
+  // yes, equals the *string* 'undefined', then something went wrong
   storedSettings = null;
 }
 
-// In all cases localStorage takes precedence over user settings so users can
-// configure it from the console and overwrite the server delivered settings
-jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
-
-if (jsbin.user) {
-  jsbin.settings = $.extend({}, jsbin.user.settings, jsbin.settings);
+if (jsbin.user && jsbin.user.name) {
+  jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
+  if (jsbin.user.settings.font) {
+    jsbin.settings.font = parseInt(jsbin.user.settings.font, 10);
+  }
+} else {
+  // In all cases localStorage takes precedence over user settings so users can
+  // configure it from the console and overwrite the server delivered settings
+  jsbin.settings = $.extend({}, jsbin.settings, JSON.parse(storedSettings || '{}'));
 }
 
 // if the above code isn't dodgy, this for hellz bells is:
@@ -187,13 +195,13 @@ jsbin.ie = (function(){
   while (
     div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
     all[0]
-  );
+  ) {}
   return v > 4 ? v : undef;
 }());
 
 if (!storedSettings && (location.origin + location.pathname) === jsbin.root + '/') {
   // first timer - let's welcome them shall we, Dave?
-  localStorage.setItem('settings', '{}');
+  store.localStorage.setItem('settings', '{}');
 }
 
 if (!jsbin.settings.editor) {
@@ -223,15 +231,21 @@ jsbin.owner = function () {
   return jsbin.user && jsbin.user.name && jsbin.state.metadata && jsbin.state.metadata.name === jsbin.user.name;
 };
 
-jsbin.getURL = function (withoutRoot, share) {
-  var url = withoutRoot ? '' : (share ? jsbin.shareRoot : jsbin.root),
-      state = jsbin.state;
+jsbin.getURL = function (options) {
+  if (!options) { options = {}; }
+
+  var withoutRoot = options.withoutRoot;
+  var root = options.root || jsbin.root;
+  var url = withoutRoot ? '' : root;
+  var state = jsbin.state;
 
   if (state.code) {
     url += '/' + state.code;
 
-    if (state.revision) { //} && state.revision !== 1) {
-      url += '/' + state.revision;
+    if (!state.latest || options.withRevision) { //} && state.revision !== 1) {
+      if (options.withRevision !== false) {
+        url += '/' + (state.revision || 1);
+      }
     }
   }
   return url;
@@ -241,11 +255,12 @@ jsbin.state.updateSettings = throttle(function updateBinSettingsInner(update, me
   if (!method) {
     method = 'POST';
   }
-  
+
   if (jsbin.state.code) {
+    update.checksum = jsbin.state.checksum;
     $.ajax({
       type: method, // consistency ftw :-\
-      url: jsbin.getURL() + '/settings',
+      url: jsbin.getURL({ withRevision: true }) + '/settings',
       data: update
     });
   }
@@ -285,31 +300,21 @@ var $window = $(window),
     documentTitle = 'JS Bin',
     $bin = $('#bin'),
     loadGist,
-    // splitterSettings = JSON.parse(localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
+    // splitterSettings = JSON.parse(store.localStorage.getItem('splitterSettings') || '[ { "x" : null }, { "x" : null } ]'),
     unload = function () {
-      // sessionStorage.setItem('javascript', editors.javascript.getCode());
-      if (jsbin.panels.focused.editor) {
-        try { // this causes errors in IE9 - so we'll use a try/catch to get through it
-          sessionStorage.setItem('line', jsbin.panels.focused.editor.getCursor().line);
-          sessionStorage.setItem('character', jsbin.panels.focused.editor.getCursor().ch);
-        } catch (e) {
-          sessionStorage.setItem('line', 0);
-          sessionStorage.setItem('character', 0);
-        }
-      }
-
-      sessionStorage.setItem('url', jsbin.getURL());
-      localStorage.setItem('settings', JSON.stringify(jsbin.settings));
+      store.sessionStorage.setItem('url', jsbin.getURL());
+      store.localStorage.setItem('settings', JSON.stringify(jsbin.settings));
 
       if (jsbin.panels.saveOnExit === false) {
         return;
       }
+
       jsbin.panels.save();
       jsbin.panels.savecontent();
 
       var panel = jsbin.panels.focused;
       if (panel) {
-        sessionStorage.setItem('panel', panel.id);
+        store.sessionStorage.setItem('panel', panel.id);
       }
     };
 
@@ -318,8 +323,8 @@ $window.unload(unload);
 // window.addEventListener('storage', function (e) {
 //   if (e.storageArea === localStorage && e.key === 'settings') {
 //     console.log('updating from storage');
-//     console.log(JSON.parse(localStorage.settings));
-//     jsbin.settings = JSON.parse(localStorage.settings);
+//     console.log(JSON.parse(store.localStorage.settings));
+//     jsbin.settings = JSON.parse(store.localStorage.settings);
 //   }
 // });
 
@@ -328,6 +333,7 @@ if ($.browser.opera) {
   setInterval(unload, 500);
 }
 
+// TODO remove this entirely, it's kinda stupid - RS 2015-07-19
 if (location.search.indexOf('api=') !== -1) {
   (function () {
     var urlParts = location.search.substring(1).split(','),
@@ -355,17 +361,18 @@ if (location.search.indexOf('api=') !== -1) {
   }());
 }
 
-
 $document.one('jsbinReady', function () {
   exposeSettings();
   $bin.removeAttr('style');
   $body.addClass('ready');
 });
 
-if (navigator.userAgent.indexOf(' Mac ') !== -1) (function () {
+if (navigator.userAgent.indexOf(' Mac ') !== -1) {
+  (function () {
   var el = $('#keyboardHelp')[0];
   el.innerHTML = el.innerHTML.replace(/ctrl/g, 'cmd').replace(/Ctrl/g, 'ctrl');
 })();
+}
 
 if (jsbin.embed) {
   $window.on('focus', function () {

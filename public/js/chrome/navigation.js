@@ -51,10 +51,10 @@ $('a.logout').click(function (event) {
   // remove that and just let the form submit itself...
   $(this.hash).submit();
   // Clear session storage so private bins wont be cached.
-  for (i = 0; i < sessionStorage.length; i++) {
-    key = sessionStorage.key(i);
+  for (i = 0; i < store.sessionStorage.length; i++) {
+    key = store.sessionStorage.key(i);
     if (key.indexOf('jsbin.content.') === 0) {
-      sessionStorage.removeItem(key);
+      store.sessionStorage.removeItem(key);
     }
   }
 });
@@ -73,41 +73,50 @@ $('.homebtn').click(function (event, data) {
   return false;
 });
 
-var $lockrevision = $('.lockrevision').on('click', function (event) {
+var $lockrevision = $('div.lockrevision').on('click', function (event) {
   event.preventDefault();
-  if (!$lockrevision.data('lock')) {
+  saveChecksum = false;
+  $document.trigger('locked');
+}).on('mouseup', function () {
+  return false;
+});
+
+$document.on('locked', function () {
+  if (!$lockrevision.data('locked')) {
     analytics.lock();
     $lockrevision.removeClass('icon-unlocked').addClass('icon-lock');
     $lockrevision.html('<span>This bin is now locked from further changes</span>');
     $lockrevision.data('locked', true);
-    saveChecksum = false;
-    $document.trigger('locked');
   }
-  return false;
-}).on('mouseup', function () {
-  return false;
 });
+
+// var $lockrevision = $('.lockrevision').on('click', function (event) {
+// });
 
 $document.on('saved', function () {
   $lockrevision.removeClass('icon-lock').addClass('icon-unlocked').data('locked', false);
   $lockrevision.html('<span>Click to lock and prevent further changes</span>');
 });
 
-$('#share input[type=text], #share textarea').on('beforecopy', function (event) {
-  analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
-});
+// TODO decide whether to remove this, since it definitely doesn't work!
+// $('#share input[type=text], #share textarea').on('beforecopy', function (event) {
+//   console.log(this, this.getAttribute('data-path'));
+//   analytics.share('copy', this.getAttribute('data-path').substring(1) || 'output');
+// });
 
-var $panelCheckboxes = $('#sharepanels input').on('change click', updateSavedState);
-$('#sharemenu').bind('open', function () {
-  // analytics.openShare();
-  // $lockrevision.removeClass('icon-unlock').addClass('icon-lock');
+if (!$('#sharemenu .share-split').length) {
+  var $panelCheckboxes = $('#sharepanels input[type="checkbox"]').on('change', function () {
+    updateSavedState();
+  });
+  $('#sharemenu').bind('open', function () {
+    $panelCheckboxes.attr('checked', false);
+    jsbin.panels.getVisible().forEach(function (panel) {
+      $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').prop('checked', true).change();
+    });
 
-  $panelCheckboxes.attr('checked', false);
-  jsbin.panels.getVisible().forEach(function (panel) {
-    $panelCheckboxes.filter('[data-panel="' + panel.id + '"]').attr('checked', true).change();
   });
 
-});
+}
 
 var dropdownOpen = false,
     onhover = false,
@@ -278,15 +287,15 @@ $('#createnew').click(function (event) {
   analytics.createNew();
   // FIXME this is out and out [cr]lazy....
   jsbin.panels.savecontent = function(){};
-  for (i = 0; i < sessionStorage.length; i++) {
-    key = sessionStorage.key(i);
+  for (i = 0; i < store.sessionStorage.length; i++) {
+    key = store.sessionStorage.key(i);
     if (key.indexOf('jsbin.content.') === 0) {
-      sessionStorage.removeItem(key);
+      store.sessionStorage.removeItem(key);
     }
   }
 
   // clear out the write checksum too
-  sessionStorage.removeItem('checksum');
+  store.sessionStorage.removeItem('checksum');
 
   jsbin.panels.saveOnExit = false;
 
@@ -312,7 +321,7 @@ var $visibilityButtons = $('#control a.visibilityToggle').click(function(event) 
   var visibility = $(this).data('vis');
 
   $.ajax({
-    url: jsbin.getURL() + '/' + visibility,
+    url: jsbin.getURL({ withRevision: true }) + '/' + visibility,
     type: 'post',
     success: function (data) {
 
@@ -347,7 +356,7 @@ $('#lostpass').click(function (e) {
 jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin.settings.includejs;
 
 // ignore for embed as there might be a lot of embeds on the page
-if (!jsbin.embed && sessionStorage.runnerPending) {
+if (!jsbin.embed && store.sessionStorage.getItem('runnerPending')) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
     type: 'error'
@@ -407,7 +416,7 @@ var re = {
   metaContent: /content=".*?"/i
 };
 
-var metatag = '<meta name="description" content="[add your bin description]" />\n';
+var metatag = '<meta name="description" content="[add your bin description]">\n';
 
 $('#addmeta').click(function () {
   // if not - insert
@@ -416,6 +425,10 @@ $('#addmeta').click(function () {
   var editor = jsbin.panels.panels.html,
       cm = editor.editor,
       html = editor.getCode();
+
+  if (!editor.visible) {
+    editor.show();
+  }
 
   if (!re.meta.test(html)) {
     if (re.head.test(html)) {
@@ -460,7 +473,7 @@ $('a.publish-to-vanity').on('click', function (event) {
   $.ajax({
     type: 'post',
     url: this.href,
-    data: { url: jsbin.getURL() },
+    data: { url: jsbin.getURL({ withRevision: true }) },
     success: function () {
       $document.trigger('tip', {
         type: 'notification',
@@ -476,13 +489,46 @@ $('a.publish-to-vanity').on('click', function (event) {
   })
 });
 
+$document.on('click', 'a.deleteallbins', function () {
+  if (jsbin.user && jsbin.state.metadata.name === jsbin.user.name) {
+    if (confirm('Delete all snapshots of this bin including this one?')) {
+    analytics.deleteAll();
+    $.ajax({
+      type: 'post',
+      url: jsbin.getURL() + '/delete-all',
+      success: function () {
+        jsbin.state.deleted = true;
+        $document.trigger('tip', {
+          type: 'error',
+          content: 'This bin and history is now deleted. You can continue to edit, but once you leave the bin can\'t be retrieved'
+        });
+      },
+      error: function (xhr) {
+        if (xhr.status === 403) {
+          $document.trigger('tip', {
+            content: 'You don\'t own this bin, so you can\'t delete it.',
+            autohide: 5000
+          });
+        }
+      }
+    });
+
+  }
+  } else {
+    $document.trigger('tip', {
+      type: 'error',
+      content: 'You must be logged in <em><strong>the bin owner</strong></em> to delete all snapshots. <a target="_blank" href="/help/delete-a-bin">Need help?</a>'
+    });
+  }
+});
+
 $('a.deletebin').on('click', function (e) {
   e.preventDefault();
   if (confirm('Delete this bin?')) {
     analytics['delete']();
     $.ajax({
       type: 'post',
-      url: jsbin.getURL() + '/delete',
+      url: jsbin.getURL({ withRevision: true }) + '/delete',
       data: { checksum: jsbin.state.checksum },
       success: function () {
         jsbin.state.deleted = true;
@@ -519,7 +565,9 @@ var $enableUniversalEditor = $('#enableUniversalEditor').on('change', function (
 
   jsbin.settings.editor.simple = this.checked;
   analytics.universalEditor(jsbin.settings.editor.simple);
-  window.location.reload();
+  settings.save(function () {
+    window.location.reload();
+  });
 });
 
 if (jsbin.settings.editor.simple) {

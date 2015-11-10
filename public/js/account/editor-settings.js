@@ -5,6 +5,7 @@
 
   // create fake jsbin object
   $.extend(jsbin, {
+    state: {},
     panels: {
       panels: {
         javascript: {
@@ -86,10 +87,6 @@
     'matchbrackets'
   ];
   var $addons = {};
-
-  var $saveStatus = $('span.status');
-  var saveTimer = null;
-
 
   // setup variables;
   var $saveStatus = $('span.status');

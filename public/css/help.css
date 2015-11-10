@@ -304,6 +304,7 @@ footer .legal a:hover {
   position: relative;
   margin: 0 0 -150px;
   min-height: 100%;
+  background: rgb(254, 254, 254);
 }
 
 #footer {

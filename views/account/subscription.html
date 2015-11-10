@@ -14,6 +14,14 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
 
   <p><a href="http://jsbin.com/dave/last">Dave</a> loves you <span class="love">&hearts;</span> Thank you.</p>
 
+  <div class="invoices">
+    <h3> Invoices </h3>
+    {{#each ../invoices}}
+    <p><a href="/account/invoices/{{id}}">Invoice for {{#stripeTimestampAsDate lines.data.[0].period.start "D MMM, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate lines.data.[0].period.end "D MMM, YYYY"}}{{/stripeTimestampAsDate}}</a></p>
+    {{/each}}
+  </div>
+
+
   {{#if cancel_at_period_end}}
   <div class="cancel">
     <h3>Cancellation Zone</h3>
@@ -43,7 +51,7 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
   </script>
 
   {{/if}}
-
   {{/subscription}}
+
 </section>
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>

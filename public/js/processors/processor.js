@@ -114,6 +114,13 @@ var processors = jsbin.processors = (function () {
         source: '',
         result: ''
       };
+
+      if (processorData.target) {
+        if (!jsbin.state.cache) {
+          jsbin.state.cache = {};
+        }
+        jsbin.state.cache[processorData.target] = cache;
+      }
       var proxyCallback = function (source) {
         return new RSVP.Promise(function (resolve, reject) {
           source = source.trim();
@@ -143,11 +150,13 @@ var processors = jsbin.processors = (function () {
   var processors = {
 
     html: createProcessor({
-      id: 'html'
+      id: 'html',
+      extensions: ['html']
     }),
 
     css: createProcessor({
-      id: 'css'
+      id: 'css',
+      extensions: ['css']
     }),
 
     javascript: createProcessor({
@@ -161,7 +170,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['coffee'],
       url: jsbin.static + '/js/vendor/coffee-script.js',
       init: function coffeescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/coffeescript/coffeescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/coffeescript/coffeescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -213,7 +222,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['ls'],
       url: jsbin.static + '/js/vendor/livescript.js',
       init: function livescript(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/livescript/livescript.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/livescript/livescript.js', ready);
       },
       handler: function (source, resolve, reject) {
         var renderedCode = '';
@@ -300,7 +309,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['md', 'markdown', 'mdown'],
       url: jsbin.static + '/js/vendor/marked.min.js',
       init: function markdown(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/markdown/markdown.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/markdown/markdown.js', ready);
       },
       handler: function (source, resolve, reject) {
         try {
@@ -318,7 +327,7 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/processing.min.js',
       init: function (ready) {
         $('#library').val( $('#library').find(':contains("Processing")').val() ).trigger('change');
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/clike/clike.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/clike/clike.js', ready);
       },
       handler: function processing(source, resolve, reject) {
         try {
@@ -348,7 +357,7 @@ var processors = jsbin.processors = (function () {
       extensions: ['jade'],
       url: jsbin.static + '/js/vendor/jade.js?1.4.2',
       init: function jade(ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/jade/jade.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/jade/jade.js', ready);
       },
       handler: function jade(source, resolve, reject) {
         try {
@@ -380,7 +389,7 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/less.min.js',
       init: passthrough,
       handler: function less(source, resolve, reject) {
-        window.less.Parser().parse(source, function (error, result) {
+        window.less.render(source, function (error, result) {
           if (error) {
             // index starts at 1
             var line = parseInt(error.line, 10) || 0;
@@ -399,7 +408,7 @@ var processors = jsbin.processors = (function () {
 
             return reject([errors]);
           }
-          resolve(result.toCSS().trim());
+          resolve(result.css.trim());
         });
       }
     }),
@@ -457,7 +466,7 @@ var processors = jsbin.processors = (function () {
       target: 'sass',
       extensions: ['sass'],
       init: function (ready) {
-        getScript(jsbin.static + '/js/vendor/codemirror4/mode/sass/sass.js', ready);
+        getScript(jsbin.static + '/js/vendor/codemirror5/mode/sass/sass.js', ready);
       },
       handler: throttle(debounceAsync(function (source, resolve, reject, done) {
         $.ajax({
@@ -488,6 +497,28 @@ var processors = jsbin.processors = (function () {
           complete: done
         });
       }), 500),
+    }),
+
+    babel: createProcessor({
+      id: 'babel',
+      target: 'js',
+      extensions: ['es6'],
+      url: jsbin.static + '/js/vendor/babel.min.js',
+      init: function (ready) {
+        ready();
+      },
+      handler: function babelhandle(source, resolve, reject) {
+        try {
+          resolve(babel.transform(source, { stage: 0 }).code);
+        } catch (e) {
+          console.error(e.message);
+          reject([{
+            line: e.loc.line - 1,
+            ch: e.loc.column,
+            msg: e.message.split('\n')[0].replace(new RegExp('\\\(' + e.loc.line + ':' + e.loc.column + '\\\)'), '(' + e.loc.column + ')')
+          }]);
+        }
+      }
     }),
 
     myth: createProcessor({
@@ -551,6 +582,59 @@ var processors = jsbin.processors = (function () {
         });
       }
     }),
+
+    clojurescript: (function() {
+
+      var worker, resolveWorker, rejectWorker, initReady;
+
+      /* do stuff after worker has finished setup */
+      function workerReady(event) {
+        if (event.data.name === 'ready') {
+          worker.removeEventListener('message', workerReady, false);
+          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', initReady);
+        }
+      }
+
+      /* get result of evaluation
+       * and wrap with quotes to prevent attempt to eval a string */
+      function workerEval(event) {
+        if (event.data.name === 'eval') {
+          worker.removeEventListener('message', workerEval, false);
+          resolveWorker(event.data.result);
+        }
+      }
+
+      return createProcessor({
+        id: 'clojurescript',
+        target: 'js',
+        extensions: ['clj', 'cljs'],
+        init: function clojurescript(ready) {
+
+          // init worker
+          if (window.Worker) {
+            initReady = ready;
+            worker = new Worker(jsbin.static + '/js/workers/cljs-worker.js');
+            worker.addEventListener('error', rejectWorker, false);
+            worker.addEventListener('message', workerReady, false);
+            worker.postMessage({ name: 'cljs', path: jsbin.static + '/js/vendor/cljs.js' });
+          } else {
+            alert('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
+          }
+        },
+        handler: function (source, resolve, reject) {
+          try {
+            /* send code to worker
+             * and alias promise functions to be used in upper scope */
+            resolveWorker = resolve;
+            rejectWorker = reject;
+            worker.addEventListener('message', workerEval, false);
+            worker.postMessage({ name: 'eval', code: source });
+          } catch (e) {
+            console.error(e);
+          }
+        }
+      })
+    })(),
 
     traceur: (function () {
       var SourceMapConsumer,
@@ -702,7 +786,8 @@ var processors = jsbin.processors = (function () {
       panel.editor.setOption('smartIndent', smartIndent);
 
       panel.processor = defaultProcessor;
-      delete jsbin.state.processors[panelId];
+      // delete jsbin.state.processors[panelId];
+      jsbin.state.processors[panelId] = panelId;
       delete panel.type;
     }
 

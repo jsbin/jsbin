@@ -10,7 +10,7 @@
   }
 
   function save() {
-    var url = jsbin.getURL(true) + '/edit';
+    var url = window.location.href;
     if (url) {
       document.cookie = 'last=' + encodeURIComponent(url) + '; expires=' + getExpires() + '; path=/';
     } else {

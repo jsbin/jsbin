@@ -51,7 +51,7 @@ var processor = (function () {
    */
   processor.render = function (source, options) {
 
-    options = options || [];
+    options = options || {};
     source = source || '';
 
     var combinedSource = [],
@@ -73,11 +73,6 @@ var processor = (function () {
         doctype = doctypeObj.doctype;
     source = doctypeObj.tail;
     combinedSource.push(doctype);
-
-    // this ensures that requests are bounced away from
-    // jsbin when they're relative. They shouldn't be
-    // hitting jsbin directly for broken images, etc.
-    combinedSource.push('<base href="//null.jsbin.com/">');
 
     // Kill the blocking functions
     // IE requires that this is done in the script, rather than off the window

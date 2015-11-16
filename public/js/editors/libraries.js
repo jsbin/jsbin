@@ -708,6 +708,16 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.1/riot.min.js',
+    'label': 'riot 2.3.1',
+    'group': 'RiotJS'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.1/riot+compiler.min.js',
+    'label': 'riot+compiler 2.3.1',
+    'group': 'RiotJS'
   }
 ];
 

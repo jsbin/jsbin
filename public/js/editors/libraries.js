@@ -648,18 +648,28 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',
-    'label': 'rx.all',
+    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
+    'label': 'RxJS 5.0.0-alpha.8',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.testing.js',
-    'label': 'rx.testing',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.js',
+    'label': 'rx.all 4.0.6',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js',
-    'label': 'rx.dom',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.compat.js',
+    'label': 'rx.all.compat 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.testing.js',
+    'label': 'rx.testing 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://npmcdn.com/rx-dom@7.0.3/dist/rx.dom.js',
+    'label': 'rx.dom 7.0.3 (requires 4.x)',
     'group': 'RxJS'
   },
   {

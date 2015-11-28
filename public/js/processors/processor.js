@@ -257,48 +257,39 @@ var processors = jsbin.processors = (function () {
       url: jsbin.static + '/js/vendor/typescript.min.js',
       init: passthrough,
       handler: function typescript(source, resolve, reject) {
-        var noop = function () {};
-        var outfile = {
-          source: '',
-          Write: function (s) {
-            this.source += s;
+
+        var result = ts.transpileModule(source, {
+          compilerOptions: {
+            inlineSourceMap: true,
+            inlineSources: true,
+            module: ts.ModuleKind.System,
+            target: ts.ScriptTarget.ES5
           },
-          WriteLine: function (s) {
-            this.source += s + '\n';
-          },
-          Close: noop
-        };
-
-        var outerr = {
-          Write: noop,
-          WriteLine: noop,
-          Close: noop
-        };
-
-        var parseErrors = [];
-
-        var compiler = new window.TypeScript.TypeScriptCompiler(outfile, outerr);
-
-        compiler.setErrorCallback(function (start, len, message) {
-          parseErrors.push({ start: start, len: len, message: message });
+          fileName: 'jsbin.ts',
+          reportDiagnostics: true
         });
-        compiler.parser.errorRecovery = true;
 
-        compiler.addUnit(source, 'jsbin.ts');
-        compiler.typeCheck();
-        compiler.reTypeCheck();
-        compiler.emit();
+        /**
+         *  TypeScript is complaining about the `isolateModules` setting, which
+         *  is meant to ignore import statements. We don't want to show that to
+         *  the user, so we just filter it out.
+         */
+        var diagnostics = result.diagnostics.filter(function(error){
+          return error.code !== 5047;
+        });
 
-        for (var i = 0, len = parseErrors.length; i < len; i++) {
-          console.log('Error Message: ' + parseErrors[i].message);
-          console.log('Error Start: ' + parseErrors[i].start);
-          console.log('Error Length: ' + parseErrors[i].len);
-        }
-
-        if (parseErrors.length) {
-          reject();
+        if (diagnostics.length) {
+          reject(diagnostics.map(function(diagnostic){
+            var position  = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
+            var line = position.line + 1;
+            var character = position.character + 1;
+            var message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+            var code = source.substr(diagnostic.start, diagnostic.length);
+            return message + (code ? ' at ' + code : '') +
+              ' (' + diagnostic.file.fileName + ':'+line+':'+character+')';
+          }).join('\n'));
         } else {
-          resolve(outfile.source);
+          resolve(result.outputText);
         }
       }
     }),

@@ -710,13 +710,13 @@ var libraries = [
     'group': 'Moment.js'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.1/riot.min.js',
-    'label': 'riot 2.3.1',
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot.min.js',
+    'label': 'riot 2.3.x',
     'group': 'RiotJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/riot/2.3.1/riot+compiler.min.js',
-    'label': 'riot+compiler 2.3.1',
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'riot+compiler 2.3.x',
     'group': 'RiotJS'
   }
 ];

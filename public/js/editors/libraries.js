@@ -708,6 +708,16 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot.min.js',
+    'label': 'riot 2.3.x',
+    'group': 'RiotJS'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'riot+compiler 2.3.x',
+    'group': 'RiotJS'
   }
 ];
 

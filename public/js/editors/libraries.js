@@ -710,13 +710,28 @@ var libraries = [
     'group': 'Moment.js'
   },
   {
+    'url': 'https://rawgit.com/riot/riot/dev/riot.min.js',
+    'label': 'Riot (dev)',
+    'group': 'RiotJS'
+  },
+  {
+    'url': 'https://rawgit.com/riot/riot/dev/riot+compiler.min.js',
+    'label': 'Riot+Compiler (dev)',
+    'group': 'RiotJS'
+  },
+  {
+    'url': 'https://rawgit.com/riot/route/dev/dist/route.min.js',
+    'label': 'Riot Router (dev)',
+    'group': 'RiotJS'
+  },
+  {
     'url': 'https://cdn.jsdelivr.net/riot/2.3/riot.min.js',
-    'label': 'riot 2.3.x',
+    'label': 'Riot 2.3.x',
     'group': 'RiotJS'
   },
   {
     'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
-    'label': 'riot+compiler 2.3.x',
+    'label': 'Riot+Compiler 2.3.x',
     'group': 'RiotJS'
   }
 ];

@@ -9,7 +9,7 @@ var Hello = React.createClass({
   }
 });
 
-React.render(
+ReactDOM.render(
   <Hello name="World" />,
   document.getElementById('container')
 );

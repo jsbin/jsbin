@@ -585,50 +585,72 @@ var processors = jsbin.processors = (function () {
 
     clojurescript: (function() {
 
-      var worker, resolveWorker, rejectWorker, initReady;
+      var worker, resolveWorker;
 
-      /* do stuff after worker has finished setup */
-      function workerReady(event) {
-        if (event.data.name === 'ready') {
-          worker.removeEventListener('message', workerReady, false);
-          getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', initReady);
-        }
+      function workerMsgHandler() {
+        window.addEventListener('message', function(event) {
+          var message = JSON.parse(event.data);
+
+          if (message.type === 'eval') {
+            jsbin_cljs.core.eval_expr(
+              '(ns cljs.user)' + message.source,
+              function(err, result) {
+                cljs.user = null;
+                if (err) {
+                  throw Error(err);
+                } else {
+                  parent.postMessage(JSON.stringify({
+                    type: 'eval',
+                    result: '"' + eval(result) + '"'
+                  }), '*');
+                }
+              });
+          }
+        }, false);
       }
 
-      /* get result of evaluation
-       * and wrap with quotes to prevent attempt to eval a string */
-      function workerEval(event) {
-        if (event.data.name === 'eval') {
-          worker.removeEventListener('message', workerEval, false);
-          resolveWorker(event.data.result);
+      window.addEventListener('message', function(event) {
+        var message = JSON.parse(event.data);
+
+        if (message.type === 'eval') {
+          resolveWorker('console.log('+message.result+')');
         }
-      }
+      }, false);
 
       return createProcessor({
         id: 'clojurescript',
         target: 'js',
         extensions: ['clj', 'cljs'],
+        url: jsbin.static + '/js/vendor/cljs.js',
         init: function clojurescript(ready) {
 
-          // init worker
-          if (window.Worker) {
-            initReady = ready;
-            worker = new Worker(jsbin.static + '/js/workers/cljs-worker.js');
-            worker.addEventListener('error', rejectWorker, false);
-            worker.addEventListener('message', workerReady, false);
-            worker.postMessage({ name: 'cljs', path: jsbin.static + '/js/vendor/cljs.js' });
-          } else {
-            alert('Web Workers API is not supported http://caniuse.com/#feat=webworkers');
-          }
+          /* Create sandbox */
+          worker = document.createElement('iframe');
+          worker.sandbox = 'allow-same-origin allow-scripts';
+          worker.name = '<cljs>';
+
+          worker.onload = function() {
+            /* Init CLJS context */
+            worker.contentWindow.jsbin_cljs = jsbin_cljs;
+            worker.contentWindow.cljs = cljs;
+            worker.contentWindow.goog = goog;
+
+            var initilizer = worker.contentWindow.document.createElement('script')
+            initilizer.textContent = '('+workerMsgHandler.toString().split('\n').join('')+')()';
+            worker.contentWindow.document.body.appendChild(initilizer);
+
+            getScript(jsbin.static + '/js/vendor/codemirror5/mode/clojure/clojure.js', ready);
+          };
+
+          document.body.appendChild(worker);
         },
         handler: function (source, resolve, reject) {
           try {
-            /* send code to worker
-             * and alias promise functions to be used in upper scope */
             resolveWorker = resolve;
-            rejectWorker = reject;
-            worker.addEventListener('message', workerEval, false);
-            worker.postMessage({ name: 'eval', code: source });
+            worker.contentWindow.postMessage(JSON.stringify({
+              type: 'eval',
+              source: source
+            }), '*');
           } catch (e) {
             console.error(e);
           }

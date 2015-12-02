@@ -733,7 +733,7 @@ var libraries = [
     'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
     'label': 'Riot+Compiler 2.3.x',
     'group': 'RiotJS'
-  }
+  },
 ];
 
 window.libraries = libraries; // expose a command line API

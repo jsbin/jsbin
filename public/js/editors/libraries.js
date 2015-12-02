@@ -708,6 +708,16 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js',
+    'label': 'Velocity JS 1.2.3',
+    'group': 'Velocity'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
+    'label': 'Velocity UI Pack 1.2.3',
+    'group': 'Velocity'
   }
 ];
 

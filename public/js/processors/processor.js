@@ -262,7 +262,6 @@ var processors = jsbin.processors = (function () {
           compilerOptions: {
             inlineSourceMap: true,
             inlineSources: true,
-            module: ts.ModuleKind.System,
             target: ts.ScriptTarget.ES5
           },
           fileName: 'jsbin.ts',

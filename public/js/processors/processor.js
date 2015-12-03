@@ -592,7 +592,7 @@ var processors = jsbin.processors = (function () {
           var message = JSON.parse(event.data);
 
           if (message.type === 'eval') {
-            jsbin_cljs.core.eval_expr(
+            jsbin_cljs.core.eval(
               '(ns cljs.user)' + message.source,
               function(err, result) {
                 cljs.user = null;
@@ -601,7 +601,7 @@ var processors = jsbin.processors = (function () {
                 } else {
                   parent.postMessage(JSON.stringify({
                     type: 'eval',
-                    result: '"' + eval(result) + '"'
+                    result: '"' + result + '"'
                   }), '*');
                 }
               });

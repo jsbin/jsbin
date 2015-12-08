@@ -271,6 +271,7 @@ var processors = jsbin.processors = (function () {
             target: ts.ScriptTarget.ES5
           },
           fileName: 'jsbin.ts',
+          moduleName: 'jsbin.ts',
           reportDiagnostics: true
         });
 
@@ -294,29 +295,8 @@ var processors = jsbin.processors = (function () {
               ' (' + diagnostic.file.fileName + ':'+line+':'+character+')';
           }).join('\n'));
         } else {
-          var before =
-            "(function(){" +
-            "var tempRegister;" +
-            "if (typeof System === 'undefined') {" +
-            "  System = {};" +
-            "}" +
-            "if (typeof System.register === 'function') {" +
-            "  tempRegister = System.register;" +
-            "  System.register = System.register.bind(System, 'jsbin.ts');" +
-            "} else {" +
-            "  System.register = function(deps, module) {" +
-            "    module().execute();" +
-            "  }" +
-            "}";
-
-          var after =
-            "if(typeof System.import === 'function'){" +
-            "  System.register = tempRegister;"+
-            "  System.import('jsbin.ts');" +
-            "};" +
-            "}());";
-
-          resolve(before + result.outputText + after);
+          var after = "System.import('jsbin.ts')";
+          resolve(result.outputText + after);
         }
       }
     }),

@@ -707,6 +707,11 @@ var libraries = [
     'label': 'Ramda 0.18.0'
   },
   {
+    'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
+    'label': 'PouchDB (latest)'
+    'group': 'PouchDB'
+  },
+  {
     'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
     'label': 'Moment 2.10.6',
     'group': 'Moment.js'

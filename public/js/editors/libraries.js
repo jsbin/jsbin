@@ -708,7 +708,7 @@ var libraries = [
   },
   {
     'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
-    'label': 'PouchDB (latest)'
+    'label': 'PouchDB (latest)',
     'group': 'PouchDB'
   },
   {

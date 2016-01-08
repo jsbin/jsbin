@@ -600,7 +600,7 @@ var processors = jsbin.processors = (function () {
       }
 
       window.addEventListener('message', function(event) {
-        var message = JSON.parse(event.data);
+        var message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
 
         if (message.type === 'eval') {
           resolveWorker('console.log('+message.result+')');

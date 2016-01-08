@@ -28,7 +28,7 @@ var runner = (function () {
   runner.error = function () {
     var args = ['Runner:'].concat([].slice.call(arguments));
     if (!('console' in window)) {return alert(args.join(' '));}
-    window.console.error.apply(console, args);
+    //window.console.error.apply(console, args);
   };
 
   /**
@@ -38,7 +38,7 @@ var runner = (function () {
     if (!event.origin) {return;}
     var data = event.data;
     try {
-      data = JSON.parse(event.data);
+      data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
     } catch (e) {
       return runner.error('Error parsing event data:', e.message);
     }

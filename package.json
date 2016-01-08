@@ -22,7 +22,7 @@
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "postinstall": "grunt build",
-    "postversion": "git push origin master",
+    "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit"
   },

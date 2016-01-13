@@ -6,7 +6,7 @@ Install in 3 simple steps:
 
 1. Installing code
 2. Configuration
-3. Database
+3. Run
 
 For the simplest install process we recommend using Node with SQLite.
 
@@ -34,10 +34,10 @@ If you plan to build and test for production, see the section at the end.
 
 ## Configuration
 
-JS Bin comes with a default config file. You can either edit this directly, or we recommend copying and modifying your own copy that should be named `config.local.json`:
+JS Bin comes with a default config file. You can either edit this directly, or we recommend copying and modifying your own copy that should be named `config.node.json`:
 
     cd /usr/local/lib/node-modules/jsbin    # Kubuntu 13.10 example; YMMV
-    cp config.default.json config.local.json
+    cp config.default.json config.node.json
 
 There are a number of options that you can change to configure JS Bin to your needs. The property names, meaning and possible values have been listed below:
 
@@ -66,7 +66,7 @@ JS Bin will run behind a proxy, indeed our production version of JS Bin is behin
 
 The `PORT` on the command line takes precedence over the config variable. This means in your config, you set the url to be the user facing port (typically port 80, so no port required), and then JS Bin will listen on the port you gave at the environment level.
 
-So to proxy jsbin.com to a localhost:8000 (using something like nginx to do the proxying), the config would look like (this snippet of `config.local.json`):
+So to proxy jsbin.com to a localhost:8000 (using something like nginx to do the proxying), the config would look like (this snippet of `config.node.json`):
 
 ```json
   "url": {
@@ -102,4 +102,8 @@ Finally, ensure either the config.local.json's `env` property is set to "product
 
     $ NODE_ENV=production node .
 
+## Running
+
+    $ grub run
+    
 And that's it.

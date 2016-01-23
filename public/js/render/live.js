@@ -193,10 +193,13 @@ var renderer = (function () {
   };
 
   /**
-   * Pass loop protection hit calls up to the error UI
+   * Pass loop protection hit calls and runtime errors 
+   * up to the error UI
    */
-  renderer.loopProtectHit = function (line) {
+  renderer.showIssue = function (data) {
     var cm = jsbin.panels.panels.javascript.editor;
+    var type = data.type;
+    var line = data.line;
 
     // grr - more setTimeouts to the rescue. We need this to go in *after*
     // jshint does it's magic, but jshint set on a setTimeout, so we have to
@@ -206,14 +209,14 @@ var renderer = (function () {
       if (typeof cm.updateLinting !== 'undefined') {
         // note: this just updated the *source* reference
         annotations = annotations.filter(function (a) {
-          return a.source !== 'loopProtectLine:' + line;
+          return a.source !== type + 'Line:' + line;
         });
         annotations.push({
           from: CodeMirror.Pos(line-1, 0),
           to: CodeMirror.Pos(line-1, 0),
-          message: 'Exiting potential infinite loop.\nTo disable loop protection: add "// noprotect" to your code',
-          severity: 'warning',
-          source: 'loopProtectLine:' + line
+          message: data.message,
+          severity: data.severity,
+          source:  type + 'Line:' + line
         });
 
         cm.updateLinting(annotations);

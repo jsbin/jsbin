@@ -12,8 +12,14 @@ var runner = (function () {
    * window so we can insert it in our error UI
    */
   loopProtect.hit = function (line) {
-    console.warn('Exiting potential infinite loop at line ' + line + '. To disable loop protection: add "// noprotect" to your code');
-    runner.postMessage('loopProtectHit', line);
+	var message = 'Exiting potential infinite loop at line ' + line + 
+	    '. To disable loop protection: add "// noprotect" to your code';
+    console.warn(message);
+    runner.postMessage('showIssue', {
+		type: 'loopProtect', 
+		line: line,
+		severity: 'warning',
+		message: message});
   }
 
   /**
@@ -65,6 +71,56 @@ var runner = (function () {
       data: data
     }), runner.parent.origin);
   };
+
+
+  runner.showErrorIfLocal = function (msg, url, line, col, error) {
+	var path = window.parent.location.pathname;
+	var cut = path.indexOf('/', 1);
+	var fileName = path.substring(1, cut) + '.js';
+	var data = {
+      severity: 'error',
+	  line: line,
+	  message: msg,
+	  type: 'runtimeError'
+	};
+	
+    window.console.log('$$$ ', msg, "url:", url, line, col, error, "fileName:" + fileName);
+
+	/*
+	if (url == fileName || url.substr(-7) === '/runner') {
+	  runner.postMessage('showIssue', data);
+	  return;
+    }
+    */
+	// If the top source is not the local file, scan the stack trace
+	// We can only scan the stack trace if we have one.
+    if (!error || !error.stack) {
+      return;
+    }	
+    var found = false;
+    var stack = error.stack.split('\n');
+    var scanFor = fileName + ':';
+    window.console.log('$$$ stack:', stack, "len:", stack.length, "scanFor", scanFor);
+	for (var i = 0; i < stack.length; i++) {
+	  var line = stack[i].trim();
+	  var start = line.indexOf(scanFor);
+	  
+	  window.console.log("line", line, "start", start);
+	  
+      if (start != -1 && start < 5) {
+		
+	    var end = line.indexOf(':', start + scanFor.length);
+	    
+	    var lineStr = line.substring(start + scanFor.length, end);
+	    
+	    window.console.log("end", end, "lineStr", lineStr);
+	    
+		data.line = parseInt(line.substring(start + scanFor.length, end));
+        runner.postMessage('showIssue', data);
+	    break;
+	  }
+    }
+  }
 
   /**
    * Render a new preview iframe using the posted source
@@ -125,7 +181,10 @@ var runner = (function () {
         // show an error on the jsbin console, but not the browser console
         // (i.e. use _raw), because the browser will throw the native error
         // which (hopefully) includes a link to the JavaScript VM at that time.
-        proxyConsole._raw('error', error && error.stack ? error.stack : msg + ' (line ' + line + ')');
+        proxyConsole._raw(error && error.stack ? error.stack : msg + ' (line ' + line + ')');
+
+        // Also highlight the error in code mirror if we can identify the location.        
+        runner.showErrorIfLocal(msg, url, line, col, error);
       };
 
       // Write the source out. IE crashes if you have lots of these, so that's
@@ -135,7 +194,6 @@ var runner = (function () {
 
       // Close the document. This will fire another DOMContentLoaded.
       childDoc.close();
-
       runner.postMessage('complete');
 
       // Setup the new window

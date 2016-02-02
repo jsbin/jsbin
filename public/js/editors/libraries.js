@@ -658,6 +658,10 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'Riot + Compiler (latest 2.3.x)'
+  },
+  {
     'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
     'label': 'RxJS 5.0.0-alpha.8',
     'group': 'RxJS'

@@ -388,6 +388,10 @@ var libraries = [
     'label': 'Vue.js',
   },
   {
+    'url': 'http://cdn.ractivejs.org/latest/ractive.js',
+    'label': 'Ractive.js'
+  },
+  {
     'url': [
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.css',
       'http://nightly.enyojs.com/latest/enyo-nightly/enyo.js',

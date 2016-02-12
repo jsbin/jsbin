@@ -628,10 +628,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/4.12/video-js.css',
-      '//vjs.zencdn.net/4.12/video.js'
+      '//vjs.zencdn.net/5.6/video-js.css',
+      '//vjs.zencdn.net/5.6/video.js'
     ],
-    'label': 'Video.js 4.12.x'
+    'label': 'Video.js 5.6.x'
   },
   {
     'url': [

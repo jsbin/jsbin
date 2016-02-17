@@ -133,8 +133,8 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/jquery.min.js',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -354,6 +354,16 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': ['//fb.me/react-0.14.3.js', '//fb.me/react-dom-0.14.3.js'],
+    'label': 'React 0.14.3',
+    'group': 'React'
+  },
+  {
+    'url': ['//fb.me/react-with-addons-0.14.3.js', '//fb.me/react-dom-0.14.3.js'],
+    'label': 'React with Add-Ons 0.14.3',
+    'group': 'React'
+  },
+  {
     'url': '//fb.me/react-0.13.3.js',
     'label': 'React 0.13.3',
     'group': 'React'
@@ -376,6 +386,10 @@ var libraries = [
   {
     'url': 'http://vuejs.org/js/vue.js',
     'label': 'Vue.js',
+  },
+  {
+    'url': 'http://cdn.ractivejs.org/latest/ractive.js',
+    'label': 'Ractive.js'
   },
   {
     'url': [
@@ -618,10 +632,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/4.12/video-js.css',
-      '//vjs.zencdn.net/4.12/video.js'
+      '//vjs.zencdn.net/5.6/video-js.css',
+      '//vjs.zencdn.net/5.6/video.js'
     ],
-    'label': 'Video.js 4.12.x'
+    'label': 'Video.js 5.6.x'
   },
   {
     'url': [
@@ -646,6 +660,10 @@ var libraries = [
   {
     'url': '//static.opentok.com/v2/js/opentok.min.js',
     'label': 'OpenTok v2.x (latest)'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'Riot + Compiler (latest 2.3.x)'
   },
   {
     'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
@@ -697,6 +715,11 @@ var libraries = [
     'label': 'Ramda 0.18.0'
   },
   {
+    'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
+    'label': 'PouchDB (latest)',
+    'group': 'PouchDB'
+  },
+  {
     'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
     'label': 'Moment 2.10.6',
     'group': 'Moment.js'
@@ -708,6 +731,16 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js',
+    'label': 'Velocity JS 1.2.3',
+    'group': 'Velocity'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
+    'label': 'Velocity UI Pack 1.2.3',
+    'group': 'Velocity'
   }
 ];
 

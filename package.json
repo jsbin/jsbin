@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.35.3",
+  "version": "3.35.9",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -22,6 +22,7 @@
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
     ":install": "build/install.js",
     "postinstall": "grunt build",
+    "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit"
   },

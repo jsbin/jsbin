@@ -513,8 +513,8 @@ var libraries = [
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'https://cdn.rawgit.com/lodash/lodash/3.0.1/lodash.min.js',
-    'label': 'lodash 3.0.1'
+    'url': 'https://cdn.rawgit.com/lodash/lodash/4.5.1/dist/lodash.min.js',
+    'label': 'lodash 4.5.1'
   },
   {
     'url': 'http://modernizr.com/downloads/modernizr-latest.js',

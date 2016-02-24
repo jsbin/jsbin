@@ -384,7 +384,7 @@ var libraries = [
     'group': 'shims'
   },
   {
-    'url': 'http://vuejs.org/js/vue.js',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js',
     'label': 'Vue.js',
   },
   {

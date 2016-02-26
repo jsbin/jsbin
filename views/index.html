@@ -306,13 +306,14 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{/unless}}
 
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{root}}/bin/user.js?{{bust}}"></script>
 {{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
 <script src="{{root}}/bin/start.js?{{bust}}"></script>
+<script src="{{root}}/bin/user.js?{{bust}}"></script>
 {{else}}{{!- if development, we need include the user code first, otherwise last --}}
 <script src="{{root}}/bin/start.js?{{bust}}"></script>
+<script src="{{root}}/bin/user.js?{{bust}}"></script>
   {{#if concat}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
   {{else}}

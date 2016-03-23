@@ -1,5 +1,7 @@
 # JS Bin
 
+[![Known Vulnerabilities](https://snyk.io/test/github/jsbin/jsbin/badge.svg)](https://snyk.io/test/github/jsbin/jsbin)
+
 JS Bin is an open source collaborative web development debugging tool.
 
 ## If you use JS Bin locally...

@@ -1,9 +1,17 @@
 
 {
-    "last_updated": "2015-01-02T18:15Z",
+    "last_updated": "2016-01-01T22:34Z",
     "disclaimer": "This data is compiled from official European Commission sources to be as accurate as possible, however no guarantee of accuracy is provided. Use at your own risk. Don't trust random people on the internet without doing your own research.",
 
     "rates": {
+        "AT": {
+            "country": "Austria",
+            "standard_rate": 20.00,
+            "reduced_rate": 10.00,
+            "reduced_rate_alt": 13.00,
+            "super_reduced_rate": false,
+            "parking_rate": 12.00
+        },
         "BE": {
             "country": "Belgium",
             "standard_rate": 21.00,
@@ -20,11 +28,19 @@
             "super_reduced_rate": false,
             "parking_rate": false
         },
+        "CY": {
+            "country": "Cyprus",
+            "standard_rate": 19.00,
+            "reduced_rate": 9.00,
+            "reduced_rate_alt": 5.00,
+            "super_reduced_rate": false,
+            "parking_rate": false
+        },
         "CZ": {
             "country": "Czech Republic",
             "standard_rate": 21.00,
             "reduced_rate": 15.00,
-            "reduced_rate_alt": false,
+            "reduced_rate_alt": 10.00,
             "super_reduced_rate": false,
             "parking_rate": false
         },
@@ -55,22 +71,20 @@
         "EL": {
             "_comment": "While the EU uses the country code 'EL' for Greece, ISO uses 'GR' - both are included for convenience.",
             "iso_duplicate": "GR",
-
             "country": "Greece",
             "standard_rate": 23.00,
             "reduced_rate": 13.00,
-            "reduced_rate_alt": 6.50,
+            "reduced_rate_alt": 6.00,
             "super_reduced_rate": false,
             "parking_rate": false
         },
         "GR": {
             "_comment": "Duplicate of EL for convenience; the EU uses the country code 'EL' for Greece, while ISO uses 'GR'.",
             "iso_duplicate_of": "EL",
-
             "country": "Greece",
             "standard_rate": 23.00,
             "reduced_rate": 13.00,
-            "reduced_rate_alt": 6.50,
+            "reduced_rate_alt": 6.00,
             "super_reduced_rate": false,
             "parking_rate": false
         },
@@ -80,6 +94,14 @@
             "reduced_rate": 10.00,
             "reduced_rate_alt": false,
             "super_reduced_rate": 4.00,
+            "parking_rate": false
+        },
+        "FI": {
+            "country": "Finland",
+            "standard_rate": 24.00,
+            "reduced_rate": 14.00,
+            "reduced_rate_alt": 10.00,
+            "super_reduced_rate": false,
             "parking_rate": false
         },
         "FR": {
@@ -98,27 +120,11 @@
             "super_reduced_rate": false,
             "parking_rate": false
         },
-        "IE": {
-            "country": "Ireland",
-            "standard_rate": 23.00,
-            "reduced_rate": 13.50,
-            "reduced_rate_alt": 9.00,
-            "super_reduced_rate": 4.80,
-            "parking_rate": 13.50
-        },
         "IT": {
             "country": "Italy",
             "standard_rate": 22.00,
             "reduced_rate": 10.00,
             "reduced_rate_alt": 4.00,
-            "super_reduced_rate": false,
-            "parking_rate": false
-        },
-        "CY": {
-            "country": "Cyprus",
-            "standard_rate": 19.00,
-            "reduced_rate": 9.00,
-            "reduced_rate_alt": 5.00,
             "super_reduced_rate": false,
             "parking_rate": false
         },
@@ -154,6 +160,14 @@
             "super_reduced_rate": false,
             "parking_rate": false
         },
+        "IE": {
+            "country": "Ireland",
+            "standard_rate": 23.00,
+            "reduced_rate": 13.50,
+            "reduced_rate_alt": 9.00,
+            "super_reduced_rate": 4.80,
+            "parking_rate": 13.50
+        },
         "MT": {
             "country": "Malta",
             "standard_rate": 18.00,
@@ -169,14 +183,6 @@
             "reduced_rate_alt": false,
             "super_reduced_rate": false,
             "parking_rate": false
-        },
-        "AT": {
-            "country": "Austria",
-            "standard_rate": 20.00,
-            "reduced_rate": 10.00,
-            "reduced_rate_alt": false,
-            "super_reduced_rate": false,
-            "parking_rate": 12.00
         },
         "PL": {
             "country": "Poland",
@@ -196,7 +202,7 @@
         },
         "RO": {
             "country": "Romania",
-            "standard_rate": 24.00,
+            "standard_rate": 20.00,
             "reduced_rate": 9.00,
             "reduced_rate_alt": 5.00,
             "super_reduced_rate": false,
@@ -218,14 +224,6 @@
             "super_reduced_rate": false,
             "parking_rate": false
         },
-        "FI": {
-            "country": "Finland",
-            "standard_rate": 24.00,
-            "reduced_rate": 14.00,
-            "reduced_rate_alt": 10.00,
-            "super_reduced_rate": false,
-            "parking_rate": false
-        },
         "SE": {
             "country": "Sweden",
             "standard_rate": 25.00,
@@ -237,7 +235,6 @@
         "UK": {
             "_comment": "While the EU uses the country code 'UK' for the United Kingdom, ISO uses 'GB' - both are included for convenience.",
             "iso_duplicate": "GB",
-
             "country": "United Kingdom",
             "standard_rate": 20.00,
             "reduced_rate": 5.00,
@@ -248,7 +245,6 @@
         "GB": {
             "_comment": "Duplicate of GB for convenience; the EU uses the country code 'UK' for the United Kingdom, while ISO uses 'GB'.",
             "iso_duplicate_of": "UK",
-
             "country": "United Kingdom",
             "standard_rate": 20.00,
             "reduced_rate": 5.00,

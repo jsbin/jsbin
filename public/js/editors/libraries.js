@@ -133,8 +133,8 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/jquery.min.js',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -354,12 +354,22 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': '//fb.me/react-0.13.3.js',
+    'url': ['https://fb.me/react-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
+    'label': 'React 0.14.7',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-with-addons-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
+    'label': 'React with Add-Ons 0.14.7',
+    'group': 'React'
+  },
+  {
+    'url': 'https://fb.me/react-0.13.3.js',
     'label': 'React 0.13.3',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-with-addons-0.13.3.js',
+    'url': 'https://fb.me/react-with-addons-0.13.3.js',
     'label': 'React with Add-Ons 0.13.3',
     'group': 'React'
   },
@@ -374,8 +384,12 @@ var libraries = [
     'group': 'shims'
   },
   {
-    'url': 'http://vuejs.org/js/vue.js',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js',
     'label': 'Vue.js',
+  },
+  {
+    'url': 'http://cdn.ractivejs.org/latest/ractive.js',
+    'label': 'Ractive.js'
   },
   {
     'url': [
@@ -618,10 +632,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/4.12/video-js.css',
-      '//vjs.zencdn.net/4.12/video.js'
+      '//vjs.zencdn.net/5.6/video-js.css',
+      '//vjs.zencdn.net/5.6/video.js'
     ],
-    'label': 'Video.js 4.12.x'
+    'label': 'Video.js 5.6.x'
   },
   {
     'url': [
@@ -648,18 +662,32 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',
-    'label': 'rx.all',
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'Riot + Compiler (latest 2.3.x)'
+  },
+  {
+    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
+    'label': 'RxJS 5.0.0-alpha.8',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.testing.js',
-    'label': 'rx.testing',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.js',
+    'label': 'rx.all 4.0.6',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js',
-    'label': 'rx.dom',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.compat.js',
+    'label': 'rx.all.compat 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.testing.js',
+    'label': 'rx.testing 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://npmcdn.com/rx-dom@7.0.3/dist/rx.dom.js',
+    'label': 'rx.dom 7.0.3 (requires 4.x)',
     'group': 'RxJS'
   },
   {
@@ -687,6 +715,11 @@ var libraries = [
     'label': 'Ramda 0.18.0'
   },
   {
+    'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
+    'label': 'PouchDB (latest)',
+    'group': 'PouchDB'
+  },
+  {
     'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
     'label': 'Moment 2.10.6',
     'group': 'Moment.js'
@@ -698,6 +731,16 @@ var libraries = [
     ],
     'label': 'Moment 2.10.6 (with locales)',
     'group': 'Moment.js'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js',
+    'label': 'Velocity JS 1.2.3',
+    'group': 'Velocity'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
+    'label': 'Velocity UI Pack 1.2.3',
+    'group': 'Velocity'
   }
 ];
 

@@ -6,7 +6,7 @@
   <link rel="alternate" type="application/json+oembed" href="{{root}}/oembed?url={{root}}{{request.url}}">
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
-  {{#if userCSS}}<style>{{userCSS}}</style>{{/if}}
+  {{#if userCSS}}<style>{{{userCSS}}}</style>{{/if}}
   <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}

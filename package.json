@@ -9,7 +9,7 @@
   "name": "jsbin",
   "description": "Collaborative JavaScript Debugging App",
   "main": "./lib/app",
-  "version": "3.35.9",
+  "version": "3.35.11",
   "preferGlobal": "true",
   "homepage": "http://jsbin.com",
   "bin": "./bin/jsbin",
@@ -24,7 +24,9 @@
     "postinstall": "grunt build",
     "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
-    "postupdate": "node build/post-update.js commit"
+    "postupdate": "node build/post-update.js commit",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "~0.1.22",
@@ -59,6 +61,7 @@
     "replify": "~1.2.0",
     "rsvp": "~3.0.1",
     "semver": "^5.0.3",
+    "snyk": "^1.12.0",
     "soak": "0.3.0",
     "sqlite3": "~2.2.0",
     "stripe": "~2.7.3",
@@ -87,5 +90,6 @@
   "engines": {
     "node": ">=0.10.16 <0.11"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "snyk": true
 }

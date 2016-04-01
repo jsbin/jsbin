@@ -1,0 +1,104 @@
+ignore:
+  'npm:send:20151103':
+    - 'express > connect > send':
+        reason: None given
+        expires: '2016-04-15T17:54:05.442Z'
+    - 'express > send':
+        reason: None given
+        expires: '2016-04-15T17:54:05.442Z'
+  'npm:send:20140912':
+    - 'express > connect > send':
+        reason: None given
+        expires: '2016-04-15T17:54:05.442Z'
+    - 'express > send':
+        reason: None given
+        expires: '2016-04-15T17:54:05.442Z'
+  'npm:qs:20140806-1':
+    - 'express > connect > qs':
+        reason: None given
+        expires: '2016-04-15T17:54:05.442Z'
+    - 'sqlite3 > node-pre-gyp > request > qs':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:qs:20140806':
+    - 'express > connect > qs':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'sqlite3 > node-pre-gyp > request > qs':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+  'npm:express:20140912':
+    - express:
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:connect:20130701':
+    - 'express > connect':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:uglify-js:20151024':
+    - 'handlebars > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'express-hbs > handlebars > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+    - 'jade > transformers > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+    - 'jade > constantinople > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+  'npm:handlebars:20151207':
+    - handlebars:
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'express-hbs > handlebars':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:uglify-js:20150824':
+    - 'handlebars > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'express-hbs > handlebars > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.445Z'
+    - 'jade > transformers > uglify-js':
+        reason: None given
+        expires: '2016-04-15T17:54:05.445Z'
+  'npm:hawk:20160119':
+    - 'less > request > hawk':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'snyk > request > hawk':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+    - 'sqlite3 > node-pre-gyp > request > hawk':
+        reason: None given
+        expires: '2016-04-15T17:54:05.445Z'
+    - 'casperjs > phantomjs > request > hawk':
+        reason: None given
+        expires: '2016-04-15T17:54:05.445Z'
+  'npm:moment:20160126':
+    - moment:
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:is-my-json-valid:20160118':
+    - 'snyk > request > har-validator > is-my-json-valid':
+        reason: None given
+        expires: '2016-04-15T17:54:05.443Z'
+  'npm:semver:20150403':
+    - 'sqlite3 > node-pre-gyp > semver':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+  'npm:tar:20151103':
+    - 'sqlite3 > node-pre-gyp > tar':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+    - 'sqlite3 > node-pre-gyp > tar-pack > tar':
+        reason: None given
+        expires: '2016-04-15T17:54:05.444Z'
+patch:
+  'npm:uglify-js:20151024':
+    - 'jade > with > uglify-js':
+        patched: '2016-03-16T17:45:39.866Z'
+version: v1

@@ -354,22 +354,22 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': ['//fb.me/react-0.14.3.js', '//fb.me/react-dom-0.14.3.js'],
-    'label': 'React 0.14.3',
+    'url': ['https://fb.me/react-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
+    'label': 'React 0.14.7',
     'group': 'React'
   },
   {
-    'url': ['//fb.me/react-with-addons-0.14.3.js', '//fb.me/react-dom-0.14.3.js'],
-    'label': 'React with Add-Ons 0.14.3',
+    'url': ['https://fb.me/react-with-addons-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
+    'label': 'React with Add-Ons 0.14.7',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-0.13.3.js',
+    'url': 'https://fb.me/react-0.13.3.js',
     'label': 'React 0.13.3',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-with-addons-0.13.3.js',
+    'url': 'https://fb.me/react-with-addons-0.13.3.js',
     'label': 'React with Add-Ons 0.13.3',
     'group': 'React'
   },
@@ -384,7 +384,7 @@ var libraries = [
     'group': 'shims'
   },
   {
-    'url': 'http://vuejs.org/js/vue.js',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js',
     'label': 'Vue.js',
   },
   {
@@ -711,8 +711,8 @@ var libraries = [
     'group': 'Data structures'
   },
   {
-    'url': 'https://cdn.jsdelivr.net/ramda/0.18.0/ramda.min.js',
-    'label': 'Ramda 0.18.0'
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.20.0/ramda.min.js',
+    'label': 'Ramda 0.20.0'
   },
   {
     'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',

@@ -666,8 +666,8 @@ var libraries = [
     'label': 'Riot + Compiler (latest 2.3.x)'
   },
   {
-    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-alpha.8/dist/global/Rx.js',
-    'label': 'RxJS 5.0.0-alpha.8',
+    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
+    'label': 'RxJS 5.0.0-beta.7',
     'group': 'RxJS'
   },
   {

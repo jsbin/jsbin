@@ -1,8 +1,5 @@
 ignore:
   'npm:send:20151103':
-    - 'express > connect > send':
-        reason: None given
-        expires: '2017-04-15T17:54:05.442Z'
     - 'express > send':
         reason: None given
         expires: '2017-04-15T17:54:05.442Z'

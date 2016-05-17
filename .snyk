@@ -1,79 +1,68 @@
 version: v1.0.0
+patch: {}
+failThreshold: high
 ignore:
   'npm:send:20151103':
     - express > connect > send:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.487Z'
     - express > send:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.487Z'
   'npm:send:20140912':
     - express > connect > send:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.487Z'
     - express > send:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.487Z'
   'npm:qs:20140806':
     - express > connect > qs:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.488Z'
   'npm:qs:20140806-1':
     - express > connect > qs:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.488Z'
   'npm:express:20140912':
     - express:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.488Z'
   'npm:connect:20130701':
     - express > connect:
         reason: None given
-        expires: '2016-06-16T13:29:21.858Z'
+        expires: '2016-06-16T16:38:28.488Z'
   'npm:handlebars:20151207':
     - express-hbs > handlebars:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.488Z'
     - handlebars:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
   'npm:uglify-js:20150824':
     - express-hbs > handlebars > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
     - handlebars > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
     - jade > transformers > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.860Z'
+        expires: '2016-06-16T16:38:28.489Z'
   'npm:uglify-js:20151024':
     - express-hbs > handlebars > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
     - handlebars > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
-    - jade > with > uglify-js:
-        reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
     - jade > transformers > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.860Z'
+        expires: '2016-06-16T16:38:28.489Z'
     - jade > constantinople > uglify-js:
         reason: None given
-        expires: '2016-06-16T13:29:21.860Z'
-  'npm:request:20160119':
-    - less > request:
-        reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
-  'npm:hawk:20160119':
-    - less > request > hawk:
-        reason: None given
-        expires: '2016-06-16T13:29:21.859Z'
+        expires: '2016-06-16T16:38:28.489Z'
   'npm:moment:20160126':
     - moment:
         reason: None given
-        expires: '2016-06-16T13:29:21.860Z'
-patch: {}
-failThreshold: high
+        expires: '2016-06-16T16:38:28.489Z'

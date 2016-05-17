@@ -43,35 +43,35 @@ ignore:
     - express-hbs > handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
-      handlebars > uglify-js:
-        reason: None given
-        expires: '2016-06-16T17:02:45.886Z'
     - handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
-      jade > transformers > uglify-js:
+    - jade > transformers > uglify-js:
+        reason: None given
+        expires: '2016-06-16T16:38:28.489Z'
+    - handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T17:02:45.886Z'
     - jade > transformers > uglify-js:
         reason: None given
-        expires: '2016-06-16T16:38:28.489Z'
+        expires: '2016-06-16T17:02:45.886Z'
   'npm:uglify-js:20151024':
     - express-hbs > handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
-      handlebars > uglify-js:
-        reason: None given
-        expires: '2016-06-16T17:02:45.885Z'
     - handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
-      jade > with > uglify-js:
-        reason: None given
-        expires: '2016-06-16T17:02:45.886Z'
     - jade > transformers > uglify-js:
         reason: None given
         expires: '2016-06-16T17:02:45.886Z'
     - jade > constantinople > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'
+    - handlebars > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.885Z'
+    - jade > with > uglify-js:
         reason: None given
         expires: '2016-06-16T17:02:45.886Z'
   'npm:moment:20160126':
@@ -86,3 +86,17 @@ ignore:
     - less > request > hawk:
         reason: None given
         expires: '2016-06-16T17:02:45.886Z'
+      sqlite3 > node-pre-gyp > request > hawk:
+        reason: None given
+        expires: '2016-06-16T17:17:53.710Z'
+  'npm:tar:20151103':
+    - sqlite3 > node-pre-gyp > tar:
+        reason: None given
+        expires: '2016-06-16T17:17:53.709Z'
+    - sqlite3 > node-pre-gyp > tar-pack > tar:
+        reason: None given
+        expires: '2016-06-16T17:17:53.710Z'
+  'npm:node-uuid:20160328':
+    - sqlite3 > node-pre-gyp > request > node-uuid:
+        reason: None given
+        expires: '2016-06-16T17:17:53.710Z'

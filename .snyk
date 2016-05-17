@@ -5,47 +5,53 @@ ignore:
   'npm:send:20151103':
     - express > connect > send:
         reason: None given
-        expires: '2016-06-16T16:38:28.487Z'
+        expires: '2016-06-16T17:02:45.885Z'
     - express > send:
         reason: None given
-        expires: '2016-06-16T16:38:28.487Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:send:20140912':
     - express > connect > send:
         reason: None given
-        expires: '2016-06-16T16:38:28.487Z'
+        expires: '2016-06-16T17:02:45.885Z'
     - express > send:
         reason: None given
-        expires: '2016-06-16T16:38:28.487Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:qs:20140806':
     - express > connect > qs:
         reason: None given
-        expires: '2016-06-16T16:38:28.488Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:qs:20140806-1':
     - express > connect > qs:
         reason: None given
-        expires: '2016-06-16T16:38:28.488Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:express:20140912':
     - express:
         reason: None given
-        expires: '2016-06-16T16:38:28.488Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:connect:20130701':
     - express > connect:
         reason: None given
-        expires: '2016-06-16T16:38:28.488Z'
+        expires: '2016-06-16T17:02:45.885Z'
   'npm:handlebars:20151207':
     - express-hbs > handlebars:
         reason: None given
-        expires: '2016-06-16T16:38:28.488Z'
+        expires: '2016-06-16T17:02:45.885Z'
     - handlebars:
         reason: None given
-        expires: '2016-06-16T16:38:28.489Z'
+        expires: '2016-06-16T17:02:45.886Z'
   'npm:uglify-js:20150824':
     - express-hbs > handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
+      handlebars > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'
     - handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
+      jade > transformers > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'
     - jade > transformers > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
@@ -53,16 +59,30 @@ ignore:
     - express-hbs > handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
+      handlebars > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.885Z'
     - handlebars > uglify-js:
         reason: None given
         expires: '2016-06-16T16:38:28.489Z'
+      jade > with > uglify-js:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'
     - jade > transformers > uglify-js:
         reason: None given
-        expires: '2016-06-16T16:38:28.489Z'
+        expires: '2016-06-16T17:02:45.886Z'
     - jade > constantinople > uglify-js:
         reason: None given
-        expires: '2016-06-16T16:38:28.489Z'
+        expires: '2016-06-16T17:02:45.886Z'
   'npm:moment:20160126':
     - moment:
         reason: None given
-        expires: '2016-06-16T16:38:28.489Z'
+        expires: '2016-06-16T17:02:45.886Z'
+  'npm:request:20160119':
+    - less > request:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'
+  'npm:hawk:20160119':
+    - less > request > hawk:
+        reason: None given
+        expires: '2016-06-16T17:02:45.886Z'

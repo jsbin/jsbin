@@ -354,6 +354,16 @@ var libraries = [
     'group': 'Angular'
   },
   {
+    'url': ['https://fb.me/react-15.0.2.min.js', 'https://fb.me/react-dom-15.0.2.min.js'],
+    'label': 'React 15.0.2',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-with-addons-15.0.2.min.js', 'https://fb.me/react-dom-15.0.2.min.js'],
+    'label': 'React with Add-Ons 15.0.2',
+    'group': 'React'
+  },
+  {
     'url': ['https://fb.me/react-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
     'label': 'React 0.14.7',
     'group': 'React'

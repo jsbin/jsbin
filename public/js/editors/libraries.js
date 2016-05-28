@@ -354,13 +354,23 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': ['https://fb.me/react-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
-    'label': 'React 0.14.7',
+    'url': ['https://fb.me/react-15.1.0.js', 'https://fb.me/react-dom-15.1.0.js'],
+    'label': 'React + React DOM 15.1.0',
     'group': 'React'
   },
   {
-    'url': ['https://fb.me/react-with-addons-0.14.7.min.js', 'https://fb.me/react-dom-0.14.7.min.js'],
-    'label': 'React with Add-Ons 0.14.7',
+    'url': ['https://fb.me/react-with-addons-15.1.0.js', 'https://fb.me/react-dom-15.1.0.js'],
+    'label': 'React with Add-Ons + React DOM 15.1.0',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-0.14.7.js', 'https://fb.me/react-dom-0.14.7.js'],
+    'label': 'React + React DOM 0.14.7',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-with-addons-0.14.7.js', 'https://fb.me/react-dom-0.14.7.js'],
+    'label': 'React with Add-Ons + React DOM 0.14.7',
     'group': 'React'
   },
   {

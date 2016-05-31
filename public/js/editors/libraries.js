@@ -5,8 +5,13 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.0.0-alpha1.js',
-    'label': 'jQuery 3.0.0-alpha1',
+    'url': 'https://code.jquery.com/jquery-3.0.0-beta1.js',
+    'label': 'jQuery 3.0.0-beta1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-2.2.3.js',
+    'label': 'jQuery 2.2.3',
     'group': 'jQuery'
   },
   {
@@ -15,18 +20,23 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-compat-git.js',
-    'label': 'jQuery Compat WIP (via git)',
+    'url': 'https://code.jquery.com/jquery-2.0.3.js',
+    'label': 'jQuery 2.0.3',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-compat-3.0.0-alpha1.js',
-    'label': 'jQuery Compat 3.0.0-alpha1',
+    'url': 'https://code.jquery.com/jquery-1.12.3.js',
+    'label': 'jQuery 1.12.3',
     'group': 'jQuery'
   },
   {
     'url': 'https://code.jquery.com/jquery-1.11.3.js',
     'label': 'jQuery 1.11.3',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.10.2.js',
+    'label': 'jQuery 1.10.2',
     'group': 'jQuery'
   },
   {

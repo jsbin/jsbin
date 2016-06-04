@@ -3788,6 +3788,33 @@ left: 50%;
   margin: 10px 0;
 }
 
+#history .filter {
+  width: 75%;
+  margin-bottom: 2px;
+  padding-bottom: 2px;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: "Helvetica Neue", Helvetica, Arial;
+}
+
+#history .filter label {
+  font-size: 14px;
+}
+
+#history .filter input[type="text"] {
+ width: 50%; 
+ font-size: 14px;
+}
+
+/* Bin keywords used in the history view */
+#history .keywords {
+  font-size: 12px;
+}
+
+#history .keywords a {
+  color: rgb(161, 216, 253);
+}
+
 #history iframe-dead {
   -webkit-transform: scale(0.8);
      -moz-transform: scale(0.8);

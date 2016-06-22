@@ -171,6 +171,13 @@ if (storedSettings === 'undefined' || jsbin.embed) {
   storedSettings = null;
 }
 
+// try to copy across statics
+['root', 'shareRoot', 'runner', 'static', 'version'].map(function (key) {
+  if (!jsbin[key]) {
+    jsbin[key] = window.jsbin[key];
+  }
+});
+
 if (jsbin.user && jsbin.user.name) {
   jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
   if (jsbin.user.settings.font) {

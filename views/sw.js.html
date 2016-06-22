@@ -1,0 +1,20 @@
+const version = '{{version}}';
+const root = 'https://rem.jsbin-dev.com';
+const scripts = [
+  '/',
+  '/js/vendor/jquery-1.11.0.min.js',
+  '/images/dave.min.svg',
+  '/images/favicon.svg',
+  '/images/jsbin_animated.gif',
+  '/images/popout.png',
+  '/images/github-32.png',
+  '/runner',
+  '/js/prod/jsbin-{{version}}.js',
+  '/js/prod/runner-{{version}}.min.js',
+  '/js/prod/addon-tern-{{version}}.min.js',
+  '/css/style.css?{{version}}',
+  '/css/font.css?{{version}}',
+  '/bin/start.js?new=1',
+  { url: '/bin/user.js', credentials: 'include' },
+];
+importScripts('/js/sw-on.js');

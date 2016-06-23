@@ -386,3 +386,22 @@ if (jsbin.embed) {
     return false;
   });
 }
+
+window.addEventListener('message', function (event) {
+  var data;
+  try {
+    data = JSON.parse(event.data);
+  } catch (e) {
+    return;
+  }
+
+  if (data.type === 'cached') {
+    if (data.updated > jsbin.state.metadata.last_updated) {
+      // update the bin
+      jsbin.panels.panels.html.setCode(data.template.html);
+      jsbin.panels.panels.javascript.setCode(data.template.javascript);
+      jsbin.panels.panels.css.setCode(data.template.css);
+      $('a.save:first').click();
+    }
+  }
+})

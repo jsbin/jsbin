@@ -1,30 +1,30 @@
 const version = '{{version}}';
-const root = 'https://rem.jsbin-dev.com';
+const root = '{{root}}';
 const scripts = [
   new Request('/', { credentials: 'include' }),
-  '/runner',
-  '/js/vendor/jquery-1.11.0.min.js',
-  '/images/dave.min.svg',
-  '/images/favicon.svg',
-  '/images/jsbin_animated.gif',
-  '/images/popout.png',
-  '/images/github-32.png',
-  '/js/prod/jsbin-{{version}}.js',
-  '/js/prod/runner-{{version}}.min.js',
-  '/js/prod/addon-tern-{{version}}.min.js',
-  '/css/style.css?{{version}}',
-  '/css/font.css?{{version}}',
-  '/bin/start.js?new=1',
-  '/images/default-avatar.min.svg',
+  '{{root}}/runner',
+  '{{static}}/js/vendor/jquery-1.11.0.min.js',
+  '{{static}}/images/dave.min.svg',
+  '{{static}}/images/favicon.svg',
+  '{{static}}/images/jsbin_animated.gif',
+  '{{static}}/images/popout.png',
+  '{{static}}/images/github-32.png',
+  '{{static}}/js/prod/jsbin-{{version}}.js',
+  '{{static}}/js/prod/runner-{{version}}.min.js',
+  '{{static}}/js/prod/addon-tern-{{version}}.min.js',
+  '{{static}}/css/style.css?{{version}}',
+  '{{static}}/css/font.css?{{version}}',
+  '{{root}}/bin/start.js?new=1',
+  '{{static}}/images/default-avatar.min.svg',
 
   // processors
-  '/js/vendor/JSXTransformer.js?{{version}}',
-  '/js/vendor/marked.min.js?{{version}}',
-  '/js/vendor/codemirror5/mode/markdown/markdown.js?{{version}}',
-  '/js/vendor/jade.js?1.4.2?{{version}}',
-  '/js/vendor/less.min.js?{{version}}',
-  '/js/vendor/babel.min.js?{{version}}',
+  '{{static}}/js/vendor/JSXTransformer.js?{{version}}',
+  '{{static}}/js/vendor/marked.min.js?{{version}}',
+  '{{static}}/js/vendor/codemirror5/mode/markdown/markdown.js?{{version}}',
+  '{{static}}/js/vendor/jade.js?1.4.2?{{version}}',
+  '{{static}}/js/vendor/less.min.js?{{version}}',
+  '{{static}}/js/vendor/babel.min.js?{{version}}',
 
-  new Request('/bin/user.js', { credentials: 'include' }),
+  new Request('{{root}}/bin/user.js', { credentials: 'include' }),
 ];
-importScripts('/js/sw/index.js');
+importScripts('{{root}}/js/sw/index.js');

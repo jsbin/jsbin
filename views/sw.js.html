@@ -1,8 +1,8 @@
 const version = '{{version}}';
 const root = '{{root}}';
 const scripts = [
-  new Request('/', { credentials: 'include' }),
-  '{{root}}/runner',
+  new Request('{{root}}/', { credentials: 'include' }),
+  '{{runner}}',
   '{{static}}/js/vendor/jquery-1.11.0.min.js',
   '{{static}}/images/dave.min.svg',
   '{{static}}/images/favicon.svg',

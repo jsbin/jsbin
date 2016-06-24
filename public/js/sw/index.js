@@ -6,10 +6,10 @@ const binCache = 'bins';
 const staticCacheName = version + '-v1';
 let acceptCacheQueue = {};
 importScripts(
-  '/js/sw/helper.js',
-  '/js/sw/save.js',
-  '/js/vendor/bin-to-file.min.js',
-  '/js/sw/clean-up.js'
+  rootStatic + '/js/sw/helper.js?' + version,
+  rootStatic + '/js/sw/save.js?' + version,
+  rootStatic + '/js/vendor/bin-to-file.min.js?' + version,
+  rootStatic + '/js/sw/clean-up.js?' + version
 );
 const empty = {};
 const emptyBinUrl = '/bin/start.js?new=1';

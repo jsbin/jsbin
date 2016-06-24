@@ -11,7 +11,6 @@ sw.save = event => {
       localSave(event, clone, json.code);
       return res;
     });
-    // return res;
   }).catch(() => {
     return localSave(event, clone);
   });
@@ -101,12 +100,36 @@ function localSave(event, request, code) {
               });
             });
           });
-        }
+        } else {
+          return request.text().then(res => {
+            // here we have a save event but we don't have a local copy
+            // so we're going to hit the jsbin API to get the initial content
+            // then add to it and store in our local cache.
+            const body = sw.paramsToObject(res);
+            return fetch(`/api/${body.code}`, { credentials: 'include' }).then(res => {
+              return res.json();
+            }).then(bin => {
+              // massarge the data
+              bin.checksum = body.checksum;
+              bin.code = bin.url;
+              bin.updated = bin.last_updated;
+              bin.jsbin = {
+                settings: bin.settings,
+              };
 
-        // this is an edge case where the cache is empty
+              const res = new Response(JSON.stringify(sw.prepareStart(bin)), {
+                headers: {
+                  'content-type': 'application/json',
+                },
+              });
+
+              const req = new Request(`${root}/${bin.code}/edit`);
+
+              return cache.put(req, res).then(() => res);
+            });
+          });
+        }
       });
-      // 2. get the updated content and update the bin
-      // 3. push back into the cache
     }
   });
 

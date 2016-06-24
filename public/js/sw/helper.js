@@ -13,7 +13,7 @@ sw.prepareStart = bin => {
 
   const jsbin = {
     state: {
-      processors: bin.jsbin ? bin.jsbin.settings.processors : {},
+      processors: bin.jsbin && bin.jsbin.settings ? bin.jsbin.settings.processors : {},
       metadata: {
         'last_updated': bin.updated,
       },

@@ -4,7 +4,7 @@
 const sw = {}; // imported scripts attach to this
 const binCache = 'bins';
 const staticCacheName = version + '-v1';
-importScripts('/js/sw/helper.js', '/js/sw/save.js');
+importScripts('/js/sw/helper.js', '/js/sw/save.js', '/js/vendor/bin-to-file.min.js');
 const empty = {};
 const emptyBinUrl = '/bin/start.js?new=1';
 self.addEventListener('install', e => {
@@ -37,7 +37,7 @@ self.addEventListener('fetch', event => {
     cached.then(json => {
       if (json) {
         clients.get(event.clientId).then(client => {
-          console.log(JSON.stringify(json, '', 2));
+          console.log('notifying of cached copy');
           client.postMessage(JSON.stringify({
             type: 'cached',
             updated: json.jsbin.state.metadata.last_updated,
@@ -48,8 +48,13 @@ self.addEventListener('fetch', event => {
       }
     });
 
-    event.respondWith(fetch(event.request).catch(() => {
-      // TODO try to find a cached version
+    event.respondWith(fetch(event.request).then(res => {
+      if (!res.ok) {
+        throw new Error('bad response from server');
+      }
+      return res;
+    }).catch(() => {
+      console.log('boot script failed over network, sending cache');
       // if the request fails, try to find the bin based on the url
 
       // return the cached bin or a new (empty) bin
@@ -85,11 +90,48 @@ self.addEventListener('fetch', event => {
         caches.open(staticCacheName).then(cache => cache.add(req.url));
       }
 
-      // eiterh send:
+      // either send:
       // - cached resource
       // - fetch the resource
       // - or send an empty body (this gives *something* back to quiet down the errors)
-      return res || fetch(event.request).catch(() => new Response(''));
+      return res || fetch(event.request).then(res => {
+        if (!res.ok) {
+          throw new Error('bad response from server: ' + res.statusCode);
+        }
+        return res;
+      }).catch(() => {
+        let pathname = url.pathname;
+        if (pathname.slice(-1) !== '/') {
+          pathname += '/';
+        }
+
+        if (!/^\/[\w\d]+\/$/i.test(pathname)) {
+          return new Response('');
+        }
+
+        // see if we can get this from the cache
+        pathname += 'edit';
+
+        return sw.getBin({ origin: url.origin, pathname }).then(res => {
+          if (!res) {
+            // give up
+            return new Response('');
+          }
+
+          // else try to render using the binToFile logic
+          return res.json().then(bin => {
+            bin.template.processors = bin.jsbin.state.processors;
+            const html = binToFile(bin.template);
+            return new Response(html, {
+              headers: {
+                'content-type': 'text/html',
+              },
+            });
+          });
+        });
+
+
+      });
       //   const type = event.request.headers.get('accept');
     })
   );

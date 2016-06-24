@@ -397,6 +397,7 @@ window.addEventListener('message', function (event) {
 
   if (data.type === 'cached') {
     if (data.updated > jsbin.state.metadata.last_updated) {
+      console.log('restored from cache: %sms newer', (new Date(data.updated).getTime() - new Date(jsbin.state.metadata.last_updated).getTime()) / 100);
       // update the bin
       jsbin.panels.panels.html.setCode(data.template.html);
       jsbin.panels.panels.javascript.setCode(data.template.javascript);
@@ -404,4 +405,4 @@ window.addEventListener('message', function (event) {
       $('a.save:first').click();
     }
   }
-})
+});

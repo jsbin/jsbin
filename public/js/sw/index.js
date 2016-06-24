@@ -4,6 +4,7 @@
 const sw = {}; // imported scripts attach to this
 const binCache = 'bins';
 const staticCacheName = version + '-v1';
+let acceptCacheQueue = {};
 importScripts(
   '/js/sw/helper.js',
   '/js/sw/save.js',
@@ -22,7 +23,25 @@ self.addEventListener('install', e => {
   );
 });
 
-self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
+self.addEventListener('activate', event => {
+  acceptCacheQueue = {}; // try to clear up some memory
+  return event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('message', event => {
+  let data = null;
+  try {
+    data = JSON.parse(event.data);
+  } catch (e) {
+    return;
+  }
+
+  if (data.type === 'accept-cache' && acceptCacheQueue[data.id]) {
+    let fn = acceptCacheQueue[data.id].resolve;
+    fn(acceptCacheQueue[data.id].body);
+    delete acceptCacheQueue[data.id];
+  }
+});
 
 self.addEventListener('fetch', event => {
   let req = event.request;
@@ -34,32 +53,61 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  if (url.pathname === '/logout') {
+    event.respondWith(fetch(event.request).then(res => {
+      return caches.delete(staticCacheName).then(() => {
+        self.registration.unregister();
+        return res;
+      });
+    }));
+    return;
+  }
+
   // here be: the bin boot up code 🐲
   if (url.pathname === '/bin/start.js') {
     const cached = getCachedBin(event);
 
     // this is a beacon to the client that we have a cached copy
-    cached.then(json => {
+    const userAccepts = cached.then(json => {
       if (json) {
-        clients.get(event.clientId).then(client => {
-          console.log('notifying of cached copy');
-          client.postMessage(JSON.stringify({
-            type: 'cached',
-            updated: json.jsbin.state.metadata.last_updated,
-            template: json.template,
-            processors: json.jsbin.state.processors,
-          }));
+        return new Promise(resolve => {
+          acceptCacheQueue[event.clientId] = {
+            resolve: () => {
+              resolve(binAsStartScript(json));
+            },
+          };
+
+          clients.get(event.clientId).then(client => {
+            console.log('notifying of cached copy');
+            client.postMessage(JSON.stringify({
+              type: 'cached',
+              id: event.clientId,
+              updated: json.jsbin.state.metadata.last_updated,
+              template: json.template,
+              processors: json.jsbin.state.processors,
+            }));
+          });
         });
       }
+
+      // send empty bin after 10 seconds of waiting
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(caches.match(emptyBinUrl));
+        }, 10 * 1000);
+      });
     });
 
-    event.respondWith(fetch(event.request).then(res => {
-      if (!res.ok) {
-        throw new Error('bad response from server');
+    const race = Promise.race([userAccepts, fetch(event.request)]);
+
+    event.respondWith(race.then(res => {
+      if (res.status >= 500) {
+        throw new Error('bad response from server: ' + res.status);
       }
+
       return res;
-    }).catch(() => {
-      console.log('boot script failed over network, sending cache');
+    }).catch(e => {
+      console.log('boot script failed over network, sending cache: ' + e.message);
       // if the request fails, try to find the bin based on the url
 
       // return the cached bin or a new (empty) bin
@@ -67,13 +115,16 @@ self.addEventListener('fetch', event => {
         if (json) {
           return binAsStartScript(json);
         }
+
         return caches.match(emptyBinUrl);
       });
+
     }));
 
     return;
   }
 
+  // basically ignoreSearch, but it's not supported yet
   if (url.pathname === '/' ||
       url.pathname === '/bin/user.js' ||
       url.pathname === '/images/default-avatar.min.svg') {
@@ -104,7 +155,7 @@ self.addEventListener('fetch', event => {
       // - or send an empty body (this gives *something* back to quiet down the errors)
       return res || fetch(event.request).then(res => {
         if (res.status >= 500) {
-          throw new Error('bad response from server: ' + res.statusCode);
+          throw new Error('bad response from server: ' + res.status);
         }
         return res;
       }).catch(() => {
@@ -152,6 +203,7 @@ function binAsStartScript(json) {
   return new Response(sw.newBinStartScript(json, {
     headers: {
       'content-type': 'text/script',
+      'x-via': 'service-worker',
     },
   }));
 }

@@ -6209,7 +6209,8 @@ div.loggedout {
   content: '';
 }
 
-#load-cached {
+#load-cached,
+.show-cached.ready #load-cached {
   opacity: 0;
   transition: opacity ease-out 500ms;
   top: -100px;

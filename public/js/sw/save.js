@@ -5,24 +5,47 @@ const OK = JSON.stringify({ ok: true });
 
 sw.save = event => {
   const clone = event.request.clone();
+  const url = new URL(event.request.url);
+  let localres = null;
+  let promise = [fetch(event.request)];
+  let backupSaveTimer = null;
+  if (url.pathname !== '/save') {
+    // save to local at the same time
+    localres = localSave(event, clone);
+  } else {
+    promise.push(new Promise(resolve => {
+      backupSaveTimer = setTimeout(() => {
+        backupSaveTimer = null;
+        resolve(localSave(event, clone));
+      }, 10 * 1000); // after 10 seconds, assume a problem and save locally
+    }));
+  }
+
   // potential area for lie-fi concern - waiting for fetch to complete first
-  return fetch(event.request).then(res => {
-    if (res.status === 200) {
+  return Promise.race(promise).then(res => {
+    clearTimeout(backupSaveTimer);
+    if (res.status === 200 && backupSaveTimer) {
       // then we want to capture the latest update
       return res.clone().json().then(json => {
         localSave(event, clone, json.code);
         return res;
       });
+    } else if (res.status === 200) {
+      return res;
     }
 
     // if it errored for some reason, let's still save the user content
-    throw new Error('failed to save online');
-  }).catch(() => {
-    return localSave(event, clone);
+    // throw new Error('failed to save online');
+    return localSave(event, clone, null, JSON.stringify({ error: true }));
+  }).catch(e => {
+    return localres || localSave(event, clone);
   });
 };
 
-function localSave(event, request, code) {
+function localSave(event, request, code, ok) {
+  if (!ok) {
+    ok = OK;
+  }
   const url = new URL(request.url);
   return caches.open(binCache).then(cache => {
     // this means we tried to save whilst we were offline

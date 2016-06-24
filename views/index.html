@@ -44,6 +44,9 @@ if(top != self) {
 {{/feature}}
 {{/unless}}
 {{> control_navigation}}
+<div id="load-cached" tabindex="-1">
+  <a href="#">Load cached copy from <span></span></a>
+</div>
 <script type="template/text" id="profile-template">
   <a title="@{name}" href="#profile" class="button button-dropdown avatar" id="accountBtn"><picture>
     <source srcset="{avatar} 1x, {avatar}?&s=58 2x">
@@ -305,12 +308,38 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{>infocard}}
 {{/unless}}
 
+{{#feature request "offline"}}
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  navigator.serviceWorker.addEventListener('message', function (event) {
+    window.postMessage(event.data, window.location.origin);
+    setTimeout(function () {
+      var data = JSON.parse(event.data);
+      console.log(data);
+      if (!document.body.classList.contains('ready')) {
+        document.querySelector('#load-cached span').innerHTML = data.updated;
+        document.body.classList.add('show-cached');
+
+        document.querySelector('#load-cached a').onclick = function (event) {
+          event.preventDefault();
+          navigator.serviceWorker.controller.postMessage(JSON.stringify({
+            type: 'accept-cache',
+            id: data.id,
+          }));
+        };
+      }
+    }, 1000);
+  });
+}
+</script>
+{{/feature}}
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{root}}/bin/user.js?{{bust}}"></script>
-{{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
+{{!-- we use the passed in version of isProduction here, not the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
-<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-<script src="{{root}}/bin/start.js?{{bust}}"></script>
+<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+<script async defer src="{{root}}/bin/start.js?{{bust}}"></script>
 {{else}}{{!- if development, we need include the user code first, otherwise last --}}
 <script src="{{root}}/bin/start.js?{{bust}}"></script>
   {{#if concat}}

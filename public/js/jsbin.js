@@ -171,6 +171,13 @@ if (storedSettings === 'undefined' || jsbin.embed) {
   storedSettings = null;
 }
 
+// try to copy across statics
+['root', 'shareRoot', 'runner', 'static', 'version'].map(function (key) {
+  if (!jsbin[key]) {
+    jsbin[key] = window.jsbin[key];
+  }
+});
+
 if (jsbin.user && jsbin.user.name) {
   jsbin.settings = $.extend(true, {}, jsbin.user.settings, jsbin.settings);
   if (jsbin.user.settings.font) {
@@ -379,3 +386,23 @@ if (jsbin.embed) {
     return false;
   });
 }
+
+window.addEventListener('message', function (event) {
+  var data;
+  try {
+    data = JSON.parse(event.data);
+  } catch (e) {
+    return;
+  }
+
+  if (data.type === 'cached') {
+    if (data.updated > jsbin.state.metadata.last_updated || !jsbin.state.metadata.last_updated) {
+      console.log('restored from cache: %sms newer', (new Date(data.updated).getTime() - new Date(jsbin.state.metadata.last_updated).getTime()) / 100);
+      // update the bin
+      jsbin.panels.panels.html.setCode(data.template.html);
+      jsbin.panels.panels.javascript.setCode(data.template.javascript);
+      jsbin.panels.panels.css.setCode(data.template.css);
+      $('a.save:first').click();
+    }
+  }
+});

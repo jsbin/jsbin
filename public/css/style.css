@@ -6208,3 +6208,30 @@ div.loggedout {
   right: 1px;
   content: '';
 }
+
+#load-cached,
+.show-cached.ready #load-cached {
+  opacity: 0;
+  transition: opacity ease-out 500ms;
+  top: -100px;
+}
+
+.show-cached #load-cached {
+  display: block;
+  opacity: 1;
+  z-index: 10;
+  top: 150px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+}
+
+.show-cached #load-cached a {
+  font-size: 110%;
+  text-decoration: none;
+  border: 1px solid #A5D6A7;
+  padding: 10px;
+  border-radius: 3px;
+  text-shadow: 0px 1px 0 #fff;
+  background-color: #E8F5E9;
+}

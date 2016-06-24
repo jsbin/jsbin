@@ -579,7 +579,12 @@ var processors = jsbin.processors = (function () {
 
       function workerMsgHandler() {
         window.addEventListener('message', function(event) {
-          var message = JSON.parse(event.data);
+          var message;
+          try {
+            message = JSON.parse(event.data);
+          } catch (e) {
+            return;
+          }
 
           if (message.type === 'eval') {
             jsbin_cljs.core.eval(
@@ -600,10 +605,14 @@ var processors = jsbin.processors = (function () {
       }
 
       window.addEventListener('message', function(event) {
-        var message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        try {
+          var message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
 
-        if (message.type === 'eval') {
-          resolveWorker('console.log('+message.result+')');
+          if (message.type === 'eval') {
+            resolveWorker('console.log('+message.result+')');
+          }
+        } catch (e) {
+          // toss errors
         }
       }, false);
 

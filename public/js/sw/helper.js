@@ -53,7 +53,8 @@ sw.getBinForClient = clientId => {
 sw.getBin = (url) => {
   return caches.open(binCache).then(cache => {
     // 3. and try to find the request based on this url
-    return cache.match(url.origin + url.pathname);
+    let pathname = url.pathname.split('/').filter(Boolean).shift();
+    return cache.match(`${url.origin}/${pathname}`);
   });
 };
 

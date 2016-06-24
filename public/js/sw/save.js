@@ -7,10 +7,16 @@ sw.save = event => {
   const clone = event.request.clone();
   // potential area for lie-fi concern - waiting for fetch to complete first
   return fetch(event.request).then(res => {
-    return res.clone().json().then(json => {
-      localSave(event, clone, json.code);
-      return res;
-    });
+    if (res.status === 200) {
+      // then we want to capture the latest update
+      return res.clone().json().then(json => {
+        localSave(event, clone, json.code);
+        return res;
+      });
+    }
+
+    // if it errored for some reason, let's still save the user content
+    throw new Error('failed to save online');
   }).catch(() => {
     return localSave(event, clone);
   });
@@ -47,7 +53,7 @@ function localSave(event, request, code) {
       });
 
       // try to find the request based on this url
-      const req = new Request(`${root}/${code}/edit`);
+      const req = new Request(`${root}/${code}`);
       request.text().then(body => {
         const bin = sw.paramsToObject(body);
         if (bin.settings) {
@@ -90,7 +96,7 @@ function localSave(event, request, code) {
               }
             );
 
-            const req = new Request(`${root}/${bin.template.code}/edit`);
+            const req = new Request(`${root}/${bin.template.code}`);
 
             return cache.put(req, response).then(() => {
               return new Response(OK, {
@@ -123,7 +129,7 @@ function localSave(event, request, code) {
                 },
               });
 
-              const req = new Request(`${root}/${bin.code}/edit`);
+              const req = new Request(`${root}/${bin.code}`);
 
               return cache.put(req, res).then(() => res);
             });

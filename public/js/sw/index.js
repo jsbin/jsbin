@@ -4,7 +4,12 @@
 const sw = {}; // imported scripts attach to this
 const binCache = 'bins';
 const staticCacheName = version + '-v1';
-importScripts('/js/sw/helper.js', '/js/sw/save.js', '/js/vendor/bin-to-file.min.js');
+importScripts(
+  '/js/sw/helper.js',
+  '/js/sw/save.js',
+  '/js/vendor/bin-to-file.min.js',
+  '/js/sw/clean-up.js'
+);
 const empty = {};
 const emptyBinUrl = '/bin/start.js?new=1';
 self.addEventListener('install', e => {
@@ -84,18 +89,21 @@ self.addEventListener('fetch', event => {
   // when the browser fetches a url, either response with the cached object
   // or go ahead and fetch the actual url
   event.respondWith(
-    caches.match(req).then(res => {
-      // also cache this if it's a gravatar
-      if (url.origin.includes('gravatar.com') && !res) {
-        caches.open(staticCacheName).then(cache => cache.add(req.url));
-      }
-
+    caches.open(staticCacheName).then(staticCache => {
+      return staticCache.match(req).then(res => {
+        // also cache this if it's a gravatar
+        if (url.origin.includes('gravatar.com') && !res) {
+          staticCache.add(req.url);
+        }
+        return res;
+      });
+    }).then(res => {
       // either send:
       // - cached resource
       // - fetch the resource
       // - or send an empty body (this gives *something* back to quiet down the errors)
       return res || fetch(event.request).then(res => {
-        if (!res.ok) {
+        if (res.status >= 500) {
           throw new Error('bad response from server: ' + res.statusCode);
         }
         return res;
@@ -109,9 +117,7 @@ self.addEventListener('fetch', event => {
           return new Response('');
         }
 
-        // see if we can get this from the cache
-        pathname += 'edit';
-
+        // let's see if we can find a bin locally that matches
         return sw.getBin({ origin: url.origin, pathname }).then(res => {
           if (!res) {
             // give up
@@ -121,6 +127,7 @@ self.addEventListener('fetch', event => {
           // else try to render using the binToFile logic
           return res.json().then(bin => {
             bin.template.processors = bin.jsbin.state.processors;
+            bin.source = bin.template;
             const html = binToFile(bin.template);
             return new Response(html, {
               headers: {

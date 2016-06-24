@@ -5,8 +5,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.0.0-rc1.js',
-    'label': 'jQuery 3.0.0-rc1',
+    'url': 'https://code.jquery.com/jquery-3.0.0.js',
+    'label': 'jQuery 3.0.0',
     'group': 'jQuery'
   },
   {

@@ -18,7 +18,13 @@ self.addEventListener('install', e => {
   // work offline
   e.waitUntil(
     caches.open(staticCacheName).then(cache => {
-      return cache.addAll(scripts).then(() => self.skipWaiting());
+      const fetches = scripts.map(req => {
+        return fetch(req, { mode: 'no-cors' }).then(res => {
+          return cache.put(req, res);
+        });
+      });
+
+      return Promise.all(fetches).then(() => self.skipWaiting());
     })
   );
 });

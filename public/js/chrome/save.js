@@ -347,7 +347,7 @@ function updateCode(panelId, callback) {
     settings: JSON.stringify(panelSettings),
   };
 
-  if (jsbin.settings.useCompression) {
+  if (jsbin.settings.useCompression && location.protocol === 'http:') {
     compressKeys('content', data);
   }
 

@@ -159,7 +159,7 @@ self.addEventListener('fetch', event => {
       // - cached resource
       // - fetch the resource
       // - or send an empty body (this gives *something* back to quiet down the errors)
-      return res || fetch(event.request, { mode: 'no-cors' }).then(res => {
+      return res || fetch(event.request).then(res => {
         if (res.status >= 500) {
           throw new Error('bad response from server: ' + res.status);
         }

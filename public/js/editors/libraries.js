@@ -686,6 +686,13 @@ var libraries = [
     'label': 'Riot + Compiler (latest 2.3.x)'
   },
   {
+    'url': [
+      'https://cdn.jsdelivr.net/blazecss/latest/blaze.min.css',
+      'https://cdn.jsdelivr.net/blazecss/latest/blaze.animations.min.css'
+    ],
+    'label': 'Blaze CSS (latest)'
+  },
+  {
     'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
     'label': 'RxJS 5.0.0-beta.7',
     'group': 'RxJS'

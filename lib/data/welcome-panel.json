@@ -70,6 +70,10 @@
       {
         "title": "Follow @js_bin on twitter",
         "link": "https://twitter.com/js_bin"
+      },
+      {
+        "title": "By using JS Bin you agree to our legal terms",
+        "link": "http://jsbin.com/legals"
       }
     ]
   },

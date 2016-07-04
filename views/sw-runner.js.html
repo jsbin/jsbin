@@ -1,0 +1,9 @@
+const cacheName = '{{version}}-v1';
+
+self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(cacheName).then(res => res || fetch(event.request))
+  );
+});

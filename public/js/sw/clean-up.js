@@ -6,6 +6,7 @@ const totalBinsToKeep = 25;
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(names => {
+      // remove anything that isn't our bins or active static cache
       const keep = [binCache, staticCacheName];
       const trash = names.filter(
         name => !keep.includes(name)
@@ -13,6 +14,7 @@ self.addEventListener('activate', event => {
         name => caches.delete(name)
       );
 
+      // compact the trash, and only keep the last 25 bins
       trash.push(new Promise(resolve => {
         resolve(caches.open(binCache).then(cache => {
           return cache.keys().then(keys => {

@@ -8,7 +8,8 @@ var analytics = jsbin.analytics = {
       data.push(value);
     }
 
-    window._gaq && _gaq.push(data);
+    // window._gaq && _gaq.push(data);
+    window.ga && ga('send', 'event', category, action, label);
   },
   universalEditor: function (value) {
     analytics.track('menu', 'universalEditor', value);

@@ -133,7 +133,8 @@ self.addEventListener('fetch', event => {
   // basically ignoreSearch, but it's not supported yet
   if (url.pathname === '/' ||
       url.pathname === '/bin/user.js' ||
-      url.pathname === '/images/default-avatar.min.svg') {
+      url.pathname === '/images/default-avatar.min.svg' ||
+      url.pathname.indexOf('/js/') === 0) {
     // strip the query string
     url.search = '';
     req = url;

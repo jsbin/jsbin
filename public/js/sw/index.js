@@ -43,8 +43,7 @@ self.addEventListener('message', event => {
   }
 
   if (data.type === 'accept-cache' && acceptCacheQueue[data.id]) {
-    let fn = acceptCacheQueue[data.id].resolve;
-    fn(acceptCacheQueue[data.id].body);
+    acceptCacheQueue[data.id].resolve();
     delete acceptCacheQueue[data.id];
   }
 });

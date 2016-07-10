@@ -1,0 +1,33 @@
+{ "features": [
+  {
+    "name": "<strong>Unlimited</strong> private & public bins",
+    "user": "pro",
+    "tip": "Keep your ideas private, and easily toggle privacy"
+  },
+  {
+    "name": "<strong>Unlimited & secure</strong> embeds, with custom theming",
+    "user": "pro",
+    "tip": "SSL support, complete CSS customisation and control over editor settings"
+  },
+  {
+    "name": "<strong>1GB storage</strong> for your uploaded assets",
+    "user": "pro",
+    "tip": "Just drag and drop assets into your bins for quick & easy use"
+  },
+  {
+    "name": "<strong>Unlimited</strong> dropbox sync",
+    "user": "pro",
+    "tip": "Every bin, backed up to your Dropbox"
+  },
+  {
+    "name": "Unique vanity URLs",
+    "user": "pro",
+    "tip": "Show off your Pro status with you.jsbin.com"
+  },
+  {
+    "name": "<strong>Support JS Bin's continued operation</strong>",
+    "user": "pro",
+    "tip": "Help keep JS Bin online, working, and awesome"
+  }
+]
+}

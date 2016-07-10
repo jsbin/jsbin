@@ -350,8 +350,9 @@ if ('serviceWorker' in navigator) {
   {{#addons}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
-<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{!- the `live` value is never true now, and loaded from source --}}
+<!-- <script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
+<script src="{{static}}/js/spike.js{{cacheBust}}"></script> -->
 {{/if}}
 {{#if custom_js}}
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>

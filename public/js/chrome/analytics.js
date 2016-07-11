@@ -134,6 +134,6 @@ var analytics = jsbin.analytics = {
 };
 
 // misses the asset upload one
-$('a[data-pro="true"').on('click', function () {
+$('a[data-pro="true"]').on('click', function () {
   analytics.track('try-pro', $(this).text());
 });

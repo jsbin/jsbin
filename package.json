@@ -57,6 +57,7 @@
     "passport": "~0.1.17",
     "passport-dropbox-oauth2": "~0.1.5",
     "passport-github": "~0.1.5",
+    "pg": "~@6.0.2", 
     "promise": "~5.0.0",
     "replify": "~1.2.0",
     "rsvp": "~3.0.1",

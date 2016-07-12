@@ -8,10 +8,10 @@ DROP TABLE IF EXISTS "assets";
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "assets" (
   "id"   BIGSERIAL UNIQUE,
-  "username" char(255) NOT NULL,
-  "asset_url" char(255) NOT NULL,
+  "username" text NOT NULL,
+  "asset_url" text NOT NULL,
   "size"  BIGINT NOT NULL,
-  "mime" char(255) NOT NULL
+  "mime" text NOT NULL
   --,
   --PRIMARY KEY ("id"),
   --KEY "asset_url" ("asset_url"),
@@ -31,13 +31,13 @@ DROP TABLE IF EXISTS "customers";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "customers" (
-  "stripe_id" char(255) NOT NULL,
+  "stripe_id" text NOT NULL,
   "id"   BIGSERIAL UNIQUE,
   "user_id"  BIGINT DEFAULT NULL,
-  "name" char(255) NOT NULL,
+  "name" text NOT NULL,
   "expiry" timestamp DEFAULT NULL,
   "active" SMALLINT DEFAULT '1',
-  "plan" varchar(255) DEFAULT NULL
+  "plan" text DEFAULT NULL
   --,
   --PRIMARY KEY ("id"),
   --KEY "stripe_id" ("stripe_id"),
@@ -62,8 +62,8 @@ DROP TABLE IF EXISTS "forgot_tokens";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "forgot_tokens" (
-  "owner_name" varchar(255) NOT NULL,
-  "token" varchar(255) NOT NULL,
+  "owner_name" text NOT NULL,
+  "token" text NOT NULL,
   "expires" timestamp NOT NULL,
   "created" timestamp NOT NULL
   --,
@@ -82,10 +82,10 @@ DROP TABLE IF EXISTS "owner_bookmarks";
 
 CREATE TABLE "owner_bookmarks" (
   "id"   BIGSERIAL UNIQUE,
-  "name" char(255) NOT NULL,
-  "url" char(255) NOT NULL,
+  "name" text NOT NULL,
+  "url" text NOT NULL,
   "revision"  BIGINT NOT NULL,
-  "type" char(50) NOT NULL,
+  "type" text NOT NULL,
   "created" timestamp NOT NULL
   --,
   --PRIMARY KEY ("id"),
@@ -108,15 +108,19 @@ DROP TYPE "visibility_type";
 CREATE TYPE "visibility_type" AS ENUM ('public','unlisted','private');
 CREATE TABLE "owners" (
   "id"   BIGSERIAL UNIQUE,
-  "name" char(75) NOT NULL,
-  "url" char(255) NOT NULL,
+  "name" text NOT NULL,
+  "url" text NOT NULL,
   "revision"  BIGINT DEFAULT '1',
   "last_updated" timestamp NOT NULL,
-  "summary" varchar(255) NOT NULL DEFAULT '',
-  "html" SMALLINT NOT NULL DEFAULT '0',
-  "css" SMALLINT NOT NULL DEFAULT '0',
-  "javascript" SMALLINT NOT NULL DEFAULT '0',
-  "archive" SMALLINT NOT NULL DEFAULT '0',
+  "summary" text NOT NULL DEFAULT '',
+  -- "html" SMALLINT NOT NULL DEFAULT '0',
+  -- "css" SMALLINT NOT NULL DEFAULT '0',
+  -- "javascript" SMALLINT NOT NULL DEFAULT '0',
+  -- "archive" SMALLINT NOT NULL DEFAULT '0',
+  "html" BOOLEAN DEFAULT FALSE,
+  "css" BOOLEAN DEFAULT FALSE,
+  "javascript" BOOLEAN DEFAULT FALSE,
+  "archive" BOOLEAN DEFAULT FALSE,
   "visibility" visibility_type NOT NULL DEFAULT 'public'
   --,
   --PRIMARY KEY ("id"),
@@ -139,23 +143,23 @@ DROP TABLE IF EXISTS "ownership";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "ownership" (
-  "name" char(75) NOT NULL,
-  "key" char(255) NOT NULL,
-  "email" varchar(255) NOT NULL DEFAULT '',
+  "name" text NOT NULL,
+  "key" text NOT NULL,
+  "email" text NOT NULL DEFAULT '',
   "last_login" timestamp NOT NULL,
   "created" timestamp NOT NULL,
   "updated" timestamp NOT NULL,
-  "api_key" varchar(255) DEFAULT NULL,
-  "github_token" varchar(255) DEFAULT NULL,
+  "api_key" text DEFAULT NULL,
+  "github_token" text DEFAULT NULL,
   "github_id"  BIGINT DEFAULT NULL,
   "verified" SMALLINT NOT NULL DEFAULT '0',
   "pro" SMALLINT NOT NULL DEFAULT '0',
   "id"   BIGSERIAL UNIQUE,
   "settings" text,
-  "dropbox_token" varchar(255) DEFAULT NULL,
+  "dropbox_token" text DEFAULT NULL,
   "dropbox_id"  BIGINT DEFAULT NULL,
   "beta" SMALLINT DEFAULT NULL,
-  "flagged" char(16) DEFAULT NULL,
+  "flagged" text DEFAULT NULL,
   "last_seen" timestamp DEFAULT NULL
   --,
   --PRIMARY KEY ("id"),
@@ -186,14 +190,14 @@ CREATE TABLE "sandbox" (
   "html" TEXT,
   "created" timestamp DEFAULT NULL,
   "last_viewed" timestamp DEFAULT NULL,
-  "url" char(255)  DEFAULT NULL,
-  "active" char(1) NOT NULL DEFAULT 'y',
+  "url" text  DEFAULT NULL,
+  "active" text NOT NULL DEFAULT 'y',
   "reported" timestamp DEFAULT NULL,
-  "streaming" char(1)  DEFAULT 'n',
-  "streaming_key" char(32)  NOT NULL,
-  "streaming_read_key" char(32) NOT NULL,
-  "active_tab" varchar(10) NOT NULL,
-  "active_cursor"  BIGINT NOT NULL,
+  "streaming" text  DEFAULT 'n',
+  "streaming_key" text  NOT NULL,
+  "streaming_read_key" text,
+  "active_tab" text,
+  "active_cursor"  BIGINT,
   "revision"  BIGINT DEFAULT '1',
   "css" TEXT,
   "settings" TEXT 

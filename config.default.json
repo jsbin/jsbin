@@ -11,19 +11,18 @@
   "max-request-size": "1MB",
   "max-age": 86400,
   "store": {
-    "adapter": "sqlite",
+    "adapter": "pgsql",
     "sqlite": {
       "location": "jsbin.sqlite"
     },
     "pgsql": {
-      "host": "localhost",
+      "host": "",
       "port": 5432,
-      "max": 10, // max number of clients in the pool
-      "idleTimeoutMillis": 30000, // how long a client is allowed to remain idle before being closed
-      "user": "root",
+      "max": 10,
+      "idleTimeoutMillis": 30000,
+      "user": "jsbin",
       "password": "",
-      "database": "jsbin",
-
+      "database": "jsbin"
     },
     "mysql": {
       "host": "localhost",

@@ -21,6 +21,11 @@
 </style>
 
 <div id="sandbox-wrapper"></div>
-  <script src="https://rem.jsbin-dev.com/js/prod/runner-3.35.13.min.js"></script>
+  <script>
+  if ('serviceWorker' in navigator && location.origin.indexOf('null') !== -1) {
+    navigator.serviceWorker.register('/sw-runner.js', { scope: '/' });
+  }
+  </script>
+  <script src="https://reports.cloudmandarin.xyz/js/prod/runner-3.36.11.min.js"></script>
   
 

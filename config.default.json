@@ -11,7 +11,7 @@
   "max-request-size": "1MB",
   "max-age": 86400,
   "store": {
-    "adapter": "pgsql",
+    "adapter": "sqlite",
     "sqlite": {
       "location": "jsbin.sqlite"
     },

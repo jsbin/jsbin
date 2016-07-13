@@ -22,7 +22,7 @@ table {
 }
 
 tbody tr {
-  border-top: 1px solid rgb(240, 240, 240);
+  // border-top: 1px solid rgb(240, 240, 240);
 }
 
 tr.headings th {

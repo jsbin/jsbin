@@ -130,7 +130,7 @@ function exposeSettings() {
     return results;
   }
 
-  if (isDOM(window.jsbin) || !window.jsbin || !window.jsbin.version) { // because...STUPIDITY!!!
+  if (isDOM(window.jsbin) || !window.jsbin || !window.jsbin.state) { // because...STUPIDITY!!!
     window.jsbin = {
       user: window.jsbin.user,
       'static': jsbin['static'],

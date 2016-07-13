@@ -2,19 +2,23 @@
   <thead>
     <tr class="headings">
       <td>&nbsp;</td>
+      {{#unless testUnlimited}}
       <th>Free account</th>
       <th>
         Pro <small class="upgrade-cost">@ £5/month*</small>
       </th>
+      {{/unless}}
     </tr>
   </thead>
   <tfoot class="upgrade">
     <tr>
       <td>&nbsp;</td>
+      {{#unless testUnlimited}}
       <td>&nbsp;</td>
       <td>
         <a class="actionButton actionButton-rounded actionButton-primary actionButton-jumbo" href="/account/upgrade/pay">Upgrade!</a>
       </td>
+      {{/unless}}
     </tr>
   </tfoot>
   <tbody>
@@ -24,8 +28,9 @@
         {{#if tip}}
         <span tabIndex="0" class="tip" data-tip="{{tip}}">?</span>
         {{/if}}
-        {{name}}
+        {{{name}}}
       </td>
+      {{#unless @root.testUnlimited}}
       <td class="free">
         {{#equal user 'anon'}}&#10003;{{/equal}}
         {{#equal user 'free'}}&#10003;{{/equal}}
@@ -35,6 +40,7 @@
         {{#equal user 'free'}}&#10003;{{/equal}}
         {{#equal user 'pro'}}&#10003;{{/equal}}
       </td>
+      {{/unless}}
     </tr>
     {{/each}}
   </tbody>

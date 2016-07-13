@@ -56,7 +56,7 @@ jQuery(function ($) {
   var vatEl = $('#vat');
   var vatISOEl = $('#vatiso');
 
-  $.getJSON('//country-finder.herokuapp.com/?callback=?', function (data) {
+  $.getJSON('https://country-finder.herokuapp.com/?callback=?', function (data) {
     if (data.geo) {
       countryEl.val(data.geo.country.toLowerCase()).trigger('change');
     }
@@ -73,7 +73,6 @@ jQuery(function ($) {
     }
   });
 
-
   var price = { yearly: {}, monthly: {}, discount: {} };
   price.yearly.el = $('#price-yearly');
   price.yearly.value = price.yearly.el.data('price') * 1;
@@ -89,9 +88,18 @@ jQuery(function ($) {
   };
 
   function updatePricesTo(ccy) {
-    price.yearly.el.html(fx[ccy].symbol + (price.yearly.value * fx[ccy].rate | 0));
-    price.monthly.el.html(fx[ccy].symbol + (price.monthly.value * fx[ccy].rate | 0));
-    price.discount.el.html(fx[ccy].symbol + (price.discount.value * fx[ccy].rate | 0));
+    var yearly = price.yearly.value * fx[ccy].rate;
+    var monthly = price.monthly.value * fx[ccy].rate;
+
+    if (ccy !== 'GBP') {
+      yearly = yearly | 0;
+      monthly = monthly | 0;
+    }
+
+    var discount = price.discount.value * fx[ccy].rate | 0;
+    price.yearly.el.html(fx[ccy].symbol + yearly);
+    price.monthly.el.html(fx[ccy].symbol + monthly);
+    price.discount.el.html(fx[ccy].symbol + discount);
   }
 
   var $ccynote = $('.ccy-note');
@@ -103,6 +111,13 @@ jQuery(function ($) {
       var rates = data.rates;
       fx.EUR.rate = 1 / rates.GBP;
       fx.USD.rate = fx.EUR.rate / (1 / rates.USD);
+
+      // every other day chose USD for pricing
+      var useUSD = (new Date()).getDay() % 2;
+      if (useUSD === 0) {
+        analytics.experiment('usd-pricing');
+        $('.ccy input[value=USD]').click();
+      }
     },
   });
 

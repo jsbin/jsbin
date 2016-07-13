@@ -404,6 +404,10 @@ var libraries = [
     'group': 'shims'
   },
   {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/blissfuljs/1.0.2/bliss.min.js',
+    'label': 'Bliss 1.0.2',
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js',
     'label': 'Vue.js',
   },

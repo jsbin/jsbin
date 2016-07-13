@@ -15,12 +15,6 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
   <div id="invoices" class="invoices">
     <h2>Invoices</h2>
 
-    {{#unless @root.charge.paid}}
-    <div><h4><abbr class="warning" title="{{@root.charge.failure_message}}">⚠️</abbr> Last charge: {{@root.charge.failure_message}}</h4>
-    <p><small>Your last invoice failed to take payment. Please update your credit card below to resolve this problem. Or email <a href="mailto:support@jsbin.com">support@jsbin.com</a> if a card update can't resolve the issue.</small></p>
-    </div>
-    {{/unless}}
-
     <div>
     {{#each ../invoices}}
     <p{{#unless paid}} class="unpaid"{{/unless}}><a href="/account/invoices/{{id}}">Invoice for {{#stripeTimestampAsDate lines.data.[0].period.start "D MMMM, YYYY"}}{{/stripeTimestampAsDate}} - {{#stripeTimestampAsDate lines.data.[0].period.end "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}</a> {{#unless paid}}<abbr class="warning" title="{{@root.charge.failure_message}}">⚠️</abbr>{{/unless}}</p>
@@ -48,13 +42,19 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
         <span class="inputWithImage payment-details-card-cvc">
           <b class="icon-lock"></b>
           <input id="cvc" placeholder="CVC" value="{{values.cvc}}" type="text" name="cvc" size="4" pattern="\d*" x-autocompletetype="cc-csc" required  autocomplete="off" data-stripe="cvc">
-          <button id="update-card-btn">Save changes</button>
+          <button id="update-card-btn">Update card</button>
         </span>
       </div>
     </div>
     <input type="hidden" name="_csrf" value="{{@root.csrf}}">
     <input type="hidden" name="id" value="{{@root.card.id}}">
     </form>
+
+    {{#unless @root.charge.paid}}
+    <div><h4><abbr class="warning" title="{{@root.charge.failure_message}}">⚠️</abbr> Last charge: {{@root.charge.failure_message}}</h4>
+    <p><small>Your last invoice failed to take payment. Please update your credit card above to resolve this problem. Or email <a href="mailto:support@jsbin.com">support@jsbin.com</a> if a card update can't resolve the issue.</small></p>
+    </div>
+    {{/unless}}
   </div>
 
   {{#if cancel_at_period_end}}

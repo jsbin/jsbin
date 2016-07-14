@@ -1,0 +1,9 @@
+{
+  "settings": {
+    "panels": ["javascript", "console"]
+  },
+  "processors": {
+    "javascript": "es6"
+  },
+  "name": "ESNext"
+}

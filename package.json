@@ -50,7 +50,7 @@
     "less": "~1.7.3",
     "lynx": "~0.1.1",
     "lz-string": "~1.3.3",
-    "memcached": "git://github.com/3rd-Eden/node-memcached#10733b0e487793dde1d3a4f9201b1ec41c0be0c6",
+    "memcached": "~2.2.2",
     "moment": "~2.5.1",
     "mysql": "~2.0.0-alpha9",
     "nodemailer": "0.3.20",

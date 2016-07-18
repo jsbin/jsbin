@@ -1,2 +1,2 @@
 {{#if production}}start({{{template}}}, {{{jsbin}}}, this, document);{{else}}window.template = {{{template}}};
-window.jsbin = {{{jsbin}}};{{/if}}
+jQuery.extend(window.jsbin, {{{jsbin}}});{{/if}}

@@ -1,0 +1,11 @@
+Just to let you know, the subscription charge for your JS Bin Pro account on {{created}}, failed against the card ending in "{{last4}}".
+
+You'll need to fix this before your subscription automatically cancelled (after 3 charge attempts).
+
+Update your card details today:
+
+https://jsbin.com/account/subscription
+
+Many thanks,
+
+– Remy (creator of JS Bin)

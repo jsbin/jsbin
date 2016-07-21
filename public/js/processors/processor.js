@@ -225,6 +225,29 @@ var processors = jsbin.processors = (function () {
       }
     }),
 
+    jsxmetal: createProcessor({
+      id: 'jsxmetal',
+      target: 'javascript',
+      extensions: ['js'],
+      url: jsbin.static + '/js/vendor/metalJSXTransform.js',
+      init: function jsx(ready) {
+        var code = editors.html.getCode();
+        if (!(/<script[^>]*src=\S*\bmetal\b/i).test(code)) {
+          $('#library').val( $('#library').find(':contains("Metal JSX Component")').val() ).trigger('change');
+        }
+        ready();
+      },
+      handler: function (source, resolve, reject) {
+        var renderedCode = '';
+        try {
+          renderedCode = window.metalJSXTransform(source);
+          resolve(renderedCode);
+        } catch (e) {
+          reject(e);
+        }
+      }
+    }),
+
     livescript: createProcessor({
       id: 'livescript',
       target: 'javascript',

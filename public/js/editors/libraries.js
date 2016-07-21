@@ -363,6 +363,13 @@ var libraries = [
     'label': 'Angular Sanitize Latest',
     'group': 'Angular'
   },
+
+  {
+    'url': ['https://rawgit.com/bryceosterhaus/metal-jsbin/master/build/metalJSXComponent.js'],
+    'label': 'Metal JSX Component',
+    'group': 'Metal.js'
+  },
+
   {
     'url': ['https://fb.me/react-15.1.0.js', 'https://fb.me/react-dom-15.1.0.js'],
     'label': 'React + React DOM 15.1.0',

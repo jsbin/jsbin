@@ -84,3 +84,11 @@ Stripe.setPublishableKey('{{stripe.key}}');
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{static}}/js/vendor/jquery.payment.js{{cacheBust}}"></script>
 <script src="{{static}}/js/account/subscription.js{{cachebust}}"></script>
+<script>
+$('#cancel').on('submit', function (event) {
+  var result = prompt("Enter your username to confirm the cancellation\n(it's \"{{@root.username}}\" by the way).\n\nWe'll miss you :(");
+  if (!result || (result.toLowerCase().trim() !== '{{@root.username}}'.toLowerCase())) {
+    event.preventDefault();
+  }
+});
+</script>

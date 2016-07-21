@@ -22,13 +22,6 @@
     $(this).closest('span').toggleClass('valid', $.payment.validateCardCVC(this.value, card));
   });
 
-  $('#cancel').on('submit', function (event) {
-    var result = prompt("Enter your username to confirm the cancellation\n(it's \"{{../../username}}\" by the way).\n\nWe'll miss you :(");
-    if (!result || (result.toLowerCase().trim() !== '{{../../username}}'.toLowerCase())) {
-      event.preventDefault();
-    }
-  });
-
   // Expiry is a single field, so we need to split it up to validate
   var expiry = $('#expiry').payment('formatCardExpiry').on('blur input', function () {
     var data = this.value.split('/').map(function (s) {

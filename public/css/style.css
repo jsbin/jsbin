@@ -6237,10 +6237,17 @@ div.loggedout {
 }
 
 body.min #toppanel,
-body.min #control {
+body.min #control,
+body.min #infocard,
+body.min .label {
   display: none !important;
 }
 
 body.min #bin {
   top: 0;
+}
+
+body.min .CodeMirror-lines,
+body.min #console {
+  padding-top: 5px !important;
 }

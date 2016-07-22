@@ -6239,7 +6239,8 @@ div.loggedout {
 body.min #toppanel,
 body.min #control,
 body.min #infocard,
-body.min .label {
+body.min .label,
+body.min .console-wrapper {
   display: none !important;
 }
 

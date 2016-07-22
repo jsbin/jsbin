@@ -6235,3 +6235,12 @@ div.loggedout {
   text-shadow: 0px 1px 0 #fff;
   background-color: #E8F5E9;
 }
+
+body.min #toppanel,
+body.min #control {
+  display: none !important;
+}
+
+body.min #bin {
+  top: 0;
+}

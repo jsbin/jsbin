@@ -6252,3 +6252,7 @@ body.min .CodeMirror-lines,
 body.min #console {
   padding-top: 5px !important;
 }
+
+body.min #live iframe {
+  padding-top: 0;
+}

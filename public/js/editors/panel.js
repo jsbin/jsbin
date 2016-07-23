@@ -96,7 +96,7 @@ var Panel = function (name, settings) {
       readOnly: jsbin.state.embed ? 'nocursor' : false,
       dragDrop: false, // we handle it ourselves
       mode: editorModes[panelLanguage],
-      lineWrapping: true,
+      lineWrapping: false,
       // gutters: ['line-highlight'],
       theme: jsbin.settings.theme || 'jsbin',
       highlightLine: true

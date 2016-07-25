@@ -8,11 +8,11 @@ var processor = (function () {
   var processor = {};
 
   processor.blockingMethods = {
-    kill: '<script>var __blocked={methods:["open","print","alert","prompt","confirm"],old:{}};for(var m in __blocked.methods){try {__blocked.old[m]=window[m];window[m]=function(){};}catch(e){}}</script>',
+    kill: '<script>(function(){var __blocked={methods:["open","print","alert","prompt","confirm"],old:{}};for(var m in __blocked.methods){try {__blocked.old[m]=window[m];window[m]=function(){};}catch(e){}}})()</script>',
     // RS: the empty comment in the end of the harness, ensures any
     // open comments are closed, and will ensure the harness is hidden
     // from the user.
-    restore: '<!--jsbin live harness--><script>for(var m in __blocked.methods){try{window[m]=__blocked.old[m];delete __blocked;}catch(e){}};</script>'
+    restore: '<!--jsbin live harness--><script>(function(){for(var m in __blocked.methods){try{window[m]=__blocked.old[m];delete __blocked;}catch(e){}};})()</script>'
   };
 
   /**

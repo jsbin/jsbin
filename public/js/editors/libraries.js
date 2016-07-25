@@ -751,16 +751,16 @@ var libraries = [
     'group': 'PouchDB'
   },
   {
-    'url': 'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
-    'label': 'Moment 2.10.6',
+    'url': 'https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js',
+    'label': 'Moment 2.14.1',
     'group': 'Moment.js'
   },
   {
     'url': [
-      'https://cdn.jsdelivr.net/momentjs/2.10.6/moment-with-locales.min.js',
-      'https://cdn.jsdelivr.net/momentjs/2.10.6/locales.min.js'
+      'https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js',
+      'https://cdn.jsdelivr.net/momentjs/2.14.1/locales.min.js'
     ],
-    'label': 'Moment 2.10.6 (with locales)',
+    'label': 'Moment 2.14.1 (with locales)',
     'group': 'Moment.js'
   },
   {

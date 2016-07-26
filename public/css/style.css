@@ -3153,6 +3153,7 @@ input {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
   font-size: 14px;
 }
+
 #bin .editbox .CodeMirror pre,
 .mobile textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
@@ -6255,4 +6256,10 @@ body.min #console {
 
 body.min #live iframe {
   padding-top: 0;
+}
+
+body.min #bin .editbox .CodeMirror,
+body.min #bin .editbox .CodeMirror pre {
+  font-size: 18px;
+  font-weight: bold;
 }

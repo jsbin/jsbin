@@ -365,8 +365,8 @@ var libraries = [
   },
 
   {
-    'url': ['https://rawgit.com/bryceosterhaus/metal-jsbin/master/build/metalJSXComponent.js'],
-    'label': 'Metal JSX Component',
+    'url': ['https://rawgit.com/bryceosterhaus/metal-jsbin/master/build/metalJSXComponent-1.0.4.js'],
+    'label': 'Metal JSX Component 1.0.4',
     'group': 'Metal.js'
   },
 

@@ -746,6 +746,13 @@ var libraries = [
     'label': 'Ramda 0.20.1'
   },
   {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js'
+    ],
+    'label': 'Semantic UI 2.2.2'
+  },
+  {
     'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
     'label': 'PouchDB (latest)',
     'group': 'PouchDB'

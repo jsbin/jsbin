@@ -5426,13 +5426,29 @@ body.ready.toppanel {
   /* margin-right: 10px; */
 }
 
+.toppanel-stretch {
+  width: 510px;
+  max-width: 510px;
+}
+
+.toppanel-stretch iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 5px;
+}
+
 @media (max-width: 1437px) { /* 5 */
   .toppanel-column {
     width: calc((100% - 240px) / 4);
     max-width: 100%;
 
     margin-right: 8px;
-}
+  }
+  .toppanel-stretch {
+    width: calc((100% - 240px) / 2);
+  }
+
   .toppanel-column:nth-child(n+6) {
     display: none;
   }
@@ -5442,7 +5458,8 @@ body.ready.toppanel {
     width: calc((100% - 250px) / 3);
 
     margin-right: 10px;
-}
+  }
+
   .toppanel-column:nth-child(n+5) {
     display: none;
   }

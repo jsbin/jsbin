@@ -2,68 +2,144 @@
 // 'use strict'; // this causes bigger issues :-\
 
 var $library = $('#library'),
+    $libraryInput = $('#library > input'),
+    $libraryLabel = $('#library > label'),
+    $libraryOptions = $('#library > ul'),
+    librarySearch = '',
+    highlightedItem = 0,
     groups = {};
 
-$library.bind('init', function () {
-  var i = 0,
-    j = 0,
-    k = 0,
-    library = {},
-    groupOrder = [],
-    group = {},
-    groupLabel = '',
-    lcGroup = '';
-
-  // reset
-  groups = {};
-  $library.empty();
-
-  for (i = 0; i < libraries.length; i++) {
-    library = libraries[i];
-    groupLabel = library.group || 'Other';
-    lcGroup = groupLabel.toLowerCase().replace(/[^a-z0-9]/ig, '');
-    if (groupOrder.indexOf(lcGroup) === -1) {
-      group = { label: groupLabel, libraries: [], key: lcGroup };
-      groups[lcGroup] = group;
-      groupOrder.push(lcGroup);
-    } else {
-      group = groups[lcGroup];
-    }
-
-    group.libraries.push(library);
-  }
-
-  var html = ['<option value="none">None</option>'];
-
-  for (i = 0; i < groupOrder.length; i++) {
-    group = groups[groupOrder[i]];
-    html.push('<option value="" data-group="' + group.label + '" class="heading">-------------</option>');
-
-    for (j = 0; j < group.libraries.length; j++) {
-      library = group.libraries[j];
-      html.push('<option value="' + group.key + ':' + j + '">' + library.label + '</option>');
+function selectItem($option){
+  var library = _.find(libraries, {label: $option.data('label')});
+  if(library !== undefined){
+    analytics.library('select', library.label);
+    insertResources(library.url);
+    if(library.snippet){
+      insertResources(library.snippet);
     }
   }
+}
 
-  $library.html( html.join('') );
-}).trigger('init');
-
-
-$library.bind('change', function () {
-  if (!this.value) { return; }
-
-  var selected = this.value.split(':'),
-      group = groups[selected[0]],
-      library = group.libraries[selected[1]];
-
-  analytics.library('select', group.libraries[selected[1]].label);
-  insertResources(library.url);
-  if (library.snippet) {
-    insertSnippet(library.snippet);
-  }
-}).on('click', function () {
-  analytics.library('open');
+$libraryOptions.on('click li', function(e){
+  selectItem($(e.target));
 });
+
+$libraryInput.bind('focus', function(){
+  analytics.library('open');
+  $library.addClass('open');
+  $libraryLabel.hide();
+});
+
+$libraryInput.bind('blur', function(){
+  $libraryLabel.show();
+  $library.removeClass('open');
+  $libraryInput.val('');
+  librarySearch = '';
+  $library.trigger('render');
+});
+
+$libraryInput.bind('cut', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+$libraryInput.bind('paste', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+
+$libraryInput.bind('keydown', function(e){
+  // if user pressed enter don't rerender dropdown
+  if(e.keyCode === 13){
+    selectItem($libraryOptions.find('.selected'));
+
+  // if user pressses escape, close the dropdown
+  }else if(e.keyCode === 27){
+    $libraryInput.trigger('blur');
+  // If user presses up or down move highlighted item
+  }else{
+    if(e.keyCode === 40){
+      highlightedItem++;
+    }else if(e.keyCode === 38 && highlightedItem > 0){
+      highlightedItem--;
+    }
+
+    librarySearch = e.target.value;
+    $library.trigger('render');
+  }
+  scrollHighlightIntoView();
+});
+
+function scrollHighlightIntoView(){
+  var $highlightedOption = $libraryOptions.find('.selected');
+  var elTop = $highlightedOption.position().top;
+  var containerScrollTop = $libraryOptions.scrollTop();
+  var elHeight = $highlightedOption.outerHeight();
+  var containerHeight = $libraryOptions.outerHeight();
+
+  // If the highlighted option is beyond the boundaries
+  // of the scrollable container, adjust the scroll position
+  // of the container
+
+  // if it is it above the boundaries
+  if( elTop < 0 ){
+    // then align the top of the scrollable container with
+    // the top of the highlighted element
+    var scrollTo = containerScrollTop + elTop;
+    $libraryOptions.scrollTop(scrollTo);
+
+  // if it is below the boundaries
+  }else if( elTop + elHeight > containerHeight){
+    // then align the bottom of the scrollable container with
+    // the bottom of the highlighted element
+    $libraryOptions.scrollTop(containerScrollTop + ((elTop + elHeight) - containerHeight));
+  }
+}
+
+$libraryInput.bind('keyup', function(e){
+  librarySearch = e.target.value;
+  $library.trigger('render');
+});
+
+
+$library.bind('render', function(){
+  var token = librarySearch.toLowerCase().trim();
+
+  // save libraries whose label match the search
+  var filteredLibraries = _(libraries).filter(function(library){
+    return library.label.toLowerCase().indexOf(token) > -1 || 
+      librarySearch.trim().length < 1
+  }).sortBy('label').value();
+
+  var optionsCount = filteredLibraries.length-1
+
+  // reset the selected item if we've moved beyond the array
+  if(highlightedItem > optionsCount && optionsCount > 1){
+    highlightedItem = filteredLibraries.length-1;
+  }else if(optionsCount === 0){
+    highlightedItem = 0;
+  }
+
+  var renderedOptions = _.map(filteredLibraries, function(library, i){
+    if(highlightedItem === i){
+      return '<li class="selected" data-label="'+library.label+'">' + library.label + '</li>';
+    }else{
+      return '<li data-label="'+library.label+'">' + library.label + '</li>';
+    }
+  });
+
+  if(renderedOptions.length < 1){
+    renderedOptions.push('<li class="library-option">No matches for <strong>' + token + '</strong></li>');
+  }
+
+  $libraryOptions.empty();
+  $libraryOptions.html( renderedOptions.join('') );
+});
+
+$library.bind('init', function () {
+  $library.trigger('render');
+}).trigger('init');
 
 function insertResources(urls) {
   if (!$.isArray(urls)) {

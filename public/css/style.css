@@ -1996,20 +1996,87 @@ a:hover {
   width: 100%;
 }
 */
-#library {
-  padding: 2px;
+
+.button-library {
   right: 0;
   margin-left: 5px;
-  position: absolute;
-  top: -1px;
+  position: relative;
   left: -5px;
-  opacity: 0;
   cursor: pointer;
-  display: block;
-  height: 37px;
-  border: 1px solid #CCC;
+  display: inline-block;
   outline: none;
-  width: 86px;
+  padding: 0;
+  height: auto;
+  width: auto;
+}
+
+.button-library > label{
+ cursor: pointer;
+ position: absolute;
+ left: 0;
+ line-height: 28px;
+ top: -1px;
+ padding: 6px 10px;
+ z-index: 9;
+}
+
+.button-library > input{
+ background: none;
+ margin: 0;
+ font-size: 13px;
+ transition: 300ms;
+ border: none;
+ width: 85px;
+ padding: 6px 10px;
+ border-left: 1px solid transparent;
+ border-right: 1px solid transparent;
+ line-height: 24px;
+ box-sizing: border-box;
+}
+
+.button-library > input:hover{
+ background: rgba(0, 0, 0, 0.04);
+ border-color: #ccc;
+}
+
+.button-library > input:focus{
+ background: #fff;
+ width: 250px;
+ border-color: #ccc;
+}
+
+.button-library > ul{
+ max-height: 0px;
+ opacity: 0;
+ transition: 300ms;
+ width: 250px;
+ overflow: auto;
+ margin: 0;
+ padding: 0;
+ position: absolute;
+ box-sizing: border-box;
+ list-style: none;
+ border: 1px solid #ccc;
+ left: 0;
+}
+
+.button-library > ul li{
+ background: #fff;
+ padding: .3em .8em;
+}
+
+.button-library > ul li:hover,
+.button-library > ul li.selected{
+ background: #EBF3FF;
+}
+
+.button-library > ul li:last-child{
+ border-bottom: none;
+}
+
+.button-library.open > ul{
+ max-height: 200px;
+ opacity: 1;
 }
 
 iframe.javascript {

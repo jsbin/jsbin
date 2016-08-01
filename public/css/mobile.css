@@ -1,0 +1,64 @@
+@media only screen and (max-width: 450px) {
+  html:before {
+    content: 'mobile';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    color: white;
+    z-index: 1000;
+  }
+
+  a.toppanel-logo {
+    transform: translate(-86px, 120px) scale(0.35);
+  }
+
+  #control {
+    height: 44px;
+  }
+
+  #bin {
+    top: 44px;
+  }
+
+  #control .control {
+    border: 0;
+  }
+  
+  #control .control > div {
+    display: none;
+  }
+
+  #control #panels {
+    display: block;
+    border: 0;
+    padding: 0;
+    padding-top: 0px;
+    right: 0;
+    width: auto;
+    position: absolute;
+    margin-right: 0;
+  }
+
+  #control #panels > a.button {
+    box-sizing: border-box;
+    border-radius: 0;
+    border-top: 0;
+    border-bottom: 0;
+    padding: 0 10px;
+    min-width: 50px;
+    line-height: 44px;
+    height: 44px;
+    border-right: 0;
+    border-left: 1px solid #ccc;
+  }
+
+  #control #panels > a.button:focus {
+    box-shadow: none;
+  }
+
+  .mobile .editbox textarea {
+    font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+  }
+}

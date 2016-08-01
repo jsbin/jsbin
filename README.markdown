@@ -80,3 +80,12 @@ End points are:
 - `GET /api/:bin/:rev` - Retrieve the specific version of the bin with the specified ID and revision
 - `POST /api/save` - Create a new bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
 - `POST /api/:bin/save` - Create a new revision for the specified bin, the body of the post should be URL encoded and contain `html`, `javascript` and `css` parameters
+
+## Backers
+
+[Become a backer]((https://opencollective.com/jsbin#backer)) and show your support to our open source project.
+
+
+## Sponsors
+
+Does your company use JS Bin? Ask your manager or marketing team if your company would be interested in supporting our project. Support will allow the maintainers to dedicate more time for maintenance and new features for everyone. Also, your company's logo will show [on GitHub](https://github.com/jsbin/jsbin#readme) --who doesn't want a little extra exposure?  [Here's the info](https://opencollective.com/jsbin#sponsor).

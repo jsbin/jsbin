@@ -72,4 +72,17 @@
     right: 0;
   }
 
+  .card.author .settings {
+    width: 170px;
+  }
+
+  .card .settings #headers input {
+    width: 130px;
+  }
+
+  .card .body select {
+    width: 280px;
+    border: 2px solid #b7dffd;
+    border-radius: 0;
+  }
 }

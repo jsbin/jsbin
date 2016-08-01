@@ -243,7 +243,9 @@ Panel.prototype = {
 
     analytics.showPanel(panel.id);
 
-    // panel.$el.show();
+    if (jsbin.mobile) {
+      panels.hideAll(true);
+    }
     if (panel.splitter.length) {
       if (panelCount === 0 || panelCount > 1) {
         var $panel = $('.panel.' + panel.id).show();
@@ -309,12 +311,15 @@ Panel.prototype = {
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
-  hide: function () {
+  hide: function (fromShow) {
     var panel = this;
     // panel.$el.hide();
     panel.visible = false;
     this.updateAriaState();
-    analytics.hidePanel(panel.id);
+
+    if (!fromShow) {
+      analytics.hidePanel(panel.id);
+    }
 
     // update all splitter positions
     // LOGIC: when you go to hide, you need to check if there's
@@ -337,22 +342,22 @@ Panel.prototype = {
       panel.$el.hide();
       panel.splitter.hide();
     }
-    // } else {
-    //   panel.$el.hide();
-    // }
+
+
     if (panel.editor) {
       panel.controlButton.toggleClass('hasContent', !!this.getCode().trim().length);
     }
 
     panel.controlButton.removeClass('active');
-    panel.distribute();
+
+    if (fromShow) {
+      return;
+    }
 
     if (panel.settings.hide) {
       panel.settings.hide.call(panel, true);
     }
 
-    // this.controlButton.show();
-    // setTimeout(function () {
     var visible = jsbin.panels.getVisible();
     if (visible.length) {
       jsbin.panels.focused = visible[0];

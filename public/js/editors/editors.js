@@ -465,11 +465,11 @@ panels.hide = function (panelId) {
   */
 };
 
-panels.hideAll = function () {
+panels.hideAll = function (fromShow) {
   var visible = panels.getVisible(),
       i = visible.length;
   while (i--) {
-    visible[i].hide();
+    visible[i].hide(fromShow);
   }
 };
 

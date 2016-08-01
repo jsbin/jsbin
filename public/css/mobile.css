@@ -48,7 +48,8 @@
     border-bottom: 0;
     padding: 0 10px;
     min-width: 50px;
-    line-height: 44px;
+    line-height: 43px;
+    padding-top: 1px;
     height: 44px;
     border-right: 0;
     border-left: 1px solid #ccc;
@@ -59,6 +60,16 @@
   }
 
   .mobile .editbox textarea {
+    box-sizing: border-box;
     font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+    width: 100%;
+    padding: 0 0.8em;
   }
+
+  .mobile .editbox {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
 }

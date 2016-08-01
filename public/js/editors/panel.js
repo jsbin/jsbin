@@ -207,7 +207,7 @@ var Panel = function (name, settings) {
     this.controlButton = $('<a role="button" class="button group" href="?' + name + '">' + panel.label + '</a>');
     this.updateAriaState();
 
-    this.controlButton.click(function () {
+    this.controlButton.on('click touchstart', function () {
       panel.toggle();
       return false;
     });
@@ -365,8 +365,8 @@ Panel.prototype = {
       jsbin.panels.focused.focus();
     }
 
-    if (jsbin.mobile && visible.length === 0) {
-      $document.trigger('history:open');
+    if (!fromShow && jsbin.mobile && visible.length === 0) {
+      $document.trigger('history:load');
       $('#history').show();
       setTimeout(function () {
         $body.removeClass('panelsVisible');

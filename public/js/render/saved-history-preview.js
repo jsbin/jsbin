@@ -218,6 +218,8 @@
     $homebtn.on('click', loadList);
     $panelButtons.on('mousedown', panelCloseIntent);
 
+    $document.on('history:load', loadList);
+
     if (!panelsVisible) {
       loadList();
     }

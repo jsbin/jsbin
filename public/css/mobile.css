@@ -92,6 +92,7 @@
 
   #history {
     right: 0;
+    top: 44px;
   }
   #history td {
     padding: 0 5px !important;
@@ -116,5 +117,10 @@
   }
   #history .title {
     width: 59%;
+  }
+
+  #history .header h2 {
+    width: 195px;
+    padding-left: 5px;
   }
 }

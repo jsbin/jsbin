@@ -377,6 +377,7 @@ Panel.prototype = {
       return;
     }
 
+    panel.distribute();
     $document.trigger('sizeeditors');
     panel.trigger('hide');
 

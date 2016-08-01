@@ -131,7 +131,7 @@
     var selected = null;
     $bins.delegate('a', 'click', function (event) {
       if (event.shiftKey || event.metaKey) { return; }
-      
+
       var $this = $(this);
 
       if ($this.closest('.action').length) {

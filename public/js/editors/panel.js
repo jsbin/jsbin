@@ -350,10 +350,6 @@ Panel.prototype = {
 
     panel.controlButton.removeClass('active');
 
-    if (fromShow) {
-      return;
-    }
-
     if (panel.settings.hide) {
       panel.settings.hide.call(panel, true);
     }
@@ -367,6 +363,18 @@ Panel.prototype = {
         jsbin.panels.focused.$el.focus();
       }
       jsbin.panels.focused.focus();
+    }
+
+    if (jsbin.mobile && visible.length === 0) {
+      $document.trigger('history:open');
+      $('#history').show();
+      setTimeout(function () {
+        $body.removeClass('panelsVisible');
+      }, 100); // 100 is on purpose to add to the effect of the reveal
+    }
+
+    if (fromShow) {
+      return;
     }
 
     $document.trigger('sizeeditors');

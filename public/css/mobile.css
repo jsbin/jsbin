@@ -85,4 +85,36 @@
     border: 2px solid #b7dffd;
     border-radius: 0;
   }
+
+  #history .preview {
+    display: none;
+  }
+
+  #history {
+    right: 0;
+  }
+  #history td {
+    padding: 0 5px !important;
+  }
+  #history .url {
+    width: 20%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+  }
+  #history .last_updated {
+    width: 33%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #history .action {
+    width: 0%;
+    visibility: hidden;
+    white-space: nowrap;
+  }
+  #history .title {
+    width: 59%;
+  }
 }

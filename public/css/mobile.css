@@ -1,15 +1,4 @@
 @media only screen and (max-width: 450px) {
-  html:before {
-    content: 'mobile';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: black;
-    color: white;
-    z-index: 1000;
-  }
-
   a.toppanel-logo {
     transform: translate(-86px, 120px) scale(0.35);
   }
@@ -25,7 +14,7 @@
   #control .control {
     border: 0;
   }
-  
+
   #control .control > div {
     display: none;
   }

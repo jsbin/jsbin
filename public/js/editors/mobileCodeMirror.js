@@ -106,6 +106,7 @@ function enableMobileMirror() {
     refresh: noop,
     selectLines: noop,
     on: noop,
+    somethingSelected: noop,
   };
 
   var _oldCM = CodeMirror;

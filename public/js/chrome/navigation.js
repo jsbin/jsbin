@@ -238,7 +238,7 @@ $('#jsbinurl').click(function (e) {
   }, 0);
 });
 
-$('#runwithalerts').click(function (event, data) {
+$('#runwithalerts, li.run-with-js a').click(function (event, data) {
   analytics.run(data);
   if (editors.console.visible) {
     editors.console.render(true);

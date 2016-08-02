@@ -189,8 +189,7 @@
     height: 100%;
   }
 
-  .inline-menu a:focus,
-  .inline-menu a:active {
+  .inline-menu a:focus {
     background: rgba(0,0,0,.1);
 /*     border-radius: 3px; */
   }
@@ -199,11 +198,16 @@
     bottom: 75px;
   }
 
+  #live iframe {
+    padding-top: 0;
+  }
+
   .panel {
     background: white;
   }
 
-  #infocard {
+  #infocard,
+  #live .label {
     display: none;
   }
 
@@ -245,6 +249,10 @@
   /* keyboard visible */
   .mobile .inline-menu {
     display: none;
+  }
+
+  .mobile .editbox textarea {
+    padding-bottom: 70%;
   }
 
   #source {

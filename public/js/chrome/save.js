@@ -72,7 +72,7 @@ $('a.save').click(function (event) {
     ajax = false;
   }
 
-  if (jsbin.state.changed || !jsbin.owner()) {
+  if ((jsbin.state.changed || jsbin.mobile) || !jsbin.owner()) {
     saveCode('save', ajax);
   }
 

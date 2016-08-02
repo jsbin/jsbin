@@ -122,16 +122,20 @@ var dropdownOpen = false,
     onhover = false,
     menuDown = false;
 
-function opendropdown(el) {
+function opendropdown(el, nofocus) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
     // $body.addClass('menuinfo');
     analytics.openMenu(el.hash.substring(1));
-    var input = menu.find(':text:visible:first').focus()[0];
-    if (input) setTimeout(function () {
-      input.select();
-    }, 0);
+    var input = menu.find(':text:visible:first');
+
+    if (input.length && !jsbin.mobile) {
+      input.focus();
+      setTimeout(function () {
+        input[0].select();
+      }, 0);
+    }
     dropdownOpen = el;
   }
 }
@@ -144,7 +148,7 @@ function closedropdown() {
     dropdownOpen = false;
     onhover = false;
     var f = jsbin.panels.focused;
-    if (f) {
+    if (f && !jsbin.mobile) {
       f.focus();
       if (f.editor) {
         f.editor.focus();

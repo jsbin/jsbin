@@ -1811,12 +1811,7 @@ textarea:focus {
           user-select: initial;
 }
 
-.control, .help, .starting {
-/*  width: 100px;*/
-
-  float: left;
-  white-space: nowrap;
-}
+.control, .help, .starting {/*  width: 100px;*/float: left;white-space: nowrap;}
 
 .control {
   padding-right: 0;
@@ -3505,7 +3500,7 @@ a.active:hover {
 #cursor { display: inline-block; height: 24px; min-width: 1px; outline: 0; top: 0; left: 0; z-index: 999;}
 
 /* HACK */
-#console form { position: relative; top: 0; width: 100%; z-index: 20; }
+#console form {position: relative;top: 0;width: 100%;/* z-index: 10; */}
 #console { padding-top: 35px; }
 #exec, .fakeInput { position: relative; height: auto; }
 
@@ -3681,6 +3676,7 @@ left: 50%;
   width: 100%;
   padding-top: 2px;
   padding-bottom: 1px;
+  /* z-index: 0; */
 }
 
 #panels a {

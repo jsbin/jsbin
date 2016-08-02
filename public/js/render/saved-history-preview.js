@@ -42,7 +42,13 @@
         },
         success: function (html) {
           $('#history').remove();
-          $body.append(html);
+          var frag = $(html);
+          if (jsbin.mobile) {
+            // mobile is particularly slow at rendering 1,000s of tbodys
+            // so we'll remove some to relieve the pressure.
+            frag.find('tbody:gt(50)').remove();
+          }
+          $body.append(frag);
           hookUserHistory();
           loaded = true;
         }

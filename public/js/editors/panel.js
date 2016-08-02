@@ -231,6 +231,7 @@ Panel.prototype = {
     this.controlButton.attr('aria-label', this.label + ' Panel: ' + (this.visible ? 'Active' : 'Inactive'));
   },
   show: function show(x) {
+    hideOpen();
     if (this.visible) {
       return;
     }
@@ -319,6 +320,9 @@ Panel.prototype = {
 
     if (!fromShow) {
       analytics.hidePanel(panel.id);
+    } else if (panel.editor) {
+      console.log('re-render %s', panel.id)
+      getRenderedCode[panel.id] = getRenderedCode.render(panel.id);
     }
 
     // update all splitter positions

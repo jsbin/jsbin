@@ -255,12 +255,15 @@
     }
 
     function initHandlers() {
-      $header.on('mousedown touchstart', function (e) {
+      $('a.more').add($header).on('mousedown touchstart', function (e) {
+        infocardVisible = !infocardVisible; // this is hack :-\
+        hideOpen();
         e.preventDefault();
         analytics.infocard('click', 'no-result');
         var toTrigger;
         $template.toggleClass(function (index, klass) {
           toTrigger = klass.indexOf('open') === -1 ? 'open' : 'close';
+          infocardVisible = toTrigger === 'open';
           return 'open';
         }).trigger(toTrigger);
       });

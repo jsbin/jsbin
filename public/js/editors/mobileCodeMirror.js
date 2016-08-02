@@ -1,15 +1,23 @@
-// yeah, nasty, but it allows me to switch from a RTF to plain text if we're running a iOS
-var noop = function () {},
-    rootClassName = document.body.className;
+/* globals jsbin, throttle, $, $body, CodeMirror, $document */
+var noop = function () {};
+var rootClassName = document.body.className;
 
 var simple = jsbin.settings.editor && jsbin.settings.editor.simple;
 
-if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -1 || rootClassName.indexOf('ie7') !== -1) {
+if (simple ||
+    jsbin.mobile ||
+    jsbin.tablet ||
+    rootClassName.indexOf('ie6') !== -1 ||
+    rootClassName.indexOf('ie7') !== -1) {
+  enableMobileMirror();
+}
+
+function enableMobileMirror() {
   $('body').addClass('mobile');
   jsbin.lameEditor = true;
-  Editor = function (el, options) {
+  var Editor = function (el, options) {
     this.textarea = el;
-    this.win = { document : this.textarea };
+    this.win = { document: this.textarea };
     this.ready = true;
     this.wrapping = document.createElement('div');
 
@@ -20,18 +28,31 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     this.textarea.style.opacity = 1;
     // this.textarea.style.width = '100%';
 
+    var eventName = jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup';
     var old = null;
-    $(this.textarea)[jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup'](throttle(function () {
-      $body.removeClass('editor-focus');
-      if (old !== this.value) {
-        old = this.value;
-        $(document).trigger('codeChange', { panelId: el.id });
-      }
-    }, 200)).on('focus', function () {
-      $body.addClass('editor-focus');
-    });
 
-    options.initCallback && $(options.initCallback);
+    var update = function () {
+      if (old !== el.value) {
+        old = el.value;
+        $document.trigger('codeChange', { panelId: el.id });
+      }
+    };
+
+    $(this.textarea)
+      .on(eventName, throttle(function () {
+        update();
+        $body.removeClass('editor-focus');
+      }, 200))
+      .on('focus', function () {
+        hideOpen();
+        $body.addClass('editor-focus');
+      });
+
+    if (options.initCallback) {
+      $(options.initCallback);
+    }
+
+    this.__update = update;
   };
 
   Editor.prototype = {
@@ -42,7 +63,7 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
       return this.textarea;
     },
     setOption: function (type, handler) {
-      if (type == 'onChange') {
+      if (type === 'onChange') {
         $(this.textarea).change(handler);
       }
     },
@@ -67,12 +88,12 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     currentLine: function () {
       return 0;
     },
-    defaultTextHeight: function() {
+    defaultTextHeight: function () {
       return 16;
     },
     highlightLines: function () {
       return {
-        string: ''
+        string: '',
       };
     },
     removeKeyMap: noop,
@@ -84,7 +105,7 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
     nthLine: noop,
     refresh: noop,
     selectLines: noop,
-    on: noop
+    on: noop,
   };
 
   var _oldCM = CodeMirror;
@@ -96,9 +117,8 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
   }
 
   CodeMirror.fromTextArea = function (el, options) {
-      return new Editor(el, options);
+    return new Editor(el, options);
   };
 
   CodeMirror.keyMap = { basic: {} };
-
 }

@@ -6277,3 +6277,7 @@ body.min #bin .editbox .CodeMirror pre {
   font-size: 18px;
   font-weight: bold;
 }
+
+.inline-menu {
+  display: none;
+}

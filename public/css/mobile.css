@@ -243,10 +243,27 @@
   #share-preview.output .output {
     background-size: contain;
   }
+
+  #strip {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 44px;
+    background: #eee;
+    z-index: 10;
+    overflow: scroll;
+  }
+
 }
 
 @media all and (max-height: 410px) and (max-width: 640px) {
   /* keyboard visible */
+
+  #strip {
+    display: block;
+  }
+
   .mobile .inline-menu {
     display: none;
   }

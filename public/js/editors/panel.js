@@ -377,13 +377,14 @@ Panel.prototype = {
       }, 100); // 100 is on purpose to add to the effect of the reveal
     }
 
+    panel.trigger('hide');
+
     if (fromShow) {
       return;
     }
 
     panel.distribute();
     $document.trigger('sizeeditors');
-    panel.trigger('hide');
 
     // note: the history:open does first check whether there's an open panels
     // and if there are, it won't show the history, it'll just ignore the event

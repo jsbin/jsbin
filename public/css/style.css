@@ -5209,6 +5209,7 @@ div.large-gravatar object {
   /* border-collapse: separate; */
   padding-top: 0;
   border-bottom: 2px solid #eee;
+  max-width: 274px;
 }
 
 #share-preview .header {
@@ -5236,7 +5237,7 @@ div.large-gravatar object {
   background: url(/images/jsbin-output-small.gif) no-repeat;
   background: url(/images/output-preview.svg) no-repeat;
   height: 113px;
-  /* width: 200px; */
+  min-width: 200px;
 }
 
 #share-preview.output .output:after {

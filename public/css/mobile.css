@@ -1,4 +1,4 @@
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 735px) {
   a.toppanel-logo {
     transform: translate(-86px, 120px) scale(0.35);
   }
@@ -15,7 +15,10 @@
     border: 0;
   }
 
-  #control .control > div {
+  #control .control > div.buttons > div.menu,
+  #control .control > div.buttons #sharemenu .button,
+  #control .control > div.help,
+  #live .label strong {
     display: none;
   }
 
@@ -53,9 +56,7 @@
     font-family: SourceCodeProRegular, Monaco, consolas, monospace;
     width: 100%;
     padding: 0 0.8em;
-    bottom: 44px;
     position: absolute;
-    /* height: 450px; */
   }
 
   .mobile .editbox {
@@ -125,12 +126,11 @@
     top: 44px;
   }
 
-  .mobile.editor-focus .inline-menu {
-    display: none;
-  }
-
-  .mobile .inline-menu {
+  .menu.inline-menu {
     display: block;
+    float: none;
+    top: auto;
+    position: absolute;
   }
 
   .inline-menu {
@@ -145,7 +145,7 @@
     border-radius: 5px;
     line-height: 38px;
     color: white;
-    padding: 10px;
+    padding: 0px 10px;
     left: 3%;
     box-sizing: border-box;
   }
@@ -164,14 +164,108 @@
   }
 
   .inline-menu li {
-    padding: 0 10px;
+    padding: 0;
+    position: relative;
+    text-align: center;
   }
 
-  .mobile #infocard {
-    display: none;
+  .inline-menu a,
+  .inline-menu .add-library span {
+    cursor: pointer;
+    display: inline-block;
+    text-shadow: none;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+
+  .inline-menu a:hover,
+  .inline-menu .add-library:hover {
+    background: rgba(0,0,0,.05);
+  }
+
+  .inline-menu .add-library select {
+    width: 100%;
+    height: 100%;
+  }
+
+  .inline-menu a:focus,
+  .inline-menu a:active {
+    background: rgba(0,0,0,.1);
+/*     border-radius: 3px; */
   }
 
   #source {
     bottom: 75px;
+  }
+
+  .panel {
+    background: white;
+  }
+
+  #infocard {
+    display: none;
+  }
+
+  #infocard.open {
+    display: block;
+    bottom: 84px;
+    right: 20px;
+  }
+
+  #infocard.open .body {
+    border-bottom: 0;
+  }
+
+  #infocard.open header {
+    display: none;
+  }
+
+  #share.share-split,
+  #infocard.openx {
+    position: fixed;
+    right: 0;
+    left: 2%;
+    bottom: 84px;
+    width: 96%;
+  }
+
+  #share.share-split > div {
+    min-width: auto;
+    border-radius: 2px;
+  }
+
+  #share-preview.output .output {
+    background-size: contain;
+  }
+}
+
+@media all and (max-height: 410px) and (max-width: 640px) {
+  /* keyboard visible */
+  .mobile .inline-menu {
+    display: none;
+  }
+
+  #source {
+    bottom: 0;
+  }
+}
+
+@media all and (max-height: 380px) and (orientation: landscape) and (max-width: 735px) {
+  #control,
+  .toppanel-logo,
+  .mobile .inline-menu,
+  .panel .label {
+    display: none !important;
+  }
+
+  #source {
+    bottom: 0;
+  }
+
+  #bin,
+  .mobile .editbox,
+  #history {
+    top: 0;
   }
 }

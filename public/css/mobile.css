@@ -66,7 +66,7 @@
   }
 
   .card.author .settings {
-    width: 170px;
+    width: 50%;
   }
 
   .card .settings #headers input {
@@ -181,7 +181,7 @@
 
   .inline-menu a:hover,
   .inline-menu .add-library:hover {
-    background: rgba(0,0,0,.05);
+    /* background: rgba(0,0,0,.05); */
   }
 
   .inline-menu .add-library select {
@@ -215,6 +215,7 @@
 
   #infocard.open .body {
     border-bottom: 0;
+    position: relative;
   }
 
   #infocard.open header {
@@ -222,7 +223,7 @@
   }
 
   #share.share-split,
-  #infocard.openx {
+  #infocard.open {
     position: fixed;
     right: 0;
     left: 2%;
@@ -267,5 +268,15 @@
   .mobile .editbox,
   #history {
     top: 0;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .inline-menu li {
+    font-size: 14px;
+  }
+
+  .toppanel-logo {
+    display: none !important;
   }
 }

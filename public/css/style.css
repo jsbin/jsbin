@@ -4796,7 +4796,7 @@ html * {
 }
 
 .card .settings details {
-  width: 360px;
+  max-width: 360px;
 }
 
 .card .settings summary {

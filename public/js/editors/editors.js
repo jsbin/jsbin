@@ -180,7 +180,7 @@ panels.restore = function () {
     }
     else {
       // load from personal settings
-      toopen = jsbin.settings.panels;
+      toopen = jsbin.mobile ? [jsbin.settings.panels[0]] : jsbin.settings.panels;
     }
   }
 

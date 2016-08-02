@@ -1996,7 +1996,7 @@ a:hover {
   width: 100%;
 }
 */
-#library {
+select.library {
   padding: 2px;
   right: 0;
   margin-left: 5px;

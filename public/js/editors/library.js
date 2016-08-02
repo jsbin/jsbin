@@ -1,7 +1,7 @@
 /*global $:true, editors:true, libraries:true, analytics:true */
 // 'use strict'; // this causes bigger issues :-\
 
-var $library = $('#library'),
+var $library = $('#library, #alt-library'),
     groups = {};
 
 $library.bind('init', function () {

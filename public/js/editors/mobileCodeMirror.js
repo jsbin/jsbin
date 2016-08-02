@@ -22,11 +22,14 @@ if (simple || jsbin.mobile || jsbin.tablet || rootClassName.indexOf('ie6') !== -
 
     var old = null;
     $(this.textarea)[jsbin.mobile || jsbin.tablet ? 'blur' : 'keyup'](throttle(function () {
+      $body.removeClass('editor-focus');
       if (old !== this.value) {
         old = this.value;
         $(document).trigger('codeChange', { panelId: el.id });
       }
-    }, 200));
+    }, 200)).on('focus', function () {
+      $body.addClass('editor-focus');
+    });
 
     options.initCallback && $(options.initCallback);
   };

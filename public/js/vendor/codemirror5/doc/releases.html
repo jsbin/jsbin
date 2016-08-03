@@ -30,13 +30,220 @@
 
   <h2>Version 5.x</h2>
 
+  <p class="rel">19-07-2016: <a href="http://codemirror.net/codemirror-5.17.0.zip">Version 5.17.0</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fix problem with wrapped trailing whitespace displaying incorrectly.</li>
+    <li>Prevent IME dialog from overlapping typed content in Chrome.</li>
+    <li>Improve measuring of characters near a line wrap.</li>
+    <li><a href="http://codemirror.net/mode/javascript">javascript mode</a>: Improve support for <code>async</code>, allow trailing commas in <code>import</code> lists.</li>
+    <li><a href="http://codemirror.net/demo/vim.html">vim bindings</a>: Fix backspace in replace mode.</li>
+    <li><a href="http://codemirror.net/demo/sublime.html">sublime bindings</a>: Fix some key bindings on OS X to match Sublime Text.</li>
+    <li><a href="http://codemirror.net/mode/markdown">markdown mode</a>: Add more classes to image links in highlight-formatting mode.</li>
+  </ul>
+
+  <p class="rel">20-06-2016: <a href="http://codemirror.net/codemirror-5.16.0.zip">Version 5.16.0</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fix glitches when dragging content caused by the drop indicator receiving mouse events.</li>
+    <li>Make Control-drag work on Firefox.</li>
+    <li>Make clicking or selection-dragging at the end of a wrapped line select the right position.</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_show-hint">show-hint addon</a>: Prevent widget scrollbar from hiding part of the hint text.</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_rulers">rulers addon</a>: Prevent rulers from forcing a horizontal editor scrollbar.</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_search">search addon</a>: Automatically bind search-related keys in persistent dialog.</li>
+    <li><a href="http://codemirror.net/demo/sublime.html">sublime keymap</a>: Add a multi-cursor aware smart backspace binding.</li>
+  </ul>
+
+  <p class="rel">20-05-2016: <a href="http://codemirror.net/codemirror-5.15.2.zip">Version 5.15.2</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fix a critical document corruption bug that occurs when a document is gradually grown.</li>
+  </ul>
+
+  <p class="rel">20-05-2016: <a href="http://codemirror.net/codemirror-5.15.0.zip">Version 5.15.0</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fix bug that caused the selection to reset when focusing the editor in contentEditable input mode.</li>
+    <li>Fix issue where not all ASCII control characters were being replaced by placeholders.</li>
+    <li>Remove the assumption that all modes have a <code>startState</code> method from several wrapping modes.</li>
+    <li>Fix issue where the editor would complain about overlapping collapsed ranges when there weren't any.</li>
+    <li>Optimize document tree building when loading or pasting huge chunks of content.</li>
+    <li>Explicitly bind Ctrl-O on OS X to make that binding (“open line”) act as expected.</li>
+    <li>Pasting <a href="http://codemirror.net/doc/manual.html#option_lineWiseCopyCut">linewise-copied</a> content when there is no selection now inserts the lines above the current line.</li>
+    <li><a href="http://codemirror.net/mode/markdown/">markdown mode</a>: Fix several issues in matching link targets.</li>
+    <li><a href="http://codemirror.net/mode/clike/">clike mode</a>: Improve indentation of C++ template declarations.</li>
+    <li><a href="http://codemirror.net/mode/javascript/">javascript mode</a>: Support <code>async</code>/<code>await</code> and improve support for TypeScript type syntax.</li>
+  </ul>
+
+  <p class="rel">20-04-2016: <a href="http://codemirror.net/codemirror-5.14.0.zip">Version 5.14.0</a>:</p>
+
+  <ul class="rel-note">
+    <li><a href="http://codemirror.net/doc/manual.html#posFromIndex"><code>posFromIndex</code></a> and <a href="http://codemirror.net/doc/manual.html#indexFromPos"><code>indexFromPos</code></a> now take <a href="http://codemirror.net/doc/manual.html#option_lineSeparator"><code>lineSeparator</code></a> into account</li>
+    <li><a href="http://codemirror.net/demo/vim.html">vim bindings</a>: Only call <code>.save()</code> when it is actually available</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_comment">comment addon</a>: Be careful not to mangle multi-line strings</li>
+    <li><a href="http://codemirror.net/mode/python/index.html">Python mode</a>: Improve distinguishing of decorators from <code>@</code> operators</li>
+    <li><a href="http://codemirror.net/doc/manual.html#findMarks"><code>findMarks</code></a>: No longer return marks that touch but don't overlap given range</li>
+    <li><a href="http://codemirror.net/demo/vim.html">vim bindings</a>: Add yank command</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_match-highlighter">match-highlighter addon</a>: Add <code>trim</code> option to disable ignoring of whitespace</li>
+    <li><a href="http://codemirror.net/mode/powershell/index.html">PowerShell mode</a>: Added</li>
+    <li><a href="http://codemirror.net/mode/yacas/index.html">Yacas mode</a>: Added</li>
+    <li><a href="http://codemirror.net/mode/webidl/index.html">Web IDL mode</a>: Added</li>
+    <li><a href="http://codemirror.net/mode/sas/index.html">SAS mode</a>: Added</li>
+    <li><a href="http://codemirror.net/mode/mbox/index.html">mbox mode</a>: Added</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.13.4...5.14.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">21-03-2016: <a href="http://codemirror.net/codemirror-5.13.2.zip">Version 5.13.2</a>:</p>
+
+  <ul class="rel-note">
+    <li>Solves a problem where the gutter would sometimes not extend all the way to the end of the document.</li>
+  </ul>
+
+  <p class="rel">21-03-2016: <a href="http://codemirror.net/codemirror-5.13.zip">Version 5.13</a>:</p>
+
+  <ul class="rel-note">
+    <li>New DOM event forwarded: <a href="http://codemirror.net/doc/manual.html#event_dom"><code>&quot;dragleave&quot;</code></a>.</li>
+    <li><a href="http://codemirror.net/mode/protobuf/index.html">protobuf mode</a>: Newly added.</li>
+    <li>Fix problem where <a href="http://codemirror.net/doc/manual.html#findMarks"><code>findMarks</code></a> sometimes failed to find multi-line marks.</li>
+    <li>Fix crash that showed up when atomic ranges and bidi text were combined.</li>
+    <li><a href="http://codemirror.net/demo/complete.html">show-hint addon</a>: Completion widgets no longer close when the line indented or dedented.</li>
+    <li><a href="http://codemirror.net/demo/merge.html">merge addon</a>: Fix bug when merging chunks at the end of the file.</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_placeholder">placeholder addon</a>: No longer gets confused by <a href="http://codemirror.net/doc/manual.html#swapDoc"><code>swapDoc</code></a>.</li>
+    <li><a href="http://codemirror.net/doc/manual.html#addon_simplescrollbars">simplescrollbars addon</a>: Fix invalid state when deleting at end of document.</li>
+    <li><a href="http://codemirror.net/mode/clike/index.html">clike mode</a>: No longer gets confused when a comment starts after an operator.</li>
+    <li><a href="http://codemirror.net/mode/markdown/index.html">markdown mode</a>: Now supports CommonMark-style flexible list indentation.</li>
+    <li><a href="http://codemirror.net/mode/dylan/index.html">dylan mode</a>: Several improvements and fixes.</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.12.0...5.13.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">19-02-2016: <a href="http://codemirror.net/codemirror-5.12.zip">Version 5.12</a>:</p>
+
+  <ul class="rel-note">
+    <li><a href="http://codemirror.net/demo/vim.html">Vim bindings</a>: Ctrl-Q is now an alias for Ctrl-V.</li>
+    <li><a href="http://codemirror.net/demo/vim.html">Vim bindings</a>: The Vim API now exposes an <code>unmap</code> method to unmap bindings.</li>
+    <li><a href="http://codemirror.net/demo/activeline.html">active-line addon</a>: This addon can now style the active line's gutter.</li>
+    <li><a href="http://codemirror.net/mode/fcl/">FCL mode</a>: Newly added.</li>
+    <li><a href="http://codemirror.net/mode/sql/">SQL mode</a>: Now has a Postgresql dialect.</li>
+    <li>Fix <a href="https://github.com/codemirror/CodeMirror/issues/3781">issue</a> where trying to scroll to a horizontal position outside of the document's width could cause the gutter to be positioned incorrectly.</li>
+    <li>Use absolute, rather than fixed positioning in the context-menu intercept hack, to work around a <a href="https://github.com/codemirror/CodeMirror/issues/3238">problem</a> when the editor is inside a transformed parent container.</li>
+    <li>Solve a <a href="https://github.com/codemirror/CodeMirror/issues/3821">problem</a> where the horizontal scrollbar could hide text in Firefox.</li>
+    <li>Fix a <a href="https://github.com/codemirror/CodeMirror/issues/3834">bug</a> that caused phantom scroll space under the text in some situations.</li>
+    <li><a href="http://codemirror.net/demo/sublime.html">Sublime Text bindings</a>: Bind delete-line to Shift-Ctrl-K on OS X.</li>
+    <li><a href="http://codemirror.net/mode/markdown/">Markdown mode</a>: Fix <a href="https://github.com/codemirror/CodeMirror/issues/3787">issue</a> where the mode would keep state related to fenced code blocks in an unsafe way, leading to occasional corrupted parses.</li>
+    <li><a href="http://codemirror.net/mode/markdown/">Markdown mode</a>: Ignore backslashes in code fragments.</li>
+    <li><a href="http://codemirror.net/mode/markdown/">Markdown mode</a>: Use whichever mode is registered as <code>text/html</code> to parse HTML.</li>
+    <li><a href="http://codemirror.net/mode/clike/">Clike mode</a>: Improve indentation of Scala <code>=&gt;</code> functions.</li>
+    <li><a href="http://codemirror.net/mode/python/">Python mode</a>: Improve indentation of bracketed code.</li>
+    <li><a href="http://codemirror.net/mode/htmlmixed/">HTMLMixed mode</a>: Support multi-line opening tags for sub-languages (<code>&lt;script&gt;</code>, <code>&lt;style&gt;</code>, etc).</li>
+    <li><a href="http://codemirror.net/mode/spreadsheet/">Spreadsheet mode</a>: Fix bug where the mode did not advance the stream when finding a backslash.</li>
+    <li><a href="http://codemirror.net/mode/xml/">XML mode</a>: The mode now takes a <code>matchClosing</code> option to configure whether mismatched closing tags should be highlighted as errors.</li>
+  </ul>
+
+  <p class="rel">20-01-2016: <a href="http://codemirror.net/codemirror-5.11.zip">Version 5.11</a>:</p>
+
+  <ul class="rel-note">
+    <li>New modes: <a href="../mode/jsx/index.html">JSX</a>, <a href="../mode/haskell-literate/index.html">literate Haskell</a></li>
+    <li>The editor now forwards more <a href="manual.html#event_dom">DOM events</a>: <code>cut</code>, <code>copy</code>, <code>paste</code>, and <code>touchstart</code>. It will also forward <code>mousedown</code> for drag events</li>
+    <li>Fixes a bug where bookmarks next to collapsed spans were not rendered</li>
+    <li>The <a href="../mode/swift/index.html">Swift</a> mode now supports auto-indentation</li>
+    <li>Frontmatters in the <a href="../mode/yaml-frontmatter/index.html">YAML frontmatter</a> mode are now optional as intended</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.10.0...5.11.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">21-12-2015: <a href="http://codemirror.net/codemirror-5.10.zip">Version 5.10</a>:</p>
+
+  <ul class="rel-note">
+    <li>Modify the way <a href="manual.html#mark_atomic">atomic ranges</a> are skipped by selection to try and make it less surprising.</li>
+    <li>The <a href="../mode/swift/index.html">Swift mode</a> was rewritten.</li>
+    <li>New addon: <a href="manual.html#addon_jump-to-line">jump-to-line</a>.</li>
+    <li>New method: <a href="manual.html#isReadOnly"><code>isReadOnly</code></a>.</li>
+    <li>The <a href="manual.html#addon_show-hint">show-hint addon</a> now defaults to picking completions on single click.</li>
+    <li>The object passed to <a href="manual.html#event_beforeSelectionChange"><code>&quot;beforeSelectionChange&quot;</code></a> events now has an <code>origin</code> property.</li>
+    <li>New mode: <a href="../mode/crystal/index.html">Crystal</a>.</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.9.0...5.10.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">23-11-2015: <a href="http://codemirror.net/codemirror-5.9.zip">Version 5.9</a>:</p>
+
+  <ul class="rel-note">
+    <li>Improve the way overlay (OS X-style) scrollbars are handled</li>
+    <li>Make <a href="manual.html#addon_annotatescrollbar">annotatescrollbar</a> and scrollpastend addons work properly together</li>
+    <li>Make <a href="manual.html#addon_show-hint">show-hint</a> addon select options on single click by default, move selection to hovered item</li>
+    <li>Properly fold comments that include block-comment-start markers</li>
+    <li>Many small language mode fixes</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.8.0...5.9.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">20-10-2015: <a href="http://codemirror.net/codemirror-5.8.zip">Version 5.8</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fixes an infinite loop in
+    the <a href="manual.html#addon_hardwrap">hardwrap
+    addon</a></li>
+    <li>New modes: <a href="../mode/nsis/index.html">NSIS</a>, <a href="../mode/clike/index.html">Ceylon</a></li>
+    <li>The Kotlin mode is now a <a href="../mode/clike/index.html">clike</a> dialect, rather than a stand-alone mode</li>
+    <li>New option: <a href="manual.html#option_allowDropFileTypes"><code>allowDropFileTypes</code></a>. Binary files can no longer be dropped into CodeMirror</li>
+    <li>New themes: <a href="../demo/theme.html#bespin">bespin</a>, <a href="../demo/theme.html#hopscotch">hopscotch</a>, <a href="../demo/theme.html#isotope">isotope</a>, <a href="../demo/theme.html#railscasts">railscasts</a></li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.7.0...5.8.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">20-09-2015: <a href="http://codemirror.net/codemirror-5.7.zip">Version 5.7</a>:</p>
+
+  <ul class="rel-note">
+    <li>New modes: <a href="../mode/vue/index.html">Vue</a>, <a href="../mode/oz/index.html">Oz</a>, <a href="../mode/mscgen/index.html">MscGen</a> (and dialects), <a href="../mode/css/gss.html">Closure Stylesheets</a></li>
+    <li>Implement <a href="http://commonmark.org">CommonMark</a>-style flexible list indent and cross-line code spans in <a href="../mode/markdown/index.html">Markdown</a> mode</li>
+    <li>Add a replace-all button to the <a href="manual.html#addon_search">search addon</a>, and make the persistent search dialog transparent when it obscures the match</li>
+    <li>Handle <code>acync</code>/<code>await</code> and ocal and binary numbers in <a href="../mode/javascript/index.html">JavaScript mode</a></li>
+    <li>Fix various issues with the <a href="../mode/haxe/index.html">Haxe mode</a></li>
+    <li>Make the <a href="manual.html#addon_closebrackets">closebrackets addon</a> select only the wrapped text when wrapping selection in brackets</li>
+    <li>Tokenize properties as properties in the <a href="../mode/coffeescript/index.html">CoffeeScript mode</a></li>
+    <li>The <a href="manual.html#addon_placeholder">placeholder addon</a> now accepts a DOM node as well as a string placeholder</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.6.0...5.7.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">20-08-2015: <a href="http://codemirror.net/codemirror-5.6.zip">Version 5.6</a>:</p>
+
+  <ul class="rel-note">
+    <li>Fix bug where you could paste into a <code>readOnly</code> editor</li>
+    <li>Show a cursor at the drop location when dragging over the editor</li>
+    <li>The <a href="../mode/rust/index.html">Rust mode</a> was rewritten to handle modern Rust</li>
+    <li>The editor and theme CSS was cleaned up. Some selectors are now less specific than before</li>
+    <li>New theme: <a href="../demo/theme.html#abcdef">abcdef</a></li>
+    <li>Lines longer than <a href="manual.html#option_maxHighlightLength"><code>maxHighlightLength</code></a> are now less likely to mess up indentation</li>
+    <li>New addons: <a href="manual.html#addon_autorefresh"><code>autorefresh</code></a> for refreshing an editor the first time it becomes visible, and <code>html-lint</code> for using <a href="http://htmlhint.com/">HTMLHint</a></li>
+    <li>The <a href="manual.html#addon_search"><code>search</code></a> addon now recognizes <code>\r</code> and <code>\n</code> in pattern and replacement input</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.5.0...5.6.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">20-07-2015: <a href="http://codemirror.net/codemirror-5.5.zip">Version 5.5</a>:</p>
+
+  <ul class="rel-note">
+    <li>New option: <a href="manual.html#option_lineSeparator"><code>lineSeparator</code></a> (with corresponding <a href="manual.html#lineSeparator">method</a>)
+    <li>New themes: <a href="../demo/theme.html#dracula">dracula</a>, <a href="../demo/theme.html#seti">seti</a>, <a href="../demo/theme.html#yeti">yeti</a>, <a href="../demo/theme.html#material">material</a>, and <a href="../demo/theme.html#icecoder">icecoder</a></li>
+    <li>New modes: <a href="../mode/brainfuck/index.html">Brainfuck</a>, <a href="../mode/vhdl/index.html">VHDL</a>, Squirrel (<a href="../mode/clike/index.html">clike</a> dialect)</li>
+    <li>Define a <code>findPersistent</code> command in
+    the <a href="../demo/search.html">search</a> addon, for a dialog
+    that stays open as you cycle through matches</li>
+    <li>From this release on, the NPM module doesn't include documentation and demos</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.4.0...5.5.0">list of patches</a></li>
+  </ul>
+
+  <p class="rel">25-06-2015: <a href="http://codemirror.net/codemirror-5.4.zip">Version 5.4</a>:</p>
+
+  <ul class="rel-note">
+    <li>New modes: <a href="../mode/twig/index.html">Twig</a>, <a href="../mode/elm/index.html">Elm</a>, <a href="../mode/factor/index.html">Factor</a>, <a href="../mode/swift/index.html">Swift</a></li>
+    <li>Prefer clipboard API (if available) when pasting</li>
+    <li>Refined definition highlighting in <a href="../mode/clike/index.html">clike</a> mode</li>
+    <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.3.0...5.4.0">list of patches</a></li>
+  </ul>
+
   <p class="rel">20-05-2015: <a href="http://codemirror.net/codemirror-5.3.zip">Version 5.3</a>:</p>
 
   <ul class="rel-note">
     <li>Fix several regressions in the <a href="manual.html#addon_show-hint"><code>show-hint</code></a> addon (<code>completeSingle</code> option, <code>"shown"</code> and <code>"close"</code> events)</li>
-    <li>The <a href="../demo/vim.html">vim mode</a> was <a href="manual.html#vimapi">documented</a></li>
+    <li>The <a href="../demo/vim.html">vim mode</a> API was <a href="manual.html#vimapi">documented</a></li>
     <li>New modes: <a href="../mode/asn.1/index.html">ASN.1</a>, <a href="../mode/ttcn/index.html">TTCN</a>, and <a href="../mode/ttcn-cfg/index.html">TTCN-CFG</a></li>
-    <li>The <a href="../mode/clike/index.html">clike</a> mode can now deep-indent <code>switch</code> statements, and rougly recognizes types and defined identifiers</li>
+    <li>The <a href="../mode/clike/index.html">clike</a> mode can now deep-indent <code>switch</code> statements, and roughly recognizes types and defined identifiers</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.2.0...5.3.0">list of patches</a></li>
   </ul>
 
@@ -48,10 +255,10 @@
     asynchronous mode</li>
     <li>Fix backspace binding in <a href="../demo/sublime.html">Sublime bindings</a></li>
     <li>Change the way IME is handled in the <code>"textarea"</code> <a href="manual.html#option_inputStyle">input style</a></li>
-    
+
     <li>New modes: <a href="../mode/mumps/index.html">MUMPS</a>, <a href="../mode/handlebars/index.html">Handlebars</a></li>
     <li>Rewritten modes: <a href="../mode/django/index.html">Django</a>, <a href="../mode/z80/index.html">Z80</a></li>
-    <li>New theme: <a href="../demo/theme.html?liquibyte">Liquibyte</a></li>
+    <li>New theme: <a href="../demo/theme.html#liquibyte">Liquibyte</a></li>
     <li>New option: <a href="manual.html#option_lineWiseCopyCut"><code>lineWiseCopyCut</code></a></li>
     <li>The <a href="../demo/vim.html">Vim mode</a> now supports buffer-local options and the <code>filetype</code> setting</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/5.1.0...5.2.0">list of patches</a></li>
@@ -142,8 +349,8 @@
     modes: <a href="../mode/dart/index.html">Dart</a>, <a href="../mode/ebnf/index.html">EBNF</a>, <a href="../mode/spreadsheet/index.html">spreadsheet</a>,
     and <a href="../mode/soy/index.html">Soy</a>.</li>
     <li>New <a href="../demo/panel.html">addon</a> to show persistent panels below/above an editor.</li>
-    <li>New themes: <a href="../demo/theme.html?zenburn">zenburn</a>
-    and <a href="../demo/theme.html?tomorrow-night-bright">tomorrow night
+    <li>New themes: <a href="../demo/theme.html#zenburn">zenburn</a>
+    and <a href="../demo/theme.html#tomorrow-night-bright">tomorrow night
     bright</a>.</li>
     <li>Allow ctrl-click to clear existing cursors.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/4.8.0...4.9.0">list of patches</a>.</li>
@@ -247,7 +454,7 @@
     <li>Rewritten <a href="../mode/jade/index.html">Jade</a> mode.</li>
     <li>Various improvements to <a href="../mode/shell/index.html">Shell</a> (support for more syntax) and <a href="../mode/python/index.html">Python</a> (better indentation) modes.</li>
     <li>New mode: <a href="../mode/cypher/index.html">Cypher</a>.</li>
-    <li>New theme: <a href="../demo/theme.html?neo">Neo</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#neo">Neo</a>.</li>
     <li>Support direct styling options (color, line style, width) in the <a href="manual.html#addon_rulers">rulers</a> addon.</li>
     <li>Recognize per-editor configuration for the <a href="manual.html#addon_show-hint">show-hint</a> and <a href="manual.html#addon_foldcode">foldcode</a> addons.</li>
     <li>More intelligent scanning for existing close tags in <a href="manual.html#addon_closetag">closetag</a> addon.</li>
@@ -313,7 +520,7 @@
   <ul class="rel-note">
     <li>Adds the <a href="manual.html#findMarks"><code>findMarks</code></a> method.</li>
     <li>New addons: <a href="manual.html#addon_rulers">rulers</a>, markdown-fold, yaml-lint.</li>
-    <li>New theme: <a href="../demo/theme.html?mdn-like">mdn-like</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#mdn-like">mdn-like</a>.</li>
     <li>New mode: <a href="../mode/solr/index.html">Solr</a>.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/3.21.0...3.22.0">list of patches</a>.</li>
   </ul>
@@ -321,13 +528,13 @@
   <p class="rel">16-01-2014: <a href="http://codemirror.net/codemirror-3.21.zip">Version 3.21</a>:</p>
 
   <ul class="rel-note">
-    <li>Auto-indenting a block will no longer add trailing whitespace to blank lines.</a>
+    <li>Auto-indenting a block will no longer add trailing whitespace to blank lines.</li>
     <li>Marking text has a new option <a href="manual.html#markText"><code>clearWhenEmpty</code></a> to control auto-removal.</li>
     <li>Several bugfixes in the handling of bidirectional text.</li>
     <li>The <a href="../mode/xml/index.html">XML</a> and <a href="../mode/css/index.html">CSS</a> modes were largely rewritten. <a href="../mode/css/less.html">LESS</a> support was added to the CSS mode.</li>
     <li>The OCaml mode was moved to an <a href="../mode/mllike/index.html">mllike</a> mode, F# support added.</li>
     <li>Make it possible to fetch multiple applicable helper values with <a href="manual.html#getHelpers"><code>getHelpers</code></a>, and to register helpers matched on predicates with <a href="manual.html#registerGlobalHelper"><code>registerGlobalHelper</code></a>.</li>
-    <li>New theme <a href="../demo/theme.html?pastel-on-dark">pastel-on-dark</a>.</li>
+    <li>New theme <a href="../demo/theme.html#pastel-on-dark">pastel-on-dark</a>.</li>
     <li>Better ECMAScript 6 support in <a href="../mode/javascript/index.html">JavaScript</a> mode.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/3.20.0...3.21.0">list of patches</a>.</li>
   </ul>
@@ -348,7 +555,7 @@
   <ul class="rel-note">
     <li>New modes: <a href="../mode/eiffel/index.html">Eiffel</a>, <a href="../mode/gherkin/index.html">Gherkin</a>, <a href="../mode/sql/?mime=text/x-mssql">MSSQL dialect</a>.</li>
     <li>New addons: <a href="manual.html#addon_hardwrap">hardwrap</a>, <a href="manual.html#addon_sql-hint">sql-hint</a>.</li>
-    <li>New theme: <a href="../demo/theme.html?mbo">MBO</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#mbo">MBO</a>.</li>
     <li>Add <a href="manual.html#token_style_line">support</a> for line-level styling from mode tokenizers.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/3.18.0...3.19.0">list of patches</a>.</li>
   </ul>
@@ -373,7 +580,7 @@
   <ul class="rel-note">
     <li>The whole codebase is now under a single <a href="../LICENSE">license</a> file.</li>
     <li>The project page was overhauled and redesigned.</li>
-    <li>New themes: <a href="../demo/theme.html?paraiso-dark">Paraiso</a> (<a href="../demo/theme.html?paraiso-light">light</a>), <a href="../demo/theme.html?the-matrix">The Matrix</a>.</li>
+    <li>New themes: <a href="../demo/theme.html#paraiso-dark">Paraiso</a> (<a href="../demo/theme.html#paraiso-light">light</a>), <a href="../demo/theme.html#the-matrix">The Matrix</a>.</li>
     <li>Improved interaction between themes and <a href="manual.html#addon_active-line">active-line</a>/<a href="manual.html#addon_matchbrackets">matchbrackets</a> addons.</li>
     <li>New <a href="manual.html#addon_foldcode">folding</a> function <code>CodeMirror.fold.comment</code>.</li>
     <li>Added <a href="manual.html#addon_fullscreen">fullscreen</a> addon.</li>
@@ -387,7 +594,7 @@
     <li>New addons: <a href="../demo/tern.html">Tern</a>, <a href="manual.html#addon_matchtags">matchtags</a>, and <a href="manual.html#addon_foldgutter">foldgutter</a>.</li>
     <li>Introduced <a href="manual.html#getHelper"><em>helper</em></a> concept (<a href="https://groups.google.com/forum/#!msg/codemirror/cOc0xvUUEUU/nLrX1-qnidgJ">context</a>).</li>
     <li>New method: <a href="manual.html#getModeAt"><code>getModeAt</code></a>.</li>
-    <li>New themes: base16 <a href="../demo/theme.html?base16-dark">dark</a>/<a href="../demo/theme.html?base16-light">light</a>, 3024 <a href="../demo/theme.html?3024-night">dark</a>/<a href="../demo/theme.html?3024-day">light</a>, <a href="../demo/theme.html?tomorrow-night-eighties">tomorrow-night</a>.</li>
+    <li>New themes: base16 <a href="../demo/theme.html#base16-dark">dark</a>/<a href="../demo/theme.html#base16-light">light</a>, 3024 <a href="../demo/theme.html#3024-night">dark</a>/<a href="../demo/theme.html#3024-day">light</a>, <a href="../demo/theme.html#tomorrow-night-eighties">tomorrow-night</a>.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/3.14.0...3.15.0">list of patches</a>.</li>
   </ul>
 
@@ -502,7 +709,7 @@
     <li>Further improvements to the <a href="../demo/vim.html">vim mode</a>.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/v3.01...v3.1">list of patches</a>.</li>
   </ul>
-  
+
 
   <p class="rel">25-01-2013: <a href="http://codemirror.net/codemirror-3.02.zip">Version 3.02</a>:</p>
 
@@ -542,7 +749,7 @@
     <li>Work around Safari segfault when dragging.</li>
     <li>Full <a href="https://github.com/codemirror/CodeMirror/compare/v3.0rc2...v3.0">list of patches</a>.</li>
   </ul>
-  
+
   <p class="rel">20-11-2012: <a href="http://codemirror.net/codemirror-3.0rc2.zip">Version 3.0, release candidate 2</a>:</p>
 
   <ul class="rel-note">
@@ -558,7 +765,7 @@
   <p class="rel">20-11-2012: <a href="http://codemirror.net/codemirror-3.0rc1.zip">Version 3.0, release candidate 1</a>:</p>
 
   <ul class="rel-note">
-    <li>New theme: <a href="../demo/theme.html?solarized%20light">Solarized</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#solarized%20light">Solarized</a>.</li>
     <li>Introduce <a href="manual.html#addLineClass"><code>addLineClass</code></a>
     and <a href="manual.html#removeLineClass"><code>removeLineClass</code></a>,
     drop <code>setLineClass</code>.</li>
@@ -624,7 +831,7 @@
 
   <ul class="rel-note">
     <li>New mode: <a href="../mode/z80/index.html">Z80 assembly</a>.</li>
-    <li>New theme: <a href="../demo/theme.html?twilight">Twilight</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#twilight">Twilight</a>.</li>
     <li>Add command-line compression helper.</li>
     <li>Make <a href="manual.html#scrollIntoView"><code>scrollIntoView</code></a> public.</li>
     <li>Add <a href="manual.html#defaultTextHeight"><code>defaultTextHeight</code></a> method.</li>
@@ -694,7 +901,7 @@
 
   <ul class="rel-note">
     <li><strong>New scrollbar implementation</strong>. Should flicker less. Changes DOM structure of the editor.</li>
-    <li>New theme: <a href="../demo/theme.html?vibrant-ink">vibrant-ink</a>.</li>
+    <li>New theme: <a href="../demo/theme.html#vibrant-ink">vibrant-ink</a>.</li>
     <li>Many extensions to the VIM keymap (including text objects).</li>
     <li>Add <a href="../demo/multiplex.html">mode-multiplexing</a> utility script.</li>
     <li>Fix bug where right-click paste works in read-only mode.</li>
@@ -720,7 +927,7 @@
     <li>New
     modes: <a href="../mode/shell/index.html">Shell</a>, <a href="../mode/tiki/index.html">Tiki
     wiki</a>, <a href="../mode/pig/index.html">Pig Latin</a>.</li>
-    <li>New themes: <a href="../demo/theme.html?ambiance">Ambiance</a>, <a href="../demo/theme.html?blackboard">Blackboard</a>.</li>
+    <li>New themes: <a href="../demo/theme.html#ambiance">Ambiance</a>, <a href="../demo/theme.html#blackboard">Blackboard</a>.</li>
     <li>More control over drag/drop
     with <a href="manual.html#option_dragDrop"><code>dragDrop</code></a>
     and <a href="manual.html#option_onDragEvent"><code>onDragEvent</code></a>

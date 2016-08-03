@@ -51,6 +51,17 @@
      "[comment ```]",
      "bar");
 
+  MT("fencedCodeBlockModeSwitchingObjc",
+     "[comment ```objective-c]",
+     "[keyword @property] [variable NSString] [operator *] [variable foo];",
+     "[comment ```]",
+     "bar");
+
+  MT("fencedCodeBlocksNoTildes",
+     "~~~",
+     "foo",
+     "~~~");
+
   MT("taskListAsterisk",
      "[variable-2 * []] foo]", // Invalid; must have space or x between []
      "[variable-2 * [ ]]bar]", // Invalid; must have space after ]
@@ -133,6 +144,15 @@
   MT("vanillaLink",
      "foo [link http://www.example.com/] bar");
 
+  MT("vanillaLinkNoScheme",
+     "foo [link www.example.com] bar");
+
+  MT("vanillaLinkHttps",
+     "foo [link https://www.example.com/] bar");
+
+  MT("vanillaLinkDataSchema",
+     "foo [link data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==] bar");
+
   MT("vanillaLinkPunctuation",
      "foo [link http://www.example.com/]. bar");
 
@@ -141,6 +161,9 @@
 
   MT("vanillaLinkEmphasis",
      "foo [em *][em&link http://www.example.com/index.html][em *] bar");
+
+  MT("notALink",
+     "foo asfd:asdf bar");
 
   MT("notALink",
      "[comment ```css]",
@@ -152,8 +175,8 @@
 
   MT("notALink",
      "[comment `foo]",
-     "[link http://www.example.com/]",
-     "[comment `foo]",
+     "[comment&link http://www.example.com/]",
+     "[comment `] foo",
      "",
      "[link http://www.example.com/]");
 

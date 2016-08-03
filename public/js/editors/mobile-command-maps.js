@@ -12,7 +12,7 @@ var commandMaps = [
   },
   {
     value: 'fn',
-    callback: funtion () { return 'function $0() {\n  $1\n}' },
+    callback: function () { return 'function $0() {\n  $1\n}' },
     panel: ['js', 'console']
   },
   {

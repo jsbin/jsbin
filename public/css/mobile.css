@@ -249,10 +249,50 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 44px;
+    height: 54px;
     background: #eee;
     z-index: 10;
-    overflow: scroll;
+    line-height: 57px;
+    /* padding: 5px; */
+    padding-left: 0;
+  }
+
+  #strip > div {
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+  }
+
+  #strip:before {
+    position: absolute;
+    content: ' ';
+    box-shadow: 0 0 20px 3px rgba(0,0,0,.15);
+    right: 0;
+    width: 0px;
+    height: 100%;
+    top: 10px;
+  }
+
+  #strip div:after {
+    content: ' ';
+    width: 5px;
+    display: inline-block;
+    position: relative;
+    right: 0;
+  }
+
+  #strip button {
+    box-sizing: border-box;
+    font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+    font-size: 18px;
+    background: #ccc;
+    border: 0;
+    border-radius: 3px;
+    height: 44px;
+    min-width: 44px;
+    margin: 5px;
+    padding: 5px;
+    display: inline-block;
   }
 
 }
@@ -269,7 +309,16 @@
   }
 
   .mobile .editbox textarea {
-    padding-bottom: 70%;
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    height: auto;
+  }
+
+  .mobile .editbox > div {
+    padding-bottom: 50%;
+    position: relative;
+    height: 100%;
   }
 
   #source {
@@ -293,6 +342,12 @@
   .mobile .editbox,
   #history {
     top: 0;
+  }
+
+  .mobile .editbox {
+    bottom: 54px;
+    overflow: scroll;
+    /* position: relative; */
   }
 }
 

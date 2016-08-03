@@ -2,7 +2,7 @@
   'use strict';
   /*globals $, jsbin, CodeMirror, template, ternDefinitions, ternBasicDefs */
 
-  if (jsbin.embed) {
+  if (true || jsbin.embed || jsbin.mobile) {
     return;
   }
 

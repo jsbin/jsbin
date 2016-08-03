@@ -13,7 +13,7 @@ var processors = jsbin.processors = (function () {
    * Add properties to a function using underscore
    */
   var extendFn = function (fn, obj) {
-    return _.extend(fn, obj);
+    return $.extend(fn, obj);
   };
 
   var passthrough = function (ready) { return ready(); };
@@ -43,6 +43,15 @@ var processors = jsbin.processors = (function () {
     });
   };
 
+  function pick() {
+    var args = [].slice.call(arguments, 0);
+    var target = args.shift();
+    return args.reduce(function (acc, curr) {
+      acc[curr] = target[curr] || null;
+      return acc;
+    }, {});
+  }
+
   /**
    * Create a processor – accepts an object containing:
    *
@@ -60,7 +69,7 @@ var processors = jsbin.processors = (function () {
     var url = opts.url,
         init = opts.init || passthrough,
         handler = opts.handler || defaultProcessor,
-        processorData = _.pick(opts, 'id', 'target', 'extensions');
+        processorData = pick(opts, 'id', 'target', 'extensions');
 
     opts.extensions = opts.extensions || [];
     if (!opts.extensions.length) {

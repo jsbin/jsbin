@@ -41,13 +41,16 @@ var simpleJsHint = function(cm) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.javascript);
   }
 };
+
 CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   'use strict';
   if (['htmlmixed', 'javascript', 'css', editorModes['less'], editorModes['sass'], editorModes['scss']].indexOf(cm.options.mode) === -1) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
-  } else {
+  } else if (oldCodeMirror) {
+    return oldCodeMirror.snippets(cm);
+  } else if (!jsbin.mobile) {
     return CodeMirror.snippets(cm);
   }
 };
@@ -114,11 +117,14 @@ var Panel = function (name, settings) {
       cmSettings.extraKeys.Tab = 'snippets';
     }
 
-    // some emmet "stuff" - TODO decide whether this is needed still...
-    $.extend(cmSettings, {
-      syntax: name,   /* define Zen Coding syntax */
-      profile: name   /* define Zen Coding output profile */
-    });
+
+    if (name === 'html') {
+      // some emmet "stuff" - TODO decide whether this is needed still...
+      $.extend(cmSettings, {
+        syntax: name, // define Zen Coding syntax
+        profile: name, // define Zen Coding output profile
+      });
+    }
 
     // make sure tabSize and indentUnit are numbers
     if (typeof cmSettings.tabSize === 'string') {
@@ -129,6 +135,10 @@ var Panel = function (name, settings) {
     }
 
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
+
+    if (name === 'html' || name === 'css') {
+      emmetCodeMirror(panel.editor);
+    }
 
     panel.editor.on('highlightLines', function () {
       window.location.hash = panels.getHighlightLines();
@@ -284,7 +294,10 @@ Panel.prototype = {
         if (panel.virgin) {
           var top = panel.$el.find('.label').outerHeight();
           top += 8;
-          $(panel.editor.scroller).find('.CodeMirror-lines').css('padding-top', top);
+
+          if (!jsbin.mobile) {
+            $(panel.editor.scroller).find('.CodeMirror-lines').css('padding-top', top);
+          }
 
           populateEditor(panel, panel.name);
         }
@@ -467,10 +480,12 @@ Panel.prototype = {
 
     // This prevents the browser from jumping
     if (jsbin.mobile || jsbin.tablet || jsbin.embed) {
-      editor._focus = editor.focus;
-      editor.focus = function () {
-        // console.log('ignoring manual call');
-      };
+      if (!jsbin.smartMobile) {
+        editor._focus = editor.focus;
+        editor.focus = function () {
+          // console.log('ignoring manual call');
+        };
+      }
     }
 
     editor.id = panel.name;

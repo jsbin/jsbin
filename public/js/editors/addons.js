@@ -370,7 +370,7 @@
         delay: 800
       });
     }
-    if (opt.console) {
+    if (opt.console && cm.consolelint) {
       $document.trigger('sizeeditors');
       $(cm.consolelint.head).on('click', function() {
         if (!detailsSupport) {

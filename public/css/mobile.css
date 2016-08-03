@@ -1,4 +1,4 @@
-nav#mobile-nav {display: none;}
+#mobile-nav {display: none;}
 
 @media only screen and (max-width: 735px) {
   /* mobile menu */

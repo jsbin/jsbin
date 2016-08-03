@@ -2176,30 +2176,6 @@ left: 50%;
   margin: 10px 0;
 }
 
-#history iframe-dead {
-  -webkit-transform: scale(0.8);
-     -moz-transform: scale(0.8);
-      -ms-transform: scale(0.8);
-       -o-transform: scale(0.8);
-          transform: scale(0.8);
-  /* IE8+ - must be on one line, unfortunately */
-  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.8, M12=0, M21=0, M22=0.8, SizingMethod='auto expand')";
-
-  /* IE6 and 7 */
-  filter: progid:DXImageTransform.Microsoft.Matrix(
-           M11=0.8,
-           M12=0,
-           M21=0,
-           M22=0.8,
-           SizingMethod='auto expand');
-
-  -webkit-transform-origin: 0 0;
-     -moz-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
-       -o-transform-origin: 0 0;
-          transform-origin: 0 0;
-}
-
 #history iframe {
   width: 100%;
   height: 100%;
@@ -4068,9 +4044,9 @@ a.toppanel-logo:hover {
 /* toppanel animation */
 #bin {
   -webkit-transition: top ease-in-out 100ms;
-     -moz-transition: top ease-in-out 100ms;
-       -o-transition: top ease-in-out 100ms;
-          transition: top ease-in-out 100ms;
+  -moz-transition: top ease-in-out 100ms;
+  -o-transition: top ease-in-out 100ms;
+  transition: top ease-in-out 100ms;
 }
 #toppanel {
   -webkit-transition: margin-top ease-in-out 100ms;
@@ -4669,6 +4645,8 @@ body.min #bin .editbox .CodeMirror pre {
   font-weight: bold;
 }
 
-.menu.inline-menu {
+.menu.inline-menu,
+#mobile-nav-trigger,
+#mobile-nav {
   display: none;
 }

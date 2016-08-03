@@ -268,6 +268,12 @@ $('#showhelp').click(function () {
   return false;
 });
 
+$('#mobile-nav-trigger').on('touchstart click', function () {
+  $body.toggleClass('show-nav');
+  return false;
+});
+
+
 $('#showurls').click(function () {
   $body.toggleClass('urlHelp');
   urlHelpVisible = $body.is('.urlHelp');

@@ -48,10 +48,10 @@ if (!customKeys.disabled) {
 
     if (event.ctrlKey && $.browser.platform !== 'mac') { event.metaKey = true; }
 
-    if (event.metaKey && event.which === 89 && !event.shiftKey) {
-      archive(!jsbin.state.metadata.archive);
-      return event.preventDefault();
-    }
+    // if (event.metaKey && event.which === 89 && !event.shiftKey) {
+    //   archive(!jsbin.state.metadata.archive);
+    //   return event.preventDefault();
+    // }
 
     if (event.metaKey && event.which === 79) { // open
       $('a.homebtn').trigger('click', 'keyboard');

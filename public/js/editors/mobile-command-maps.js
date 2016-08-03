@@ -12,12 +12,12 @@ var commandMaps = [
   },
   {
     value: 'fn',
-    callback: () => 'function $0() {\n  $1\n}',
+    callback: funtion () { return 'function $0() {\n  $1\n}' },
     panel: ['js', 'console']
   },
   {
     value: 'log',
-    callback: () => 'console.log($0)',
+    callback: function () { return 'console.log($0)' },
     panel: 'js',
   },
   {

@@ -28,7 +28,9 @@ body, html {
     display: none !important;
   }
 
-
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 44px;
+  }
   #mobile-nav {
     left: -200px;
     display: block;
@@ -84,7 +86,7 @@ body, html {
     font-size: 18px;
     color: #6293d3;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 500;
     display: block;
     cursor: pointer;
   }

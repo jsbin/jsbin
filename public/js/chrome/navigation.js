@@ -270,11 +270,10 @@ $('#showhelp').click(function () {
   return false;
 });
 
-$('a.toggle-side-nav').on('touchstart click', function () {
+$('a.toggle-side-nav').on(jsbin.mobile ? 'touchstart' : 'click', function () {
   $body.toggleClass('show-nav');
   sideNavVisible = $body.is('.show-nav');
   if (!sideNavVisible) {
-    console.log(sideNavVisible);
     $('#skipToEditor').click();
   }
   return sideNavVisible;

@@ -37,6 +37,7 @@
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
 <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}} {{bodyClass}}">    <!--<![endif]-->
+<main>
 {{#unless embed}}
 <script>
 if(top != self) {
@@ -247,6 +248,7 @@ if ('serviceWorker' in navigator) {
 {{#if custom_js}}
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
 {{/if}}
+</main>
 </body>
 </html>
 

@@ -1,5 +1,15 @@
 #mobile-nav {display: none;}
 
+main {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+body, html {
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 735px) {
   /* mobile menu */
   #mobile-nav-trigger {
@@ -17,9 +27,7 @@
   #toppanel {
     display: none !important;
   }
-  #mobile-nav {
-    /* transform: translateX(-200px); */
-  }
+
 
   #mobile-nav {
     left: -200px;
@@ -54,10 +62,14 @@
   }
 
   body {
+    overflow: hidden;
+  }
+
+  body main {
      transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  body.show-nav {
+  body.show-nav main {
     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: translateX(200px);
   }

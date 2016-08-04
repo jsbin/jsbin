@@ -69,12 +69,19 @@ body, html {
   }
 
   body main {
+     -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+     transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
      transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   body.show-nav main {
+    -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transform: translateX(200px);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transform: translateX(200px);
+            transform: translateX(200px);
   }
 
   #mobile-nav li a {
@@ -93,7 +100,8 @@ body, html {
   }
 
   a.toppanel-logo {
-    transform: translate(-86px, 120px) scale(0.35);
+    -webkit-transform: translate(-86px, 120px) scale(0.35);
+            transform: translate(-86px, 120px) scale(0.35);
   }
 
   #control {
@@ -248,13 +256,26 @@ body, html {
     list-style: none;
     margin: 0;
     padding: 0;
+    display:-webkit-box;
+    display:-ms-flexbox;
     display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    justify-content: space-between;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
 
   .inline-menu li {

@@ -270,7 +270,7 @@ ul.flat li {
 
 #control > *, a {
   color: #232323;
-/*   text-shadow: #fff 0 1px 1px; */
+  /* text-shadow: #fff 0 1px 1px; */
 }
 
 a:hover {
@@ -3737,7 +3737,7 @@ div.large-gravatar object {
 .toppanel #bin,
 .toppanel #history,
 .toppanel #history .preview {
-  top: 236px;
+  top: 35px;
 }
 
 #toppanel ~ main #control .brand {
@@ -3756,7 +3756,7 @@ body.ready.toppanel {
 
 .toppanel #tip.notification,
 .toppanel #tip.error {
-  top: 234px;
+  top: 35px;
 }
 
 /* toppanel */

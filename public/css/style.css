@@ -1541,7 +1541,7 @@ li.CodeMirror-hint-active {
 }
 
 #bin .editbox .CodeMirror pre,
-.mobile textarea {
+.mobile .editbox textarea {
   font-family: SourceCodeProRegular, Menlo, Monaco, consolas, monospace;
 }
 

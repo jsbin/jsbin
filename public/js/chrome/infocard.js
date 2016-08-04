@@ -156,7 +156,7 @@
 
       // then restore
       if (jsbin.panels.panels.html.visible) {
-        cm.setCursor(cursor);
+        if (!jsbin.mobile) cm.setCursor(cursor);
         if (selected) {
           cm.setSelections(state);
         }

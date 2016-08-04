@@ -273,7 +273,8 @@ $('#showhelp').click(function () {
 $('a.toggle-side-nav').on(jsbin.mobile ? 'touchstart' : 'click', function () {
   $body.toggleClass('show-nav');
   sideNavVisible = $body.is('.show-nav');
-  if (!sideNavVisible) {
+  if (!sideNavVisible && !jsbin.mobile) {
+    // we only focus the editor in desktop, otherwise the keyboard jumps up
     $('#skipToEditor').click();
   }
   return sideNavVisible;

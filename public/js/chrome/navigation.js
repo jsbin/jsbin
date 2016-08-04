@@ -69,6 +69,8 @@ $('.homebtn').click(function (event, data) {
     analytics.open(data);
   }
 
+  hideOpen();
+
   jsbin.panels.hideAll();
   return false;
 });
@@ -268,9 +270,14 @@ $('#showhelp').click(function () {
   return false;
 });
 
-$('#mobile-nav-trigger').on('touchstart click', function () {
+$('a.toggle-side-nav').on('touchstart click', function () {
   $body.toggleClass('show-nav');
-  return false;
+  sideNavVisible = $body.is('.show-nav');
+  if (!sideNavVisible) {
+    console.log(sideNavVisible);
+    $('#skipToEditor').click();
+  }
+  return sideNavVisible;
 });
 
 
@@ -291,7 +298,7 @@ $('.code.panel > .label > span.name').dblclick(function () {
   });
 });
 
-$('#createnew').click(function (event) {
+$('a.createnew').click(function (event) {
   event.preventDefault();
   var i, key;
   analytics.createNew();
@@ -584,12 +591,16 @@ if (jsbin.settings.editor.simple) {
   $enableUniversalEditor.prop('checked', true);
 }
 
-$('#skipToEditor').click(function () {
-  if (jsbin.settings.editor.simple) {
-    $('#html').focus();
+$('#skipToEditor').on('click keypress', function () {
+  var first = (jsbin.panels.getVisible() || ['html']).shift();
+  if (jsbin.settings.editor.simple || jsbin.mobile) {
+    $('#' + first.id).focus();
+  } else if (first) {
+    first.editor.focus();
   } else {
     jsbin.panels.panels.html.editor.focus();
   }
+  return false;
 });
 
 }());

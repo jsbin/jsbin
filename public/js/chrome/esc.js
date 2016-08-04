@@ -2,6 +2,7 @@ var loginVisible = false,
     dropdownOpen = false,
     keyboardHelpVisible = false,
     urlHelpVisible = false,
+    sideNavVisible = false,
     infocardVisible = false;
 
 $document.keydown(function (event) {
@@ -14,6 +15,10 @@ function hideOpen() {
   if (infocardVisible) {
     $('#infocard').removeClass('open');
     infocardVisible = false;
+  }
+  if (sideNavVisible) {
+    $body.removeClass('show-nav');
+    sideNavVisible = false;
   }
   if (urlHelpVisible) {
     $body.removeClass('urlHelp');

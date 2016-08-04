@@ -12,14 +12,14 @@ body, html {
 
 @media only screen and (max-width: 735px) {
   /* mobile menu */
-  #mobile-nav-trigger {
+  .mobile-nav-trigger {
     display: block;
     position: fixed;
     z-index: 100000;
     height: 44px;
   }
 
-  #mobile-nav-trigger img {
+  .mobile-nav-trigger img {
     padding-top: 2px;
     height: 40px;
   }
@@ -74,20 +74,20 @@ body, html {
     transform: translateX(200px);
   }
 
-  #mobile-nav a {
+  #mobile-nav li a {
     border-bottom: 1px solid #fff;
     box-sizing: border-box;
-    line-height: 34px;
-    height: 54px;
+    line-height: 26px;
+    height: 46px;
     padding: 10px 20px;
-    background: #ebf3ff;
+    background: rgb(235, 243, 255);
     font-size: 18px;
     color: #6293d3;
     text-decoration: none;
     font-weight: bold;
     display: block;
+    cursor: pointer;
   }
-
 
   a.toppanel-logo {
     transform: translate(-86px, 120px) scale(0.35);
@@ -271,7 +271,7 @@ body, html {
 
   .inline-menu a:hover,
   .inline-menu .add-library:hover {
-    /* background: rgba(0,0,0,.05); */
+    background: rgba(0,0,0,.05);
   }
 
   .inline-menu .add-library select {
@@ -416,12 +416,13 @@ body, html {
   }
 }
 
+/* tablet in landscape */
 @media all and (max-height: 319px) and (orientation: landscape) and (max-width: 735px) {
   #control,
   .toppanel-logo,
   .mobile .inline-menu,
   .panel .label,
-  #mobile-nav-trigger {
+  .mobile-nav-trigger {
     display: none !important;
   }
 
@@ -442,6 +443,7 @@ body, html {
   }
 }
 
+/* basically: iPhone mini display of 320px */
 @media only screen and (max-width: 320px) {
   .inline-menu li {
     font-size: 14px;

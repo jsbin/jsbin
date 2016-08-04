@@ -447,16 +447,17 @@ body.public #control a#public {
   color: #999;
 }
 
-a.button:focus { /* , .button:active */
-  -moz-box-shadow: #C8C8C8 0 0 3px;
-  -webkit-box-shadow: #C8C8C8 0 0 3px;
-     -moz-box-shadow: #C8C8C8 0 0 3px;
-          box-shadow: #C8C8C8 0 0 3px;
-  border-color: #fff;
-  outline: 0;
-  text-shadow: none;
+/* a.button:focus { /* , .button:active */
+  -moz-box-shadow: #C8C8C8 0 0 3px !important;
+  -webkit-box-shadow: #C8C8C8 0 0 3px !important;
+     -moz-box-shadow: #C8C8C8 0 0 3px !important;
+          box-shadow: #C8C8C8 0 0 3px !important;
+  border-color: #fff !important;
+  outline: 0 !important;
+  text-shadow: none !important;
+  overflow: visible;
 }
-
+ */
 /*body.source a.source,
 body.preview a.preview {
   background: #aaa;
@@ -4315,6 +4316,11 @@ a[data-pro]:hover:after {
   border-color: #2E7D32;
 }
 
+html.pro .gopro,
+html.pro .gopro-plain {
+  display: none;
+}
+
 .gopro { /* not the camera...silly */
   text-decoration: none;
   position: relative;
@@ -4649,4 +4655,49 @@ body.min #bin .editbox .CodeMirror pre {
 #mobile-nav-trigger,
 #mobile-nav {
   display: none;
+}
+
+#mobile-nav a.toggle-side-nav {
+  padding-left: 45px;
+  color: rgb(152, 185, 228);
+}
+
+#mobile-nav a.toggle-side-nav:hover,
+#mobile-nav a.toggle-side-nav:active {
+  color: rgb(98, 147, 211);
+}
+
+#mobile-nav a.toggle-side-nav:hover:before,
+#mobile-nav a.toggle-side-nav:active:before {
+  background: rgb(98, 147, 211);
+}
+
+#mobile-nav a.toggle-side-nav:before {
+  content: '×';
+  background: rgb(152, 185, 228);
+  display: inline-block;
+  border-radius: 100px;
+  width: 20px;
+  height: 20px;
+  line-height: 1.35rem;
+  text-align: center;
+  background-position: inherit;
+  /* padding-top: 0px; */
+  top: 0.8rem;
+  position: absolute;
+  color: rgb(235, 243, 255);
+  /* vertical-align: top; */
+  /* padding-top: 10px; */
+  margin-left: -25px;
+  text-shadow: none;
+  font-family: arial, sans-serif;
+}
+
+#version {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #8da6ce;
+  z-index: 100000;
+  text-decoration: none;
 }

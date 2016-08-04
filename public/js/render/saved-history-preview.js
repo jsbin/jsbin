@@ -12,7 +12,7 @@
 
   $document.on('history:open', function () {
     if ($history && jsbin.panels.getVisible().length === 0) {
-      $history.appendTo('body');
+      $history.appendTo('main');
     }
   }).on('history:close', function () {
     if ($history === null) {

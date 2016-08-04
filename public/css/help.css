@@ -631,6 +631,12 @@ h6:hover .anchor span:before {
   }
 }
 
+@media only screen and (max-width: 640px) {
+  header nav {
+    width: 50% !important;
+  }
+}
+
 /* smaller than 480 */
 @media only screen and (max-width: 480px) {
   .sample {
@@ -660,6 +666,10 @@ h6:hover .anchor span:before {
 
   #back {
     margin-right: 0;
+  }
+
+  header nav {
+    width: 75% !important; /* sorry :( */
   }
 
   #footer .legal {

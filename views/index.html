@@ -7,6 +7,7 @@
   <link rel="icon" href="{{static}}/images/favicon.png">
   <link rel="stylesheet" href="{{static}}/js/vendor/codemirror5/lib/codemirror.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
+  <link rel="stylesheet" href="{{static}}/css/themes.css{{cacheBust}}">
   {{#feature request "mobile"}}
   <link rel="manifest" href="{{root}}/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,7 +38,6 @@
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
 <!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}} {{bodyClass}}">    <!--<![endif]-->
-<main>
 {{#unless embed}}
 <script>
 if(top != self) {
@@ -50,6 +50,7 @@ if(top != self) {
   {{> welcome_panel}}
 {{/feature}}
 {{/unless}}
+<main>
 {{#feature request "mobile"}}
   {{>mobile-nav}}
 {{/feature}}

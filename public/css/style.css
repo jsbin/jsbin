@@ -3739,10 +3739,10 @@ div.large-gravatar object {
   top: 236px;
 }
 
-#toppanel ~ #control .brand {
+#toppanel ~ main #control .brand {
   margin-left: 34px;
 }
-#toppanel ~ #control .brand img {
+#toppanel ~ main #control .brand img {
   display: none;
 }
 

@@ -22,7 +22,7 @@
   {{#if is_production}}
     {{> analytics}}
   {{/if}}
-  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
+  <meta id="app-description" name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
@@ -45,7 +45,7 @@ if(top != self) {
   document.write('<' + '!--');
 }
 </script>
-<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome &amp; menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}
@@ -101,11 +101,11 @@ if(top != self) {
   </div>
   <div id="panelswaiting">
     <div class="code stretch html panel">
-      <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
-          <div class="dropdownmenu processorSelector" data-type="html">
-            <a href="#html">HTML</a>
-            <a href="#markdown">Markdown</a>
-            <a href="#jade">Jade</a>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a href="#htmlprocessors" role="menuitem" class="fake-dropdown button-dropdown">Processor</a></strong></span><div class="dropdown" id="htmlprocessors">
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="html">
+            <a role="menuitemradio" aria-checked="true" href="#html" data-label="HTML">None</a>
+            <a role="menuitemradio" href="#markdown">Markdown</a>
+            <a role="menuitemradio" href="#jade">Jade</a>
             <a href="#convert">Convert to HTML</a>
           </div>
         </div>
@@ -115,19 +115,19 @@ if(top != self) {
       </div>
     </div>
     <div class="code stretch javascript panel">
-      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#javascriptprocessors">Processor</a></strong></span>
         <div class="dropdown" id="javascriptprocessors">
-          <div class="dropdownmenu processorSelector" data-type="javascript">
-            <a href="#javascript">JavaScript</a>
-            <a href="#babel">ES6 / Babel</a>
-            <a href="#jsx">JSX (React)</a>
-            <a href="#coffeescript">CoffeeScript</a>
-            <a href="#traceur">Traceur</a>
-            <a href="#typescript">TypeScript</a>
-            <a href="#processing">Processing</a>
-            <a href="#livescript">LiveScript</a>
-            <a href="#clojurescript">ClojureScript</a>
-            <a href="#convert">Convert to JavaScript</a>
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="javascript">
+            <a role="menuitemradio" aria-checked="true" href="#javascript" data-label="JavaScript">None</a>
+            <a role="menuitemradio" href="#babel">ES6 / Babel</a>
+            <a role="menuitemradio" href="#jsx">JSX (React)</a>
+            <a role="menuitemradio" href="#coffeescript">CoffeeScript</a>
+            <a role="menuitemradio" href="#traceur">Traceur</a>
+            <a role="menuitemradio" href="#typescript">TypeScript</a>
+            <a role="menuitemradio" href="#processing">Processing</a>
+            <a role="menuitemradio" href="#livescript">LiveScript</a>
+            <a role="menuitemradio" href="#clojurescript">ClojureScript</a>
+            <a role="menuitem" href="#convert">Convert to JavaScript</a>
           </div>
         </div>
       </div>
@@ -136,18 +136,18 @@ if(top != self) {
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#cssprocessors">Processor</a></strong></span>
         <div class="dropdown" id="cssprocessors">
-          <div class="dropdownmenu processorSelector" data-type="css">
-            <a href="#css">CSS</a>
-            <a href="#less">Less</a>
-            <a href="#myth">Myth</a>
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="css">
+            <a role="menuitemradio" aria-checked="true" href="#css" data-label="CSS">None</a>
+            <a role="menuitemradio" href="#less">Less</a>
+            <a role="menuitemradio" href="#myth">Myth</a>
             {{#feature request "processors"}}
-            <a href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
-            <a href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
+            <a role="menuitemradio" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
+            <a role="menuitemradio" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
             {{/feature}}
-            <a href="#stylus">Stylus</a>
-            <a href="#convert">Convert to CSS</a>
+            <a role="menuitemradio" href="#stylus">Stylus</a>
+            <a role="menuitem" href="#convert">Convert to CSS</a>
           </div>
         </div>
       </div>

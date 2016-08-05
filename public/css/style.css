@@ -2613,7 +2613,7 @@ form + hr {
   text-decoration: none;
 }
 
-.label .name span {
+.label .name span.saved {
   /*margin-left: -41px;*/
   padding-left: 4px;
   color: #999;

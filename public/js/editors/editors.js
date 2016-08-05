@@ -625,12 +625,14 @@ var editorsReady = setInterval(function () {
     }
 
 
-    $(window).resize(function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        $document.trigger('sizeeditors');
-      }, 100);
-    });
+    if (!jsbin.mobile) {
+      $(window).resize(function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          $document.trigger('sizeeditors');
+        }, 100);
+      });
+    }
 
     $document.trigger('sizeeditors');
     $document.trigger('jsbinReady');

@@ -1,6 +1,20 @@
 #mobile-nav,
 .mobile-nav-trigger {display: none;}
 
+html.debug:before {
+  pointer-events: none;
+  content: 'default';
+  position: fixed;
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 105, 180, 0.39);
+  padding: 10px;
+  z-index: 10000000000;
+}
+
 main {
   display: block;
   position: relative;
@@ -12,6 +26,14 @@ body, html {
 }
 
 @media only screen and (max-width: 735px) {
+  :focus {
+    outline: none;
+  }
+
+  html.debug:before {
+    content: 'mobile';
+  }
+
   /* mobile menu */
   .mobile-nav-trigger {
     display: block;
@@ -32,6 +54,12 @@ body, html {
   .toppanel #bin, .toppanel #history, .toppanel #history .preview {
     top: 44px;
   }
+
+  body.toppanel {
+    background-position: center;
+  }
+
+
   #mobile-nav {
     left: -200px;
     display: block;
@@ -370,6 +398,7 @@ body, html {
     line-height: 57px;
     /* padding: 5px; */
     padding-left: 0;
+    background: transparent;
   }
 
   #strip > div {
@@ -414,6 +443,17 @@ body, html {
 
 @media all and (max-height: 410px) and (max-width: 640px) {
   /* keyboard visible */
+  html.debug:before {
+    content: 'keyboard';
+  }
+
+  #console {
+    padding-top: 0;
+  }
+
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 0;
+  }
 
   #strip {
     display: block;
@@ -443,12 +483,34 @@ body, html {
 
 /* tablet in landscape */
 @media all and (max-height: 319px) and (orientation: landscape) and (max-width: 735px) {
-  #control,
+  html.debug:before {
+    content: 'tablet';
+  }
+
+  .toppanel #tip.notification, .toppanel #tip.error,
+  #tip.notification, #tip.error {
+    top: 22px;
+  }
+
+
   .toppanel-logo,
   .mobile .inline-menu,
   .panel .label,
   .mobile-nav-trigger {
     display: none !important;
+  }
+
+  #control, #control * {
+    height: 22px;
+  }
+
+  #control #panels > a.button {
+    height: 22px;
+    line-height: 24px;
+  }
+
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 22px;
   }
 
   #source {
@@ -470,6 +532,10 @@ body, html {
 
 /* basically: iPhone mini display of 320px */
 @media only screen and (max-width: 320px) {
+  html.debug:before {
+    content: 'iphone';
+  }
+
   .inline-menu li {
     font-size: 14px;
   }

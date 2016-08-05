@@ -81,6 +81,10 @@ function enableMobileMirror() {
       }
     };
 
+    $document.on('jsbinReady', function () {
+      old = el.value;
+    });
+
     $(this.textarea)
       .on(eventName, throttle(function () {
         update();
@@ -139,7 +143,9 @@ function enableMobileMirror() {
     setValue: function (code)  {
       this.textarea.value = code;
     },
-    focus: noop,
+    focus: function () {
+      this.textarea.focus();
+    },
     getCursor: function () {
       var p = this.cursorPosition().character;
       var lines = this.textarea.value.substring(0, p).split('\n');

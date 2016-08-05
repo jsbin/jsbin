@@ -1,5 +1,4 @@
 /*globals $, CodeMirror, jsbin, jshintEnabled, RSVP */
-
 var $document = $(document),
     $source = $('#source'),
     userResizeable = !$('html').hasClass('layout');
@@ -229,9 +228,11 @@ var Panel = function (name, settings) {
   $panel.focus(function () {
     panel.focus();
   });
-  $panel.add(this.$el.find('.label')).click(function () {
-    panel.focus();
-  });
+  if (!jsbin.mobile) {
+    $panel.add(this.$el.find('.label')).click(function () {
+      panel.focus();
+    });
+  }
 };
 
 Panel.order = 0;
@@ -259,6 +260,7 @@ Panel.prototype = {
     if (jsbin.mobile) {
       panels.hideAll(true);
     }
+
     if (panel.splitter.length) {
       if (panelCount === 0 || panelCount > 1) {
         var $panel = $('.panel.' + panel.id).show();
@@ -280,6 +282,16 @@ Panel.prototype = {
     panel.controlButton.addClass('active');
     panel.visible = true;
     this.updateAriaState();
+
+
+    // if the textarea is in focus AND we're mobile AND the keyboard is up
+    if (jsbin.mobile && window.matchMedia && window.matchMedia('(max-height: 410px) and (max-width: 640px)').matches) {
+      if (panel.editor) panel.editor.focus();
+    }
+
+    if (jsbin.mobile) {
+      return ;
+    }
 
     // update the splitter - but do it on the next tick
     // required to allow the splitter to see it's visible first
@@ -323,7 +335,7 @@ Panel.prototype = {
       panel.trigger('show');
 
       panel.virgin = false;
-  }, 0);
+    }, 0);
 
     // TODO save which panels are visible in their profile - but check whether it's their code
   },
@@ -336,7 +348,6 @@ Panel.prototype = {
     if (!fromShow) {
       analytics.hidePanel(panel.id);
     } else if (panel.editor) {
-      console.log('re-render %s', panel.id)
       getRenderedCode[panel.id] = getRenderedCode.render(panel.id);
     }
 
@@ -482,12 +493,12 @@ Panel.prototype = {
 
     // This prevents the browser from jumping
     if (jsbin.mobile || jsbin.tablet || jsbin.embed) {
-      if (!jsbin.smartMobile) {
+      /*if (!jsbin.smartMobile) {
         editor._focus = editor.focus;
         editor.focus = function () {
           // console.log('ignoring manual call');
         };
-      }
+      }*/
     }
 
     editor.id = panel.name;

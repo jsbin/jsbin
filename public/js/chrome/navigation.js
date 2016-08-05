@@ -177,7 +177,15 @@ var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e)
     analytics.closeMenu(this.hash.substring(1));
     closedropdown();
   }
+  if (menuDown) {
+    $(this.hash).attr('tabindex', 0);
+    menuDown = false;
+    return true;
+  }
+
   menuDown = false;
+
+  $(this.hash).attr('tabindex', -1);
   return false;
 });
 
@@ -376,8 +384,9 @@ jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin
 if (!jsbin.embed && store.sessionStorage.getItem('runnerPending')) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
-    type: 'error'
+    type: 'error',
   });
+  store.sessionStorage.removeItem('runnerPending');
   jsbin.settings.includejs = false;
 }
 

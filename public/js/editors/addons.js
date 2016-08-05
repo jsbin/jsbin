@@ -3,7 +3,7 @@
   /*globals $, jsbin, CodeMirror*/
 
   // ignore addons for embedded views
-  if (jsbin.embed) {
+  if (jsbin.embed || jsbin.mobile) {
     return;
   }
 
@@ -312,10 +312,16 @@
     if (test()) {
       d.resolve();
     } else {
+      var start = new Date().getTime();
+      var last = new Date();
       timer = setInterval(function () {
+        last = new Date();
         if (test()) {
           clearInterval(timer);
           d.resolve();
+        } else if (last.getTime() - start > 10 * 1000) {
+          clearInterval(timer);
+          d.reject();
         }
       }, 100);
     }

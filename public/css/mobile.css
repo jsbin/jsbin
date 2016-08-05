@@ -504,9 +504,16 @@ body, html {
     height: 22px;
   }
 
-  #control #panels > a.button {
+  #control #panels > a.button,
+  #control #panels > a.button.hasContent.active {
     height: 22px;
     line-height: 24px;
+    padding-top: 0;
+/*     letter-spacing: 0.035rem; */
+  }
+
+  #control #panels > a.button.hasContent {
+/*     letter-spacing: 0.01rem; */
   }
 
   .toppanel #bin, .toppanel #history, .toppanel #history .preview {
@@ -517,13 +524,12 @@ body, html {
     bottom: 0;
   }
 
-  #bin,
-  .mobile .editbox,
-  #history {
-    top: 0;
+  #bin, #history {
+    top: 23px;
   }
 
   .mobile .editbox {
+    top: 0;
     bottom: 54px;
     overflow: scroll;
     /* position: relative; */

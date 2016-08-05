@@ -1670,7 +1670,7 @@ li.CodeMirror-hint-active {
 
 .panel:before {
   position: absolute;
-  display: block;
+  display: none;
   background: #ccc;
   top: 0;
   left: 0;
@@ -4601,7 +4601,8 @@ div.loggedout {
 .show-cached.ready #load-cached {
   opacity: 0;
   transition: opacity ease-out 500ms;
-  top: -100px;
+  top: -1000px;
+  display: none;
 }
 
 .show-cached #load-cached {

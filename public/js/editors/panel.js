@@ -137,6 +137,8 @@ var Panel = function (name, settings) {
     panel.editor = CodeMirror.fromTextArea(panel.el, cmSettings);
 
     if (name === 'html' || name === 'css') {
+      delete emmetCodeMirror.defaultKeymap['Cmd-D'];
+      delete emmetCodeMirror.defaultKeymap['Ctrl-D'];
       emmetCodeMirror(panel.editor);
     }
 

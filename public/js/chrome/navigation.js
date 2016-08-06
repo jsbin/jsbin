@@ -180,7 +180,7 @@ var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e)
   if (menuDown) {
     $(this.hash).attr('tabindex', 0);
     menuDown = false;
-    return true;
+    return jsbin.mobile;
   }
 
   menuDown = false;

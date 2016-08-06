@@ -1,3 +1,61 @@
+/*! system-font.css v1.1.0 | CC0-1.0 License | github.com/jonathantneal/system-font-face */
+
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+@font-face {
+  font-family: system;
+  font-style: italic;
+  font-weight: 300;
+  src: local(".SFNSText-LightItalic"), local(".HelveticaNeueDeskInterface-Italic"), local(".LucidaGrandeUI"), local("Ubuntu Light Italic"), local("Segoe UI Light Italic"), local("Roboto-LightItalic"), local("DroidSans"), local("Tahoma");
+}
+
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 400;
+  src: local(".SFNSText-Regular"), local(".HelveticaNeueDeskInterface-Regular"), local(".LucidaGrandeUI"), local("Ubuntu"), local("Segoe UI"), local("Roboto-Regular"), local("DroidSans"), local("Tahoma");
+}
+
+@font-face {
+  font-family: system;
+  font-style: italic;
+  font-weight: 400;
+  src: local(".SFNSText-Italic"), local(".HelveticaNeueDeskInterface-Italic"), local(".LucidaGrandeUI"), local("Ubuntu Italic"), local("Segoe UI Italic"), local("Roboto-Italic"), local("DroidSans"), local("Tahoma");
+}
+
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 500;
+  src: local(".SFNSText-Medium"), local(".HelveticaNeueDeskInterface-MediumP4"), local(".LucidaGrandeUI"), local("Ubuntu Medium"), local("Segoe UI Semibold"), local("Roboto-Medium"), local("DroidSans-Bold"), local("Tahoma Bold");
+}
+
+@font-face {
+  font-family: system;
+  font-style: italic;
+  font-weight: 500;
+  src: local(".SFNSText-MediumItalic"), local(".HelveticaNeueDeskInterface-MediumItalicP4"), local(".LucidaGrandeUI"), local("Ubuntu Medium Italic"), local("Segoe UI Semibold Italic"), local("Roboto-MediumItalic"), local("DroidSans-Bold"), local("Tahoma Bold");
+}
+
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 700;
+  src: local(".SFNSText-Bold"), local(".HelveticaNeueDeskInterface-Bold"), local(".LucidaGrandeUI"), local("Ubuntu Bold"), local("Roboto-Bold"), local("DroidSans-Bold"), local("Segoe UI Bold"), local("Tahoma Bold");
+}
+
+@font-face {
+  font-family: system;
+  font-style: italic;
+  font-weight: 700;
+  src: local(".SFNSText-BoldItalic"), local(".HelveticaNeueDeskInterface-BoldItalic"), local(".LucidaGrandeUI"), local("Ubuntu Bold Italic"), local("Roboto-BoldItalic"), local("DroidSans-Bold"), local("Segoe UI Bold Italic"), local("Tahoma Bold");
+}
+
 /* =============================================================================
    JS Bin
    ========================================================================== */
@@ -15,7 +73,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-family: system, "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
   /*min-width: 976px;*/
   overflow: hidden;
@@ -57,7 +115,7 @@ td small {
 
 input,
 #sharemenu span /* stupid fix for IE9's custom font handling */ {
-  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-family: system, "Helvetica Neue", Helvetica, Arial;
 }
 
 input[type=text],
@@ -274,7 +332,7 @@ ul.flat li {
 }
 
 a:hover {
-  text-shadow: white 1px 1px 1px;
+  text-shadow: rgba(255, 255, 255, 0.2) 1px 1px 0px;
 }
 
 .light {
@@ -1396,7 +1454,7 @@ textarea,
 }
 
 #sharemenu textarea {
-  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-family: system, "Helvetica Neue", Helvetica, Arial;
   /* resize: none; */
   font-size: 14px;
   /* height: 90px; */
@@ -1550,17 +1608,17 @@ li.CodeMirror-hint-active {
   background: transparent;
 }
 
-.editbox .CodeMirror,
+/* .editbox .CodeMirror,
 .editbox .CodeMirror .CodeMirror-gutters {
   background-image: linear-gradient(to bottom, rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
 
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(200,200,200,0.2)), color-stop(100%,rgba(200,200,200,0.2))); /* Chrome,Safari4+ */
-  background-image: -webkit-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* Chrome10+,Safari5.1+ */
-  background-image:    -moz-linear-gradient(top,  rgba(200,200,200,0.2) 0%, rgba(200,200,200,0.2) 100%); /* FF3.6+ */
-  background-image:      -o-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* Opera 11.10+ */
-  background-image:         linear-gradient(to bottom,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%); /* W3C */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(200,200,200,0.2)), color-stop(100%,rgba(200,200,200,0.2)));
+  background-image: -webkit-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
+  background-image:    -moz-linear-gradient(top,  rgba(200,200,200,0.2) 0%, rgba(200,200,200,0.2) 100%);
+  background-image:      -o-linear-gradient(top,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
+  background-image:         linear-gradient(to bottom,  rgba(200,200,200,0.2) 0%,rgba(200,200,200,0.2) 100%);
 
-}
+} */
 .editbox .CodeMirror.cm-s-jsbin,
 .editbox .CodeMirror.cm-s-jsbin .CodeMirror-gutters,
 .focus .editbox .CodeMirror,
@@ -2255,7 +2313,7 @@ left: 50%;
 
 #history h2 {
   margin: 0;
-  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-family: system, "Helvetica Neue", Helvetica, Arial;
   font-size: 13px;
   padding: 10px 20px;
 }
@@ -2264,7 +2322,7 @@ left: 50%;
   float: right;
   padding: 10px 20px;
   font-size: 13px;
-  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-family: system , "Helvetica Neue", Helvetica, Arial;
 }
 
 #history #bins h2 {
@@ -3082,7 +3140,7 @@ html * {
   bottom: 12px;
   right: 12px;
   float: left;
-  font-family: "Helvetica Neue", sans-serif;
+  font-family: system, "Helvetica Neue", sans-serif;
   font-weight: 400;
   background: #fafafa;
   background: -moz-linear-gradient(top,  #FFF 0%, #FBFBFB 100%); /* FF3.6+ */

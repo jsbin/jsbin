@@ -777,7 +777,7 @@ a[data-pro]:hover:after {
   padding: 0px 25.6px;
   font-weight: 300;
   font-size: 14px;
-  font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
+  font-family: system, "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
   color: #666666;
   text-shadow: 0 1px 1px white;
   margin: 0;
@@ -1039,7 +1039,7 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets a.asset {
-  font-family: "Helvetica Neue";
+  font-family: system, "Helvetica Neue";
   position: relative;
   /* flex-direction: column; */
   float: left;

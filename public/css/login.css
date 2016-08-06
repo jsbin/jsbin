@@ -79,7 +79,7 @@ body {
 .form-container form input[type="submit"] {
   width:60%;
   margin:10px 20%;
-  font-family: "Helvetica Neue", "Arial";
+  font-family: system, "Helvetica Neue", "Arial";
   font-size: 0.75em;
   background: #f0f0f0;
   background: linear-gradient(0deg, #f0f0f0, #fefefe);

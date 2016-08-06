@@ -357,7 +357,6 @@
     var opt = $.extend({}, settingsHintShow);
     opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
     setOption(cm, 'lintOpt', opt);
-    setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
       if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
@@ -365,17 +364,13 @@
         copyGutters.push('CodeMirror-lint-markers');
         setOption(cm, 'gutters', copyGutters);
       }
-      setOption(cm, 'lint', {
-        delay: 800
-      });
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
       setOption(cm, 'lineNumbers', ln);
-    } else {
-      setOption(cm, 'lint', {
-        delay: 800
-      });
     }
+
+    setOption(cm, 'lint', { delay: 800, options: $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']) });
+
     if (opt.console && cm.consolelint) {
       $document.trigger('sizeeditors');
       $(cm.consolelint.head).on('click', function() {

@@ -15,7 +15,7 @@ if (simple ||
 }
 
 function enableMobileMirror() {
-  var re = new RegExp('[ ;,]', 'g');
+  var re = /\b./g;
   jsbin.lameEditor = true;
 
   var setCursor = function (sPos, ePos) {
@@ -46,6 +46,18 @@ function enableMobileMirror() {
       value = '';
     }
 
+    if (!from) {
+      from = this.getCursor();
+    }
+
+    if (!to) {
+      to = from;
+      if (this.textarea.selectionEnd !== this.textarea.selectionStart) {
+        to = this.posFromIndex(this.textarea.selectionEnd);
+      }
+    }
+
+    var prev = field.value;
     var lines = field.value.split('\n');
     var line = lines[from.line];
     line = line.substring(0, from.ch) + value + line.substring(to.ch);
@@ -53,7 +65,8 @@ function enableMobileMirror() {
 
     field.value = lines.join('\n');
 
-    var endPos = lines.slice(0, from.line - 1).join('\n').length + value.length + to.ch;
+    var endPos = lines.slice(0, from.line).join('\n').length + 1 + from.ch + value.length; // +1 for missing ln
+    //lines.slice(0, from.line - 1).join('\n').length + value.length + to.ch - 1;
 
     setCursor.call({ textarea: field }, endPos);
   };
@@ -93,6 +106,12 @@ function enableMobileMirror() {
       .on('focus', function () {
         hideOpen();
         $body.addClass('editor-focus');
+      })
+      .on('touchstart', function () {
+        completionIndex = -1; // reset the completion
+      })
+      .on('keypress', function () {
+        completionIndex = -1; // reset the completion
       });
 
     if (options.initCallback) {
@@ -105,8 +124,46 @@ function enableMobileMirror() {
     this.__update = update;
   };
 
+  var completionIndex = -1;
+  var completionCache = [];
+  var lastToken = null;
+
   Editor.prototype = {
-    replaceRange: insert,
+    _hasCompletions: function () {
+      return completionIndex !== -1;
+    },
+    _completionIndex: completionIndex,
+    _showCompletion: function (completions, token) {
+      if (completionIndex === -1) {
+        // reset
+        console.log(completions);
+        completionCache = completions;
+        lastToken = token;
+        console.log(token);
+      }
+
+      // else, show the next completion
+      completionIndex++;
+      if (completionIndex >= completionCache.length) {
+        completionIndex = 0;
+      }
+      var pos = this.getCursor();
+      var i = this.indexFromPos(pos);
+      var value = completionCache[completionIndex].substr(lastToken.string.length);
+      insert.call(this, value);
+      this.setCursor(i, i + value.length); // highlight the section
+
+      return;
+    },
+    cursorCoords: function (from) {
+      var pos = getCaretCoordinates(this.textarea, this.textarea.selectionEnd);
+      pos.bottom = pos.top; // hack for CM
+      return pos;
+    },
+    replaceRange: function () {
+      this._completionIndex = -1;
+      return insert.apply(this, arguments);
+    },
     getMode: function () {
       return this.options.mode;
     },
@@ -159,14 +216,27 @@ function enableMobileMirror() {
     },
     getTokenAt: function (pos) {
       var line = this.textarea.value.split('\n')[pos.line];
-      var start = (re.exec(line.substr(0, pos.char)) || { index: -1 }).index + 1;
+      var frag = line.substr(0, pos.char);
+      var start = -1;
+      line.replace(re, function (m, i) {
+        if (line.substr(i).trim()) { // ignore the end of the line
+          start = i;
+        }
+      });
+
+      //var start = (re.exec(line.substr(0, pos.char)) || { index: -1 }).index + 1;
       var end = (re.exec(line.substr(pos.char)) || { index: line.length }).index;
       var string = line.substr(start, end);
+
+      // TODO validate string is made up entirely of \w characters
+      if (!(/^\w+$/g).test(string)) {
+        string = '';
+      }
 
       return {
         start: start,
         end: end,
-        string: string,
+        string: string.trim(),
         type: 'variable',
         state: {
           mode: this.options.mode,

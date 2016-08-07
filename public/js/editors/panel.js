@@ -290,7 +290,9 @@ Panel.prototype = {
     }
 
     if (jsbin.mobile) {
-      return ;
+      panel.focus();
+      panel.trigger('show');
+      return;
     }
 
     // update the splitter - but do it on the next tick

@@ -5,7 +5,7 @@
     for (var opt in defaults)
       if (defaults.hasOwnProperty(opt))
         options[opt] = (givenOptions && givenOptions.hasOwnProperty(opt) ? givenOptions : defaults)[opt];
-    
+
     function collectHints(previousToken) {
       // We want a single cursor position.
       if (editor.somethingSelected()) return;
@@ -35,6 +35,12 @@
         return true;
       }
 
+      // JSBIN CUSTOM CHANGE
+      if (editor._showCompletion) {
+        editor._showCompletion(completions, tempToken);
+        return true;
+      }
+
       // Build the select widget
       var complete = document.createElement("div");
       complete.className = "CodeMirror-completions";
@@ -42,7 +48,7 @@
       // Opera doesn't move the selection when pressing up/down in a
       // multi-select, but it does properly support the size property on
       // single-selects, so no multi-select is necessary.
-      if (!window.opera) sel.multiple = true;
+      if (!window.opera && !jsbin.mobile) sel.multiple = true;
       for (var i = 0; i < completions.length; ++i) {
         var opt = sel.appendChild(document.createElement("option"));
         opt.appendChild(document.createTextNode(completions[i]));
@@ -51,7 +57,7 @@
       sel.size = Math.min(10, completions.length);
       var pos = editor.cursorCoords(options.alignWithWord ? result.from : null);
       complete.style.left = pos.left + "px";
-      complete.style.top = pos.bottom + "px";
+      complete.style.top = (pos.bottom + (jsbin.mobile ? 22 : 0)) + "px";
       document.body.appendChild(complete);
       // If we're at the edge of the screen, then we want the menu to appear on the left of the cursor.
       var winW = window.innerWidth || Math.max(document.body.offsetWidth, document.documentElement.offsetWidth);
@@ -90,6 +96,7 @@
         }
       });
       CodeMirror.on(sel, "dblclick", pick);
+      if (jsbin.mobile) CodeMirror.on(sel, "input", pick);
 
       sel.focus();
       // Opera sometimes ignores focusing a freshly created node

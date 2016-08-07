@@ -57,6 +57,8 @@
       var focused = jsbin.panels.focused;
       if (focused.id === 'html' || focused.id === 'css') {
         CodeMirror.commands['emmet.expand_abbreviation_with_tab'].call(null, focused.editor);
+      } else if (focused.editor._hasCompletions && focused.editor._hasCompletions()) {
+        focused.editor._showCompletion();
       } else {
         CodeMirror.commands.autocomplete(focused.editor);
       }
@@ -86,8 +88,8 @@
       var focused = jsbin.panels.focused;
       if (focused.editor) {
         var pos = focused.editor.getCursor();
-        var value = (command.callback.call(mobileUtils) || '');
-        if (value === null) {
+        var value = command.callback.call(mobileUtils);
+        if (value == null) {
           return;
         }
         var resetTo = value.indexOf('$0');
@@ -141,6 +143,6 @@
     editors.html.on('show', hideAll('html'));
     editors.css.on('show', hideAll('css'));
     editors.javascript.on('show', hideAll('js'));
-    editors.console.on('show', hideAll('console'))
+    editors.console.on('show', hideAll('console'));
   });
 })();

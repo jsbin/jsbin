@@ -1,6 +1,6 @@
 (function () {
   /* globals jsbin, $, escapeHTML, $document, editors, commandMaps */
-  if (!jsbin.mobile) {
+  if (!jsbin.mobile || jsbin.embed) {
     return;
   }
 

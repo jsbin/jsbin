@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/themes.css{{cacheBust}}">
   {{#feature request "mobile"}}
+  {{#unless embed}}
   <link rel="manifest" href="{{root}}/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{static}}/css/mobile.css{{cacheBust}}">
+  {{/unless}}
   {{/feature}}
   {{#if userCSS}}<style>{{{userCSS}}}</style>{{/if}}
   <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
@@ -252,4 +254,3 @@ if ('serviceWorker' in navigator) {
 </main>
 </body>
 </html>
-

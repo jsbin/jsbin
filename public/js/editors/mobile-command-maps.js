@@ -4,16 +4,20 @@ var commandMaps = [
     callback: function () { return this.complete(); }
   },
   {
+    value: 'fn',
+    callback: function () { return 'function $0() {\n  \n}' },
+    panel: ['js', 'console']
+  },
+  {
+    value: '($0)',
+    panel: ['js', 'console']
+  },
+  {
     value: '{$0}',
-    panel: 'css',
+    panel: ['css', 'js'],
     callback: function () {
       return '{\n  $0\n}';
     },
-  },
-  {
-    value: 'fn',
-    callback: function () { return 'function $0() {\n  $1\n}' },
-    panel: ['js', 'console']
   },
   {
     value: 'log',

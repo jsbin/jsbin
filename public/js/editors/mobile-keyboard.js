@@ -144,5 +144,6 @@
     editors.css.on('show', hideAll('css'));
     editors.javascript.on('show', hideAll('js'));
     editors.console.on('show', hideAll('console'));
+    hideAll(jsbin.panels.focused.id === 'javascript' ? 'js' : jsbin.panels.focused.id)();
   });
 })();

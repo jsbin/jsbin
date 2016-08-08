@@ -4760,3 +4760,6 @@ body.min #bin .editbox .CodeMirror pre {
   z-index: 100000;
   text-decoration: none;
 }
+
+#mobile-nav,
+.mobile-nav-trigger {display: none;}

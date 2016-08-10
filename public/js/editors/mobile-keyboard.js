@@ -134,7 +134,9 @@
   var hideAll = function (panel) {
     return function () {
       buttons.all.hide();
-      buttons[panel].show();
+      if (buttons[panel]) {
+        buttons[panel].show();
+      }
     };
   };
 

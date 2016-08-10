@@ -275,7 +275,7 @@ function enableMobileMirror() {
     somethingSelected: noop,
     indexFromPos: function (pos) {
       var lines = this.textarea.value.split('\n');
-      return lines.slice(0, pos.line).join('\n').length + pos.ch + 1;
+      return lines.slice(0, pos.line).join('').length + pos.ch + pos.line;
     },
     posFromIndex: function (i) {
       var lines = this.textarea.value.substr(0, i).split('\n');

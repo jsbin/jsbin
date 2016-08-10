@@ -5,6 +5,11 @@ var libraries = [
     'group': 'jQuery'
   },
   {
+    'url': 'https://code.jquery.com/jquery-3.1.0.js',
+    'label': 'jQuery 3.1.0',
+    'group': 'jQuery'
+  },
+  {
     'url': 'https://code.jquery.com/jquery-3.0.0.js',
     'label': 'jQuery 3.0.0',
     'group': 'jQuery'
@@ -70,8 +75,17 @@ var libraries = [
   },
   {
     'url': [
+      'https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-3.1.0.js',
+      'https://code.jquery.com/ui/1.12.0/jquery-ui.js'
+    ],
+    'label': 'jQuery UI 1.12.0',
+    'group': 'jQuery UI'
+  },
+  {
+    'url': [
       'https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css',
-      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/jquery-1.12.4.js',
       'https://code.jquery.com/ui/1.11.4/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.11.4',

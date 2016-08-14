@@ -11,3 +11,7 @@ jsbin.sqlite
 node_modules
 public/runner.html
 tmp/*
+/resolve
+/tests_output/
+/selenium-debug.log
+/npm-debug.log

@@ -26,7 +26,8 @@
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "e2e": "nightwatch --config nightwatch.js"
   },
   "dependencies": {
     "async": "~0.1.22",

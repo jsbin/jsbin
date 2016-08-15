@@ -76,6 +76,7 @@
     "validator": "^3.16.1"
   },
   "devDependencies": {
+    "glob": "^7.0.5",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.11",
     "grunt-contrib-concat": "~0.3.0",

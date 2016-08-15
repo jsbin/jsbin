@@ -103,3 +103,11 @@ Finally, ensure either the config.local.json's `env` property is set to "product
     $ NODE_ENV=production node .
 
 And that's it.
+
+
+## End-to-end tests
+JSBin has end-to-end tests. The tests can be found in `tests/e2e` folder. 
+
+Running the tests: 
+
+    $ npm run e2e

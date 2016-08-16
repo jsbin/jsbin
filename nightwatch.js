@@ -9,14 +9,14 @@ if (!seleniumJar) {
 }
 
 module.exports = {
-  "src_folders": ["test/e2e"],
+  "src_folders": ["test/e2e/specs"],
   "selenium": {
     "start_process": true,
     "server_path": seleniumJar
   },
   "test_settings": {
     "default": {
-      "launch_url": "http://127.0.0.1:3000/"
+      "launch_url": "http://localhost:3000/"
     }
   }
 };

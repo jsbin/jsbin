@@ -18,5 +18,6 @@ module.exports = {
     "default": {
       "launch_url": "http://localhost:3000/"
     }
-  }
+  },
+  "custom_assertions_path": "test/e2e/assertions"
 };

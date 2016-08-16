@@ -10,6 +10,7 @@ module.exports = {
       }, ["document.body.innerHTML = 'Hello'"])
       .frame(2)
       .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
   }
 };

@@ -551,8 +551,19 @@ var libraries = [
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'https://cdn.rawgit.com/lodash/lodash/4.5.1/dist/lodash.min.js',
-    'label': 'lodash 4.5.1'
+    'url': 'https://cdn.jsdelivr.net/lodash/4/lodash.min.js',
+    'label': 'lodash 4.x',
+    'group': 'Lodash'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)',
+    'label': 'lodash fp 4.x',
+    'group': 'Lodash'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/lodash/3/lodash.min.js',
+    'label': 'lodash 3.x',
+    'group': 'Lodash'
   },
   {
     'url': 'http://modernizr.com/downloads/modernizr-latest.js',

@@ -1,4 +1,4 @@
-/*globals jsbin, _, $, RSVP, renderLivePreview, editors, throttle, debounceAsync, hintingDone, CodeMirror, Panel, editorModes */
+/*globals jsbin, _$, RSVP, renderLivePreview, editors, throttle, debounceAsync, hintingDone, CodeMirror, Panel, editorModes */
 var processors = jsbin.processors = (function () {
   'use strict';
   /*
@@ -27,7 +27,7 @@ var processors = jsbin.processors = (function () {
    * Cache extension ids by their file extensions
    */
   var processorBy = {
-    extension: {}
+    extension: {},
   };
 
   /**
@@ -256,7 +256,7 @@ var processors = jsbin.processors = (function () {
 
           reject([errors]);
         }
-      }
+      },
     }),
 
     typescript: createProcessor({

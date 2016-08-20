@@ -10,6 +10,7 @@ if (!seleniumJar) {
 
 const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
 
+
 module.exports = {
   "src_folders": ["test/e2e/specs"],
 

@@ -9,7 +9,8 @@ before_script:
 script:
   - npm test
   - test "$TRAVIS_PULL_REQUEST" = "false" && npm run e2e-remote
-  - test "$TRAVIS_PULL_REQUEST" = "false" && pkill node
+  - test "$TRAVIS_PULL_REQUEST" = "false" && pkill node || exit 0
+
 
 notifications:
   email: false

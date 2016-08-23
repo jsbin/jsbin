@@ -4,7 +4,7 @@
                 </td>
               </tr>
               <tr style="vertical-align: top; padding: 0;">
-                <td class="container templateContainerPadding" align="center" valign="top" style="vertical-align: top; padding: 0 40px;">
+                <td class="container templateContainerPadding" align="center" valign="top" style="vertical-align: top; padding: 0;">
                   <table id="footerContent" style="border-spacing: 0; border-collapse: collapse; font-family: proxima-nova, 'helvetica neue', helvetica, arial, geneva, sans-serif; height: 100%; width: 100%; border-top-style: solid; border-top-color: #ebeaef; color: #999999; font-size: 12px; background: #ffffff; margin: 0; padding: 0; border-width: 1px 0 0;">
                     <tr style="vertical-align: top; padding: 0;">
                       <td valign="top" style="vertical-align: top; text-align: left; padding: 0;" align="left">
@@ -54,7 +54,11 @@ border: 0; outline: none; text-decoration: none;
 height: 100% !important; margin: 0; padding: 0; width: 100% !important;
 }
 #backgroundTable {
-color: #4c4c4c; background-color: #ffffff; font-family: proxima-nova, 'helvetica neue', helvetica, arial, geneva, sans-serif; font-size: 15px; line-height: 150%;
+color: #4c4c4c; background-color: #ffffff; font-family: sans-serif; font-size: 14px; line-height: 150%;
+}
+
+@media only screen and (min-width: 600px) {
+  .container { width: auto !important; padding: 0 40px !important;}
 }
 
 @media screen and (max-width: 600px) {

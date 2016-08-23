@@ -1,0 +1,48 @@
+{
+  "id": "evt_XXXXXXXXXXXX",
+  "object": "event",
+  "api_version": "2014-06-17",
+  "created": 1471018855,
+  "data": {
+    "object": {
+      "id": "sub_XXXXXXXXX",
+      "object": "subscription",
+      "application_fee_percent": null,
+      "cancel_at_period_end": false,
+      "canceled_at": null,
+      "created": 1471018852,
+      "current_period_end": 1502554852,
+      "current_period_start": 1471018852,
+      "customer": "cus_XXXXXXXXXXXX",
+      "discount": null,
+      "ended_at": null,
+      "livemode": true,
+      "metadata": {},
+      "plan": {
+        "id": "yearly3",
+        "object": "plan",
+        "amount": 9999,
+        "created": 1434381891,
+        "currency": "gbp",
+        "interval": "year",
+        "interval_count": 1,
+        "livemode": true,
+        "metadata": {},
+        "name": "Pro yearly",
+        "statement_descriptor": "JS BIN PRO (yearly)",
+        "trial_period_days": null,
+        "statement_description": "JS BIN PRO (yearly)"
+      },
+      "quantity": 1,
+      "start": 1471018852,
+      "status": "active",
+      "tax_percent": null,
+      "trial_end": null,
+      "trial_start": null
+    }
+  },
+  "livemode": true,
+  "pending_webhooks": 3,
+  "request": "req_XXXXXXXXXX",
+  "type": "customer.subscription.created"
+}

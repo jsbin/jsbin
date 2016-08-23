@@ -19,14 +19,17 @@
   },
   "scripts": {
     "start": "(sleep 2 && open http://localhost:3000) & ./bin/jsbin",
-    "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/**/*.test.js",
+    "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/unit/**/*.test.js",
     ":install": "build/install.js",
-    "postinstall": "grunt build",
+    "postinstall": "grunt build && npm run selenium:install",
     "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "e2e": "nightwatch --env local --config nightwatch.js",
+    "e2e-remote": "nightwatch --env remote --config nightwatch.js",
+    "selenium:install": "selenium-standalone install"
   },
   "dependencies": {
     "async": "~0.1.22",
@@ -74,16 +77,19 @@
     "validator": "^3.16.1"
   },
   "devDependencies": {
+    "glob": "^7.0.5",
     "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.11",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-contrib-uglify": "~0.2.2",
-    "should": "~1.2.2",
-    "sinon": "~1.7.3",
-    "grunt-cli": "~0.1.11",
-    "mocha-casperjs": "~0.5.0",
     "hbs-utils": "0.0.3",
-    "mocha": "~1.21.4"
+    "mocha": "~1.21.4",
+    "mocha-casperjs": "~0.5.0",
+    "nightwatch": "^0.9.6",
+    "selenium-standalone": "^5.5.0",
+    "should": "~1.2.2",
+    "sinon": "~1.7.3"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

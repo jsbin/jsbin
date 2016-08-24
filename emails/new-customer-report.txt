@@ -1,0 +1,13 @@
+New customer created:
+
+- username: [{{username}}](https://jsbin.com/user/{{username}}) ([github]({{html_url}}))
+- plan: {{plan.id}} (£{{#divide plan.amount 100 2}}{{/divide}})
+- repos: {{public_repos}}
+- gists: {{public_gists}}
+- followers: {{followers}}
+- following: {{following}}
+
+---
+
+JS Bin Ltd. Company No. 8998555
+Made in Brighton, UK

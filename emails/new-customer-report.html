@@ -1,0 +1,16 @@
+{{>email-header}}
+
+<!-- BODY -->
+
+<p style="font-weight: bold; margin: 20px 0;"><strong>New customer created:</strong></p>
+<ul>
+<li style="margin: 0;">username: <a href="https://jsbin.com/user/{{username}}">{{username}}</a> (<a href="{{html_url}}">github</a>)</li>
+<li style="margin: 0;">plan: {{plan.name}} (£{{#divide plan.amount 100 2}}{{/divide}})</li>
+<li style="margin: 0;">repos: {{public_repos}}</li>
+<li style="margin: 0;">gists: {{public_gists}}</li>
+<li style="margin: 0;">followers: {{followers}}</li>
+<li style="margin: 0;">following: {{following}}</li>
+</ul>
+
+<!-- /BODY -->
+{{>email-footer}}

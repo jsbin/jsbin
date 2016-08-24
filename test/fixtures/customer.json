@@ -1,0 +1,16 @@
+{
+  "id": "cus_XXXXXXXXXXX",
+  "object": "customer",
+  "account_balance": 0,
+  "created": 1462738589,
+  "currency": "gbp",
+  "default_source": "card_XXXXXXXXXXXXX",
+  "delinquent": false,
+  "description": "Chloe Anderson",
+  "discount": null,
+  "email": "chloe.anderson.56@example.com",
+  "livemode": false,
+  "metadata": {
+    "username": "Rishard1"
+  }
+}

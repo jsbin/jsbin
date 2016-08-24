@@ -62,6 +62,7 @@
     "passport-github": "~0.1.5",
     "promise": "~5.0.0",
     "replify": "~1.2.0",
+    "request": "^2.74.0",
     "rsvp": "~3.0.1",
     "semver": "^5.0.3",
     "snyk": "^1.12.0",
@@ -87,9 +88,12 @@
     "mocha": "~1.21.4",
     "mocha-casperjs": "~0.5.0",
     "nightwatch": "^0.9.6",
+    "proxyquire": "^1.7.10",
     "selenium-standalone": "^5.5.0",
     "should": "~1.2.2",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "tap": "^6.3.2",
+    "tap-only": "0.0.5"
   },
   "optionalDependencies": {
     "zmq": "~2.6.0"

@@ -2,8 +2,8 @@ module.exports = {
   'Basic JavaScript test' : function (client) {
     client
       .url(client.launch_url)
-      .waitForElementVisible('#panels a:nth-child(2)', 1000)
-      .click('#panels a:nth-child(2)')
+      .waitForElementVisible('#panel-css', 1000)
+      .click('#panel-css')
       .waitForElementVisible('.css .CodeMirror', 1000)
       .execute(function (text){
         return $('.css .CodeMirror')[0].CodeMirror.setValue(text);

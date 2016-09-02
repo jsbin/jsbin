@@ -12,8 +12,11 @@ const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
 
 module.exports = {
   "src_folders": ["test/e2e/specs"],
+  "globals_path": "globals.js",
 
   "test_settings": {
+    waitForConditionTimeout : 1000,
+
     "local": {
       "launch_url": "http://localhost:3000/",
       "selenium": {

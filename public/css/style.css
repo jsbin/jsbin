@@ -3869,7 +3869,7 @@ body.ready.toppanel {
     margin-right: 8px;
   }
   .toppanel-stretch {
-    width: calc((100% - 240px) / 2);
+    width: calc((100% - 242px) / 2);
   }
 
   .toppanel-column:nth-child(n+6) {

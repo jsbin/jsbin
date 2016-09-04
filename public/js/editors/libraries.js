@@ -722,7 +722,7 @@ var libraries = [
     'label': 'Blaze CSS (latest)'
   },
   {
-    'url': 'https://npmcdn.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
+    'url': 'https://unpkg.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
     'label': 'RxJS 5.0.0-beta.7',
     'group': 'RxJS'
   },
@@ -742,7 +742,7 @@ var libraries = [
     'group': 'RxJS'
   },
   {
-    'url': 'https://npmcdn.com/rx-dom@7.0.3/dist/rx.dom.js',
+    'url': 'https://unpkg.com/rx-dom@7.0.3/dist/rx.dom.js',
     'label': 'rx.dom 7.0.3 (requires 4.x)',
     'group': 'RxJS'
   },

@@ -767,8 +767,8 @@ var libraries = [
     'group': 'Data structures'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.20.1/ramda.min.js',
-    'label': 'Ramda 0.20.1'
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.22.1/ramda.min.js',
+    'label': 'Ramda 0.22.1'
   },
   {
     'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',

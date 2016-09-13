@@ -585,8 +585,14 @@ var libraries = [
     'label': 'Processing 1.4.1'
   },
   {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js',
+    'label': 'D3 4.2.3',
+    'group': 'D3'
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js',
-    'label': 'D3 3.5.6'
+    'label': 'D3 3.5.6',
+    'group': 'D3'
   },
   {
     'url': '//code.highcharts.com/highcharts.js',
@@ -653,6 +659,14 @@ var libraries = [
       'https://cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/polymer.js'
     ],
     'label': 'Polymer 0.3.3'
+  },
+  {
+    'url':[
+      'https://code.getmdl.io/1.2.1/material.indigo-pink.min.css',
+      'https://code.getmdl.io/1.2.1/material.min.js',
+      'https://fonts.googleapis.com/icon?family=Material+Icons'
+      ],
+    'label': 'Material Design Lite 1.2.1'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',

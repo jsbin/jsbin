@@ -6,9 +6,7 @@ module.exports = {
       .waitForElementVisible('#panel-css')
       .click('#panel-css')
       .waitForElementVisible('.css .CodeMirror')
-      .execute(function (text){
-        return $('.css .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["body{background:rgba(0, 0, 0, 1)"])
+        .insert('.css .CodeMirror')
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)

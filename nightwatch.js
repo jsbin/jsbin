@@ -44,5 +44,6 @@ module.exports = {
       }
     }
   },
-  "custom_assertions_path": "test/e2e/assertions"
+  "custom_assertions_path": "test/e2e/assertions",
+  "custom_commands_path": "test/e2e/commands"
 };

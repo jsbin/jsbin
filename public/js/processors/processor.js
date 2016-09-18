@@ -605,7 +605,7 @@ var processors = jsbin.processors = (function () {
                 } else {
                   parent.postMessage(JSON.stringify({
                     type: 'eval',
-                    result: '"' + result + '"'
+                    result: result
                   }), '*');
                 }
               });
@@ -618,7 +618,7 @@ var processors = jsbin.processors = (function () {
           var message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
 
           if (message.type === 'eval') {
-            resolveWorker('console.log('+message.result+')');
+            resolveWorker('console.log('+JSON.stringify(message.result)+')');
           }
         } catch (e) {
           // toss errors

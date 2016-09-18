@@ -4773,6 +4773,7 @@ body.min #bin .editbox .CodeMirror pre {
 }
 
 #bsaapi {
+  box-sizing: border-box;
   position: absolute;
   bottom: 0;
   z-index: 5;

@@ -18,6 +18,18 @@ main {
   height: 100%;
 }
 
+.toppanel main {
+  height: calc(100% - 200px);
+}
+
+.bsaapi main {
+  height: calc(100% - 33px);
+}
+
+.bsaapi.toppanel main {
+  height: calc(100% - 233px);
+}
+
 body, html {
   overflow: hidden;
 }

@@ -4763,3 +4763,41 @@ body.min #bin .editbox .CodeMirror pre {
 
 #mobile-nav,
 .mobile-nav-trigger {display: none;}
+
+#bsaapi {
+  display: none;
+}
+
+.bsaapi #bsaapi {
+  display: block;
+}
+
+#bsaapi {
+  position: absolute;
+  bottom: 0;
+  z-index: 5;
+  padding: .5em 1em;
+  width: 100%;
+  border-top: solid 1px #bfbfbf;
+  background-color: #eeeeee;
+  text-align: center;
+  line-height: 1.5;
+}
+
+#bsaapi a:before {
+  margin-right: 4px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: #4caf50;
+  color: #fff;
+  content: "Ad";
+}
+
+#bsaapi a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#bsaapi a:hover {
+  color: inherit;
+}

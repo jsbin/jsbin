@@ -202,6 +202,22 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{>infocard}}
 {{/unless}}
 
+{{#unless embed}}
+{{#feature request "!pro"}}
+<!-- this is here -->
+<script>
+(function () {
+  var container = document.createElement('div');
+  container.id = 'bsaapi';
+  document.body.appendChild(container);
+  var script = document.createElement('script');
+  script.src = '{{root}}/js/inject-back';
+  document.body.appendChild(script);
+})();
+</script>
+{{/feature}}
+{{/unless}}
+
 {{#feature request "offline"}}
 <script>
 if ('serviceWorker' in navigator) {

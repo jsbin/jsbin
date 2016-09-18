@@ -1,0 +1,45 @@
+/* jshint esversion: 6 */
+const cacheName = '{{version}}-v1';
+
+const scripts = [
+  '/runner',
+  '{{static}}/js/prod/runner-{{version}}.min.js',
+];
+
+self.addEventListener('install', e => {
+  // once the SW is installed, go ahead and fetch the resources to make this
+  // work offline
+  e.waitUntil(
+    caches.open(cacheName).then(cache => {
+      const fetches = scripts.map(req => {
+        return fetch(req, { mode: 'no-cors' }).then(res => {
+          return cache.put(req, res);
+        });
+      });
+
+      return Promise.all(fetches).then(() => self.skipWaiting());
+    })
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(names => {
+      // remove anything that isn't our bins or active static cache
+      const keep = [cacheName];
+      const trash = names.filter(
+        name => !keep.includes(name)
+      ).map(
+        name => caches.delete(name)
+      );
+
+      return Promise.all(trash).then(() => self.clients.claim());
+    })
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(res => res || fetch(event.request))
+  );
+});

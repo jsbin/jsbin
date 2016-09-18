@@ -1,13 +1,12 @@
 <link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
 <link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
 
-{{#if is_production}}{{#if analyticsId}}
+{{#if_all is_production analyticsId testUnlimited}}
 <script>
-ga('send', 'pageview', {
-  'title': '[2014-08-14] Upgrade to Pro - Account Management'
-});
+ga('send', 'event', 'experiment', 'testUnlimited');
 </script>
-{{/if}}{{/if}}
+{{/if_all}}
+
 
 
 <div class="upgrade-wrapper">
@@ -75,7 +74,7 @@ ga('send', 'pageview', {
   </div>
 
   <div class="upgrade-feature-wrapper">
-    <h1>Features</h1>
+    <h1>{{#if testUnlimited}}Pro {{/if}}Features</h1>
     {{> features}}
   </div>
 

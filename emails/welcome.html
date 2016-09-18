@@ -1,0 +1,18 @@
+{{>email-header}}
+
+<!-- BODY -->
+<p style="margin: 20px 0;">Welcome to JS Bin!</p>
+
+<p style="margin: 20px 0;">Thanks for signing up. To get familiar with JS Bin, check out our <a style="text-decoration: underline;" href="https://jsbin.com/help?utm_medium=email">help</a> and follow <a style="text-decoration: underline;" href="https://twitter.com/js_bin">@js_bin</a> on Twitter.</p>
+{{#if code}}
+<p style="margin: 20px 0;">As an exclusive gift, I'm offering you a month of free Pro – <span style="font-weight: bold">total saving of over&nbsp;$100(!)</span> when you subscribe to a yearly pro account with the special code: <a style="font-weight: bold;text-decoration: underline;" href="https://jsbin.com/upgrade?coupon={{code}}&amp;utm_source=welcome-email&amp;utm_medium=email&amp;utm_campaign=welcome-email-discount
+">{{code}}</a> (valid for a month from today).</p>
+{{else}}
+<p style="margin: 20px 0;">If you want to power-up your JS Bin usage, you can <a href="https://jsbin.com/upgrade?coupon={{code}}&amp;utm_source=welcome-email&amp;utm_medium=email&amp;utm_campaign=welcome-email">upgrade your account to Pro today</a>, and you'll have access to unlimited private bins, asset uploading, experimental features and more.</p>
+{{/if}}
+
+<p style="margin: 20px 0;">Thanks again,</p>
+<p style="margin: 20px 0;">– <a href="https://twitter.com/rem">Remy</a> (creator of JS Bin)</p>
+
+<!-- /BODY -->
+{{>email-footer}}

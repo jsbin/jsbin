@@ -16,13 +16,13 @@ Historically, JS Bin v1, v2 and the first release of v3 had support for PHP. **P
 
 ### Node
 
-Install the [latest stable version](http://nodejs.org/) of Node first which will give you the `node` and `npm` programs.
+Install Node first (Node version 0.10.27 will work, no guarantee on later versions) this will give you the `node` and `npm` programs.
 
-You can (and should) install Node directly from `npm` using the following command:
+You can (and should) install JS Bin with `npm` using the following command:
 
     $ npm install -g jsbin
 
-This will automatically install all the dependancies.
+This will automatically install all the dependencies.
 
 If you're installing JS Bin for development (and hopefully contribution), clone the project from github:
 
@@ -92,7 +92,7 @@ JS Bin's build process uses Grunt, so assuming you've cloned a copy, you will ne
 
 This will generate the `public/js/prod/` directory and read the version in the `package.json` file to generate to build a number of files:
 
-1. jsbin-<version>.js - the uncompressed, concatted version of all the scripts from `/scripts.json`
+1. jsbin-<version>.js - the uncompressed, concatenated version of all the scripts from `/scripts.json`
 2. jsbin-<version>.min.js - the production compressed version of jsbin, used in the editor
 3. jsbin.map.json - the sourcemaps file (useful for debugging in live)
 4. runner-<version>.js - the runner script, used to generate the output of the user's code in an iframe
@@ -103,3 +103,11 @@ Finally, ensure either the config.local.json's `env` property is set to "product
     $ NODE_ENV=production node .
 
 And that's it.
+
+
+## End-to-end tests
+JS Bin has end-to-end tests. The tests can be found in `tests/e2e` folder. 
+
+Running the tests (JS Bin has to be running on port http://localhost:3000): 
+
+    $ npm run e2e

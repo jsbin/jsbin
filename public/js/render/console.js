@@ -401,10 +401,15 @@ function whichKey(event) {
   return keys[event.keyIdentifier] || event.which || event.keyCode;
 }
 
-function setCursorTo(str) {
+function setCursorTo(str, append) {
   str = enableCC ? cleanse(str) : str;
   var old = exec.value;
-  exec.value = str;
+
+  if (append) {
+    exec.value = old + str;
+  } else {
+    exec.value = str;
+  }
 
   if (enableCC) {
     if (exec.textContent.length) {
@@ -574,7 +579,8 @@ var jsconsole = {
       echo(data.cmd);
       log(data.response, 'response');
     }
-  }
+  },
+  setCursorTo: setCursorTo,
 };
 
 return jsconsole;
@@ -586,68 +592,69 @@ var msgType = '';
 jsconsole.init(document.getElementById('output'));
 
 function upgradeConsolePanel(console) {
-    console.$el.click(function (event) {
-      if (!$(event.target).closest('#output').length) {
-        jsconsole.focus();
-      }
-    });
-    console.reset = function () {
-      jsconsole.reset();
-    };
-    console.settings.render = function (withAlerts) {
-      var html = editors.html.getCode().trim();
-      if (html === "") {
-        editors.javascript.render().then(function (echo) {
-          echo = echo.trim();
-          return getPreparedCode().then(function (code) {
-            code = code.replace(/<pre>/, '').replace(/<\/pre>/, '');
+  console.setCursorTo = jsconsole.setCursorTo;
+  console.$el.click(function (event) {
+    if (!$(event.target).closest('#output').length) {
+      jsconsole.focus();
+    }
+  });
+  console.reset = function () {
+    jsconsole.reset();
+  };
+  console.settings.render = function (withAlerts) {
+    var html = editors.html.getCode().trim();
+    if (html === "") {
+      editors.javascript.render().then(function (echo) {
+        echo = echo.trim();
+        return getPreparedCode().then(function (code) {
+          code = code.replace(/<pre>/, '').replace(/<\/pre>/, '');
 
-            setTimeout(function() {
-              jsconsole.run({
-                echo: echo,
-                cmd: code
-              });
-            }, 0);
-          });
-        }, function (error) {
-          console.warn('Failed to render JavaScript');
-          console.warn(error);
+          setTimeout(function() {
+            jsconsole.run({
+              echo: echo,
+              cmd: code
+            });
+          }, 0);
         });
+      }, function (error) {
+        console.warn('Failed to render JavaScript');
+        console.warn(error);
+      });
 
-        // Tell the iframe to reload
-        renderer.postMessage('render', {
-          source: '<html>'
-        });
-      } else {
-        renderLivePreview(withAlerts || false);
-      }
+      // Tell the iframe to reload
+      renderer.postMessage('render', {
+        source: '<html>'
+      });
+    } else {
+      renderLivePreview(withAlerts || false);
+    }
+  };
+  console.settings.show = function () {
+    jsconsole.clear();
+    // renderLivePreview(true);
+    // setTimeout because the renderLivePreview creates the iframe after a timeout
+    setTimeout(function () {
+      if (editors.console.ready && !jsbin.embed) jsconsole.focus();
+    }, 0);
+  };
+  console.settings.hide = function () {
+    // Removal code is commented out so that the
+    // output iframe is never removed
+    if (!editors.live.visible) {
+      // $live.find('iframe').remove();
+    }
+  };
+
+  $document.one('jsbinReady', function () {
+    var hidebutton = function () {
+      $('#runconsole')[this.visible ? 'hide' : 'show']();
     };
-    console.settings.show = function () {
-      jsconsole.clear();
-      // renderLivePreview(true);
-      // setTimeout because the renderLivePreview creates the iframe after a timeout
-      setTimeout(function () {
-        if (editors.console.ready && !jsbin.embed) jsconsole.focus();
-      }, 0);
-    };
-    console.settings.hide = function () {
-      // Removal code is commented out so that the
-      // output iframe is never removed
-      if (!editors.live.visible) {
-        // $live.find('iframe').remove();
-      }
-    };
 
-    $document.one('jsbinReady', function () {
-      var hidebutton = function () {
-        $('#runconsole')[this.visible ? 'hide' : 'show']();
-      };
+    jsbin.panels.panels.live.on('show', hidebutton).on('hide', hidebutton);
 
-      jsbin.panels.panels.live.on('show', hidebutton).on('hide', hidebutton);
+    if (jsbin.panels.panels.live.visible) {
+      $('#runconsole').hide();
+    }
 
-      if (jsbin.panels.panels.live.visible) {
-        $('#runconsole').hide();
-      }
-
-    });
+  });
 }

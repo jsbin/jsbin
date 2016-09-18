@@ -1,0 +1,33 @@
+const version = '{{version}}';
+const root = '{{root}}';
+const rootStatic = '{{static}}';
+const scripts = [
+  new Request('{{root}}/', { credentials: 'include' }),
+  '{{runner}}',
+  '{{root}}/bin/start.js?new=1',
+  '{{static}}/js/vendor/jquery-1.11.0.min.js',
+  '{{static}}/images/dave.min.svg',
+  '{{static}}/images/favicon.svg',
+  '{{static}}/images/jsbin_animated.gif',
+  '{{static}}/images/popout.png',
+  '{{static}}/images/github-32.png',
+  '{{static}}/js/prod/jsbin-{{version}}.min.js',
+  '{{static}}/js/prod/runner-{{version}}.min.js',
+  '{{static}}/js/prod/addon-tern-{{version}}.min.js',
+  '{{static}}/js/vendor/codemirror5/lib/codemirror.css?{{version}}',
+  '{{static}}/css/style.css?{{version}}',
+  '{{static}}/css/mobile.css?{{version}}',
+  '{{static}}/css/font.css?{{version}}',
+  '{{static}}/images/default-avatar.min.svg',
+
+  // processors
+  '{{static}}/js/vendor/JSXTransformer.js',
+  '{{static}}/js/vendor/marked.min.js',
+  '{{static}}/js/vendor/codemirror5/mode/markdown/markdown.js',
+  '{{static}}/js/vendor/jade.js?1.4.2',
+  '{{static}}/js/vendor/less.min.js',
+  '{{static}}/js/vendor/babel.min.js',
+
+  new Request('{{root}}/bin/user.js', { credentials: 'include' }),
+];
+importScripts('{{static}}/js/sw/index.js?{{version}}');

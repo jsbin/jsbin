@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html id="jsbin" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}{{#equal editorLayout "0"}}{{else}} layout layout{{editorLayout}}{{/equal}}">
+<html id="jsbin-com" lang="en" class="{{#if flash_tip}}showtip{{/if}}{{#if embed}} embed{{/if}}{{#equal editorLayout "0"}}{{else}} layout layout{{editorLayout}}{{/equal}}">
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
   <link rel="alternate" type="application/json+oembed" href="{{root}}/oembed?url={{root}}{{request.url}}">
   <link rel="icon" href="{{static}}/images/favicon.png">
+  <link rel="stylesheet" href="{{static}}/js/vendor/codemirror5/lib/codemirror.css{{cacheBust}}">
   <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
-  {{#if userCSS}}<style>{{userCSS}}</style>{{/if}}
+  <link rel="stylesheet" href="{{static}}/css/themes.css{{cacheBust}}">
+  {{#feature request "mobile"}}
+  {{#unless embed}}
+  <link rel="manifest" href="{{root}}/manifest.json">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{static}}/css/mobile.css{{cacheBust}}">
+  {{/unless}}
+  {{/feature}}
+  {{#if userCSS}}<style>{{{userCSS}}}</style>{{/if}}
   <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}
@@ -15,7 +24,7 @@
   {{#if is_production}}
     {{> analytics}}
   {{/if}}
-  <meta name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
+  <meta id="app-description" name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
   <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
@@ -30,20 +39,27 @@
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
 <!--[if gt IE 7]>  <body class="source ie">     <![endif]-->
-<!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}}">    <!--<![endif]-->
+<!--[if !IE]><!--> <body class="source {{#if private}}private{{else}}public{{/if}} {{bodyClass}}">    <!--<![endif]-->
 {{#unless embed}}
 <script>
 if(top != self) {
-  window.location = '{{embedURL}}';
+  window.location = location.pathname.split('/').slice(0, -1).concat(['embed']).join('/') + (location.search ? location.search : '');
   document.write('<' + '!--');
 }
 </script>
-<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome & menu and move to editor</a>
+<a href="#html" id="skipToEditor" class="visuallyhidden">Skip welcome &amp; menu and move to editor</a>
 {{#feature request "welcomePanel"}}
   {{> welcome_panel}}
 {{/feature}}
 {{/unless}}
+<main>
+{{#feature request "mobile"}}
+  {{>mobile-nav}}
+{{/feature}}
 {{> control_navigation}}
+<div id="load-cached" tabindex="-1">
+  <a href="#">Load cached copy from <span></span></a>
+</div>
 <script type="template/text" id="profile-template">
   <a title="@{name}" href="#profile" class="button button-dropdown avatar" id="accountBtn"><picture>
     <source srcset="{avatar} 1x, {avatar}?&s=58 2x">
@@ -72,15 +88,26 @@ if(top != self) {
   </div>
 </script>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
+  {{#feature request "mobile"}}
+  <div class="inline-menu menu">
+    <ul>
+    <li class="add-library"><span>Add library</span><select class="library" id="alt-library"></select></li>
+    <li class="run-with-js"><a tabindex="0" role="button">Run with JS</a></li>
+    <li><a tabindex="0" role="button" class="save">Save</a></li>
+    <li><a tabindex="0" role="button" class="show-share">Share</a></li>
+    <li><a tabindex="0" role="button" aria-label="More bin links and information" class="more">…</a></li>
+    </ul>
+  </div>
+  {{/feature}}
   <div id="source" class="binview stretch">
   </div>
   <div id="panelswaiting">
     <div class="code stretch html panel">
-      <div class="label menu"><span class="name"><strong><a href="#htmlprocessors" class="fake-dropdown button-dropdown">HTML</a></strong></span><div class="dropdown" id="htmlprocessors">
-          <div class="dropdownmenu processorSelector" data-type="html">
-            <a href="#html">HTML</a>
-            <a href="#markdown">Markdown</a>
-            <a href="#jade">Jade</a>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a href="#htmlprocessors" role="menuitem" class="fake-dropdown button-dropdown">Processor</a></strong></span><div class="dropdown" id="htmlprocessors">
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="html">
+            <a role="menuitemradio" aria-checked="true" href="#html" data-label="HTML">HTML</a>
+            <a role="menuitemradio" href="#markdown">Markdown</a>
+            <a role="menuitemradio" href="#jade">Jade</a>
             <a href="#convert">Convert to HTML</a>
           </div>
         </div>
@@ -90,19 +117,19 @@ if(top != self) {
       </div>
     </div>
     <div class="code stretch javascript panel">
-      <div class="label menu"><span class="name"><strong><a  class="fake-dropdown button-dropdown" href="#javascriptprocessors">JavaScript</a></strong></span>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#javascriptprocessors">Processor</a></strong></span>
         <div class="dropdown" id="javascriptprocessors">
-          <div class="dropdownmenu processorSelector" data-type="javascript">
-            <a href="#javascript">JavaScript</a>
-            <a href="#babel">ES6 / Babel</a>
-            <a href="#jsx">JSX (React)</a>
-            <a href="#coffeescript">CoffeeScript</a>
-            <a href="#traceur">Traceur</a>
-            <a href="#typescript">TypeScript</a>
-            <a href="#processing">Processing</a>
-            <a href="#livescript">LiveScript</a>
-            <a href="#clojurescript">ClojureScript</a>
-            <a href="#convert">Convert to JavaScript</a>
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="javascript">
+            <a role="menuitemradio" aria-checked="true" href="#javascript" data-label="JavaScript">JavaScript</a>
+            <a role="menuitemradio" href="#babel">ES6 / Babel</a>
+            <a role="menuitemradio" href="#jsx">JSX (React)</a>
+            <a role="menuitemradio" href="#coffeescript">CoffeeScript</a>
+            <a role="menuitemradio" href="#traceur">Traceur</a>
+            <a role="menuitemradio" href="#typescript">TypeScript</a>
+            <a role="menuitemradio" href="#processing">Processing</a>
+            <a role="menuitemradio" href="#livescript">LiveScript</a>
+            <a role="menuitemradio" href="#clojurescript">ClojureScript</a>
+            <a role="menuitem" href="#convert">Convert to JavaScript</a>
           </div>
         </div>
       </div>
@@ -111,18 +138,18 @@ if(top != self) {
       </div>
     </div>
     <div class="code stretch css panel">
-      <div class="label menu"><span class="name"><strong><a class="fake-dropdown button-dropdown" href="#cssprocessors">CSS</a></strong></span>
+      <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#cssprocessors">Processor</a></strong></span>
         <div class="dropdown" id="cssprocessors">
-          <div class="dropdownmenu processorSelector" data-type="css">
-            <a href="#css">CSS</a>
-            <a href="#less">Less</a>
-            <a href="#myth">Myth</a>
+          <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="css">
+            <a role="menuitemradio" aria-checked="true" href="#css" data-label="CSS">CSS</a>
+            <a role="menuitemradio" href="#less">Less</a>
+            <a role="menuitemradio" href="#myth">Myth</a>
             {{#feature request "processors"}}
-            <a href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
-            <a href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
+            <a role="menuitemradio" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
+            <a role="menuitemradio" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
             {{/feature}}
-            <a href="#stylus">Stylus</a>
-            <a href="#convert">Convert to CSS</a>
+            <a role="menuitemradio" href="#stylus">Stylus</a>
+            <a role="menuitem" href="#convert">Convert to CSS</a>
           </div>
         </div>
       </div>
@@ -169,148 +196,44 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   </p>
   <a class="dismiss" href="#">Dismiss x</a>
 </div>
-<div id="keyboardHelp" class="modal">
-  <div>
-    <h2>Keyboard Shortcuts</h2>
-    <table>
-      <thead>
-        <tr>
-          <th class="shortcut">Shortcut</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ctrl + [num]</td>
-          <td>Toggle nth panel</td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <small>
-              <input type="checkbox" id="enablealt" class="enablealt">
-              <label for="enablealt">Require alt key, leaving cmd+1, 2 etc for tab switching.</label>
-            </small>
-          </td>
-        </tr>
-        <tr>
-          <td>ctrl + 0</td>
-          <td>Close focused panel</td>
-        </tr>
-        <tr>
-          <td>ctrl + enter</td>
-          <td>Re-render output.<br>If console visible: run JS in console</td>
-        </tr>
-        <tr>
-          <td>Ctrl + l</td>
-          <td>Clear the console</td>
-        </tr>
-        <tr>
-          <td>ctrl + /</td>
-          <td>Toggle comment on selected lines</td>
-        </tr>
-        <tr>
-          <td>ctrl + [</td>
-          <td>Indents selected lines</td>
-        </tr>
-        <tr>
-          <td>ctrl + ]</td>
-          <td>Unindents selected lines</td>
-        </tr>
-        <tr>
-          <td>tab</td>
-          <td>Code complete &amp; <a href="http://docs.emmet.io/" target="_blank">Emmet</a> expand</td>
-        </tr>
-        <tr>
-          <td>ctrl + shift + L</td>
-          <td>Beautify code in active panel</td>
-        </tr>
-        <tr>
-          <td>ctrl + s</td>
-          <td>Save &amp; lock current Bin from further changes</td>
-        </tr>
-        <tr>
-          <td>ctrl + shift + s</td>
-          <td>Open the share options</td>
-        </tr>
-        <tr>
-          <td>ctrl + y</td>
-          <td>Archive Bin</td>
-        </tr>
-        <tr><td colspan="2"><small><br><a href="{{root}}/help/keyboard-shortcuts" target="_blank">Complete list of JS Bin shortcuts</a></small></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<div id="urlHelp" class="modal">
-  <div>
-    <h2>JS Bin URLs</h2>
-    <table>
-      <thead>
-        <tr>
-          <th class="shortcut">URL</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>/</td>
-          <td>Show the full rendered output.<br><small>This content will update in real time as it's updated from the /edit url.</small></td>
-        </tr>
-        <tr>
-          <td>/edit</td>
-          <td>Edit the current bin</td>
-        </tr>
-        <tr>
-          <td>/watch</td>
-          <td>Follow a Code Casting session</td>
-        </tr>
-        <tr>
-          <td>/embed</td>
-          <td>Create an embeddable version of the bin</td>
-        </tr>
-        <tr>
-          <td>/latest</td>
-          <td>Load the very latest bin (/latest goes in place of the revision)</td>
-        </tr>
-        <tr>
-          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last</td>
-          <td>View the last edited bin for this user</td>
-        </tr>
-        <tr>
-          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/edit</td>
-          <td>Edit the last edited bin for this user</td>
-        </tr>
-        <tr>
-          <td>/{{#if home}}{{home}}{{/if}}{{#unless home}}[username]{{/unless}}/last/watch</td>
-          <td>Follow the Code Casting session for the latest bin for this user</td>
-        </tr>
-        <tr>
-          <td>/quiet</td>
-          <td>Remove analytics and edit button from rendered output</td>
-        </tr>
-        <tr>
-          <td>.js</td>
-          <td>Load only the JavaScript for a bin</td>
-        </tr>
-        <tr>
-          <td>.css</td>
-          <td>Load only the CSS for a bin</td>
-        </tr>
-        <tr><td colspan="2"><br><small>Except for username prefixed urls, the url may start with http://jsbin.com/abc and the url fragments can be added to the url to view it differently.</small></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+{{>keyboardhelp}}
+{{>urlhelp}}
 {{#unless embed}}
 {{>infocard}}
 {{/unless}}
 
+{{#feature request "offline"}}
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  navigator.serviceWorker.addEventListener('message', function (event) {
+    window.postMessage(event.data, window.location.origin);
+    setTimeout(function () {
+      var data = JSON.parse(event.data);
+      console.log(data);
+      if (!document.body.classList.contains('ready')) {
+        document.querySelector('#load-cached span').innerHTML = data.updated;
+        document.body.classList.add('show-cached');
+
+        document.querySelector('#load-cached a').onclick = function (event) {
+          event.preventDefault();
+          navigator.serviceWorker.controller.postMessage(JSON.stringify({
+            type: 'accept-cache',
+            id: data.id,
+          }));
+        };
+      }
+    }, 1000);
+  });
+}
+</script>
+{{/feature}}
 <script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{root}}/bin/user.js?{{bust}}"></script>
-{{!-- we use the passed in version of isProduction here, not the the app global as we need to be able to switch it - even when in production --}}
+{{!-- we use the passed in version of isProduction here, not the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
 <script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-<script src="{{root}}/bin/start.js?{{bust}}"></script>
+<script async defer src="{{root}}/bin/start.js?{{bust}}"></script>
 {{else}}{{!- if development, we need include the user code first, otherwise last --}}
 <script src="{{root}}/bin/start.js?{{bust}}"></script>
   {{#if concat}}
@@ -321,12 +244,13 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
   {{#addons}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/addons}}
 {{/if}}
 {{#if live}}
-<script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
-<script src="{{static}}/js/spike.js{{cacheBust}}"></script>
+{{!- the `live` value is never true now, and loaded from source --}}
+<!-- <script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
+<script src="{{static}}/js/spike.js{{cacheBust}}"></script> -->
 {{/if}}
 {{#if custom_js}}
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
 {{/if}}
+</main>
 </body>
 </html>
-

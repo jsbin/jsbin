@@ -78,6 +78,7 @@
     settings.editor.tabSize = parseInt($tabSize.val(), 10);
     settings.editor.indentWithTabs = $indentWithTabs.prop('checked');
     settings.editor.lineWrapping = $lineWrapping.prop('checked');
+    settings.editor.lineNumbers = $lineNumbers.prop('checked');
     console.log(settings);
     $.ajax({
       type: 'POST',

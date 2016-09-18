@@ -180,7 +180,7 @@ panels.restore = function () {
     }
     else {
       // load from personal settings
-      toopen = jsbin.settings.panels;
+      toopen = jsbin.mobile ? [jsbin.settings.panels[0]] : jsbin.settings.panels;
     }
   }
 
@@ -465,11 +465,11 @@ panels.hide = function (panelId) {
   */
 };
 
-panels.hideAll = function () {
+panels.hideAll = function (fromShow) {
   var visible = panels.getVisible(),
       i = visible.length;
   while (i--) {
-    visible[i].hide();
+    visible[i].hide(fromShow);
   }
 };
 
@@ -548,7 +548,6 @@ editors.console = panelInit.console();
 upgradeConsolePanel(editors.console);
 editors.live = panelInit.live();
 
-// jsconsole.init(); // sets up render functions etc.
 editors.live.settings.render = function (showAlerts) {
   if (panels.ready) {
     renderLivePreview(showAlerts);
@@ -597,6 +596,24 @@ var editorsReady = setInterval(function () {
       }
     });
 
+    var altLibraries = $('li.add-library');
+    var altRun = $('li.run-with-js');
+    editors.live.on('hide', function () {
+      altLibraries.show();
+      altRun.hide();
+    });
+
+    editors.live.on('show', function () {
+      altLibraries.hide();
+      altRun.show();
+    });
+
+    if (panels.panels.live.visible) {
+      editors.live.trigger('show');
+    } else {
+      editors.live.trigger('hide');
+    }
+
     clearInterval(editorsReady);
 
     // if the console is visible, it'll handle rendering of the output and console
@@ -608,12 +625,14 @@ var editorsReady = setInterval(function () {
     }
 
 
-    $(window).resize(function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        $document.trigger('sizeeditors');
-      }, 100);
-    });
+    if (!jsbin.mobile) {
+      $(window).resize(function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function () {
+          $document.trigger('sizeeditors');
+        }, 100);
+      });
+    }
 
     $document.trigger('sizeeditors');
     $document.trigger('jsbinReady');

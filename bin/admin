@@ -2,7 +2,7 @@
 'use strict';
 var memcache = require('memcached');
 var repl = require('repl');
-var Promise = require('promise');
+var Promise = require('es6-promise');
 var m = new memcache('localhost:11211');
 var mysql = require('../lib/db/mysql');
 var config = require('../lib/config');

@@ -1,0 +1,574 @@
+html.debug:before {
+  pointer-events: none;
+  content: 'default';
+  position: fixed;
+  font-family: monospace;
+  font-size: 2rem;
+  font-weight: bold;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 105, 180, 0.39);
+  padding: 10px;
+  z-index: 10000000000;
+}
+
+main {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+body, html {
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 735px) {
+  :focus {
+    outline: none;
+  }
+
+  html.debug:before {
+    content: 'mobile';
+  }
+
+  /* mobile menu */
+  .mobile-nav-trigger {
+    display: block;
+    position: fixed;
+    z-index: 100000;
+    height: 44px;
+  }
+
+  .mobile-nav-trigger img {
+    padding-top: 2px;
+    height: 40px;
+  }
+
+  #toppanel {
+    display: none !important;
+  }
+
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 44px;
+  }
+
+  body.toppanel {
+    background-position: center;
+  }
+
+
+  #mobile-nav {
+    left: -200px;
+    display: block;
+    width: 200px;
+    background: #ebf3ff;
+    position: fixed;
+    height: 100%;
+    z-index: 100000;
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+
+  #mobile-nav:after {
+    content: ' ';
+    box-shadow: 0px 0 3px 3px rgba(0,0,0,.1);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 0;
+  }
+
+  #mobile-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #mobile-nav li {
+    background: white;
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  body main {
+     -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+     transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  body.show-nav main {
+    -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transform: translateX(200px);
+            transform: translateX(200px);
+  }
+
+  #mobile-nav li a {
+    border-bottom: 1px solid #fff;
+    box-sizing: border-box;
+    line-height: 26px;
+    height: 46px;
+    padding: 10px 20px;
+    background: rgb(235, 243, 255);
+    font-size: 18px;
+    color: #6293d3;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    cursor: pointer;
+  }
+
+  a.toppanel-logo {
+    -webkit-transform: translate(-86px, 120px) scale(0.35);
+            transform: translate(-86px, 120px) scale(0.35);
+  }
+
+  #control {
+    height: 44px;
+  }
+
+  #bin {
+    top: 44px;
+  }
+
+  #control .control {
+    border: 0;
+  }
+
+  #control .control > div.buttons > div.menu,
+  #control .control > div.buttons #sharemenu .button,
+  #control .control > div.help,
+  #live .label strong {
+    display: none;
+  }
+
+  #control #panels {
+    display: block;
+    border: 0;
+    padding: 0;
+    padding-top: 0px;
+    right: 0;
+    width: auto;
+    position: absolute;
+    margin-right: 0;
+  }
+
+  #control #panels > a.button {
+    box-sizing: border-box;
+    border-radius: 0;
+    border-top: 0;
+    border-bottom: 0;
+    padding: 0 10px;
+    min-width: 50px;
+    line-height: 43px;
+    padding-top: 1px;
+    height: 44px;
+    border-right: 0;
+    border-left: 1px solid #ccc;
+  }
+
+  #control #panels > a.button:focus {
+    box-shadow: none;
+  }
+
+  .mobile .editbox textarea {
+    box-sizing: border-box;
+    font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+    width: 100%;
+    padding: 0 0.8em;
+    position: absolute;
+  }
+
+  .mobile .editbox {
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .card.author .settings {
+    width: 50%;
+  }
+
+  .card .settings #headers input {
+    width: 130px;
+  }
+
+  .card .body select {
+    width: 280px;
+    border: 2px solid #b7dffd;
+    border-radius: 0;
+  }
+
+  #history .preview {
+    display: none;
+  }
+
+  #history {
+    right: 0;
+    top: 44px;
+  }
+  #history td {
+    padding: 0 5px !important;
+  }
+  #history .url {
+    width: 20%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+  }
+  #history .last_updated {
+    width: 33%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #history .action {
+    width: 0%;
+    visibility: hidden;
+    white-space: nowrap;
+  }
+  #history .title {
+    width: 59%;
+  }
+
+  #history .header h2 {
+    width: 195px;
+    padding-left: 5px;
+  }
+
+  button#runconsole {
+    /* always show the run button since the console is never shown with another panel */
+    display: inline-block !important;
+  }
+
+  .toppanel #tip.notification, .toppanel #tip.error,
+  #tip.notification, #tip.error {
+    top: 44px;
+  }
+
+  .menu.inline-menu {
+    display: block;
+    float: none;
+    top: auto;
+    position: absolute;
+  }
+
+  .inline-menu {
+    display: none;
+    z-index: 1;
+    position: absolute;
+    bottom: 10px;
+    font-size: 18px;
+    background: #95a6ad;
+    display: block;
+    width: 94%;
+    border-radius: 5px;
+    line-height: 38px;
+    color: white;
+    padding: 0px 10px;
+    left: 3%;
+    box-sizing: border-box;
+  }
+
+  .inline-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -ms-flex-line-pack: center;
+        align-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+
+  .inline-menu li {
+    padding: 0;
+    position: relative;
+    text-align: center;
+  }
+
+  .inline-menu a,
+  .inline-menu .add-library span {
+    cursor: pointer;
+    display: inline-block;
+    text-shadow: none;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+  }
+
+  .inline-menu a:hover,
+  .inline-menu .add-library:hover {
+    background: rgba(0,0,0,.05);
+  }
+
+  .inline-menu .add-library select {
+    width: 100%;
+    height: 100%;
+  }
+
+  .inline-menu a:focus {
+    background: rgba(0,0,0,.1);
+/*     border-radius: 3px; */
+  }
+
+  #source {
+    bottom: 75px;
+  }
+
+  #live iframe {
+    padding-top: 0;
+  }
+
+  .panel {
+    background: white;
+  }
+
+  #infocard,
+  #live .label {
+    display: none;
+  }
+
+  #infocard.open {
+    display: block;
+    bottom: 84px;
+    right: 20px;
+  }
+
+  #infocard.open .body {
+    border-bottom: 0;
+    position: relative;
+  }
+
+  #infocard.open header {
+    display: none;
+  }
+
+  #share.share-split,
+  #infocard.open {
+    position: fixed;
+    right: 0;
+    left: 2%;
+    bottom: 84px;
+    width: 96%;
+  }
+
+  #share.share-split > div {
+    min-width: auto;
+    border-radius: 2px;
+  }
+
+  #share-preview.output .output {
+    background-size: contain;
+  }
+
+  #strip {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 54px;
+    background: #eee;
+    z-index: 10;
+    line-height: 57px;
+    /* padding: 5px; */
+    padding-left: 0;
+    background: transparent;
+  }
+
+  #strip > div {
+    overflow-x: scroll;
+    white-space: nowrap;
+    overflow-y: hidden;
+  }
+
+  #strip:before {
+    position: absolute;
+    content: ' ';
+    box-shadow: 0 0 20px 3px rgba(0,0,0,.15);
+    right: 0;
+    width: 0px;
+    height: 100%;
+    top: 10px;
+  }
+
+  #strip div:after {
+    content: ' ';
+    width: 5px;
+    display: inline-block;
+    position: relative;
+    right: 0;
+  }
+
+  #strip button {
+    box-sizing: border-box;
+    font-family: SourceCodeProRegular, Monaco, consolas, monospace;
+    font-size: 18px;
+    background: #ccc;
+    border: 0;
+    border-radius: 3px;
+    height: 44px;
+    min-width: 44px;
+    margin: 5px;
+    padding: 5px;
+    display: inline-block;
+  }
+
+}
+
+@media all and (max-height: 410px) and (max-width: 640px) {
+  /* keyboard visible */
+  html.debug:before {
+    content: 'keyboard';
+  }
+
+  #console {
+    padding-top: 0;
+  }
+
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 0;
+  }
+
+  #strip {
+    display: block;
+  }
+
+  .mobile .inline-menu {
+    display: none;
+  }
+
+  .mobile .editbox textarea {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    height: auto;
+  }
+
+  .mobile .editbox > div {
+    padding-bottom: 50%;
+    position: relative;
+    height: 100%;
+  }
+
+  #source {
+    bottom: 0;
+  }
+}
+
+/* tablet in landscape */
+@media all and (max-height: 319px) and (orientation: landscape) and (max-width: 735px) {
+  html.debug:before {
+    content: 'tablet';
+  }
+
+  .toppanel #tip.notification, .toppanel #tip.error,
+  #tip.notification, #tip.error {
+    top: 22px;
+  }
+
+
+  .toppanel-logo,
+  .mobile .inline-menu,
+  .panel .label,
+  .mobile-nav-trigger {
+    display: none !important;
+  }
+
+  #control, #control * {
+    height: 22px;
+  }
+
+  #control #panels > a.button,
+  #control #panels > a.button.hasContent.active {
+    height: 22px;
+    line-height: 24px;
+    padding-top: 0;
+/*     letter-spacing: 0.035rem; */
+  }
+
+  #control #panels > a.button.hasContent {
+/*     letter-spacing: 0.01rem; */
+  }
+
+  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+    top: 22px;
+  }
+
+  #source {
+    bottom: 0;
+  }
+
+  #bin, #history {
+    top: 23px;
+  }
+
+  .mobile .editbox {
+    top: 0;
+    bottom: 54px;
+    overflow: scroll;
+    /* position: relative; */
+  }
+}
+
+/* basically: iPhone mini display of 320px */
+@media only screen and (max-width: 320px) {
+  html.debug:before {
+    content: 'iphone';
+  }
+
+  .inline-menu li {
+    font-size: 14px;
+  }
+
+  .toppanel-logo {
+    display: none !important;
+  }
+
+  #control #panels > a.button {
+    font-size: 13px;
+    padding: 0 5px;
+    border: 0;
+    position: relative;
+  }
+
+  #control #panels > a.button.hasContent {
+    font-weight: normal;
+  }
+
+  #control #panels > a.button.hasContent:before {
+    content: '・';
+    text-align: center;
+    font-size: 20px;
+    color: #ccc;
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+/*     background: blue; */
+  }
+}

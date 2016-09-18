@@ -60,12 +60,20 @@
     ]
   },
   "twitter": {
-    "title": "Recently on Twitter",
-    "link": "http://twitter.com/js_bin",
+    "title": "Donate to JS Bin ❤",
+    "link": "https://gratipay.com/jsbin",
     "data": [
       {
-        "title": "Additional linters for HTML, CSS & CoffeeScript, changing output permission for anon users & SSL for pro users!",
+        "title": "Support JS Bin to keep the project open source & MIT for all",
+        "link": "https://gratipay.com/jsbin"
+      },
+      {
+        "title": "Follow @js_bin on twitter",
         "link": "https://twitter.com/js_bin"
+      },
+      {
+        "title": "By using JS Bin you agree to our legal terms",
+        "link": "http://jsbin.com/legals"
       }
     ]
   },

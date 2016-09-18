@@ -5,23 +5,63 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-2.1.1.min.js',
-    'label': 'jQuery 2.1.1',
+    'url': 'https://code.jquery.com/jquery-3.1.0.js',
+    'label': 'jQuery 3.1.0',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-compat-git.js',
-    'label': 'jQuery Compat WIP (via git)',
+    'url': 'https://code.jquery.com/jquery-3.0.0.js',
+    'label': 'jQuery 3.0.0',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-1.11.1.min.js',
-    'label': 'jQuery 1.11.1',
+    'url': 'https://code.jquery.com/jquery-2.2.4.js',
+    'label': 'jQuery 2.2.4',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-1.9.1.min.js',
+    'url': 'https://code.jquery.com/jquery-2.1.4.js',
+    'label': 'jQuery 2.1.4',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-2.0.3.js',
+    'label': 'jQuery 2.0.3',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.12.4.js',
+    'label': 'jQuery 1.12.4',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.11.3.js',
+    'label': 'jQuery 1.11.3',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.10.2.js',
+    'label': 'jQuery 1.10.2',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.9.1.js',
     'label': 'jQuery 1.9.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.8.3.js',
+    'label': 'jQuery 1.8.3',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.7.2.js',
+    'label': 'jQuery 1.7.2',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-1.6.4.js',
+    'label': 'jQuery 1.6.4',
     'group': 'jQuery'
   },
   {
@@ -35,18 +75,27 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/ui/1.11.4/jquery-ui.min.js'
+      'https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-3.1.0.js',
+      'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+    ],
+    'label': 'jQuery UI 1.12.1',
+    'group': 'jQuery UI'
+  },
+  {
+    'url': [
+      'https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-1.12.4.js',
+      'https://code.jquery.com/ui/1.11.4/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.11.4',
     'group': 'jQuery UI'
   },
   {
     'url': [
-      'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/ui/1.10.4/jquery-ui.min.js'
+      'https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/ui/1.10.4/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.10.4',
     'group': 'jQuery UI'
@@ -54,7 +103,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css',
-      'https://code.jquery.com/jquery-1.8.3.min.js',
+      'https://code.jquery.com/jquery-1.8.3.js',
       'https://code.jquery.com/ui/1.9.2/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.9.2',
@@ -63,7 +112,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
+      'https://code.jquery.com/jquery-1.11.3.js',
       'https://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
@@ -71,52 +120,45 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css',
-      'https://code.jquery.com/jquery-1.11.0.min.js',
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js'
+      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.css',
+      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.js'
     ],
     'label': 'jQuery Mobile 1.4.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js'
+      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.css',
+      'https://code.jquery.com/jquery-1.9.1.js',
+      'https://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.js'
     ],
     'label': 'jQuery Mobile 1.3.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css',
-      'https://code.jquery.com/jquery-1.8.3.min.js',
-      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js'
+      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.css',
+      'https://code.jquery.com/jquery-1.8.3.js',
+      'https://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.js'
     ],
     'label': 'jQuery Mobile 1.2.1',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.css',
-      'https://code.jquery.com/jquery-1.6.4.min.js',
-      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.min.js'
+      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.css',
+      'https://code.jquery.com/jquery-1.6.4.js',
+      'https://code.jquery.com/mobile/1.1.2/jquery.mobile-1.1.2.js'
     ],
     'label': 'jQuery Mobile 1.1.2',
     'group': 'jQuery Mobile'
   },
   {
     'url': [
-      '//himera-emh.herokuapp.com/js/repl.js'
-    ],
-    'label': 'ClojureScript',
-    'group': 'ClojureScript'
-  },
-  {
-    'url': [
       'https://code.jquery.com/jquery.min.js',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
+      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
     ],
     'label': 'Bootstrap Latest',
     'group': 'Bootstrap'
@@ -227,40 +269,22 @@ var libraries = [
   },
   {
     'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.ui.core.min.js'
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/styles/kendo.common.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/styles/kendo.silver.min.css',
+      'https://code.jquery.com/jquery-2.1.4.min.js',
+      'https://da7xgjtj801h2.cloudfront.net/2015.2.624/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI Core 2014.Q2',
+    'label': 'Kendo UI Core 2015.2.624',
     'group': 'Kendo UI'
   },
   {
     'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.rtl.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.dataviz.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/styles/kendo.mobile.all.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/styles/kendo.common.min.css',
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/styles/kendo.default.min.css',
       'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.2.716/js/kendo.all.min.js'
+      'https://da7xgjtj801h2.cloudfront.net/2014.3.1411/js/kendo.ui.core.min.js'
     ],
-    'label': 'Kendo UI 2014.Q2',
-    'group': 'Kendo UI'
-  },
-  {
-    'url': [
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.common.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.rtl.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.dataviz.default.min.css',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/styles/kendo.mobile.all.min.css',
-      'https://code.jquery.com/jquery-1.9.1.min.js',
-      'https://da7xgjtj801h2.cloudfront.net/2014.1.318/js/kendo.all.min.js'
-    ],
-    'label': 'Kendo UI 2014.Q1',
+    'label': 'Kendo UI Core 2014.3.1411',
     'group': 'Kendo UI'
   },
   {
@@ -354,13 +378,33 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': '//fb.me/react-0.13.1.js',
-    'label': 'React 0.13.1',
+    'url': ['https://fb.me/react-15.1.0.js', 'https://fb.me/react-dom-15.1.0.js'],
+    'label': 'React + React DOM 15.1.0',
     'group': 'React'
   },
   {
-    'url': '//fb.me/react-with-addons-0.13.1.js',
-    'label': 'React with Add-Ons 0.13.1',
+    'url': ['https://fb.me/react-with-addons-15.1.0.js', 'https://fb.me/react-dom-15.1.0.js'],
+    'label': 'React with Add-Ons + React DOM 15.1.0',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-0.14.7.js', 'https://fb.me/react-dom-0.14.7.js'],
+    'label': 'React + React DOM 0.14.7',
+    'group': 'React'
+  },
+  {
+    'url': ['https://fb.me/react-with-addons-0.14.7.js', 'https://fb.me/react-dom-0.14.7.js'],
+    'label': 'React with Add-Ons + React DOM 0.14.7',
+    'group': 'React'
+  },
+  {
+    'url': 'https://fb.me/react-0.13.3.js',
+    'label': 'React 0.13.3',
+    'group': 'React'
+  },
+  {
+    'url': 'https://fb.me/react-with-addons-0.13.3.js',
+    'label': 'React with Add-Ons 0.13.3',
     'group': 'React'
   },
   {
@@ -374,8 +418,16 @@ var libraries = [
     'group': 'shims'
   },
   {
-    'url': 'http://vuejs.org/js/vue.js',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/blissfuljs/1.0.2/bliss.min.js',
+    'label': 'Bliss 1.0.2',
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.16/vue.js',
     'label': 'Vue.js',
+  },
+  {
+    'url': 'http://cdn.ractivejs.org/latest/ractive.js',
+    'label': 'Ractive.js'
   },
   {
     'url': [
@@ -454,15 +506,15 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/jquery-1.11.1.min.js',
-      '//builds.emberjs.com/tags/v1.13.2/ember-template-compiler.js',
-      '//builds.emberjs.com/tags/v1.13.2/ember.debug.js'
+      '//builds.emberjs.com/tags/v1.13.5/ember-template-compiler.js',
+      '//builds.emberjs.com/tags/v1.13.5/ember.debug.js'
     ],
-    'label': 'Ember.js 1.13.2',
+    'label': 'Ember.js 1.13.5',
     'group': 'Ember'
   },
   {
-    'url': '//builds.emberjs.com/tags/v1.13.2/ember-data.js',
-    'label': 'Ember Data 1.13.4',
+    'url': '//builds.emberjs.com/tags/v1.13.6/ember-data.js',
+    'label': 'Ember Data 1.13.6',
     'group': 'Ember'
   },
   {
@@ -499,8 +551,19 @@ var libraries = [
     'label': 'Less 1.3.3'
   },
   {
-    'url': 'https://cdn.rawgit.com/lodash/lodash/3.0.1/lodash.min.js',
-    'label': 'lodash 3.0.1'
+    'url': 'https://cdn.jsdelivr.net/lodash/4/lodash.min.js',
+    'label': 'lodash 4.x',
+    'group': 'Lodash'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)',
+    'label': 'lodash fp 4.x',
+    'group': 'Lodash'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/lodash/3/lodash.min.js',
+    'label': 'lodash 3.x',
+    'group': 'Lodash'
   },
   {
     'url': 'http://modernizr.com/downloads/modernizr-latest.js',
@@ -522,8 +585,14 @@ var libraries = [
     'label': 'Processing 1.4.1'
   },
   {
-    'url': 'http://d3js.org/d3.v3.min.js',
-    'label': 'D3 3.x'
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js',
+    'label': 'D3 4.2.3',
+    'group': 'D3'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js',
+    'label': 'D3 3.5.6',
+    'group': 'D3'
   },
   {
     'url': '//code.highcharts.com/highcharts.js',
@@ -574,9 +643,9 @@ var libraries = [
   },
   {
     'url':[
-      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r67/three.min.js'
+      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r72/three.min.js'
     ],
-    'label': 'Three.js r67'
+    'label': 'Three.js r72'
   },
   {
     'url':[
@@ -590,6 +659,14 @@ var libraries = [
       'https://cdnjs.cloudflare.com/ajax/libs/polymer/0.3.3/polymer.js'
     ],
     'label': 'Polymer 0.3.3'
+  },
+  {
+    'url':[
+      'https://code.getmdl.io/1.2.1/material.indigo-pink.min.css',
+      'https://code.getmdl.io/1.2.1/material.min.js',
+      'https://fonts.googleapis.com/icon?family=Material+Icons'
+      ],
+    'label': 'Material Design Lite 1.2.1'
   },
   {
     'url': '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css',
@@ -618,10 +695,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/4.12/video-js.css',
-      '//vjs.zencdn.net/4.12/video.js'
+      '//vjs.zencdn.net/5.6/video-js.css',
+      '//vjs.zencdn.net/5.6/video.js'
     ],
-    'label': 'Video.js 4.12.x'
+    'label': 'Video.js 5.6.x'
   },
   {
     'url': [
@@ -648,18 +725,39 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.all.js',
-    'label': 'rx.all',
+    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
+    'label': 'Riot + Compiler (latest 2.3.x)'
+  },
+  {
+    'url': [
+      'https://cdn.jsdelivr.net/blazecss/latest/blaze.min.css',
+      'https://cdn.jsdelivr.net/blazecss/latest/blaze.animations.min.css'
+    ],
+    'label': 'Blaze CSS (latest)'
+  },
+  {
+    'url': 'https://unpkg.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
+    'label': 'RxJS 5.0.0-beta.7',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/2.3.22/rx.testing.js',
-    'label': 'rx.testing',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.js',
+    'label': 'rx.all 4.0.6',
     'group': 'RxJS'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs-dom/2.0.7/rx.dom.js',
-    'label': 'rx.dom',
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.all.compat.js',
+    'label': 'rx.all.compat 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.0.6/rx.testing.js',
+    'label': 'rx.testing 4.0.6',
+    'group': 'RxJS'
+  },
+  {
+    'url': 'https://unpkg.com/rx-dom@7.0.3/dist/rx.dom.js',
+    'label': 'rx.dom 7.0.3 (requires 4.x)',
     'group': 'RxJS'
   },
   {
@@ -681,6 +779,45 @@ var libraries = [
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/mori/0.3.2/mori.js',
     'label': 'mori 0.3.2',
     'group': 'Data structures'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/ramda/0.22.1/ramda.min.js',
+    'label': 'Ramda 0.22.1'
+  },
+  {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js'
+    ],
+    'label': 'Semantic UI 2.2.2'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/pouchdb/latest/pouchdb.min.js',
+    'label': 'PouchDB (latest)',
+    'group': 'PouchDB'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js',
+    'label': 'Moment 2.14.1',
+    'group': 'Moment.js'
+  },
+  {
+    'url': [
+      'https://cdn.jsdelivr.net/momentjs/2.14.1/moment-with-locales.min.js',
+      'https://cdn.jsdelivr.net/momentjs/2.14.1/locales.min.js'
+    ],
+    'label': 'Moment 2.14.1 (with locales)',
+    'group': 'Moment.js'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js',
+    'label': 'Velocity JS 1.2.3',
+    'group': 'Velocity'
+  },
+  {
+    'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
+    'label': 'Velocity UI Pack 1.2.3',
+    'group': 'Velocity'
   }
 ];
 

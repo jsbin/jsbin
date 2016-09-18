@@ -9,6 +9,10 @@
   font-style: normal;
 }
 
+.loading {
+  background: url(/images/loader.svg) no-repeat right;
+}
+
 [class^="icon-"], [class*=" icon-"] {
   font-family: 'icomoon';
   speak: none;
@@ -330,11 +334,61 @@ select#country {
   border-radius: 3px;
 }
 
+.payment-errors.payment-failure {
+  background: #FF4136;
+  border: 1px solid rgb(227, 39, 28);
+  padding: 20px;
+}
+
 .payment-errors b {
   font-size: 16px;
   line-height: 29px;
   display: inline-block;
   /* vertical-align: initial; */
+}
+
+.payment-errors h4 {
+  margin-top: 0;
+}
+
+.payment-errors a {
+  color: #fafafa;
+}
+
+.payment-errors p:last-child {
+  margin-bottom: 0;
+}
+
+.warning {
+  display: inline-block;
+  color: #FF4136;
+  text-shadow: 0px 0px 0px rgb(188, 60, 52);
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.carddetails span {
+  font-size: 16px;
+}
+
+.carddetails button {
+  vertical-align: text-bottom;
+}
+
+.payment-details span input {
+  font-size: 16px;
+  margin: 2px 0;
+}
+
+.carddetails label {
+  display: block;
+  float: left;
+  width: 120px;
+  clear: left;
+}
+
+.carddetails input {
+  min-width: 115px;
 }
 
 input.invalid {
@@ -351,11 +405,11 @@ input.invalid {
   content: 'Validation passed';
 }
 
-.carddetails {
+/*.carddetails {
   margin-left: 200px;
   width: 200px;
 }
-
+*/
 .input {
   border: 1px solid #ccc;
 }
@@ -684,7 +738,7 @@ a[data-pro]:hover:after {
   header nav {
     display: block;
     position: relative;
-    width: 100%;
+    width: 76%;
     padding-bottom: 0;
   }
   header nav a {
@@ -723,7 +777,7 @@ a[data-pro]:hover:after {
   padding: 0px 25.6px;
   font-weight: 300;
   font-size: 14px;
-  font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
+  font-family: system, "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", "Lucida Grande", sans-serif;
   color: #666666;
   text-shadow: 0 1px 1px white;
   margin: 0;
@@ -985,7 +1039,7 @@ input.actionButton-small, button.actionButton-small {
 }
 
 #assets a.asset {
-  font-family: "Helvetica Neue";
+  font-family: system, "Helvetica Neue";
   position: relative;
   /* flex-direction: column; */
   float: left;

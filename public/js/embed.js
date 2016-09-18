@@ -217,11 +217,13 @@
   }
 
   function loadRealEmbed(iframe) {
-    var url = iframe.getAttribute('data-url');
+    var clone = iframe.cloneNode();
+    var url = clone.getAttribute('data-url');
 
-    iframe.src = url.split('&')[0];
-    iframe._src = url.split('&')[0]; // support for google slide embed
-    hookMessaging(iframe);
+    clone.src = url.split('&')[0];
+    clone._src = url.split('&')[0]; // support for google slide embed
+    iframe.parentNode.replaceChild(clone, iframe);
+    hookMessaging(clone);
   }
 
   function embed(link) {
@@ -332,6 +334,7 @@
       }
     }
     docElem[addEventListener]('scroll', handler, true);
+    window[addEventListener]('scroll', handler, true);
   });
 
 }(this, document));

@@ -3,7 +3,7 @@
   /*globals $, jsbin, CodeMirror*/
 
   // ignore addons for embedded views
-  if (jsbin.embed) {
+  if (jsbin.embed || jsbin.mobile) {
     return;
   }
 
@@ -312,10 +312,16 @@
     if (test()) {
       d.resolve();
     } else {
+      var start = new Date().getTime();
+      var last = new Date();
       timer = setInterval(function () {
+        last = new Date();
         if (test()) {
           clearInterval(timer);
           d.resolve();
+        } else if (last.getTime() - start > 10 * 1000) {
+          clearInterval(timer);
+          d.reject();
         }
       }, 100);
     }
@@ -351,7 +357,6 @@
     var opt = $.extend({}, settingsHintShow);
     opt.consoleParent = cm.getWrapperElement().parentNode.parentNode;
     setOption(cm, 'lintOpt', opt);
-    setOption(cm, 'lintRules', $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']));
     if (opt.gutter) {
       var gutters = cm.getOption('gutters');
       if (gutters.indexOf('CodeMirror-lint-markers') === -1) {
@@ -359,18 +364,14 @@
         copyGutters.push('CodeMirror-lint-markers');
         setOption(cm, 'gutters', copyGutters);
       }
-      setOption(cm, 'lint', {
-        delay: 800
-      });
       var ln = cm.getOption('lineNumbers');
       setOption(cm, 'lineNumbers', !ln);
       setOption(cm, 'lineNumbers', ln);
-    } else {
-      setOption(cm, 'lint', {
-        delay: 800
-      });
     }
-    if (opt.console) {
+
+    setOption(cm, 'lint', { delay: 800, options: $.extend({}, defhintOptions, jsbin.settings[mode + 'hintOptions']) });
+
+    if (opt.console && cm.consolelint) {
       $document.trigger('sizeeditors');
       $(cm.consolelint.head).on('click', function() {
         if (!detailsSupport) {

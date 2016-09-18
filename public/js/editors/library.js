@@ -1,7 +1,7 @@
 /*global $:true, editors:true, libraries:true, analytics:true */
 // 'use strict'; // this causes bigger issues :-\
 
-var $library = $('#library'),
+var $library = $('#library, #alt-library'),
     groups = {};
 
 $library.bind('init', function () {
@@ -139,7 +139,9 @@ function insertResources(urls) {
     code = code.trim() + '\n' + indent + html.join('\n' + indent).trim();
   } else {
     if (code.indexOf('<head') !== -1) {
-      code = code.replace(/<head>/i, '<head>\n' + html.join('\n'));
+      var codeLines = code.split('\n');
+      codeLines.splice(state.line, 0, html.join('\n'));
+      code = codeLines.join('\n');
     } else { // add to the start of the doc
       code = html.join('\n') + code;
     }

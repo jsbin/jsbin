@@ -509,6 +509,13 @@ testCM("markClearBetween", function(cm) {
   eq(cm.findMarksAt(Pos(1, 1)).length, 0);
 });
 
+testCM("findMarksMiddle", function(cm) {
+  var mark = cm.markText(Pos(1, 1), Pos(3, 1));
+  var found = cm.findMarks(Pos(2, 1), Pos(2, 2));
+  eq(found.length, 1);
+  eq(found[0], mark);
+}, {value: "line 0\nline 1\nline 2\nline 3"});
+
 testCM("deleteSpanCollapsedInclusiveLeft", function(cm) {
   var from = Pos(1, 0), to = Pos(1, 1);
   var m = cm.markText(from, to, {collapsed: true, inclusiveLeft: true});
@@ -1583,7 +1590,7 @@ testCM("addLineClass", function(cm) {
   eq(byClassName(lines, "foo").length, 2);
   eq(byClassName(lines, "bar").length, 1);
   eq(byClassName(lines, "baz").length, 1);
-  eq(byClassName(lines, "gutter-class").length, 1);
+  eq(byClassName(lines, "gutter-class").length, 2); // Gutter classes are reflected in 2 nodes
   cm.removeLineClass(0, "text", "foo");
   cls(0, "bar", null, null, null);
   cm.removeLineClass(0, "text", "foo");
@@ -1656,6 +1663,8 @@ testCM("atomicMarker", function(cm) {
 
 testCM("selectionBias", function(cm) {
   cm.markText(Pos(0, 1), Pos(0, 3), {atomic: true});
+  cm.setCursor(Pos(0, 2));
+  eqPos(cm.getCursor(), Pos(0, 1));
   cm.setCursor(Pos(0, 2));
   eqPos(cm.getCursor(), Pos(0, 3));
   cm.setCursor(Pos(0, 2));
@@ -2125,3 +2134,18 @@ test("core_addClass", function() {
   CodeMirror.addClass(node, "b");
   eq(node.className, "a b");
 });
+
+testCM("lineSeparator", function(cm) {
+  eq(cm.lineCount(), 3);
+  eq(cm.getLine(1), "bar\r");
+  eq(cm.getLine(2), "baz\rquux");
+  cm.setOption("lineSeparator", "\r");
+  eq(cm.lineCount(), 5);
+  eq(cm.getLine(4), "quux");
+  eq(cm.getValue(), "foo\rbar\r\rbaz\rquux");
+  eq(cm.getValue("\n"), "foo\nbar\n\nbaz\nquux");
+  cm.setOption("lineSeparator", null);
+  cm.setValue("foo\nbar\r\nbaz\rquux");
+  eq(cm.lineCount(), 4);
+}, {value: "foo\nbar\r\nbaz\rquux",
+    lineSeparator: "\n"});

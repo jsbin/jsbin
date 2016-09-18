@@ -1,6 +1,5 @@
 /*jshint strict: false */
 /*globals $, analytics, jsbin, documentTitle, $document, throttle, editors*/
-
 var saving = {
   todo: {
     html: false,
@@ -72,7 +71,7 @@ $('a.save').click(function (event) {
     ajax = false;
   }
 
-  if (jsbin.state.changed || !jsbin.owner()) {
+  if ((jsbin.state.changed || jsbin.mobile) || !jsbin.owner()) {
     saveCode('save', ajax);
   }
 
@@ -233,12 +232,12 @@ function onSaveError(jqXHR, panelId) {
 
 // only start live saving it they're allowed to (whereas save is disabled if they're following)
 if (!jsbin.saveDisabled) {
-  $('.code.panel .label .name').append('<span>Saved</span>');
+  $('.code.panel .label .name').append('<span class="saved">Saved</span>');
 
   var savingLabels = {
-    html: $('.panel.html .name span'),
-    javascript: $('.panel.javascript .name span'),
-    css: $('.panel.css .name span')
+    html: $('.panel.html .name span.saved'),
+    javascript: $('.panel.javascript .name span.saved'),
+    css: $('.panel.css .name span.saved'),
   };
 
   $document.bind('jsbinReady', function () {
@@ -347,7 +346,7 @@ function updateCode(panelId, callback) {
     settings: JSON.stringify(panelSettings),
   };
 
-  if (jsbin.settings.useCompression) {
+  if (jsbin.settings.useCompression && location.protocol === 'http:') {
     compressKeys('content', data);
   }
 

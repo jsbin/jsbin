@@ -137,6 +137,11 @@ var renderer = (function () {
     if (!event.origin) return;
     var data = event.data;
 
+    if (typeof data !== 'string') {
+      // this event isn't for us (i.e. comes from a browser ext)
+      return;
+    }
+
     // specific change to handle reveal embedding
     try {
       if (event.data.indexOf('slide:') === 0 || event.data === 'jsbin:refresh') {
@@ -150,7 +155,7 @@ var renderer = (function () {
     } catch (e) {}
 
     try {
-      data = JSON.parse(event.data);
+      data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
     } catch (e) {
       return renderer.error('Error parsing event data:', e.message);
     }
@@ -173,7 +178,7 @@ var renderer = (function () {
     }
 
     if (typeof renderer[data.type] !== 'function') {
-      return renderer.error('No matching event handler:', data.type);
+      return false; //renderer.error('No matching handler for event', data);
     }
     try {
       renderer[data.type](data.data);
@@ -341,7 +346,7 @@ var renderLivePreview = (function () {
   if (!$live.find('iframe').length) {
     iframe = document.createElement('iframe');
     iframe.setAttribute('class', 'stretch');
-    iframe.setAttribute('sandbox', 'allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
+    iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', '<proxy>');
     $live.prepend(iframe);

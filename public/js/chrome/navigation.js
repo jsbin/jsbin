@@ -69,6 +69,8 @@ $('.homebtn').click(function (event, data) {
     analytics.open(data);
   }
 
+  hideOpen();
+
   jsbin.panels.hideAll();
   return false;
 });
@@ -122,16 +124,20 @@ var dropdownOpen = false,
     onhover = false,
     menuDown = false;
 
-function opendropdown(el) {
+function opendropdown(el, nofocus) {
   var menu;
   if (!dropdownOpen) {
     menu = $(el).closest('.menu').addClass('open').trigger('open');
     // $body.addClass('menuinfo');
     analytics.openMenu(el.hash.substring(1));
-    var input = menu.find(':text:visible:first').focus()[0];
-    if (input) setTimeout(function () {
-      input.select();
-    }, 0);
+    var input = menu.find(':text:visible:first');
+
+    if (input.length && !jsbin.mobile) {
+      input.focus();
+      setTimeout(function () {
+        input[0].select();
+      }, 0);
+    }
     dropdownOpen = el;
   }
 }
@@ -144,7 +150,7 @@ function closedropdown() {
     dropdownOpen = false;
     onhover = false;
     var f = jsbin.panels.focused;
-    if (f) {
+    if (f && !jsbin.mobile) {
       f.focus();
       if (f.editor) {
         f.editor.focus();
@@ -171,7 +177,15 @@ var dropdownButtons = $('.button-dropdown, .button-open').mousedown(function (e)
     analytics.closeMenu(this.hash.substring(1));
     closedropdown();
   }
+  if (menuDown) {
+    $(this.hash).attr('tabindex', 0);
+    menuDown = false;
+    return jsbin.mobile;
+  }
+
   menuDown = false;
+
+  $(this.hash).attr('tabindex', -1);
   return false;
 });
 
@@ -234,7 +248,7 @@ $('#jsbinurl').click(function (e) {
   }, 0);
 });
 
-$('#runwithalerts').click(function (event, data) {
+$('#runwithalerts, li.run-with-js a').click(function (event, data) {
   analytics.run(data);
   if (editors.console.visible) {
     editors.console.render(true);
@@ -264,6 +278,17 @@ $('#showhelp').click(function () {
   return false;
 });
 
+$('a.toggle-side-nav').on(jsbin.mobile ? 'touchstart' : 'click', function () {
+  $body.toggleClass('show-nav');
+  sideNavVisible = $body.is('.show-nav');
+  if (!sideNavVisible && !jsbin.mobile) {
+    // we only focus the editor in desktop, otherwise the keyboard jumps up
+    $('#skipToEditor').click();
+  }
+  return sideNavVisible;
+});
+
+
 $('#showurls').click(function () {
   $body.toggleClass('urlHelp');
   urlHelpVisible = $body.is('.urlHelp');
@@ -281,7 +306,7 @@ $('.code.panel > .label > span.name').dblclick(function () {
   });
 });
 
-$('#createnew').click(function (event) {
+$('a.createnew').click(function (event) {
   event.preventDefault();
   var i, key;
   analytics.createNew();
@@ -359,8 +384,9 @@ jsbin.settings.includejs = jsbin.settings.includejs === undefined ? true : jsbin
 if (!jsbin.embed && store.sessionStorage.getItem('runnerPending')) {
   $document.trigger('tip', {
     content: 'It looks like your last session may have crashed, so I\'ve disabled "Auto-run JS" for you',
-    type: 'error'
+    type: 'error',
   });
+  store.sessionStorage.removeItem('runnerPending');
   jsbin.settings.includejs = false;
 }
 
@@ -574,12 +600,16 @@ if (jsbin.settings.editor.simple) {
   $enableUniversalEditor.prop('checked', true);
 }
 
-$('#skipToEditor').click(function () {
-  if (jsbin.settings.editor.simple) {
-    $('#html').focus();
+$('#skipToEditor').on('click keypress', function () {
+  var first = (jsbin.panels.getVisible() || ['html']).shift();
+  if (jsbin.settings.editor.simple || jsbin.mobile) {
+    $('#' + first.id).focus();
+  } else if (first) {
+    first.editor.focus();
   } else {
     jsbin.panels.panels.html.editor.focus();
   }
+  return false;
 });
 
 }());

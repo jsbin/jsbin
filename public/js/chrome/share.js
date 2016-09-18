@@ -14,17 +14,6 @@
   var $sharepanels = $('#sharepanels input[type="checkbox"]');
 
   var selectedSnapshot = jsbin.state.revision;
-  // var $snapshots = $('#snapshot').on('change', function () {
-  //   selectedSnapshot = this.value * 1;
-
-  //   $lockRevision.prop('checked', true);
-
-  //   if (selectedSnapshot === jsbin.state.revision) {
-  //     $lockRevision.trigger('change');
-  //   }
-  //   update();
-  // }).hide();
-
 
   $document.on('saved', function () {
     selectedSnapshot = jsbin.state.revision;
@@ -39,6 +28,7 @@
 
   var $sharemenu = $('#sharemenu').bind('open', function () {
     // select the right panels
+    // hideOpen();
     $sharepanels.prop('checked', false);
     jsbin.panels.getVisible().forEach(function (p) {
       $sharepanels.filter('[value="' + (mapping[p.id] || p.id) + '"]').prop('checked', true);
@@ -249,4 +239,17 @@
 
     update();
   });
+
+  var $share = $('#share').closest('.menu');
+  var shareElement = $('#sharemenu a')[0];
+  var $showShare = $('a.show-share').on('click', function () {
+    if ($share.hasClass('open')) {
+      closedropdown(shareElement);
+    } else {
+      opendropdown(shareElement, true); // true = no focus
+    }
+    $showShare.blur();
+  });
+
+
 })();

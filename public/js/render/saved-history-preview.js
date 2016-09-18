@@ -12,7 +12,7 @@
 
   $document.on('history:open', function () {
     if ($history && jsbin.panels.getVisible().length === 0) {
-      $history.appendTo('body');
+      $history.appendTo('main');
     }
   }).on('history:close', function () {
     if ($history === null) {
@@ -42,7 +42,13 @@
         },
         success: function (html) {
           $('#history').remove();
-          $body.append(html);
+          var frag = $(html);
+          if (jsbin.mobile) {
+            // mobile is particularly slow at rendering 1,000s of tbodys
+            // so we'll remove some to relieve the pressure.
+            frag.find('tbody:gt(50)').remove();
+          }
+          $body.append(frag);
           hookUserHistory();
           loaded = true;
         }
@@ -131,7 +137,7 @@
     var selected = null;
     $bins.delegate('a', 'click', function (event) {
       if (event.shiftKey || event.metaKey) { return; }
-      
+
       var $this = $(this);
 
       if ($this.closest('.action').length) {
@@ -217,6 +223,8 @@
 
     $homebtn.on('click', loadList);
     $panelButtons.on('mousedown', panelCloseIntent);
+
+    $document.on('history:load', loadList);
 
     if (!panelsVisible) {
       loadList();

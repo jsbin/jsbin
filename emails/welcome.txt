@@ -1,0 +1,16 @@
+Welcome to JS Bin!
+
+Thanks for signing up. To get familiar with JS Bin, check out our https://jsbin.com/help and follow us https://twitter.com/js_bin on Twitter.
+
+If you want to power-up your JS Bin usage, you can upgrade your account to Pro today, and you'll have access to unlimited private bins, asset uploading, experimental features and more: https://jsbin.com/upgrade
+
+Thanks again,
+
+– Remy (creator of JS Bin)
+
+---
+
+Your username: {{user.name}}
+
+JS Bin Ltd. Company No. 8998555
+Made in Brighton, UK

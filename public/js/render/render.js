@@ -145,14 +145,15 @@ var getPreparedCode = (function () { // jshint ignore:line
         js = 'try {' + js + '\n} catch (error) { throw error; }';
       }
 
+      loopProtect.alias = 'window.runnerWindow.protect';
+
       // Rewrite loops to detect infiniteness.
       // This is done by rewriting the for/while/do loops to perform a check at
       // the start of each iteration.
-      js = loopProtect.rewriteLoops(js);
+      js = loopProtect(js);
 
       // escape any script tags in the JS code, because that'll break the mushing together
       js = js.replace(re.script, '<\\/script');
-
 
       // redirect console logged to our custom log while debugging
       if (re.console.test(js)) {
@@ -223,8 +224,8 @@ var getPreparedCode = (function () { // jshint ignore:line
         parts = [];
         close = '';
         if (html.indexOf('</head>') !== -1) {
-          parts.push(html.substring(0, html.lastIndexOf('</head>')));
-          parts.push(html.substring(html.lastIndexOf('</head>')));
+          parts.push(html.substring(0, html.indexOf('</head>')));
+          parts.push(html.substring(html.indexOf('</head>')));
 
           html = parts[0];
           close = parts.length === 2 && parts[1] ? parts[1] : '';

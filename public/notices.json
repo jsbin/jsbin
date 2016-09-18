@@ -11,7 +11,7 @@
     "message": "If you're using Dropbox backup please <a href=\"/auth/dropbox\">relink your account</a> as we've released some fixes."
   },
   {
-    "version": "0.28.0",
+    "version": "3.33.1",
     "type": "notification",
     "message": "HTTPS is now freely available to all users, if you have an account, you can make HTTPS your <a href=\"/account/preferences\">your default preference</a> on jsbin.com"
   }

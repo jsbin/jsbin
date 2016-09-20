@@ -730,8 +730,9 @@ var libraries = [
   },
   {
     'url': [
-      'https://cdn.jsdelivr.net/blazecss/latest/blaze.min.css',
-      'https://cdn.jsdelivr.net/blazecss/latest/blaze.animations.min.css'
+      'https://unpkg.com/blaze',
+      'https://unpkg.com/blaze/dist/blaze.animations.min.css',
+      'https://unpkg.com/blaze/dist/blaze.colors.min.css'
     ],
     'label': 'Blaze CSS (latest)'
   },

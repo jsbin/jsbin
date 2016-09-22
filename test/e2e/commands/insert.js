@@ -1,5 +1,4 @@
 exports.command = function(selector, callback) {
-  var self = this;
   console.log('.css .CodeMirror' === selector)
   this.execute(function (text){
         return $(selector)[0].CodeMirror.setValue(text);

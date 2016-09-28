@@ -494,13 +494,11 @@ Panel.prototype = {
     // });
 
     // This prevents the browser from jumping
-    if (jsbin.mobile || jsbin.tablet || jsbin.embed) {
-      /*if (!jsbin.smartMobile) {
-        editor._focus = editor.focus;
-        editor.focus = function () {
-          // console.log('ignoring manual call');
-        };
-      }*/
+    if (jsbin.embed) {
+      editor._focus = editor.focus;
+      editor.focus = function () {
+        // console.log('ignoring manual call');
+      };
     }
 
     editor.id = panel.name;

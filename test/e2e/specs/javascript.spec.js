@@ -1,5 +1,5 @@
 module.exports = {
-  'General JavaScript  test one' : function (client) {
+  'General JavaScript  test' : function (client) {
     var data = client.globals;
     client
       .url(client.launch_url)
@@ -14,160 +14,50 @@ module.exports = {
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
   },
-        'Test processor-javascript' : function (client) {
-    var data = client.globals;
+
+  'Test processor-javascript' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-javascript"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+        .js_processors('a[id="processor-javascript"]');
   },
 
-        'Test processor-babel' : function (client) {
-    var data = client.globals;
+  'Test processor-babel' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-babel"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
-        'Test processor-jsx' : function (client) {
-    var data = client.globals;
-    client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-jsx"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
-        'Test processor-coffeescript' : function (client) {
-    var data = client.globals;
-    client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-coffeescript"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
-        'Test processor-traceur' : function (client) {
-    var data = client.globals;
-    client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-traceur"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+        .js_processors('a[id="processor-babel"]');
   },
 
-          'Test processor-typescript' : function (client) {
-    var data = client.globals;
+  'Test processor-jsx' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-typescript"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+        .js_processors('a[id="processor-jsx"]');
   },
-        'Test processor-processing' : function (client) {
-    var data = client.globals;
+
+  'Test processor-coffeescript' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-processing"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+          .js_processors('a[id="processor-coffeescript"]');
   },
-        'Test processor-livescript' : function (client) {
-    var data = client.globals;
+
+  'Test processor-traceur' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-livescript"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+      .js_processors('a[id="processor-traceur"]');
   },
-          'Test processor-convert' : function (client) {
-    var data = client.globals;
+
+  'Test processor-typescript' : function (client) {
     client
-      .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      client.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-convert"]').pause(data.defaultTime)
-        client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
-      .frame(2)
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
+      .js_processors('a[id="processor-typescript"]');
+  },
+
+  'Test processor-processing' : function (client) {
+    client
+      .js_processors('a[id="processor-processing"]');
+  },
+
+  'Test processor-livescript' : function (client) {
+    client
+      .js_processors('a[id="processor-livescript"]');
+  },
+
+  'Test processor-convert' : function (client) {
+    client
+      .js_processors('a[id="processor-convert"]');
   }
 };
 

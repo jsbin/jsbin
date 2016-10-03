@@ -6,7 +6,7 @@ exports.command = function(selector, callback) {
       .click('#panel-javascript')
       .waitForElementVisible('.javascript .CodeMirror')
       this.click('a[href="#javascriptprocessors"]')
-      .click('a[id="processor-javascript"]').pause(data.defaultTime)
+      .click(selector).pause(data.defaultTime)
         this.execute(function (text){
         return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
       }, ["document.body.innerHTML = 'Hello'"])

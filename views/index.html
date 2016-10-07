@@ -141,15 +141,15 @@ if(top != self) {
       <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#cssprocessors">Processor</a></strong></span>
         <div class="dropdown" id="cssprocessors">
           <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="css">
-            <a role="menuitemradio" aria-checked="true" href="#css" data-label="CSS">CSS</a>
-            <a role="menuitemradio" href="#less">Less</a>
-            <a role="menuitemradio" href="#myth">Myth</a>
+            <a role="menuitemradio" id="processor-css" aria-checked="true" href="#css" data-label="CSS">CSS</a>
+            <a role="menuitemradio" id="processor-less" href="#less">Less</a>
+            <a role="menuitemradio" id="processor-myth" href="#myth">Myth</a>
             {{#feature request "processors"}}
-            <a role="menuitemradio" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
-            <a role="menuitemradio" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
+            <a role="menuitemradio" id="processor-sass" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
+            <a role="menuitemradio" id="processor-scss" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
             {{/feature}}
-            <a role="menuitemradio" href="#stylus">Stylus</a>
-            <a role="menuitem" href="#convert">Convert to CSS</a>
+            <a role="menuitemradio" id="processor-stylus" href="#stylus">Stylus</a>
+            <a role="menuitem" id="processor-convert-css" href="#convert">Convert to CSS</a>
           </div>
         </div>
       </div>

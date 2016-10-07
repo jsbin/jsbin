@@ -725,8 +725,8 @@ var libraries = [
     'label': 'OpenTok v2.x (latest)'
   },
   {
-    'url': 'https://cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js',
-    'label': 'Riot + Compiler (latest 2.3.x)'
+    'url': 'https://cdn.jsdelivr.net/riot/2.6/riot+compiler.min.js',
+    'label': 'Riot + Compiler (latest 2.6.x)'
   },
   {
     'url': [

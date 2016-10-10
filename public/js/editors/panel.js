@@ -215,7 +215,7 @@ var Panel = function (name, settings) {
   }
 
   if (showPanelButton) {
-    this.controlButton = $('<a role="button" id="panel-' + name + '"' + ' class="button group" href="?' + name + '">' + panel.label + '</a>');
+    this.controlButton = $('<a role="button" id="panel-' + name + '" class="button group" href="?' + name + '">' + panel.label + '</a>');
     this.updateAriaState();
 
     this.controlButton.on('click touchstart', function () {

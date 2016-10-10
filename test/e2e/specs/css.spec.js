@@ -6,7 +6,9 @@ module.exports = {
       .waitForElementVisible('#panel-css')
       .click('#panel-css')
       .waitForElementVisible('.css .CodeMirror')
-        .insert('.css .CodeMirror')
+      .execute(function (text){
+        return $('.css .CodeMirror')[0].CodeMirror.setValue(text);
+      }, ["body{background:rgba(0, 0, 0, 1)"])
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -20,32 +22,27 @@ module.exports = {
   'Test processor-CSS  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors('a[id="processor-css"]');
+          .css_processors("#processor-css");
   },
   'Test processor-less  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors('a[id="processor-less"]');
+          .css_processors("#processor-less");
   },
   'Test processor-myth  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors('a[id="processor-myth"]');
-  },
-  'Test processor-scss  test' : function (client) {
-       var data = client.globals;
-        client
-          .css_processors('a[id="processor-scss"]');
+          .css_processors("#processor-myth");
   },
   'Test processor-stylus  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors('a[id="processor-stylus"]');
+          .css_processors("#processor-stylus");
   },
   'Test processor-convert-css  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors('a[id="processor-convert-css"]');
+          .css_processors("#processor-convert-css");
   }
 
 };

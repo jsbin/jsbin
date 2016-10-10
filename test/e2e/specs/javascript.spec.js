@@ -17,48 +17,46 @@ module.exports = {
 
   'Test processor-javascript' : function (client) {
     client
-        .js_processors('a[id="processor-javascript"]');
+        .js_processors("#processor-javascript");
   },
 
   'Test processor-babel' : function (client) {
     client
-        .js_processors('a[id="processor-babel"]');
+        .js_processors("#processor-babel");
   },
 
   'Test processor-jsx' : function (client) {
     client
-        .js_processors('a[id="processor-jsx"]');
+        .js_processors("#processor-jsx");
   },
 
   'Test processor-coffeescript' : function (client) {
     client
-          .js_processors('a[id="processor-coffeescript"]');
+          .js_processors("#processor-coffeescript");
   },
 
   'Test processor-traceur' : function (client) {
     client
-      .js_processors('a[id="processor-traceur"]');
+      .js_processors("#processor-traceur");
   },
 
   'Test processor-typescript' : function (client) {
     client
-      .js_processors('a[id="processor-typescript"]');
+      .js_processors("#processor-typescript");
   },
 
   'Test processor-processing' : function (client) {
     client
-      .js_processors('a[id="processor-processing"]');
+      .js_processors("#processor-processing");
   },
 
   'Test processor-livescript' : function (client) {
     client
-      .js_processors('a[id="processor-livescript"]');
+      .js_processors("#processor-livescript");
   },
 
   'Test processor-convert' : function (client) {
     client
-      .js_processors('a[id="processor-convert"]');
+      .js_processors("#processor-convert");
   }
 };
-
-

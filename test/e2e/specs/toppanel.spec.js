@@ -3,9 +3,7 @@ module.exports = {
    var data = client.globals;
    client
     .url(client.launch_url)
-    .waitForElementVisible('.toppanel-hide')
     .click('.toppanel-hide')
-    .pause(data.defaultTime)
     .waitForElementNotVisible('.toppanel-hide')
     .click('.toppanel-logo')
     .waitForElementVisible('.toppanel-hide')

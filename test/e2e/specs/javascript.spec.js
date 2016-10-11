@@ -17,46 +17,46 @@ module.exports = {
 
   'Test processor-javascript' : function (client) {
     client
-        .js_processors("#processor-javascript");
+        .check_js_processors("#processor-javascript");
   },
 
   'Test processor-babel' : function (client) {
     client
-        .js_processors("#processor-babel");
+        .check_js_processors("#processor-babel");
   },
 
   'Test processor-jsx' : function (client) {
     client
-        .js_processors("#processor-jsx");
+        .check_js_processors("#processor-jsx");
   },
 
   'Test processor-coffeescript' : function (client) {
     client
-          .js_processors("#processor-coffeescript");
+          .check_js_processors("#processor-coffeescript");
   },
 
   'Test processor-traceur' : function (client) {
     client
-      .js_processors("#processor-traceur");
+      .check_js_processors("#processor-traceur");
   },
 
   'Test processor-typescript' : function (client) {
     client
-      .js_processors("#processor-typescript");
+      .check_js_processors("#processor-typescript");
   },
 
   'Test processor-processing' : function (client) {
     client
-      .js_processors("#processor-processing");
+      .check_js_processors("#processor-processing");
   },
 
   'Test processor-livescript' : function (client) {
     client
-      .js_processors("#processor-livescript");
+      .check_js_processors("#processor-livescript");
   },
 
   'Test processor-convert' : function (client) {
     client
-      .js_processors("#processor-convert");
+      .check_js_processors("#processor-convert");
   }
 };

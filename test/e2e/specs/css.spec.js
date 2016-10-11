@@ -22,27 +22,27 @@ module.exports = {
   'Test processor-CSS  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors("#processor-css");
+          .check_css_processors("#processor-css");
   },
   'Test processor-less  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors("#processor-less");
+          .check_css_processors("#processor-less");
   },
   'Test processor-myth  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors("#processor-myth");
+          .check_css_processors("#processor-myth");
   },
   'Test processor-stylus  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors("#processor-stylus");
+          .check_css_processors("#processor-stylus");
   },
   'Test processor-convert-css  test' : function (client) {
        var data = client.globals;
         client
-          .css_processors("#processor-convert-css");
+          .check_css_processors("#processor-convert-css");
   }
 
 };

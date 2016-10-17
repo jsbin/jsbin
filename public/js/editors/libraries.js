@@ -5,6 +5,11 @@ var libraries = [
     'group': 'jQuery'
   },
   {
+    'url': 'https://code.jquery.com/jquery-3.1.1.js',
+    'label': 'jQuery 3.1.1',
+    'group': 'jQuery'
+  },
+  {
     'url': 'https://code.jquery.com/jquery-3.1.0.js',
     'label': 'jQuery 3.1.0',
     'group': 'jQuery'

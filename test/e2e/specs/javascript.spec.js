@@ -17,46 +17,46 @@ module.exports = {
 
   'Test processor-javascript' : function (client) {
     client
-        .check_js_processors("#processor-javascript");
+        .checkJsProcessors("#processor-javascript");
   },
 
   'Test processor-babel' : function (client) {
     client
-        .check_js_processors("#processor-babel");
+        .checkJsProcessors("#processor-babel");
   },
 
   'Test processor-jsx' : function (client) {
     client
-        .check_js_processors("#processor-jsx");
+        .checkJsProcessors("#processor-jsx");
   },
 
   'Test processor-coffeescript' : function (client) {
     client
-          .check_js_processors("#processor-coffeescript");
+          .checkJsProcessors("#processor-coffeescript");
   },
 
   'Test processor-traceur' : function (client) {
     client
-      .check_js_processors("#processor-traceur");
+      .checkJsProcessors("#processor-traceur");
   },
 
   'Test processor-typescript' : function (client) {
     client
-      .check_js_processors("#processor-typescript");
+      .checkJsProcessors("#processor-typescript");
   },
 
   'Test processor-processing' : function (client) {
     client
-      .check_js_processors("#processor-processing");
+      .checkJsProcessors("#processor-processing");
   },
 
   'Test processor-livescript' : function (client) {
     client
-      .check_js_processors("#processor-livescript");
+      .checkJsProcessors("#processor-livescript");
   },
 
   'Test processor-convert' : function (client) {
     client
-      .check_js_processors("#processor-convert");
+      .checkJsProcessors("#processor-convert");
   }
 };

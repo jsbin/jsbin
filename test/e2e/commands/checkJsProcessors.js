@@ -1,4 +1,5 @@
 exports.command = function(selector, callback) {
+    consoe.log(callback)
     var data = this.globals;
     this
       .url(this.launch_url)

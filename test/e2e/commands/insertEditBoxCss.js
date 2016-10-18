@@ -1,7 +1,10 @@
 exports.command = function(selector, callback) {
-  this.execute(function (text){
+        var preSel = toString(selector)
+
+    this
+      .execute(function (text,selector){
         return $(selector)[0].CodeMirror.setValue(text);
-      }, ["body{background:rgba(0, 0, 0, 1)"]);
+      }, ["body{background-color:#000}",selector]);
 
 
   return this; // allows the command to be chained.

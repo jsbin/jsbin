@@ -3,12 +3,10 @@ module.exports = {
    var data = client.globals;
     client
       .url(client.launch_url)
-      .waitForElementVisible('#panel-css')
-      .click('#panel-css')
+      .selectTab('#panel-css')
       .waitForElementVisible('.css .CodeMirror')
-      .execute(function (text){
-        return $('.css .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["body{background:rgba(0, 0, 0, 1)"])
+      .selectProcessorCss("#processor-css")
+      .insertEditBoxCss(".css .CodeMirror")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -20,29 +18,89 @@ module.exports = {
   },
 
   'Test processor-CSS  test' : function (client) {
-       var data = client.globals;
-        client
-          .check_css_processors("#processor-css");
+   var data = client.globals;
+    client
+      .url(client.launch_url)
+      .selectTab('#panel-css')
+      .waitForElementVisible('.css .CodeMirror')
+      .selectProcessorCss("#processor-css")
+      .insertEditBoxCss(".css .CodeMirror")
+        .frame(1)
+        .pause(data.defaultTime)
+        .frame(0)
+        .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+
+      client.end();
+
   },
   'Test processor-less  test' : function (client) {
        var data = client.globals;
         client
-          .check_css_processors("#processor-less");
+      .url(client.launch_url)
+      .selectTab('#panel-css')
+      .waitForElementVisible('.css .CodeMirror')
+      .selectProcessorCss("#processor-less")
+      .insertEditBoxCss(".css .CodeMirror")
+        .frame(1)
+        .pause(data.defaultTime)
+        .frame(0)
+        .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+
+      client.end();
+
   },
   'Test processor-myth  test' : function (client) {
        var data = client.globals;
-        client
-          .check_css_processors("#processor-myth");
+      client
+      .url(client.launch_url)
+      .selectTab('#panel-css')
+      .waitForElementVisible('.css .CodeMirror')
+      .selectProcessorCss("#processor-myth")
+      .insertEditBoxCss(".css .CodeMirror")
+        .frame(1)
+        .pause(data.defaultTime)
+        .frame(0)
+        .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+
+      client.end();
+
   },
   'Test processor-stylus  test' : function (client) {
        var data = client.globals;
         client
-          .check_css_processors("#processor-stylus");
+      .url(client.launch_url)
+      .selectTab('#panel-css')
+      .waitForElementVisible('.css .CodeMirror')
+      .selectProcessorCss("#processor-stylus")
+      .insertEditBoxCss(".css .CodeMirror")
+        .frame(1)
+        .pause(data.defaultTime)
+        .frame(0)
+        .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+
+      client.end();
+
   },
   'Test processor-convert-css  test' : function (client) {
        var data = client.globals;
         client
-          .check_css_processors("#processor-convert-css");
+            .url(client.launch_url)
+      .selectTab('#panel-css')
+      .waitForElementVisible('.css .CodeMirror')
+      .selectProcessorCss("#processor-convert-css")
+      .insertEditBoxCss(".css .CodeMirror")
+        .frame(1)
+        .pause(data.defaultTime)
+        .frame(0)
+        .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+
+      client.end();
+
   }
 
 };

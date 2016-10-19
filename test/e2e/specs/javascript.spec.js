@@ -3,12 +3,9 @@ module.exports = {
     var data = client.globals;
     client
       .url(client.launch_url)
-      .waitForElementVisible('#panel-javascript')
-      .click('#panel-javascript')
+      .selectTab('JavaScript')
       .waitForElementVisible('.javascript .CodeMirror')
-      client.execute(function (text){
-        return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, ["document.body.innerHTML = 'Hello'"])
+      .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)

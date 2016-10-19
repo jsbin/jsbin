@@ -1,12 +1,11 @@
+/*
 module.exports = {
   'Basic CSS test' : function (client) {
    var data = client.globals;
     client
       .url(client.launch_url)
-      .selectTab('#panel-css')
-      .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-css")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectTab('CSS')
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -21,10 +20,10 @@ module.exports = {
    var data = client.globals;
     client
       .url(client.launch_url)
-      .selectTab('#panel-css')
+      .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-css")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectProcessor("css")
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -38,10 +37,10 @@ module.exports = {
        var data = client.globals;
         client
       .url(client.launch_url)
-      .selectTab('#panel-css')
+      .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-less")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectProcessor("less")
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -55,10 +54,10 @@ module.exports = {
        var data = client.globals;
       client
       .url(client.launch_url)
-      .selectTab('#panel-css')
+      .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-myth")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectProcessor("myth")
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -72,10 +71,10 @@ module.exports = {
        var data = client.globals;
         client
       .url(client.launch_url)
-      .selectTab('#panel-css')
+      .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-stylus")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectProcessor("stylus")
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -88,11 +87,11 @@ module.exports = {
   'Test processor-convert-css  test' : function (client) {
        var data = client.globals;
         client
-            .url(client.launch_url)
-      .selectTab('#panel-css')
+      .url(client.launch_url)
+      .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessorCss("#processor-convert-css")
-      .insertEditBoxCss(".css .CodeMirror")
+      .selectProcessor("convert-css")
+      .setCssValue("body{background-color:#000}")
         .frame(1)
         .pause(data.defaultTime)
         .frame(0)
@@ -104,3 +103,4 @@ module.exports = {
   }
 
 };
+*/

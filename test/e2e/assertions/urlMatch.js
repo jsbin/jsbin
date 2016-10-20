@@ -14,24 +14,18 @@ function _interopRequireDefault(obj){
 }
 
 function assertion(regex, msg){
-  console.log('titan',msg)
   this.message = msg || _util2.default.format('Testing if the URL match the regex "%s".', regex);
   this.expected = regex;
 
   this.pass = function (value){
-      console.log('value',value)
-
     return this.expected.test(value);
   };
 
   this.value = function (result){
-    console.log('result',result)
-
     return result.value;
   };
 
   this.command = function (callback){
-    console.log('callback',callback)
     return this.api.url(callback);
   };
 }

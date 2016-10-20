@@ -1,5 +1,4 @@
 exports.command = function(selector, callback) {
-        var preSel = toString(selector)
     this
       .waitForElementVisible('.css .CodeMirror')
       .execute(function (text,selector){

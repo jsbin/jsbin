@@ -1,4 +1,4 @@
-/*
+
 module.exports = {
   'Basic CSS test' : function (client) {
    var data = client.globals;
@@ -11,9 +11,7 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   },
 
   'Test processor-CSS  test' : function (client) {
@@ -29,10 +27,9 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   },
+
   'Test processor-less  test' : function (client) {
        var data = client.globals;
         client
@@ -46,10 +43,9 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   },
+
   'Test processor-myth  test' : function (client) {
        var data = client.globals;
       client
@@ -63,10 +59,9 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   },
+
   'Test processor-stylus  test' : function (client) {
        var data = client.globals;
         client
@@ -80,10 +75,9 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   },
+
   'Test processor-convert-css  test' : function (client) {
        var data = client.globals;
         client
@@ -97,10 +91,7 @@ module.exports = {
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
-
       client.end();
-
   }
 
 };
-*/

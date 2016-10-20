@@ -14,46 +14,109 @@ module.exports = {
 
   'Test processor-javascript' : function (client) {
     client
-        .checkJsProcessors("#processor-javascript");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("javascript")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   },
 
   'Test processor-babel' : function (client) {
     client
-        .checkJsProcessors("#processor-babel");
+        .url(client.launch_url)
+        .selectTab('JavaScript')
+        .selectProcessor("babel")
+        .setJsValue("document.body.innerHTML = 'Hello'")
+        .frame(2)
+        .assert.containsText('body', 'Hello')
+        .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+        .end();
   },
 
   'Test processor-jsx' : function (client) {
     client
-        .checkJsProcessors("#processor-jsx");
+        .url(client.launch_url)
+        .selectTab('JavaScript')
+        .selectProcessor("jsx")
+        .setJsValue("document.body.innerHTML = 'Hello'")
+        .frame(2)
+        .assert.containsText('body', 'Hello')
+        .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+        .end();
   },
 
   'Test processor-coffeescript' : function (client) {
     client
-          .checkJsProcessors("#processor-coffeescript");
+          .url(client.launch_url)
+          .selectTab('JavaScript')
+          .selectProcessor("coffeescript")
+          .setJsValue("document.body.innerHTML = 'Hello'")
+          .frame(2)
+          .assert.containsText('body', 'Hello')
+          .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+          .end();
   },
 
   'Test processor-traceur' : function (client) {
     client
-      .checkJsProcessors("#processor-traceur");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("traceur")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   },
 
   'Test processor-typescript' : function (client) {
     client
-      .checkJsProcessors("#processor-typescript");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("typescript")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   },
 
   'Test processor-processing' : function (client) {
     client
-      .checkJsProcessors("#processor-processing");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("processing")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   },
 
   'Test processor-livescript' : function (client) {
     client
-      .checkJsProcessors("#processor-livescript");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("livescript")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   },
 
   'Test processor-convert' : function (client) {
     client
-      .checkJsProcessors("#processor-convert");
+      .url(client.launch_url)
+      .selectTab('JavaScript')
+      .selectProcessor("convert")
+      .setJsValue("document.body.innerHTML = 'Hello'")
+      .frame(2)
+      .assert.containsText('body', 'Hello')
+      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+      .end();
   }
 };

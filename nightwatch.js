@@ -15,7 +15,6 @@ module.exports = {
   "globals_path": "globals.js",
 
   "test_settings": {
-    waitForConditionTimeout : 1000,
 
     "local": {
       "launch_url": "http://localhost:3000/",

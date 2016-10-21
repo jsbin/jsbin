@@ -7,10 +7,10 @@ module.exports = {
       .selectTab('CSS')
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
-      client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
+      client.assert.testAsert(client);
       client.end();
   },
 
@@ -20,10 +20,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessor("css")
+      .selectCssProcessor("css")
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
@@ -36,10 +36,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessor("less")
+      .selectCssProcessor("less")
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
@@ -52,10 +52,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessor("myth")
+      .selectCssProcessor("myth")
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
@@ -68,10 +68,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessor("stylus")
+      .selectCssProcessor("stylus")
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);
@@ -84,10 +84,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('CSS')
       .waitForElementVisible('.css .CodeMirror')
-      .selectProcessor("convert-css")
+      .selectCssProcessor("convert-css")
       .setCssValue("body{background-color:#000}")
         .frame(1)
-        .pause(data.defaultTime)
+        .pause(data.defaultTimeout)
         .frame(0)
         .expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
       client.assert.urlMatch(/\/\w+\/edit\?html,css,output$/);

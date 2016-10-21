@@ -21,6 +21,6 @@ exports.command = function(selector, callback) {
     this
       .waitForElementVisible(lang +' .CodeMirror')
       .click(processorHref)
-      .click(processor).pause(data.defaultTime)
+      .click(processor).pause(data.defaultTimeout)
   return this; // allows the command to be chained.
 };

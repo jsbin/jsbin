@@ -16,7 +16,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("javascript")
+      .selectJsProcessor("javascript")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
@@ -28,7 +28,7 @@ module.exports = {
     client
         .url(client.launch_url)
         .selectTab('JavaScript')
-        .selectProcessor("babel")
+        .selectJsProcessor("babel")
         .setJsValue("document.body.innerHTML = 'Hello'")
         .frame(2)
         .assert.containsText('body', 'Hello')
@@ -40,7 +40,7 @@ module.exports = {
     client
         .url(client.launch_url)
         .selectTab('JavaScript')
-        .selectProcessor("jsx")
+        .selectJsProcessor("jsx")
         .setJsValue("document.body.innerHTML = 'Hello'")
         .frame(2)
         .assert.containsText('body', 'Hello')
@@ -52,7 +52,7 @@ module.exports = {
     client
           .url(client.launch_url)
           .selectTab('JavaScript')
-          .selectProcessor("coffeescript")
+          .selectJsProcessor("coffeescript")
           .setJsValue("document.body.innerHTML = 'Hello'")
           .frame(2)
           .assert.containsText('body', 'Hello')
@@ -64,7 +64,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("traceur")
+      .selectJsProcessor("traceur")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
@@ -76,7 +76,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("typescript")
+      .selectJsProcessor("typescript")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
@@ -88,7 +88,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("processing")
+      .selectJsProcessor("processing")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
@@ -100,7 +100,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("livescript")
+      .selectJsProcessor("livescript")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')
@@ -112,7 +112,7 @@ module.exports = {
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
-      .selectProcessor("convert")
+      .selectJsProcessor("convert")
       .setJsValue("document.body.innerHTML = 'Hello'")
       .frame(2)
       .assert.containsText('body', 'Hello')

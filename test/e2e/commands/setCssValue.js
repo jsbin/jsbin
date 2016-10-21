@@ -1,10 +1,9 @@
-exports.command = function(selector, callback) {
+exports.command = function(value, callback) {
     this
       .waitForElementVisible('.css .CodeMirror')
-      .execute(function (text,selector){
+      .execute(function (text){
         return $('.css .CodeMirror')[0].CodeMirror.setValue(text);
-      }, [selector]);
-
+      }, [value]);
 
   return this; // allows the command to be chained.
 };

@@ -14,9 +14,9 @@ function _interopRequireDefault(obj){
 }
 
 function assertion(regex, msg){
-  this.message = 'Testing';
+  this.message = msg || _util2.default.format('Testing if the URL match the regex "%s".', regex);
   this.expected = regex;
-
+  var lol = regex
   this.pass = function (value){
     return this.expected.test(value);
   };
@@ -26,7 +26,7 @@ function assertion(regex, msg){
   };
 
   this.command = function (callback){
-    return this.expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
+    return lol.expect.element('body').to.have.css('backgroundColor').which.equals('rgba(0, 0, 0, 1)');
   };
 }
 /**

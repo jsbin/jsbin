@@ -695,10 +695,10 @@ var libraries = [
   },
   {
     'url': [
-      '//vjs.zencdn.net/5.6/video-js.css',
-      '//vjs.zencdn.net/5.6/video.js'
+      '//vjs.zencdn.net/5.11/video-js.css',
+      '//vjs.zencdn.net/5.11/video.js'
     ],
-    'label': 'Video.js 5.6.x'
+    'label': 'Video.js 5.11.x'
   },
   {
     'url': [

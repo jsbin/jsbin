@@ -1,5 +1,5 @@
 document.getElementById('bsaapi').innerHTML = '<a href="{{ad.statlink}}" target="_blank">{{ad.description}}</a>{{#if ad.pixel}}<img src="{{ad.pixel}}">{{/if}}';
-$('body').addClass('bsaapi');
+{{#if ad.description}}$('body').addClass('bsaapi');{{/if}}
 $('#bsaapi a').click(function () {
   jsbin.analytics.track('ad', 'click', 'bsa');
 });

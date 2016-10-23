@@ -3,20 +3,22 @@
  *
  * ```
  *    this.demoTest = function (client) {
- *      browser.assert.cssProperty('#main', 'display', 'block');
+ *      browser.assert.cssProperty('white',client);
  *    };
  * ```
  *
- * @method cssProperty
- * @param {string} selector The selector (CSS / Xpath) used to locate the element.
- * @param {string} cssProperty The CSS property.
+ * @method bodyBgColorProp
  * @param {string} expected The expected value of the css property to check.
+ * @param client
  * @param {string} [message] Optional log message to display in the output. If missing, one is displayed by default.
+ * @frame api Change focus to another frame on the page.
+ * @globals Global values
  * @api assertions
  */
 
 var util = require('util');
 exports.assertion = function(expected,client, msg) {
+  var data = client.globals;
 
   var MSG_ELEMENT_NOT_FOUND = 'Testing if element <%s> has css property %s. ' +
     'Element or attribute could not be located.';
@@ -41,10 +43,10 @@ exports.assertion = function(expected,client, msg) {
   };
 
   this.command = function(callback) {
-  client  .frame(1)
-        .pause(1000)
-        .frame(0)
-
+  client
+      .frame(1)
+      .pause(data.defaultTimeout)
+      .frame(0);
     return this.api.getCssProperty('body', 'backgroundColor', callback);
   };
 

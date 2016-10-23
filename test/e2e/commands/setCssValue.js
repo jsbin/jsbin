@@ -1,4 +1,4 @@
-exports.command = function(value, callback) {
+exports.command = function(value) {
     this
       .waitForElementVisible('.css .CodeMirror')
       .execute(function (text){

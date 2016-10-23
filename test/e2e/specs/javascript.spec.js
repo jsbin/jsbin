@@ -6,7 +6,7 @@ module.exports = {
       .selectTab('JavaScript')
       .waitForElementVisible('.javascript .CodeMirror')
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -18,7 +18,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("javascript")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -30,7 +30,7 @@ module.exports = {
         .selectTab('JavaScript')
         .selectJsProcessor("babel")
         .setJsValue("document.body.innerHTML = 'Hello'")
-        .frame(2)
+        .selectOutputFrame(2)
         .assert.containsText('body', 'Hello')
         .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
         .end();
@@ -42,7 +42,7 @@ module.exports = {
         .selectTab('JavaScript')
         .selectJsProcessor("jsx")
         .setJsValue("document.body.innerHTML = 'Hello'")
-        .frame(2)
+        .selectOutputFrame(2)
         .assert.containsText('body', 'Hello')
         .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
         .end();
@@ -54,7 +54,7 @@ module.exports = {
           .selectTab('JavaScript')
           .selectJsProcessor("coffeescript")
           .setJsValue("document.body.innerHTML = 'Hello'")
-          .frame(2)
+          .selectOutputFrame(2)
           .assert.containsText('body', 'Hello')
           .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
           .end();
@@ -66,7 +66,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("traceur")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -78,7 +78,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("typescript")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -90,7 +90,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("processing")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -102,7 +102,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("livescript")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -114,7 +114,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("convert")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .frame(2)
+      .selectOutputFrame(2)
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();

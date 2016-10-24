@@ -12,9 +12,6 @@ const TRAVIS_JOB_NUMBER = process.env.TRAVIS_JOB_NUMBER;
 
 module.exports = {
   "src_folders": ["test/e2e/specs"],
-  "globals_path": "",
-  "globals":"",
-
   "test_settings": {
     "local": {
       "launch_url": "http://localhost:3000/",

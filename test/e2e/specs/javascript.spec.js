@@ -1,12 +1,11 @@
 module.exports = {
   'General JavaScript  test' : function (client) {
-    var data = client.globals;
     client
       .url(client.launch_url)
       .selectTab('JavaScript')
       .waitForElementVisible('.javascript .CodeMirror')
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -18,7 +17,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("javascript")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -30,7 +29,7 @@ module.exports = {
         .selectTab('JavaScript')
         .selectJsProcessor("babel")
         .setJsValue("document.body.innerHTML = 'Hello'")
-        .selectOutputFrame(2)
+        .selectOutputFrame()
         .assert.containsText('body', 'Hello')
         .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
         .end();
@@ -42,7 +41,7 @@ module.exports = {
         .selectTab('JavaScript')
         .selectJsProcessor("jsx")
         .setJsValue("document.body.innerHTML = 'Hello'")
-        .selectOutputFrame(2)
+        .selectOutputFrame()
         .assert.containsText('body', 'Hello')
         .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
         .end();
@@ -54,7 +53,7 @@ module.exports = {
           .selectTab('JavaScript')
           .selectJsProcessor("coffeescript")
           .setJsValue("document.body.innerHTML = 'Hello'")
-          .selectOutputFrame(2)
+          .selectOutputFrame()
           .assert.containsText('body', 'Hello')
           .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
           .end();
@@ -66,7 +65,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("traceur")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -77,8 +76,8 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('JavaScript')
       .selectJsProcessor("typescript")
-      .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .setJsValue("let hren: string = 'Hello';document.body.innerHTML = hren")
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -90,7 +89,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("processing")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -102,7 +101,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("livescript")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
@@ -114,7 +113,7 @@ module.exports = {
       .selectTab('JavaScript')
       .selectJsProcessor("convert")
       .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame(2)
+      .selectOutputFrame()
       .assert.containsText('body', 'Hello')
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();

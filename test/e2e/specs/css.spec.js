@@ -25,7 +25,7 @@ module.exports = {
           .url(client.launch_url)
           .selectTab('CSS')
           .selectCssProcessor("less")
-          .setCssValue("body{background-color:#000}")
+          .setCssValue("@color:#000;body{background-color:@color}")
           .assert.bodyBgColorProp(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
@@ -36,7 +36,8 @@ module.exports = {
           .url(client.launch_url)
           .selectTab('CSS')
           .selectCssProcessor("myth")
-          .setCssValue("body{background-color:#000}")
+          .setCssValue(":root {--bgcolor: #000;}" +
+              "body{background-color: var(--bgcolor)}")
           .assert.bodyBgColorProp(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
@@ -47,7 +48,7 @@ module.exports = {
           .url(client.launch_url)
           .selectTab('CSS')
           .selectCssProcessor("stylus")
-          .setCssValue("body{background-color:#000}")
+          .setCssValue("body \n background-color #000")
           .assert.bodyBgColorProp(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();

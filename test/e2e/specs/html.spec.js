@@ -7,9 +7,7 @@ module.exports = {
     .execute(function (text){
       return $('.html .CodeMirror')[0].CodeMirror.setValue(text);
     }, ["<b>jsbin"])//This check is the text in html. <b> isn't really a text
-    .frame(1)
-    .pause(data.defaultTimeout)
-    .frame(0)
+    .goFrame()
     .assert.containsText('body', 'jsbin')
     .assert.urlMatch(/\/\w+\/edit\?html,output$/)
     .end();

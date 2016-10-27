@@ -1,29 +1,11 @@
-/**
- * Checks if the specified css property of a given element has the expected value.
- *
- * ```
- *    this.demoTest = function (client) {
- *      browser.assert.cssProperty('white',client);
- *    };
- * ```
- *
- * @method bodyBgColorProp
- * @param {string} expected The expected value of the css property to check.
- * @param client
- * @param {string} [message] Optional log message to display in the output. If missing, one is displayed by default.
- * @frame api Change focus to another frame on the page.
- * @globals Global values
- * @api assertions
- */
-
 var util = require('util');
 exports.assertion = function(expected,client, msg) {
   var data = client.globals;
 
-  var MSG_ELEMENT_NOT_FOUND = 'Testing if element <%s> has css property %s. ' +
-    'Element or attribute could not be located.';
+  var MSG_ELEMENT_NOT_FOUND = 'Testing if element body has css property backgroundColor: %s ' +
+    'Element could not be located or backgroundColor does not match the verification  %s';
 
-  this.message = msg || util.format('Testing if element <%s> has css property "%s: %s".', 'body', 'backgroundColor', expected);
+  this.message = msg || util.format('Testing if body has css property backgroundColor: %s', expected);
   this.expected = expected;
 
   this.pass = function(value) {
@@ -44,9 +26,7 @@ exports.assertion = function(expected,client, msg) {
 
   this.command = function(callback) {
   client
-      .frame(1)
-      .pause(data.defaultTimeout)
-      .frame(0);
+      .goFrame();
     return this.api.getCssProperty('body', 'backgroundColor', callback);
   };
 

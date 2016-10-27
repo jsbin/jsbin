@@ -27,7 +27,7 @@ module.exports = {
 
     "remote": {
       desiredCapabilities: {
-        browserName: "chrome",
+        browserName:"chrome",
         platform: "OS X 10.11",
         version: "latest",
         build: 'build-' + TRAVIS_JOB_NUMBER,

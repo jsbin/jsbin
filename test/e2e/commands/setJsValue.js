@@ -1,9 +1,9 @@
-exports.command = function(value) {
+exports.command = function(text) {
     this
       .waitForElementVisible('.javascript .CodeMirror')
       .execute(function (text){
         return $('.javascript .CodeMirror')[0].CodeMirror.setValue(text);
-      }, [value]);
+      }, [text]);
 
   return this; // allows the command to be chained.
 };

@@ -26,7 +26,7 @@ exports.assertion = function(expected,client, msg) {
 
   this.command = function(callback) {
   client
-      .goFrame();
+      .goFrames();
     return this.api.getCssProperty('body', 'backgroundColor', callback);
   };
 

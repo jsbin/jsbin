@@ -1,4 +1,5 @@
 exports.command = function() {
+    var data = this.globals;
     this
     .frame(1)
     .pause(data.defaultTimeout)

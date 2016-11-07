@@ -1,6 +1,5 @@
 module.exports = {
  'Basic HTML test': function (client){
-   var data = client.globals;
    client
     .url(client.launch_url)
     .setHtml("<b>jsbin")

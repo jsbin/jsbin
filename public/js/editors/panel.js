@@ -54,6 +54,12 @@ CodeMirror.commands.snippets = function (cm) {
   }
 };
 
+if(jsbin.settings.editor.tabMode === "default") {
+  CodeMirror.keyMap.basic.Tab = undefined;
+} else if(jsbin.settings.editor.tabMode !== "classic") {
+  CodeMirror.keyMap.basic.Tab = "indentMore";
+}
+
 var Panel = function (name, settings) {
   'use strict';
   var panel = this,

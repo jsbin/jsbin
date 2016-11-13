@@ -89,9 +89,10 @@ module.exports = {
       .url(client.launch_url)
       .selectTab('JavaScript')
       .selectJsProcessor("processing")
-      .setJsValue("str value = 'Hello';\ndocument.body.innerHTML = value;")
+      .setJsValue("size(200, 200);\nbackground(204);")
       .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
+      .assert.attributeEquals("canvas", "width", "200")
+      .assert.attributeEquals("canvas", "height", "200")
       .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
       .end();
   },

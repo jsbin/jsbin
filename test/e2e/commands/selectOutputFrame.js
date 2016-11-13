@@ -1,4 +1,9 @@
 exports.command = function() {
-  this.frame(2)
-  return this; // allows the command to be chained.
+    this
+    .frame('iframe-live-one')
+    .pause(this.globals.defaultTimeout)
+    .frame(0)
+    .pause(this.globals.defaultTimeout);
+
+  return this;
 };

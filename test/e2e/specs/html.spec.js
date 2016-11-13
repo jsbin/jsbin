@@ -3,7 +3,7 @@ module.exports = {
    client
     .url(client.launch_url)
     .setHtml("<b>jsbin")
-    .goFrames()
+    .selectOutputFrame()
     .assert.containsText('body', 'jsbin')
     .assert.urlMatch(/\/\w+\/edit\?html,output$/)
     .end();

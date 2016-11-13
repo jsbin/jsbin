@@ -5,5 +5,5 @@ exports.command = function(text) {
         return $('.css .CodeMirror')[0].CodeMirror.setValue(text);
       }, [text]);
 
-  return this; // allows the command to be chained.
+  return this;
 };

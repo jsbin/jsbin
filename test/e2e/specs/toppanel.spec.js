@@ -7,7 +7,7 @@ module.exports = {
     .waitForElementNotVisible('.toppanel-hide')
     .click('.toppanel-logo')
     .waitForElementVisible('.toppanel-hide')
-    .assert.urlMatch(/\/\?html,output$/)//real server adress ?html,css,output$/ . You need to find out why an address ?html,output
+    .assert.urlMatch(/\/\?html,output$/)
     .end();
  }
 };

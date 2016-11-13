@@ -5,7 +5,7 @@ module.exports = {
           .url(client.launch_url)
           .selectTab('CSS')
           .setCssValue("body{background-color:#000}")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .end();
   },
 
@@ -15,7 +15,7 @@ module.exports = {
           .selectTab('CSS')
           .selectCssProcessor("css")
           .setCssValue("body{background-color:#000}")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
   },
@@ -26,7 +26,7 @@ module.exports = {
           .selectTab('CSS')
           .selectCssProcessor("less")
           .setCssValue("@color:#000;body{background-color:@color}")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
   },
@@ -38,7 +38,7 @@ module.exports = {
           .selectCssProcessor("myth")
           .setCssValue(":root {--bgcolor: #000;}" +
               "body{background-color: var(--bgcolor)}")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
   },
@@ -49,7 +49,7 @@ module.exports = {
           .selectTab('CSS')
           .selectCssProcessor("stylus")
           .setCssValue("body \n background-color #000")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
   },
@@ -60,7 +60,7 @@ module.exports = {
           .selectTab('CSS')
           .selectCssProcessor("convert-css")
           .setCssValue("body{background-color:#000}")
-          .assert.bodyBgColorProp(bgColorProp,client)
+          .assert.outputBackgroundIs(bgColorProp,client)
           .assert.urlMatch(/\/\w+\/edit\?html,css,output$/)
           .end();
   }

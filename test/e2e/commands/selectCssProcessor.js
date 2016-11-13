@@ -1,9 +1,9 @@
-exports.command = function(selector, callback) {
-    var data = this.globals;
-    var processor = '#processor-' + selector;
+exports.command = function(cssPreprocessor, callback) {
+    var processor = '#processor-' + cssPreprocessor;
     this
       .waitForElementVisible('.css .CodeMirror')
       .click('a[href="#cssprocessors"]')
-      .click(processor).pause(data.defaultTimeout)
-  return this; // allows the command to be chained.
+      .click(processor).pause(this.globals.defaultTimeout)
+
+  return this;
 };

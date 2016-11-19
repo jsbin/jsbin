@@ -1,123 +1,104 @@
 module.exports = {
-  'General JavaScript  test' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .waitForElementVisible('.javascript .CodeMirror')
-      .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript without preprocessing': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .waitForElementVisible('.javascript .CodeMirror')
+            .setJsValue("document.body.innerHTML = 'Hello'")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
+            .end();
+    },
 
-  'Test processor-javascript' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("javascript")
-      .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript preprocessed with JavaScript': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("javascript")
+            .setJsValue("document.body.innerHTML = 'Hello'")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-babel' : function (client) {
-    client
-        .url(client.launch_url)
-        .selectTab('JavaScript')
-        .selectJsProcessor("babel")
-        .setJsValue("const value = 'Hello';\ndocument.body.innerHTML = value;")
-        .selectOutputFrame()
-        .assert.containsText('body', 'Hello')
-        .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-        .end();
-  },
+    'Test JavaScript preprocessed with Babel': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("babel")
+            .setJsValue("let value = `\nHello`;\ndocument.body.innerHTML = value;")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-jsx' : function (client) {
-    client
-        .url(client.launch_url)
-        .setHtml("<div id='root'> </div>")
-        .selectTab('JavaScript')
-        .selectJsProcessor("jsx")
-        .setJsValue("ReactDOM.render\n(<div>Hello</div>,\n document.getElementById('root'));")
-        .selectOutputFrame()
-        .assert.containsText('body', 'Hello')
-        .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-        .end();
-  },
+    'Test JavaScript preprocessed with JSX': function (client) {
+        client
+            .url(client.launch_url)
+            .setHtml("<div id='root'> </div>")
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("jsx")
+            .setJsValue("ReactDOM.render\n(<div>Hello</div>,\n document.getElementById('root'));")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-coffeescript' : function (client) {
-    client
-          .url(client.launch_url)
-          .selectTab('JavaScript')
-          .selectJsProcessor("coffeescript")
-          .setJsValue("class Foo\n bar: 'Hello'\nobj = new Foo()\ndocument.body.innerHTML = obj.bar")
-          .selectOutputFrame()
-          .assert.containsText('body', 'Hello')
-          .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-          .end();
-  },
+    'Test JavaScript preprocessed with CoffeeScript': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("coffeescript")
+            .setJsValue("class Foo\n bar: 'Hello'\nobj = new Foo()\ndocument.body.innerHTML = obj.bar")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-traceur' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("traceur")
-      .setJsValue("const value = 'Hello';\ndocument.body.innerHTML = value;")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript preprocessed with Traceur': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("traceur")
+            .setJsValue("const value = 'Hello';\ndocument.body.innerHTML = value;")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-typescript' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("typescript")
-      .setJsValue("let value: string = 'Hello';\ndocument.body.innerHTML = value;")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript preprocessed with TypeScript': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("typescript")
+            .setJsValue("let value: string = 'Hello';\ndocument.body.innerHTML = value;")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    },
 
-  'Test processor-processing' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("processing")
-      .setJsValue("size(200, 200);\nbackground(204);")
-      .selectOutputFrame()
-      .assert.attributeEquals("canvas", "width", "200")
-      .assert.attributeEquals("canvas", "height", "200")
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript preprocessed with Processing': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("processing")
+            .setJsValue("size(200, 200);")
+            .selectOutputFrame()
+            .assert.attributeEquals("canvas", "width", "200")
+            .assert.attributeEquals("canvas", "height", "200")
+            .end();
+    },
 
-  'Test processor-livescript' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("livescript")
-      .setJsValue("value = \\Hello;\ndocument.body.innerHTML = value;")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  },
+    'Test JavaScript preprocessed with LiveScript': function (client) {
+        client
+            .url(client.launch_url)
+            .selectTab('#panel-javascript')
+            .selectJsProcessor("livescript")
+            .setJsValue("value = \\Hello;\ndocument.body.innerHTML = value;")
+            .selectOutputFrame()
+            .assert.containsText('body', 'Hello')
+            .end();
+    }
 
-  'Test processor-convert' : function (client) {
-    client
-      .url(client.launch_url)
-      .selectTab('JavaScript')
-      .selectJsProcessor("convert")
-      .setJsValue("document.body.innerHTML = 'Hello'")
-      .selectOutputFrame()
-      .assert.containsText('body', 'Hello')
-      .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
-      .end();
-  }
 };

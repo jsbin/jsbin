@@ -1,9 +1,7 @@
-exports.command = function(cssPreprocessor, callback) {
-    var processor = '#processor-' + cssPreprocessor;
-    this
-      .waitForElementVisible('.css .CodeMirror')
-      .click('a[href="#cssprocessors"]')
-      .click(processor).pause(this.globals.defaultTimeout)
+exports.command = function (processor, callback) {
+    return this
+        .waitForElementVisible('.css .CodeMirror')
+        .click('a[href="#cssprocessors"]')
+        .click('#processor-' + processor).pause(this.globals.defaultTimeout);
 
-  return this;
 };

@@ -33,7 +33,7 @@ module.exports = {
                 build: 'build-' + TRAVIS_JOB_NUMBER,
                 'tunnel-identifier': TRAVIS_JOB_NUMBER,
                 "username": "jsbin",
-                "access_key": "b9f917a9-f546-4adf-95a7-09341e70c287",
+                "access_key": "b9f917a9-f546-4adf-95a7-09341e70c287"
             },
             "launch_url": "http://localhost:3000/",
             "selenium_port": 80,
@@ -47,8 +47,8 @@ module.exports = {
             "use_ssl": false,
             "output": true,
             "globals": {
-                "waitForConditionTimeout": 1000,
-                "defaultTimeout": 1000
+                "waitForConditionTimeout": 500,
+                "defaultTimeout": 500
             }
         }
     },

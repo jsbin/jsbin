@@ -9,7 +9,6 @@ module.exports = {
             .assert.outputBackgroundIs(bgColorProp)
             .end();
     },
-
     'Test CSS preprocessed with CSS  ': function (client) {
         client
             .url(client.launch_url)
@@ -20,7 +19,6 @@ module.exports = {
             .assert.outputBackgroundIs(bgColorProp)
             .end();
     },
-
     'Test CSS preprocessed with Less  ': function (client) {
         client
             .url(client.launch_url)
@@ -31,7 +29,6 @@ module.exports = {
             .assert.outputBackgroundIs(bgColorProp)
             .end();
     },
-
     'Test CSS preprocessed with Myth  ': function (client) {
         client
             .url(client.launch_url)
@@ -43,7 +40,6 @@ module.exports = {
             .assert.outputBackgroundIs(bgColorProp)
             .end();
     },
-
     'Test CSS preprocessed with Stylus  ': function (client) {
         client
             .url(client.launch_url)

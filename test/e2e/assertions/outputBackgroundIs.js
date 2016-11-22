@@ -1,6 +1,5 @@
 var util = require('util');
 exports.assertion = function (expected, msg) {
-
     var MSG_ELEMENT_NOT_FOUND = 'Testing if output body has css property backgroundColor: %s ' +
         'Element could not be located or backgroundColor does not match the verification  %s';
 

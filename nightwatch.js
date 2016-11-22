@@ -32,8 +32,8 @@ module.exports = {
                 version: "45.0",
                 build: 'build-' + TRAVIS_JOB_NUMBER,
                 'tunnel-identifier': TRAVIS_JOB_NUMBER,
-                "username": "jsbin",
-                "access_key": "b9f917a9-f546-4adf-95a7-09341e70c287"
+                "username": "",
+                "access_key": ""
             },
             "launch_url": "http://localhost:3000/",
             "selenium_port": 80,

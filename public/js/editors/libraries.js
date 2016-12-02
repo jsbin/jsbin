@@ -574,9 +574,9 @@ var libraries = [
   },
   {
     'url':[
-      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r72/three.min.js'
+      'https://cdnjs.cloudflare.com/ajax/libs/three.js/r82/three.min.js'
     ],
-    'label': 'Three.js r72'
+    'label': 'Three.js r82'
   },
   {
     'url':[

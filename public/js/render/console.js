@@ -266,6 +266,17 @@ window._console = {
   clear: function () {
     output.innerHTML = '';
   },
+  assert: function() { 
+    if (arguments.length === 0  || !eval(arguments[0])) {
+      var msg = [];
+      for(var p in arguments) {
+          if (p === "0") continue;
+          msg.push(arguments[p]);
+      }
+      var assertionMsg = msg.join(' ') || 'console.assert'
+      log('Assertion failed: '+assertionMsg, 'error');
+    }
+  },
   log: function () {
     var l = arguments.length, i = 0;
     for (; i < l; i++) {

@@ -17,8 +17,8 @@ module.exports = {
         client
             .url(client.launch_url)
             .click('#loginbtn').pause(client.globals.defaultTimeout)
-            .setValue('#login-username', 'voicetime@yandex.ru')
-            .setValue('#login-key', '12345678')
+            .setValue('#login-username', '')
+            .setValue('#login-key', '')
             .pause(client.globals.defaultTimeout);
         client
             .click('input[value="Log in"]')

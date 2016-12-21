@@ -16,13 +16,7 @@ module.exports = {
     'Archive and Unarchive  bin test': function (client) {
         client
             .url(client.launch_url)
-            .click('#loginbtn').pause(client.globals.defaultTimeout)
-            .setValue('#login-username', '')
-            .setValue('#login-key', '')
-            .pause(client.globals.defaultTimeout);
-        client
-            .click('input[value="Log in"]')
-            .pause(client.globals.defaultTimeout)
+            .setLogin('yourmail', '123')
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Archive'")
@@ -34,7 +28,8 @@ module.exports = {
             .click('a.toppanel-button.homebtn')
             .pause(client.globals.defaultTimeout)
             .click('#toggleArchive')
-            .assert.urlMatch(/\/\w+\/edit\?/).pause(client.globals.defaultTimeout);
+            .assert.urlMatch(/\/\w+\/edit\?/)
+            .pause(client.globals.defaultTimeout);
         client.url(function (response) {
             var url = response.value;
             var arrDataUrl = url.split('/');
@@ -56,8 +51,8 @@ module.exports = {
                 client
                     .pause(client.globals.defaultTimeout)
                     .click('tr[data-url="/' + arrDataUrl[3] + '/1"]')
-                    .pause(1000)
-                    .click('.unarchive').pause(1000);
+                    .pause(client.globals.defaultTimeout)
+                    .click('.unarchive').pause(client.globals.defaultTimeout);
                 client.expect.element('tr[data-url="/' + arrDataUrl[3] + '/1"]').to.be.not.visible;
             });
         client.end();
@@ -79,7 +74,8 @@ module.exports = {
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Clone'")
-            .click('a.brand.button.button-dropdown.group.button-dropdown-arrow').pause(1000);
+            .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
+            .pause(client.globals.defaultTimeout);
         client.url(function (response) {
             client.assert.urlMatch(/\/\w+\/edit\?html,js,output$/);
             var url = response.value;
@@ -100,6 +96,16 @@ module.exports = {
                 });
         });
         client.end();
+    },
+    'My bins test': function (client) {
+        client
+            .url(client.launch_url)
+            .setLogin('yourmail', '123')
+            .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
+            .pause(client.globals.defaultTimeout)
+            .click('a[data-shortcut="ctrl+o"]')
+            .pause(client.globals.defaultTimeout);
+        client.expect.element('#history').to.be.visible;
+        client.end();
     }
-
 };

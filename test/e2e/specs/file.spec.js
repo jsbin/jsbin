@@ -1,5 +1,5 @@
 module.exports = {
-    'Create fresh bin test': function (client) {
+  /*  'Create fresh bin test': function (client) {
         client
             .url(client.launch_url)
             .selectTab('#panel-javascript')
@@ -107,5 +107,31 @@ module.exports = {
             .pause(client.globals.defaultTimeout);
         client.expect.element('#history').to.be.visible;
         client.end();
+    },*/
+        'Save snapshot test': function (client) {
+        client
+            .url(client.launch_url)
+            .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
+            .pause(client.globals.defaultTimeout)
+            .click('a[data-shortcut="ctrl+s"]')
+            .pause(client.globals.defaultTimeout)
+            .assert.urlMatch(/\/\w+\/edit\?html,output$/)
+            .end();
+    },
+            'Export as gist test': function (client) {
+        client
+            .url(client.launch_url)
+            .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
+            .pause(client.globals.defaultTimeout)
+            .click('a[href="#export-to-gist"]')
+            .pause(client.globals.defaultTimeout)
+            .click('#tip a')
+            .pause(client.globals.defaultTimeout)
+            .selectWindow(1)
+            .pause(client.globals.defaultTimeout)
+            .assert.urlMatch(/\.github\.com\/anonymous\/[a-z0-9-]+/)
+            .end();
     }
+
+
 };

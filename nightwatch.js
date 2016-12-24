@@ -21,13 +21,16 @@ module.exports = {
             },
             "globals": {
                 "waitForConditionTimeout": 1000,
-                "defaultTimeout": 1000,
+                "defaultTimeout": 150,
+                "defaultTimeoutMax": 1000,
                 "buttonUrls":{
                     "menuHelpTips":"http://jsbin.com/help",
                     "menuFeedback":"https://github.com/jsbin/jsbin/issues/new",
                     "menuFork":"https://gratipay.com/jsbin/",
                     "menuFollowJsbin" : "https://twitter.com/js_bin"
-                }
+                },
+                "github":{"login":"", "password":""},
+                "jsbin":{"login":"yourmail", "password":"123"}
             }
         },
         "remote": {

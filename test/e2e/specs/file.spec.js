@@ -5,11 +5,11 @@ module.exports = {
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Hello'")
-            .pause(client.globals.defaultTimeout)
+            .pause(client.globals.defaultTimeoutMax)
             .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .click('#createnew')
-            .pause(client.globals.defaultTimeout)
+            .pause(client.globals.defaultTimeoutMax)
             .assert.urlMatch(/\/\?html,js,output/)
             .end();
     },
@@ -20,7 +20,7 @@ module.exports = {
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Archive'")
-            .pause(client.globals.defaultTimeout)
+            .pause(client.globals.defaultTimeoutMax)
             .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .click('a.archivebin.button.group')
@@ -100,7 +100,7 @@ module.exports = {
     'My bins test': function (client) {
         client
             .url(client.launch_url)
-            .setLogin('yourmail', '123')
+            .setLogin(client.globals.jsbin.login, client.globals.jsbin.password)
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .pause(client.globals.defaultTimeout)
             .click('a[data-shortcut="ctrl+o"]')
@@ -124,7 +124,7 @@ module.exports = {
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .pause(client.globals.defaultTimeout)
             .click('a[href="#export-to-gist"]')
-            .pause(client.globals.defaultTimeout)
+            .pause(1000)
             .click('#tip a')
             .pause(client.globals.defaultTimeout)
             .selectWindow(1)

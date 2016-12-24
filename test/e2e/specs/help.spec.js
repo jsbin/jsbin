@@ -33,9 +33,11 @@ module.exports = {
             .click('#menu-feedback').pause(client.globals.defaultTimeout)
             .selectWindow(1)
             .url(function (response) {
-                if (client.globals.buttonUrls.menuFeedback != response.value + '') {
-                    console.log('Sign in to GitHub!!!!');
-                    client.end();
+                if (client.globals.buttonUrls.menuFeedback != response.value) {
+                    client.pause(this.globals.defaultTimeout)
+                        .setValue('#login_field', client.globals.github.login)
+                        .setValue('#password', client.globals.github.password);
+                    client.click('input[value="Sign in"]').pause(1000);
                 }
             });
         client.assert.urlEquals(client.globals.buttonUrls.menuFeedback);

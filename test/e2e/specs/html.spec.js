@@ -1,5 +1,5 @@
 module.exports = {
-    'Basic HTML test': function (client) {
+    'Test HTML': function (client) {
         client
             .url(client.launch_url)
             .setHtml("jsbin") 

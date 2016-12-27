@@ -1,5 +1,5 @@
 module.exports = {
-    'Basic top panel test': function (client) {
+    'Test hide and show top panel': function (client) {
         client
             .url(client.launch_url)
             .click('.toppanel-hide');

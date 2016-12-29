@@ -5,11 +5,11 @@ module.exports = {
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Hello'")
-            .pause(client.globals.defaultTimeoutMax)
+            .pause(1000)
             .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .click('#createnew')
-            .pause(client.globals.defaultTimeoutMax)
+            .pause(1000)
             .assert.urlMatch(/\/\?html,js,output/)
             .end();
     },
@@ -20,7 +20,7 @@ module.exports = {
             .selectTab('#panel-javascript')
             .waitForElementVisible('.javascript .CodeMirror')
             .setJsValue("document.body.innerHTML = 'Archive'")
-            .pause(client.globals.defaultTimeoutMax)
+            .pause(1000)
             .assert.urlMatch(/\/\w+\/edit\?html,js,output$/)
             .click('a.brand.button.button-dropdown.group.button-dropdown-arrow')
             .click('a.archivebin.button.group')

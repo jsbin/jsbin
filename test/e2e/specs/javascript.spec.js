@@ -41,7 +41,7 @@ module.exports = {
             .selectJsProcessor("jsx")
             .setJsValue("ReactDOM.render\n(<div>Hello</div>,\n document.getElementById('root'));")
             .selectOutputFrame()
-            .pause(client.globals.defaultTimeoutMax)
+            .pause(1000)
             .assert.containsText('body', 'Hello')
             .end();
     },

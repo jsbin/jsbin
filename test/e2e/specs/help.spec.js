@@ -21,7 +21,8 @@ module.exports = {
         client
             .url(client.launch_url)
             .click('#button-help')
-            .click('#menu-help-tips').pause(client.globals.defaultTimeout)
+            .click('#menu-help-tips')
+            .pause(client.globals.defaultTimeout)
             .selectWindow(1)
             .assert.urlEquals(client.globals.buttonUrls.menuHelpTips)
             .end();

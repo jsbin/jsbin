@@ -7,7 +7,7 @@ exports.command = function (username, key) {
         .pause(this.globals.defaultTimeout);
     this
         .click('input[value="Log in"]')
-        .pause(this.globals.defaultTimeoutMax);
+        .pause(1000);
     return this
 };
 

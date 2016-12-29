@@ -22,14 +22,13 @@ module.exports = {
             "globals": {
                 "waitForConditionTimeout": 1000,
                 "defaultTimeout": 150,
-                "defaultTimeoutMax": 1000,
                 "buttonUrls":{
                     "menuHelpTips":"http://jsbin.com/help",
                     "menuFeedback":"https://github.com/jsbin/jsbin/issues/new",
                     "menuFork":"https://gratipay.com/jsbin/",
                     "menuFollowJsbin" : "https://twitter.com/js_bin"
                 },
-                "github":{"login":"", "password":""},
+                "github":{"login":"ilyjs", "password":"Tvrain9011540"},
                 "jsbin":{"login":"yourmail", "password":"123"}
             }
         },
@@ -41,8 +40,8 @@ module.exports = {
                 version: "45.0",
                 build: 'build-' + TRAVIS_JOB_NUMBER,
                 'tunnel-identifier': TRAVIS_JOB_NUMBER,
-                "username": "",
-                "access_key": ""
+                "username": "ilyajs",
+                "access_key": "2addb26e-5725-40c8-b1da-8778cb845253"
             },
             "launch_url": "http://localhost:3000/",
             "selenium_port": 80,

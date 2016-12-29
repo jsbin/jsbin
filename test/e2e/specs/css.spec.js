@@ -22,7 +22,7 @@ module.exports = {
 'Test CSS preprocessed with Less  ': function (client) {
     client
         .url(client.launch_url)
-        .selectTab('#panel-css')
+        .selectTab("#panel-css")
         .selectCssProcessor("less")
         .setCssValue("@color:#000;body{background-color:@color}")
         .selectOutputFrame()

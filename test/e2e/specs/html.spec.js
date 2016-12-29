@@ -4,7 +4,7 @@ module.exports = {
             .url(client.launch_url)
             .setHtml("jsbin") 
             .selectOutputFrame()
-            .assert.containsText('body', 'jsbin')
+            .assert.containsText("body", "jsbin")
             .assert.urlMatch(/\/\w+\/edit\?html,output$/)
             .end();
     }

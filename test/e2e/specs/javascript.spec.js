@@ -37,52 +37,52 @@ module.exports = {
         client
             .url(client.launch_url)
             .setHtml("<div id='root'> </div>")
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("jsx")
             .setJsValue("ReactDOM.render\n(<div>Hello</div>,\n document.getElementById('root'));")
             .selectOutputFrame()
             .pause(client.globals.defaultTimeout)
-            .assert.containsText('body', 'Hello')
+            .assert.containsText("body", "Hello")
             .end();
     },
 
     'Test JavaScript preprocessed with CoffeeScript': function (client) {
         client
             .url(client.launch_url)
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("coffeescript")
             .setJsValue("class Foo\n bar: 'Hello'\nobj = new Foo()\ndocument.body.innerHTML = obj.bar")
             .selectOutputFrame()
-            .assert.containsText('body', 'Hello')
+            .assert.containsText("body", "Hello")
             .end();
     },
 
     'Test JavaScript preprocessed with Traceur': function (client) {
         client
             .url(client.launch_url)
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("traceur")
             .setJsValue("const value = 'Hello';\ndocument.body.innerHTML = value;")
             .selectOutputFrame()
-            .assert.containsText('body', 'Hello')
+            .assert.containsText("body", "Hello")
             .end();
     },
 
     'Test JavaScript preprocessed with TypeScript': function (client) {
         client
             .url(client.launch_url)
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("typescript")
             .setJsValue("let value: string = 'Hello';\ndocument.body.innerHTML = value;")
             .selectOutputFrame()
-            .assert.containsText('body', 'Hello')
+            .assert.containsText("body", "Hello")
             .end();
     },
 
     'Test JavaScript preprocessed with Processing': function (client) {
         client
             .url(client.launch_url)
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("processing")
             .setJsValue("size(200, 200);")
             .selectOutputFrame()
@@ -94,11 +94,11 @@ module.exports = {
     'Test JavaScript preprocessed with LiveScript': function (client) {
         client
             .url(client.launch_url)
-            .selectTab('#panel-javascript')
+            .selectTab("#panel-javascript")
             .selectJsProcessor("livescript")
             .setJsValue("value = \\Hello;\ndocument.body.innerHTML = value;")
             .selectOutputFrame()
-            .assert.containsText('body', 'Hello')
+            .assert.containsText("body", "Hello")
             .end();
     }
 

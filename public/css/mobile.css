@@ -20,6 +20,7 @@ main {
 
 .toppanel main {
   height: calc(100% - 200px);
+  height: 100%;
 }
 
 .bsaapi main {
@@ -201,6 +202,7 @@ body, html {
     bottom: 0;
     left: 0;
     right: 0;
+    top: 44px;
   }
 
   .card.author .settings {
@@ -477,12 +479,16 @@ body, html {
     position: absolute;
     top: 0;
     height: auto;
+    padding-bottom: 50vh;
   }
 
   .mobile .editbox > div {
-    padding-bottom: 50%;
+    /* padding-bottom: 50%; */
     position: relative;
     height: 100%;
+    overflow: hidden;
+    height: calc(100vh - 100px);
+    /* border: 3px dashed hotpink; */
   }
 
   #source {

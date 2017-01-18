@@ -740,8 +740,8 @@ var libraries = [
     'label': 'Blaze CSS (latest)'
   },
   {
-    'url': 'https://unpkg.com/@reactivex/rxjs@5.0.0-beta.7/dist/global/Rx.umd.js',
-    'label': 'RxJS 5.0.0-beta.7',
+    'url': 'https://unpkg.com/@reactivex/rxjs@5.0.3/dist/global/Rx.js',
+    'label': 'RxJS 5.0.3',
     'group': 'RxJS'
   },
   {

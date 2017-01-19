@@ -40,6 +40,7 @@
     "bin-to-file": "0.0.5",
     "clone": "~0.1.18",
     "commander": "1.0.0",
+    "connect": "2.7.2",
     "debug": "^2.2.0",
     "dropbox": "~0.10.2",
     "express": "3.0.x",

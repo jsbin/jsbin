@@ -734,7 +734,7 @@ var libraries = [
   },
   {
     'url': [
-      'https://unpkg.com/blaze',
+      'https://unpkg.com/blaze/dist/blaze.min.css',
       'https://unpkg.com/blaze/dist/blaze.colors.min.css'
     ],
     'label': 'Blaze CSS (latest)'

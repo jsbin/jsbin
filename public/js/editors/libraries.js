@@ -684,10 +684,10 @@ var libraries = [
     'url': {
       'url': 'https://openui5.hana.ondemand.com/resources/sap-ui-core.js',
       'id': 'sap-ui-bootstrap',
-      'data-sap-ui-theme': 'sap_bluecrystal',
+      'data-sap-ui-theme': 'sap_belize',
       'data-sap-ui-libs': 'sap.m'
     },
-    'label': 'OpenUI5 latest (Mobile BlueCrystal)'
+    'label': 'OpenUI5 CDN (belize Theme, mobile library)'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.7/TweenMax.min.js',

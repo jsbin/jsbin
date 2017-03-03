@@ -145,11 +145,12 @@ jQuery(function ($) {
 
     if (vatNum) {
       vatEl.addClass('validating');
-      $.getJSON('//vat-validator.herokuapp.com/' + vat + '?callback=?', function (data) {
-        if (data.error) {
+      $.getJSON('https://taxtools.io/api/validate/' + vat, function (data) {
+        if (!data.verified) {
           return setTimeout(function () {
+            console.log('API request failed, trying again');
             $('#validateVat').click();
-          }, 2000);
+          }, 3000);
         }
 
         if (data) {

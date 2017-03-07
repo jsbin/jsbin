@@ -4352,7 +4352,7 @@ a.toppanel-logo {
 }
 
 a[data-pro]:after, .pro-required {
-  content: 'Pro';
+  content: 'Users';
   color: #fff;
   position: absolute;
   right: 6px;

@@ -138,7 +138,7 @@ CREATE TABLE `ownership` (
   `github_token` varchar(255) DEFAULT NULL,
   `github_id` int(11) DEFAULT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0',
-  `pro` tinyint(1) NOT NULL DEFAULT '0',
+  `pro` tinyint(1) NOT NULL DEFAULT '1',
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `settings` text,
   `dropbox_token` varchar(255) DEFAULT NULL,

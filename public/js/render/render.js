@@ -165,6 +165,31 @@ var getPreparedCode = (function () { // jshint ignore:line
           return replaceWith + arg;
         });
       }
+      
+      if (!hasHTML && !hasJS && hasCSS) {
+        html = '<pre>\n' + css.replace(/[<>&]/g, function (m) {
+          return escapeMap[m];
+        }) + '</pre>';
+      } else if (re.csscode.test(html)) {
+        html = html.split('%css%').join(css);
+      } else if (hasHTML) {
+        parts = [];
+        close = '';
+        if (html.indexOf('</head>') !== -1) {
+          parts.push(html.substring(0, html.indexOf('</head>')));
+          parts.push(html.substring(html.indexOf('</head>')));
+
+          html = parts[0];
+          close = parts.length === 2 && parts[1] ? parts[1] : '';
+        }
+
+        // if the focused panel is CSS, then just return the css NOW
+        if (jsbin.state.hasBody && jsbin.panels.focused.id === 'css') {
+          return css;
+        }
+
+        html += '<style id="jsbin-css">\n' + css + '\n</style>\n' + close;
+      }
 
       // note that I'm using split and reconcat instead of replace, because if
       // the js var contains '$$' it's replaced to '$' - thus breaking Prototype
@@ -212,31 +237,6 @@ var getPreparedCode = (function () { // jshint ignore:line
             return all;
           }
         });
-      }
-
-      if (!hasHTML && !hasJS && hasCSS) {
-        html = '<pre>\n' + css.replace(/[<>&]/g, function (m) {
-          return escapeMap[m];
-        }) + '</pre>';
-      } else if (re.csscode.test(html)) {
-        html = html.split('%css%').join(css);
-      } else if (hasHTML) {
-        parts = [];
-        close = '';
-        if (html.indexOf('</head>') !== -1) {
-          parts.push(html.substring(0, html.indexOf('</head>')));
-          parts.push(html.substring(html.indexOf('</head>')));
-
-          html = parts[0];
-          close = parts.length === 2 && parts[1] ? parts[1] : '';
-        }
-
-        // if the focused panel is CSS, then just return the css NOW
-        if (jsbin.state.hasBody && jsbin.panels.focused.id === 'css') {
-          return css;
-        }
-
-        html += '<style id="jsbin-css">\n' + css + '\n</style>\n' + close;
       }
 
       // Add defer to all inline script tags in IE.

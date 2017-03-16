@@ -4802,3 +4802,7 @@ body.min #bin .editbox .CodeMirror pre {
 #bsaapi a:hover {
   color: inherit;
 }
+
+.fadeout {
+  color: #ccc;
+}

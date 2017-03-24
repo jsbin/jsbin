@@ -21,7 +21,8 @@
     "start": "(sleep 2 && open http://localhost:3000) & ./bin/jsbin",
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/unit/**/*.test.js",
     ":install": "build/install.js",
-    "postinstall": "grunt build && npm run selenium:install",
+    "postinstall": "grunt build",
+    "// disabled": " && npm run selenium:install",
     "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit",
@@ -86,17 +87,17 @@
     "grunt-contrib-uglify": "~0.2.2",
     "hbs-utils": "0.0.3",
     "mocha": "~1.21.4",
-    "mocha-casperjs": "~0.5.0",
-    "nightwatch": "^0.9.6",
     "proxyquire": "^1.7.10",
-    "selenium-standalone": "^5.5.0",
     "should": "~1.2.2",
     "sinon": "~1.7.3",
     "tap": "^6.3.2",
     "tap-only": "0.0.5"
   },
   "optionalDependencies": {
-    "zmq": "~2.6.0"
+    "zmq": "~2.6.0",
+    "mocha-casperjs": "~0.5.0",
+    "nightwatch": "^0.9.6",
+    "selenium-standalone": "^5.5.0",
   },
   "engines": {
     "node": ">=0.10.16 <0.11"

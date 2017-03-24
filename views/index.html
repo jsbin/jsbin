@@ -120,16 +120,16 @@ if(top != self) {
       <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#javascriptprocessors">Processor</a></strong></span>
         <div class="dropdown" id="javascriptprocessors">
           <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="javascript">
-            <a role="menuitemradio" aria-checked="true" href="#javascript" data-label="JavaScript">JavaScript</a>
-            <a role="menuitemradio" href="#babel">ES6 / Babel</a>
-            <a role="menuitemradio" href="#jsx">JSX (React)</a>
-            <a role="menuitemradio" href="#coffeescript">CoffeeScript</a>
-            <a role="menuitemradio" href="#traceur">Traceur</a>
-            <a role="menuitemradio" href="#typescript">TypeScript</a>
-            <a role="menuitemradio" href="#processing">Processing</a>
-            <a role="menuitemradio" href="#livescript">LiveScript</a>
-            <a role="menuitemradio" href="#clojurescript">ClojureScript</a>
-            <a role="menuitem" href="#convert">Convert to JavaScript</a>
+            <a role="menuitemradio" aria-checked="true" id="processor-javascript" href="#javascript" data-label="JavaScript">JavaScript</a>
+            <a role="menuitemradio" id="processor-babel" href="#babel">ES6 / Babel</a>
+            <a role="menuitemradio" id="processor-jsx" href="#jsx">JSX (React)</a>
+            <a role="menuitemradio" id="processor-coffeescript" href="#coffeescript">CoffeeScript</a>
+            <a role="menuitemradio" id="processor-traceur" href="#traceur">Traceur</a>
+            <a role="menuitemradio" id="processor-typescript" href="#typescript">TypeScript</a>
+            <a role="menuitemradio" id="processor-processing" href="#processing">Processing</a>
+            <a role="menuitemradio" id="processor-livescript" href="#livescript">LiveScript</a>
+            <a role="menuitemradio" id="processor-clojurescript" href="#clojurescript">ClojureScript</a>
+            <a role="menuitem" id="processor-convert" href="#convert">Convert to JavaScript</a>
           </div>
         </div>
       </div>
@@ -141,15 +141,15 @@ if(top != self) {
       <div role="menubar" class="label menu" tabindex="0"><span class="name"><strong><a role="menuitem" class="fake-dropdown button-dropdown" href="#cssprocessors">Processor</a></strong></span>
         <div class="dropdown" id="cssprocessors">
           <div role="menu" aria-hidden="true" class="dropdownmenu processorSelector" data-type="css">
-            <a role="menuitemradio" aria-checked="true" href="#css" data-label="CSS">CSS</a>
-            <a role="menuitemradio" href="#less">Less</a>
-            <a role="menuitemradio" href="#myth">Myth</a>
+            <a role="menuitemradio" id="processor-css" aria-checked="true" href="#css" data-label="CSS">CSS</a>
+            <a role="menuitemradio" id="processor-less" href="#less">Less</a>
+            <a role="menuitemradio" id="processor-myth" href="#myth">Myth</a>
             {{#feature request "processors"}}
-            <a role="menuitemradio" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
-            <a role="menuitemradio" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
+            <a role="menuitemradio" id="processor-sass" href="#sass" data-label="Sass">Sass <span class="small">with Compass</span></a>
+            <a role="menuitemradio" id="processor-scss" href="#scss" data-label="SCSS">SCSS <span class="small">with Compass</span></a>
             {{/feature}}
-            <a role="menuitemradio" href="#stylus">Stylus</a>
-            <a role="menuitem" href="#convert">Convert to CSS</a>
+            <a role="menuitemradio" id="processor-stylus" href="#stylus">Stylus</a>
+            <a role="menuitem" id="processor-convert-css" href="#convert">Convert to CSS</a>
           </div>
         </div>
       </div>

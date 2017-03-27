@@ -2364,6 +2364,8 @@ left: 50%;
   width: 100px;
   padding-left: 20px;
   padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #history .url .snapshot {
@@ -2429,7 +2431,9 @@ left: 50%;
 /* Archive */
 
 /* By default, don't show archived rows */
-#history tr.archived {
+#history tr.archived,
+#history tr.archived + tr.spacer
+ {
   display: none;
 }
 

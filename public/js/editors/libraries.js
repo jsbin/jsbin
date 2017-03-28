@@ -599,6 +599,14 @@ var libraries = [
     'group': 'D3'
   },
   {
+    'url': [
+      'https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css',
+      'https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'
+    ],
+    'label': 'Mapbox GL JS 0.34.0',
+    'group': 'Mapbox'
+  },
+  {
     'url': '//code.highcharts.com/highcharts.js',
     'label': 'Highcharts latest'
   },

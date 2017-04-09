@@ -600,10 +600,10 @@ var libraries = [
   },
   {
     'url': [
-      'https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css',
-      'https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'
+      'https://unpkg.com/mapbox-gl/dist/mapbox-gl.css',
+      'https://unpkg.com/mapbox-gl/dist/mapbox-gl.js'
     ],
-    'label': 'Mapbox GL JS 0.34.0',
+    'label': 'Mapbox GL JS',
     'group': 'Mapbox'
   },
   {

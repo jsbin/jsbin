@@ -47,6 +47,7 @@ For detailed instructions on how to build JS Bin please see the [running your ow
 
 If you install [Node.js](http://nodejs.org) installation is easy:
 
+    $ sudo apt-get install libldap2-dev //For LDAP support
     $ npm install -g jsbin
     $ jsbin
 

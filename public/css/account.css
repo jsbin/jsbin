@@ -582,7 +582,7 @@ form label.hintOptions {
 }
 
 a[data-pro]:after {
-  content: 'Pro';
+  content: 'Users';
   color: #ccc;
   position: absolute;
   right: 6px;

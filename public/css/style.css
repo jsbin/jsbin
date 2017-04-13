@@ -1653,6 +1653,10 @@ li.CodeMirror-hint-active {
   padding-left: 0;
 }
 
+.CodeMirror-linenumber {
+  font-size: 12px;
+}
+
 #jsbin .CodeMirror-Tern-tooltip,
 #jsbin .CodeMirror-hints {
   border: 1px solid #aaa;

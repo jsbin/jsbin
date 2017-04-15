@@ -36,7 +36,7 @@ If you plan to build and test for production, see the section at the end.
 
 JS Bin comes with a default config file. You can either edit this directly, or we recommend copying and modifying your own copy that should be named `config.local.json`:
 
-    cd /usr/local/lib/node-modules/jsbin    # Kubuntu 13.10 example; YMMV
+    cd /usr/local/lib/node_modules/jsbin    # Kubuntu 13.10 example; YMMV
     cp config.default.json config.local.json
 
 There are a number of options that you can change to configure JS Bin to your needs. The property names, meaning and possible values have been listed below:

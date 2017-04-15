@@ -37,7 +37,7 @@ $library.bind('init', function () {
 
   for (i = 0; i < groupOrder.length; i++) {
     group = groups[groupOrder[i]];
-    html.push('<option value="" data-group="' + group.label + '" class="heading">-------------</option>');
+    html.push('<optgroup value="" label="' + group.label + '" data-group="' + group.label + '" class="heading"></optgroup>');
 
     for (j = 0; j < group.libraries.length; j++) {
       library = group.libraries[j];

@@ -78,7 +78,7 @@ $error.delegate('li', 'click', function () {
 
 var checkForErrors = function () {
   // exit if the javascript panel isn't visible or jshint is disabled (for example by the user or when using a js preprocessor)
-  if (!editors.javascript.visible || !jshintEnabled) return;
+  if (!editors.javascript.visible || !jshintEnabled || jsbin.settings.jshint === false) return;
 
   var hint = jshint(),
       jshintErrors = JSHINT.data(true),

@@ -35,9 +35,14 @@
     }
   });
 
+  var hasFormValidation = false;
+  if (typeof document.createElement('input').checkValidity === 'function') {
+    hasFormValidation = true;
+  }
   // Steps
   var openClass = 'open';
   var $upgradeSummaries = $('.upgrade-summary');
+  var $submit = $('#payment-form').find(':submit');
 
   $upgradeSummaries.on('click', function() {
     $(this).closest('.upgrade-details').toggleClass(openClass);
@@ -47,11 +52,23 @@
 
   $('.upgrade-details-next').on('click', function(event) {
     event.preventDefault();
+    var sendable = true;
+    if (hasFormValidation) {
+      $formLogin.find('input').each(function() {
+        if (!this.checkValidity()) {
+          $submit.click();
+          sendable = false;
+          return false;
+        }
+      });
+    }
+    if (sendable) {
+      $(this).closest('.upgrade-details').removeClass(openClass)
+        .nextAll('.upgrade-details').addClass(openClass);
+    }
     if ($('#signup-email').val().length) {
       // remove the second email field as we have their email already
       $('#email').closest('div').remove();
     }
-    $(this).closest('.upgrade-details').removeClass(openClass)
-      .nextAll('.upgrade-details').addClass(openClass);
   });
 }());

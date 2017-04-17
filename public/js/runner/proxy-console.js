@@ -43,7 +43,7 @@ var proxyConsole = (function () {
     // Create console method
     proxyConsole.prototype[method] = function () {
       // Replace args that can't be sent through postMessage
-      var originalArgs = [].slice.call(arguments),
+      var originalArgs = Array.prototype.slice.call(arguments),
           args = stringifyArgs(originalArgs);
 
       // Post up with method and the arguments

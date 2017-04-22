@@ -20,6 +20,7 @@ var sandbox = (function () {
    */
   sandbox.create = function () {
     var iframe = document.createElement('iframe');
+    iframe.src = window.location.origin + '/runner-wrapper';
     iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', 'JS Bin Output ');
@@ -38,11 +39,18 @@ var sandbox = (function () {
     var state = sandbox.saveState(sandbox.old);
     sandbox.active = iframe;
     prependChild(sandbox.target, iframe);
+
+    iframe.onload = function () {
+      console.log('done', sandbox.guid);
+      done();
+      // if (done) setTimeout(done, 10);
+    };
+
     // setTimeout allows the iframe to be rendered before other code runs,
     // allowing us access to the calculated properties like innerWidth.
     setTimeout(function () {
       // call the code that renders the iframe source
-      if (done) done();
+      // if (done) done();
 
       // remove *all* the iframes, baring the active one
       var iframes = sandbox.target.getElementsByTagName('iframe'),

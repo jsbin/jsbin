@@ -1,0 +1,21 @@
+CACHE MANIFEST
+# v1-{{version}}
+/runner
+/runner-wrapper
+/js/prod/runner-{{version}}.min.js
+{{root}}/js/vendor/polyfills.js
+{{root}}/js/vendor/stringify.js
+{{root}}/js/runner/utils.js
+{{root}}/js/vendor/loop-protect.min.js
+{{root}}/js/runner/proxy-console.js
+{{root}}/js/runner/processor.js
+{{root}}/js/runner/sandbox.js
+{{root}}/js/runner/runner.js
+{{root}}/js/runner/index.js
+
+# prevent all network traffic
+NETWORK:
+https://code.jquery.com/
+
+FALLBACK:
+* /runner

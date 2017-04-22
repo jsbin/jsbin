@@ -105,7 +105,7 @@ var runner = (function () {
       // Note that each document.write fires a DOMContentLoaded in Firefox.
       // This method exhibits synchronous and asynchronous behaviour, depending
       // on the browser. Urg.
-      childDoc.write('');
+      // childDoc.write('');
 
       // Give the child a reference to things it needs. This has to go here so
       // that the user's code (that runs as a result of the following

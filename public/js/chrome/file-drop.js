@@ -1,7 +1,6 @@
 function allowDrop(holder) {
   var cursorPosition = null;
   var panel = null;
-  var Promise = window.Promise || RSVP.Promise;
 
   var guid = (function() {
   function s4() {

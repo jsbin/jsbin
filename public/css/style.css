@@ -1653,6 +1653,10 @@ li.CodeMirror-hint-active {
   padding-left: 0;
 }
 
+.CodeMirror-linenumber {
+  font-size: 12px;
+}
+
 #jsbin .CodeMirror-Tern-tooltip,
 #jsbin .CodeMirror-hints {
   border: 1px solid #aaa;
@@ -2364,6 +2368,8 @@ left: 50%;
   width: 100px;
   padding-left: 20px;
   padding-right: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #history .url .snapshot {
@@ -2429,7 +2435,9 @@ left: 50%;
 /* Archive */
 
 /* By default, don't show archived rows */
-#history tr.archived {
+#history tr.archived,
+#history tr.archived + tr.spacer
+ {
   display: none;
 }
 
@@ -4801,4 +4809,8 @@ body.min #bin .editbox .CodeMirror pre {
 
 #bsaapi a:hover {
   color: inherit;
+}
+
+.fadeout {
+  color: #ccc;
 }

@@ -9,6 +9,12 @@ var jsbin = {
 
 (function () {
   if (jsbin.user && jsbin.user.name) {
+    if (window.FS) {
+      FS.identify(jsbin.user.name, {
+        displayName: jsbin.user.name,
+        reviewsWritten_int: 14,
+      });
+    }
     $('.loggedout').hide();
     var menu = $('.loggedin').show();
     var html = $('#profile-template').text();

@@ -132,7 +132,7 @@ function exposeSettings() {
 
   if (isDOM(window.jsbin) || !window.jsbin || !window.jsbin.state) { // because...STUPIDITY!!!
     window.jsbin = {
-      user: window.jsbin.user,
+      user: $.extend(true, {}, window.jsbin.user, jsbin.user),
       'static': jsbin['static'],
       version: jsbin.version,
       analytics: jsbin.analytics,

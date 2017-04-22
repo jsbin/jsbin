@@ -890,3 +890,8 @@ input.invalid {
 small {
   font-size: smaller;
 }
+
+.fadeout,
+.fadeout a {
+  color: #ccc;
+}

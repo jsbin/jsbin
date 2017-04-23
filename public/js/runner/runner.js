@@ -2,7 +2,7 @@
  * JS Bin Runner
  * Accepts incoming postMessage events and updates a live iframe accordingly.
  * ========================================================================== */
-
+/*globals sandbox loopProtect window alert */
 var runner = (function () {
   'use strict';
   var runner = {};
@@ -105,7 +105,7 @@ var runner = (function () {
       // Note that each document.write fires a DOMContentLoaded in Firefox.
       // This method exhibits synchronous and asynchronous behaviour, depending
       // on the browser. Urg.
-      // childDoc.write('');
+      childDoc.write('');
 
       // Give the child a reference to things it needs. This has to go here so
       // that the user's code (that runs as a result of the following
@@ -132,6 +132,7 @@ var runner = (function () {
       // why the source is rendered above (processor.render) – it should be one
       // string. IE's a sensitive soul.
       childDoc.write(source);
+      // childDoc.documentElement.innerHTML = source;
 
       // Close the document. This will fire another DOMContentLoaded.
       childDoc.close();

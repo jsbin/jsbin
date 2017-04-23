@@ -350,7 +350,11 @@ var renderLivePreview = (function () {
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', '<proxy>');
     $live.prepend(iframe);
-    iframe.src = jsbin.runner;
+    var src = jsbin.runner;
+    if (jsbin.user.pro) {
+      src += '?pro=1';
+    }
+    iframe.src = src;
     try {
       iframe.contentWindow.name = '/' + jsbin.state.code + '/' + jsbin.state.revision;
     } catch (e) {

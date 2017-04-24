@@ -340,34 +340,6 @@ if ($.browser.opera) {
   setInterval(unload, 500);
 }
 
-// TODO remove this entirely, it's kinda stupid - RS 2015-07-19
-if (location.search.indexOf('api=') !== -1) {
-  (function () {
-    var urlParts = location.search.substring(1).split(','),
-        newUrlParts = [],
-        i = urlParts.length,
-        apiurl = '';
-
-    while (i--) {
-      if (urlParts[i].indexOf('api=') !== -1) {
-        apiurl = urlParts[i].replace(/&?api=/, '');
-      } else {
-        newUrlParts.push(urlParts[i]);
-      }
-    }
-
-    $.getScript(jsbin.root + '/js/chrome/sandbox.js', function () {
-      var sandbox = new Sandbox(apiurl);
-      sandbox.get('settings', function (data) {
-        $.extend(jsbin.settings, data);
-        unload();
-        window.location = location.pathname + (newUrlParts.length ? '?' + newUrlParts.join(',') : '');
-      });
-    });
-
-  }());
-}
-
 $document.one('jsbinReady', function () {
   exposeSettings();
   $bin.removeAttr('style');

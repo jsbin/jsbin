@@ -230,7 +230,7 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   var skip = {head: 1, get: 1};
   if (!skip[options.type.toLowerCase()] &&
       !options.url.match(/^https:\/\/api.github.com/)) {
-    xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
+    xhr.setRequestHeader('x-csrf-token', jsbin.state.token);
   }
 });
 

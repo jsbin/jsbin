@@ -26,7 +26,6 @@
     "postversion": "git push origin master && git push --tags origin master",
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit",
-    "snyk-protect": "snyk protect",
     "e2e": "nightwatch --env local --config nightwatch.js",
     "e2e-remote": "nightwatch --env remote --config nightwatch.js",
     "selenium:install": "selenium-standalone install"
@@ -65,7 +64,6 @@
     "request": "^2.74.0",
     "rsvp": "~3.0.1",
     "semver": "^5.0.3",
-    "snyk": "^1.12.0",
     "soak": "0.3.0",
     "sqlite3": "~2.2.0",
     "stripe": "~2.7.3",
@@ -102,5 +100,4 @@
     "node": ">=0.10.16 <0.11"
   },
   "license": "MIT",
-  "snyk": true
 }

@@ -27,7 +27,6 @@
     "preupdate": "node build/pre-update.js",
     "postupdate": "node build/post-update.js commit",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect",
     "e2e": "nightwatch --env local --config nightwatch.js",
     "e2e-remote": "nightwatch --env remote --config nightwatch.js",
     "selenium:install": "selenium-standalone install"

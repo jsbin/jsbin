@@ -23,12 +23,12 @@ var sandbox = (function () {
    */
   sandbox.create = function () {
     var iframe = document.createElement('iframe');
-    iframe.src = window.location.origin + '/runner-inner';
+    // iframe.src = window.location.origin + '/runner-inner';
     iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
     iframe.setAttribute('name', 'JS Bin Output ');
     iframe.id = sandbox.guid++;
-    sandbox.active = iframe;
+    // sandbox.active = iframe;
     return iframe;
   };
 
@@ -37,36 +37,40 @@ var sandbox = (function () {
    * requester back. Also wait until the new iframe has loaded before removing
    * the old one.
    */
+  /**
+   * Add a new iframe to the page and wait until it has loaded to call the
+   * requester back. Also wait until the new iframe has loaded before removing
+   * the old one.
+   */
   sandbox.use = function (iframe, done) {
-    if (!sandbox.target) throw new Error('Sandbox has no target element.');
-    // sandbox.old = sandbox.active;
-    // sandbox.active = iframe;
+    if (!sandbox.target) {
+      throw new Error('Sandbox has no target element.');
+    }
+    sandbox.old = sandbox.active;
+    sandbox.saveState(sandbox.old);
+    sandbox.active = iframe;
     prependChild(sandbox.target, iframe);
-
     // setTimeout allows the iframe to be rendered before other code runs,
     // allowing us access to the calculated properties like innerWidth.
     setTimeout(function () {
       // call the code that renders the iframe source
-      // if (done) done();
-      sandbox.active.contentWindow.addEventListener('load', function () {
-        console.log('IFRAME LOADED');
-        if (done) done();
+      if (done) {
+        done();
+      }
 
+      // remove *all* the iframes, baring the active one
+      var iframes = sandbox.target.getElementsByTagName('iframe');
+      var length = iframes.length;
+      var i = 0;
+      var id = sandbox.active.id;
+      var iframe;
 
-        // remove *all* the iframes, baring the active one
-        var iframes = sandbox.target.getElementsByTagName('iframe'),
-            length = iframes.length,
-            i = 0,
-            id = sandbox.active.id,
-            iframe;
-
-        for (; iframe = iframes[i], i < length; i++) {
-          if (iframe.id !== id) {
-            iframe.parentNode.removeChild(iframe);
-            length--;
-          }
+      for (; iframe = iframes[i], i < length; i++) {
+        if (iframe.id !== id) {
+          iframe.parentNode.removeChild(iframe);
+          length--;
         }
-      });
+      }
     }, 0);
   };
 

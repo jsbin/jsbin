@@ -26,8 +26,6 @@ var getBin = function (ownerBin, cb) {
 // Populate the summary field of the owner table
 
 var populateBin = function (ownerBin, done) {
-  console.log("%d", ownerBin.id);
-
   getBin(ownerBin, function (err, sandboxBin) {
     if (err) return done(err);
     if (!sandboxBin) return done();

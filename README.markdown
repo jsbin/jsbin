@@ -6,6 +6,10 @@ JS Bin is an open source collaborative web development debugging tool.
 
 It likely means you're not going to subscribe as a pro user - which is how we're sustaining our project, which is cool, but [please consider donating via Gratipay here](https://gratipay.com/jsbin/).
 
+## IMPORTANT NOTICE
+
+Current documentation does not reflect jsbin@4.0.0 - this is a work in progress and community support is welcome to update how to use locally. ❤️
+
 ## What can JS Bin do?
 
 * Write code and have it both save in real-time, but also render a full preview in real-time

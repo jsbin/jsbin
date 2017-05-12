@@ -1,5 +1,4 @@
 var test = require('tap-only');
-global.Promise = require('promise'); // expose
 var root = __dirname + '/../../..';
 var emailSender = require(root + '/lib/email');
 

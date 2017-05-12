@@ -1,5 +1,4 @@
 var test = require('tap-only');
-global.Promise = require('promise'); // expose
 var root = __dirname + '/../../../..';
 var event = require(root + '/test/fixtures/customer.subscription.created.json').data.object;
 var user = require(root + '/test/fixtures/customer.json');

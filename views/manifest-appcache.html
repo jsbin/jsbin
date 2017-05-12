@@ -1,0 +1,37 @@
+CACHE MANIFEST
+# v1-{{version}}-{{open}}
+
+# only allow these CDNs
+NETWORK:
+{{#if open}}
+*
+{{else}}
+{{root}}
+{{root}}/js/prod/runner-{{version}}.min.js
+https://maxcdn.bootstrapcdn.com
+https://ajax.googleapis.com
+https://cdn.firebase.com
+https://cdn.jsdelivr.net
+https://cdn.popcornjs.org
+https://cdn.ractivejs.org
+https://cdn.rawgit.com
+https://cdnjs.cloudflare.com
+https://code.jquery.com
+https://fb.me
+https://modernizr.com
+https://rawgit.com
+https://unpkg.com
+https://www.promisejs.org
+https://yui.yahooapis.com
+https://zeptojs.com
+https://aui-cdn.atlassian.com
+https://cdn.sencha.io
+https://code.getmdl.io
+https://code.ionicframework.com
+https://da7xgjtj801h2.cloudfront.net
+https://enyojs.com
+https://extjs.cachefly.net
+https://nightly.enyojs.com
+https://static.jsbin.com
+https://vjs.zencdn.net
+{{/if}}

@@ -230,7 +230,7 @@ jQuery.ajaxPrefilter(function (options, original, xhr) {
   var skip = {head: 1, get: 1};
   if (!skip[options.type.toLowerCase()] &&
       !options.url.match(/^https:\/\/api.github.com/)) {
-    xhr.setRequestHeader('X-CSRF-Token', jsbin.state.token);
+    xhr.setRequestHeader('x-csrf-token', jsbin.state.token);
   }
 });
 
@@ -338,34 +338,6 @@ $window.unload(unload);
 // hack for Opera because the unload event isn't firing to capture the settings, so we put it on a timer
 if ($.browser.opera) {
   setInterval(unload, 500);
-}
-
-// TODO remove this entirely, it's kinda stupid - RS 2015-07-19
-if (location.search.indexOf('api=') !== -1) {
-  (function () {
-    var urlParts = location.search.substring(1).split(','),
-        newUrlParts = [],
-        i = urlParts.length,
-        apiurl = '';
-
-    while (i--) {
-      if (urlParts[i].indexOf('api=') !== -1) {
-        apiurl = urlParts[i].replace(/&?api=/, '');
-      } else {
-        newUrlParts.push(urlParts[i]);
-      }
-    }
-
-    $.getScript(jsbin.root + '/js/chrome/sandbox.js', function () {
-      var sandbox = new Sandbox(apiurl);
-      sandbox.get('settings', function (data) {
-        $.extend(jsbin.settings, data);
-        unload();
-        window.location = location.pathname + (newUrlParts.length ? '?' + newUrlParts.join(',') : '');
-      });
-    });
-
-  }());
 }
 
 $document.one('jsbinReady', function () {

@@ -1,5 +1,6 @@
 {
   "browser": true,
+  "version": "es6",
   "camelcase": true,
   "curly": true,
   "devel": true,

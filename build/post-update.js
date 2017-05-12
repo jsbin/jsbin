@@ -3,7 +3,6 @@ var fs = require('fs'),
     path = require('path'),
     version = require('../package').version,
     semver = require('semver'),
-    RSVP = require('rsvp'),
     script = process.argv[1];
 
 if (process.argv[2] && semver.valid(process.argv[2]) === process.argv[2]) {
@@ -28,7 +27,7 @@ function main(oldVersion) {
 }
 
 function getVersionUpdate(file) {
-  return new RSVP.Promise(function (resolve) {
+  return new Promise(function (resolve) {
     var dir = path.join(__dirname, 'upgrade', file);
     fs.stat(dir, function (err, stat) {
       if (stat.isDirectory()) {
@@ -54,7 +53,7 @@ function getVersions(oldVersion, version) {
       promises.push(getVersionUpdate(file));
     });
 
-    RSVP.all(promises).then(function (files) {
+    Promise.all(promises).then(function (files) {
       files.filter(function (file) {
         return file !== false;
       }).sort(function (a, b) {

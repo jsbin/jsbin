@@ -5,8 +5,13 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.1.0.js',
-    'label': 'jQuery 3.1.0',
+    'url': 'https://code.jquery.com/jquery-3.2.1.js',
+    'label': 'jQuery 3.2.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.1.1.js',
+    'label': 'jQuery 3.1.1',
     'group': 'jQuery'
   },
   {
@@ -112,7 +117,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/jquery-1.11.4.js',
       'https://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
@@ -120,11 +125,11 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.css',
-      'https://code.jquery.com/jquery-1.11.3.js',
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.js'
+      'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.2.css',
+      'https://code.jquery.com/jquery-1.11.4.js',
+      'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.2.js'
     ],
-    'label': 'jQuery Mobile 1.4.2',
+    'label': 'jQuery Mobile 1.4.5',
     'group': 'jQuery Mobile'
   },
   {
@@ -156,16 +161,16 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/jquery.min.js',
+      'https://code.jquery.com/jquery-1.11.4.min.js',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
     ],
-    'label': 'Bootstrap Latest',
+    'label': 'Bootstrap 3.3.6',
     'group': 'Bootstrap'
   },
   {
     'url': [
-      'https://code.jquery.com/jquery.min.js',
+      'https://code.jquery.com/jquery-1.11.4.min.js',
       'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
       'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
@@ -173,12 +178,7 @@ var libraries = [
     'group': 'Bootstrap'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-    'label': 'Prototype latest',
-    'group': 'Prototype'
-  },
-  {
-    'url': 'https://ajax.googleapis.com/ajax/libs/prototype/1.7/prototype.js',
+    'url': 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.1/prototype.js',
     'label': 'Prototype 1.7.1',
     'group': 'Prototype'
   },
@@ -189,23 +189,15 @@ var libraries = [
   },
   {
     'url': [
-      'https://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-      'https://ajax.googleapis.com/ajax/libs/scriptaculous/1/scriptaculous.js'
+      'https://ajax.googleapis.com/ajax/libs/prototype/1.7.1/prototype.js',
+      'https://ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js'
     ],
-    'label': 'script.aculo.us latest',
+    'label': 'script.aculo.us 1.9.0',
     'group': 'Prototype'
   },
   {
-    'url': [
-      'https://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js',
-      'https://ajax.googleapis.com/ajax/libs/scriptaculous/1.8.3/scriptaculous.js'
-    ],
-    'label': 'script.aculo.us 1.8.3',
-    'group': 'Prototype'
-  },
-  {
-    'url': 'http://yui.yahooapis.com/3.10.0/build/yui/yui.js',
-    'label': 'YUI 3.10.0',
+    'url': 'http://yui.yahooapis.com/3.18.1/build/yui/yui.js',
+    'label': 'YUI 3.18.1',
     'group': 'YUI'
   },
   {
@@ -214,13 +206,13 @@ var libraries = [
     'group': 'YUI'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-yui-compressed.js',
-    'label': 'MooTools 1.5.0',
+    'url': 'https://ajax.googleapis.com/ajax/libs/mootools/1.5.1/mootools-yui-compressed.js',
+    'label': 'MooTools 1.5.1',
     'group': 'MooTools'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/mootools/1.5.0/mootools-nocompat-yui-compressed.js',
-    'label': 'MooTools 1.5.0 (without 1.2+ compatibility layer)',
+    'url': 'https://ajax.googleapis.com/ajax/libs/mootools/1.5.1/mootools-nocompat-yui-compressed.js',
+    'label': 'MooTools 1.5.1 (without 1.2+ compatibility layer)',
     'group': 'MooTools'
   },
   {
@@ -229,26 +221,39 @@ var libraries = [
     'group': 'MooTools'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js',
-    'label': 'Dojo latest',
+    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.10.8/dojo/dojo.js',
+    'label': 'Dojo 1.10.8',
     'group': 'Dojo'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.8/dojo/dojo.js',
+    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.9.11/dojo/dojo.js',
+    'label': 'Dojo 1.9.11',
+    'group': 'Dojo'
+  },
+  {
+    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dojo/dojo.js',
     'label': 'Dojo 1.8.4',
     'group': 'Dojo'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.7/dojo/dojo.js',
+    'url': 'https://ajax.googleapis.com/ajax/libs/dojo/1.7.4/dojo/dojo.js',
     'label': 'Dojo 1.7.4',
     'group': 'Dojo'
   },
   {
     'url': [
-      'https://ajax.googleapis.com/ajax/libs/dojo/1/dijit/themes/claro/claro.css',
-      'https://ajax.googleapis.com/ajax/libs/dojo/1/dojo/dojo.js'
+      'https://ajax.googleapis.com/ajax/libs/dojo/1.10.8/dijit/themes/claro/claro.css',
+      'https://ajax.googleapis.com/ajax/libs/dojo/1.10.8/dojo/dojo.js'
     ],
-    'label': 'Dijit latest (Claro)',
+    'label': 'Dijit 1.8.4 (Claro)',
+    'group': 'Dojo'
+  },
+  {
+    'url': [
+      'https://ajax.googleapis.com/ajax/libs/dojo/1.9.11/dijit/themes/claro/claro.css',
+      'https://ajax.googleapis.com/ajax/libs/dojo/1.9.11/dojo/dojo.js'
+    ],
+    'label': 'Dijit 1.8.4 (Claro)',
     'group': 'Dojo'
   },
   {
@@ -313,28 +318,28 @@ var libraries = [
     'group': 'Zepto'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js',
-    'label': 'Angular 1.4.0 Stable',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js',
+    'label': 'Angular 1.6.4',
     'group': 'Angular'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js',
-    'label': 'Angular 1.4.0 Stable Uncompressed',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.js',
+    'label': 'Angular 1.5.11',
     'group': 'Angular'
   },
   {
-    'url':'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js',
-    'label': 'Angular 1.3.15 Stable',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.14/angular.js',
+    'label': 'Angular 1.4.14',
     'group': 'Angular'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.js',
-    'label': 'Angular 1.3.15 Stable Uncompressed',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.3.20/angular.js',
+    'label': 'Angular 1.3.20',
     'group': 'Angular'
   },
   {
-    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js',
-    'label': 'Angular 1.2.26 Legacy',
+    'url': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.32/angular.js',
+    'label': 'Angular 1.2.32 Legacy',
     'group': 'Angular'
   },
   {
@@ -348,32 +353,32 @@ var libraries = [
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-animate/master/angular-animate.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-animate/master/angular-animate.js',
     'label': 'Angular Animate Latest',
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-aria/master/angular-aria.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-aria/master/angular-aria.js',
     'label': 'Angular Aria Latest',
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-messages/master/angular-messages.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-messages/master/angular-messages.js',
     'label': 'Angular Messages Latest',
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-resource/master/angular-resource.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-resource/master/angular-resource.js',
     'label': 'Angular Resource Latest',
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-route/master/angular-route.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-route/master/angular-route.js',
     'label': 'Angular Route Latest',
     'group': 'Angular'
   },
   {
-    'url': 'https://rawgit.com/angular/bower-angular-sanitize/master/angular-sanitize.min.js',
+    'url': 'https://rawgit.com/angular/bower-angular-sanitize/master/angular-sanitize.js',
     'label': 'Angular Sanitize Latest',
     'group': 'Angular'
   },

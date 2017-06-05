@@ -408,6 +408,21 @@ var libraries = [
     'group': 'React'
   },
   {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/mithril/0.2.0/mithril.min.js',
+    'label': 'Mithril 0.2.0',
+    'group': 'Mithril'
+  },
+  {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/mithril/0.2.5/mithril.min.js',
+    'label': 'Mithril 0.2.5',
+    'group': 'Mithril'
+  },
+  {
+    'url': 'https://rawgit.com/lhorie/mithril.js/rewrite/mithril.js',
+    'label': 'Mithril Rewrite',
+    'group': 'Mithril'
+  },
+  {
     'url': 'https://cdn.rawgit.com/zloirock/core-js/master/client/shim.min.js',
     'label': 'core-js',
     'group': 'shims'

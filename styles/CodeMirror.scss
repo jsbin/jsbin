@@ -1,11 +1,15 @@
+@import "vars";
+
 .CodeMirror {
   font-family: 'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console,
     monospace;
   height: 100%;
   padding: 5px 10px 5px 0;
+  font-size: $font-size-base;
+  line-height: $font-line-height;
 
   .CodeMirror-linenumber {
-    font-size: calc($font-size-base - 2);
+    font-size: ($font-size-base - 2);
     line-height: 16px;
   }
 

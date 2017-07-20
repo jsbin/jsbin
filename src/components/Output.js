@@ -11,10 +11,16 @@ export default class Output extends React.Component {
 
   updateOutput() {
     const { code } = this.props;
+    const document = this.iframe.contentDocument;
 
+    // start writing the page. This will clear any existing document.
     this.iframe.contentDocument.open();
-    this.iframe.contentDocument.write(code);
-    this.iframe.contentDocument.close();
+
+    // this is to avoid a Firefox issue (see original jsbin)
+    document.write('');
+
+    document.write(code);
+    document.close();
   }
 
   componentDidMount() {
@@ -34,6 +40,7 @@ export default class Output extends React.Component {
 
   shouldComponentUpdate() {
     // diff the code
+    return true;
   }
 
   render() {

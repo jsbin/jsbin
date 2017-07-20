@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
-import code from './code';
+import bin from './bin';
+import editor from './editor';
 
 export default combineReducers({
-  code
+  editor,
+  bin
 });

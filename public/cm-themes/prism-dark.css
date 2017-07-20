@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+/**
+ * prism.js Dark theme for JavaScript, CSS and HTML
+ * Based on the slides of the talk “/Reg(exp){2}lained/”
+ * @author Lea Verou
+ *
+ * Adapted for CodeMirror
+ * @author Félix Saparelli
+ */
+
+div.cm-s-prism-dark {
+  background: #4d4033;
+  color: white;
+  text-shadow: 0 -0.1em 0.2em black;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+  line-height: 1.5;
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+  border: 0.3em solid #7a6652;
+  border-radius: .5em;
+  box-shadow: 1px 1px .5em black inset;
+}
+
+.cm-s-prism-dark span.cm-number {
+  color: #d1949e;
+}
+.cm-s-prism-dark span.cm-string {
+  color: #bde052;
+}
+.cm-s-prism-dark span.cm-atom {
+  color: #bde052;
+}
+.cm-s-prism-dark span.cm-comment {
+  color: #998066;
+}
+.cm-s-prism-dark span.cm-meta {
+  opacity: .7;
+}
+.cm-s-prism-dark span.cm-variable {
+  color: white;
+}
+.cm-s-prism-dark span.cm-variable-2 {
+  color: white;
+}
+.cm-s-prism-dark span.cm-qualifier {
+  color: #f5b83d;
+}
+.cm-s-prism-dark span.cm-keyword {
+  color: #d1949e;
+}
+.cm-s-prism-dark span.cm-builtin {
+  color: #f5b83d;
+}
+.cm-s-prism-dark span.cm-error {
+  border-bottom: 1px red dotted;
+}
+.cm-s-prism-dark span.cm-link {
+  color: #762;
+}
+
+.CodeMirror .cm-s-prism-dark .CodeMirror-cursor {
+  border-color: white;
+}

@@ -12,11 +12,15 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
+const css = `* {
+  font-family: sans-serif;
+}`;
+
 const defaultState = {
   output: '',
   html,
   js: '',
-  css: ''
+  css
 };
 
 export default function reducer(state = defaultState, action) {

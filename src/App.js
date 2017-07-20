@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
+import Splitter from 'react-split-pane';
 import Panel from './components/Panel';
+import Output from './components/Output';
+import Nav from './components/Nav';
+import PropTypes from 'prop-types';
+
 import './css/App.css';
 
-class App extends Component {
+export default class App extends Component {
   render() {
-    return <Panel />;
+    const { code } = this.props;
+    return (
+      <div className="JsBinApp">
+        <Nav />
+        <Splitter split="vertical" defaultSize="50%">
+          <Panel mode="html" code={code} />
+          <Output code={code} />
+        </Splitter>
+      </div>
+    );
   }
 }
 
-export default App;
+App.propTypes = {
+  code: PropTypes.string
+};

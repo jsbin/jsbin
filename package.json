@@ -3,10 +3,17 @@
   "version": "5.0.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-codemirror": "^1.0.0",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10"
+    "react-redux": "^5.0.5",
+    "react-scripts": "1.0.10",
+    "react-split-pane": "^0.1.65",
+    "redux": "^3.7.2",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "node-sass": "^4.5.3"
@@ -15,7 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "watch": "node-sass ./styles/ -w -o ./src/css",
+    "watch": "node-sass ./styles/ -w -o ./src/css --recursive",
     "eject": "react-scripts eject"
   }
 }

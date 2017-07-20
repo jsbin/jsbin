@@ -1,0 +1,10 @@
+@import "vars";
+
+.Nav {
+  height: $menu-height;
+  display: block;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px solid $c-divider;
+  background: $c-bg;
+}

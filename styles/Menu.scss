@@ -1,0 +1,19 @@
+@import "vars";
+
+.Menu {
+  cursor: pointer;
+  flex-shrink: 1;
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: $menu-height;
+
+  &:hover {
+    background: rgba(0, 0, 0, .05);
+  }
+}
+
+.Menu.right {
+  text-align: right;
+  float: right;
+}

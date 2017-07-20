@@ -1,6 +1,8 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
-require('codemirror/lib/codemirror.css');
+
+import '../css/Panel.css';
+import 'codemirror/lib/codemirror.css';
 
 export default class Panel extends React.Component {
   constructor(props) {
@@ -20,7 +22,9 @@ export default class Panel extends React.Component {
     const options = { lineNumbers: true };
 
     return (
-      <CodeMirror value={code} onChange={this.updateCode} options={options} />
+      <div className="Panel">
+        <CodeMirror value={code} onChange={this.updateCode} options={options} />
+      </div>
     );
   }
 }

@@ -1,30 +1,50 @@
-import { SET_HTML, SET_JS, SET_CSS, SET_OUTPUT } from '../actions/code';
+import { handle } from 'redux-pack';
 
-const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
-</head>
-<body>
-
-</body>
-</html>`;
-
-const css = `* {
-  font-family: sans-serif;
-}`;
+import {
+  SET_HTML,
+  SET_JS,
+  SET_CSS,
+  SET_OUTPUT,
+  SET_BIN,
+  GET_BIN
+} from '../actions/bin';
 
 const defaultState = {
+  loading: true,
   output: '',
-  html,
-  js: '',
-  css
+  html: '',
+  javascript: '',
+  css: ''
 };
 
 export default function reducer(state = defaultState, action) {
-  const { type, code } = action;
+  const { type, code, payload } = action;
+
+  if (type === GET_BIN) {
+    return handle(state, action, {
+      start: prevState => ({
+        ...prevState,
+        ...defaultState
+      }),
+      // finish: prevState => ({ ...prevState, isLoading: false }),
+      failure: prevState => ({ ...prevState, error: payload }),
+      success: prevState => {
+        const { html, css, javascript } = payload;
+        // FIXME handle extra settings
+        return { ...prevState, html, css, javascript, loading: false };
+      }
+    });
+  }
+
+  if (type === SET_BIN) {
+    return {
+      ...state,
+      html: action.html,
+      css: action.css,
+      javascript: action.javascript,
+      loading: false
+    };
+  }
 
   if (type === SET_OUTPUT) {
     return { ...state, output: code };
@@ -39,7 +59,7 @@ export default function reducer(state = defaultState, action) {
   }
 
   if (type === SET_JS) {
-    return { ...state, js: code };
+    return { ...state, javascript: code };
   }
 
   return state;

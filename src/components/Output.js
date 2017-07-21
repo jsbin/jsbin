@@ -19,7 +19,13 @@ export default class Output extends React.Component {
     // this is to avoid a Firefox issue (see original jsbin)
     document.write('');
 
-    document.write(code);
+    let i = 0;
+    document.write(
+      code.replace(
+        /<\/script>/g,
+        m => `//# sourceURL=your-scripts-${++i}.js${m}`
+      )
+    );
     document.close();
   }
 
@@ -28,20 +34,16 @@ export default class Output extends React.Component {
     this.updateOutput();
   }
 
-  componentWillUnmount() {
-    // remove iframe
-    // unsure this is entirely required.
-    this.iframe.parentNode.removeChild(this.iframe);
+  componentDidUpdate(prevProps) {
+    if (prevProps.code !== this.props.code) {
+      this.updateOutput();
+    }
   }
 
-  componentDidUpdate() {
-    this.updateOutput();
-  }
-
-  shouldComponentUpdate() {
-    // diff the code
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   // diff the code
+  //   return true;
+  // }
 
   render() {
     return (
@@ -57,29 +59,3 @@ export default class Output extends React.Component {
 Output.propTypes = {
   code: PropTypes.string.isRequired
 };
-
-/**
- *   var iframe = null;
-  $(this).after(button);
-  var running = false;
-  button.on('click', function () {
-    // dear past Remy: why do you mix jQuery with vanilla DOM scripting?
-    // Well…because vanilla is habbit, jQuery is just here as a helper.
-    var code = pre.innerText;
-    if (iframe || running) {
-      iframe.parentNode.removeChild(iframe);
-    }
-    if (running) {
-      button.text('run');
-      iframe = null;
-      running = false;
-      return;
-    }
-    running = true;
-    button.text('stop');
-    iframe = document.createElement('iframe');
-    iframe.className = 'runnable-frame';
-    document.body.appendChild(iframe);
-    iframe.contentWindow.eval(code);
-  });
- */

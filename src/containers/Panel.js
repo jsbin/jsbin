@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
+import { setSource } from '../actions/editor';
 import { setCode } from '../actions/bin';
-import { SET_HTML, SET_JS, SET_CSS } from '../actions/code';
+import { SET_HTML, SET_JS, SET_CSS } from '../actions/bin';
 import * as MODES from '../lib/cm-modes';
 
 import Panel from '../components/Panel';
 
-const mapStateToProps = ({ bin, editor }, ownProps) => {
-  return { code: bin[ownProps.mode], theme: editor.theme };
+const mapStateToProps = ({ bin = { html: '' }, editor }, ownProps) => {
+  return { code: bin[ownProps.mode], ...editor, editor };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    setSource: source => dispatch(setSource(source)),
     changeCode: code => {
       let type = SET_HTML;
       if (ownProps.mode === MODES.CSS) {

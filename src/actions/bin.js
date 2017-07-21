@@ -1,26 +1,38 @@
-import fetch from 'isomorphic-fetch';
+import * as Api from '../lib/Api';
+import * as defaults from '../lib/Defaults';
 
-export const FETCH_BIN = 'FETCH_BIN';
-export const FETCH_BIN_SUCCESS = 'FETCH_BIN_SUCCESS';
-export const FETCH_BIN_FAILURE = 'FETCH_BIN_FAILURE';
+export const SET_BIN = '/bin/set/BIN';
+export const SET_JS = '/bin/set/JS';
+export const SET_HTML = '/bin/set/HTML';
+export const SET_CSS = '/bin/set/CSS';
+export const SET_OUTPUT = '/bin/set/OUTPUT';
+export const GET_BIN = '/bin/fetch/GET';
 
-export const SET_JS = 'SET_JS';
-export const SET_HTML = 'SET_HTML';
-export const SET_CSS = 'SET_CSS';
-export const SET_OUTPUT = 'SET_OUTPUT';
+export function fetchDefault() {
+  return {
+    type: SET_BIN,
+    ...defaults
+  };
+}
 
-const API = process.env.REACT_APP_API;
+export function fetchBin(id, revision = 'latest') {
+  return {
+    type: GET_BIN,
+    promise: Api.getBin(id, revision)
+  };
+}
 
 export function setCode(type, code) {
-  return async (dispatch, getState) => {
-    const allCode = getState().code;
+  return dispatch => {
+    // , getState
+    // const allCode = getState().code;
 
     dispatch({
       type,
       code
     });
 
-    // combine into the output…
+    // combine into the output… and put in separate function
     return new Promise(resolve => {
       const output = code;
       resolve(
@@ -30,33 +42,5 @@ export function setCode(type, code) {
         })
       );
     });
-  };
-}
-
-export function fetchCourse(id, token) {
-  const payload = fetch(`${API}/bin/${id}/latest`, {
-    mode: 'cors',
-    headers: {
-      authorization: `Bearer ${token}`
-    }
-  });
-
-  return {
-    type: FETCH_BIN,
-    payload
-  };
-}
-
-export function fetchCourseSuccess(payload) {
-  return {
-    type: FETCH_BIN_SUCCESS,
-    payload
-  };
-}
-
-export function fetchCourseFailure(error) {
-  return {
-    type: FETCH_BIN_FAILURE,
-    payload: error
   };
 }

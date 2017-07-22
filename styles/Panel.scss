@@ -32,5 +32,29 @@
       cursor: pointer;
       user-select: none;
     }
+
+    label.select {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 10px;
+    }
+
+    select {
+      flex-grow: 1;
+      margin-left: 10px;
+    }
+
+    details {
+      summary {
+        margin-top: 20px;
+        outline: none;
+        color: #666;
+        cursor: pointer;
+      }
+
+      &[open] summary {
+        padding-bottom: 10px;
+      }
+    }
   }
 }

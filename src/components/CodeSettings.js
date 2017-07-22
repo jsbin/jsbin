@@ -62,16 +62,16 @@ export default class CodeSettings extends React.Component {
         }}
         className="CodeSettings"
       >
-        <label>
-          Source:{' '}
+        <label className="select">
+          Source{' '}
           <select value={source} onChange={this.changeSource}>
             <option value={MODES.HTML}>HTML</option>
             <option value={MODES.CSS}>CSS</option>
             <option value={MODES.JAVASCRIPT}>JavaScript</option>
           </select>
         </label>
-        <label className="output">
-          Output:{' '}
+        <label className="output select">
+          Output{' '}
           <select value={output} onChange={this.changeOutput}>
             <option value={OUTPUT_PAGE}>Page</option>
             <option value={OUTPUT_CONSOLE}>Console</option>
@@ -79,27 +79,31 @@ export default class CodeSettings extends React.Component {
             <option value={OUTPUT_NONE}>None</option>
           </select>
         </label>
-        <label>
-          <input
-            type="checkbox"
-            onChange={e => {
-              this.props.set('lineWrapping', e.target.checked);
-            }}
-            checked={lineWrapping}
-          />{' '}
-          Line wrap
-        </label>
+        <details>
+          <summary>Settings</summary>
 
-        <label>
-          <input
-            type="checkbox"
-            onChange={e => {
-              this.props.set('lineNumbers', e.target.checked);
-            }}
-            checked={lineNumbers}
-          />{' '}
-          Line numbers
-        </label>
+          <label>
+            <input
+              type="checkbox"
+              onChange={e => {
+                this.props.set('lineWrapping', e.target.checked);
+              }}
+              checked={lineWrapping}
+            />{' '}
+            Line wrap
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              onChange={e => {
+                this.props.set('lineNumbers', e.target.checked);
+              }}
+              checked={lineNumbers}
+            />{' '}
+            Line numbers
+          </label>
+        </details>
 
         {updated &&
           `Last saved: ${distanceInWordsToNow(updated, {

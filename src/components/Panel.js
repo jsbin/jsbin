@@ -99,6 +99,7 @@ export default class Panel extends React.Component {
 
   updateCode(code) {
     this.setState({ code });
+    this.props.changeCode(code);
   }
 
   saveCode(e) {

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { HotKeys } from 'react-hotkeys';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 
 import Panel from '../containers/Panel';
-import Output from './Output';
+import Output from '../containers/Output';
 import Nav from './Nav';
 import Head from './Head';
-import * as MODES from '../lib/cm-modes';
 
 import '../../node_modules/@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
@@ -65,31 +63,23 @@ export default class App extends Component {
       );
     }
 
-    const handlers = {
-      html: () => this.props.setSource(MODES.HTML),
-      javascript: () => this.props.setSource(MODES.JAVASCRIPT),
-      css: () => this.props.setSource(MODES.CSS)
-    };
-
     return (
-      <HotKeys keyMap={keyMap} handlers={handlers}>
-        <div className="JsBinApp">
-          <Head />
-          <Nav />
-          <div onDoubleClick={this.hideOutput}>
-            <Splitter
-              split="vertical"
-              defaultSize="50%"
-              onSize={(() => {
-                this.panel.refresh();
-              }).bind(this)}
-            >
-              <Panel onRef={ref => (this.panel = ref)} mode={editor.source} />
-              {editor.output && <Output code={bin.output} />}
-            </Splitter>
-          </div>
+      <div className="JsBinApp">
+        <Head />
+        <Nav />
+        <div onDoubleClick={this.hideOutput}>
+          <Splitter
+            split="vertical"
+            defaultSize="50%"
+            onSize={(() => {
+              this.panel.refresh();
+            }).bind(this)}
+          >
+            <Panel onRef={ref => (this.panel = ref)} mode={editor.source} />
+            {editor.output && <Output code={bin.output} />}
+          </Splitter>
         </div>
-      </HotKeys>
+      </div>
     );
   }
 }

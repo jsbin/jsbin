@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import binToHTML from '../lib/BinToHTML';
 
 import '../css/Output.css';
 
@@ -10,7 +11,7 @@ export default class Output extends React.Component {
   }
 
   updateOutput() {
-    const { code } = this.props;
+    const { bin } = this.props;
     const document = this.iframe.contentDocument;
 
     // start writing the page. This will clear any existing document.
@@ -20,12 +21,21 @@ export default class Output extends React.Component {
     document.write('');
 
     let i = 0;
-    document.write(
-      code.replace(
-        /<\/script>/g,
-        m => `//# sourceURL=your-scripts-${++i}.js${m}`
-      )
+
+    const html = bin.html.replace(
+      /<\/script>/g,
+      m => `//# sourceURL=your-scripts-${++i}.js${m}`
     );
+    const javascript =
+      bin.javascript + `\n//# sourceURL=your-scripts-${++i}.js$`;
+
+    const output = binToHTML({
+      html,
+      javascript,
+      css: bin.css
+    });
+
+    document.write(output);
     document.close();
   }
 

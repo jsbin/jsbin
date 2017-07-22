@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// use a custom splitter as I've added an onSize event
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 
@@ -6,15 +7,10 @@ import Panel from '../containers/Panel';
 import Output from '../containers/Output';
 import Nav from './Nav';
 import Head from './Head';
+import * as OUTPUT from '../actions/session';
 
 import '../../node_modules/@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
-
-const keyMap = {
-  html: ['ctrl+1', 'command+1'],
-  css: ['ctrl+2', 'command+2'],
-  javascript: ['ctrl+3', 'command+3']
-};
 
 export default class App extends Component {
   constructor(props) {
@@ -52,7 +48,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { bin, editor, loading } = this.props;
+    const { bin, editor, loading, session } = this.props;
 
     if (loading) {
       return (
@@ -71,12 +67,14 @@ export default class App extends Component {
           <Splitter
             split="vertical"
             defaultSize="50%"
-            onSize={(() => {
+            onSize={() => {
               this.panel.refresh();
-            }).bind(this)}
+            }}
           >
             <Panel onRef={ref => (this.panel = ref)} mode={editor.source} />
-            {editor.output && <Output code={bin.output} />}
+            {(session.output === OUTPUT.OUTPUT_BOTH ||
+              session.output === OUTPUT.OUTPUT_PAGE) &&
+              <Output code={bin.output} />}
           </Splitter>
         </div>
       </div>
@@ -90,7 +88,8 @@ App.propTypes = {
   match: PropTypes.object,
   fetch: PropTypes.func,
   editor: PropTypes.object,
+  session: PropTypes.object,
   loadDefault: PropTypes.func,
   setSource: PropTypes.func,
-  toggleOutput: PropTypes.func
+  toggleOutput: PropTypes.func,
 };

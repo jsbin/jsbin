@@ -1,24 +1,24 @@
 import * as Api from '../lib/Api';
 import * as defaults from '../lib/Defaults';
 
-export const SET_BIN = '/bin/set/BIN';
-export const SET_JS = '/bin/set/JS';
-export const SET_HTML = '/bin/set/HTML';
-export const SET_CSS = '/bin/set/CSS';
-export const SET_OUTPUT = '/bin/set/OUTPUT';
-export const GET_BIN = '/bin/fetch/GET';
+export const SET_BIN = '@@bin/set/BIN';
+export const SET_JS = '@@bin/set/JS';
+export const SET_HTML = '@@bin/set/HTML';
+export const SET_CSS = '@@bin/set/CSS';
+export const SET_OUTPUT = '@@bin/set/OUTPUT';
+export const GET_BIN = '@@bin/fetch/GET';
 
 export function fetchDefault() {
   return {
     type: SET_BIN,
-    ...defaults
+    ...defaults,
   };
 }
 
 export function fetchBin(id, revision = 'latest') {
   return {
     type: GET_BIN,
-    promise: Api.getBin(id, revision)
+    promise: Api.getBin(id, revision),
   };
 }
 
@@ -29,7 +29,7 @@ export function setCode(type, code) {
 
     dispatch({
       type,
-      code
+      code,
     });
 
     // combine into the output… and put in separate function
@@ -38,7 +38,7 @@ export function setCode(type, code) {
       resolve(
         dispatch({
           type: SET_OUTPUT,
-          code: output
+          code: output,
         })
       );
     });

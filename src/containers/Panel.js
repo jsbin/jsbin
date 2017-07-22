@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
 
       dispatch(setCode(type, code));
-    }
+    },
   };
 };
 

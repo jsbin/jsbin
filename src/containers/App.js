@@ -3,8 +3,8 @@ import App from '../components/App';
 import { fetchBin, fetchDefault as loadDefault } from '../actions/bin';
 import { setSource, toggleOutput } from '../actions/editor';
 
-const mapStateToProps = ({ bin, editor }) => {
-  return { bin, editor, loading: bin.loading };
+const mapStateToProps = ({ bin, editor, session }) => {
+  return { bin, editor, loading: bin.loading, session };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
           window.document.title = `JS Bin: ${res.url}@${res.snapshot}`;
         })
         .catch(e => console.log('failed', e));
-    }
+    },
   };
 };
 

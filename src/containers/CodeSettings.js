@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 import CodeSettings from '../components/CodeSettings';
-import { set, setSource, toggleOutput } from '../actions/editor';
+import { set, setSource } from '../actions/editor';
+import { changeOutput } from '../actions/session';
 
-const mapStateToProps = ({ editor }) => ({ ...editor });
+const mapStateToProps = ({ editor, session }) => ({
+  ...editor,
+  output: session.output,
+});
 
 const CodeSettingsContainer = connect(mapStateToProps, {
   set,
   setSource,
-  toggleOutput
+  changeOutput,
 })(CodeSettings);
 
 export default CodeSettingsContainer;

@@ -2,13 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
+import {
+  OUTPUT_PAGE,
+  OUTPUT_CONSOLE,
+  OUTPUT_BOTH,
+  OUTPUT_NONE,
+} from '../actions/session';
+
 import * as MODES from '../lib/cm-modes';
 
 export default class CodeSettings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSource = this.changeSource.bind(this);
+    this.changeOutput = this.changeOutput.bind(this);
     this.state = { height: 0 };
+  }
+
+  changeOutput(e) {
+    this.props.changeOutput(e.target.value);
   }
 
   changeSource(e) {
@@ -46,7 +58,7 @@ export default class CodeSettings extends React.Component {
       <div
         ref={e => (this.el = e)}
         style={{
-          marginBottom: `calc(100vh - ${this.state.height + 20 + 0}px)`
+          marginBottom: `calc(100vh - ${this.state.height + 20 + 0}px)`,
         }}
         className="CodeSettings"
       >
@@ -58,15 +70,14 @@ export default class CodeSettings extends React.Component {
             <option value={MODES.JAVASCRIPT}>JavaScript</option>
           </select>
         </label>
-        <label>
-          <input
-            type="checkbox"
-            onChange={e => {
-              this.props.toggleOutput(!this.props.output);
-            }}
-            checked={output}
-          />{' '}
-          Show output
+        <label className="output">
+          Output:{' '}
+          <select value={output} onChange={this.changeOutput}>
+            <option value={OUTPUT_PAGE}>Page</option>
+            <option value={OUTPUT_CONSOLE}>Console</option>
+            <option value={OUTPUT_BOTH}>Both</option>
+            <option value={OUTPUT_NONE}>None</option>
+          </select>
         </label>
         <label>
           <input
@@ -92,7 +103,7 @@ export default class CodeSettings extends React.Component {
 
         {updated &&
           `Last saved: ${distanceInWordsToNow(updated, {
-            includeSeconds: true
+            includeSeconds: true,
           })}`}
       </div>
     );
@@ -102,11 +113,12 @@ export default class CodeSettings extends React.Component {
 CodeSettings.propTypes = {
   onRef: PropTypes.func,
   toggleOutput: PropTypes.func,
-  output: PropTypes.bool,
+  output: PropTypes.string,
   set: PropTypes.func,
   updated: PropTypes.string,
   lineWrapping: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   source: PropTypes.string.isRequired,
-  setSource: PropTypes.func
+  setSource: PropTypes.func,
+  changeOutput: PropTypes.func,
 };

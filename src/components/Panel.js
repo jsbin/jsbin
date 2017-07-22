@@ -25,7 +25,7 @@ const keyMap = {
   run: ['ctrl+enter', 'command+enter'],
   html: ['ctrl+1', 'command+1'],
   css: ['ctrl+2', 'command+2'],
-  javascript: ['ctrl+3', 'command+3']
+  javascript: ['ctrl+3', 'command+3'],
 };
 
 const STATIC = process.env.REACT_APP_STATIC;
@@ -38,13 +38,17 @@ export default class Panel extends React.Component {
     this.saveCode = this.saveCode.bind(this);
 
     this.state = {
-      code: props.code
+      code: props.code,
     };
   }
 
   refresh() {
-    this.CodeMirror.getCodeMirror().refresh();
-    this.CodeSettings.refresh();
+    // as usual with jsbin, we need a setTimeout to avoid a race on the
+    // rendering of the codemirror instance
+    setTimeout(() => {
+      this.CodeMirror.getCodeMirror().refresh();
+      this.CodeSettings.refresh();
+    }, 0);
   }
 
   loadTheme(theme) {
@@ -79,6 +83,7 @@ export default class Panel extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // this.CodeMirror.getCodeMirror().execCommand('selectAll');
     if (prevProps.theme !== this.props.theme) {
       // load the CSS for the new theme
       this.loadTheme(this.props.theme);
@@ -115,7 +120,7 @@ export default class Panel extends React.Component {
       mode: source,
       fixedGutter: true,
       autoRefresh: true,
-      ...editor
+      ...editor,
     };
 
     if (source === MODES.HTML) {
@@ -124,9 +129,9 @@ export default class Panel extends React.Component {
         scriptTypes: [
           {
             matches: /\/x-handlebars-template|\/x-mustache/i,
-            mode: null
-          }
-        ]
+            mode: null,
+          },
+        ],
       };
     }
 
@@ -140,7 +145,7 @@ export default class Panel extends React.Component {
       run: this.saveCode,
       html: setTo(MODES.HTML),
       javascript: setTo(MODES.JAVASCRIPT),
-      css: setTo(MODES.CSS)
+      css: setTo(MODES.CSS),
     };
 
     return (
@@ -168,5 +173,5 @@ Panel.propTypes = {
   editor: PropTypes.object,
   changeCode: PropTypes.func,
   onRef: PropTypes.func,
-  setSource: PropTypes.func
+  setSource: PropTypes.func,
 };

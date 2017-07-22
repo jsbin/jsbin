@@ -1,16 +1,14 @@
 var doctypeRe = new RegExp(/^<!doctype[^>]*>\n?/im);
 
-function hashof(string) {
-  var hash = 0;
-  var i = 0;
-  var c = 0;
+function hashOf(string) {
+  let hash = 0;
 
   if (string.length === 0) {
     return hash;
   }
 
-  for (; i < string.length; i++) {
-    c = string.charCodeAt(i);
+  for (let i = 0; i < string.length; i++) {
+    const c = string.charCodeAt(i);
     hash = (hash << 5) - hash + c;
     hash = hash & hash; // Convert to 32bit integer
   }
@@ -19,61 +17,48 @@ function hashof(string) {
 }
 
 function insert(source, needle, value) {
-  if (source.toLowerCase().indexOf(needle.toLowerCase()) === -1) {
+  needle = needle.toLowerCase();
+  const sourceLC = source.toLowerCase();
+  if (!source.toLowerCase().includes(needle)) {
     return null;
   }
 
-  var left = source.substring(
-    0,
-    source.toLowerCase().lastIndexOf(needle.toLowerCase())
-  );
-  var right = source.substring(
-    source.toLowerCase().lastIndexOf(needle.toLowerCase())
-  );
-  var result = '';
+  const left = source.substring(0, sourceLC.lastIndexOf(needle));
+  const right = source.substring(sourceLC.lastIndexOf(needle));
 
   if (left && right) {
-    result = left + value + right;
+    return left + value + right;
   }
-  return result;
+  return '';
 }
 
-function safeForHTML(s) {
+function safeForHTML(s = '') {
   return s.replace(/<\/script>/gi, '<\\/script>').replace(/<!--/g, '<\\!--');
 }
 
-export default function binToFile(bin, options) {
+export default function binToFile(bin, options = {}) {
   if (!bin) {
     console.error('binToFile requires bin object', new Error().stack);
     return '<!DOCTYPE html>';
   }
 
-  if (!options) {
-    options = {};
-  }
-
   // allows for the proto to be '' (not sure why you'd want that though...)
-  var proto = options.proto !== undefined ? options.proto : 'http:';
+  let proto = options.proto !== undefined ? options.proto : 'https:';
 
-  // protect myself from idoits, like me.
+  // protect myself from idiots, like me.
   if (proto && proto.slice(-1) !== ':') {
     proto += ':';
   }
 
-  var file = '';
-  var html = (bin.html || '').replace(/(\r\n)/g, '\n'); // remove windows nl.
-  var source = bin.source;
-  var css = safeForHTML(bin.css || '');
-  var javascript = safeForHTML(bin.javascript || '');
-  var processors = bin.processors || {};
-  var meta =
+  let file = '';
+  let html = (bin.html || '').replace(/(\r\n)/g, '\n'); // remove windows nl.
+  var css = safeForHTML(bin.css);
+  var javascript = safeForHTML(bin.javascript);
+  const { source, processors = {} } = bin;
+  let meta =
     bin.meta ||
     (bin.url
-      ? '<!-- source: http://jsbin.com/' +
-        bin.url +
-        '/' +
-        (bin.revision || '') +
-        ' -->\n'
+      ? `<!-- source: http://jsbin.com/${bin.url}/${bin.revision || ''} -->\n`
       : '');
 
   // insert protocol if missing
@@ -107,7 +92,7 @@ export default function binToFile(bin, options) {
   file = html;
 
   if (css) {
-    if (file.indexOf('%css%') !== -1) {
+    if (file.includes('%css%')) {
       file = file.split('%css%').join(bin.css);
     } else {
       // is there head tag?
@@ -139,13 +124,12 @@ export default function binToFile(bin, options) {
   }
 
   if (javascript) {
-    if (file.indexOf('%code%') !== -1) {
+    if (file.includes('%code%')) {
       file = file.split('%code%').join(javascript);
     } else {
       // is there head tag?
-      javascript =
-        '<script id="jsbin-javascript">\n' + javascript + '\n</script>';
-      var body = insert(file, '</body>', javascript + '\n');
+      javascript = `<script id="jsbin-javascript">${javascript}\n</script>`;
+      const body = insert(file, '</body>', javascript + '\n');
       if (body) {
         file = body;
       } else {
@@ -167,37 +151,32 @@ export default function binToFile(bin, options) {
       delete source.html;
     }
 
-    var sourceScripts = ['html', 'css', 'javascript']
-      .map(function(type) {
+    const sourceScripts = ['html', 'css', 'javascript']
+      .map(type => {
         if (source[type] === undefined) {
           return '';
         }
 
-        var content = safeForHTML(source[type]);
+        const content = safeForHTML(source[type]);
         if (content) {
-          return (
-            '\n<script id="jsbin-source-' +
-            type +
-            '" type="text/' +
-            (processors[type] || type) +
-            '">' +
-            content +
-            '</script>'
-          );
+          return `\n<script id="jsbin-source-${type}" type="text/${processors[
+            type
+          ] || type}">${content}\n</script>`;
         }
+
+        return '';
       })
       .join('\n');
 
-    var bodytag = insert(file, '</body>', sourceScripts);
-    if (bodytag) {
-      file = bodytag;
+    const bodyTag = insert(file, '</body>', sourceScripts);
+    if (bodyTag) {
+      file = bodyTag;
     } else {
       file += sourceScripts;
     }
   }
 
-  var signature = hashof(file);
-  file = file.split('^^hash^^').join(signature);
+  file = file.split('^^hash^^').join(hashOf(file));
 
   return file;
 }

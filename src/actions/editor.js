@@ -1,7 +1,7 @@
-export const SET_THEME = 'SET_THEME';
-export const SET_OPTION = 'SET_OPTION';
-export const SET_SOURCE = 'SET_SOURCE';
-export const TOGGLE_OUTPUT = 'TOGGLE_OUTPUT';
+export const SET_THEME = '@@editor/SET_THEME';
+export const SET_OPTION = '@@editor/SET_OPTION';
+export const SET_SOURCE = '@@editor/SET_SOURCE';
+export const TOGGLE_OUTPUT = '@@editor/TOGGLE_OUTPUT';
 
 export function toggleOutput(show) {
   return { type: TOGGLE_OUTPUT, value: show };

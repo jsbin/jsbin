@@ -94,4 +94,8 @@ body,
 
 .JsBinApp {
   @import "_splitter";
+
+  [tabindex] {
+    outline: none;
+  }
 }

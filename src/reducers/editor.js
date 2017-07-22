@@ -2,7 +2,7 @@ import {
   SET_THEME,
   SET_OPTION,
   SET_SOURCE,
-  TOGGLE_OUTPUT
+  TOGGLE_OUTPUT,
 } from '../actions/editor';
 
 import * as MODE from '../lib/cm-modes';
@@ -12,7 +12,7 @@ const defaultState = {
   lineWrapping: true,
   lineNumbers: true,
   source: MODE.HTML,
-  output: true
+  output: true,
 };
 
 export default function reducer(state = defaultState, action) {

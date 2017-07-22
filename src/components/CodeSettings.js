@@ -27,41 +27,10 @@ export default class CodeSettings extends React.Component {
     this.props.setSource(e.target.value);
   }
 
-  refresh() {
-    const height = this.el.offsetHeight;
-    this.setState({ height });
-  }
-
-  componentDidMount() {
-    if (this.props.onRef) this.props.onRef(this);
-    this.refresh();
-  }
-
-  componentWillUnmount() {
-    this.props.onRef(undefined);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const { lineWrapping, lineNumbers } = this.props;
-    const { nextLineWrapping, nextLineNumbers } = nextProps;
-
-    if (lineWrapping !== nextLineWrapping || lineNumbers !== nextLineNumbers) {
-      this.refresh();
-    }
-
-    return true;
-  }
-
   render() {
     const { updated, lineWrapping, lineNumbers, source, output } = this.props;
     return (
-      <div
-        ref={e => (this.el = e)}
-        style={{
-          marginBottom: `calc(100vh - ${this.state.height + 20 + 0}px)`,
-        }}
-        className="CodeSettings"
-      >
+      <div className="CodeSettings">
         <label className="select">
           Source{' '}
           <select value={source} onChange={this.changeSource}>
@@ -80,7 +49,7 @@ export default class CodeSettings extends React.Component {
           </select>
         </label>
         <details>
-          <summary>Settings</summary>
+          <summary>Quick Settings</summary>
 
           <label>
             <input
@@ -115,7 +84,6 @@ export default class CodeSettings extends React.Component {
 }
 
 CodeSettings.propTypes = {
-  onRef: PropTypes.func,
   toggleOutput: PropTypes.func,
   output: PropTypes.string,
   set: PropTypes.func,
@@ -125,4 +93,5 @@ CodeSettings.propTypes = {
   source: PropTypes.string.isRequired,
   setSource: PropTypes.func,
   changeOutput: PropTypes.func,
+  onRefresh: PropTypes.func,
 };

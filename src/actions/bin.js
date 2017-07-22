@@ -6,6 +6,7 @@ export const SET_JS = '@@bin/set/JS';
 export const SET_HTML = '@@bin/set/HTML';
 export const SET_CSS = '@@bin/set/CSS';
 export const SET_OUTPUT = '@@bin/set/OUTPUT';
+export const RESET = '@@bin/reset';
 export const GET_BIN = '@@bin/fetch/GET';
 
 export function fetchDefault() {

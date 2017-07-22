@@ -11,21 +11,23 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/display/autorefresh';
 
 import CodeSettings from '../containers/CodeSettings';
+import Footer from './Footer';
 
 import 'codemirror/lib/codemirror.css';
 import '../css/Panel.css';
 import '../css/CodeMirror.css';
 
 import * as MODES from '../lib/cm-modes';
+import { cmd } from '../lib/is-mac';
 
 CodeMirror.displayName = 'CodeMirror';
 
 const keyMap = {
-  save: ['ctrl+s', 'command+s'],
-  run: ['ctrl+enter', 'command+enter'],
-  html: ['ctrl+1', 'command+1'],
-  css: ['ctrl+2', 'command+2'],
-  javascript: ['ctrl+3', 'command+3'],
+  save: `${cmd}+s`,
+  run: `${cmd}+enter`,
+  html: `${cmd}+1`,
+  css: `${cmd}+2`,
+  javascript: `${cmd}+3`,
 };
 
 const STATIC = process.env.REACT_APP_STATIC;
@@ -36,9 +38,11 @@ export default class Panel extends React.Component {
     this.updateCode = this.updateCode.bind(this);
     this.loadTheme = this.loadTheme.bind(this);
     this.saveCode = this.saveCode.bind(this);
+    this.refresh = this.refresh.bind(this);
 
     this.state = {
       code: props.code,
+      height: 0,
     };
   }
 
@@ -47,8 +51,11 @@ export default class Panel extends React.Component {
     // rendering of the codemirror instance
     setTimeout(() => {
       this.CodeMirror.getCodeMirror().refresh();
-      this.CodeSettings.refresh();
+      // this.CodeSettings.refresh();
     }, 0);
+
+    const height = this.footer.offsetHeight;
+    this.setState({ height });
   }
 
   loadTheme(theme) {
@@ -80,6 +87,9 @@ export default class Panel extends React.Component {
       // react-codemirror already has the bits…
       this.CodeMirror.getCodeMirror().setValue(nextProps.code);
     }
+
+    const height = this.footer.offsetHeight;
+    this.setState({ height });
   }
 
   componentDidUpdate(prevProps) {
@@ -89,17 +99,9 @@ export default class Panel extends React.Component {
       this.loadTheme(this.props.theme);
     }
 
-    if (this.props.source !== prevProps.source) {
-      // this.setState({ code: this.props.code });
+    if (prevProps.focus !== this.props.focus) {
+      this.CodeMirror.focus();
     }
-
-    // FIXME I think the code below belongs in componentWillReceiveProps
-    // if (
-    //   prevProps.code !== this.props.code &&
-    //   this.props.code !== this.state.code
-    // ) {
-    //   this.setState({ code: this.props.code });
-    // }
   }
 
   updateCode(code) {
@@ -150,15 +152,24 @@ export default class Panel extends React.Component {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
-        <div className="Panel">
+        <div
+          style={{
+            paddingBottom: `calc(100vh - ${this.state.height + 20 + 0}px)`,
+          }}
+          ref={e => (this.el = e)}
+          className="Panel"
+        >
           <CodeMirror
             ref={e => (this.CodeMirror = e)}
             value={code}
             onChange={this.updateCode}
             options={options}
-            autoFocus={true}
+            autoFocus={this.props.focus}
           />
-          <CodeSettings onRef={ref => (this.CodeSettings = ref)} />
+          <div ref={e => (this.footer = e)}>
+            <CodeSettings />
+            <Footer />
+          </div>
         </div>
       </HotKeys>
     );
@@ -174,4 +185,5 @@ Panel.propTypes = {
   changeCode: PropTypes.func,
   onRef: PropTypes.func,
   setSource: PropTypes.func,
+  focus: PropTypes.bool,
 };

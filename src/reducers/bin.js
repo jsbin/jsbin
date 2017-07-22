@@ -6,7 +6,8 @@ import {
   SET_CSS,
   SET_OUTPUT,
   SET_BIN,
-  GET_BIN
+  GET_BIN,
+  RESET,
 } from '../actions/bin';
 
 const defaultState = {
@@ -14,17 +15,21 @@ const defaultState = {
   output: '',
   html: '',
   javascript: '',
-  css: ''
+  css: '',
 };
 
 export default function reducer(state = defaultState, action) {
   const { type, code, payload } = action;
 
+  if (type === RESET) {
+    return defaultState;
+  }
+
   if (type === GET_BIN) {
     return handle(state, action, {
       start: prevState => ({
         ...prevState,
-        ...defaultState
+        ...defaultState,
       }),
       // finish: prevState => ({ ...prevState, isLoading: false }),
       failure: prevState => ({ ...prevState, error: payload }),
@@ -32,7 +37,7 @@ export default function reducer(state = defaultState, action) {
         const { html, css, javascript } = payload;
         // FIXME handle extra settings
         return { ...prevState, html, css, javascript, loading: false };
-      }
+      },
     });
   }
 
@@ -42,7 +47,7 @@ export default function reducer(state = defaultState, action) {
       html: action.html,
       css: action.css,
       javascript: action.javascript,
-      loading: false
+      loading: false,
     };
   }
 

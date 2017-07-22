@@ -12,13 +12,19 @@ export default class Output extends React.Component {
 
   updateOutput() {
     const { bin } = this.props;
-    const document = this.iframe.contentDocument;
+    const iframe = this.iframe; //document.createElement('iframe');
+    // iframe.hidden = true;
+    // iframe.name = 'JS Bin Output';
+    // iframe.className = 'Output';
+    // this.output.appendChild(iframe);
+
+    const doc = iframe.contentDocument;
 
     // start writing the page. This will clear any existing document.
-    this.iframe.contentDocument.open();
+    iframe.contentDocument.open();
 
     // this is to avoid a Firefox issue (see original jsbin)
-    document.write('');
+    doc.write('');
 
     let i = 0;
 
@@ -32,40 +38,38 @@ export default class Output extends React.Component {
     const output = binToHTML({
       html,
       javascript,
-      css: bin.css
+      css: bin.css,
     });
 
-    document.write(output);
-    document.close();
+    doc.write(output);
+    doc.close();
   }
 
   componentDidMount() {
-    // create an iframe
     this.updateOutput();
   }
 
+  // FIXME: not sure this is actually need
   componentDidUpdate(prevProps) {
     if (prevProps.code !== this.props.code) {
       this.updateOutput();
     }
   }
 
-  // shouldComponentUpdate() {
-  //   // diff the code
-  //   return true;
-  // }
-
   render() {
     return (
-      <iframe
-        className="Output"
-        title="JS Bin Output"
-        ref={e => (this.iframe = e)}
-      />
+      <div id="output" ref={e => (this.output = e)}>
+        <iframe
+          className="Output"
+          title="JS Bin Output"
+          ref={e => (this.iframe = e)}
+        />
+      </div>
     );
   }
 }
 
 Output.propTypes = {
-  code: PropTypes.string.isRequired
+  code: PropTypes.string.isRequired, // FIXME not entirely sure
+  bin: PropTypes.object.isRequired,
 };

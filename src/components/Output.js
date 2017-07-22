@@ -12,11 +12,12 @@ export default class Output extends React.Component {
 
   updateOutput() {
     const { bin } = this.props;
-    const iframe = this.iframe; //document.createElement('iframe');
-    // iframe.hidden = true;
-    // iframe.name = 'JS Bin Output';
-    // iframe.className = 'Output';
-    // this.output.appendChild(iframe);
+    const iframe = document.createElement('iframe');
+    iframe.hidden = true;
+    iframe.name = 'JS Bin Output';
+    iframe.className = 'Output';
+    this.output.innerHTML = '';
+    this.output.appendChild(iframe);
 
     const doc = iframe.contentDocument;
 
@@ -43,6 +44,7 @@ export default class Output extends React.Component {
 
     doc.write(output);
     doc.close();
+    iframe.hidden = false;
   }
 
   componentDidMount() {
@@ -59,11 +61,11 @@ export default class Output extends React.Component {
   render() {
     return (
       <div id="output" ref={e => (this.output = e)}>
-        <iframe
+        {/* <iframe
           className="Output"
           title="JS Bin Output"
           ref={e => (this.iframe = e)}
-        />
+        /> */}
       </div>
     );
   }

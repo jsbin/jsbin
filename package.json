@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "watch": "node-sass ./styles/ -w -o ./src/css --recursive",
-    "deploy": "npm run build && now build && now alias",
+    "deploy": "npm run build && now build --name jsbin-v5 && now alias",
     "eject": "react-scripts eject"
   }
 }

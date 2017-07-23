@@ -11,7 +11,7 @@ const defaultState = {
   theme: 'jsbin',
   lineWrapping: true,
   lineNumbers: true,
-  vertical: true,
+  vertical: false,
   source: MODE.HTML,
   output: true,
 };

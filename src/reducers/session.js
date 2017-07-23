@@ -3,6 +3,8 @@ import {
   OUTPUT_PAGE,
   TRIGGER_PALETTE,
   SET_CURSOR,
+  SET_ERROR,
+  CLEAR_ERROR,
 } from '../actions/session';
 
 import { RESET } from '../actions/bin';
@@ -18,12 +20,21 @@ const defaultState = {
   openPanel: MODES.HTML,
   output: OUTPUT_PAGE,
   palette: false,
+  error: null,
   ...defaultCursorState,
 };
 
 export default function reducer(state = defaultState, action) {
   if (action.type === RESET) {
-    return { ...state, ...defaultCursorState };
+    return { ...state, ...defaultCursorState, error: null };
+  }
+
+  if (action.type === SET_ERROR) {
+    return { ...state, error: action.value };
+  }
+
+  if (action.type === CLEAR_ERROR) {
+    return { ...state, error: null };
   }
 
   if (action.type === CHANGE_OUTPUT) {

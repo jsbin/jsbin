@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
 // middleware for store
@@ -14,8 +14,8 @@ import { middleware as reduxPackMiddleware } from 'redux-pack';
 import reducers from './reducers'; // Or wherever you keep your reducers
 import App from './containers/App';
 import * as MODES from './lib/cm-modes';
-import { setSource } from './actions/editor';
-import { RESET } from './actions/bin';
+import { OUTPUT_PAGE, OUTPUT_CONSOLE } from './actions/session';
+import { setSource, toggleOutput } from './actions/editor';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
 
@@ -54,36 +54,42 @@ try {
 const finalCreateStore = compose(...middleware)(createStore);
 const store = finalCreateStore(reducers, initState);
 
-const url = new URL(window.location.toString());
+// FIXME move this out of index.js
+{
+  const url = new URL(window.location.toString());
 
-Object.keys(MODES).forEach(mode => {
-  const key = MODES[mode];
-  if (url.searchParams.get(key) !== null) {
-    store.dispatch(setSource(key));
+  const showOutput = url.searchParams.get('output');
+  if (showOutput !== null) {
+    if (showOutput === '' || showOutput === 1) {
+      store.dispatch(toggleOutput(OUTPUT_PAGE));
+    }
   }
-});
 
-const resetBin = nextState => {
-  const { dispatch } = store;
-  console.log('resetting');
+  const showConsole = url.searchParams.get('console');
+  if (showConsole !== null) {
+    if (showConsole === '' || showConsole === 1) {
+      store.dispatch(toggleOutput(OUTPUT_CONSOLE));
+    }
+  }
 
-  dispatch({ type: RESET });
-};
+  Object.keys(MODES).forEach(mode => {
+    const key = MODES[mode];
+    if (url.searchParams.get(key) !== null) {
+      store.dispatch(setSource(key));
+    }
+  });
+}
 
 const render = App => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <div>
-          <Route exact onEnter={resetBin} path="/" component={App} />
-          <Route
-            exact
-            onEnter={resetBin}
-            path="/:bin/:version"
-            component={App}
-          />
-          <Route exact onEnter={resetBin} path="/:bin" component={App} />
-        </div>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/local/:localId" component={App} />
+          <Route exact path="/:bin/:version" component={App} />
+          <Route exact path="/:bin" component={App} />
+        </Switch>
       </ConnectedRouter>
     </Provider>,
     document.getElementById('root')

@@ -11,7 +11,7 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/display/autorefresh';
 
 import CodeSettings from '../containers/CodeSettings';
-import Footer from './Footer';
+import Footer from '../containers/Footer';
 
 import 'codemirror/lib/codemirror.css';
 import '../css/Panel.css';
@@ -40,6 +40,7 @@ export default class Panel extends React.Component {
     this.saveCode = this.saveCode.bind(this);
     this.refresh = this.refresh.bind(this);
     this.saveCursorPosition = this.saveCursorPosition.bind(this);
+    this.refreshTimer = null;
 
     this.state = {
       code: props.code,
@@ -56,7 +57,7 @@ export default class Panel extends React.Component {
   refresh() {
     // as usual with jsbin, we need a setTimeout to avoid a race on the
     // rendering of the codemirror instance
-    setTimeout(() => {
+    this.refreshTimer = setTimeout(() => {
       this.CodeMirror.getCodeMirror().refresh();
       // this.CodeSettings.refresh();
     }, 0);
@@ -85,15 +86,16 @@ export default class Panel extends React.Component {
 
   componentWillUnmount() {
     this.props.onRef(undefined);
+    clearTimeout(this.refreshTimer);
   }
 
   componentWillReceiveProps(nextProps) {
     const { source } = this.props;
+    const cm = this.CodeMirror.getCodeMirror();
     if (source !== nextProps.source) {
       this.setState({ code: nextProps.code });
       // FIXME this is a hack, but don't understand why
       // react-codemirror already has the bits…
-      const cm = this.CodeMirror.getCodeMirror();
       this.props.setCursor({ source, ...cm.getCursor() });
       cm.setValue(nextProps.code);
 
@@ -103,7 +105,10 @@ export default class Panel extends React.Component {
       cm.setCursor({ line, ch });
     }
 
-    const height = this.footer.offsetHeight;
+    let height = this.footer.offsetHeight;
+    if (this.props.editor.vertical === true) {
+      height += document.querySelector('.layout-pane-primary').offsetHeight;
+    }
     this.setState({ height });
   }
 
@@ -126,7 +131,7 @@ export default class Panel extends React.Component {
 
   saveCode(e) {
     e.preventDefault(); // prevent showing the "save as" modal
-    this.props.changeCode(this.state.code);
+    this.props.save();
   }
 
   render() {
@@ -181,7 +186,7 @@ export default class Panel extends React.Component {
             options={options}
             autoFocus={this.props.focus}
           />
-          <div ref={e => (this.footer = e)}>
+          <div className="AppFooter" ref={e => (this.footer = e)}>
             <CodeSettings />
             <Footer />
           </div>
@@ -202,4 +207,5 @@ Panel.propTypes = {
   focus: PropTypes.bool,
   setCursor: PropTypes.func,
   session: PropTypes.object,
+  save: PropTypes.func,
 };

@@ -17,16 +17,27 @@ export default class Palette extends React.Component {
     this.onRun = this.onRun.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
 
+    this.focusTimer = null;
+
+    const all = { ...allCommands };
+
     this.state = {
-      commands: [...Object.keys(allCommands)],
+      all,
+      commands: [...Object.keys(all)],
       filter: '>',
       active: 0,
     };
   }
 
-  onRun(command) {
-    this.props.run(command);
-    this.props.dismiss();
+  async onRun(command) {
+    const res = await this.props.run(command);
+    if (!res) {
+      this.props.dismiss();
+    }
+
+    if (Array.isArray(res)) {
+      this.setState({ all: res, commands: res.map((x, i) => i) });
+    }
   }
 
   onKeyDown(e) {
@@ -49,11 +60,14 @@ export default class Palette extends React.Component {
 
   onFilter(e) {
     const filter = e.target.value;
+    const { all } = this.state;
     const key = filter.toLowerCase().substr(1);
     this.setState({
-      commands: Object.keys(allCommands).filter(c =>
-        allCommands[c].title.toLowerCase().includes(key)
-      ),
+      commands: Object.keys(all)
+        .filter(c => all[c].title.toLowerCase().includes(key))
+        .sort((a, b) => {
+          return a.indexOf(key) < b.indexOf(key);
+        }),
       filter,
       active: 0,
     });
@@ -64,13 +78,30 @@ export default class Palette extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    /*
+      This setTimeout is used due to a race condition:
+      If the user opens the palette, and selects "new",
+      since the commands are async, the command emits
+      a RESET event, which causes the bin to empty out,
+      but since the palette is still visible (according
+      to the state), it's rendered - and `componentDidMount`
+      is called, but the the DISMISS event fires which
+      removes this component from the DOM, which causes
+      `this.input` to be missing. Thus the check before
+      the focus is run in the setTimeout - since it's
+      scheduled _after_ the component has been removed.
+    */
+    this.focusTimer = setTimeout(() => {
       this.input.focus();
     });
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.focusTimer);
+  }
+
   render() {
-    const { filter, active, commands } = this.state;
+    const { filter, active, commands, all } = this.state;
     return (
       <div className="Palette">
         <div className="inner">
@@ -89,7 +120,7 @@ export default class Palette extends React.Component {
                 key={`command-${i}`}
                 onClick={() => this.onRun(command)}
               >
-                {allCommands[command].title}
+                {all[command].title}
               </li>
             )}
           </ul>

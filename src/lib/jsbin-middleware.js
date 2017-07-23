@@ -1,6 +1,8 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SET_SOURCE } from '../actions/editor';
+import { SAVE } from '../actions/bin';
 import { DISMISS, triggerPalette } from '../actions/session';
+import { save } from '../lib/bin';
 
 export default store => next => action => {
   const nextAction = next(action);
@@ -13,6 +15,10 @@ export default store => next => action => {
     } catch (e) {
       // noop
     }
+  }
+
+  if (action.type === SAVE) {
+    save(state, store.dispatch);
   }
 
   if (action.type === LOCATION_CHANGE && action.payload.state) {

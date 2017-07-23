@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { setSource } from '../actions/editor';
-import { setCode } from '../actions/bin';
+import { setCode, save } from '../actions/bin';
 import { setCursor } from '../actions/session';
 import { SET_HTML, SET_JS, SET_CSS } from '../actions/bin';
 import * as MODES from '../lib/cm-modes';
@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => {
     setCursor: ({ line, ch, source }) => {
       dispatch(setCursor(source, line, ch));
     },
+    save: () => dispatch(save()),
     setSource: source => dispatch(setSource(source)),
     changeCode: (source, code) => {
       let type = SET_HTML;

@@ -28,7 +28,14 @@ export default class CodeSettings extends React.Component {
   }
 
   render() {
-    const { updated, lineWrapping, lineNumbers, source, output } = this.props;
+    const {
+      updated,
+      lineWrapping,
+      lineNumbers,
+      source,
+      output,
+      vertical,
+    } = this.props;
     return (
       <div className="CodeSettings">
         <label className="select">
@@ -72,6 +79,17 @@ export default class CodeSettings extends React.Component {
             />{' '}
             Line numbers
           </label>
+
+          <label>
+            <input
+              type="checkbox"
+              onChange={e => {
+                this.props.set('vertical', e.target.checked);
+              }}
+              checked={vertical}
+            />{' '}
+            Vertical splitter
+          </label>
         </details>
 
         {updated &&
@@ -94,4 +112,5 @@ CodeSettings.propTypes = {
   setSource: PropTypes.func,
   changeOutput: PropTypes.func,
   onRefresh: PropTypes.func,
+  vertical: PropTypes.bool,
 };

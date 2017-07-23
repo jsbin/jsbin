@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
+import idk from 'idb-keyval';
 
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
@@ -45,7 +46,11 @@ export default class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.editor.output !== prevProps.editor.output) {
+    const { editor } = this.props;
+    if (
+      editor.output !== prevProps.editor.output ||
+      editor.vertical !== prevProps.editor.vertical
+    ) {
       this.panel.refresh();
       return;
     }
@@ -63,8 +68,16 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount() {
+  async componentWillMount() {
     const { match } = this.props;
+    console.log(match);
+
+    if (match.params.localId) {
+      const res = await idk.get(match.params.localId);
+      this.props.setBin(res);
+      return;
+    }
+
     if (!match.params.bin) {
       // new bin
       // dispatch request for default bin
@@ -76,7 +89,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { bin, loading, session } = this.props;
+    const { bin, loading, session, editor } = this.props;
 
     if (loading) {
       return (
@@ -105,7 +118,7 @@ export default class App extends Component {
           <Nav />
           <div onDoubleClick={this.hideOutput}>
             <Splitter
-              split="vertical"
+              vertical={editor.vertical}
               defaultSize="50%"
               onSize={() => {
                 this.panel.refresh();

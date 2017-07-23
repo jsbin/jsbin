@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
-import { fetchBin, fetchDefault as loadDefault } from '../actions/bin';
+import { fetchBin, fetchDefault as loadDefault, setBin } from '../actions/bin';
 import { triggerPalette, dismiss } from '../actions/session';
 import { setSource, toggleOutput } from '../actions/editor';
 
@@ -11,6 +11,7 @@ const mapStateToProps = ({ bin, editor, session }) => {
 const mapDispatchToProps = dispatch => {
   return {
     dismiss: () => dispatch(dismiss()),
+    setBin: bin => dispatch(setBin(bin)),
     triggerPalette: value => dispatch(triggerPalette(value)),
     setSource: source => dispatch(setSource(source)),
     toggleOutput: value => dispatch(toggleOutput(value)),

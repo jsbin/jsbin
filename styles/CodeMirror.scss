@@ -1,8 +1,7 @@
 @import "vars";
 
 .CodeMirror {
-  font-family: 'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console,
-    monospace;
+  font-family: $font-family-code;
   height: 100%;
   padding: 5px 10px 0 0;
   font-size: $font-size-base;

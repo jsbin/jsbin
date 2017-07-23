@@ -11,6 +11,15 @@
     outline: none;
   }
 
+  .AppFooter {
+    opacity: 0.3;
+    transition: opacity ease-out 100ms;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
   .CodeSettings {
     margin: 20px;
     margin-top: 60px;
@@ -19,12 +28,6 @@
     background: #eee;
     padding: 20px;
     font-size: $font-size-base + 2;
-    opacity: 0.3;
-    transition: opacity ease-out 100ms;
-
-    &:hover {
-      opacity: 1;
-    }
 
     label {
       display: block;

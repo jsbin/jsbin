@@ -12,6 +12,8 @@ import {
 
 const defaultState = {
   loading: true,
+  id: null,
+  revision: 1, // may drop this
   output: '',
   html: '',
   javascript: '',
@@ -47,6 +49,7 @@ export default function reducer(state = defaultState, action) {
       html: action.html,
       css: action.css,
       javascript: action.javascript,
+      id: action.url || action.id,
       loading: false,
     };
   }

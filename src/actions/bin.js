@@ -7,13 +7,22 @@ export const SET_HTML = '@@bin/set/HTML';
 export const SET_CSS = '@@bin/set/CSS';
 export const SET_OUTPUT = '@@bin/set/OUTPUT';
 export const RESET = '@@bin/RESET';
+export const SAVE = '@@bin/SAVE';
 export const GET_BIN = '@@bin/fetch/GET';
+
+export function setBin({ id, html, css, javascript }) {
+  return { type: SET_BIN, id, html, css, javascript };
+}
 
 export function fetchDefault() {
   return {
     type: SET_BIN,
     ...defaults,
   };
+}
+
+export function save() {
+  return { type: SAVE };
 }
 
 export function fetchBin(id, revision = 'latest') {

@@ -2,6 +2,8 @@ export const CHANGE_OUTPUT = '@@session/CHANGE_OUTPUT';
 export const TRIGGER_PALETTE = '@@session/TRIGGER_PALETTE';
 export const DISMISS = '@@session/DISMISS';
 export const SET_CURSOR = '@@session/SET_CURSOR';
+export const SET_ERROR = '@@session/SET_ERROR';
+export const CLEAR_ERROR = '@@session/CLEAR_ERROR';
 
 // constants - not event types
 export const OUTPUT_NONE = 'OUTPUT_NONE';
@@ -16,6 +18,14 @@ export function changeOutput(value) {
 
 export function triggerPalette(show) {
   return { type: TRIGGER_PALETTE, value: show };
+}
+
+export function setError(value) {
+  return { type: SET_ERROR, value };
+}
+
+export function clearError() {
+  return { type: CLEAR_ERROR };
 }
 
 export function dismiss() {

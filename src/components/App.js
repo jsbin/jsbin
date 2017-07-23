@@ -76,7 +76,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { bin, editor, loading, session } = this.props;
+    const { bin, loading, session } = this.props;
 
     if (loading) {
       return (
@@ -88,7 +88,7 @@ export default class App extends Component {
     }
 
     const keyMap = {
-      openPalette: `${cmd}+shift+p`,
+      openPalette: [`${cmd}+shift+p`, `ctrl+shift+p`],
       dismiss: 'escape',
     };
 
@@ -114,7 +114,6 @@ export default class App extends Component {
               <Panel
                 focus={!session.palette}
                 onRef={ref => (this.panel = ref)}
-                mode={editor.source}
               />
               {(session.output === OUTPUT.OUTPUT_BOTH ||
                 session.output === OUTPUT.OUTPUT_PAGE) &&

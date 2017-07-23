@@ -1,6 +1,5 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SET_SOURCE } from '../actions/editor';
-import { RESET } from '../actions/bin';
 import { DISMISS, triggerPalette } from '../actions/session';
 
 export default store => next => action => {
@@ -16,8 +15,10 @@ export default store => next => action => {
     }
   }
 
-  if (action.type === LOCATION_CHANGE) {
-    store.dispatch({ type: RESET });
+  if (action.type === LOCATION_CHANGE && action.payload.state) {
+    if (action.payload.state.action) {
+      store.dispatch(action.payload.state.action);
+    }
   }
 
   // keep the URL in sync

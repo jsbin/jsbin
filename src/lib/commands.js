@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux';
+import { RESET } from '../actions/bin';
 
 export const save = {
   title: 'Save',
@@ -20,14 +21,14 @@ export const open = {
 export const newbin = {
   title: 'New',
   run: dispatch => {
-    dispatch(push('/'));
+    dispatch(push('/', { action: { type: RESET } }));
   },
 };
 
 /**
  * Wanted commands:
  *
- * save as template (optionally nameed)
+ * save as template (optionally named)
  * new from template
  * upgrade
  * clone
@@ -36,5 +37,6 @@ export const newbin = {
  * make private
  * add library + search
  * download
+ * toggle dark/light theme
  * help / search
  */

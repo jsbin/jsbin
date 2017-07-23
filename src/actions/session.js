@@ -1,6 +1,7 @@
 export const CHANGE_OUTPUT = '@@session/CHANGE_OUTPUT';
 export const TRIGGER_PALETTE = '@@session/TRIGGER_PALETTE';
 export const DISMISS = '@@session/DISMISS';
+export const SET_CURSOR = '@@session/SET_CURSOR';
 
 // constants - not event types
 export const OUTPUT_NONE = 'OUTPUT_NONE';
@@ -19,4 +20,8 @@ export function triggerPalette(show) {
 
 export function dismiss() {
   return { type: DISMISS };
+}
+
+export function setCursor(panel, line, ch) {
+  return { type: SET_CURSOR, panel, value: `${line}:${ch}` };
 }

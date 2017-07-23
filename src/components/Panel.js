@@ -39,11 +39,18 @@ export default class Panel extends React.Component {
     this.loadTheme = this.loadTheme.bind(this);
     this.saveCode = this.saveCode.bind(this);
     this.refresh = this.refresh.bind(this);
+    this.saveCursorPosition = this.saveCursorPosition.bind(this);
 
     this.state = {
       code: props.code,
       height: 0,
     };
+  }
+
+  saveCursorPosition() {
+    const pos = this.CodeMirror.getCodeMirror().getCursor();
+    pos.source = this.props.source;
+    this.props.setCursor(pos);
   }
 
   refresh() {
@@ -81,11 +88,19 @@ export default class Panel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.source !== nextProps.source) {
+    const { source } = this.props;
+    if (source !== nextProps.source) {
       this.setState({ code: nextProps.code });
       // FIXME this is a hack, but don't understand why
       // react-codemirror already has the bits…
-      this.CodeMirror.getCodeMirror().setValue(nextProps.code);
+      const cm = this.CodeMirror.getCodeMirror();
+      this.props.setCursor({ source, ...cm.getCursor() });
+      cm.setValue(nextProps.code);
+
+      const [line, ch] = nextProps.session[`cursor${nextProps.source}`]
+        .split(':')
+        .map(_ => parseInt(_, 10));
+      cm.setCursor({ line, ch });
     }
 
     const height = this.footer.offsetHeight;
@@ -106,7 +121,7 @@ export default class Panel extends React.Component {
 
   updateCode(code) {
     this.setState({ code });
-    this.props.changeCode(code);
+    this.props.changeCode(this.props.source, code);
   }
 
   saveCode(e) {
@@ -177,7 +192,6 @@ export default class Panel extends React.Component {
 }
 
 Panel.propTypes = {
-  mode: PropTypes.string.isRequired,
   code: PropTypes.string,
   theme: PropTypes.string,
   source: PropTypes.string,
@@ -186,4 +200,6 @@ Panel.propTypes = {
   onRef: PropTypes.func,
   setSource: PropTypes.func,
   focus: PropTypes.bool,
+  setCursor: PropTypes.func,
+  session: PropTypes.object,
 };

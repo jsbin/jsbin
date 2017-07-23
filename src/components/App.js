@@ -88,7 +88,7 @@ export default class App extends Component {
     }
 
     const keyMap = {
-      openPalette: `ctrl+shift+p`,
+      openPalette: `${cmd}+shift+p`,
       dismiss: 'escape',
     };
 

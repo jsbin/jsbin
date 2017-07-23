@@ -23,3 +23,18 @@ export const newbin = {
     dispatch(push('/'));
   },
 };
+
+/**
+ * Wanted commands:
+ *
+ * save as template (optionally nameed)
+ * new from template
+ * upgrade
+ * clone
+ * export
+ * delete
+ * make private
+ * add library + search
+ * download
+ * help / search
+ */

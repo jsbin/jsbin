@@ -23,7 +23,7 @@ const defaultState = {
 
 export default function reducer(state = defaultState, action) {
   if (action.type === RESET) {
-    return { state, ...defaultCursorState };
+    return { ...state, ...defaultCursorState };
   }
 
   if (action.type === CHANGE_OUTPUT) {

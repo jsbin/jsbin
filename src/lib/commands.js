@@ -14,7 +14,7 @@ export const open = {
   title: 'Open...',
   run: dispatch => {
     console.log('not implemented');
-    dispatch(push('/open'));
+    // dispatch(push('/open'));
   },
 };
 

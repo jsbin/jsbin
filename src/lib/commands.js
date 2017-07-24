@@ -1,6 +1,14 @@
 import { push } from 'react-router-redux';
 import { RESET, SAVE } from '../actions/bin';
+import { toggleOutput } from '../actions/session';
 import fetch from 'isomorphic-fetch';
+
+export const newBin = {
+  title: 'New',
+  run: dispatch => {
+    dispatch(push('/', { action: { type: RESET } }));
+  },
+};
 
 export const save = {
   title: 'Save',
@@ -12,16 +20,16 @@ export const save = {
 
 export const open = {
   title: 'Open...',
-  run: dispatch => {
+  run: () => {
     console.log('not implemented');
     // dispatch(push('/open'));
   },
 };
 
-export const newbin = {
-  title: 'New',
+export const togglePage = {
+  title: 'Toggle page output',
   run: dispatch => {
-    dispatch(push('/', { action: { type: RESET } }));
+    dispatch(toggleOutput());
   },
 };
 

@@ -1,5 +1,7 @@
 import {
   CHANGE_OUTPUT,
+  OUTPUT_NONE,
+  TOGGLE_OUTPUT,
   OUTPUT_PAGE,
   TRIGGER_PALETTE,
   SET_CURSOR,
@@ -11,41 +13,50 @@ import { RESET } from '../actions/bin';
 
 import * as MODES from '../lib/cm-modes';
 
-const defaultCursorState = Object.keys(MODES).reduce((acc, curr) => {
-  acc[`cursor${MODES[curr]}`] = '0:0';
-  return acc;
-}, {});
+const defaultCursorState = {
+  [`cursor${MODES.HTML}`]: '8:0', // start on the blank line
+  [`cursor${MODES.JAVASCRIPT}`]: '0:0', // start on the blank line
+  [`cursor${MODES.CSS}`]: '0:0', // start on the blank line
+};
 
 const defaultState = {
   openPanel: MODES.HTML,
   output: OUTPUT_PAGE,
+  lastOutput: OUTPUT_NONE,
   palette: false,
   error: null,
   ...defaultCursorState,
 };
 
 export default function reducer(state = defaultState, action) {
-  if (action.type === RESET) {
+  const { type } = action;
+  if (type === RESET) {
     return { ...state, ...defaultCursorState, error: null };
   }
 
-  if (action.type === SET_ERROR) {
+  if (type === TOGGLE_OUTPUT) {
+    const output =
+      state.output === OUTPUT_NONE ? state.lastOutput : OUTPUT_NONE;
+    return { ...state, lastOutput: state.output, output };
+  }
+
+  if (type === SET_ERROR) {
     return { ...state, error: action.value };
   }
 
-  if (action.type === CLEAR_ERROR) {
+  if (type === CLEAR_ERROR) {
     return { ...state, error: null };
   }
 
-  if (action.type === CHANGE_OUTPUT) {
+  if (type === CHANGE_OUTPUT) {
     return { ...state, output: action.value };
   }
 
-  if (action.type === SET_CURSOR) {
+  if (type === SET_CURSOR) {
     return { ...state, [`cursor${action.panel}`]: action.value };
   }
 
-  if (action.type === TRIGGER_PALETTE) {
+  if (type === TRIGGER_PALETTE) {
     return { ...state, palette: action.value };
   }
 

@@ -21,6 +21,10 @@ export function fetchDefault() {
   };
 }
 
+export function reset() {
+  return { type: RESET };
+}
+
 export function save() {
   return { type: SAVE };
 }

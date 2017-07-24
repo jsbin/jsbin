@@ -1,10 +1,10 @@
 export const SET_THEME = '@@editor/SET_THEME';
 export const SET_OPTION = '@@editor/SET_OPTION';
 export const SET_SOURCE = '@@editor/SET_SOURCE';
-export const TOGGLE_OUTPUT = '@@editor/TOGGLE_OUTPUT';
+export const TOGGLE_THEME = '@@editor/TOGGLE_THEME';
 
-export function toggleOutput(show) {
-  return { type: TOGGLE_OUTPUT, value: show };
+export function toggleTheme() {
+  return { type: TOGGLE_THEME };
 }
 
 export function setTheme(theme) {

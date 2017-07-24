@@ -2,18 +2,20 @@ import {
   SET_THEME,
   SET_OPTION,
   SET_SOURCE,
-  TOGGLE_OUTPUT,
+  TOGGLE_THEME,
 } from '../actions/editor';
 
 import * as MODE from '../lib/cm-modes';
 
+const lightTheme = 'jsbin';
+const darkTheme = 'monokai';
+
 const defaultState = {
-  theme: 'jsbin',
+  theme: lightTheme,
   lineWrapping: true,
   lineNumbers: true,
   vertical: false,
   source: MODE.HTML,
-  output: true,
 };
 
 export default function reducer(state = defaultState, action) {
@@ -23,8 +25,11 @@ export default function reducer(state = defaultState, action) {
     return { ...state, source: action.source };
   }
 
-  if (type === TOGGLE_OUTPUT) {
-    return { ...state, output: action.value };
+  if (type === TOGGLE_THEME) {
+    return {
+      ...state,
+      theme: state.theme === lightTheme ? darkTheme : lightTheme,
+    };
   }
 
   if (type === SET_OPTION) {

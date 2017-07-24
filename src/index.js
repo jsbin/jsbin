@@ -14,8 +14,8 @@ import { middleware as reduxPackMiddleware } from 'redux-pack';
 import reducers from './reducers'; // Or wherever you keep your reducers
 import App from './containers/App';
 import * as MODES from './lib/cm-modes';
-import { OUTPUT_PAGE, OUTPUT_CONSOLE } from './actions/session';
-import { setSource, toggleOutput } from './actions/editor';
+import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
+import { setSource } from './actions/editor';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
 
@@ -61,14 +61,14 @@ const store = finalCreateStore(reducers, initState);
   const showOutput = url.searchParams.get('output');
   if (showOutput !== null) {
     if (showOutput === '' || showOutput === 1) {
-      store.dispatch(toggleOutput(OUTPUT_PAGE));
+      store.dispatch(changeOutput(OUTPUT_PAGE));
     }
   }
 
   const showConsole = url.searchParams.get('console');
   if (showConsole !== null) {
     if (showConsole === '' || showConsole === 1) {
-      store.dispatch(toggleOutput(OUTPUT_CONSOLE));
+      store.dispatch(changeOutput(OUTPUT_CONSOLE));
     }
   }
 

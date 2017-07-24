@@ -19,7 +19,6 @@ import '../css/App.css';
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.hideOutput = this.hideOutput.bind(this);
     this.triggerPalette = this.triggerPalette.bind(this);
     this.dismiss = this.dismiss.bind(this);
   }
@@ -32,17 +31,6 @@ export default class App extends Component {
   triggerPalette(e) {
     e.preventDefault();
     this.props.triggerPalette(true);
-  }
-
-  hideOutput(e) {
-    const { output } = this.props.editor;
-    if (e.target.className === 'layout-splitter') {
-      this.props.toggleOutput(false);
-    }
-
-    if (output === false) {
-      this.props.toggleOutput(true);
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -116,7 +104,7 @@ export default class App extends Component {
           {session.palette && <Palette />}
           <Head />
           <Nav />
-          <div onDoubleClick={this.hideOutput}>
+          <div>
             <Splitter
               vertical={editor.vertical}
               defaultSize="50%"
@@ -148,7 +136,6 @@ App.propTypes = {
   session: PropTypes.object,
   loadDefault: PropTypes.func,
   setSource: PropTypes.func,
-  toggleOutput: PropTypes.func,
   triggerPalette: PropTypes.func,
   dismiss: PropTypes.func,
 };

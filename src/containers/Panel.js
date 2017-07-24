@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
     },
     save: () => dispatch(save()),
     setSource: source => dispatch(setSource(source)),
-    changeCode: (source, code) => {
+    changeCode: (code, source) => {
       let type = SET_HTML;
       if (source === MODES.CSS) {
         type = SET_CSS;
@@ -27,7 +27,7 @@ const mapDispatchToProps = dispatch => {
         type = SET_JS;
       }
 
-      dispatch(setCode(type, code));
+      dispatch(setCode(code, type));
     },
   };
 };

@@ -1,6 +1,18 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
+
+// import 'codemirror/addon/hint/show-hint.js';
+// import 'codemirror/addon/hint/html-hint.js';
+// import 'codemirror/addon/hint/css-hint.js';
+// import '../lib/anyword-hint';
+// import 'codemirror/addon/display/placeholder.js';
+// import 'codemirror/addon/comment/comment.js';
+
+import 'codemirror/addon/edit/closetag';
+import 'codemirror/addon/fold/xml-fold';
+import 'codemirror/addon/edit/closebrackets';
 
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/jsx/jsx';
@@ -10,6 +22,7 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/display/autorefresh';
 
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/addon/hint/show-hint.css';
 import '../css/CodeMirror.css';
 
 CodeMirror.displayName = 'CodeMirror';
@@ -34,6 +47,7 @@ export default class Mirror extends React.Component {
     }
 
     this.updateCursor(this.props);
+    this.CodeMirror.getCodeMirror().refresh();
   }
 
   componentWillUnmount() {
@@ -69,14 +83,21 @@ export default class Mirror extends React.Component {
     if (prevProps.focus !== this.props.focus) {
       this.CodeMirror.focus();
     }
+
+    // try to do auto complete on typing…
+    // const autocomplete = debounce(cm => cm.execCommand('autocomplete'), 500);
+    // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
   }
 
   updateCursor(props) {
-    const cm = this.CodeMirror.getCodeMirror();
-    const [line, ch] = props.session[`cursor${props.editor.source}`]
-      .split(':')
-      .map(_ => parseInt(_, 10));
-    cm.setCursor({ line, ch });
+    if (props.setCursor) {
+      const cm = this.CodeMirror.getCodeMirror();
+      const [line, ch] = props.session[`cursor${props.editor.source}`]
+        .split(':')
+        .map(_ => parseInt(_, 10));
+
+      cm.setCursor({ line, ch });
+    }
   }
 
   loadTheme(theme) {
@@ -89,19 +110,30 @@ export default class Mirror extends React.Component {
   updateCode(code) {
     this.setState({ code });
     if (this.props.changeCode) {
-      this.props.changeCode(this.props.editor.source, code);
+      this.props.changeCode(code, this.props.editor.source);
     }
   }
 
   render() {
     const { options, focus } = this.props;
     const { code } = this.state;
+
+    const cmOptions = {
+      fixedGutter: true,
+      autoRefresh: true,
+      autoCloseBrackets: true,
+      hintOptions: {
+        completeSingle: false,
+      },
+      ...options,
+    };
+
     return (
       <CodeMirror
         ref={e => (this.CodeMirror = e)}
         value={code}
         onChange={this.updateCode}
-        options={options}
+        options={cmOptions}
         autoFocus={focus}
       />
     );
@@ -111,8 +143,8 @@ export default class Mirror extends React.Component {
 Mirror.propTypes = {
   code: PropTypes.string.isRequired,
   editor: PropTypes.object.isRequired,
-  setCursor: PropTypes.func.isRequired,
-  setDirtyFlag: PropTypes.func.isRequired,
+  setCursor: PropTypes.func,
+  setDirtyFlag: PropTypes.func,
   session: PropTypes.object,
   changeCode: PropTypes.func,
   theme: PropTypes.string,
@@ -124,4 +156,5 @@ Mirror.defaultProps = {
   theme: 'jsbin',
   focus: true,
   code: '',
+  session: {},
 };

@@ -56,6 +56,10 @@ export default class App extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.setDirtyFlag();
+  }
+
   async componentWillMount() {
     const { match } = this.props;
 

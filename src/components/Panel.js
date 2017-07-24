@@ -37,7 +37,7 @@ export default class Panel extends React.Component {
     this.props.onRef(undefined);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     let height = this.footer.offsetHeight;
     if (this.props.editor.vertical === true) {
       height += document.querySelector('.layout-pane-primary').offsetHeight;
@@ -69,6 +69,7 @@ export default class Panel extends React.Component {
     };
 
     if (source === MODES.HTML) {
+      options.autoCloseTags = true;
       options.mode = {
         name: 'htmlmixed',
         scriptTypes: [

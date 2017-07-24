@@ -36,7 +36,7 @@ export function fetchBin(id, revision = 'latest') {
   };
 }
 
-export function setCode(type, code) {
+export function setCode(code, type) {
   return dispatch => {
     // , getState
     // const allCode = getState().code;

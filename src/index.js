@@ -13,6 +13,7 @@ import { middleware as reduxPackMiddleware } from 'redux-pack';
 
 import reducers from './reducers'; // Or wherever you keep your reducers
 import App from './containers/App';
+import Settings from './containers/Settings';
 import * as MODES from './lib/cm-modes';
 import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/editor';
@@ -87,6 +88,7 @@ const render = App => {
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/" component={App} />
+          <Route exact path="/settings" component={Settings} />
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/:bin/:version" component={App} />
           <Route exact path="/:bin" component={App} />

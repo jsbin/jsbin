@@ -7,6 +7,7 @@ import {
   SET_CURSOR,
   SET_ERROR,
   CLEAR_ERROR,
+  DIRTY,
 } from '../actions/session';
 
 import { RESET } from '../actions/bin';
@@ -25,6 +26,7 @@ const defaultState = {
   lastOutput: OUTPUT_NONE,
   palette: false,
   error: null,
+  dirty: false,
   ...defaultCursorState,
 };
 
@@ -32,6 +34,10 @@ export default function reducer(state = defaultState, action) {
   const { type } = action;
   if (type === RESET) {
     return { ...state, ...defaultCursorState, error: null };
+  }
+
+  if (type === DIRTY) {
+    return { ...state, dirty: action.value };
   }
 
   if (type === TOGGLE_OUTPUT) {
@@ -53,6 +59,10 @@ export default function reducer(state = defaultState, action) {
   }
 
   if (type === SET_CURSOR) {
+    if (!state[`cursor${action.panel}`]) {
+      // ignore unknown panels
+      return state;
+    }
     return { ...state, [`cursor${action.panel}`]: action.value };
   }
 

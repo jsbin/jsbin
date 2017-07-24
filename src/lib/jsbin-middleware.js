@@ -1,7 +1,7 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SET_SOURCE } from '../actions/editor';
+import { SET_SOURCE, SET_SPLITTER_WIDTH } from '../actions/editor';
 import { SAVE } from '../actions/bin';
-import { DISMISS, triggerPalette } from '../actions/session';
+import { DISMISS, triggerPalette, setDirtyFlag } from '../actions/session';
 import { save } from '../lib/bin';
 
 export default store => next => action => {
@@ -15,6 +15,10 @@ export default store => next => action => {
     } catch (e) {
       // noop
     }
+  }
+
+  if (action.type === SET_SPLITTER_WIDTH) {
+    store.dispatch(setDirtyFlag());
   }
 
   if (action.type === SAVE) {

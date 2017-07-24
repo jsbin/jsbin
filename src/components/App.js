@@ -39,7 +39,7 @@ export default class App extends Component {
       editor.output !== prevProps.editor.output ||
       editor.vertical !== prevProps.editor.vertical
     ) {
-      this.panel.refresh();
+      this.props.setDirtyFlag();
       return;
     }
 
@@ -110,8 +110,8 @@ export default class App extends Component {
               secondaryInitialSize={100 - editor.splitterWidth}
               primaryIndex={0}
               onSize={size => {
+                console.log('splitter size');
                 this.props.setSplitterWidth(size);
-                this.panel.refresh();
               }}
             >
               <Panel
@@ -141,4 +141,5 @@ App.propTypes = {
   triggerPalette: PropTypes.func,
   dismiss: PropTypes.func,
   setSplitterWidth: PropTypes.func,
+  setDirtyFlag: PropTypes.func,
 };

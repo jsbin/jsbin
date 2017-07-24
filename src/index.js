@@ -16,6 +16,7 @@ import App from './containers/App';
 import * as MODES from './lib/cm-modes';
 import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/editor';
+import { defaultState as defaultEditorState } from './reducers/editor';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
 
@@ -42,7 +43,7 @@ try {
   const key = 'editor';
   const value = localStorage.getItem(`jsbin.${key}`);
   if (value) {
-    initState[key] = JSON.parse(value);
+    initState[key] = { ...defaultEditorState, ...JSON.parse(value) };
   }
 } catch (e) {
   console.log('failed to restore state', e);

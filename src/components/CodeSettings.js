@@ -88,7 +88,7 @@ export default class CodeSettings extends React.Component {
               }}
               checked={vertical}
             />{' '}
-            Vertical splitter
+            Horizontal splitter
           </label>
         </details>
 

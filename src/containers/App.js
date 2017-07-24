@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import App from '../components/App';
 import { fetchBin, fetchDefault as loadDefault, setBin } from '../actions/bin';
 import { triggerPalette, dismiss } from '../actions/session';
-import { setSource } from '../actions/editor';
+import { setSource, setSplitterWidth } from '../actions/editor';
 
 const mapStateToProps = ({ bin, editor, session }) => {
   return { bin, editor, loading: bin.loading, session };
@@ -10,6 +10,7 @@ const mapStateToProps = ({ bin, editor, session }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),
     dismiss: () => dispatch(dismiss()),
     setBin: bin => dispatch(setBin(bin)),
     triggerPalette: value => dispatch(triggerPalette(value)),

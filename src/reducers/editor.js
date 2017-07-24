@@ -3,6 +3,7 @@ import {
   SET_OPTION,
   SET_SOURCE,
   TOGGLE_THEME,
+  SET_SPLITTER_WIDTH,
 } from '../actions/editor';
 
 import * as MODE from '../lib/cm-modes';
@@ -10,16 +11,21 @@ import * as MODE from '../lib/cm-modes';
 const lightTheme = 'jsbin';
 const darkTheme = 'monokai';
 
-const defaultState = {
+export const defaultState = {
   theme: lightTheme,
   lineWrapping: true,
   lineNumbers: true,
   vertical: false,
+  splitterWidth: 50,
   source: MODE.HTML,
 };
 
 export default function reducer(state = defaultState, action) {
   const { type } = action;
+
+  if (type === SET_SPLITTER_WIDTH) {
+    return { ...state, splitterWidth: action.value };
+  }
 
   if (type === SET_SOURCE) {
     return { ...state, source: action.source };

@@ -3,7 +3,7 @@
   "version": "5.0.0",
   "private": true,
   "dependencies": {
-    "@remy/react-splitter-layout": "^1.0.1",
+    "@remy/react-splitter-layout": "^1.0.2",
     "classnames": "^2.2.5",
     "date-fns": "^1.28.5",
     "history": "^4.6.3",

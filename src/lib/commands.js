@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux';
 import { RESET, SAVE } from '../actions/bin';
 import { toggleOutput } from '../actions/session';
+// import { toggleTheme } from '../actions/editor';
 import fetch from 'isomorphic-fetch';
 
 export const newBin = {
@@ -32,6 +33,13 @@ export const togglePage = {
     dispatch(toggleOutput());
   },
 };
+
+// export const toggleThemeCmd = {
+//   title: 'Toggle dark/light theme',
+//   run: dispatch => {
+//     dispatch(toggleTheme());
+//   },
+// };
 
 export const addLibrary = {
   title: 'Add library…',

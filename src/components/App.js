@@ -58,7 +58,6 @@ export default class App extends Component {
 
   async componentWillMount() {
     const { match } = this.props;
-    console.log(match);
 
     if (match.params.localId) {
       const res = await idk.get(match.params.localId);
@@ -107,8 +106,11 @@ export default class App extends Component {
           <div>
             <Splitter
               vertical={editor.vertical}
-              defaultSize="50%"
-              onSize={() => {
+              percentage={true}
+              secondaryInitialSize={100 - editor.splitterWidth}
+              primaryIndex={0}
+              onSize={size => {
+                this.props.setSplitterWidth(size);
                 this.panel.refresh();
               }}
             >
@@ -138,4 +140,5 @@ App.propTypes = {
   setSource: PropTypes.func,
   triggerPalette: PropTypes.func,
   dismiss: PropTypes.func,
+  setSplitterWidth: PropTypes.func,
 };

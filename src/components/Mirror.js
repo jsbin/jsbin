@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 // import 'codemirror/addon/hint/css-hint.js';
 // import '../lib/anyword-hint';
 
+// import 'cm-show-invisibles';
+
 import '../lib/cm-jsbin-addons';
 
 import 'codemirror/addon/lint/lint.js';
@@ -43,7 +45,8 @@ export default class Mirror extends React.Component {
   }
 
   componentDidMount() {
-    const { theme } = this.props;
+    const { theme } = this.props.app;
+    console.log('loading %s', theme);
     if (theme !== 'default') {
       // lazy load the theme css
       this.loadTheme(theme);
@@ -58,7 +61,7 @@ export default class Mirror extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    const { source } = this.props.editor;
+    const { source } = this.props.session;
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
 
@@ -83,7 +86,7 @@ export default class Mirror extends React.Component {
      * it also means we need to restore the cursor for this particular panel,
      * but first capturing the cursor position for the *current* panel.
      */
-    if (source !== nextProps.editor.source) {
+    if (source !== nextProps.session.source) {
       // firstly save the cursor position
       this.props.setCursor({ source, line, ch });
 
@@ -123,7 +126,7 @@ export default class Mirror extends React.Component {
   updateCursor(props) {
     if (props.setCursor) {
       const cm = this.CodeMirror.getCodeMirror();
-      const [line, ch] = props.session[`cursor${props.editor.source}`]
+      const [line, ch] = props.session[`cursor${props.session.source}`]
         .split(':')
         .map(_ => parseInt(_, 10));
 
@@ -141,7 +144,7 @@ export default class Mirror extends React.Component {
   updateCode(code) {
     this.setState({ code });
     if (this.props.changeCode) {
-      this.props.changeCode(code, this.props.editor.source);
+      this.props.changeCode(code, this.props.session.source);
     }
   }
 
@@ -150,13 +153,15 @@ export default class Mirror extends React.Component {
     const { code } = this.state;
 
     const cmOptions = {
-      ...editor,
+      theme: this.props.app.theme,
       fixedGutter: true,
       autoRefresh: true,
       autoCloseBrackets: true,
       hintOptions: {
         completeSingle: false,
       },
+      showInvisibles: true,
+      ...editor,
       ...options,
     };
 
@@ -182,10 +187,10 @@ Mirror.propTypes = {
   theme: PropTypes.string,
   options: PropTypes.object,
   focus: PropTypes.bool,
+  app: PropTypes.object,
 };
 
 Mirror.defaultProps = {
-  theme: 'jsbin',
   focus: true,
   code: '',
   session: {},

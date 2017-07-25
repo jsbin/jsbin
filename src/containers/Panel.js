@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
-import { setSource } from '../actions/editor';
 import { setCode, save } from '../actions/bin';
-import { setCursor } from '../actions/session';
+import { setSource, setCursor } from '../actions/session';
 import { SET_HTML, SET_JS, SET_CSS } from '../actions/bin';
 import * as MODES from '../lib/cm-modes';
 
 import Panel from '../components/Panel';
 
 const mapStateToProps = ({ bin = { html: '' }, editor, session }, ownProps) => {
-  return { code: bin[editor.source], ...editor, editor, session };
+  return { code: bin[session.source], editor, session, source: session.source };
 };
 
 const mapDispatchToProps = dispatch => {

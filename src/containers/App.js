@@ -11,8 +11,9 @@ import {
   dismiss,
   setDirtyFlag,
   setCursor,
+  setSource,
 } from '../actions/session';
-import { setSource, setSplitterWidth } from '../actions/editor';
+import { setSplitterWidth } from '../actions/app';
 
 const mapStateToProps = ({ bin, editor, session }) => {
   return { bin, editor, loading: bin.loading, session };

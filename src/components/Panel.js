@@ -115,7 +115,10 @@ export default class Panel extends React.Component {
             <CodeSettings />
             <Footer>
               <p>
-                Show all commands <kbd><Command /> <Shift /> P</kbd>
+                Show all commands{' '}
+                <kbd>
+                  <Command /> <Shift /> P
+                </kbd>
               </p>
             </Footer>
           </div>
@@ -126,9 +129,9 @@ export default class Panel extends React.Component {
 }
 
 Panel.propTypes = {
+  source: PropTypes.string.isRequired,
   code: PropTypes.string,
   theme: PropTypes.string,
-  source: PropTypes.string,
   editor: PropTypes.object,
   changeCode: PropTypes.func,
   onRef: PropTypes.func,

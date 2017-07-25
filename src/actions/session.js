@@ -5,6 +5,7 @@ export const SET_CURSOR = '@@session/SET_CURSOR';
 export const SET_ERROR = '@@session/SET_ERROR';
 export const CLEAR_ERROR = '@@session/CLEAR_ERROR';
 export const TOGGLE_OUTPUT = '@@session/TOGGLE_OUTPUT';
+export const SET_SOURCE = '@@session/SET_SOURCE';
 export const DIRTY = '@@session/DIRTY';
 
 // constants - not event types
@@ -19,6 +20,10 @@ export function toggleOutput() {
 
 export function setDirtyFlag(value = true) {
   return { type: DIRTY, value };
+}
+
+export function setSource(source) {
+  return { type: SET_SOURCE, source };
 }
 
 // note: value should be in OUTPUT_*

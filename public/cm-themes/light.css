@@ -1,56 +1,56 @@
 /* jsbin - based on web inspector */
-.cm-s-jsbin span.cm-keyword {
+.cm-s-light span.cm-keyword {
   color: #aa0d91;
 }
-.cm-s-jsbin span.cm-atom {
+.cm-s-light span.cm-atom {
   color: #219;
 }
-.cm-s-jsbin span.cm-number {
+.cm-s-light span.cm-number {
   color: #164;
 }
-.cm-s-jsbin span.cm-def {
+.cm-s-light span.cm-def {
   color: #00f;
 }
-.cm-s-jsbin span.cm-variable {
+.cm-s-light span.cm-variable {
   color: black;
 }
-.cm-s-jsbin span.cm-variable-2 {
+.cm-s-light span.cm-variable-2 {
   color: #05a;
 }
-.cm-s-jsbin span.cm-variable-3 {
+.cm-s-light span.cm-variable-3 {
   color: #0a5;
 }
-.cm-s-jsbin span.cm-property {
+.cm-s-light span.cm-property {
   color: black;
 }
-.cm-s-jsbin span.cm-operator {
+.cm-s-light span.cm-operator {
   color: black;
 }
-.cm-s-jsbin span.cm-comment {
+.cm-s-light span.cm-comment {
   color: #236e25;
 }
-.cm-s-jsbin span.cm-string {
+.cm-s-light span.cm-string {
   color: #c41a16;
 }
-.cm-s-jsbin span.cm-meta {
+.cm-s-light span.cm-meta {
   color: #555;
 }
-.cm-s-jsbin span.cm-error {
+.cm-s-light span.cm-error {
   color: #f00;
 }
-.cm-s-jsbin span.cm-qualifier {
+.cm-s-light span.cm-qualifier {
   color: #555;
 }
-.cm-s-jsbin span.cm-builtin {
+.cm-s-light span.cm-builtin {
   color: #30a;
 }
-.cm-s-jsbin span.cm-bracket {
+.cm-s-light span.cm-bracket {
   color: #cc7;
 }
-.cm-s-jsbin span.cm-tag {
+.cm-s-light span.cm-tag {
   color: #881280;
 }
-.cm-s-jsbin span.cm-attribute {
+.cm-s-light span.cm-attribute {
   color: #994500;
 }
 

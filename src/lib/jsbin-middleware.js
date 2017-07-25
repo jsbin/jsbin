@@ -1,8 +1,13 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SET_SOURCE, SET_SPLITTER_WIDTH } from '../actions/editor';
+import { SET_SPLITTER_WIDTH } from '../actions/app';
 import { SAVE } from '../actions/bin';
 import { SAVE_SETTINGS } from '../actions/user';
-import { DISMISS, triggerPalette, setDirtyFlag } from '../actions/session';
+import {
+  DISMISS,
+  triggerPalette,
+  setDirtyFlag,
+  SET_SOURCE,
+} from '../actions/session';
 import { save } from '../lib/bin';
 
 export default store => next => action => {

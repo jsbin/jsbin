@@ -1,6 +1,7 @@
 import {
   CHANGE_OUTPUT,
   OUTPUT_NONE,
+  SET_SOURCE,
   TOGGLE_OUTPUT,
   OUTPUT_PAGE,
   TRIGGER_PALETTE,
@@ -21,8 +22,8 @@ const defaultCursorState = {
 };
 
 const defaultState = {
-  openPanel: MODES.HTML,
   output: OUTPUT_PAGE,
+  source: MODES.HTML,
   lastOutput: OUTPUT_NONE,
   palette: false,
   error: null,
@@ -44,6 +45,10 @@ export default function reducer(state = defaultState, action) {
     const output =
       state.output === OUTPUT_NONE ? state.lastOutput : OUTPUT_NONE;
     return { ...state, lastOutput: state.output, output };
+  }
+
+  if (type === SET_SOURCE) {
+    return { ...state, source: action.source };
   }
 
   if (type === SET_ERROR) {

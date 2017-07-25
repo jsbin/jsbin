@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const MirrorContainer = connect(
-  ({ editor, session }) => ({ editor, session }),
+  ({ editor, session, app }) => ({ editor, session, app }),
   mapDispatchToProps
 )(Mirror);
 

@@ -94,7 +94,11 @@ export const addLibrary = {
 
 export const settings = {
   title: 'Settings',
-  run: dispatch => dispatch(push('/settings')),
+  run: () => {
+    // dispatch => dispatch(push('/settings')),
+    window.open('/settings');
+    return null;
+  },
 };
 
 /**

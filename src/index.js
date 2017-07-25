@@ -11,13 +11,17 @@ import thunk from 'redux-thunk';
 // import { apiMiddleware } from 'redux-api-middleware';
 import { middleware as reduxPackMiddleware } from 'redux-pack';
 
+import { parse } from './lib/Defaults';
 import reducers from './reducers'; // Or wherever you keep your reducers
 import App from './containers/App';
 import Settings from './containers/Settings';
 import * as MODES from './lib/cm-modes';
-import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
-import { setSource } from './actions/editor';
-import { defaultState as defaultEditorState } from './reducers/editor';
+import {
+  OUTPUT_PAGE,
+  OUTPUT_CONSOLE,
+  changeOutput,
+  setSource,
+} from './actions/session';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
 
@@ -38,8 +42,6 @@ if (window.__REDUX_DEVTOOLS_EXTENSION__) {
   middleware.push(window.__REDUX_DEVTOOLS_EXTENSION__());
 }
 
-const initState = {};
-
 const loadFromStorage = (localStorageKey, defaults = {}) => {
   try {
     let value = localStorage.getItem(`jsbin.${localStorageKey}`);
@@ -56,8 +58,9 @@ const loadFromStorage = (localStorageKey, defaults = {}) => {
   }
 };
 
-initState.editor = loadFromStorage('editor', defaultEditorState);
-initState.user = { settings: loadFromStorage('user.settings') };
+// initState.editor = loadFromStorage('editor', defaultEditorState);
+const userSettings = loadFromStorage('user.settings');
+const initState = parse(userSettings);
 
 console.log(initState);
 

@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import CodeSettings from '../components/CodeSettings';
-import { set, setSource } from '../actions/editor';
-import { changeOutput } from '../actions/session';
+import { set } from '../actions/editor';
+import { changeOutput, setSource } from '../actions/session';
 
 const mapStateToProps = ({ editor, session }) => ({
   ...editor,
+  source: session.source,
   output: session.output,
 });
 

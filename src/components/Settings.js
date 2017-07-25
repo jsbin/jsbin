@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import stripJsonComments from 'strip-json-comments';
 import Splitter from '@remy/react-splitter-layout';
 import { HotKeys } from 'react-hotkeys';
 
@@ -64,7 +63,7 @@ export default class Settings extends React.Component {
   validateSettings(settings) {
     let res = null;
     try {
-      res = parse(JSON.parse(stripJsonComments(settings)));
+      res = parse(settings);
 
       this.setState({
         error: null,
@@ -89,7 +88,7 @@ export default class Settings extends React.Component {
   }
 
   render() {
-    const { editor, user } = this.props;
+    const { editor, user, app } = this.props;
     const { error } = this.state;
 
     return (
@@ -114,6 +113,7 @@ export default class Settings extends React.Component {
                 lineNumbers: true,
                 lint: true,
               }}
+              app={app}
               code={user.settings}
               editor={editor}
             />
@@ -129,14 +129,14 @@ export default class Settings extends React.Component {
           <Mirror
             ref={e => (this.defaults = e)}
             focus={false}
-            changeCode={this.validateSettings}
             options={{
               mode: 'application/ld+json',
               lineNumbers: true,
               lineWrapping: true,
               readOnly: true,
             }}
-            code={JSON.stringify(defaults, '', 2)}
+            app={app}
+            code={defaults}
             editor={editor}
           />
         </Splitter>

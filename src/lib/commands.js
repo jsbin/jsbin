@@ -1,5 +1,7 @@
+import React from 'react';
 import { push } from 'react-router-redux';
-import { RESET, SAVE } from '../actions/bin';
+import { Command, Shift, Backspace } from '../components/Symbols';
+import { RESET, SAVE, DELETE } from '../actions/bin';
 import { toggleOutput } from '../actions/session';
 // import { toggleTheme } from '../actions/editor';
 import fetch from 'isomorphic-fetch';
@@ -16,6 +18,24 @@ export const save = {
   shortcut: null,
   run: dispatch => {
     dispatch({ type: SAVE });
+  },
+};
+
+export const del = {
+  title: 'Delete',
+  shortcut: (
+    <span>
+      <Command />
+      <Shift />
+      <Backspace />
+    </span>
+  ),
+  run: dispatch => {
+    if (
+      window.confirm('Are you sure you want to permanently delete this bin?')
+    ) {
+      dispatch({ type: DELETE });
+    }
   },
 };
 

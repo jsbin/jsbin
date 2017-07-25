@@ -1,7 +1,7 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
+// import debounce from 'lodash.debounce';
 
 // import 'codemirror/addon/hint/show-hint.js';
 // import 'codemirror/addon/hint/html-hint.js';
@@ -72,10 +72,8 @@ export default class Mirror extends React.Component {
     // as usual with jsbin, we need a setTimeout to avoid a race on the
     // rendering of the codemirror instance
     if (nextProps.session.dirty) {
-      this.refreshTimer = setTimeout(() => {
-        this.CodeMirror.getCodeMirror().refresh();
-        this.props.setDirtyFlag(false);
-      }, 0);
+      this.refresh();
+      this.props.setDirtyFlag(false);
     }
   }
 
@@ -87,6 +85,12 @@ export default class Mirror extends React.Component {
     // try to do auto complete on typing…
     // const autocomplete = debounce(cm => cm.execCommand('autocomplete'), 500);
     // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
+  }
+
+  refresh() {
+    this.refreshTimer = setTimeout(() => {
+      this.CodeMirror.getCodeMirror().refresh();
+    }, 0);
   }
 
   updateCursor(props) {

@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import stripJsonComments from 'strip-json-comments';
+
 import Splitter from '@remy/react-splitter-layout';
 import Mirror from '../components/Mirror'; // explicit about component
+import { settings as defaults, parse } from '../lib/Defaults';
 
 import '../css/Settings.css';
 
@@ -16,9 +19,18 @@ export default class Settings extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.settings.refresh();
+    this.defaults.refresh();
+  }
+
   validateSettings(code) {
     try {
-      this.setState({ settings: JSON.parse(code), error: null });
+      const res = parse(JSON.parse(stripJsonComments(code)));
+      this.setState({
+        error: null,
+        // settings: parse(JSON.parse(stripJsonComments(code))),
+      });
     } catch (error) {
       this.setState({ error: error.message.replace(/\n/g, ' ') });
     }
@@ -38,29 +50,46 @@ export default class Settings extends React.Component {
       <div>
         <Splitter
           vertical={false}
+          primaryIndex={0}
           percentage={true}
-          secondaryInitialSize={50}
-          primaryIndex={1}
+          onSize={size => {
+            this.props.setSplitterWidth(size);
+          }}
+          secondaryInitialSize={100 - editor.splitterWidth}
         >
+          <div>
+            <Mirror
+              ref={e => (this.settings = e)}
+              focus={true}
+              changeCode={this.validateSettings}
+              options={{
+                mode: 'application/ld+json',
+                lineWrapping: true,
+                lineNumbers: true,
+              }}
+              code={JSON.stringify(settings, '', 2)}
+              editor={editor}
+            />
+            {error &&
+              <pre className="error">
+                {error}
+              </pre>}
+          </div>
           <Mirror
+            ref={e => (this.defaults = e)}
             focus={false}
             changeCode={this.validateSettings}
-            options={{ mode: 'application/json', lineNumbers: true }}
-            code={JSON.stringify(settings, '', 2)}
+            options={{
+              mode: 'application/ld+json',
+              lineNumbers: true,
+              lineWrapping: true,
+              readOnly: true,
+            }}
+            code={JSON.stringify(defaults, '', 2)}
             editor={editor}
-          />
-          <Mirror
-            focus={!true}
-            changeCode={this.validateSettings}
-            options={{ mode: 'application/json', lineNumbers: true }}
-            code={JSON.stringify(editor, '', 2)}
-            editor={editor}
+            readOnly={true}
           />
         </Splitter>
-        {error &&
-          <pre className="error">
-            {error}
-          </pre>}
       </div>
     );
   }
@@ -68,4 +97,6 @@ export default class Settings extends React.Component {
 
 Settings.propTypes = {
   editor: PropTypes.object.isRequired,
+  session: PropTypes.object.isRequired,
+  setSplitterWidth: PropTypes.func.isRequired,
 };

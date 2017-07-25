@@ -2,6 +2,7 @@ import idb from 'idb-keyval';
 import { push } from 'react-router-redux';
 import uuid from './uuid';
 import { setError } from '../actions/session';
+import { setId } from '../actions/bin';
 
 export function save({ bin }, dispatch) {
   const { html, javascript, css } = bin;
@@ -15,5 +16,6 @@ export function save({ bin }, dispatch) {
     })
     .then(() => {
       dispatch(push(`/local/${id}`));
+      dispatch(setId(id));
     });
 }

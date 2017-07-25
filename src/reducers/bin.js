@@ -8,6 +8,7 @@ import {
   SET_BIN,
   GET_BIN,
   RESET,
+  SET_ID,
 } from '../actions/bin';
 
 const defaultState = {
@@ -25,6 +26,10 @@ export default function reducer(state = defaultState, action) {
 
   if (type === RESET) {
     return defaultState;
+  }
+
+  if (type === SET_ID) {
+    return { ...state, id: action.value };
   }
 
   if (type === GET_BIN) {

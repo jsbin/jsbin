@@ -114,7 +114,6 @@ export default class App extends Component {
               secondaryInitialSize={100 - editor.splitterWidth}
               primaryIndex={0}
               onSize={size => {
-                console.log('splitter size');
                 this.props.setSplitterWidth(size);
               }}
             >
@@ -137,13 +136,21 @@ App.propTypes = {
   bin: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   match: PropTypes.object,
-  fetch: PropTypes.func,
-  editor: PropTypes.object,
   session: PropTypes.object,
+  editor: PropTypes.object,
+  fetch: PropTypes.func,
   loadDefault: PropTypes.func,
   setSource: PropTypes.func,
   triggerPalette: PropTypes.func,
   dismiss: PropTypes.func,
   setSplitterWidth: PropTypes.func,
   setDirtyFlag: PropTypes.func,
+};
+
+App.defaultProps = {
+  loading: true,
+  match: { params: {} },
+  editor: {},
+  session: {},
+  setDirtyFlag: () => {},
 };

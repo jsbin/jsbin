@@ -9,6 +9,19 @@ const UP = 38;
 const DOWN = 40;
 const ENTER = 13;
 
+export function filter(needle, haystack) {
+  const keys = needle.toLowerCase().replace(/^>\s*/, '').trim().split(/\s+/);
+  console.log(keys);
+  return Object.keys(haystack)
+    .filter(c => {
+      const title = haystack[c].title.toLowerCase();
+      return keys.filter(key => title.includes(key)).length;
+    })
+    .sort((a, b) => {
+      return a.indexOf(keys[0]) < b.indexOf(keys[0]);
+    });
+}
+
 export default class Palette extends React.Component {
   constructor(props) {
     super(props);
@@ -61,12 +74,16 @@ export default class Palette extends React.Component {
   onFilter(e) {
     const filter = e.target.value;
     const { all } = this.state;
-    const key = filter.toLowerCase().substr(1);
+    const keys = filter.toLowerCase().replace(/^>\s*/, '').trim().split(/\s+/);
+    console.log(keys);
     this.setState({
       commands: Object.keys(all)
-        .filter(c => all[c].title.toLowerCase().includes(key))
+        .filter(c => {
+          const title = all[c].title.toLowerCase();
+          return keys.filter(key => title.includes(key)).length;
+        })
         .sort((a, b) => {
-          return a.indexOf(key) < b.indexOf(key);
+          return a.indexOf(keys[0]) < b.indexOf(keys[0]);
         }),
       filter,
       active: 0,

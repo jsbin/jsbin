@@ -1,5 +1,10 @@
 # JS Bin V: TODO
 
+## Today
+
+- [ ] Settings
+- [ ] Sign in (API, JWT)
+
 ## UI
 
 - [ ] Handle 404 - mainly for /local/* entries
@@ -7,6 +12,7 @@
 - [ ] Some kind of notification system
 - [ ] Completely dark theme
 - [ ] Console
+- [ ] Delete shortcut
 
 ## Pages
 

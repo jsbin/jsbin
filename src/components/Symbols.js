@@ -1,6 +1,11 @@
 import React from 'react';
 import { isMac } from '../lib/is-mac';
 
+export const Backspace = () =>
+  <span>
+    {isMac ? '⌫' : 'Backspace'}
+  </span>;
+
 export const Ctrl = () =>
   <span>
     {isMac ? '⌃' : 'Ctrl'}

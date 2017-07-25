@@ -96,10 +96,53 @@ body,
   font-size: $font-size-base;
 }
 
-.JsBinApp {
-  @import "_splitter";
+#root {
+  @import "splitter";
 
   [tabindex] {
     outline: none;
   }
+}
+
+.error {
+  transition: opacity 100ms ease-in-out;
+  color: rgb(231, 76, 60);
+  opacity: 0;
+  line-height: $font-line-height;
+  &.has-error {
+    opacity: 1;
+  }
+}
+
+kbd {
+  font-size: $font-size-base;
+  font-family: system;
+  .combo {
+    padding: 0;
+    background: none;
+  }
+}
+
+kbd.combo > kbd,
+kbd {
+  padding: 5px;
+  border-radius: 3px;
+  background: rgb(243, 243, 243);
+  /* border: 2px solid #fff; */
+}
+
+p > kbd,
+td > kbd,
+li > kbd {
+  box-shadow: .5px .5px 0 rgba(0, 0, 0, .2);
+  border: 1px solid #ccc;
+  margin: 0 4px;
+}
+
+kbd:first-child {
+  margin-left: 10px;
+}
+
+kbd.symbol {
+  // font-family: monospace;
 }

@@ -5,6 +5,7 @@ import Mirror from '../containers/Mirror';
 
 import CodeSettings from '../containers/CodeSettings';
 import Footer from '../containers/Footer';
+import { Command, Shift } from './Symbols';
 
 import '../css/Panel.css';
 
@@ -112,7 +113,11 @@ export default class Panel extends React.Component {
           />
           <div className="AppFooter" ref={e => (this.footer = e)}>
             <CodeSettings />
-            <Footer />
+            <Footer>
+              <p>
+                Show all commands <kbd><Command /> <Shift /> P</kbd>
+              </p>
+            </Footer>
           </div>
         </div>
       </HotKeys>

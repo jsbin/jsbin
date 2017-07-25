@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import { Command, Shift } from './Symbols';
 import '../css/Footer.css';
 
-const Footer = ({ error }) =>
+const Footer = ({ error, children }) =>
   <footer className="Footer">
-    <p>
-      Show all commands <Command /> <Shift /> P
-    </p>
+    {children}
     <p
       className={classnames({ error: true, 'has-error': !!error })}
       title={error}
@@ -22,4 +19,5 @@ export default Footer;
 
 Footer.propTypes = {
   error: PropTypes.string,
+  children: PropTypes.node,
 };

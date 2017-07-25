@@ -4,6 +4,7 @@ import {
   SET_SOURCE,
   TOGGLE_THEME,
   SET_SPLITTER_WIDTH,
+  MASS_UPDATE,
 } from '../actions/editor';
 
 import * as MODE from '../lib/cm-modes';
@@ -22,6 +23,10 @@ export const defaultState = {
 
 export default function reducer(state = defaultState, action) {
   const { type } = action;
+
+  if (type === MASS_UPDATE) {
+    return { ...state, ...action.value };
+  }
 
   if (type === SET_SPLITTER_WIDTH) {
     return { ...state, splitterWidth: action.value };

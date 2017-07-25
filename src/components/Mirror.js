@@ -7,8 +7,11 @@ import PropTypes from 'prop-types';
 // import 'codemirror/addon/hint/html-hint.js';
 // import 'codemirror/addon/hint/css-hint.js';
 // import '../lib/anyword-hint';
-// import 'codemirror/addon/display/placeholder.js';
-// import 'codemirror/addon/comment/comment.js';
+
+import '../lib/cm-jsbin-addons';
+
+import 'codemirror/addon/lint/lint.js';
+import 'codemirror/addon/lint/javascript-lint.js';
 
 import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/fold/xml-fold';
@@ -59,10 +62,18 @@ export default class Mirror extends React.Component {
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
 
-    if (this.state.code !== nextProps.code) {
+    if (
+      this.state.code !== nextProps.code &&
+      this.props.code !== nextProps.code
+    ) {
       this.setState({ code: nextProps.code });
       // FIXME I don't understand why I need to manually set this value since
       // react-codemirror already has these bits…
+      console.log(
+        'updating code',
+        this.state.code.length,
+        nextProps.code.length
+      );
       cm.setValue(nextProps.code);
     }
 
@@ -96,7 +107,7 @@ export default class Mirror extends React.Component {
     // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  _shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.dirty) {
       return false;
     }
@@ -135,10 +146,11 @@ export default class Mirror extends React.Component {
   }
 
   render() {
-    const { options, focus } = this.props;
+    const { options, focus, editor } = this.props;
     const { code } = this.state;
 
     const cmOptions = {
+      ...editor,
       fixedGutter: true,
       autoRefresh: true,
       autoCloseBrackets: true,

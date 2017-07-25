@@ -40,15 +40,26 @@ if (window.__REDUX_DEVTOOLS_EXTENSION__) {
 
 const initState = {};
 
-try {
-  const key = 'editor';
-  const value = localStorage.getItem(`jsbin.${key}`);
-  if (value) {
-    initState[key] = { ...defaultEditorState, ...JSON.parse(value) };
+const loadFromStorage = (localStorageKey, defaults = {}) => {
+  try {
+    let value = localStorage.getItem(`jsbin.${localStorageKey}`);
+    if (value) {
+      value = JSON.parse(value);
+      if (value.toString() === '[Object object]') {
+        return { ...defaults, ...value };
+      } else {
+        return value;
+      }
+    }
+  } catch (e) {
+    console.log('failed to restore state', e);
   }
-} catch (e) {
-  console.log('failed to restore state', e);
-}
+};
+
+initState.editor = loadFromStorage('editor', defaultEditorState);
+initState.user = { settings: loadFromStorage('user.settings') };
+
+console.log(initState);
 
 // NOTE I don't really know why I couldn't do
 // `createStore(reducers, applyMiddleware(...middleware))`

@@ -1,32 +1,33 @@
 import React from 'react';
 import { isMac } from '../lib/is-mac';
+const className = isMac ? 'symbol' : '';
 
 export const Backspace = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⌫' : 'Backspace'}
   </span>;
 
 export const Ctrl = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⌃' : 'Ctrl'}
   </span>;
 
 export const Command = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⌘' : 'Ctrl'}
   </span>;
 
 export const Shift = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⇧' : 'Shift'}
   </span>;
 
 export const Alt = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⌥' : 'Alt'}
   </span>;
 
 export const Esc = () =>
-  <span>
+  <span className={className}>
     {isMac ? '⎋' : 'Esc'}
   </span>;

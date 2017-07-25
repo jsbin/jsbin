@@ -10,6 +10,7 @@
     "history": "^4.6.3",
     "idb-keyval": "^2.3.0",
     "isomorphic-fetch": "^2.2.1",
+    "json-lint": "^0.1.0",
     "lodash.debounce": "^4.0.8",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

@@ -15,6 +15,10 @@
 - [ ] Delete shortcut
 - [ ] Restore cursor position on insert
 
+## Lib
+
+- [ ] Add redux middleware that listens for storage events and redistributes them out to sync settings across tabs.
+
 ## Pages
 
 - [ ] Account

@@ -1,19 +1,16 @@
 import { connect } from 'react-redux';
 import Settings from '../components/Settings';
-import { setSplitterWidth } from '../actions/editor';
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),
-  };
-};
+import { setSplitterWidth, massUpdate } from '../actions/editor';
+import { saveSettings } from '../actions/user';
+import { setDirtyFlag } from '../actions/session';
 
 const SettingsContainer = connect(
-  ({ editor, session }) => ({
+  ({ editor, session, user }) => ({
     editor,
     session,
+    user,
   }),
-  mapDispatchToProps
+  { setSplitterWidth, massUpdate, saveSettings, setDirtyFlag }
 )(Settings);
 
 export default SettingsContainer;

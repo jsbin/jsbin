@@ -1,53 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import stripJsonComments from 'strip-json-comments';
-
 import Splitter from '@remy/react-splitter-layout';
+import { HotKeys } from 'react-hotkeys';
+
+import Footer from '../components/Footer';
+import { Command } from './Symbols';
 import Mirror from '../components/Mirror'; // explicit about component
 import { settings as defaults, parse } from '../lib/Defaults';
+import { cmd } from '../lib/is-mac';
 
+// intentionally after Mirror component
+import JSONLint from 'json-lint';
+import CodeMirror from 'codemirror';
+import '../css/App.css';
 import '../css/Settings.css';
+
+const keyMap = {
+  save: `${cmd}+s`,
+};
+
+CodeMirror.registerHelper('lint', 'json', text => {
+  const found = [];
+
+  try {
+    const lint = JSONLint(text);
+    if (lint.error) {
+      found.push({
+        from: CodeMirror.Pos(lint.line - 1, lint.character - 1),
+        to: CodeMirror.Pos(lint.line - 1, lint.character),
+        message: lint.error,
+      });
+    }
+  } catch (e) {}
+
+  return found;
+});
 
 export default class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.validateSettings = this.validateSettings.bind(this);
+    this.save = this.save.bind(this);
     this.state = {
       error: null,
-      settings: {},
+      settings: props.user.settings,
     };
   }
 
-  componentDidMount() {
+  refresh() {
     this.settings.refresh();
     this.defaults.refresh();
   }
 
-  validateSettings(code) {
+  componentDidMount() {
+    this.refresh();
+  }
+
+  componentDidUpdate() {
+    this.refresh();
+  }
+
+  validateSettings(settings) {
+    let res = null;
     try {
-      parse(JSON.parse(stripJsonComments(code)));
+      res = parse(JSON.parse(stripJsonComments(settings)));
+
       this.setState({
         error: null,
-        // settings: parse(JSON.parse(stripJsonComments(code))),
+        settings,
       });
     } catch (error) {
-      this.setState({ error: error.message.replace(/\n/g, ' ') });
+      console.dir(error);
+      this.setState({ error: error.message });
+    }
+    return res;
+  }
+
+  save(e) {
+    e.preventDefault();
+    const { settings } = this.state;
+    const res = this.validateSettings(settings);
+    if (res !== null) {
+      this.props.massUpdate(res.editor);
+      this.props.saveSettings(settings);
+      this.setState({ settings });
     }
   }
 
   render() {
-    const { editor } = this.props;
+    const { editor, user } = this.props;
     const { error } = this.state;
 
-    const settings = {
-      'editor.theme': editor.theme,
-      'editor.lineWrapping': editor.lineWrapping,
-      'editor.lineNumbers': editor.lineNumbers,
-    };
-
     return (
-      <div>
+      <HotKeys keyMap={keyMap} handlers={{ save: this.save }}>
         <Splitter
           vertical={false}
           primaryIndex={0}
@@ -63,17 +109,22 @@ export default class Settings extends React.Component {
               focus={true}
               changeCode={this.validateSettings}
               options={{
-                mode: 'application/ld+json',
+                mode: 'application/ld+json', // this allows comments
                 lineWrapping: true,
                 lineNumbers: true,
+                lint: true,
               }}
-              code={JSON.stringify(settings, '', 2)}
+              code={user.settings}
               editor={editor}
             />
-            {error &&
-              <pre className="error">
-                {error}
-              </pre>}
+            <Footer error={error}>
+              <p>
+                Save settings{' '}
+                <kbd>
+                  <Command /> S
+                </kbd>
+              </p>
+            </Footer>
           </div>
           <Mirror
             ref={e => (this.defaults = e)}
@@ -87,10 +138,9 @@ export default class Settings extends React.Component {
             }}
             code={JSON.stringify(defaults, '', 2)}
             editor={editor}
-            readOnly={true}
           />
         </Splitter>
-      </div>
+      </HotKeys>
     );
   }
 }
@@ -98,5 +148,13 @@ export default class Settings extends React.Component {
 Settings.propTypes = {
   editor: PropTypes.object.isRequired,
   session: PropTypes.object.isRequired,
-  setSplitterWidth: PropTypes.func.isRequired,
+  massUpdate: PropTypes.func.isRequired,
+  saveSettings: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  setSplitterWidth: PropTypes.func,
+  setDirtyFlag: PropTypes.func,
+};
+
+Settings.defaultProps = {
+  setSplitterWidth: () => {},
 };

@@ -3,6 +3,11 @@ export const SET_OPTION = '@@editor/SET_OPTION';
 export const SET_SOURCE = '@@editor/SET_SOURCE';
 export const TOGGLE_THEME = '@@editor/TOGGLE_THEME';
 export const SET_SPLITTER_WIDTH = '@@editor/SET_SPLITTER_WIDTH';
+export const MASS_UPDATE = '@@editor/MASS_UPDATE';
+
+export function massUpdate(value) {
+  return { type: MASS_UPDATE, value };
+}
 
 export function toggleTheme() {
   return { type: TOGGLE_THEME };

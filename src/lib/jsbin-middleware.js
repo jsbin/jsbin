@@ -1,6 +1,7 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SET_SOURCE, SET_SPLITTER_WIDTH } from '../actions/editor';
 import { SAVE } from '../actions/bin';
+import { SAVE_SETTINGS } from '../actions/user';
 import { DISMISS, triggerPalette, setDirtyFlag } from '../actions/session';
 import { save } from '../lib/bin';
 
@@ -12,6 +13,17 @@ export default store => next => action => {
   if (action.type.startsWith('@@editor/')) {
     try {
       localStorage.setItem('jsbin.editor', JSON.stringify(state.editor));
+    } catch (e) {
+      // noop
+    }
+  }
+
+  if (action.type === SAVE_SETTINGS) {
+    try {
+      localStorage.setItem(
+        'jsbin.user.settings',
+        JSON.stringify(state.user.settings)
+      );
     } catch (e) {
       // noop
     }

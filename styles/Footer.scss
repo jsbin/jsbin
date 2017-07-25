@@ -7,16 +7,6 @@
     text-align: center;
   }
 
-  .error {
-    color: rgb(231, 76, 60);
-    opacity: 0;
-    transition: opacity 100ms ease-in-out;
-  }
-
-  .error.has-error {
-    opacity: 1;
-  }
-
   ul {
     list-style: none;
     padding: 0;

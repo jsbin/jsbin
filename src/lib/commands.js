@@ -92,6 +92,11 @@ export const addLibrary = {
   },
 };
 
+export const settings = {
+  title: 'Settings',
+  run: dispatch => dispatch(push('/settings')),
+};
+
 /**
  * Wanted commands:
  *

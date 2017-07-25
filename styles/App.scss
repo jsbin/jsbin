@@ -117,6 +117,7 @@ body,
 kbd {
   font-size: $font-size-base;
   font-family: system;
+  white-space: nowrap;
   .combo {
     padding: 0;
     background: none;
@@ -145,4 +146,42 @@ kbd:first-child {
 
 kbd.symbol {
   // font-family: monospace;
+}
+
+.theme-dark {
+  &,
+  .splitter-layout,
+  kbd {
+    background: hsl(220, 13%, 18%);
+  }
+
+  .Palette > .inner {
+    border-color: #666;
+    box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 1);
+
+    input {
+      border: 1px solid rgb(60, 196, 255);
+    }
+
+    ul li.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: #eee;
+    }
+  }
+
+  .Palette > .inner,
+  .Panel .CodeSettings {
+    background: black;
+    color: #999;
+
+    select {
+      background: black;
+      border-color: #666;
+    }
+  }
+
+  .Footer,
+  .Button {
+    color: hsl(220, 14%, 71%);
+  }
 }

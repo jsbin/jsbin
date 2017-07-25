@@ -1,14 +1,13 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
-// import debounce from 'lodash.debounce';
 
 // import 'codemirror/addon/hint/show-hint.js';
 // import 'codemirror/addon/hint/html-hint.js';
 // import 'codemirror/addon/hint/css-hint.js';
 // import '../lib/anyword-hint';
 
-// import 'cm-show-invisibles';
+import 'cm-show-invisibles';
 
 import '../lib/cm-jsbin-addons';
 
@@ -27,7 +26,7 @@ import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/display/autorefresh';
 
 import 'codemirror/lib/codemirror.css';
-import 'codemirror/addon/hint/show-hint.css';
+// import 'codemirror/addon/hint/show-hint.css';
 import '../css/CodeMirror.css';
 
 CodeMirror.displayName = 'CodeMirror';
@@ -46,7 +45,6 @@ export default class Mirror extends React.Component {
 
   componentDidMount() {
     const { theme } = this.props.app;
-    console.log('loading %s', theme);
     if (theme !== 'default') {
       // lazy load the theme css
       this.loadTheme(theme);
@@ -60,7 +58,7 @@ export default class Mirror extends React.Component {
     clearTimeout(this.refreshTimer);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  componentWillReceiveProps(nextProps) {
     const { source } = this.props.session;
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
@@ -72,11 +70,6 @@ export default class Mirror extends React.Component {
       this.setState({ code: nextProps.code });
       // FIXME I don't understand why I need to manually set this value since
       // react-codemirror already has these bits…
-      console.log(
-        'updating code',
-        this.state.code.length,
-        nextProps.code.length
-      );
       cm.setValue(nextProps.code);
     }
 
@@ -89,7 +82,6 @@ export default class Mirror extends React.Component {
     if (source !== nextProps.session.source) {
       // firstly save the cursor position
       this.props.setCursor({ source, line, ch });
-
       this.updateCursor(nextProps);
     }
 
@@ -103,6 +95,12 @@ export default class Mirror extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.focus !== this.props.focus) {
       this.CodeMirror.focus();
+    }
+
+    const { theme } = this.props.app;
+    if (theme !== prevProps.theme) {
+      // lazy load the theme css
+      this.loadTheme(theme);
     }
 
     // try to do auto complete on typing…
@@ -149,16 +147,21 @@ export default class Mirror extends React.Component {
   }
 
   render() {
-    const { options, focus, editor } = this.props;
+    const { options, focus, editor, snippets } = this.props;
     const { code } = this.state;
 
     const cmOptions = {
       theme: this.props.app.theme,
       fixedGutter: true,
+      dragDrop: false, // FIXME add the custom D&D support
       autoRefresh: true,
       autoCloseBrackets: true,
       hintOptions: {
         completeSingle: false,
+      },
+      snippets: snippets,
+      extraKeys: {
+        Tab: 'snippets',
       },
       showInvisibles: true,
       ...editor,
@@ -188,9 +191,11 @@ Mirror.propTypes = {
   options: PropTypes.object,
   focus: PropTypes.bool,
   app: PropTypes.object,
+  snippets: PropTypes.object,
 };
 
 Mirror.defaultProps = {
+  snippets: null,
   focus: true,
   code: '',
   session: {},

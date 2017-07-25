@@ -84,7 +84,8 @@ export default class CodeSettings extends React.Component {
             <input
               type="checkbox"
               onChange={e => {
-                this.props.set('vertical', e.target.checked);
+                // FIXME this should be a custom action
+                this.props.toggleLayout(e.target.checked);
               }}
               checked={vertical}
             />{' '}

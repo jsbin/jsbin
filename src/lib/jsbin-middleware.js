@@ -1,8 +1,8 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SET_SPLITTER_WIDTH } from '../actions/app';
 import { SAVE } from '../actions/bin';
 import { SAVE_SETTINGS } from '../actions/user';
 import {
+  SET_SPLITTER_WIDTH,
   DISMISS,
   triggerPalette,
   setDirtyFlag,
@@ -10,28 +10,29 @@ import {
 } from '../actions/session';
 import { save } from '../lib/bin';
 
+function storeKV(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {
+    // noop
+  }
+}
+
 export default store => next => action => {
   const nextAction = next(action);
 
   /** keeping this for future use so we can use state to save */
   const state = store.getState(); // new state after action was applied
-  if (action.type.startsWith('@@editor/')) {
-    try {
-      localStorage.setItem('jsbin.editor', JSON.stringify(state.editor));
-    } catch (e) {
-      // noop
-    }
+  if (action.type.startsWith('@@app/')) {
+    storeKV('jsbin.app', state.app);
+  }
+
+  if (action.type === SET_SPLITTER_WIDTH) {
+    storeKV('jsbin.splitter-width', state.session.splitterWidth);
   }
 
   if (action.type === SAVE_SETTINGS) {
-    try {
-      localStorage.setItem(
-        'jsbin.user.settings',
-        JSON.stringify(state.user.settings)
-      );
-    } catch (e) {
-      // noop
-    }
+    storeKV('jsbin.user.settings', state.user.settings);
   }
 
   if (action.type === SET_SPLITTER_WIDTH) {

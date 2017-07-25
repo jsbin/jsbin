@@ -12,16 +12,24 @@ import {
   setDirtyFlag,
   setCursor,
   setSource,
+  setSplitterWidth,
 } from '../actions/session';
-import { setSplitterWidth } from '../actions/app';
 
-const mapStateToProps = ({ bin, editor, session }) => {
-  return { bin, editor, loading: bin.loading, session };
+const mapStateToProps = ({ bin, editor, session, app }) => {
+  return {
+    bin,
+    editor,
+    loading: bin.loading,
+    session,
+    splitterWidth: session.splitterWidth,
+    vertical: app.vertical,
+    theme: app.theme,
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCursor,
+    setCursor: (source, line, ch) => dispatch(setCursor(source, line, ch)),
     setCode: (code, panel) => dispatch(setCode(code, panel)),
     setDirtyFlag: value => dispatch(setDirtyFlag(value)),
     setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),

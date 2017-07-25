@@ -1,6 +1,7 @@
 import {
   CHANGE_OUTPUT,
   OUTPUT_NONE,
+  SET_SPLITTER_WIDTH,
   SET_SOURCE,
   TOGGLE_OUTPUT,
   OUTPUT_PAGE,
@@ -21,12 +22,13 @@ const defaultCursorState = {
   [`cursor${MODES.CSS}`]: '0:0', // start on the blank line
 };
 
-const defaultState = {
+export const defaultState = {
   output: OUTPUT_PAGE,
   source: MODES.HTML,
   lastOutput: OUTPUT_NONE,
   palette: false,
   error: null,
+  splitterWidth: 50,
   dirty: false,
   ...defaultCursorState,
 };
@@ -39,6 +41,10 @@ export default function reducer(state = defaultState, action) {
 
   if (type === DIRTY) {
     return { ...state, dirty: action.value };
+  }
+
+  if (type === SET_SPLITTER_WIDTH) {
+    return { ...state, splitterWidth: action.value };
   }
 
   if (type === TOGGLE_OUTPUT) {

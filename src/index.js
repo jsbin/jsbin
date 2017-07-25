@@ -11,8 +11,9 @@ import thunk from 'redux-thunk';
 // import { apiMiddleware } from 'redux-api-middleware';
 import { middleware as reduxPackMiddleware } from 'redux-pack';
 
-import { parse } from './lib/Defaults';
+import restoreSettings, { getRawUserSettings } from './lib/settings';
 import reducers from './reducers'; // Or wherever you keep your reducers
+import { defaultState as defaultSessions } from './reducers/session';
 import App from './containers/App';
 import Settings from './containers/Settings';
 import * as MODES from './lib/cm-modes';
@@ -58,11 +59,21 @@ const loadFromStorage = (localStorageKey, defaults = {}) => {
   }
 };
 
-// initState.editor = loadFromStorage('editor', defaultEditorState);
-const userSettings = loadFromStorage('user.settings');
-const initState = parse(userSettings);
+// TODO consider looking at/using redux-persist, for now though, let's reinvent
+// some wheels!
+const initState = restoreSettings();
+initState.session = {
+  ...defaultSessions,
+  splitterWidth: loadFromStorage('splitter-width'),
+};
 
-console.log(initState);
+/** FIXME bad, this is messy and hacky */
+initState.user = {
+  settings: getRawUserSettings(),
+};
+if (!initState.user.settings) {
+  delete initState.user;
+}
 
 // NOTE I don't really know why I couldn't do
 // `createStore(reducers, applyMiddleware(...middleware))`

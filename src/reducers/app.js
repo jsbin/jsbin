@@ -1,7 +1,12 @@
-import { SET_THEME, TOGGLE_THEME, SET_SPLITTER_WIDTH } from '../actions/app';
+import {
+  MASS_UPDATE,
+  SET_THEME,
+  TOGGLE_THEME,
+  TOGGLE_LAYOUT,
+} from '../actions/app';
 
-const lightTheme = 'jsbin';
-const darkTheme = 'monokai';
+const lightTheme = 'light';
+const darkTheme = 'dark';
 
 export const defaultState = {
   theme: lightTheme,
@@ -12,8 +17,14 @@ export const defaultState = {
 export default function reducer(state = defaultState, action) {
   const { type } = action;
 
-  if (type === SET_SPLITTER_WIDTH) {
-    return { ...state, splitterWidth: action.value };
+  if (type === MASS_UPDATE) {
+    return { ...state, ...action.value.app };
+  }
+
+  if (type === TOGGLE_LAYOUT) {
+    const vertical =
+      action.value === undefined ? !state.vertical : action.value;
+    return { ...state, vertical };
   }
 
   if (type === TOGGLE_THEME) {

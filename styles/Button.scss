@@ -1,0 +1,11 @@
+.Button {
+  cursor: pointer;
+  &.simple {
+    border: 0;
+    background: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -24,10 +24,13 @@ export default class Output extends React.Component {
 
   updateOutput() {
     if (!this.output) {
-      // this happens if updateOutput was debounced, but the component was removed.
+      // this happens if updateOutput was de-bounced, but the component was removed.
       return;
     }
-    this.props.clearError();
+    if (this.props.error) {
+      // don't bother sending the state change if there's nothing to be done
+      this.props.clearError();
+    }
     const { bin } = this.props;
     const iframe = document.createElement('iframe');
     iframe.src = '/blank.html';

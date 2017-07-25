@@ -4,7 +4,7 @@ const defaultState = {
   authenticated: false,
   username: 'anonymous',
   token: null,
-  settings: '{\n  // your JSON settings can also include comments\n  \n}', // this contains JSON
+  settings: '{\n  // you can also use comments\n//  "app.theme": "dark"\n\n}', // this contains JSON
 };
 
 export default function(state = defaultState, action) {

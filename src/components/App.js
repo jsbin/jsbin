@@ -7,12 +7,11 @@ import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
-import Nav from './Nav';
+// import Nav from './Nav';
 import Head from './Head';
 import Palette from '../containers/Palette';
 import * as OUTPUT from '../actions/session';
 import { SET_HTML } from '../actions/bin';
-import { cmd } from '../lib/is-mac';
 
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
@@ -104,19 +103,26 @@ export default class App extends Component {
   }
 
   render() {
-    const { bin, loading, session, editor } = this.props;
+    const {
+      bin,
+      loading,
+      session,
+      splitterWidth,
+      vertical,
+      theme,
+    } = this.props;
 
     if (loading) {
       return (
-        <div className="JsBinApp loading">
+        <div className={`JsBinApp loading theme-${theme}`}>
           <Head />
-          <Nav />
         </div>
       );
     }
 
     const keyMap = {
-      openPalette: [`${cmd}+shift+p`, `ctrl+shift+p`],
+      // intentionally supporting both
+      openPalette: [`command+shift+p`, `ctrl+shift+p`],
       dismiss: 'escape',
     };
 
@@ -127,15 +133,14 @@ export default class App extends Component {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
-        <div className="JsBinApp">
+        <div className={`JsBinApp theme-${theme}`}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />
-          <Nav />
           <div>
             <Splitter
-              vertical={editor.vertical}
+              vertical={vertical}
               percentage={true}
-              secondaryInitialSize={100 - editor.splitterWidth}
+              secondaryInitialSize={100 - splitterWidth}
               primaryIndex={0}
               onSize={size => {
                 this.props.setSplitterWidth(size);
@@ -170,9 +175,13 @@ App.propTypes = {
   dismiss: PropTypes.func,
   setSplitterWidth: PropTypes.func,
   setDirtyFlag: PropTypes.func,
+  splitterWidth: PropTypes.number,
+  vertical: PropTypes.bool,
 };
 
 App.defaultProps = {
+  vertical: false,
+
   loading: true,
   match: { params: {} },
   editor: {},

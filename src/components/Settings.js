@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import { Command } from './Symbols';
 import Mirror from '../components/Mirror'; // explicit about component
 import { settings as defaults, parse } from '../lib/Defaults';
+import { merge } from '../lib/settings';
 import { cmd } from '../lib/is-mac';
 
 // intentionally after Mirror component
@@ -14,6 +15,7 @@ import JSONLint from 'json-lint';
 import CodeMirror from 'codemirror';
 import '../css/App.css';
 import '../css/Settings.css';
+import '../css/Button.css';
 
 const keyMap = {
   save: `${cmd}+s`,
@@ -41,6 +43,7 @@ export default class Settings extends React.Component {
     super(props);
     this.validateSettings = this.validateSettings.bind(this);
     this.save = this.save.bind(this);
+    this.refresh = this.refresh.bind(this);
     this.state = {
       error: null,
       settings: props.user.settings,
@@ -62,15 +65,15 @@ export default class Settings extends React.Component {
 
   validateSettings(settings) {
     let res = null;
+    this.setState({ settings });
     try {
       res = parse(settings);
 
       this.setState({
         error: null,
-        settings,
       });
     } catch (error) {
-      console.dir(error);
+      console.error(error.message.split('\n').map(_ => _.trim()).join(' '));
       this.setState({ error: error.message });
     }
     return res;
@@ -79,9 +82,9 @@ export default class Settings extends React.Component {
   save(e) {
     e.preventDefault();
     const { settings } = this.state;
-    const res = this.validateSettings(settings);
+    let res = this.validateSettings(settings);
     if (res !== null) {
-      this.props.massUpdate(res.editor);
+      this.props.massUpdate(merge(parse(defaults), res));
       this.props.saveSettings(settings);
       this.setState({ settings });
     }
@@ -92,55 +95,57 @@ export default class Settings extends React.Component {
     const { error } = this.state;
 
     return (
-      <HotKeys keyMap={keyMap} handlers={{ save: this.save }}>
-        <Splitter
-          vertical={false}
-          primaryIndex={0}
-          percentage={true}
-          onSize={size => {
-            this.props.setSplitterWidth(size);
-          }}
-          secondaryInitialSize={100 - editor.splitterWidth}
-        >
-          <div>
+      <div className={`theme-${app.theme}`}>
+        <HotKeys keyMap={keyMap} handlers={{ save: this.save }}>
+          <Splitter
+            vertical={false}
+            primaryIndex={0}
+            percentage={true}
+            secondaryInitialSize={60}
+            onSize={this.refresh}
+          >
+            <div>
+              <Mirror
+                ref={e => (this.settings = e)}
+                focus={true}
+                changeCode={this.validateSettings}
+                options={{
+                  mode: 'application/ld+json', // this allows comments
+                  lineWrapping: true,
+                  lineNumbers: true,
+                  lint: true,
+                }}
+                app={app}
+                code={user.settings}
+                editor={editor}
+              />
+              <Footer error={error}>
+                <p>
+                  <button className="Button simple" onClick={this.save}>
+                    Save settings
+                  </button>{' '}
+                  <kbd>
+                    <Command /> S
+                  </kbd>
+                </p>
+              </Footer>
+            </div>
             <Mirror
-              ref={e => (this.settings = e)}
-              focus={true}
-              changeCode={this.validateSettings}
+              ref={e => (this.defaults = e)}
+              focus={false}
               options={{
-                mode: 'application/ld+json', // this allows comments
-                lineWrapping: true,
+                mode: 'application/javascript',
                 lineNumbers: true,
-                lint: true,
+                lineWrapping: true,
+                readOnly: true,
               }}
               app={app}
-              code={user.settings}
+              code={defaults}
               editor={editor}
             />
-            <Footer error={error}>
-              <p>
-                Save settings{' '}
-                <kbd>
-                  <Command /> S
-                </kbd>
-              </p>
-            </Footer>
-          </div>
-          <Mirror
-            ref={e => (this.defaults = e)}
-            focus={false}
-            options={{
-              mode: 'application/ld+json',
-              lineNumbers: true,
-              lineWrapping: true,
-              readOnly: true,
-            }}
-            app={app}
-            code={defaults}
-            editor={editor}
-          />
-        </Splitter>
-      </HotKeys>
+          </Splitter>
+        </HotKeys>
+      </div>
     );
   }
 }

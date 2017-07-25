@@ -7,12 +7,17 @@ export const CLEAR_ERROR = '@@session/CLEAR_ERROR';
 export const TOGGLE_OUTPUT = '@@session/TOGGLE_OUTPUT';
 export const SET_SOURCE = '@@session/SET_SOURCE';
 export const DIRTY = '@@session/DIRTY';
+export const SET_SPLITTER_WIDTH = '@@app/SET_SPLITTER_WIDTH';
 
 // constants - not event types
 export const OUTPUT_NONE = 'OUTPUT_NONE';
 export const OUTPUT_CONSOLE = 'OUTPUT_CONSOLE';
 export const OUTPUT_PAGE = 'OUTPUT_PAGE';
 export const OUTPUT_BOTH = 'OUTPUT_BOTH';
+
+export function setSplitterWidth(value) {
+  return { type: SET_SPLITTER_WIDTH, value };
+}
 
 export function toggleOutput() {
   return { type: TOGGLE_OUTPUT };

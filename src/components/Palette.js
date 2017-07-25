@@ -12,12 +12,21 @@ const ENTER = 13;
 
 const fuseOptions = {
   shouldSort: true,
-  threshold: 0.3,
+  threshold: 0.2,
   location: 0,
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
-  keys: ['title', 'meta'],
+  keys: [
+    {
+      name: 'title',
+      weight: 0.7,
+    },
+    {
+      name: 'meta',
+      weight: 0.3,
+    },
+  ],
 };
 
 export default class Palette extends React.Component {
@@ -35,7 +44,7 @@ export default class Palette extends React.Component {
     this.state = {
       commands,
       fuse: new Fuse(commands, fuseOptions),
-      filter: '>',
+      filter: '> ',
       active: 0,
     };
   }
@@ -43,7 +52,7 @@ export default class Palette extends React.Component {
   reset() {
     const commands = Object.keys(allCommands).map(key => allCommands[key]);
     const fuse = new Fuse(commands, fuseOptions);
-    this.setState({ commands, fuse, filter: '>' });
+    this.setState({ commands, fuse, filter: '> ' });
   }
 
   async onRun(command) {
@@ -68,7 +77,7 @@ export default class Palette extends React.Component {
       let { active, commands } = this.state;
       e.preventDefault();
       if (key === ENTER) {
-        this.setState({ filter: '>' });
+        this.setState({ filter: '> ' });
         return this.onRun(commands[active]);
       }
 
@@ -95,7 +104,7 @@ export default class Palette extends React.Component {
     const filter = e.target.value;
     const needle = filter.toLowerCase().replace(/^>\s*/, '').trim();
 
-    if (needle === '') {
+    if (filter === '') {
       return this.reset();
     }
 
@@ -159,8 +168,9 @@ export default class Palette extends React.Component {
                 className={classnames({ active: i === active })}
                 key={`command-${i}`}
                 onClick={() => this.onRun(command)}
+                command={command}
               >
-                {command.title}
+                {command.display || command.title}
               </li>
             )}
           </ul>

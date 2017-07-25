@@ -64,7 +64,9 @@ export const togglePage = {
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
-    const res = await fetch('https://api.cdnjs.com/libraries');
+    const res = await fetch(
+      'https://api.cdnjs.com/libraries?fields=name,filename,version,keywords'
+    );
     const json = await res.json();
 
     const run = url => {
@@ -80,9 +82,10 @@ export const addLibrary = {
     };
 
     return json.results
-      .map(({ name, latest }) => ({
+      .map(({ name, version, keywords, latest }) => ({
         title: name,
-        meta: latest,
+        display: `${name} @ ${version}`,
+        meta: name + ' ' + keywords.join(' '),
         run: run.bind(null, latest),
       }))
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
@@ -99,7 +102,6 @@ export const addLibrary = {
  * export
  * delete
  * make private
- * add library + search
  * download
  * toggle dark/light theme
  * help / search

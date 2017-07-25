@@ -26,7 +26,7 @@ export default class Settings extends React.Component {
 
   validateSettings(code) {
     try {
-      const res = parse(JSON.parse(stripJsonComments(code)));
+      parse(JSON.parse(stripJsonComments(code)));
       this.setState({
         error: null,
         // settings: parse(JSON.parse(stripJsonComments(code))),

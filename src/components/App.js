@@ -21,6 +21,11 @@ export default class App extends Component {
     super(props);
     this.triggerPalette = this.triggerPalette.bind(this);
     this.dismiss = this.dismiss.bind(this);
+    this.insertCode = this.insertCode.bind(this);
+  }
+
+  insertCode(string) {
+    console.log(string);
   }
 
   dismiss(e) {
@@ -104,7 +109,7 @@ export default class App extends Component {
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
         <div className="JsBinApp">
-          {session.palette && <Palette />}
+          {session.palette && <Palette insert={this.insertCode} />}
           <Head />
           <Nav />
           <div>

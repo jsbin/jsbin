@@ -66,12 +66,26 @@ export const addLibrary = {
   run: async () => {
     const res = await fetch('https://api.cdnjs.com/libraries');
     const json = await res.json();
+
+    const run = url => {
+      if (url.endsWith('.css')) {
+        return `<link rel="stylesheet" href="${url}" />`;
+      }
+
+      if (url.endsWith('.js')) {
+        return `<script src="${url}" async></script>`;
+      }
+
+      return url;
+    };
+
     return json.results
       .map(({ name, latest }) => ({
         title: name,
-        url: latest,
+        meta: latest,
+        run: run.bind(null, latest),
       }))
-      .sort((a, b) => a.title.toLowerCase() < b.title.toLowerCase());
+      .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
   },
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import Fuse from 'fuse.js';
 
 import * as allCommands from '../lib/commands';
 import '../css/Palette.css';
@@ -9,18 +10,15 @@ const UP = 38;
 const DOWN = 40;
 const ENTER = 13;
 
-export function filter(needle, haystack) {
-  const keys = needle.toLowerCase().replace(/^>\s*/, '').trim().split(/\s+/);
-  console.log(keys);
-  return Object.keys(haystack)
-    .filter(c => {
-      const title = haystack[c].title.toLowerCase();
-      return keys.filter(key => title.includes(key)).length;
-    })
-    .sort((a, b) => {
-      return a.indexOf(keys[0]) < b.indexOf(keys[0]);
-    });
-}
+const fuseOptions = {
+  shouldSort: true,
+  threshold: 0.3,
+  location: 0,
+  distance: 100,
+  maxPatternLength: 32,
+  minMatchCharLength: 1,
+  keys: ['title', 'meta'],
+};
 
 export default class Palette extends React.Component {
   constructor(props) {
@@ -32,25 +30,35 @@ export default class Palette extends React.Component {
 
     this.focusTimer = null;
 
-    const all = { ...allCommands };
+    const commands = Object.keys(allCommands).map(key => allCommands[key]);
 
     this.state = {
-      all,
-      commands: [...Object.keys(all)],
+      commands,
+      fuse: new Fuse(commands, fuseOptions),
       filter: '>',
       active: 0,
     };
   }
 
+  reset() {
+    const commands = Object.keys(allCommands).map(key => allCommands[key]);
+    const fuse = new Fuse(commands, fuseOptions);
+    this.setState({ commands, fuse, filter: '>' });
+  }
+
   async onRun(command) {
     const res = await this.props.run(command);
-    if (!res) {
-      this.props.dismiss();
+    if (Array.isArray(res)) {
+      this.setState({ commands: res, fuse: new Fuse(res, fuseOptions) });
+      return;
     }
 
-    if (Array.isArray(res)) {
-      this.setState({ all: res, commands: res.map((x, i) => i) });
+    if (typeof res === 'string') {
+      // insert this into the
+      this.props.insert(res);
     }
+
+    this.props.dismiss();
   }
 
   onKeyDown(e) {
@@ -60,12 +68,24 @@ export default class Palette extends React.Component {
       let { active, commands } = this.state;
       e.preventDefault();
       if (key === ENTER) {
+        this.setState({ filter: '>' });
         return this.onRun(commands[active]);
       }
+
       if (key === UP) {
         if (active > 0) active--;
       } else {
         if (active < commands.length - 1) active++;
+      }
+
+      // try to scroll the element into view
+      const li = this.commands.childNodes[active];
+      if (li) {
+        if (li.scrollIntoViewIfNeeded) {
+          li.scrollIntoViewIfNeeded();
+        } else {
+          li.scrollIntoView();
+        }
       }
       this.setState({ active });
     }
@@ -73,18 +93,18 @@ export default class Palette extends React.Component {
 
   onFilter(e) {
     const filter = e.target.value;
-    const { all } = this.state;
-    const keys = filter.toLowerCase().replace(/^>\s*/, '').trim().split(/\s+/);
-    console.log(keys);
+    const needle = filter.toLowerCase().replace(/^>\s*/, '').trim();
+
+    if (needle === '') {
+      return this.reset();
+    }
+
+    const { fuse } = this.state;
+
+    const commands = fuse.search(needle).slice(0, 20);
+
     this.setState({
-      commands: Object.keys(all)
-        .filter(c => {
-          const title = all[c].title.toLowerCase();
-          return keys.filter(key => title.includes(key)).length;
-        })
-        .sort((a, b) => {
-          return a.indexOf(keys[0]) < b.indexOf(keys[0]);
-        }),
+      commands,
       filter,
       active: 0,
     });
@@ -118,7 +138,9 @@ export default class Palette extends React.Component {
   }
 
   render() {
-    const { filter, active, commands, all } = this.state;
+    const { filter, active, commands } = this.state;
+    const start = active - 100 < 0 ? 0 : active - 100;
+    const end = start + 100;
     return (
       <div className="Palette">
         <div className="inner">
@@ -130,14 +152,15 @@ export default class Palette extends React.Component {
             onKeyDown={this.onKeyDown}
             onChange={this.onFilter}
           />
-          <ul>
-            {commands.map((command, i) =>
+          <ul ref={e => (this.commands = e)}>
+            {commands.slice(start, end).map((command, i) =>
               <li
+                onMouseOver={() => this.setState({ active: i })}
                 className={classnames({ active: i === active })}
                 key={`command-${i}`}
                 onClick={() => this.onRun(command)}
               >
-                {all[command].title}
+                {command.title}
               </li>
             )}
           </ul>
@@ -150,4 +173,11 @@ export default class Palette extends React.Component {
 Palette.propTypes = {
   dismiss: PropTypes.func,
   run: PropTypes.func,
+  insert: PropTypes.func,
+};
+
+Palette.defaultProps = {
+  dismiss: () => {},
+  run: () => {},
+  insert: () => {},
 };

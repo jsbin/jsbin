@@ -54,23 +54,32 @@ export default class Mirror extends React.Component {
     clearTimeout(this.refreshTimer);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     const { source } = this.props.editor;
     const cm = this.CodeMirror.getCodeMirror();
+    const { line, ch } = cm.getCursor();
+
+    if (this.state.code !== nextProps.code) {
+      this.setState({ code: nextProps.code });
+      // FIXME I don't understand why I need to manually set this value since
+      // react-codemirror already has these bits…
+      cm.setValue(nextProps.code);
+    }
+
+    /**
+     * if the source has changed, it means that we've changed panel and we
+     * need to restore the code entirely and scrap the current state.
+     * it also means we need to restore the cursor for this particular panel,
+     * but first capturing the cursor position for the *current* panel.
+     */
     if (source !== nextProps.editor.source) {
       // firstly save the cursor position
-      this.props.setCursor({ source, ...cm.getCursor() });
-
-      this.setState({ code: nextProps.code });
-      // FIXME this is a hack, but don't understand why
-      // react-codemirror already has the bits…
-      cm.setValue(nextProps.code);
+      this.props.setCursor({ source, line, ch });
 
       this.updateCursor(nextProps);
     }
 
-    // as usual with jsbin, we need a setTimeout to avoid a race on the
-    // rendering of the codemirror instance
+    // we listen for a dirty flag that triggers a CodeMirror repaint
     if (nextProps.session.dirty) {
       this.refresh();
       this.props.setDirtyFlag(false);
@@ -85,6 +94,13 @@ export default class Mirror extends React.Component {
     // try to do auto complete on typing…
     // const autocomplete = debounce(cm => cm.execCommand('autocomplete'), 500);
     // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.dirty) {
+      return false;
+    }
+    return true;
   }
 
   refresh() {

@@ -1,7 +1,17 @@
 import { connect } from 'react-redux';
 import App from '../components/App';
-import { fetchBin, fetchDefault as loadDefault, setBin } from '../actions/bin';
-import { triggerPalette, dismiss, setDirtyFlag } from '../actions/session';
+import {
+  fetchBin,
+  fetchDefault as loadDefault,
+  setBin,
+  setCode,
+} from '../actions/bin';
+import {
+  triggerPalette,
+  dismiss,
+  setDirtyFlag,
+  setCursor,
+} from '../actions/session';
 import { setSource, setSplitterWidth } from '../actions/editor';
 
 const mapStateToProps = ({ bin, editor, session }) => {
@@ -10,6 +20,8 @@ const mapStateToProps = ({ bin, editor, session }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setCursor,
+    setCode: (code, panel) => dispatch(setCode(code, panel)),
     setDirtyFlag: value => dispatch(setDirtyFlag(value)),
     setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),
     dismiss: () => dispatch(dismiss()),

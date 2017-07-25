@@ -75,7 +75,7 @@ export const addLibrary = {
       }
 
       if (url.endsWith('.js')) {
-        return `<script src="${url}" async></script>`;
+        return `<script src="${url}"></script>`;
       }
 
       return url;

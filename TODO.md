@@ -13,6 +13,7 @@
 - [ ] Completely dark theme
 - [ ] Console
 - [ ] Delete shortcut
+- [ ] Restore cursor position on insert
 
 ## Pages
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
-import idk from 'idb-keyval';
+import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
@@ -11,9 +11,10 @@ import Nav from './Nav';
 import Head from './Head';
 import Palette from '../containers/Palette';
 import * as OUTPUT from '../actions/session';
+import { SET_HTML } from '../actions/bin';
 import { cmd } from '../lib/is-mac';
 
-import '../../node_modules/@remy/react-splitter-layout/src/stylesheets/index.css';
+import '@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
 
 export default class App extends Component {
@@ -26,6 +27,24 @@ export default class App extends Component {
 
   insertCode(string) {
     console.log(string);
+
+    let html = this.props.bin.html;
+    const closeHeadIndex = html
+      .toLowerCase()
+      .split('\n')
+      .find(line => line.includes('</head'));
+
+    if (closeHeadIndex) {
+      const codeLines = html.split(closeHeadIndex);
+      html = codeLines.join(string + '\n' + closeHeadIndex);
+    } else {
+      // add to the start of the doc
+      html = string + '\n' + html;
+    }
+
+    this.props.setCode(html, SET_HTML);
+    const [line, ch] = this.props.session.cursorhtml.split(':');
+    this.props.setCursor('html', line + 1, ch);
   }
 
   dismiss(e) {
@@ -143,6 +162,7 @@ App.propTypes = {
   match: PropTypes.object,
   session: PropTypes.object,
   editor: PropTypes.object,
+  setCode: PropTypes.func,
   fetch: PropTypes.func,
   loadDefault: PropTypes.func,
   setSource: PropTypes.func,

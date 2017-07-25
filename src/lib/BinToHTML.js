@@ -128,7 +128,7 @@ export default function binToFile(bin, options = {}) {
       file = file.split('%code%').join(javascript);
     } else {
       // is there head tag?
-      javascript = `<!--boot js--><script id="jsbin-javascript">${javascript}\n</script>`;
+      javascript = `<!--boot js--><script id="jsbin-javascript" defer>${javascript}\n</script>`;
       const body = insert(file, '</body>', javascript + '\n');
       if (body) {
         file = body;

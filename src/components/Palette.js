@@ -168,7 +168,6 @@ export default class Palette extends React.Component {
                 className={classnames({ active: i === active })}
                 key={`command-${i}`}
                 onClick={() => this.onRun(command)}
-                command={command}
               >
                 {command.display || command.title}
               </li>

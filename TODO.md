@@ -20,6 +20,7 @@
 
 ## UI
 
+- [ ] Import light + dark theme by default
 - [ ] Handle 404 - mainly for /local/* entries
 - [ ] Share box
 - [ ] Some kind of notification system

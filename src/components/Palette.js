@@ -56,7 +56,7 @@ export default class Palette extends React.Component {
   }
 
   async onRun(command) {
-    if (!command || !command.trim()) {
+    if (!command) {
       return;
     }
 

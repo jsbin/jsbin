@@ -6,8 +6,8 @@ import {
   DISMISS,
   triggerPalette,
   setDirtyFlag,
-  SET_SOURCE,
 } from '../actions/session';
+import { SET_SOURCE } from '../actions/app';
 import { save } from '../lib/bin';
 
 function storeKV(key, value) {
@@ -51,7 +51,7 @@ export default store => next => action => {
 
   // keep the URL in sync
   if (action.type === SET_SOURCE) {
-    store.dispatch(replace('?' + action.source.toLowerCase()));
+    store.dispatch(replace('?' + action.value.toLowerCase()));
   }
 
   if (action.type === DISMISS) {

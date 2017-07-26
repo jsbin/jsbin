@@ -17,12 +17,8 @@ import { defaultState as defaultSessions } from './reducers/session';
 import App from './containers/App';
 import Settings from './containers/Settings';
 import * as MODES from './lib/cm-modes';
-import {
-  OUTPUT_PAGE,
-  OUTPUT_CONSOLE,
-  changeOutput,
-  setSource,
-} from './actions/session';
+import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
+import { setSource } from './actions/app';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
 

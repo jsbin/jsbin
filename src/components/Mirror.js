@@ -59,7 +59,7 @@ export default class Mirror extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { source } = this.props.session;
+    const { source } = this.props;
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
 
@@ -79,7 +79,7 @@ export default class Mirror extends React.Component {
      * it also means we need to restore the cursor for this particular panel,
      * but first capturing the cursor position for the *current* panel.
      */
-    if (source !== nextProps.session.source) {
+    if (source !== nextProps.source) {
       // firstly save the cursor position
       this.props.setCursor({ source, line, ch });
       this.updateCursor(nextProps);
@@ -130,7 +130,7 @@ export default class Mirror extends React.Component {
   updateCursor(props) {
     if (props.setCursor) {
       const cm = this.CodeMirror.getCodeMirror();
-      const [line, ch] = props.session[`cursor${props.session.source}`]
+      const [line, ch] = props.session[`cursor${props.source}`]
         .split(':')
         .map(_ => parseInt(_, 10));
 
@@ -148,7 +148,7 @@ export default class Mirror extends React.Component {
   updateCode(code) {
     this.setState({ code });
     if (this.props.changeCode) {
-      this.props.changeCode(code, this.props.session.source);
+      this.props.changeCode(code, this.props.source);
     }
   }
 
@@ -199,9 +199,11 @@ Mirror.propTypes = {
   app: PropTypes.object,
   snippets: PropTypes.object,
   dirty: PropTypes.bool,
+  source: PropTypes.string,
 };
 
 Mirror.defaultProps = {
+  source: 'html',
   dirty: false,
   snippets: null,
   focus: true,

@@ -3,13 +3,14 @@
 ## Today
 
 - [x] Ensure dirty flag is always picked up
+- [ ] If undefined command is selected in the palette, it breaks
 
 ### Settings
 
-- [ ] Inject live across all tabs
-- [ ] Tests defaults work in App view
 - [ ] Check default panel from 'app.source'
+- [ ] Inject live across all tabs
 - [ ] Fix references to "vertical"
+- [x] Tests defaults work in App view
 - [x] Support option injection via the "quick settings"
 
 ### Others

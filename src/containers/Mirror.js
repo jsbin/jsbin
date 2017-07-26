@@ -17,6 +17,7 @@ const MirrorContainer = connect(
     session,
     app,
     dirty: session.dirty,
+    source: app.source,
   }),
   mapDispatchToProps
 )(Mirror);

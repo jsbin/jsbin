@@ -13,6 +13,31 @@
   height: 100%;
   z-index: $z-background;
 
+  .Console,
+  .Input .cli,
+  .Autocomplete {
+    font-family: $font-family-code;
+    // line-height: $font-line-height;
+  }
+
+  // small tweak to increase scale
+  .Line .input,
+  .Input .cli,
+  .Line .output {
+    padding: 9px;
+    padding-left: 22px;
+  }
+
+  .Console .LineNav .icon {
+    // height: 0.8rem;
+    // width: 0.8rem;
+    padding: 10px;
+
+    &.link {
+      display: none;
+    }
+  }
+
   & > pre {
     font-family: inherit;
     font-size: $font-size-base * 1.2;
@@ -23,60 +48,5 @@
     color: black;
     border-radius: 2px;
     border: 1px solid rgb(229, 57, 53);
-
-    .bell {
-      animation: ring 2s ease infinite;
-      transform-origin: 50% 0;
-      &:before {
-        content: '🔔 ';
-      }
-    }
-  }
-}
-
-@keyframes ring {
-  0% {
-    transform: rotate(-15deg);
-  }
-
-  2% {
-    transform: rotate(15deg);
-  }
-
-  4% {
-    transform: rotate(-18deg);
-  }
-
-  6% {
-    transform: rotate(18deg);
-  }
-
-  8% {
-    transform: rotate(-22deg);
-  }
-
-  10% {
-    transform: rotate(22deg);
-  }
-
-  12% {
-    transform: rotate(-18deg);
-  }
-
-  14% {
-    transform: rotate(18deg);
-  }
-
-  16% {
-    transform: rotate(-12deg);
-  }
-
-  18% {
-    transform: rotate(12deg);
-  }
-
-  100%,
-  20% {
-    transform: rotate(0deg);
   }
 }

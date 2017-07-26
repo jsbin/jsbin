@@ -5,16 +5,17 @@ import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
 import idk from 'idb-keyval'; // FIXME lazy load candidate
 
+import * as OUTPUT from '../actions/session';
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
-// import Nav from './Nav';
 import Head from './Head';
 import Palette from '../containers/Palette';
-import * as OUTPUT from '../actions/session';
 import { SET_HTML } from '../actions/bin';
 
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
+
+const noop = () => {};
 
 export default class App extends Component {
   constructor(props) {
@@ -25,8 +26,6 @@ export default class App extends Component {
   }
 
   insertCode(string) {
-    console.log(string);
-
     let html = this.props.bin.html;
     const closeHeadIndex = html
       .toLowerCase()
@@ -150,9 +149,8 @@ export default class App extends Component {
                 focus={!session.palette}
                 onRef={ref => (this.panel = ref)}
               />
-              {(session.output === OUTPUT.OUTPUT_BOTH ||
-                session.output === OUTPUT.OUTPUT_PAGE) &&
-                <Output code={bin.output} />}
+              {session.output !== OUTPUT.OUTPUT_NONE &&
+                <Output output={session.output} />}
             </Splitter>
           </div>
         </div>
@@ -177,14 +175,17 @@ App.propTypes = {
   setDirtyFlag: PropTypes.func,
   splitterWidth: PropTypes.number,
   vertical: PropTypes.bool,
+  setCursor: PropTypes.func,
+  theme: PropTypes.string,
 };
 
 App.defaultProps = {
+  theme: 'light',
+  setCursor: noop,
   vertical: false,
-
   loading: true,
   match: { params: {} },
   editor: {},
   session: {},
-  setDirtyFlag: () => {},
+  setDirtyFlag: noop,
 };

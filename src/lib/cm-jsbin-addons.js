@@ -11,7 +11,7 @@ CodeMirror.defineOption('fontSize', 13, function(cm, value) {
 CodeMirror.defineOption('lineHeight', function(cm, value) {
   value = parseFloat(value, 10);
   const style = document.createElement('style');
-  style.innerHTML = `.CodeMirror { line-height: ${value}px; }`;
+  style.innerHTML = `.CodeMirror, .Console { line-height: ${value}px; }`;
   document.head.appendChild(style);
 });
 
@@ -20,7 +20,7 @@ CodeMirror.defineOption('fontFamily', '', function(cm, value) {
     return;
   }
   const style = document.createElement('style');
-  style.innerHTML = `.CodeMirror { font-family: ${value}; } .CodeMirror-lint-tooltip { font-family: ${value};`;
+  style.innerHTML = `.CodeMirror, .Console, .CodeMirror-lint-tooltip { font-family: ${value}; }`;
   document.head.appendChild(style);
 });
 

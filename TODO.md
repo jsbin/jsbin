@@ -1,21 +1,25 @@
 # JS Bin V: TODO
 
-## Today
+## In progress
 
-- [x] Ensure dirty flag is always picked up
-- [x] If undefined command is selected in the palette, it breaks
+- [ ] Console!
 
-### Settings
+## Bit bugs
+
+- [ ] Dark theme for .Error
+
+## Settings
 
 - [x] Check default panel from 'app.source'
+- [x] Ensure dirty flag is always picked up
+- [x] If undefined command is selected in the palette, it breaks
 - [ ] Inject live across all tabs
 - [ ] Fix references to "vertical"
 - [x] Tests defaults work in App view
 - [x] Support option injection via the "quick settings"
 
-### Others
+## Larger tasks
 
-- [ ] Console!
 - [ ] Sign in (API, JWT)
 
 ## UI

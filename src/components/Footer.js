@@ -8,7 +8,7 @@ const Footer = ({ error, children }) =>
   <footer className="Footer">
     {children}
     <p
-      className={classnames({ error: true, 'has-error': !!error })}
+      className={classnames({ Error: true, 'has-error': !!error })}
       title={error}
     >
       New errors can be found in the console

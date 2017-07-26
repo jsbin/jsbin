@@ -3,7 +3,7 @@ import Output from '../components/Output';
 import { clearError, setError } from '../actions/session';
 
 const OutputContainer = connect(
-  ({ bin, session }) => ({ bin, error: session.error }),
+  ({ bin, session }) => ({ code: bin.output, bin, error: session.error }),
   { clearError, setError }
 )(Output);
 

@@ -44,12 +44,6 @@ export default class Mirror extends React.Component {
   }
 
   componentDidMount() {
-    // const { theme } = this.props.app;
-    // if (theme !== 'default') {
-    //   // lazy load the theme css
-    //   this.loadTheme(theme);
-    // }
-
     this.updateCursor(this.props);
     this.CodeMirror.getCodeMirror().refresh();
   }
@@ -97,12 +91,6 @@ export default class Mirror extends React.Component {
       this.CodeMirror.focus();
     }
 
-    const { theme } = this.props.app;
-    if (theme !== prevProps.theme) {
-      // lazy load the theme css
-      this.loadTheme(theme);
-    }
-
     // we listen for a dirty flag that triggers a CodeMirror repaint
     if (this.dirty) {
       this.refresh();
@@ -136,13 +124,6 @@ export default class Mirror extends React.Component {
 
       cm.setCursor({ line, ch });
     }
-  }
-
-  loadTheme(theme) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = `${STATIC}/cm-themes/${theme}.css`;
-    document.head.appendChild(link);
   }
 
   updateCode(code) {

@@ -1,5 +1,26 @@
 @import "vars";
 
+// modifiers
+.theme-dark .Palette {
+  .inner {
+    border-color: $c-dark-theme-border;
+    background: darken($c-dark-theme-bg, 20%);
+    color: darken($c-dark-theme-text, 40%);
+    box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 1);
+  }
+
+  input {
+    background: $c-dark-theme-bg;
+    color: $c-dark-theme-text;
+    border: 1px solid rgb(60, 196, 255);
+  }
+
+  ul li.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: $c-dark-theme-text;
+  }
+}
+
 .Palette {
   position: absolute;
   z-index: 100;

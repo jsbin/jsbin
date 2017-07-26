@@ -1,5 +1,18 @@
 @import "vars";
 
+.theme-dark .Panel {
+  .CodeSettings {
+    background: darken($c-dark-theme-bg, 20%);
+    color: darken($c-dark-theme-text, 30%);
+
+    select {
+      color: lighten($c-dark-theme-text, 10%);
+      background: darken($c-dark-theme-bg, 10%);
+      border-color: $c-dark-theme-border;
+    }
+  }
+}
+
 .Panel {
   // min-height: 100%;
   // padding-bottom: calc(100vh - #{$menu-height + $font-line-height + 5});

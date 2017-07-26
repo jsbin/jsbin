@@ -24,14 +24,26 @@ export default class Panel extends React.Component {
   constructor(props) {
     super(props);
     this.saveCode = this.saveCode.bind(this);
+    this.updateHeight = this.updateHeight.bind(this);
 
     this.state = {
       height: 0,
     };
   }
 
+  updateHeight() {
+    let height = this.footer.offsetHeight;
+    if (this.props.editor.vertical === true) {
+      height += document.querySelector('.layout-pane-primary').offsetHeight;
+    }
+    this.setState({ height });
+  }
+
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
+    if (this.props.session.dirty) {
+      this.updateHeight();
+    }
   }
 
   componentWillUnmount() {
@@ -39,11 +51,7 @@ export default class Panel extends React.Component {
   }
 
   componentWillReceiveProps() {
-    let height = this.footer.offsetHeight;
-    if (this.props.editor.vertical === true) {
-      height += document.querySelector('.layout-pane-primary').offsetHeight;
-    }
-    this.setState({ height });
+    this.updateHeight();
   }
 
   componentDidUpdate(prevProps) {

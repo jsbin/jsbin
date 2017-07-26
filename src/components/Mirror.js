@@ -103,12 +103,18 @@ export default class Mirror extends React.Component {
       this.loadTheme(theme);
     }
 
+    // we listen for a dirty flag that triggers a CodeMirror repaint
+    if (this.dirty) {
+      this.refresh();
+      this.props.setDirtyFlag(false);
+    }
+
     // try to do auto complete on typing…
     // const autocomplete = debounce(cm => cm.execCommand('autocomplete'), 500);
     // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
   }
 
-  _shouldComponentUpdate(nextProps, nextState) {
+  _shouldComponentUpdate(nextProps) {
     if (nextProps.dirty) {
       return false;
     }
@@ -192,9 +198,11 @@ Mirror.propTypes = {
   focus: PropTypes.bool,
   app: PropTypes.object,
   snippets: PropTypes.object,
+  dirty: PropTypes.bool,
 };
 
 Mirror.defaultProps = {
+  dirty: false,
   snippets: null,
   focus: true,
   code: '',

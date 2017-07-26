@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import { insertChangeIntoUserSettings } from '../lib/settings';
 
 import {
   OUTPUT_PAGE,
@@ -11,11 +12,15 @@ import {
 
 import * as MODES from '../lib/cm-modes';
 
+const noop = () => {};
+
 export default class CodeSettings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSource = this.changeSource.bind(this);
     this.changeOutput = this.changeOutput.bind(this);
+    this.changeEditor = this.changeEditor.bind(this);
+    this.changeApp = this.changeApp.bind(this);
     this.state = { height: 0 };
   }
 
@@ -25,6 +30,25 @@ export default class CodeSettings extends React.Component {
 
   changeSource(e) {
     this.props.setSource(e.target.value);
+  }
+
+  changeApp(property, value) {
+    this.changeSetting(`app.${property}`, value);
+    this.props.toggleLayout(value);
+  }
+
+  changeEditor(property, value) {
+    this.changeSetting(`editor.${property}`, value);
+    this.props.set(property, value);
+  }
+
+  changeSetting(property, value) {
+    const change = insertChangeIntoUserSettings(
+      { [property]: value },
+      this.props.userSettings,
+      !value
+    );
+    this.props.saveSettings(change);
   }
 
   render() {
@@ -57,23 +81,11 @@ export default class CodeSettings extends React.Component {
         </label>
         <details>
           <summary>Quick Settings</summary>
-
           <label>
             <input
               type="checkbox"
               onChange={e => {
-                this.props.set('lineWrapping', e.target.checked);
-              }}
-              checked={lineWrapping}
-            />{' '}
-            Line wrap
-          </label>
-
-          <label>
-            <input
-              type="checkbox"
-              onChange={e => {
-                this.props.set('lineNumbers', e.target.checked);
+                this.changeEditor('lineNumbers', e.target.checked);
               }}
               checked={lineNumbers}
             />{' '}
@@ -84,8 +96,19 @@ export default class CodeSettings extends React.Component {
             <input
               type="checkbox"
               onChange={e => {
+                this.changeEditor('lineWrapping', e.target.checked);
+              }}
+              checked={lineWrapping}
+            />{' '}
+            Line wrap
+          </label>
+
+          <label>
+            <input
+              type="checkbox"
+              onChange={e => {
                 // FIXME this should be a custom action
-                this.props.toggleLayout(e.target.checked);
+                this.changeApp('vertical', e.target.checked);
               }}
               checked={vertical}
             />{' '}
@@ -103,15 +126,24 @@ export default class CodeSettings extends React.Component {
 }
 
 CodeSettings.propTypes = {
-  toggleOutput: PropTypes.func,
-  output: PropTypes.string,
-  set: PropTypes.func,
-  updated: PropTypes.string,
   lineWrapping: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   source: PropTypes.string.isRequired,
+  output: PropTypes.string,
+  updated: PropTypes.string,
+  userSettings: PropTypes.string,
+  vertical: PropTypes.bool,
+  toggleOutput: PropTypes.func,
+  set: PropTypes.func,
   setSource: PropTypes.func,
   changeOutput: PropTypes.func,
   onRefresh: PropTypes.func,
-  vertical: PropTypes.bool,
+  toggleLayout: PropTypes.func,
+  saveSettings: PropTypes.func,
+};
+
+CodeSettings.defaultProps = {
+  saveSettings: noop,
+  toggleLayout: noop,
+  userSettings: '',
 };

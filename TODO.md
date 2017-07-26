@@ -2,7 +2,19 @@
 
 ## Today
 
-- [ ] Settings
+- [x] Ensure dirty flag is always picked up
+
+### Settings
+
+- [ ] Inject live across all tabs
+- [ ] Tests defaults work in App view
+- [ ] Check default panel from 'app.source'
+- [ ] Fix references to "vertical"
+- [x] Support option injection via the "quick settings"
+
+### Others
+
+- [ ] Console!
 - [ ] Sign in (API, JWT)
 
 ## UI
@@ -17,7 +29,8 @@
 
 ## Lib
 
-- [ ] Add redux middleware that listens for storage events and redistributes them out to sync settings across tabs.
+- [ ] Complile output document in web worker
+- [ ] Inject CSS, don't recompile
 
 ## Pages
 

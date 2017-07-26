@@ -23,7 +23,7 @@
 
 .Palette {
   position: absolute;
-  z-index: 100;
+  z-index: $z-top;
   left: 0;
   top: 0;
   width: 100%;

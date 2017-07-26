@@ -62,10 +62,13 @@ const loadFromStorage = (localStorageKey, defaults = {}) => {
 // TODO consider looking at/using redux-persist, for now though, let's reinvent
 // some wheels!
 const initState = restoreSettings();
-initState.session = {
-  ...defaultSessions,
-  splitterWidth: loadFromStorage('splitter-width'),
-};
+const splitterWidth = loadFromStorage('splitter-width');
+if (splitterWidth) {
+  initState.session = {
+    ...defaultSessions,
+    splitterWidth,
+  };
+}
 
 /** FIXME bad, this is messy and hacky */
 initState.user = {

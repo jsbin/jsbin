@@ -55,8 +55,11 @@ export const settings = `{
   // The font family for the editor
   "editor.fontFamily": "'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console",
 
+  // Whether to show line numbers to the left of the editor
+  "editor.lineNumbers": false,
+
   // Controls line wrapping, using a soft wrap at the editor viewport
-  "editor.lineWrapping": true,
+  "editor.lineWrapping": false,
 
   // Whether to automatically add closing bracket when you open them
   "editor.autoCloseBrackets": true,

@@ -7,7 +7,11 @@ const Head = () =>
   <Helmet>
     <meta charSet="utf-8" />
     <title>JS Bin</title>
-    <link rel="icon" href={`${STATIC}/images/favicon.png`} />
+    <link
+      rel="icon shortcut"
+      type="image/svg+xml"
+      href={`${STATIC}/images/favicon.svg`}
+    />
     <link rel="shortcut icon" href={`${STATIC}/images/favicon.png`} />
     <meta
       name="viewport"

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 // import 'codemirror/addon/hint/css-hint.js';
 // import '../lib/anyword-hint';
 
-import 'cm-show-invisibles';
+// import 'cm-show-invisibles';
 
 import '../lib/cm-jsbin-addons';
 

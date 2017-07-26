@@ -3,11 +3,11 @@
 ## Today
 
 - [x] Ensure dirty flag is always picked up
-- [ ] If undefined command is selected in the palette, it breaks
+- [x] If undefined command is selected in the palette, it breaks
 
 ### Settings
 
-- [ ] Check default panel from 'app.source'
+- [x] Check default panel from 'app.source'
 - [ ] Inject live across all tabs
 - [ ] Fix references to "vertical"
 - [x] Tests defaults work in App view

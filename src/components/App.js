@@ -102,14 +102,7 @@ export default class App extends Component {
   }
 
   render() {
-    const {
-      bin,
-      loading,
-      session,
-      splitterWidth,
-      vertical,
-      theme,
-    } = this.props;
+    const { loading, session, splitterWidth, vertical, theme } = this.props;
 
     if (loading) {
       return (

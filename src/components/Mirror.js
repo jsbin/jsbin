@@ -30,7 +30,6 @@ import 'codemirror/lib/codemirror.css';
 import '../css/CodeMirror.css';
 
 CodeMirror.displayName = 'CodeMirror';
-const STATIC = process.env.REACT_APP_STATIC;
 
 export default class Mirror extends React.Component {
   constructor(props) {

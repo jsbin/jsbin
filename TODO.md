@@ -33,10 +33,15 @@
 - [ ] Delete shortcut
 - [ ] Restore cursor position on insert
 
+## Keyboard
+
+- [ ] cmd+enter - run code
+
 ## Lib
 
 - [ ] Complile output document in web worker
 - [ ] Inject CSS, don't recompile
+- [ ] Background save of current state.
 
 ## Pages
 

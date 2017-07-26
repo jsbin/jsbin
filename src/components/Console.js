@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { Console } from '@remy/jsconsole'; // currently a singleton
 import Input from '@remy/jsconsole/dist/components/Input';
@@ -12,7 +13,9 @@ export default class BinConsole extends React.Component {
   constructor(props) {
     super(props);
     this.onRun = this.onRun.bind(this);
+    this.rebind = this.rebind.bind(this);
   }
+
   async onRun(command) {
     const console = this.console;
 
@@ -29,18 +32,27 @@ export default class BinConsole extends React.Component {
     });
   }
 
-  componentDidMount() {
-    setContainer(this.props.container);
+  rebind(container) {
+    setContainer(container);
     bindConsole(this.console);
   }
 
+  componentDidMount() {
+    if (this.props.onRef) this.props.onRef(this);
+    this.rebind(this.props.container);
+  }
+
   componentWillReceiveProps(nextProps) {
-    setContainer(nextProps.container);
-    bindConsole(this.console);
+    // console.log('bindConsole', nextProps.guid);
+    // this.rebind(nextProps.container);
   }
 
   shouldComponentUpdate() {
     return false;
+  }
+
+  componentWillUnmount() {
+    this.props.onRef(undefined);
   }
 
   // TODO on prop change, set container to prop
@@ -69,3 +81,8 @@ export default class BinConsole extends React.Component {
     );
   }
 }
+
+BinConsole.propTypes = {
+  onRef: PropTypes.func.isRequired,
+  container: PropTypes.any.isRequired, // real DOM node
+};

@@ -5,22 +5,30 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
+// FIXME remove on live
+import Perf from 'react-addons-perf';
+
 // middleware for store
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
 // import { apiMiddleware } from 'redux-api-middleware';
 import { middleware as reduxPackMiddleware } from 'redux-pack';
 
+// main pages
+import App from './containers/App';
+import Settings from './containers/Settings';
+
+// utils/store setup
 import restoreSettings, { getRawUserSettings } from './lib/settings';
 import reducers from './reducers'; // Or wherever you keep your reducers
 import { defaultState as defaultSessions } from './reducers/session';
-import App from './containers/App';
-import Settings from './containers/Settings';
 import * as MODES from './lib/cm-modes';
 import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/app';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware from './lib/jsbin-middleware';
+
+window.Perf = Perf;
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();

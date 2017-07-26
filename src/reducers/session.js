@@ -17,7 +17,7 @@ import * as MODES from '../lib/cm-modes';
 
 const defaultCursorState = {
   [`cursor${MODES.HTML}`]: '8:0', // start on the blank line
-  [`cursor${MODES.JAVASCRIPT}`]: '0:0', // start on the blank line
+  [`cursor${MODES.JAVASCRIPT}`]: '1:0', // start on the blank line
   [`cursor${MODES.CSS}`]: '0:0', // start on the blank line
 };
 

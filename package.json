@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0",
+  "version": "5.0.0-alpha.1",
   "private": true,
   "dependencies": {
     "@remy/jsconsole": "^2.0.0-beta.9",
@@ -31,11 +31,12 @@
     "cm-show-invisibles": "^2.0.2",
     "expect": "^1.20.2",
     "node-sass": "^4.5.3",
+    "react-addons-perf": "^15.4.2",
     "redux-mock-store": "^1.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
+    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "watch": "node-sass ./styles/ -w -o ./src/css --recursive",
     "deploy": "npm run build && now build --name jsbin-v5 && now alias",

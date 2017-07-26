@@ -1,22 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
 import Splitter from '@remy/react-splitter-layout';
-import { bindConsole, setContainer } from '@remy/jsconsole/dist/lib/run';
-
 import * as OUTPUT from '../actions/session';
 import binToHTML from '../lib/BinToHTML';
 import Console from '../containers/Console';
 import '../css/Output.css';
+
+const STATIC = process.env.REACT_APP_STATIC;
 
 export default class Output extends React.Component {
   constructor(props) {
     super(props);
     this.updateOutput = this.updateOutput.bind(this);
     this.catchErrors = this.catchErrors.bind(this);
-    this.state = {
-      container: null,
-    };
+
+    this.state = { guid: 0 };
+
+    const iframe = document.createElement('iframe');
+    iframe.src = STATIC + '/blank.html';
+    iframe.hidden = true;
+    iframe.name = 'JS Bin Output';
+    iframe.className = 'Output';
+    iframe.setAttribute(
+      'sandbox',
+      'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
+    );
+    this.iframe = iframe;
   }
 
   catchErrors(event) {
@@ -36,53 +45,36 @@ export default class Output extends React.Component {
     }
 
     const { bin } = this.props;
-    const { container } = this.state;
+    const iframe = this.iframe;
 
-    if (container) {
-      container.parentNode.removeChild(container);
+    if (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_PAGE) {
+      if (!this.output) {
+        // then we're not ready for a render, so let's exit early
+        return;
+      }
     }
 
-    const iframe = document.createElement('iframe');
-    iframe.src = '/blank.html';
-    iframe.hidden = true;
-    iframe.name = 'JS Bin Output';
-    iframe.className = 'Output';
-    iframe.setAttribute(
-      'sandbox',
-      'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
-    );
+    // removing the iframe from the DOM completely resets the state and nukes
+    // all running code
+    if (iframe.parentNode) {
+      iframe.parentNode.removeChild(iframe);
+    }
 
     // if the output element is visible (i.e. the user has OUTPUT_PAGE or OUTPUT_BOTH)
     // then we need to clear the container and insert into this.output node. Otherwise,
     // we need to put in the DOM somewhere, so we drop it into the body, but leave
     // it hidden.
     if (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_PAGE) {
-      this.output.innerHTML = '';
       this.output.appendChild(iframe);
+      iframe.hidden = false;
     } else {
-      try {
-        // just in case it's already hanging around
-        document.body.removeChild(this.iframe);
-      } catch (e) {}
       document.body.appendChild(iframe);
+      iframe.hidden = true;
     }
-
-    this.iframe = iframe;
 
     const doc = iframe.contentDocument;
 
-    // bind to the console at this point
-    // if (output === OUTPUT.OUTPUT_BOTH || OUTPUT.OUTPUT_CONSOLE) {
-    //   setContainer(iframe);
-    // }
-
-    // start writing the page. This will clear any existing document.
-    iframe.contentDocument.open();
-
-    // this is to avoid a Firefox issue (see original jsbin)
-    doc.write('');
-
-    let i = 0;
+    let i = 0; // track script tags and add inline source map
 
     const html = bin.html.replace(
       /<\/script>/g,
@@ -90,8 +82,13 @@ export default class Output extends React.Component {
     );
 
     const guid = Math.random().toString();
-    this.iframe.guid = guid;
+    iframe.guid = guid;
 
+    this.setState({ guid });
+
+    // this logic will allow us to track whether there's an error, the
+    // error is then passed through a localStorage event which is
+    // paired back up using the guid
     const javascript = `
       try {
         ${bin.javascript}
@@ -108,20 +105,19 @@ export default class Output extends React.Component {
       css: bin.css,
     });
 
+    doc.open();
+    doc.write('');
+    if (
+      this.console &&
+      (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_CONSOLE)
+    ) {
+      console.log('joining doc');
+      this.console.rebind(iframe);
+    }
+    console.log('write doc');
+    // start writing the page. This will clear any existing document.
     doc.write(renderedDoc);
     doc.close();
-
-    this.setState({ container: iframe });
-
-    if (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_PAGE) {
-      iframe.hidden = false;
-    }
-  }
-
-  componentWillMount() {
-    // if (this.props.output === OUTPUT.OUTPUT_CONSOLE) {
-    // this.updateOutput(this.props.output);
-    // }
   }
 
   componentDidMount() {
@@ -136,15 +132,49 @@ export default class Output extends React.Component {
     window.removeEventListener('storage', this.catchErrors, false);
   }
 
-  // FIXME: not sure this is actually need
   componentWillReceiveProps(nextProps) {
-    if (nextProps.output === OUTPUT.OUTPUT_CONSOLE) {
-      this.updateOutput(OUTPUT.OUTPUT_CONSOLE);
+    // multiple `if` statements so that I'm super sure what's happening
+    if (this.props.code !== nextProps.code) {
+      this.updateOutput(nextProps.output);
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.output !== this.props.output) {
+      return true;
+    }
+
+    // do not re-render if the code has changed, this happens inside of the
+    // iframe, and via the previous life cycle event: componentWillReceiveProps
+    if (this.code !== nextProps.code) {
+      return false;
+    }
+
+    return true;
+  }
+
+  componentWillUpdate(nextProps) {
+    // check if the console needs to be rewired up
+    if (nextProps.output !== this.props.output) {
+      if (
+        nextProps.output === OUTPUT.OUTPUT_BOTH ||
+        nextProps.output === OUTPUT.OUTPUT_CONSOLE
+      ) {
+        // blows up on "BOTH"
+        this.updateOutput(nextProps.output);
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.output !== this.props.output) {
+      // FIXME this doubles up when we show OUTPUT_BOTH
+      this.updateOutput(this.props.output);
     }
   }
 
   render() {
-    const { output } = this.props;
+    const { output, vertical } = this.props;
     const hasConsole =
       output === OUTPUT.OUTPUT_CONSOLE || output === OUTPUT.OUTPUT_BOTH;
     const hasPage =
@@ -153,14 +183,19 @@ export default class Output extends React.Component {
     return (
       <div className="Output">
         <Splitter
-          vertical={true}
+          vertical={!vertical}
           percentage={true}
           secondaryInitialSize={50}
           primaryIndex={0}
           onSize={() => {}}
         >
           {hasPage && <div id="output" ref={e => (this.output = e)} />}
-          {hasConsole && <Console container={this.state.container} />}
+          {hasConsole &&
+            <Console
+              onRef={e => (this.console = e)}
+              guid={this.state.guid}
+              container={this.iframe}
+            />}
         </Splitter>
       </div>
     );
@@ -173,8 +208,10 @@ Output.propTypes = {
   setError: PropTypes.func,
   clearError: PropTypes.func,
   output: PropTypes.string,
+  vertical: PropTypes.bool,
 };
 
 Output.defaultProps = {
   output: OUTPUT.OUTPUT_PAGE,
+  vertical: false,
 };

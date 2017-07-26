@@ -20,6 +20,11 @@
     // line-height: $font-line-height;
   }
 
+  .Input .cli {
+    padding-top: 11px;
+    line-height: $font-line-height;
+  }
+
   // small tweak to increase scale
   .Line .input,
   .Input .cli,

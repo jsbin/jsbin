@@ -39,16 +39,10 @@ export default class BinConsole extends React.Component {
 
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
-    this.rebind(this.props.container);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    // console.log('bindConsole', nextProps.guid);
-    // this.rebind(nextProps.container);
   }
 
   shouldComponentUpdate() {
-    return false;
+    return false; // all rendering is handled internally
   }
 
   componentWillUnmount() {

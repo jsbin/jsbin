@@ -44,10 +44,14 @@ export default class Output extends React.Component {
       this.props.clearError();
     }
 
+    const isPage = output === OUTPUT.OUTPUT_PAGE;
+    const isBoth = output === OUTPUT.OUTPUT_BOTH;
+    const isConsole = output === OUTPUT.OUTPUT_CONSOLE;
+
     const { bin } = this.props;
     const iframe = this.iframe;
 
-    if (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_PAGE) {
+    if (isBoth || isPage) {
       if (!this.output) {
         // then we're not ready for a render, so let's exit early
         return;
@@ -64,7 +68,7 @@ export default class Output extends React.Component {
     // then we need to clear the container and insert into this.output node. Otherwise,
     // we need to put in the DOM somewhere, so we drop it into the body, but leave
     // it hidden.
-    if (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_PAGE) {
+    if (isBoth || isPage) {
       this.output.appendChild(iframe);
       iframe.hidden = false;
     } else {
@@ -107,15 +111,18 @@ export default class Output extends React.Component {
 
     doc.open();
     doc.write('');
-    if (
-      this.console &&
-      (output === OUTPUT.OUTPUT_BOTH || output === OUTPUT.OUTPUT_CONSOLE)
-    ) {
-      console.log('joining doc');
+
+    // if we've already got a console reference AND we're showing the
+    // console, then we rebind the console connections right before
+    // we write any content (to catch the console messaging).
+    if (this.console && (isBoth || isConsole)) {
       this.console.rebind(iframe);
     }
-    console.log('write doc');
+
     // start writing the page. This will clear any existing document.
+    // oddly this is around 40ms on a high end Mac, but .innerHTML is
+    // way faster, but doesn't actually get rendered…nor does it execute
+    // the JavaScript, so we'll stick with the baddie that is .write.
     doc.write(renderedDoc);
     doc.close();
   }

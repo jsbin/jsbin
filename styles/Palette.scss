@@ -3,7 +3,7 @@
 // modifiers
 .theme-dark .Palette {
   .inner {
-    border-color: $c-dark-theme-border;
+    border-color: darken($c-dark-theme-border, 15%);
     background: darken($c-dark-theme-bg, 20%);
     color: darken($c-dark-theme-text, 40%);
     box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 1);

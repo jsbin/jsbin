@@ -1,13 +1,25 @@
 @import "vars";
 
+.theme-dark {
+  .splitter-layout {
+    & > .layout-splitter {
+      background-color: lighten($c-dark-theme-border, 50%);
+
+      &:hover {
+        border-color: lighten($c-dark-theme-border, 30%);
+      }
+    }
+  }
+}
+
 .splitter-layout {
   height: calc(100% - #{$menu-height});
   & > .layout-splitter {
-    background: #000;
+    background-color: #000;
+    background-clip: padding-box; // this is important to the effect
     opacity: .2;
     z-index: $z-middle;
     box-sizing: border-box;
-    background-clip: padding-box;
 
     width: 11px;
     margin: 0 -5px;
@@ -27,8 +39,6 @@
     border: 0;
     height: 11px;
     margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
     cursor: row-resize;
     width: 100%;
 

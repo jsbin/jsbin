@@ -1,0 +1,292 @@
+.theme-light {
+  // light theme created by Remy Sharp akin to Atom One Light
+  &.CodeMirror pre,
+  .CodeMirror-gutter-wrapper pre {
+    color: #262626;
+  }
+  .CodeMirror-gutter-wrapper {
+    background: #ffffff;
+  }
+  .CodeMirror-cursor {
+    border-left-color: #000000;
+  }
+  .cm-keyword {
+    color: #950095;
+  }
+  .cm-atom {
+    color: #865600;
+  }
+  .box-html .cm-atom {
+    color: #865600;
+  }
+  .cm-def {
+    color: #2f5af3;
+  }
+  .cm-variable {
+    color: #b4713c;
+  }
+  .cm-variable-2 {
+    color: #de3e35;
+  }
+  .cm-variable-3 {
+    color: #b4713c;
+  }
+  .cm-header {
+    color: #df3e35;
+  }
+  .cm-number {
+    color: #865600;
+  }
+  .cm-property {
+    color: #262626;
+  }
+  .cm-attribute {
+    color: #2f5af3;
+  }
+  .cm-builtin {
+    color: #2f5af3;
+  }
+  .cm-qualifier {
+    color: #905600;
+  }
+  .cm-operator {
+    color: #006eb0;
+  }
+  .cm-meta {
+    color: #006eb0;
+  }
+  .cm-string {
+    color: #3f9455;
+  }
+  .cm-string-2 {
+    color: #2a2c33;
+  }
+  .cm-tag {
+    color: #df3e35;
+  }
+  .box-css .cm-tag {
+    color: #de3e35;
+  }
+  .cm-tag.cm-bracket {
+    color: #2a2c33;
+  }
+  .CodeMirror-linenumber {
+    color: #cccccc;
+  }
+  .CodeMirror-guttermarker-subtle {
+    color: #cccccc;
+  }
+  .cm-comment {
+    color: #8f8f9c;
+    font-style: italic;
+  }
+  .cm-searching,
+  .CodeMirror-focused .CodeMirror-selected,
+  .CodeMirror-selected {
+    background-color: #edf0f0;
+  }
+}
+
+.theme-dark {
+  /*
+    Name:       one-dark
+    Original Author:     Török Ádám (http://github.com/Aerobird98)
+
+    Original Atom One Dark Theme (https://github.com/atom/one-dark-syntax & https://github.com/atom/one-dark-ui)
+
+    Modifications by Remy Sharp (sorry!)
+*/
+
+  /* UI Theme /----------------------------------------------------------------------------------- */
+
+  .CodeMirror,
+  .CodeMirror-scroll {
+    background: hsl(220, 13%, 18%);
+    color: hsl(220, 14%, 71%);
+  }
+  .CodeMirror-selected {
+    background: rgb(73, 78, 93);
+  }
+  .CodeMirror-lines {
+    padding: 4px 0; /* Vertical padding around content */
+  }
+  pre {
+    padding: 0 4px; /* Horizontal padding of content */
+  }
+
+  /* Gutter & Folding */
+
+  .CodeMirror-gutters,
+  .CodeMirror-gutter {
+    white-space: nowrap;
+    border: none;
+    background: transparent;
+  }
+  .CodeMirror-linenumber {
+    /* padding: 0 30px 0 30px; */
+    background: hsl(220, 13%, 18%);
+    min-width: 20px;
+    text-align: right;
+    white-space: nowrap;
+    color: hsl(220, 14%, 71%);
+  }
+  /* ...folding addon: fold/...  */
+  .CodeMirror-foldmarker {
+    line-height: .3;
+    cursor: pointer;
+    color: hsl(220, 14%, 71%);
+    background: rgba(204, 217, 255, 0.05);
+  }
+  .CodeMirror-foldgutter {
+    width: 15px;
+    border: none;
+  }
+  .CodeMirror-foldgutter-open,
+  .CodeMirror-foldgutter-folded {
+    cursor: pointer;
+  }
+  .CodeMirror-foldgutter-open:after {
+    content: "\25BE";
+    color: hsl(220, 10%, 25%);
+  }
+  .CodeMirror.over-gutter,
+  .CodeMirror-activeline .CodeMirror-foldgutter-open:after {
+    color: hsl(220, 10%, 40%);
+  }
+  .CodeMirror-foldgutter-folded:after {
+    content: "\25B8";
+    color: hsl(220, 10%, 40%);
+  }
+  /* ...misc */
+  .CodeMirror-scrollbar-filler,
+  .CodeMirror-gutter-filler {
+    background-color: #ccc; /* The little square between H and V scrollbars */
+  }
+
+  /* Cursor */
+
+  .CodeMirror-cursor {
+    border-left: 2px solid hsl(220, 100%, 66%) !important;
+  }
+  .CodeMirror-overwrite .CodeMirror-cursor {
+    border-left: none !important;
+    border-bottom: 1px solid #fff;
+  }
+
+  /* Popular addons */
+
+  /* addon: adit/machingbrackets.js & addon: edit/matchtags.js   */
+  .CodeMirror-matchingbracket,
+  .CodeMirror-matchingtag {
+    /* Ensure visibility against gray inline editor background */
+    background-color: rgba(204, 217, 255, 0.09);
+    color: hsl(220, 14%, 71%) !important;
+    border-bottom: 1px solid hsl(220, 100%, 66%);
+  }
+
+  /* Syntax Theme /---------------------------------------------------------------------------------- */
+
+  /* markdown */
+  .cm-header {
+    color: #e06c75;
+  }
+  .cm-quote {
+    color: #5c6370;
+    font-style: italic;
+  }
+
+  .cm-negative {
+    color: #e06c75;
+  }
+  .cm-positive {
+    color: #e06c75;
+  }
+
+  .cm-strong {
+    color: #d19a66;
+    font-weight: bold;
+  }
+  .cm-header .cm-strong {
+    color: #d19a66;
+    font-weight: bold;
+  }
+
+  .cm-em {
+    color: #c678dd;
+    font-style: italic;
+  }
+  .cm-header .cm-em {
+    color: #c678dd;
+    font-style: italic;
+  }
+
+  /* xml, html, ... */
+  .cm-tag {
+    color: #e06c75;
+  }
+  .cm-attribute {
+    color: #d19a66;
+  }
+  .cm-link {
+    color: #98c379;
+    border-bottom: solid 1px #98c379;
+  }
+
+  /* other ... (for example javascript) */
+  .cm-builtin {
+    color: #e06c75;
+  }
+  .cm-keyword {
+    color: #c678dd;
+  }
+  .cm-def {
+    color: #e5c07b;
+  } /* original:  #d19a66; */
+
+  .cm-atom {
+    color: #d19a66;
+  }
+  .cm-number {
+    color: #d19a66;
+  }
+  .cm-property {
+    color: #61afef;
+  } /* original: #abb2bf */
+  .cm-qualifier {
+    color: #d19a66;
+  }
+
+  .cm-variable {
+    color: #e06c75;
+  }
+  .cm-variable-2 {
+    color: #abb2bf;
+  }
+  .cm-variable-3 {
+    color: #e5c07b;
+  }
+
+  .cm-string {
+    color: #98c379;
+  }
+  .cm-string-2 {
+    color: #98c379;
+  }
+
+  .cm-punctuation {
+    color: #abb2bf;
+  }
+  .cm-operator {
+    color: #abb2bf;
+  }
+  .cm-meta {
+    color: #abb2bf;
+  }
+  .cm-bracket {
+    color: #abb2bf;
+  }
+  .cm-comment {
+    color: #5c6370;
+    font-style: italic;
+  }
+}

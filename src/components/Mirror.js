@@ -44,11 +44,11 @@ export default class Mirror extends React.Component {
   }
 
   componentDidMount() {
-    const { theme } = this.props.app;
-    if (theme !== 'default') {
-      // lazy load the theme css
-      this.loadTheme(theme);
-    }
+    // const { theme } = this.props.app;
+    // if (theme !== 'default') {
+    //   // lazy load the theme css
+    //   this.loadTheme(theme);
+    // }
 
     this.updateCursor(this.props);
     this.CodeMirror.getCodeMirror().refresh();

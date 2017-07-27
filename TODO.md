@@ -10,7 +10,7 @@
 ## Bit bugs
 
 
-## Theming
+## Themeing
 
 - [ ] Dark loading
 
@@ -46,9 +46,11 @@
 - [x] Restore cursor position on insert
 - [x] Snippets and snippets from local bins
 
-## Keyboard
+## UX
 
-- [ ] cmd+enter - run code
+- [ ] cmd+enter - run code with alerts, etc
+- [ ] Investigate using blobs with scripts for real-time line number reports
+
 
 ## Lib
 

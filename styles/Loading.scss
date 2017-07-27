@@ -5,7 +5,14 @@
   width: 100%;
   height: 100%;
   display: flex;
+  opacity: 1;
+  transition: opacity 1s cubic-bezier(0.34, 0.37, 0.92, 0.32);
   flex-direction: column;
+
+  &[hidden] {
+    opacity: 0;
+    display: flex;
+  }
 
   .loader {
     flex-grow: 1;

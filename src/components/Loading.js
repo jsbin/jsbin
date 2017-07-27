@@ -24,6 +24,7 @@ export default class Loading extends React.Component {
   constructor(props) {
     super(props);
     this.timer = null;
+    this.loadingTimer = null;
 
     this.state = {
       index: 0,
@@ -32,10 +33,13 @@ export default class Loading extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timer);
+    clearTimeout(this.loadingTimer);
   }
 
   componentDidMount() {
-    // this.loading.hidden = false;
+    this.loadingTimer = setTimeout(() => {
+      this.loading.hidden = false;
+    }, 500);
     this.timer = setInterval(() => {
       const index = this.state.index + 1;
       if (index === messages.length) {

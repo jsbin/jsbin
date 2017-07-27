@@ -133,10 +133,11 @@ export default class Mirror extends React.Component {
   }
 
   render() {
-    const { options, focus, editor, snippets } = this.props;
+    const { options, focus, editor, snippets, source } = this.props;
     const { code } = this.state;
 
     const cmOptions = {
+      source,
       theme: this.props.app.theme,
       fixedGutter: true,
       dragDrop: false, // FIXME add the custom D&D support
@@ -145,7 +146,7 @@ export default class Mirror extends React.Component {
       hintOptions: {
         completeSingle: false,
       },
-      snippets: snippets,
+      snippets,
       extraKeys: {
         Tab: 'snippets',
       },

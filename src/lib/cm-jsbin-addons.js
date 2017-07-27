@@ -1,4 +1,5 @@
 import CodeMirror from 'codemirror';
+import idk from 'idb-keyval';
 
 CodeMirror.defineOption('fontSize', 13, function(cm, value) {
   value = parseFloat(value, 10);
@@ -24,7 +25,7 @@ CodeMirror.defineOption('fontFamily', '', function(cm, value) {
   document.head.appendChild(style);
 });
 
-CodeMirror.commands.snippets = function(cm) {
+CodeMirror.defineExtension('snippets', async function({ cm }) {
   const pos = cm.getCursor();
   const tok = cm.getTokenAt(pos);
   const snippets = cm.getOption('snippets') || { cl: `console.log('$0');` };
@@ -36,11 +37,18 @@ CodeMirror.commands.snippets = function(cm) {
     tagName = tagName.slice(0, tagName.length - tok.end + pos.ch);
   }
 
-  var key = tagName.toLowerCase();
+  const key = tagName.toLowerCase();
 
   if (snippets[key]) {
-    targetCursorPos = snippets[key].indexOf('$0');
-    macro = snippets[key].replace(/\$0/, '');
+    let code = snippets[key];
+    if (code.startsWith('@local/')) {
+      const data = await idk.get(code.split('@local/').pop());
+      console.log('mode', cm.getOption('source'));
+      code = data[cm.getOption('source')];
+    }
+
+    targetCursorPos = code.indexOf('$0');
+    macro = code.replace(/\$0/, '');
     cm.replaceRange(
       macro,
       { line: pos.line, ch: pos.ch - key.length },
@@ -56,4 +64,10 @@ CodeMirror.commands.snippets = function(cm) {
     return;
   }
   return CodeMirror.Pass;
+});
+
+console.log(CodeMirror.commands);
+
+CodeMirror.commands.snippets = function(cm) {
+  cm.snippets({ cm });
 };

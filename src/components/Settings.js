@@ -9,6 +9,7 @@ import Mirror from '../components/Mirror'; // explicit about component
 import { settings as defaults, parse } from '../lib/Defaults';
 import { merge } from '../lib/settings';
 import { cmd } from '../lib/is-mac';
+import Head from './Head';
 
 // intentionally after Mirror component
 import JSONLint from 'json-lint';
@@ -96,6 +97,9 @@ export default class Settings extends React.Component {
 
     return (
       <div className={`theme-${app.theme}`}>
+        <Head>
+          <title>Settings</title>
+        </Head>
         <HotKeys keyMap={keyMap} handlers={{ save: this.save }}>
           <Splitter
             vertical={false}

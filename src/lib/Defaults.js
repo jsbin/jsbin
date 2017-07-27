@@ -90,8 +90,13 @@ export const settings = `{
   // - 'emacs'
   "editor.keyMap": "default",
 
+  // Configure custom key handling in CodeMirror to trigger commands. The
+  // 'snippets' command will use your custom snippets defined using
+  // 'snippets.javascript' etc.
   // details: https://codemirror.net/doc/manual.html#option_extraKeys
-  "editor.extraKeys": null,
+  "editor.extraKeys": {
+    "Tab": "snippets"
+  },
 
   // Custom snippets that expand on tab press. Use $0 for the position
   // to insert the cursor after the snippet is inserted.

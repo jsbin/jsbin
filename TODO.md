@@ -2,11 +2,15 @@
 
 ## In progress
 
-- [ ] Console!
+- [x] Console!
 
 ## Bit bugs
 
 - [ ] Dark theme for .Error
+
+## Console
+
+- [ ] Errors need to be passed into console too
 
 ## Settings
 
@@ -24,14 +28,15 @@
 
 ## UI
 
-- [ ] Import light + dark theme by default
+- [x] Import light + dark theme by default
 - [ ] Handle 404 - mainly for /local/* entries
 - [ ] Share box
 - [ ] Some kind of notification system
-- [ ] Completely dark theme
-- [ ] Console
+- [x] Completely dark theme
+- [x] Console
 - [ ] Delete shortcut
-- [ ] Restore cursor position on insert
+- [x] Restore cursor position on insert
+- [x] Snippets and snippets from local bins
 
 ## Keyboard
 
@@ -50,6 +55,7 @@
 
 ## API
 
+- [ ] Import from gists
 - [ ] Save online/share
 - [ ] Sync settings
 - [ ] Login / upgrade, etc

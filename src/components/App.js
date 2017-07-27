@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
 import idk from 'idb-keyval'; // FIXME lazy load candidate
 
+import { getFromGist } from '../lib/Api';
 import * as OUTPUT from '../actions/session';
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
@@ -23,6 +24,31 @@ export default class App extends Component {
     this.triggerPalette = this.triggerPalette.bind(this);
     this.dismiss = this.dismiss.bind(this);
     this.insertCode = this.insertCode.bind(this);
+  }
+
+  async componentWillMount() {
+    const { match } = this.props;
+
+    if (match.params.localId) {
+      const res = await idk.get(match.params.localId);
+      this.props.setBin(res);
+      return;
+    }
+
+    if (match.params.gistId) {
+      const res = await getFromGist(match.params.gistId);
+      this.props.setBin(res);
+      return;
+    }
+
+    if (!match.params.bin) {
+      // new bin
+      // dispatch request for default bin
+      this.props.loadDefault();
+      return;
+    }
+
+    this.props.fetch(match.params);
   }
 
   insertCode(string) {
@@ -80,25 +106,6 @@ export default class App extends Component {
 
   componentDidMount() {
     this.props.setDirtyFlag();
-  }
-
-  async componentWillMount() {
-    const { match } = this.props;
-
-    if (match.params.localId) {
-      const res = await idk.get(match.params.localId);
-      this.props.setBin(res);
-      return;
-    }
-
-    if (!match.params.bin) {
-      // new bin
-      // dispatch request for default bin
-      this.props.loadDefault();
-      return;
-    }
-
-    this.props.fetch(match.params);
   }
 
   render() {

@@ -33,7 +33,17 @@ export default class Output extends React.Component {
       // check if it came from _our_ iframe
       const data = JSON.parse(event.newValue);
       if (data.guid === this.iframe.guid) {
-        this.props.setError(data.error);
+        this.props.setError(data.message);
+        if (this.console) {
+          const value = new Error(data.message);
+          value.name = data.name;
+          value.stack = data.stack;
+          this.console.console.push({
+            error: true,
+            type: 'response',
+            value,
+          });
+        }
       }
     }
   }
@@ -98,7 +108,7 @@ export default class Output extends React.Component {
         ${bin.javascript}
       } catch (error) {
         try { localStorage.setItem('jsbin.error', JSON.stringify({
-          error: error.message, guid: "${guid}"
+          name: error.name, message: error.message, stack: error.stack, guid: "${guid}"
         })); } catch (E) {}
         throw error;
       } //# sourceURL=your-scripts-${++i}.js$`;

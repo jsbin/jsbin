@@ -123,6 +123,12 @@ const render = App => {
           <Route exact path="/settings" component={Settings} />
           <Route
             exact
+            path="/welcome"
+            component={require('./components/Welcome').default}
+          />
+
+          <Route
+            exact
             path="/404"
             component={require('./components/GenericErrorPage').default}
           />

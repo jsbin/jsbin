@@ -2,7 +2,6 @@
 
 ## In progress
 
-- [ ] Loading gif
 - [ ] Handle 404 - and for missing /local/* entries
 - [ ] Welcome
 - [ ] Sign in (API, JWT)
@@ -10,7 +9,7 @@
 ## Bit bugs
 
 
-## Themeing
+## Themes
 
 - [ ] Dark loading
 
@@ -32,22 +31,23 @@
 
 ## Larger tasks
 
-- [ ] Embeds
+- [ ] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
 - [ ] Processors
 
 ## UI
 
-- [x] Import light + dark theme by default
 - [ ] Share box
 - [ ] Some kind of notification system
+- [x] Loading gif
+- [x] Import light + dark theme by default
 - [x] Completely dark theme
 - [x] Console
-- [ ] Delete shortcut
 - [x] Restore cursor position on insert
 - [x] Snippets and snippets from local bins
 
 ## UX
 
+- [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
 - [ ] Investigate using blobs with scripts for real-time line number reports
 
@@ -61,11 +61,11 @@
 ## Pages
 
 - [ ] Account
-- [ ] Settings (json like, ala VS Code)
+- [x] Settings (json like, ala VS Code)
 
 ## API
 
-- [ ] Import from gists
+- [x] Import from gists
 - [ ] Save online/share
 - [ ] Sync settings
 - [ ] Login / upgrade, etc
@@ -76,4 +76,4 @@
 
 ## Known issues
 
-- [ ] Output is too big, it can't be scrolled
+- [ ] When output is too big, it can't be scrolled vertically?

@@ -121,6 +121,16 @@ const render = App => {
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/settings" component={Settings} />
+          <Route
+            exact
+            path="/404"
+            component={require('./components/GenericErrorPage').default}
+          />
+          <Route
+            exact
+            path="/loading"
+            component={require('./components/Loading').default}
+          />
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/gist/:gistId" component={App} />
           <Route exact path="/:bin/:version" component={App} />

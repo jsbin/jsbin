@@ -43,8 +43,7 @@ CodeMirror.defineExtension('snippets', async function({ cm }) {
     let code = snippets[key];
     if (code.startsWith('@local/')) {
       const data = await idk.get(code.split('@local/').pop());
-      console.log('mode', cm.getOption('source'));
-      code = data[cm.getOption('source')];
+      code = data[cm.getOption('source')]; // NOTE: getOption('source') is bespoke to jsbin
     }
 
     targetCursorPos = code.indexOf('$0');
@@ -65,8 +64,6 @@ CodeMirror.defineExtension('snippets', async function({ cm }) {
   }
   return CodeMirror.Pass;
 });
-
-console.log(CodeMirror.commands);
 
 CodeMirror.commands.snippets = function(cm) {
   cm.snippets({ cm });

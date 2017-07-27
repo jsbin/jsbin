@@ -2,6 +2,7 @@ import { handle } from 'redux-pack';
 
 import {
   SET_HTML,
+  ERROR,
   SET_JS,
   SET_CSS,
   SET_OUTPUT,
@@ -19,6 +20,7 @@ const defaultState = {
   html: '',
   javascript: '',
   css: '',
+  error: null,
 };
 
 export default function reducer(state = defaultState, action) {
@@ -26,6 +28,10 @@ export default function reducer(state = defaultState, action) {
 
   if (type === RESET) {
     return defaultState;
+  }
+
+  if (type === ERROR) {
+    return { ...state, error: action.value };
   }
 
   if (type === SET_ID) {
@@ -39,7 +45,7 @@ export default function reducer(state = defaultState, action) {
         ...defaultState,
       }),
       // finish: prevState => ({ ...prevState, isLoading: false }),
-      failure: prevState => ({ ...prevState, error: payload }),
+      failure: prevState => ({ ...prevState, error: payload, loading: false }),
       success: prevState => {
         const { html, css, javascript } = payload;
         // FIXME handle extra settings
@@ -55,7 +61,8 @@ export default function reducer(state = defaultState, action) {
       css: action.css,
       javascript: action.javascript,
       id: action.url || action.id,
-      loading: false,
+      loading: action.loading === undefined ? false : action.loading,
+      error: action.error || null,
     };
   }
 

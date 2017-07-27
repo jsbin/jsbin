@@ -18,9 +18,15 @@ const settings = ({ opts, token } = {}) => {
 };
 
 export const getBin = (id, revision = 'latest') => {
-  return fetch(`${API}/bin/${id}/${revision}`, settings()).then(res =>
-    res.json()
-  );
+  return fetch(`${API}/bin/${id}/${revision}`, settings()).then(res => {
+    if (res.status !== 200) {
+      // this is a bit sucky, but redux-pack expect an object not a first class
+      // error to be rejected
+      return Promise.reject(res.status);
+    }
+
+    return res.json();
+  });
 };
 
 export const getFromGist = async id => {

@@ -1,0 +1,49 @@
+@import "vars";
+
+.Loading {
+  font-family: system;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .loader {
+    flex-grow: 1;
+    flex-basis: 66%;
+    background: url(/loading.gif) no-repeat;
+    background-position: top center;
+  }
+
+  .message {
+    color: #666;
+    font-family: $font-family-code;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    flex-basis: 33%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    p {
+      width: calc(100% - 40px);
+      margin: 20px;
+      position: absolute;
+      bottom: 0;
+      display: none;
+
+      // I'd love for this to fade out and gently in, but I gave up.
+      // PR ME! ❤️
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+}

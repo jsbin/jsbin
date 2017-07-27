@@ -2,34 +2,42 @@
 
 ## In progress
 
-- [x] Console!
+- [ ] Loading gif
+- [ ] Handle 404 - and for missing /local/* entries
+- [ ] Welcome
+- [ ] Sign in (API, JWT)
 
 ## Bit bugs
 
-- [ ] Dark theme for .Error
+
+## Theming
+
+- [ ] Dark loading
 
 ## Console
 
-- [ ] Errors need to be passed into console too
+- [x] Console!
+- [x] Errors need to be passed into console too
 
 ## Settings
 
+- [x] Dark theme for .Error
 - [x] Check default panel from 'app.source'
 - [x] Ensure dirty flag is always picked up
 - [x] If undefined command is selected in the palette, it breaks
-- [ ] Inject live across all tabs
-- [ ] Fix references to "vertical"
+- [x] Inject live across all tabs
 - [x] Tests defaults work in App view
 - [x] Support option injection via the "quick settings"
+- [ ] Fix references to "vertical"
 
 ## Larger tasks
 
-- [ ] Sign in (API, JWT)
+- [ ] Embeds
+- [ ] Processors
 
 ## UI
 
 - [x] Import light + dark theme by default
-- [ ] Handle 404 - mainly for /local/* entries
 - [ ] Share box
 - [ ] Some kind of notification system
 - [x] Completely dark theme

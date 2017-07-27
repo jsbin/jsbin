@@ -2,11 +2,13 @@ import { parse, settings as defaultSettings } from './Defaults';
 import stripJsonComments from 'strip-json-comments';
 
 /**
- * @returns {Object} Merged user settings (from localStorage) and default settings
- * as defined in ./lib/Default.js
+ * Merged user settings (from localStorage) and default settings
+ *
+ * @param {Object} [settings=user.settings from localStorage]
+ * @returns {Object} Merged object nested one level deep as defined in ./lib/Default.js
  */
-export default function main() {
-  const user = getUserSettings(getRawUserSettings());
+export default function main(settings = getRawUserSettings()) {
+  const user = getUserSettings(settings);
   const defaults = parse(defaultSettings);
 
   if (!user) {
@@ -59,7 +61,7 @@ export function merge(defaults, user) {
  *
  * @param {object} change { key: value } change to settings
  * @param {string} settings The JSON object for the user settings
- * @param {[Any]} previousValue If replacing an existing value, it's useful to
+ * @param {Any} [previousValue] If replacing an existing value, it's useful to
  * include the previous value for replacement
  */
 export function insertChangeIntoUserSettings(change, settings, previousValue) {

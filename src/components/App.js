@@ -11,6 +11,8 @@ import Panel from '../containers/Panel';
 import Output from '../containers/Output';
 import Head from './Head';
 import Palette from '../containers/Palette';
+import Loading from './Loading';
+import Error from './GenericErrorPage';
 import { SET_HTML } from '../actions/bin';
 
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
@@ -109,14 +111,26 @@ export default class App extends Component {
   }
 
   render() {
-    const { loading, session, splitterWidth, vertical, theme } = this.props;
+    const {
+      bin,
+      loading,
+      session,
+      splitterWidth,
+      vertical,
+      theme,
+    } = this.props;
 
     if (loading) {
       return (
         <div className={`JsBinApp loading theme-${theme}`}>
           <Head />
+          <Loading />
         </div>
       );
+    }
+
+    if (bin.error) {
+      return <Error status={bin.error} />;
     }
 
     const keyMap = {

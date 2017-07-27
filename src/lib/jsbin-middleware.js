@@ -7,8 +7,9 @@ import {
   triggerPalette,
   setDirtyFlag,
 } from '../actions/session';
-import { SET_SOURCE } from '../actions/app';
+import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/bin';
+import getSettings from '../lib/settings';
 
 function storeKV(key, value) {
   try {
@@ -18,45 +19,62 @@ function storeKV(key, value) {
   }
 }
 
-export default store => next => action => {
-  const nextAction = next(action);
+export default store => {
+  // I'm adding the storage listener here to sync the settings
+  window.addEventListener(
+    'storage',
+    event => {
+      if (event.key === 'jsbin.user.settings') {
+        const { editor, app } = getSettings(JSON.parse(event.newValue));
+        // prevents the panel from switching
+        delete app.source;
+        store.dispatch({ type: MASS_UPDATE, value: { editor, app } });
+      }
+    },
+    false
+  );
 
-  /** keeping this for future use so we can use state to save */
-  const state = store.getState(); // new state after action was applied
-  if (action.type.startsWith('@@app/')) {
-    storeKV('jsbin.app', state.app);
-  }
+  // return the middleware
+  return next => action => {
+    const nextAction = next(action);
 
-  if (action.type === SET_SPLITTER_WIDTH) {
-    storeKV('jsbin.splitter-width', state.session.splitterWidth);
-  }
-
-  if (action.type === SAVE_SETTINGS) {
-    storeKV('jsbin.user.settings', state.user.settings);
-  }
-
-  if (action.type === SET_SPLITTER_WIDTH) {
-    store.dispatch(setDirtyFlag());
-  }
-
-  if (action.type === SAVE) {
-    save(state, store.dispatch);
-  }
-
-  if (action.type === LOCATION_CHANGE && action.payload.state) {
-    if (action.payload.state.action) {
-      store.dispatch(action.payload.state.action);
+    /** keeping this for future use so we can use state to save */
+    const state = store.getState(); // new state after action was applied
+    if (action.type.startsWith('@@app/')) {
+      storeKV('jsbin.app', state.app);
     }
-  }
 
-  // keep the URL in sync
-  if (action.type === SET_SOURCE) {
-    store.dispatch(replace('?' + action.value.toLowerCase()));
-  }
+    if (action.type === SET_SPLITTER_WIDTH) {
+      storeKV('jsbin.splitter-width', state.session.splitterWidth);
+    }
 
-  if (action.type === DISMISS) {
-    store.dispatch(triggerPalette(false));
-  }
+    if (action.type === SAVE_SETTINGS) {
+      storeKV('jsbin.user.settings', state.user.settings);
+    }
 
-  return nextAction;
+    if (action.type === SET_SPLITTER_WIDTH) {
+      store.dispatch(setDirtyFlag());
+    }
+
+    if (action.type === SAVE) {
+      save(state, store.dispatch);
+    }
+
+    if (action.type === LOCATION_CHANGE && action.payload.state) {
+      if (action.payload.state.action) {
+        store.dispatch(action.payload.state.action);
+      }
+    }
+
+    // keep the URL in sync
+    if (action.type === SET_SOURCE) {
+      store.dispatch(replace('?' + action.value.toLowerCase()));
+    }
+
+    if (action.type === DISMISS) {
+      store.dispatch(triggerPalette(false));
+    }
+
+    return nextAction;
+  };
 };

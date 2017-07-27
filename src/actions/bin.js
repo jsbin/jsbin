@@ -10,6 +10,7 @@ export const SET_ID = '@@bin/set/ID';
 export const RESET = '@@bin/RESET';
 export const SAVE = '@@bin/SAVE';
 export const DELETE = '@@bin/DELETE';
+export const ERROR = '@@bin/ERROR';
 export const GET_BIN = '@@bin/fetch/GET';
 
 export function setBin({ id, html, css, javascript }) {
@@ -18,6 +19,10 @@ export function setBin({ id, html, css, javascript }) {
 
 export function setId(value) {
   return { type: SET_ID, value };
+}
+
+export function setError(value) {
+  return { type: ERROR, value };
 }
 
 export function fetchDefault() {

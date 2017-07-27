@@ -4,7 +4,10 @@ import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE } from '../actions/bin';
 import { toggleOutput } from '../actions/session';
 // import { toggleTheme } from '../actions/editor';
+import BinToHTML from '../lib/BinToHTML';
 import fetch from 'isomorphic-fetch';
+
+import FileSaver from 'file-saver'; // @@ lazy load
 
 export const newBin = {
   title: 'New',
@@ -18,6 +21,14 @@ export const save = {
   shortcut: null,
   run: dispatch => {
     dispatch({ type: SAVE });
+  },
+};
+
+export const download = {
+  title: 'Download',
+  run: (dispatch, { bin }) => {
+    const blob = new Blob([BinToHTML(bin)], { type: 'text/html' });
+    FileSaver.saveAs(blob, (bin.id || 'jsbin') + '.html');
   },
 };
 

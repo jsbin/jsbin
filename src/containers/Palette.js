@@ -5,10 +5,12 @@ import Palette from '../components/Palette';
 const mapDispatchToProps = dispatch => {
   return {
     dismiss: () => dispatch(dismiss()),
-    run: command => command.run(dispatch),
+    run: (command, state = {}) => command.run(dispatch, state),
   };
 };
 
-const PaletteContainer = connect(null, mapDispatchToProps)(Palette);
+const PaletteContainer = connect(({ bin }) => ({ bin }), mapDispatchToProps)(
+  Palette
+);
 
 export default PaletteContainer;

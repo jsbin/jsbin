@@ -15,7 +15,7 @@ export function save({ bin }, dispatch) {
       dispatch(setError(e.message));
     })
     .then(() => {
-      dispatch(push(`/local/${id}`));
+      dispatch(push(`/local/${id}${window.location.search}`));
       dispatch(setId(id));
     });
 }

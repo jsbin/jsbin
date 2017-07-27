@@ -35,6 +35,7 @@ export default class Loading extends React.Component {
   }
 
   componentDidMount() {
+    // this.loading.hidden = false;
     this.timer = setInterval(() => {
       const index = this.state.index + 1;
       if (index === messages.length) {
@@ -51,7 +52,7 @@ export default class Loading extends React.Component {
     const { index } = this.state;
     const classNames = { [index]: 'active' };
     return (
-      <div className="Loading">
+      <div className="Loading" ref={e => (this.loading = e)} hidden={true}>
         <div className="message">
           {messages.map((m, i) =>
             <p key={`message-${i}`} className={classNames[i] || ''}>

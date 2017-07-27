@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => {
     fetch: ({ bin, version }) => {
       dispatch(fetchBin(bin, version))
         .then(res => {
-          window.document.title = `JS Bin: ${res.url}@${res.snapshot}`;
+          // window.document.title = `JS Bin: ${res.url}@${res.snapshot}`;
         })
         .catch(e => console.log('failed', e));
     },

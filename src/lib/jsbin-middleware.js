@@ -1,5 +1,5 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SAVE } from '../actions/bin';
+import { SAVE, SET_OUTPUT } from '../actions/bin';
 import { SAVE_SETTINGS } from '../actions/user';
 import {
   SET_SPLITTER_WIDTH,
@@ -56,7 +56,7 @@ export default store => {
       store.dispatch(setDirtyFlag());
     }
 
-    if (action.type === SAVE) {
+    if (action.type === SAVE || (action.type === SET_OUTPUT && state.bin.id)) {
       save(state, store.dispatch);
     }
 

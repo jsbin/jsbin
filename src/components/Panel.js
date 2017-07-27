@@ -16,8 +16,8 @@ const keyMap = {
   save: `${cmd}+s`,
   run: `${cmd}+enter`,
   html: `${cmd}+1`,
-  css: `${cmd}+2`,
-  javascript: `${cmd}+3`,
+  css: `${cmd}+3`,
+  javascript: `${cmd}+2`,
 };
 
 export default class Panel extends React.Component {

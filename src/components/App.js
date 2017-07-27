@@ -28,18 +28,20 @@ export default class App extends Component {
     this.insertCode = this.insertCode.bind(this);
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     const { match } = this.props;
 
     if (match.params.localId) {
-      const res = await idk.get(match.params.localId);
-      this.props.setBin(res);
+      idk.get(match.params.localId).then(res => {
+        this.props.setBin(res);
+      });
       return;
     }
 
     if (match.params.gistId) {
-      const res = await getFromGist(match.params.gistId);
-      this.props.setBin(res);
+      getFromGist(match.params.gistId).then(res => {
+        this.props.setBin(res);
+      });
       return;
     }
 

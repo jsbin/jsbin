@@ -99,6 +99,10 @@ body,
 #root {
   @import "splitter";
 
+  .JsBinApp {
+    height: 100%;
+  }
+
   [tabindex] {
     outline: none;
   }

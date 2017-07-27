@@ -66,8 +66,8 @@ export default class CodeSettings extends React.Component {
           Source{' '}
           <select value={source} onChange={this.changeSource}>
             <option value={MODES.HTML}>HTML</option>
-            <option value={MODES.CSS}>CSS</option>
             <option value={MODES.JAVASCRIPT}>JavaScript</option>
+            <option value={MODES.CSS}>CSS</option>
           </select>
         </label>
         <label className="output select">

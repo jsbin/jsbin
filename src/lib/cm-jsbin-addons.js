@@ -25,7 +25,7 @@ CodeMirror.defineOption('fontFamily', '', function(cm, value) {
   document.head.appendChild(style);
 });
 
-CodeMirror.defineExtension('snippets', async function({ cm }) {
+CodeMirror.defineExtension('snippets', function({ cm }) {
   const pos = cm.getCursor();
   const tok = cm.getTokenAt(pos);
   const snippets = cm.getOption('snippets') || { cl: `console.log('$0');` };
@@ -37,34 +37,45 @@ CodeMirror.defineExtension('snippets', async function({ cm }) {
     tagName = tagName.slice(0, tagName.length - tok.end + pos.ch);
   }
 
+  if (tagName === '') {
+    return CodeMirror.Pass;
+  }
+
   const key = tagName.toLowerCase();
 
   if (snippets[key]) {
     let code = snippets[key];
+    let promise;
     if (code.startsWith('@local/')) {
-      const data = await idk.get(code.split('@local/').pop());
-      code = data[cm.getOption('source')]; // NOTE: getOption('source') is bespoke to jsbin
-    }
-
-    targetCursorPos = code.indexOf('$0');
-    macro = code.replace(/\$0/, '');
-    cm.replaceRange(
-      macro,
-      { line: pos.line, ch: pos.ch - key.length },
-      { line: pos.line, ch: pos.ch + key.length }
-    );
-
-    if (targetCursorPos !== -1) {
-      cm.setCursor({
-        line: pos.line,
-        ch: pos.ch - key.length + targetCursorPos,
+      promise = idk.get(code.split('@local/').pop()).then(data => {
+        // NOTE: getOption('source') is bespoke to jsbin
+        return data[cm.getOption('source')];
       });
+    } else {
+      promise = Promise.resolve(code);
     }
-    return;
+
+    promise.then(code => {
+      targetCursorPos = code.indexOf('$0');
+      macro = code.replace(/\$0/, '');
+      cm.replaceRange(
+        macro,
+        { line: pos.line, ch: pos.ch - key.length },
+        { line: pos.line, ch: pos.ch + key.length }
+      );
+
+      if (targetCursorPos !== -1) {
+        cm.setCursor({
+          line: pos.line,
+          ch: pos.ch - key.length + targetCursorPos,
+        });
+      }
+      return;
+    });
   }
   return CodeMirror.Pass;
 });
 
 CodeMirror.commands.snippets = function(cm) {
-  cm.snippets({ cm });
+  return cm.snippets({ cm });
 };

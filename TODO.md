@@ -54,7 +54,7 @@
 
 ## Lib
 
-- [ ] Complile output document in web worker
+- [ ] Compile output document in web worker
 - [ ] Inject CSS, don't recompile
 - [ ] Background save of current state.
 

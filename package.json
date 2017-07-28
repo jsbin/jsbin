@@ -15,6 +15,7 @@
     "js-beautify": "^1.6.14",
     "json-lint": "^0.1.0",
     "lodash.debounce": "^4.0.8",
+    "marked": "^0.3.6",
     "prettier": "^1.5.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
@@ -33,9 +34,11 @@
   },
   "devDependencies": {
     "cm-show-invisibles": "^2.0.2",
+    "enzyme": "^2.9.1",
     "expect": "^1.20.2",
     "node-sass": "^4.5.3",
     "react-addons-perf": "^15.4.2",
+    "react-test-renderer": "^15.6.1",
     "redux-mock-store": "^1.2.3"
   },
   "scripts": {

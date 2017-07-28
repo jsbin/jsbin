@@ -1,5 +1,6 @@
 import { parse, settings as defaultSettings } from './Defaults';
 import stripJsonComments from 'strip-json-comments';
+import { js as tidy } from 'js-beautify';
 
 /**
  * Merged user settings (from localStorage) and default settings
@@ -61,15 +62,10 @@ export function merge(defaults, user) {
  *
  * @param {object} change { key: value } change to settings
  * @param {string} settings The JSON object for the user settings
- * @param {Any} [previousValue] If replacing an existing value, it's useful to
  * include the previous value for replacement
  */
-export function insertChangeIntoUserSettings(change, settings, previousValue) {
+export function insertChangeIntoUserSettings(change, settings) {
   const [key, value] = Object.entries(change)[0];
-
-  if (previousValue !== undefined) {
-    previousValue = JSON.stringify(previousValue);
-  }
 
   const search = `"${key}"`;
   const insert = `${search}: ${JSON.stringify(value)}\n`;
@@ -79,11 +75,12 @@ export function insertChangeIntoUserSettings(change, settings, previousValue) {
   let splitEnd = -1;
   let replace = false;
 
+  // then we need to insert
   if (!settings.includes(search)) {
-    // then we need to insert
     splitStart = json.lastIndexOf('}');
     splitEnd = splitStart;
   } else {
+    const previousValue = JSON.stringify(JSON.parse(json)[key]);
     replace = true;
     splitStart = json.lastIndexOf(search);
     let end = json.indexOf(previousValue, splitStart) + previousValue.length;
@@ -94,11 +91,12 @@ export function insertChangeIntoUserSettings(change, settings, previousValue) {
     settings.substr(0, splitStart),
     settings.substr(splitEnd),
   ];
+
   let res = left;
   if (!isEmpty && !replace) {
     res += ', ';
   }
   res += insert + right;
 
-  return res;
+  return tidy(res);
 }

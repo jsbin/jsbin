@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import { insertChangeIntoUserSettings } from '../lib/settings';
 
 import {
   OUTPUT_PAGE,
@@ -33,22 +32,11 @@ export default class CodeSettings extends React.Component {
   }
 
   changeApp(property, value) {
-    this.changeSetting(`app.${property}`, value);
     this.props.toggleLayout(value);
   }
 
   changeEditor(property, value) {
-    this.changeSetting(`editor.${property}`, value);
     this.props.set(property, value);
-  }
-
-  changeSetting(property, value) {
-    const change = insertChangeIntoUserSettings(
-      { [property]: value },
-      this.props.userSettings,
-      !value
-    );
-    this.props.saveSettings(change);
   }
 
   render() {
@@ -83,6 +71,7 @@ export default class CodeSettings extends React.Component {
           <summary>Quick Settings</summary>
           <label>
             <input
+              name="lineNumbers"
               type="checkbox"
               onChange={e => {
                 this.changeEditor('lineNumbers', e.target.checked);
@@ -94,6 +83,7 @@ export default class CodeSettings extends React.Component {
 
           <label>
             <input
+              name="lineWrapping"
               type="checkbox"
               onChange={e => {
                 this.changeEditor('lineWrapping', e.target.checked);

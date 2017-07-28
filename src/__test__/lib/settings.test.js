@@ -46,7 +46,7 @@ it('merges new user settings without corrupting', () => {
   expect(parsed).toContain({ editor: { lineNumbers: true } });
 });
 
-it('merges changed user settings without corrupting', () => {
+test.only('merges changed user settings without corrupting', () => {
   const source = `{
   // you can also use comments
   "app.theme": "dark",
@@ -63,4 +63,7 @@ it('merges changed user settings without corrupting', () => {
     app: { theme: 'dark' },
     editor: { lineNumbers: false },
   });
+
+  const delta2 = insertChangeIntoUserSettings(change, delta, true);
+  expect(delta2.split('//').length - 1).toEqual(1);
 });

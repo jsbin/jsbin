@@ -25,10 +25,16 @@ export default class Panel extends React.Component {
     super(props);
     this.saveCode = this.saveCode.bind(this);
     this.updateHeight = this.updateHeight.bind(this);
+    this.triggerPalette = this.triggerPalette.bind(this);
 
     this.state = {
       height: 0,
     };
+  }
+
+  triggerPalette(e) {
+    e.preventDefault();
+    this.props.triggerPalette(true);
   }
 
   updateHeight() {
@@ -123,7 +129,7 @@ export default class Panel extends React.Component {
             <CodeSettings />
             <Footer>
               <p>
-                Show all commands{' '}
+                <button className="Button simple" onClick={this.triggerPalette}>Show all commands</button>
                 <kbd>
                   <Command /> <Shift /> P
                 </kbd>

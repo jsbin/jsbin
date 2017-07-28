@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { setCode, save } from '../actions/bin';
-import { setCursor } from '../actions/session';
+import { setCursor, triggerPalette } from '../actions/session';
 import { SET_HTML, SET_JS, SET_CSS } from '../actions/bin';
 import { setSource } from '../actions/app';
 import * as MODES from '../lib/cm-modes';
@@ -13,6 +13,7 @@ const mapStateToProps = ({ bin = { html: '' }, editor, session, app }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    triggerPalette: value => dispatch(triggerPalette(value)),
     setCursor: ({ line, ch, source }) => {
       dispatch(setCursor(source, line, ch));
     },

@@ -111,13 +111,13 @@ export const togglePage = {
   },
 };
 
-export const bottomOutput = {
-  title: 'Split horizontally',
+export const splitRight = {
+  title: 'Split to the right',
   run: dispatch => dispatch(toggleLayout(false)),
 };
 
-export const sideOutput = {
-  title: 'Split vertically',
+export const splitBottom = {
+  title: 'Split to the bottom',
   run: dispatch => dispatch(toggleLayout(true)),
 };
 

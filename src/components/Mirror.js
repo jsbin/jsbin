@@ -7,12 +7,18 @@ import PropTypes from 'prop-types';
 // import 'codemirror/addon/hint/css-hint.js';
 // import '../lib/anyword-hint';
 
+import 'codemirror/keymap/vim.js';
+import 'codemirror/keymap/sublime.js';
+import 'codemirror/keymap/emacs.js';
+
+import '../lib/cm-formatter';
+
 // import 'cm-show-invisibles';
 
 import '../lib/cm-jsbin-addons';
 
-import 'codemirror/addon/lint/lint.js';
-import 'codemirror/addon/lint/javascript-lint.js';
+// import 'codemirror/addon/lint/lint.js';
+// import 'codemirror/addon/lint/javascript-lint.js';
 
 import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/fold/xml-fold';

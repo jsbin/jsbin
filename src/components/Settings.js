@@ -95,6 +95,14 @@ export default class Settings extends React.Component {
     const { editor, user, app } = this.props;
     const { error } = this.state;
 
+    const options = {
+      mode: 'application/javascript', // this allows comments
+      lineWrapping: true,
+      lineNumbers: true,
+      source: 'javascript',
+      ...editor,
+    };
+
     return (
       <div className={`theme-${app.theme}`}>
         <Head>
@@ -113,12 +121,8 @@ export default class Settings extends React.Component {
                 ref={e => (this.settings = e)}
                 focus={true}
                 changeCode={this.validateSettings}
-                options={{
-                  mode: 'application/ld+json', // this allows comments
-                  lineWrapping: true,
-                  lineNumbers: true,
-                  lint: true,
-                }}
+                options={options}
+                source="javascript"
                 app={app}
                 code={user.settings}
                 editor={editor}
@@ -138,11 +142,10 @@ export default class Settings extends React.Component {
               ref={e => (this.defaults = e)}
               focus={false}
               options={{
-                mode: 'application/javascript',
-                lineNumbers: true,
-                lineWrapping: true,
+                ...options,
                 readOnly: true,
               }}
+              source="javascript"
               app={app}
               code={defaults}
               editor={editor}

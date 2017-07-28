@@ -12,8 +12,10 @@
     "history": "^4.6.3",
     "idb-keyval": "^2.3.0",
     "isomorphic-fetch": "^2.2.1",
+    "js-beautify": "^1.6.14",
     "json-lint": "^0.1.0",
     "lodash.debounce": "^4.0.8",
+    "prettier": "^1.5.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-codemirror": "^1.0.0",
@@ -26,6 +28,7 @@
     "redux": "^3.7.2",
     "redux-pack": "^0.1.5",
     "redux-thunk": "^2.2.0",
+    "source-map-explorer": "^1.4.0",
     "strip-json-comments": "^2.0.1"
   },
   "devDependencies": {
@@ -36,6 +39,7 @@
     "redux-mock-store": "^1.2.3"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
     "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test --env=jsdom",

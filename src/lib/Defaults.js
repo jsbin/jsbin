@@ -93,7 +93,12 @@ export const settings = `{
   // Configure custom key handling in CodeMirror to trigger commands. The
   // 'snippets' command will use your custom snippets defined using
   // 'snippets.javascript' etc.
-  // details: https://codemirror.net/doc/manual.html#option_extraKeys
+  // Examples of names defined here are Enter, F5, and Q. These can be prefixed
+  // with Shift-, Cmd-, Ctrl-, and Alt- to specify a modifier. So for example,
+  // Shift-Ctrl-Space would be a valid key identifier.
+  // Links:
+  // - keymaps: https://codemirror.net/doc/manual.html#keymaps
+  // - details: https://codemirror.net/doc/manual.html#option_extraKeys
   "editor.extraKeys": {
     "Tab": "snippets"
   },

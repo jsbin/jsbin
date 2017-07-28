@@ -2,8 +2,13 @@ import React from 'react';
 import { push } from 'react-router-redux';
 import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE } from '../actions/bin';
-import { toggleOutput } from '../actions/session';
-// import { toggleTheme } from '../actions/editor';
+import { toggleLayout, toggleTheme } from '../actions/app';
+import {
+  toggleOutput,
+  changeOutput,
+  OUTPUT_PAGE,
+  OUTPUT_CONSOLE,
+} from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
 import fetch from 'isomorphic-fetch';
 
@@ -58,20 +63,6 @@ export const open = {
   },
 };
 
-export const togglePage = {
-  title: 'Toggle page output',
-  run: dispatch => {
-    dispatch(toggleOutput());
-  },
-};
-
-// export const toggleThemeCmd = {
-//   title: 'Toggle dark/light theme',
-//   run: dispatch => {
-//     dispatch(toggleTheme());
-//   },
-// };
-
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
@@ -103,6 +94,40 @@ export const addLibrary = {
   },
 };
 
+export const showConsole = {
+  title: 'Show console',
+  run: dispatch => dispatch(changeOutput(OUTPUT_CONSOLE)),
+};
+
+export const showPage = {
+  title: 'Show page',
+  run: dispatch => dispatch(changeOutput(OUTPUT_PAGE)),
+};
+
+export const togglePage = {
+  title: 'Toggle output',
+  run: dispatch => {
+    dispatch(toggleOutput());
+  },
+};
+
+export const bottomOutput = {
+  title: 'Split horizontally',
+  run: dispatch => dispatch(toggleLayout(false)),
+};
+
+export const sideOutput = {
+  title: 'Split vertically',
+  run: dispatch => dispatch(toggleLayout(true)),
+};
+
+export const toggleThemeCmd = {
+  title: 'Toggle dark/light theme',
+  run: dispatch => {
+    dispatch(toggleTheme());
+  },
+};
+
 export const settings = {
   title: 'Settings',
   run: () => {
@@ -122,7 +147,5 @@ export const settings = {
  * export
  * delete
  * make private
- * download
- * toggle dark/light theme
  * help / search
  */

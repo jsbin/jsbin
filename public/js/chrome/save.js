@@ -297,7 +297,7 @@ if (!jsbin.saveDisabled) {
       } else {
         updateCode(panelId);
       }
-    }, 1000));
+    }, 30 * 1000));
   });
 } else {
   $document.one('jsbinReady', function () {

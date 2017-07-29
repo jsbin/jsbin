@@ -8,6 +8,19 @@ import '../css/Output.css';
 
 const STATIC = process.env.REACT_APP_STATIC;
 
+function makeIframe() {
+  const iframe = document.createElement('iframe');
+  iframe.src = STATIC + '/blank.html';
+  iframe.hidden = true;
+  iframe.name = 'JS Bin Output';
+  iframe.className = 'Output';
+  iframe.setAttribute(
+    'sandbox',
+    'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
+  );
+  return iframe;
+}
+
 export default class Output extends React.Component {
   constructor(props) {
     super(props);
@@ -16,16 +29,7 @@ export default class Output extends React.Component {
 
     this.state = { guid: 0 };
 
-    const iframe = document.createElement('iframe');
-    iframe.src = STATIC + '/blank.html';
-    iframe.hidden = true;
-    iframe.name = 'JS Bin Output';
-    iframe.className = 'Output';
-    iframe.setAttribute(
-      'sandbox',
-      'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
-    );
-    this.iframe = iframe;
+    this.iframe = makeIframe();
   }
 
   catchErrors(event) {
@@ -59,7 +63,7 @@ export default class Output extends React.Component {
     const isConsole = output === OUTPUT.OUTPUT_CONSOLE;
 
     const { bin } = this.props;
-    const iframe = this.iframe;
+    let iframe = this.iframe;
 
     if (isBoth || isPage) {
       if (!this.output) {
@@ -72,6 +76,7 @@ export default class Output extends React.Component {
     // all running code
     if (iframe.parentNode) {
       iframe.parentNode.removeChild(iframe);
+      this.iframe = iframe = makeIframe();
     }
 
     // if the output element is visible (i.e. the user has OUTPUT_PAGE or OUTPUT_BOTH)

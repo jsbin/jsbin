@@ -1,6 +1,8 @@
 import CodeMirror from 'codemirror';
 import idk from 'idb-keyval';
 
+import * as MODES from './cm-modes';
+
 CodeMirror.defineOption('fontSize', 13, function(cm, value) {
   value = parseFloat(value, 10);
   const style = document.createElement('style');

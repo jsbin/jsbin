@@ -22,10 +22,10 @@ class Welcome extends Component {
               <h2>Get started</h2>
               <ul>
                 <li>
-                  <a href="#">New bin</a>
+                  <a href="/">New bin</a>
                 </li>
                 <li>
-                  <a href="#">Open existing bin</a>
+                  <a href="/">Open existing bin</a>
                 </li>
               </ul>
             </div>
@@ -33,10 +33,10 @@ class Welcome extends Component {
               <h2>Get started</h2>
               <ul>
                 <li>
-                  <a href="#">New bin</a>
+                  <a href="/">New bin</a>
                 </li>
                 <li>
-                  <a href="#">Open existing bin</a>
+                  <a href="/">Open existing bin</a>
                 </li>
               </ul>
             </div>

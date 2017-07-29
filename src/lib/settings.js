@@ -74,13 +74,14 @@ export function insertChangeIntoUserSettings(change, settings) {
   let splitStart = -1;
   let splitEnd = -1;
   let replace = false;
+  const parsed = JSON.parse(json);
+  const previousValue = JSON.stringify(parsed[key]);
 
   // then we need to insert
-  if (!settings.includes(search)) {
+  if (parsed[key] === undefined) {
     splitStart = json.lastIndexOf('}');
     splitEnd = splitStart;
   } else {
-    const previousValue = JSON.stringify(JSON.parse(json)[key]);
     replace = true;
     splitStart = json.lastIndexOf(search);
     let end = json.indexOf(previousValue, splitStart) + previousValue.length;

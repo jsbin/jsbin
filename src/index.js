@@ -26,7 +26,7 @@ import * as MODES from './lib/cm-modes';
 import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/app';
 import registerServiceWorker from './registerServiceWorker';
-import jsbinMiddleware from './lib/jsbin-middleware';
+import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
 
 window.Perf = Perf;
 
@@ -87,6 +87,8 @@ if (!initState.user.settings) {
 // but it just didn't want to fly
 const finalCreateStore = compose(...middleware)(createStore);
 const store = finalCreateStore(reducers, initState);
+
+saveSettings(store);
 
 // FIXME move this out of index.js
 {

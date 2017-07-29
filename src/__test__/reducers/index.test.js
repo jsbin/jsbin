@@ -52,7 +52,28 @@ test('layout change multiple times to the same value does not corrupt', () => {
   expect(() => JSON.parse(stripComments(res2.user.settings))).toNotThrow(/.*/);
 });
 
-test.only('lineNumbers change trickles up to user settings', () => {
+test('start state', () => {
+  let store = {};
+  store = reducers(store, {
+    type: SET_OPTION,
+    option: 'lineNumbers',
+    value: true,
+  });
+  expect(store.user.settings).toInclude('"editor.lineNumbers": true');
+
+  store = reducers(store, {
+    type: SET_OPTION,
+    option: 'lineWrapping',
+    value: true,
+  });
+
+  expect(JSON.parse(stripComments(store.user.settings))).toContain({
+    'editor.lineNumbers': true,
+    'editor.lineWrapping': true,
+  });
+});
+
+test('lineNumbers change trickles up to user settings', () => {
   const store = {
     editor: { lineNumbers: true, lineWrapping: false },
     user: {

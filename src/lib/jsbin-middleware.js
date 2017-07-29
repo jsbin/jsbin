@@ -1,6 +1,5 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SAVE, SET_OUTPUT } from '../actions/bin';
-import { SAVE_SETTINGS } from '../actions/user';
 import {
   SET_SPLITTER_WIDTH,
   DISMISS,
@@ -17,6 +16,22 @@ function storeKV(key, value) {
   } catch (e) {
     // noop
   }
+}
+
+export function saveSettings(store) {
+  const select = state => state.user.settings;
+
+  // returns `unsubscribe`
+  let currentValue;
+  store.subscribe(() => {
+    let previousValue = currentValue;
+
+    currentValue = select(store.getState());
+
+    if (previousValue !== currentValue) {
+      storeKV('jsbin.user.settings', currentValue);
+    }
+  });
 }
 
 export default store => {
@@ -48,10 +63,6 @@ export default store => {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
     }
 
-    if (action.type === SAVE_SETTINGS) {
-      storeKV('jsbin.user.settings', state.user.settings);
-    }
-
     if (action.type === SET_SPLITTER_WIDTH) {
       store.dispatch(setDirtyFlag());
     }
@@ -72,6 +83,7 @@ export default store => {
     }
 
     if (action.type === DISMISS) {
+      // dismiss anything that can be dismissed
       store.dispatch(triggerPalette(false));
     }
 

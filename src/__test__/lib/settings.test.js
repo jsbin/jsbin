@@ -46,7 +46,7 @@ it('merges new user settings without corrupting', () => {
   expect(parsed).toContain({ editor: { lineNumbers: true } });
 });
 
-test.only('merges changed user settings without corrupting', () => {
+test('merges changed user settings without corrupting', () => {
   const source = `{
   // you can also use comments
   "app.theme": "dark",

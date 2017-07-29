@@ -1,7 +1,7 @@
 import { SAVE_SETTINGS } from '../actions/user';
 import { SET_OPTION } from '../actions/editor';
 import { CHANGE_OUTPUT } from '../actions/session';
-import { TOGGLE_LAYOUT } from '../actions/app';
+import { TOGGLE_LAYOUT, TOGGLE_THEME } from '../actions/app';
 import { insertChangeIntoUserSettings } from '../lib/settings';
 
 const defaultState = {
@@ -11,7 +11,7 @@ const defaultState = {
   settings: '{\n  // you can also use comments\n//  "app.theme": "dark"\n\n}', // this contains JSON
 };
 
-const editorSaveOptions = ['lineNumbers', 'LineWrapping'];
+const editorSaveOptions = ['lineNumbers', 'lineWrapping'];
 
 const getSettingsChange = (key, action, settings) => {
   return insertChangeIntoUserSettings({ [key]: action.value }, settings);
@@ -19,6 +19,13 @@ const getSettingsChange = (key, action, settings) => {
 
 export default function(state = defaultState, action) {
   const { type } = action;
+
+  if (type === TOGGLE_THEME) {
+    return {
+      ...state,
+      settings: getSettingsChange('app.theme', action, state.settings),
+    };
+  }
 
   if (type === CHANGE_OUTPUT) {
     return {
@@ -37,7 +44,11 @@ export default function(state = defaultState, action) {
   if (type === SET_OPTION && editorSaveOptions.includes(action.option)) {
     return {
       ...state,
-      settings: getSettingsChange(action.option, action, state.settings),
+      settings: getSettingsChange(
+        `editor.${action.option}`,
+        action,
+        state.settings
+      ),
     };
   }
 

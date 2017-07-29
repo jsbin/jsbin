@@ -8,6 +8,7 @@
 
 ## Bit bugs
 
+- [ ] Quick commands aren't saving
 
 ## Themes
 
@@ -15,6 +16,7 @@
 
 ## Console
 
+- [ ] Can the code be run without a try/catch closure to expose the `const`?
 - [x] Console!
 - [x] Errors need to be passed into console too
 

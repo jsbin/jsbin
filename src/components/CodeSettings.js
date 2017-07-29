@@ -33,10 +33,12 @@ export default class CodeSettings extends React.Component {
 
   changeApp(property, value) {
     this.props.toggleLayout(value);
+    // this.props.saveSettings();
   }
 
   changeEditor(property, value) {
     this.props.set(property, value);
+    // this.props.saveSettings();
   }
 
   render() {

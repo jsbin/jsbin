@@ -33,12 +33,10 @@ export default class CodeSettings extends React.Component {
 
   changeApp(property, value) {
     this.props.toggleLayout(value);
-    // this.props.saveSettings();
   }
 
   changeEditor(property, value) {
     this.props.set(property, value);
-    // this.props.saveSettings();
   }
 
   render() {
@@ -123,7 +121,6 @@ CodeSettings.propTypes = {
   source: PropTypes.string.isRequired,
   output: PropTypes.string,
   updated: PropTypes.string,
-  userSettings: PropTypes.string,
   vertical: PropTypes.bool,
   toggleOutput: PropTypes.func,
   set: PropTypes.func,
@@ -131,11 +128,8 @@ CodeSettings.propTypes = {
   changeOutput: PropTypes.func,
   onRefresh: PropTypes.func,
   toggleLayout: PropTypes.func,
-  saveSettings: PropTypes.func,
 };
 
 CodeSettings.defaultProps = {
-  saveSettings: noop,
   toggleLayout: noop,
-  userSettings: '',
 };

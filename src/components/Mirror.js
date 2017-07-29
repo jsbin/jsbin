@@ -142,6 +142,12 @@ export default class Mirror extends React.Component {
     const { options, focus, editor, snippets, source } = this.props;
     const { code } = this.state;
 
+    const profiles = {
+      html: 'xhtml',
+      css: 'css',
+      javascript: null,
+    };
+
     const cmOptions = {
       source,
       theme: this.props.app.theme,
@@ -156,6 +162,7 @@ export default class Mirror extends React.Component {
       extraKeys: {
         Tab: 'snippets',
       },
+      profile: profiles[source],
       showInvisibles: true,
       ...editor,
       ...options,

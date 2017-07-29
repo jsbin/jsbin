@@ -8,7 +8,9 @@
 
 ## Bit bugs
 
-- [ ] Quick commands aren't saving
+- [ ] Change theme from palette doesn't save (because it toggles to unknown value)
+- [x] Quick commands aren't saving
+
 
 ## Themes
 
@@ -29,7 +31,7 @@
 - [x] Inject live across all tabs
 - [x] Tests defaults work in App view
 - [x] Support option injection via the "quick settings"
-- [ ] Fix references to "vertical"
+- [ ] Fix/change? references to "vertical"
 
 ## Larger tasks
 

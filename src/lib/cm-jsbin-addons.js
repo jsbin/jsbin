@@ -79,5 +79,12 @@ CodeMirror.defineExtension('snippets', function({ cm }) {
 });
 
 CodeMirror.commands.snippets = function(cm) {
-  return cm.snippets({ cm });
+  const res = cm.snippets({ cm });
+  const source = cm.getOption('source');
+
+  if (res === CodeMirror.Pass && source !== MODES.JAVASCRIPT) {
+    // try with emmet
+    // emmet.expand_abbreviation_with_tab
+  }
+  return res;
 };

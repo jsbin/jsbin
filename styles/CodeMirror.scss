@@ -7,6 +7,10 @@
   font-size: $font-size-base;
   line-height: $font-line-height;
 
+  .auto-complete-text {
+    color: rgb(128, 128, 128);
+  }
+
   .CodeMirror-linenumber {
     font-size: ($font-size-base - 2);
     line-height: 16px;
@@ -96,4 +100,23 @@
   background-position: right bottom;
   width: 100%;
   height: 100%;
+}
+
+.CodeMirror-linenumber {
+  cursor: pointer;
+}
+
+.CodeMirror.highlight .CodeMirror-code {
+  & > div:not(.CodeMirror-highlight-line) * {
+    color: rgb(204, 204, 204) !important;
+  }
+
+  .CodeMirror-linenumber {
+    color: rgb(158, 158, 158) !important;
+  }
+}
+
+.theme-dark .CodeMirror.highlight .CodeMirror-code
+  > div:not(.CodeMirror-highlight-line) * {
+  color: #666 !important;
 }

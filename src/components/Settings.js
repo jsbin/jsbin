@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import { HotKeys } from 'react-hotkeys';
-
+import stripComments from 'strip-json-comments';
 import Footer from '../components/Footer';
 import { Command } from './Symbols';
 import Mirror from '../components/Mirror'; // explicit about component
@@ -10,6 +10,8 @@ import { settings as defaults, parse } from '../lib/Defaults';
 import { merge } from '../lib/settings';
 import { cmd } from '../lib/is-mac';
 import Head from './Head';
+
+import { TextUtils } from '../lib/common/TextUtils';
 
 // intentionally after Mirror component
 import JSONLint from 'json-lint';
@@ -44,6 +46,7 @@ export default class Settings extends React.Component {
     super(props);
     this.validateSettings = this.validateSettings.bind(this);
     this.save = this.save.bind(this);
+
     this.refresh = this.refresh.bind(this);
     this.state = {
       error: null,
@@ -56,7 +59,25 @@ export default class Settings extends React.Component {
     this.defaults.refresh();
   }
 
+  isWordChar(char) {
+    return (
+      (!TextUtils.isStopChar(char) && !TextUtils.isSpaceChar(char)) ||
+      char === '.'
+    );
+  }
+
   componentDidMount() {
+    // const cm = this.settings.CodeMirror.getCodeMirror();
+    // cm.on('changes', this.onChange);
+    // this._dictionary = new Dictionary();
+
+    // const data = stripComments(defaults);
+
+    // TextUtils.textToWords(data, this.isWordChar, word => {
+    //   if (word.length && (word[0] < '0' || word[0] > '9'))
+    //     this._dictionary.addWord(word);
+    // });
+
     this.refresh();
   }
 
@@ -99,6 +120,7 @@ export default class Settings extends React.Component {
       mode: 'application/javascript', // this allows comments
       lineWrapping: true,
       lineNumbers: true,
+      matchBrackets: false,
       source: 'javascript',
       ...editor,
     };

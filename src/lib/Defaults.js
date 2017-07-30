@@ -42,7 +42,7 @@ export const settings = `{
 
   // Default output panel. Values can be: 'page', 'console', 'both' and 'none'
   "app.output": "page",
-  ${'\n' + macSpecificKeySwap + '\n'}
+  ${'\n  ' + macSpecificKeySwap + '\n'}
   // Preferred open panel when sharing a bin URL
   "share.panel": "javascript",
 
@@ -100,7 +100,8 @@ export const settings = `{
   // - keymaps: https://codemirror.net/doc/manual.html#keymaps
   // - details: https://codemirror.net/doc/manual.html#option_extraKeys
   "editor.extraKeys": {
-    "Tab": "snippets"
+    "Tab": "snippets",
+    "Esc": "dismiss"
   },
 
   // Custom snippets that expand on tab press. Use $0 for the position

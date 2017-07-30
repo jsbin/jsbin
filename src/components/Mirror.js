@@ -11,12 +11,6 @@ import 'codemirror/keymap/vim.js';
 import 'codemirror/keymap/sublime.js';
 import 'codemirror/keymap/emacs.js';
 
-import '../lib/cm-formatter';
-
-// import 'cm-show-invisibles';
-
-import '../lib/cm-jsbin-addons';
-
 // import 'codemirror/addon/lint/lint.js';
 // import 'codemirror/addon/lint/javascript-lint.js';
 
@@ -31,6 +25,13 @@ import 'codemirror/mode/xml/xml'; // html
 import 'codemirror/mode/htmlmixed/htmlmixed';
 import 'codemirror/addon/display/autorefresh';
 
+// JS Bin specific addons
+import '../lib/CodeMirror/ext-formatter';
+import '../lib/CodeMirror/cmd-dismiss';
+import '../lib/CodeMirror/cmd-snippets';
+import '../lib/CodeMirror/opt-styles';
+import '../lib/CodeMirror/ext-highlight-lines';
+
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/addon/hint/show-hint.css';
 import '../css/CodeMirror.css';
@@ -41,6 +42,8 @@ export default class Mirror extends React.Component {
   constructor(props) {
     super(props);
     this.updateCode = this.updateCode.bind(this);
+    this.onCursorActivity = this.onCursorActivity.bind(this);
+    this.onChanges = this.onChanges.bind(this);
 
     this.refreshTimer = null;
     this.state = {
@@ -48,9 +51,25 @@ export default class Mirror extends React.Component {
     };
   }
 
+  onCursorActivity(cm) {
+    // var shouldCloseAutocomplete = !(
+    //   cursor.line === this._queryRange.startLine &&
+    //   this._queryRange.startColumn <= cursor.ch &&
+    //   cursor.ch <= this._queryRange.endColumn
+    // );
+  }
+
+  onChanges(cm, changes) {
+    if (!changes.length) return;
+
+    console.log(changes);
+  }
+
   componentDidMount() {
     this.updateCursor(this.props);
-    this.CodeMirror.getCodeMirror().refresh();
+    const cm = this.CodeMirror.getCodeMirror();
+    cm.on('changes', this.onChanges);
+    cm.refresh();
   }
 
   componentWillUnmount() {
@@ -163,7 +182,9 @@ export default class Mirror extends React.Component {
         Tab: 'snippets',
       },
       profile: profiles[source],
-      showInvisibles: true,
+      showInvisibles: true, // this extension is disabled
+      highlightLine: true, // this extension is disabled
+      flattenSpans: true,
       ...editor,
       ...options,
     };
@@ -172,6 +193,7 @@ export default class Mirror extends React.Component {
       <CodeMirror
         ref={e => (this.CodeMirror = e)}
         value={code}
+        onCursorActivity={this.onCursorActivity}
         onChange={this.updateCode}
         options={cmOptions}
         autoFocus={focus}

@@ -5,10 +5,11 @@ import { set } from '../actions/editor';
 import { changeOutput } from '../actions/session';
 
 const mapStateToProps = ({ editor, session, app }) => ({
-  ...editor,
+  lineNumbers: editor.lineNumbers,
+  lineWrapping: editor.lineWrapping,
   source: app.source,
   output: session.output,
-  vertical: app.vertical,
+  splitColumns: app.splitColumns,
 });
 
 const CodeSettingsContainer = connect(mapStateToProps, {

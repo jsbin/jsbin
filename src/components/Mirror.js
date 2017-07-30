@@ -2,6 +2,8 @@ import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
 
+import { cmCmd } from '../lib/is-mac';
+
 // import 'codemirror/addon/hint/show-hint.js';
 // import 'codemirror/addon/hint/html-hint.js';
 // import 'codemirror/addon/hint/css-hint.js';
@@ -61,14 +63,16 @@ export default class Mirror extends React.Component {
 
   onChanges(cm, changes) {
     if (!changes.length) return;
-
-    console.log(changes);
   }
 
   componentDidMount() {
     this.updateCursor(this.props);
     const cm = this.CodeMirror.getCodeMirror();
     cm.on('changes', this.onChanges);
+
+    cm.on('highlightLines', () => {
+      this.props.setHighlightedLines(cm.highlightLines().string || null);
+    });
     cm.refresh();
   }
 
@@ -167,6 +171,8 @@ export default class Mirror extends React.Component {
       javascript: null,
     };
 
+    const extraKeys = { [`${cmCmd}-S`]: 'noop', ...(editor.extraKeys || {}) };
+
     const cmOptions = {
       source,
       theme: this.props.app.theme,
@@ -178,15 +184,13 @@ export default class Mirror extends React.Component {
         completeSingle: false,
       },
       snippets,
-      extraKeys: {
-        Tab: 'snippets',
-      },
       profile: profiles[source],
       showInvisibles: true, // this extension is disabled
       highlightLine: true, // this extension is disabled
       flattenSpans: true,
       ...editor,
       ...options,
+      extraKeys,
     };
 
     return (
@@ -207,6 +211,7 @@ Mirror.propTypes = {
   editor: PropTypes.object.isRequired,
   setCursor: PropTypes.func,
   setDirtyFlag: PropTypes.func,
+  setHighlightedLines: PropTypes.func,
   session: PropTypes.object,
   changeCode: PropTypes.func,
   theme: PropTypes.string,

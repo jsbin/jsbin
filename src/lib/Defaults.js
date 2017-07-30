@@ -1,5 +1,6 @@
 import stripJsonComments from 'strip-json-comments';
 import { cmd, isMac } from './is-mac';
+import { LIGHT, DARK } from '../actions/app';
 
 export const html = `<!DOCTYPE html>
 <html>
@@ -25,14 +26,20 @@ const macSpecificKeySwap = isMac
   "app.useControl": false,`
   : '';
 
+export const defaultUserSettings = `{
+  // you can also use comments
+  // "app.theme": "dark"
+
+}`;
+
 export const settings = `{
   // Colour scheme used in jsbin. Values can be:
-  // - 'dark' (based on Atom One Dark)
-  // - 'light' (based on Devtools light)
-  "app.theme": "light",
+  // - '${DARK}' (based on Atom One Dark)
+  // - '${LIGHT}' (based on Devtools light)
+  "app.theme": "${LIGHT}",
 
   // Switches the view from columns to rows with output at the bottom
-  "app.splitVertical": true,
+  "app.splitColumns": true,
 
   // Automatically upload settings to your account (requires PRO)
   "app.syncSettings": false,
@@ -57,7 +64,7 @@ export const settings = `{
   "editor.fontFamily": "'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console",
 
   // Whether to show line numbers to the left of the editor
-  "editor.lineNumbers": false,
+  "editor.lineNumbers": true,
 
   // Controls line wrapping, using a soft wrap at the editor viewport
   "editor.lineWrapping": false,
@@ -68,8 +75,8 @@ export const settings = `{
   // Indent lines with tabs (or spaces)
   "editor.indentWithTabs": false,
 
-  // The width of a tab character
-  "editor.tabSize": 4,
+  // The width of a tab
+  "editor.tabSize": 2,
 
   // How many spaces a block should be indented.
   "editor.indentUnit": 2,

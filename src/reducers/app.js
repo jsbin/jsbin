@@ -1,19 +1,16 @@
 import {
   MASS_UPDATE,
   SET_THEME,
-  TOGGLE_THEME,
   TOGGLE_LAYOUT,
   SET_SOURCE,
+  LIGHT,
 } from '../actions/app';
 
 import * as MODES from '../lib/cm-modes';
 
-const lightTheme = 'light';
-const darkTheme = 'dark';
-
 export const defaultState = {
-  theme: lightTheme,
-  vertical: false,
+  theme: LIGHT,
+  splitColumns: false,
   splitterWidth: 50,
   source: MODES.HTML,
 };
@@ -30,20 +27,13 @@ export default function reducer(state = defaultState, action) {
   }
 
   if (type === TOGGLE_LAYOUT) {
-    const vertical =
-      action.value === undefined ? !state.vertical : action.value;
-    return { ...state, vertical };
-  }
-
-  if (type === TOGGLE_THEME) {
-    return {
-      ...state,
-      theme: state.theme === lightTheme ? darkTheme : lightTheme,
-    };
+    const splitColumns =
+      action.value === undefined ? !state.splitColumns : action.value;
+    return { ...state, splitColumns };
   }
 
   if (type === SET_THEME) {
-    return { ...state, theme: action.theme };
+    return { ...state, theme: action.value };
   }
 
   return state;

@@ -39,7 +39,7 @@ export default class Panel extends React.Component {
 
   updateHeight() {
     let height = this.footer.offsetHeight;
-    if (this.props.editor.vertical === true) {
+    if (this.props.editor.splitColumns === true) {
       height += document.querySelector('.layout-pane-primary').offsetHeight;
     }
     this.setState({ height });
@@ -129,7 +129,9 @@ export default class Panel extends React.Component {
             <CodeSettings />
             <Footer>
               <p>
-                <button className="Button simple" onClick={this.triggerPalette}>Show all commands</button>
+                <button className="Button simple" onClick={this.triggerPalette}>
+                  Show all commands
+                </button>
                 <kbd>
                   <Command /> <Shift /> P
                 </kbd>
@@ -154,4 +156,5 @@ Panel.propTypes = {
   setCursor: PropTypes.func,
   session: PropTypes.object,
   save: PropTypes.func,
+  triggerPalette: PropTypes.func,
 };

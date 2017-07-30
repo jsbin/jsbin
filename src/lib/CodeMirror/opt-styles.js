@@ -23,3 +23,5 @@ CodeMirror.defineOption('fontFamily', '', function(cm, value) {
   style.innerHTML = `.CodeMirror, .Console, .CodeMirror-lint-tooltip { font-family: ${value}; }`;
   document.head.appendChild(style);
 });
+
+CodeMirror.commands.noop = () => {};

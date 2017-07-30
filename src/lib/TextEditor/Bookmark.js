@@ -19,14 +19,14 @@ export class TextEditorBookMark {
   }
 
   clear() {
-    var position = this._marker.find();
+    // var position = this._marker.find();
     this._marker.clear();
     // if (position) this._editor._updateDecorations(position.line);
   }
 
   refresh() {
     this._marker.changed();
-    var position = this._marker.find();
+    // var position = this._marker.find();
     // if (position) this._editor._updateDecorations(position.line);
   }
 

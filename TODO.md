@@ -8,8 +8,10 @@
 
 ## Bit bugs
 
-- [ ] Change theme from palette doesn't save (because it toggles to unknown value)
+- [ ] Make title a prop of Head, rather than multiple `title` els
+- [x] Sticky quick setting layout
 - [x] Quick commands aren't saving
+- [x] Change theme from palette doesn't save (because it toggles to unknown value)
 
 
 ## Themes
@@ -31,12 +33,13 @@
 - [x] Inject live across all tabs
 - [x] Tests defaults work in App view
 - [x] Support option injection via the "quick settings"
-- [ ] Fix/change? references to "vertical"
+- [x] Fix/change? references to "vertical"
 
 ## Larger tasks
 
 - [ ] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
 - [ ] Processors
+- [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
 
 ## UI
 

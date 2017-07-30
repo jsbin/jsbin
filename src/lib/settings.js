@@ -99,5 +99,9 @@ export function insertChangeIntoUserSettings(change, settings) {
   }
   res += insert + right;
 
-  return tidy(res);
+  return tidy(res, {
+    preserve_newlines: false,
+    indent_size: parsed['editor.tabSize' || 2],
+    indent_with_tabs: parsed['editor.indentWithTabs'] || false,
+  });
 }

@@ -7,7 +7,7 @@ const OutputContainer = connect(
     code: bin.output,
     bin,
     error: session.error,
-    vertical: app.vertical,
+    splitColumns: app.splitColumns,
   }),
   { clearError, setError }
 )(Output);

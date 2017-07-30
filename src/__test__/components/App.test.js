@@ -13,7 +13,7 @@ test('renders without crashing', () => {
   const store = mockStore({
     bin,
     session,
-    app: { vertical: true },
+    app: { splitColumns: true },
   });
   ReactDOM.render(<App store={store} />, div);
 });

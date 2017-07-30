@@ -196,7 +196,7 @@ export default class Output extends React.Component {
   }
 
   render() {
-    const { output, vertical } = this.props;
+    const { output, splitColumns } = this.props;
     const hasConsole =
       output === OUTPUT.OUTPUT_CONSOLE || output === OUTPUT.OUTPUT_BOTH;
     const hasPage =
@@ -205,7 +205,7 @@ export default class Output extends React.Component {
     return (
       <div className="Output">
         <Splitter
-          vertical={!vertical}
+          vertical={!splitColumns}
           percentage={true}
           secondaryInitialSize={50}
           primaryIndex={0}
@@ -230,10 +230,10 @@ Output.propTypes = {
   setError: PropTypes.func,
   clearError: PropTypes.func,
   output: PropTypes.string,
-  vertical: PropTypes.bool,
+  splitColumns: PropTypes.bool,
 };
 
 Output.defaultProps = {
   output: OUTPUT.OUTPUT_PAGE,
-  vertical: false,
+  splitColumns: false,
 };

@@ -4,7 +4,7 @@ import {
   SET_SPLITTER_WIDTH,
   DISMISS,
   triggerPalette,
-  setDirtyFlag,
+  HIGHLIGHT_LINES,
 } from '../actions/session';
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/bin';
@@ -22,14 +22,14 @@ export function saveSettings(store) {
   const select = state => state.user.settings;
 
   // returns `unsubscribe`
-  let currentValue;
+  let current;
   store.subscribe(() => {
-    let previousValue = currentValue;
+    let previous = current;
 
-    currentValue = select(store.getState());
+    current = select(store.getState());
 
-    if (previousValue !== currentValue) {
-      storeKV('jsbin.user.settings', currentValue);
+    if (previous !== current) {
+      storeKV('jsbin.user.settings', current);
     }
   });
 }
@@ -63,10 +63,6 @@ export default store => {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
     }
 
-    if (action.type === SET_SPLITTER_WIDTH) {
-      store.dispatch(setDirtyFlag());
-    }
-
     if (action.type === SAVE || (action.type === SET_OUTPUT && state.bin.id)) {
       save(state, store.dispatch);
     }
@@ -80,6 +76,12 @@ export default store => {
     // keep the URL in sync
     if (action.type === SET_SOURCE) {
       store.dispatch(replace('?' + action.value.toLowerCase()));
+    }
+
+    if (action.type === HIGHLIGHT_LINES) {
+      const hash = action.value ? 'L' + action.value : '';
+      console.log(state.app);
+      store.dispatch(replace({ hash, search: state.app.source }));
     }
 
     if (action.type === DISMISS) {

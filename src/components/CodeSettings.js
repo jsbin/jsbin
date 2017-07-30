@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+// import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import {
   OUTPUT_PAGE,
@@ -41,12 +41,12 @@ export default class CodeSettings extends React.Component {
 
   render() {
     const {
-      updated,
+      // updated,
       lineWrapping,
       lineNumbers,
       source,
       output,
-      vertical,
+      splitColumns,
     } = this.props;
     return (
       <div className="CodeSettings">
@@ -95,21 +95,21 @@ export default class CodeSettings extends React.Component {
 
           <label>
             <input
+              name="splitColumns"
               type="checkbox"
               onChange={e => {
-                // FIXME this should be a custom action
-                this.changeApp('vertical', e.target.checked);
+                this.changeApp('splitColumns', e.target.checked);
               }}
-              checked={vertical}
+              checked={splitColumns}
             />{' '}
             Horizontal splitter
           </label>
         </details>
 
-        {updated &&
+        {/* {updated &&
           `Last saved: ${distanceInWordsToNow(updated, {
             includeSeconds: true,
-          })}`}
+          })}`} */}
       </div>
     );
   }
@@ -120,8 +120,8 @@ CodeSettings.propTypes = {
   lineNumbers: PropTypes.bool.isRequired,
   source: PropTypes.string.isRequired,
   output: PropTypes.string,
-  updated: PropTypes.string,
-  vertical: PropTypes.bool,
+  // updated: PropTypes.string,
+  splitColumns: PropTypes.bool,
   toggleOutput: PropTypes.func,
   set: PropTypes.func,
   setSource: PropTypes.func,

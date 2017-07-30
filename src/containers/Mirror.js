@@ -1,9 +1,14 @@
 import { connect } from 'react-redux';
 import Mirror from '../components/Mirror';
-import { setCursor, setDirtyFlag } from '../actions/session';
+import {
+  setCursor,
+  setDirtyFlag,
+  setHighlightedLines,
+} from '../actions/session';
 
 const mapDispatchToProps = dispatch => {
   return {
+    setHighlightedLines: lines => dispatch(setHighlightedLines(lines)),
     setCursor: ({ line, ch, source }) => {
       dispatch(setCursor(source, line, ch));
     },

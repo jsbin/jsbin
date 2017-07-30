@@ -1,9 +1,20 @@
 import CodeMirror from 'codemirror';
+import { cmCmd } from '../is-mac';
 
 // FIXME I want to *only* use the HTML formatter, and then use prettier
 // for js, CSS and JSON - but I need something working now, so this is a start.
 import * as tidy from 'js-beautify';
 tidy.javascript = tidy.js; // alias to allow our named sources to work
+
+CodeMirror.defineOption('autoFormat', false, (cm, autoFormatOn) => {
+  if (autoFormatOn) {
+    cm.on('keyHandled', (cm, name) => {
+      if (name === `${cmCmd}-S`) {
+        cm.autoFormat(cm);
+      }
+    });
+  }
+});
 
 CodeMirror.defineExtension('autoFormat', cm => {
   let from, to;
@@ -22,6 +33,7 @@ CodeMirror.defineExtension('autoFormat', cm => {
   const res = tidy[cm.getOption('source')](code, {
     indent_size: cm.getOption('indentUnit'),
     indent_with_tabs: cm.getOption('indentWithTabs'),
+    ...(cm.getOption('autoFormatOptions') || {}),
   });
 
   const cursor = cm.getCursor();

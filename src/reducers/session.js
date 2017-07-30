@@ -2,6 +2,7 @@ import {
   CHANGE_OUTPUT,
   OUTPUT_NONE,
   SET_SPLITTER_WIDTH,
+  HIGHLIGHT_LINES,
   TOGGLE_OUTPUT,
   OUTPUT_PAGE,
   TRIGGER_PALETTE,
@@ -24,6 +25,7 @@ const defaultCursorState = {
 export const defaultState = {
   output: OUTPUT_PAGE,
   lastOutput: OUTPUT_NONE,
+  highlightedLines: null,
   palette: false,
   error: null,
   splitterWidth: 50,
@@ -35,6 +37,10 @@ export default function reducer(state = defaultState, action) {
   const { type } = action;
   if (type === RESET) {
     return { ...state, ...defaultCursorState, error: null };
+  }
+
+  if (type === HIGHLIGHT_LINES) {
+    return { ...state, highlightedLines: action.value };
   }
 
   if (type === DIRTY) {

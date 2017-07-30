@@ -13,12 +13,12 @@ test('layout change multiple times to the same value does not corrupt', () => {
   const store = {
     app: {
       theme: 'light',
-      splitVertical: true,
+      splitColumns: true,
       syncSettings: false,
       source: 'html',
       output: 'page',
       useControl: false,
-      vertical: false,
+      splitColumns: false,
     },
     user: {
       settings: `{
@@ -31,7 +31,7 @@ test('layout change multiple times to the same value does not corrupt', () => {
         "Tab": "snippets",
         "Cmd-S": "autoFormat"
       },
-      "app.vertical": true,
+      "app.splitColumns": true,
       "app.source": "html",
       "editor.fontSize": 15,
       "app.theme": "light",
@@ -87,7 +87,7 @@ test('lineNumbers change trickles up to user settings', () => {
         "Tab": "snippets",
         "Cmd-S": "autoFormat"
       },
-      "app.vertical": true,
+      "app.splitColumns": true,
       "app.source": "html",
       "editor.fontSize": 15,
       "app.theme": "light",
@@ -111,6 +111,6 @@ test('lineNumbers change trickles up to user settings', () => {
   });
 
   expect(JSON.parse(stripComments(res.user.settings))).toInclude({
-    lineNumbers: false,
+    'editor.lineNumbers': false,
   });
 });

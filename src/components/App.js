@@ -86,15 +86,6 @@ export default class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { editor } = this.props;
-    if (
-      editor.output !== prevProps.editor.output ||
-      editor.vertical !== prevProps.editor.vertical
-    ) {
-      this.props.setDirtyFlag();
-      return;
-    }
-
     if (prevProps.loading === false && this.props.loading === true) {
       const { match } = this.props;
       if (!match.params.bin) {
@@ -118,7 +109,7 @@ export default class App extends Component {
       loading,
       session,
       splitterWidth,
-      vertical,
+      splitColumns,
       theme,
     } = this.props;
 
@@ -153,7 +144,7 @@ export default class App extends Component {
           <Head />
           <div>
             <Splitter
-              vertical={vertical}
+              vertical={splitColumns}
               percentage={true}
               secondaryInitialSize={100 - splitterWidth}
               primaryIndex={0}
@@ -190,7 +181,7 @@ App.propTypes = {
   setSplitterWidth: PropTypes.func,
   setDirtyFlag: PropTypes.func,
   splitterWidth: PropTypes.number,
-  vertical: PropTypes.bool,
+  splitColumns: PropTypes.bool,
   setCursor: PropTypes.func,
   theme: PropTypes.string,
 };
@@ -198,7 +189,7 @@ App.propTypes = {
 App.defaultProps = {
   theme: 'light',
   setCursor: noop,
-  vertical: false,
+  splitColumns: false,
   loading: true,
   match: { params: {} },
   editor: {},

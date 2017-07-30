@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import { HotKeys } from 'react-hotkeys';
-import stripComments from 'strip-json-comments';
+// import stripComments from 'strip-json-comments';
 import Footer from '../components/Footer';
 import { Command } from './Symbols';
 import Mirror from '../components/Mirror'; // explicit about component
@@ -116,14 +116,23 @@ export default class Settings extends React.Component {
     const { editor, user, app } = this.props;
     const { error } = this.state;
 
+    const extraKeys = editor.extraKeys || {};
+    extraKeys['Cmd-S'] = 'noop';
+
     const options = {
+      autoFormatOptions: {
+        preserve_newlines: false,
+      },
       mode: 'application/javascript', // this allows comments
       lineWrapping: true,
       lineNumbers: true,
       matchBrackets: false,
       source: 'javascript',
+      autoFormat: true,
       ...editor,
     };
+
+    options.extraKeys = extraKeys;
 
     return (
       <div className={`theme-${app.theme}`}>

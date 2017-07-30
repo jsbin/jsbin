@@ -178,7 +178,8 @@ export const TextUtils = {
       var currentIndex = 0;
       var result;
       regex.lastIndex = 0;
-      while ((result = regex.exec(text)) !== null) {
+      //prettier-ignore
+      while ((result = regex.exec(text)) !== null) { // eslint-disable-line no-cond-assign
         var stringBeforeMatch = text.substring(currentIndex, result.index);
         if (stringBeforeMatch)
           doSplit(stringBeforeMatch, regexIndex + 1, startIndex + currentIndex);

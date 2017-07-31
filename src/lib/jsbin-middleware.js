@@ -80,7 +80,6 @@ export default store => {
 
     if (action.type === HIGHLIGHT_LINES) {
       const hash = action.value ? 'L' + action.value : '';
-      console.log(state.app);
       store.dispatch(replace({ hash, search: state.app.source }));
     }
 

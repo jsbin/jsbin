@@ -43,14 +43,20 @@ export default function reducer(state = defaultState, action) {
       start: prevState => ({
         ...prevState,
         ...defaultState,
+        loading: true,
       }),
-      // finish: prevState => ({ ...prevState, isLoading: false }),
-      failure: prevState => ({ ...prevState, error: payload, loading: false }),
+      failure: prevState => ({
+        ...prevState,
+        error: payload,
+        loading: false,
+      }),
       success: prevState => {
-        const { html, css, javascript } = payload;
+        const { html, css, javascript, id } = payload;
         // FIXME handle extra settings
-        return { ...prevState, html, css, javascript, loading: false };
+        return { ...prevState, html, css, id, javascript, loading: false };
       },
+      // on finish dispatch reset
+      // finish: prevState => ({ ...prevState, isLoading: false }),
     });
   }
 

@@ -2,8 +2,8 @@
 
 ## In progress
 
-- [ ] Handle 404 - and for missing /local/* entries
 - [ ] Welcome
+- [ ] Handle 404 - and for missing /local/* entries
 - [ ] Sign in (API, JWT)
 
 ## Bit bugs
@@ -16,7 +16,7 @@
 
 ## Themes
 
-- [ ] Dark loading
+- [ ] Dark loading gif
 
 ## Console
 
@@ -84,3 +84,7 @@
 ## Known issues
 
 - [ ] When output is too big, it can't be scrolled vertically?
+
+## Nice to have
+
+- [ ] Hold cmd and hover over keyword, it underlines, and clicking opens a sub panel below the line of code to http://docs.devdocs.io/javascript/global_objects/arraybuffer.html

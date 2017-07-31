@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
 import App from '../components/App';
 import {
   fetchBin,
+  fetchGithub,
+  fetchLocal,
   fetchDefault as loadDefault,
   setBin,
   setCode,
@@ -39,17 +43,26 @@ const mapDispatchToProps = dispatch => {
     setBin: bin => dispatch(setBin(bin)),
     triggerPalette: value => dispatch(triggerPalette(value)),
     setSource: source => dispatch(setSource(source)),
-    loadDefault: () => dispatch(loadDefault()),
-    fetch: ({ bin, version }) => {
-      dispatch(fetchBin(bin, version))
-        .then(res => {
-          // window.document.title = `JS Bin: ${res.url}@${res.snapshot}`;
-        })
-        .catch(e => console.log('failed', e));
+    fetch: params => {
+      if (params.bin) {
+        return dispatch(fetchBin(params.bin, params.version));
+      }
+
+      if (params.gistId) {
+        return dispatch(fetchGithub(params.gistId));
+      }
+
+      if (params.localId) {
+        return dispatch(fetchLocal(params.localId));
+      }
+
+      dispatch(loadDefault());
     },
   };
 };
 
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(App)
+);
 
 export default AppContainer;

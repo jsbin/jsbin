@@ -3,6 +3,7 @@ import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
 
 import { cmCmd } from '../lib/is-mac';
+import * as MODES from '../lib/cm-modes';
 
 // import 'codemirror/addon/hint/show-hint.js';
 // import 'codemirror/addon/hint/html-hint.js';
@@ -77,6 +78,9 @@ export default class Mirror extends React.Component {
   }
 
   componentWillUnmount() {
+    if (this.errorMarker) {
+      this.errorMarker.clear();
+    }
     clearTimeout(this.refreshTimer);
   }
 
@@ -123,6 +127,46 @@ export default class Mirror extends React.Component {
     if (this.dirty) {
       this.refresh();
       this.props.setDirtyFlag(false);
+    }
+
+    const { error, source } = this.props;
+    if (this.errorMarker) {
+      this.errorMarker.clear();
+    }
+    this.errorMarker = null;
+
+    if (error) {
+      let { message, line, ch } = error;
+      line = line - 1;
+      ch = ch - 1;
+      const cm = this.CodeMirror.getCodeMirror();
+
+      let element;
+      if (this.errorMarker) {
+        element = this.errorMarker.node.firstChild;
+      } else {
+        element = document.createElement('div');
+        element.className = 'text-editor-line-decoration';
+        element.innerHTML = `<div title="${message
+          .split(':')
+          .pop()
+          .trim()}" class="text-editor-line-decoration-wave"></div>`;
+      }
+
+      const CM = this.CodeMirror.getCodeMirrorInstance();
+      var base = cm.cursorCoords(CM.Pos(line, 0), 'page');
+      var start = cm.cursorCoords(CM.Pos(line, ch), 'page');
+      var end = cm.charCoords(CM.Pos(line, Infinity), 'page');
+      element.style.width = end.right - start.left + 'px';
+      element.style.left = start.left - base.left + 'px';
+
+      if (!this.errorMarker) {
+        this.errorMarker = cm.doc.addLineWidget(line, element);
+      }
+    }
+
+    if (this.errorMarker) {
+      this.errorMarker.node.hidden = source !== MODES.JAVASCRIPT;
     }
 
     // try to do auto complete on typing…

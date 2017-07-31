@@ -11,6 +11,7 @@ import {
 } from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
 import fetch from 'isomorphic-fetch';
+import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 import FileSaver from 'file-saver'; // @@ lazy load
 
@@ -57,9 +58,14 @@ export const del = {
 
 export const open = {
   title: 'Open...',
-  run: () => {
-    console.log('not implemented');
-    // dispatch(push('/open'));
+  run: async () => {
+    const keys = await idk.keys();
+    return keys.map(key => ({
+      title: key,
+      run: dispatch => {
+        dispatch(push('/local/' + key));
+      },
+    }));
   },
 };
 

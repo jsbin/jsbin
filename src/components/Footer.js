@@ -12,7 +12,7 @@ const Footer = ({ error, children }) =>
     </p>
     <p
       className={classnames({ Error: true, 'has-error': !!error })}
-      title={error}
+      title={error ? (typeof error === 'string' ? error : error.message) : null}
     >
       New errors can be found in the console
     </p>
@@ -21,6 +21,6 @@ const Footer = ({ error, children }) =>
 export default Footer;
 
 Footer.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.any,
   children: PropTypes.node,
 };

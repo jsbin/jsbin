@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 const API = process.env.REACT_APP_API;
 
@@ -26,6 +27,12 @@ export const getBin = (id, revision = 'latest') => {
     }
 
     return res.json();
+  });
+};
+
+export const getLocal = async id => {
+  return idk.get(id).then(res => {
+    return { ...res, id };
   });
 };
 

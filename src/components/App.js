@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
-import idk from 'idb-keyval'; // FIXME lazy load candidate
 
-import { getFromGist } from '../lib/Api';
 import * as OUTPUT from '../actions/session';
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
@@ -30,28 +28,6 @@ export default class App extends Component {
 
   componentWillMount() {
     const { match } = this.props;
-
-    if (match.params.localId) {
-      idk.get(match.params.localId).then(res => {
-        this.props.setBin(res);
-      });
-      return;
-    }
-
-    if (match.params.gistId) {
-      getFromGist(match.params.gistId).then(res => {
-        this.props.setBin(res);
-      });
-      return;
-    }
-
-    if (!match.params.bin) {
-      // new bin
-      // dispatch request for default bin
-      this.props.loadDefault();
-      return;
-    }
-
     this.props.fetch(match.params);
   }
 
@@ -86,16 +62,17 @@ export default class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.loading === false && this.props.loading === true) {
-      const { match } = this.props;
-      if (!match.params.bin) {
-        // new bin
-        // dispatch request for default bin
-        this.props.loadDefault();
-        return;
-      }
-
-      this.props.fetch(match.params);
+    // this is a little bit manky, but it detects that the url has changed
+    // either via the browser history, or via a history.push (like "open bin")
+    // and IF the action was NOT replace, then we load up the bin.
+    // If the action was 'REPLACE' then it was a URL change managed by either
+    // a "save" (where the URL goes from / to /local/1234) or if the search
+    // query was added.
+    if (
+      this.props.match.url !== prevProps.match.url &&
+      this.props.history.action !== 'REPLACE'
+    ) {
+      return this.props.fetch(this.props.match.params);
     }
   }
 
@@ -170,6 +147,7 @@ App.propTypes = {
   bin: PropTypes.object.isRequired,
   loading: PropTypes.bool,
   match: PropTypes.object,
+  history: PropTypes.object,
   session: PropTypes.object,
   editor: PropTypes.object,
   setCode: PropTypes.func,
@@ -192,6 +170,7 @@ App.defaultProps = {
   splitColumns: false,
   loading: true,
   match: { params: {} },
+  history: {},
   editor: {},
   session: {},
   setDirtyFlag: noop,

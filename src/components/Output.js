@@ -105,10 +105,13 @@ export default class Output extends React.Component {
 
     this.setState({ guid });
 
+    const insertJS = html.includes('%code%');
+
     // this logic will allow us to track whether there's an error, the
     // error is then passed through a localStorage event which is
     // paired back up using the guid
-    const javascript = `
+    const javascript = insertJS
+      ? `
       try {
         ${bin.javascript}
       } catch (error) {
@@ -116,16 +119,40 @@ export default class Output extends React.Component {
           name: error.name, message: error.message, stack: error.stack, guid: "${guid}"
         })); } catch (E) {}
         throw error;
-      } //# sourceURL=your-scripts-${++i}.js$`;
+      } //# sourceURL=your-scripts-${++i}.js$`
+      : bin.javascript + `//# sourceURL=your-scripts-${i}.js$`;
 
     const renderedDoc = binToHTML({
       html,
-      javascript,
+      javascript: insertJS ? javascript : '',
       css: bin.css,
     });
 
     doc.open();
     doc.write('');
+
+    iframe.contentWindow.addEventListener('error', frameError => {
+      const { error, message, lineno: line, colno: ch } = frameError;
+      this.props.setError({
+        name: error.name,
+        message,
+        line,
+        ch,
+        error,
+      });
+      if (this.console) {
+        const value = new Error(message);
+        value.name = error.name;
+        value.stack = error.stack;
+        value.lineno = line;
+        value.colno = ch;
+        this.console.console.push({
+          error: true,
+          type: 'response',
+          value,
+        });
+      }
+    });
 
     // if we've already got a console reference AND we're showing the
     // console, then we rebind the console connections right before
@@ -140,6 +167,13 @@ export default class Output extends React.Component {
     // the JavaScript, so we'll stick with the baddie that is .write.
     doc.write(renderedDoc);
     doc.close();
+
+    if (!insertJS) {
+      const script = doc.createElement('script');
+      const blob = new Blob([javascript], { type: 'application/javascript' });
+      script.src = URL.createObjectURL(blob);
+      doc.documentElement.appendChild(script);
+    }
   }
 
   componentDidMount() {

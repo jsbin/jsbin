@@ -40,6 +40,20 @@ export function save() {
   return { type: SAVE };
 }
 
+export function fetchLocal(id) {
+  return {
+    type: GET_BIN,
+    promise: Api.getLocal(id),
+  };
+}
+
+export function fetchGithub(id) {
+  return {
+    type: GET_BIN,
+    promise: Api.getFromGist(id),
+  };
+}
+
 export function fetchBin(id, revision = 'latest') {
   return {
     type: GET_BIN,

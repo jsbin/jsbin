@@ -106,6 +106,32 @@
   cursor: pointer;
 }
 
+.CodeMirror .text-editor-line-decoration {
+  position: absolute;
+}
+
+.CodeMirror-linewidget {
+  overflow: visible !important;
+}
+
+.CodeMirror .text-editor-line-decoration-wave {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  left: 4px;
+  cursor: pointer;
+  height: 4px;
+  background-image: url(/errorWave.png);
+  background-repeat: repeat-x;
+  background-size: contain;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.1) {
+  .CodeMirror .text-editor-line-decoration-wave {
+    background-image: url(/errorWave_2x.png);
+  }
+}
+
 .CodeMirror.highlight .CodeMirror-code {
   & > div:not(.CodeMirror-highlight-line) * {
     color: rgb(204, 204, 204) !important;

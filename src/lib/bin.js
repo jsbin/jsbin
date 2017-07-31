@@ -1,5 +1,5 @@
 import idb from 'idb-keyval';
-import { push } from 'react-router-redux';
+import { replace } from 'react-router-redux';
 import uuid from './uuid';
 import { setError } from '../actions/session';
 import { setId } from '../actions/bin';
@@ -10,12 +10,12 @@ export function save({ bin }, dispatch) {
 
   return idb
     .set(id, { html, javascript, css, id })
+    .then(() => {
+      dispatch(replace(`/local/${id}${window.location.search}`));
+      dispatch(setId(id));
+    })
     .catch(e => {
       console.log(e);
       dispatch(setError(e.message));
-    })
-    .then(() => {
-      dispatch(push(`/local/${id}${window.location.search}`));
-      dispatch(setId(id));
     });
 }

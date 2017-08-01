@@ -2,9 +2,8 @@
 
 ## In progress
 
-- [ ] Welcome
-- [ ] Handle 404 - and for missing /local/* entries
 - [ ] Sign in (API, JWT)
+- [x] Welcome
 
 ## Need for live
 
@@ -14,7 +13,8 @@
 
 ## Bit bugs
 
-- [ ] Make title a prop of Head, rather than multiple `title` els
+- [x] Make title a prop of Head, rather than multiple `title` els
+- [x] Handle 404 - and for missing /local/* entries
 - [x] Sticky quick setting layout
 - [x] Quick commands aren't saving
 - [x] Change theme from palette doesn't save (because it toggles to unknown value)

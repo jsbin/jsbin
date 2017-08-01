@@ -27,7 +27,7 @@ class Welcome extends Component {
   }
 
   componentDidMount() {
-    fetch('http://jsbin.com/help/search.json')
+    fetch('https://jsbin.com/help/search.json')
       .then(res => {
         if (res.status === 200) {
           return res.json();

@@ -10,7 +10,6 @@ import {
   OUTPUT_CONSOLE,
 } from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
-import fetch from 'isomorphic-fetch';
 import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 import FileSaver from 'file-saver'; // @@ lazy load
@@ -132,6 +131,11 @@ export const toggleThemeCmd = {
   run: dispatch => {
     dispatch(toggleTheme());
   },
+};
+
+export const welcome = {
+  title: 'Help: Welcome',
+  run: dispatch => dispatch(push('/welcome')),
 };
 
 export const settings = {

@@ -120,7 +120,7 @@ export default class CodeSettings extends React.Component {
               }}
               checked={splitColumns}
             />{' '}
-            Horizontal splitter
+            Vertical splitter
           </label>
         </details>
 

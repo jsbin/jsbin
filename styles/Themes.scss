@@ -87,7 +87,7 @@
   }
 }
 
-.theme-dark {
+.theme-dark .CodeMirror {
   /*
     Name:       one-dark
     Original Author:     Török Ádám (http://github.com/Aerobird98)
@@ -99,7 +99,7 @@
 
   /* UI Theme /----------------------------------------------------------------------------------- */
 
-  .CodeMirror,
+  &,
   .CodeMirror-scroll {
     background: hsl(220, 13%, 18%);
     color: hsl(220, 14%, 71%);

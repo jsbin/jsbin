@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-fetch';
 import Head from './Head';
 import Layout from './PageLayout';
 
@@ -92,14 +91,14 @@ class Welcome extends Component {
                 {loadingHelp
                   ? <li>Loading help…</li>
                   : help.map(({ title, slug }, i) => {
-                    return (
+                      return (
                         <li key={'help-' + i}>
                           <a target="_blank" href={`https://jsbin.com/${slug}`}>
                             {title}
                           </a>
                         </li>
-                    );
-                  })}
+                      );
+                    })}
                 <li>
                   <a href="https://jsbin.com/help">
                     <strong>
@@ -153,6 +152,7 @@ class Welcome extends Component {
 
             <div className="block">
               <h2>Get your license</h2>
+              <p>Nothing to see here just yet.</p>
             </div>
           </div>
         </div>

@@ -5,9 +5,6 @@ import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
-// FIXME remove on live
-import Perf from 'react-addons-perf';
-
 // middleware for store
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
@@ -29,8 +26,6 @@ import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/app';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
-
-window.Perf = Perf;
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();

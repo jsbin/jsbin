@@ -5,35 +5,69 @@
   "dependencies": {
     "@remy/jsconsole": "^2.0.0-beta.9",
     "@remy/react-splitter-layout": "^1.0.2",
+    "autoprefixer": "7.1.1",
+    "babel-core": "6.25.0",
+    "babel-eslint": "7.2.3",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.0.0",
+    "babel-preset-react-app": "^3.0.1",
+    "babel-runtime": "6.23.0",
+    "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "chalk": "1.1.3",
     "classnames": "^2.2.5",
+    "css-loader": "0.28.4",
     "date-fns": "^1.28.5",
+    "dotenv": "4.0.0",
     "emmet-codemirror": "^1.2.5",
+    "eslint": "3.19.0",
+    "eslint-config-react-app": "^1.0.5",
+    "eslint-loader": "1.7.1",
+    "eslint-plugin-flowtype": "2.34.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "5.0.3",
+    "eslint-plugin-react": "7.1.0",
+    "extract-text-webpack-plugin": "2.1.2",
+    "file-loader": "0.11.2",
     "file-saver": "^1.3.3",
+    "fs-extra": "3.0.1",
     "fuse.js": "^3.0.5",
     "history": "^4.6.3",
+    "html-webpack-plugin": "2.29.0",
     "idb-keyval": "^2.3.0",
-    "isomorphic-fetch": "^2.2.1",
+    "jest": "20.0.4",
     "js-beautify": "^1.6.14",
     "js-cookie": "^2.1.4",
     "json-lint": "^0.1.0",
     "lodash.debounce": "^4.0.8",
     "marked": "^0.3.6",
+    "object-assign": "4.1.1",
+    "postcss-flexbugs-fixes": "3.0.0",
+    "postcss-loader": "2.0.6",
     "prettier": "^1.5.3",
+    "promise": "7.1.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-codemirror": "^1.0.0",
+    "react-dev-utils": "^3.0.2",
     "react-dom": "^15.6.1",
+    "react-error-overlay": "^1.0.9",
     "react-helmet": "^5.1.3",
     "react-hotkeys": "^0.10.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.2",
     "react-router-redux": "next",
-    "react-scripts": "1.0.10",
     "redux": "^3.7.2",
     "redux-pack": "^0.1.5",
     "redux-thunk": "^2.2.0",
     "source-map-explorer": "^1.4.0",
-    "strip-json-comments": "^2.0.1"
+    "strip-json-comments": "^2.0.1",
+    "style-loader": "0.18.2",
+    "sw-precache-webpack-plugin": "0.11.3",
+    "url-loader": "0.5.9",
+    "webpack": "2.6.1",
+    "webpack-dev-server": "2.5.0",
+    "webpack-manifest-plugin": "1.1.0",
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "cm-show-invisibles": "^2.0.2",
@@ -46,11 +80,50 @@
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
-    "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
-    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "REACT_APP_VERSION=$npm_package_version node scripts/start.js",
+    "build": "REACT_APP_VERSION=$npm_package_version node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom",
     "watch": "node-sass ./styles/ -w -o ./src/css --recursive",
-    "deploy": "npm run build && now build --name jsbin-v5 && now alias",
-    "eject": "react-scripts eject"
+    "deploy": "npm run build && now build --name jsbin-v5 && now alias"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+    ],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "json",
+      "web.jsx",
+      "jsx"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }

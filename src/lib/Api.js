@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-fetch';
 import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 const API = process.env.REACT_APP_API;

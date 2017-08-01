@@ -17,11 +17,13 @@ import { middleware as reduxPackMiddleware } from 'redux-pack';
 // main pages
 import App from './containers/App';
 import Settings from './containers/Settings';
+import Welcome from './containers/Welcome';
 
 // utils/store setup
 import restoreSettings, { getRawUserSettings } from './lib/settings';
 import reducers from './reducers'; // Or wherever you keep your reducers
 import { defaultState as defaultSessions } from './reducers/session';
+import { defaultState as defaultApp } from './reducers/app';
 import * as MODES from './lib/cm-modes';
 import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
 import { setSource } from './actions/app';
@@ -82,6 +84,8 @@ if (!initState.user.settings) {
   delete initState.user;
 }
 
+initState.app = { ...defaultApp, ...initState.app };
+
 // NOTE I don't really know why I couldn't do
 // `createStore(reducers, applyMiddleware(...middleware))`
 // but it just didn't want to fly
@@ -123,11 +127,7 @@ const render = App => {
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/settings" component={Settings} />
-          <Route
-            exact
-            path="/welcome"
-            component={require('./components/Welcome').default}
-          />
+          <Route exact path="/welcome" component={Welcome} />
 
           <Route
             exact

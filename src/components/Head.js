@@ -4,10 +4,12 @@ import { Helmet } from 'react-helmet';
 
 const STATIC = process.env.REACT_APP_STATIC;
 
-const Head = ({ children }) =>
+const Head = ({ children, title = 'JS Bin' }) =>
   <Helmet>
     <meta charSet="utf-8" />
-    <title>JS Bin</title>
+    <title>
+      {title}
+    </title>
     <link
       rel="icon shortcut"
       type="image/svg+xml"

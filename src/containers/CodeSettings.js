@@ -4,12 +4,13 @@ import { toggleLayout, setSource } from '../actions/app';
 import { set } from '../actions/editor';
 import { changeOutput } from '../actions/session';
 
-const mapStateToProps = ({ editor, session, app }) => ({
+const mapStateToProps = ({ editor, session, app, bin }) => ({
   lineNumbers: editor.lineNumbers,
   lineWrapping: editor.lineWrapping,
   source: app.source,
   output: session.output,
   splitColumns: app.splitColumns,
+  bin,
 });
 
 const CodeSettingsContainer = connect(mapStateToProps, {

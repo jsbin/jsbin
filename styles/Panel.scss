@@ -5,7 +5,8 @@
     background: darken($c-dark-theme-bg, 20%);
     color: darken($c-dark-theme-text, 30%);
 
-    select {
+    select,
+    input {
       color: lighten($c-dark-theme-text, 10%);
       background: darken($c-dark-theme-bg, 10%);
       border-color: $c-dark-theme-border;
@@ -49,10 +50,16 @@
       user-select: none;
     }
 
-    label.select {
+    label.grow {
       display: flex;
       flex-direction: row;
       margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      margin-left: 10px;
+      flex-grow: 1;
+      max-width: 400px;
     }
 
     select {

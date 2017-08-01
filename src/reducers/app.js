@@ -4,11 +4,13 @@ import {
   TOGGLE_LAYOUT,
   SET_SOURCE,
   LIGHT,
+  SHOW_WELCOME,
 } from '../actions/app';
 
 import * as MODES from '../lib/cm-modes';
 
 export const defaultState = {
+  showWelcome: true,
   theme: LIGHT,
   splitColumns: false,
   splitterWidth: 50,
@@ -24,6 +26,10 @@ export default function reducer(state = defaultState, action) {
 
   if (type === MASS_UPDATE) {
     return { ...state, ...action.value.app };
+  }
+
+  if (type === SHOW_WELCOME) {
+    return { ...state, showWelcome: action.value };
   }
 
   if (type === TOGGLE_LAYOUT) {

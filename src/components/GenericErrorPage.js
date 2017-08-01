@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from './Head';
+import Layout from './PageLayout';
 
 const ErrorPage = ({ children, message, status }) => {
   return (
-    <div>
-      <Head>
-        <title>Uh oh</title>
-      </Head>
+    <Layout className="ErrorPage">
+      <Head title="Uh oh..." />
       <h1>
         Whoops! Something went wrong{' '}
         <span role="img" aria-labelledby="super sad face">
@@ -18,8 +17,10 @@ const ErrorPage = ({ children, message, status }) => {
         {message} (<code>{status}</code>)
       </p>
       <div className="jsbin-fail" />
-      {children}
-    </div>
+      {children
+        ? children
+        : <img src="/images/favicon.svg" className="jsbin-error" alt="" />}
+    </Layout>
   );
 };
 

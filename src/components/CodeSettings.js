@@ -20,6 +20,7 @@ export default class CodeSettings extends React.Component {
     this.changeOutput = this.changeOutput.bind(this);
     this.changeEditor = this.changeEditor.bind(this);
     this.changeApp = this.changeApp.bind(this);
+    this.changeBin = this.changeBin.bind(this);
     this.state = { height: 0 };
   }
 
@@ -39,9 +40,12 @@ export default class CodeSettings extends React.Component {
     this.props.set(property, value);
   }
 
+  changeBin(propery, value) {}
+
   render() {
     const {
       // updated,
+      // bin,
       lineWrapping,
       lineNumbers,
       source,
@@ -50,7 +54,7 @@ export default class CodeSettings extends React.Component {
     } = this.props;
     return (
       <div className="CodeSettings">
-        <label className="select">
+        <label className="grow">
           Source{' '}
           <select value={source} onChange={this.changeSource}>
             <option value={MODES.HTML}>HTML</option>
@@ -58,7 +62,7 @@ export default class CodeSettings extends React.Component {
             <option value={MODES.CSS}>CSS</option>
           </select>
         </label>
-        <label className="output select">
+        <label className="output grow">
           Output{' '}
           <select value={output} onChange={this.changeOutput}>
             <option value={OUTPUT_PAGE}>Page</option>
@@ -67,6 +71,20 @@ export default class CodeSettings extends React.Component {
             <option value={OUTPUT_NONE}>None</option>
           </select>
         </label>
+        {/* <details>
+          <summary>Metadata</summary>
+          <label className="grow">
+            Title
+            <input
+              name="title"
+              type="text"
+              onChange={e => {
+                this.changeBin('title', e.target.value);
+              }}
+              value={bin.title}
+            />{' '}
+          </label>
+        </details> */}
         <details>
           <summary>Quick Settings</summary>
           <label>

@@ -36,7 +36,9 @@ CodeMirror.registerHelper('lint', 'json', text => {
         message: lint.error,
       });
     }
-  } catch (e) {}
+  } catch (e) {
+    console.log('Settings failed to lint');
+  }
 
   return found;
 });
@@ -136,9 +138,7 @@ export default class Settings extends React.Component {
 
     return (
       <div className={`theme-${app.theme}`}>
-        <Head>
-          <title>Settings</title>
-        </Head>
+        <Head title="Settings" />
         <HotKeys keyMap={keyMap} handlers={{ save: this.save }}>
           <Splitter
             vertical={false}
@@ -196,6 +196,7 @@ Settings.propTypes = {
   user: PropTypes.object.isRequired,
   setSplitterWidth: PropTypes.func,
   setDirtyFlag: PropTypes.func,
+  app: PropTypes.object,
 };
 
 Settings.defaultProps = {

@@ -9,12 +9,6 @@
     box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 1);
   }
 
-  input {
-    background: $c-dark-theme-bg;
-    color: $c-dark-theme-text;
-    border: 1px solid rgb(60, 196, 255);
-  }
-
   ul li.active {
     background: rgba(255, 255, 255, 0.2);
     color: $c-dark-theme-text;
@@ -49,14 +43,10 @@
   input {
     margin: 10px;
     outline: none;
-    border-radius: 1px;
     display: block;
     flex-grow: 0;
     flex-shrink: 1;
     min-height: $font-size-base * 1.2;
-    border: 1px solid #03a9f4;
-    font-size: $font-size-base * 1.2;
-    padding: 5px;
   }
 
   ul {

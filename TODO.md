@@ -6,13 +6,18 @@
 - [ ] Handle 404 - and for missing /local/* entries
 - [ ] Sign in (API, JWT)
 
+## Need for live
+
+- [ ] Login
+- [ ] Pay/cancel/renew
+- [ ] Embeds work
+
 ## Bit bugs
 
 - [ ] Make title a prop of Head, rather than multiple `title` els
 - [x] Sticky quick setting layout
 - [x] Quick commands aren't saving
 - [x] Change theme from palette doesn't save (because it toggles to unknown value)
-
 
 ## Themes
 
@@ -45,6 +50,7 @@
 
 - [ ] Share box
 - [ ] Some kind of notification system
+- [ ] Add meta data box
 - [x] Loading gif
 - [x] Import light + dark theme by default
 - [x] Completely dark theme
@@ -57,7 +63,7 @@
 - [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
 - [ ] Investigate using blobs with scripts for real-time line number reports
-
+- [ ] unfurl - can this even work if there's no dynamic server side?
 
 ## Lib
 
@@ -88,3 +94,19 @@
 ## Nice to have
 
 - [ ] Hold cmd and hover over keyword, it underlines, and clicking opens a sub panel below the line of code to http://docs.devdocs.io/javascript/global_objects/arraybuffer.html
+
+# The Remy User
+
+Why build JS Bin V at all?
+
+## 1. I want to be able to try some code out and throw it away (out of mind).
+
+This is achieve through local saving and potentially clearing my local browser cache.
+
+## 2. I want to be able to help other people with their code.
+
+I want to save a few steps from start of their code to the final code design and include notes on why I made changes.
+
+## 3. I want to practice coding and pull it up later in time.
+
+I should be able to tag or describe a bin to find it again. Perhaps use code snippets to search, or have some visual way to find bins again - perhaps highlight a specific line? #metadata

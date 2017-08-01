@@ -188,3 +188,8 @@ template {
 [hidden] {
   display: none;
 }
+
+// addition by RS 2017-08-01
+* {
+  box-sizing: border-box;
+}

@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
+import Cookies from 'js-cookie';
 
+import Welcome from '../containers/Welcome';
 import * as OUTPUT from '../actions/session';
 import Panel from '../containers/Panel';
 import Output from '../containers/Output';
@@ -24,6 +26,17 @@ export default class App extends Component {
     this.triggerPalette = this.triggerPalette.bind(this);
     this.dismiss = this.dismiss.bind(this);
     this.insertCode = this.insertCode.bind(this);
+
+    // this actually means ignore the welcome page altogether
+    let welcomeSeen = props.showWelcome === false;
+
+    if (!welcomeSeen) {
+      welcomeSeen = Cookies.get('welcomeSeen') || false;
+    }
+
+    this.state = {
+      welcomeSeen,
+    };
   }
 
   componentWillMount() {
@@ -90,6 +103,13 @@ export default class App extends Component {
       theme,
     } = this.props;
 
+    const { welcomeSeen } = this.state;
+
+    if (!welcomeSeen) {
+      Cookies.set('welcomeSeen', true);
+      return <Welcome />;
+    }
+
     if (loading) {
       return (
         <div className={`JsBinApp loading theme-${theme}`}>
@@ -121,7 +141,7 @@ export default class App extends Component {
           <Head />
           <div>
             <Splitter
-              vertical={splitColumns}
+              vertical={!splitColumns}
               percentage={true}
               secondaryInitialSize={100 - splitterWidth}
               primaryIndex={0}
@@ -146,6 +166,7 @@ export default class App extends Component {
 App.propTypes = {
   bin: PropTypes.object.isRequired,
   loading: PropTypes.bool,
+  showWelcome: PropTypes.bool,
   match: PropTypes.object,
   history: PropTypes.object,
   session: PropTypes.object,
@@ -174,4 +195,5 @@ App.defaultProps = {
   editor: {},
   session: {},
   setDirtyFlag: noop,
+  showWelcome: true,
 };

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import fetch from 'isomorphic-fetch';
 import Head from './Head';
 import Layout from './PageLayout';
+import { Link } from 'react-router';
+
 import { cmd } from '../lib/is-mac';
 
 import '../css/App.css';
@@ -72,7 +74,9 @@ class Welcome extends Component {
               <h2>Get started</h2>
               <ul>
                 <li>
-                  <a href="/">New bin</a>
+                  <a href="/">
+                    <strong>New bin</strong>
+                  </a>
                 </li>
                 <li>
                   <a href="/open">Open existing bin</a>
@@ -160,10 +164,12 @@ class Welcome extends Component {
 
 Welcome.propTypes = {
   updateShowWelcome: PropTypes.func,
+  showWelcome: PropTypes.bool,
 };
 
 Welcome.defaultProps = {
   updateShowWelcome: noop,
+  showWelcome: true,
 };
 
 export default Welcome;

@@ -30,6 +30,7 @@ const mapStateToProps = ({ bin, editor, session, app }) => {
     splitColumns: app.splitColumns,
     output: session.output,
     theme: app.theme,
+    showWelcome: app.showWelcome,
   };
 };
 

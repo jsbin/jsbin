@@ -23,7 +23,8 @@ export const getBin = (id, revision = 'latest') => {
     if (res.status !== 200) {
       // this is a bit sucky, but redux-pack expect an object not a first class
       // error to be rejected
-      return Promise.reject(res.status);
+      console.log('failed to fetch from bin api - check network panel');
+      return Promise.reject({ status: res.status });
     }
 
     return res.json();
@@ -32,6 +33,12 @@ export const getBin = (id, revision = 'latest') => {
 
 export const getLocal = async id => {
   return idk.get(id).then(res => {
+    if (res === undefined) {
+      return Promise.reject({
+        status: 404,
+        message: `That local bin doesn't exist. If you expected it to, it's possible you're using a different browser, or incognito and ultimately doesn't have access to your browser's local store of bins.`,
+      });
+    }
     return { ...res, id };
   });
 };
@@ -40,6 +47,15 @@ export const getFromGist = async id => {
   const res = await fetch(`https://api.github.com/gists/${id}`, {
     mode: 'cors',
   });
+
+  if (res.status !== 200) {
+    const error = new Error(
+      `Github doesn't think that gist exists. Maybe double check the original gist URL, and swap out the gist.github.com bit for jsbin.com.`
+    );
+    error.status = res.status;
+    throw error;
+  }
+
   const { files } = await res.json();
   const settings = getFileFromGist({ type: 'json', files, parse: true });
 

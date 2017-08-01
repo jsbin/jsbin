@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import fetch from 'isomorphic-fetch';
 import Head from './Head';
 import Layout from './PageLayout';
-import { Link } from 'react-router';
 
 import { cmd } from '../lib/is-mac';
 

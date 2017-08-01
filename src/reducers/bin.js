@@ -47,7 +47,10 @@ export default function reducer(state = defaultState, action) {
       }),
       failure: prevState => ({
         ...prevState,
-        error: payload,
+        error:
+          payload instanceof Error
+            ? { message: payload.message, status: payload.status || 500 }
+            : payload,
         loading: false,
       }),
       success: prevState => {

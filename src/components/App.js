@@ -120,7 +120,7 @@ export default class App extends Component {
     }
 
     if (bin.error) {
-      return <Error status={bin.error} />;
+      return <Error {...bin.error} />;
     }
 
     const keyMap = {

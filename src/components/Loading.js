@@ -4,7 +4,7 @@ import '../css/Loading.css';
 
 const messages = [
   'One sec...just firing up the dobberies',
-  'One sec...just firing up the dobberies...',
+  'Dobberies now on fire',
   `Seriously, I'm still loading, I *will* find your thing...`,
   'I know I put it here somewhere.',
   'I probably would have refreshed me by now.',

@@ -117,13 +117,15 @@ export const togglePage = {
 };
 
 export const splitRight = {
+  condition: ({ app }) => !app.splitColumns,
   title: 'Split to the right',
-  run: dispatch => dispatch(toggleLayout(false)),
+  run: dispatch => dispatch(toggleLayout(true)),
 };
 
 export const splitBottom = {
+  condition: ({ app }) => app.splitColumns,
   title: 'Split to the bottom',
-  run: dispatch => dispatch(toggleLayout(true)),
+  run: dispatch => dispatch(toggleLayout(false)),
 };
 
 export const toggleThemeCmd = {

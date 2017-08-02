@@ -9,8 +9,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const PaletteContainer = connect(({ bin }) => ({ bin }), mapDispatchToProps)(
-  Palette
-);
+const PaletteContainer = connect(
+  ({ bin, app }) => ({ bin, app }),
+  mapDispatchToProps
+)(Palette);
 
 export default PaletteContainer;

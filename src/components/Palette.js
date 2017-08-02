@@ -152,6 +152,7 @@ export default class Palette extends React.Component {
 
   render() {
     const { filter, active, commands } = this.state;
+    const { app } = this.props;
     const start = active - 100 < 0 ? 0 : active - 100;
     const end = start + 100;
     return (
@@ -166,16 +167,24 @@ export default class Palette extends React.Component {
             onChange={this.onFilter}
           />
           <ul ref={e => (this.commands = e)}>
-            {commands.slice(start, end).map((command, i) =>
-              <li
-                onMouseOver={() => this.setState({ active: i })}
-                className={classnames({ active: i === active })}
-                key={`command-${i}`}
-                onClick={() => this.onRun(command)}
-              >
-                {command.display || command.title}
-              </li>
-            )}
+            {commands
+              .filter(command => {
+                if (command.condition) {
+                  return command.condition({ app });
+                }
+                return true;
+              })
+              .slice(start, end)
+              .map((command, i) =>
+                <li
+                  onMouseOver={() => this.setState({ active: i })}
+                  className={classnames({ active: i === active })}
+                  key={`command-${i}`}
+                  onClick={() => this.onRun(command)}
+                >
+                  {command.display || command.title}
+                </li>
+              )}
           </ul>
         </div>
       </div>
@@ -184,12 +193,14 @@ export default class Palette extends React.Component {
 }
 
 Palette.propTypes = {
+  app: PropTypes.object,
   dismiss: PropTypes.func,
   run: PropTypes.func,
   insert: PropTypes.func,
 };
 
 Palette.defaultProps = {
+  app: {},
   dismiss: () => {},
   run: () => {},
   insert: () => {},

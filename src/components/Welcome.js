@@ -6,7 +6,6 @@ import Layout from '../containers/PageLayout';
 
 import { cmd } from '../lib/is-mac';
 
-import '../css/App.css';
 import '../css/Welcome.css';
 
 const noop = () => {};

@@ -1,6 +1,5 @@
 import { SAVE_SETTINGS } from '../actions/user';
 import { SET_OPTION } from '../actions/editor';
-import { CHANGE_RESULT } from '../actions/session';
 import { TOGGLE_LAYOUT, SET_THEME, SHOW_WELCOME } from '../actions/app';
 import { insertChangeIntoUserSettings } from '../lib/settings';
 import { defaultUserSettings } from '../lib/Defaults';

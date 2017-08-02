@@ -17,8 +17,9 @@ import { TextUtils } from '../lib/common/TextUtils';
 import JSONLint from 'json-lint';
 import CodeMirror from 'codemirror';
 import '../css/App.css';
+import '@remy/react-splitter-layout/src/stylesheets/index.css';
+
 import '../css/Settings.css';
-import '../css/Button.css';
 
 const keyMap = {
   save: `${cmd}+s`,

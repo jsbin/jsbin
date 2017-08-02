@@ -12,7 +12,7 @@
   }
 }
 
-.splitter-layout {
+.theme-light .splitter-layout {
   height: calc(100% - #{$menu-height});
   & > .layout-splitter {
     background-color: #000;

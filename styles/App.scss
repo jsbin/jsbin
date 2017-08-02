@@ -12,6 +12,7 @@ body,
 }
 
 @import "splitter";
+@import "button";
 
 .JsBinApp {
   height: 100%;
@@ -80,6 +81,9 @@ kbd:first-child {
 }
 
 .theme-dark {
+  background: $c-dark-theme-bg;
+  color: $c-dark-theme-text;
+
   .splitter-layout,
   kbd {
     background: $c-dark-theme-bg;

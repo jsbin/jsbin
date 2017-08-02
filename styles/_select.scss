@@ -1,0 +1,80 @@
+@import "vars";
+
+.Select-menu-outer {
+  max-width: 100%;
+}
+
+.Select {
+  flex-grow: 1;
+  max-width: 400px;
+  margin-left: 10px;
+  div {
+    cursor: pointer;
+  }
+
+  .Select-option {
+    padding: 5px 10px;
+    color: #333;
+    background: inherit;
+
+    kbd {
+      float: right;
+      display: block;
+      background: none;
+      padding: 0 5px;
+      color: #666;
+      background: rgb(243, 243, 243);
+      border: 1px solid rgb(243, 243, 243);
+    }
+
+    &:hover kbd {
+      border: 1px solid #ccc;
+    }
+  }
+
+  .Select-option:hover,
+  .Select-option.is-selected:hover {
+    color: #333;
+    background: rgba(0, 126, 255, 0.08);
+  }
+}
+
+.theme-dark {
+  .Select {
+    color: lighten($c-dark-theme-text, 10%);
+    background: darken($c-dark-theme-bg, 10%);
+    border-color: $c-dark-theme-border;
+  }
+
+  .Select kbd {
+    background: $c-dark-theme-bg;
+    color: $c-dark-theme-text;
+  }
+
+  .Select-control {
+    background: darken($c-dark-theme-bg, 10%);
+    border-color: $c-dark-theme-border;
+  }
+
+  .Select-menu-outer {
+    background: $c-dark-theme-bg;
+    border-color: $c-dark-theme-border;
+  }
+
+  .Option {
+    color: lighten($c-dark-theme-text, 10%);
+  }
+
+  .Select-option:hover,
+  .Select-option.is-selected:hover {
+    background: rgba(0, 126, 255, 0.08);
+  }
+
+  .Select-value,
+  .has-value.Select--single > .Select-control .Select-value .Select-value-label,
+  .has-value.is-pseudo-focused.Select--single
+    > .Select-control .Select-value .Select-value-label {
+    border-color: $c-dark-theme-border;
+    color: lighten($c-dark-theme-text, 10%);
+  }
+}

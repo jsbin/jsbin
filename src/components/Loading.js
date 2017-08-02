@@ -1,4 +1,5 @@
 import React from 'react';
+import Error from './GenericErrorPage';
 
 import '../css/Loading.css';
 
@@ -53,8 +54,18 @@ export default class Loading extends React.Component {
   }
 
   render() {
+    const { isLoading, error } = this.props;
     const { index } = this.state;
     const classNames = { [index]: 'active' };
+
+    if (!isLoading) {
+      return null;
+    }
+
+    if (error) {
+      return <Error />;
+    }
+
     return (
       <div className="Loading" ref={e => (this.loading = e)} hidden={true}>
         <div className="message">

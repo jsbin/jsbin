@@ -1,11 +1,12 @@
 @import "vars";
 
+@import "select";
+
 .theme-dark .Panel {
   .CodeSettings {
     background: darken($c-dark-theme-bg-accent, 10%);
     color: $c-dark-theme-text-accent;
 
-    select,
     input {
       color: lighten($c-dark-theme-text, 10%);
       background: darken($c-dark-theme-bg, 10%);
@@ -77,46 +78,6 @@
       margin-left: 10px;
       flex-grow: 1;
       max-width: 400px;
-    }
-
-    .Select-menu-outer {
-      max-width: 100%;
-    }
-
-    select,
-    .Select {
-      flex-grow: 1;
-      max-width: 400px;
-      margin-left: 10px;
-      div {
-        cursor: pointer;
-      }
-
-      .Select-option {
-        padding: 5px 10px;
-        color: #333;
-        background: inherit;
-
-        kbd {
-          float: right;
-          display: block;
-          background: none;
-          padding: 0 5px;
-          color: #666;
-          background: rgb(243, 243, 243);
-          border: 1px solid rgb(243, 243, 243);
-        }
-
-        &:hover kbd {
-          border: 1px solid #ccc;
-        }
-      }
-
-      .Select-option:hover,
-      .Select-option.is-selected:hover {
-        color: #333;
-        background: rgba(0, 126, 255, 0.08);
-      }
     }
 
     details {

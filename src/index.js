@@ -11,11 +11,8 @@ import thunk from 'redux-thunk';
 // import { apiMiddleware } from 'redux-api-middleware';
 import { middleware as reduxPackMiddleware } from 'redux-pack';
 
-// main pages
-import App from './containers/App';
-import Settings from './containers/Settings';
-import Welcome from './containers/Welcome';
-import Login from './components/Login';
+import Loadable from 'react-loadable';
+import LoadingComponent from './components/Loading';
 
 // utils/store setup
 import restoreSettings, { getRawUserSettings } from './lib/settings';
@@ -26,6 +23,29 @@ import * as MODES from './lib/cm-modes';
 import { RESULT_PAGE, RESULT_CONSOLE } from './actions/session';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
+
+// main pages async loading 💪
+const App = Loadable({
+  loader: () => import(/* webpackChunkName: "app" */ './containers/App'),
+  loading: LoadingComponent,
+});
+
+const Settings = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "settings" */ './containers/Settings'),
+  loading: LoadingComponent,
+});
+
+const Welcome = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "welcome" */ './containers/Welcome'),
+  loading: LoadingComponent,
+});
+
+const Login = Loadable({
+  loader: () => import(/* webpackChunkName: "login" */ './components/Login'),
+  loading: LoadingComponent,
+});
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();

@@ -15,7 +15,8 @@
 
 ## Bit bugs
 
-- [ ] If console is open by default, then it takes focus
+- [ ] Change settings, and in other panel change a setting and original settings are lost
+- [x] If console is open by default, then it takes focus
 - [x] New is broken
 - [x] Open is broken / Palette is broken
 - [x] Make title a prop of Head, rather than multiple `title` els

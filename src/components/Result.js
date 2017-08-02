@@ -194,7 +194,7 @@ export default class Result extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.iframe) {
+    if (this.iframe && this.iframe.parentNode) {
       this.iframe.parentNode.removeChild(this.iframe);
     }
     window.removeEventListener('storage', this.catchErrors, false);

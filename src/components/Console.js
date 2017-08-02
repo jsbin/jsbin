@@ -62,6 +62,7 @@ export default class BinConsole extends React.Component {
         />
         <Input
           inputRef={e => (this.input = e)}
+          autoFocus={false}
           onRun={this.onRun}
           history={history}
           addHistory={cmd => {

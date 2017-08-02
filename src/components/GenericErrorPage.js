@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from './Head';
-import Layout from './PageLayout';
+import Layout from '../containers/PageLayout';
 
 const ErrorPage = ({ children, message, status }) => {
   return (

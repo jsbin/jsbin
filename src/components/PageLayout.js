@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { LIGHT } from '../actions/app';
 // import Nav from './Nav'; // FIXME will need user data
 
 import '../css/PageLayout.css';
 
 export default class PageLayout extends Component {
   render() {
-    const { children, className } = this.props;
+    const { children, className, theme } = this.props;
 
     return (
-      <div className={classnames(['PageLayout', className])}>
+      <div className={classnames(['PageLayout', className, `theme-${theme}`])}>
         <main>
           {children}
         </main>
@@ -22,8 +23,10 @@ export default class PageLayout extends Component {
 PageLayout.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  theme: PropTypes.string,
 };
 
 PageLayout.defaultProps = {
   className: null,
+  theme: LIGHT,
 };

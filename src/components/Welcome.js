@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Cookies from 'js-cookie';
 import Head from './Head';
-import Layout from './PageLayout';
+import Layout from '../containers/PageLayout';
 
 import { cmd } from '../lib/is-mac';
 
@@ -14,11 +15,16 @@ class Welcome extends Component {
   constructor(props) {
     super(props);
     this.updateShowWelcome = this.updateShowWelcome.bind(this);
+    this.welcomeSeen = this.welcomeSeen.bind(this);
     this.state = {
       loadingHelp: true,
       blog: [],
       help: [],
     };
+  }
+
+  welcomeSeen() {
+    Cookies.set('welcomeSeen', true);
   }
 
   updateShowWelcome(e) {
@@ -72,7 +78,7 @@ class Welcome extends Component {
               <h2>Get started</h2>
               <ul>
                 <li>
-                  <a href="/">
+                  <a onClick={this.welcomeSeen} href="/">
                     <strong>New bin</strong>
                   </a>
                 </li>

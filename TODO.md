@@ -10,6 +10,8 @@
 - [ ] Login
 - [ ] Pay/cancel/renew
 - [ ] Embeds work
+- [ ] Secure output
+- [ ] Processors?
 
 ## Bit bugs
 
@@ -22,7 +24,7 @@
 ## Themes
 
 - [ ] Dark loading gif
-- [ ] Dark welcome/document theme
+- [x] Dark welcome/document theme
 
 ## Console
 

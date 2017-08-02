@@ -5,6 +5,9 @@ $c-dark-theme-text: #eee;
 $c-divider: #ccc;
 $c-dark-theme-border: #666;
 
+$c-dark-theme-bg-accent: darken($c-dark-theme-bg, 5%);
+$c-dark-theme-text-accent: darken($c-dark-theme-text, 30%);
+
 $z-auto: auto;
 $z-background: 1;
 $z-bottom: 1;

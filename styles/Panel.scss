@@ -2,8 +2,8 @@
 
 .theme-dark .Panel {
   .CodeSettings {
-    background: darken($c-dark-theme-bg, 20%);
-    color: darken($c-dark-theme-text, 30%);
+    background: darken($c-dark-theme-bg-accent, 10%);
+    color: $c-dark-theme-text-accent;
 
     select,
     input {

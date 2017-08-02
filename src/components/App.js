@@ -106,7 +106,6 @@ export default class App extends Component {
     const { welcomeSeen } = this.state;
 
     if (!welcomeSeen) {
-      Cookies.set('welcomeSeen', true);
       return <Welcome />;
     }
 

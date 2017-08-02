@@ -131,10 +131,10 @@ export default class Panel extends React.Component {
               <p>
                 <button className="Button simple" onClick={this.triggerPalette}>
                   Show all commands
+                  <kbd>
+                    <Command /> <Shift /> P
+                  </kbd>
                 </button>
-                <kbd>
-                  <Command /> <Shift /> P
-                </kbd>
               </p>
             </Footer>
           </div>

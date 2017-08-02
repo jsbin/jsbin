@@ -1,5 +1,18 @@
 @import "vars";
 
+.theme-dark.Welcome .discover {
+  background: $c-dark-theme-bg-accent;
+  color: $c-dark-theme-text-accent;
+
+  &:hover {
+    background: darken($c-dark-theme-bg-accent, 10%);
+  }
+
+  p {
+    color: $c-dark-theme-text;
+  }
+}
+
 .Welcome {
   display: flex;
   flex-direction: column;

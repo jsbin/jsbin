@@ -5,7 +5,7 @@ export const SET_BIN = '@@bin/set/BIN';
 export const SET_JS = '@@bin/set/JS';
 export const SET_HTML = '@@bin/set/HTML';
 export const SET_CSS = '@@bin/set/CSS';
-export const SET_OUTPUT = '@@bin/set/OUTPUT';
+export const SET_RESULT = '@@bin/set/RESULT';
 export const SET_ID = '@@bin/set/ID';
 export const RESET = '@@bin/RESET';
 export const SAVE = '@@bin/SAVE';
@@ -71,13 +71,13 @@ export function setCode(code, type) {
       code,
     });
 
-    // combine into the output… and put in separate function
+    // combine into the result… and put in separate function
     return new Promise(resolve => {
-      const output = code;
+      const result = code;
       resolve(
         dispatch({
-          type: SET_OUTPUT,
-          code: output,
+          type: SET_RESULT,
+          code: result,
         })
       );
     });

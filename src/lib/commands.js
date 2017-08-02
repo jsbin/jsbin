@@ -4,10 +4,10 @@ import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
 import {
-  toggleOutput,
-  changeOutput,
-  OUTPUT_PAGE,
-  OUTPUT_CONSOLE,
+  toggleResult,
+  changeResult,
+  RESULT_PAGE,
+  RESULT_CONSOLE,
 } from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
 import idk from 'idb-keyval'; // FIXME lazy load candidate
@@ -40,11 +40,11 @@ export const download = {
 export const del = {
   title: 'Delete',
   shortcut: (
-    <span>
+    <kbd>
       <Command />
       <Shift />
       <Backspace />
-    </span>
+    </kbd>
   ),
   run: dispatch => {
     if (
@@ -101,18 +101,18 @@ export const addLibrary = {
 
 export const showConsole = {
   title: 'Show console',
-  run: dispatch => dispatch(changeOutput(OUTPUT_CONSOLE)),
+  run: dispatch => dispatch(changeResult(RESULT_CONSOLE)),
 };
 
 export const showPage = {
   title: 'Show page',
-  run: dispatch => dispatch(changeOutput(OUTPUT_PAGE)),
+  run: dispatch => dispatch(changeResult(RESULT_PAGE)),
 };
 
 export const togglePage = {
-  title: 'Toggle output',
+  title: 'Toggle result',
   run: dispatch => {
-    dispatch(toggleOutput());
+    dispatch(toggleResult());
   },
 };
 

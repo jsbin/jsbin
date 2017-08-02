@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
-import * as OUTPUT from '../actions/session';
+import * as RESULT from '../actions/session';
 import binToHTML from '../lib/BinToHTML';
 import Console from '../containers/Console';
-import '../css/Output.css';
+import '../css/Result.css';
 
 const STATIC = process.env.REACT_APP_STATIC;
 
@@ -12,8 +12,8 @@ function makeIframe() {
   const iframe = document.createElement('iframe');
   iframe.src = STATIC + '/blank.html';
   iframe.hidden = true;
-  iframe.name = 'JS Bin Output';
-  iframe.className = 'Output';
+  iframe.name = 'JS Bin Result';
+  iframe.className = 'Result';
   iframe.setAttribute(
     'sandbox',
     'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
@@ -21,10 +21,10 @@ function makeIframe() {
   return iframe;
 }
 
-export default class Output extends React.Component {
+export default class Result extends React.Component {
   constructor(props) {
     super(props);
-    this.updateOutput = this.updateOutput.bind(this);
+    this.updateResult = this.updateResult.bind(this);
     this.catchErrors = this.catchErrors.bind(this);
 
     this.state = { guid: 0 };
@@ -52,21 +52,21 @@ export default class Output extends React.Component {
     }
   }
 
-  updateOutput(output) {
+  updateResult(result) {
     if (this.props.error) {
       // don't bother sending the state change if there's nothing to be done
       this.props.clearError();
     }
 
-    const isPage = output === OUTPUT.OUTPUT_PAGE;
-    const isBoth = output === OUTPUT.OUTPUT_BOTH;
-    const isConsole = output === OUTPUT.OUTPUT_CONSOLE;
+    const isPage = result === RESULT.RESULT_PAGE;
+    const isBoth = result === RESULT.RESULT_BOTH;
+    const isConsole = result === RESULT.RESULT_CONSOLE;
 
     const { bin } = this.props;
     let iframe = this.iframe;
 
     if (isBoth || isPage) {
-      if (!this.output) {
+      if (!this.result) {
         // then we're not ready for a render, so let's exit early
         return;
       }
@@ -79,12 +79,12 @@ export default class Output extends React.Component {
       this.iframe = iframe = makeIframe();
     }
 
-    // if the output element is visible (i.e. the user has OUTPUT_PAGE or OUTPUT_BOTH)
-    // then we need to clear the container and insert into this.output node. Otherwise,
+    // if the result element is visible (i.e. the user has RESULT_PAGE or RESULT_BOTH)
+    // then we need to clear the container and insert into this.result node. Otherwise,
     // we need to put in the DOM somewhere, so we drop it into the body, but leave
     // it hidden.
     if (isBoth || isPage) {
-      this.output.appendChild(iframe);
+      this.result.appendChild(iframe);
       iframe.hidden = false;
     } else {
       document.body.appendChild(iframe);
@@ -177,7 +177,7 @@ export default class Output extends React.Component {
   }
 
   componentDidMount() {
-    this.updateOutput(this.props.output);
+    this.updateResult(this.props.result);
     window.addEventListener('storage', this.catchErrors, false);
   }
 
@@ -191,12 +191,12 @@ export default class Output extends React.Component {
   componentWillReceiveProps(nextProps) {
     // multiple `if` statements so that I'm super sure what's happening
     if (this.props.code !== nextProps.code) {
-      this.updateOutput(nextProps.output);
+      this.updateResult(nextProps.result);
     }
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.output !== this.props.output) {
+    if (nextProps.result !== this.props.result) {
       return true;
     }
 
@@ -211,33 +211,33 @@ export default class Output extends React.Component {
 
   componentWillUpdate(nextProps) {
     // check if the console needs to be rewired up
-    if (nextProps.output !== this.props.output) {
+    if (nextProps.result !== this.props.result) {
       if (
-        nextProps.output === OUTPUT.OUTPUT_BOTH ||
-        nextProps.output === OUTPUT.OUTPUT_CONSOLE
+        nextProps.result === RESULT.RESULT_BOTH ||
+        nextProps.result === RESULT.RESULT_CONSOLE
       ) {
         // blows up on "BOTH"
-        this.updateOutput(nextProps.output);
+        this.updateResult(nextProps.result);
       }
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.output !== this.props.output) {
-      // FIXME this doubles up when we show OUTPUT_BOTH
-      this.updateOutput(this.props.output);
+    if (prevProps.result !== this.props.result) {
+      // FIXME this doubles up when we show RESULT_BOTH
+      this.updateResult(this.props.result);
     }
   }
 
   render() {
-    const { output, splitColumns } = this.props;
+    const { result, splitColumns } = this.props;
     const hasConsole =
-      output === OUTPUT.OUTPUT_CONSOLE || output === OUTPUT.OUTPUT_BOTH;
+      result === RESULT.RESULT_CONSOLE || result === RESULT.RESULT_BOTH;
     const hasPage =
-      output === OUTPUT.OUTPUT_PAGE || output === OUTPUT.OUTPUT_BOTH;
+      result === RESULT.RESULT_PAGE || result === RESULT.RESULT_BOTH;
 
     return (
-      <div className="Output">
+      <div className="Result">
         <Splitter
           vertical={!splitColumns}
           percentage={true}
@@ -245,7 +245,7 @@ export default class Output extends React.Component {
           primaryIndex={0}
           onSize={() => {}}
         >
-          {hasPage && <div id="output" ref={e => (this.output = e)} />}
+          {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&
             <Console
               onRef={e => (this.console = e)}
@@ -258,16 +258,16 @@ export default class Output extends React.Component {
   }
 }
 
-Output.propTypes = {
+Result.propTypes = {
   code: PropTypes.string.isRequired, // FIXME not entirely sure
   bin: PropTypes.object.isRequired,
   setError: PropTypes.func,
   clearError: PropTypes.func,
-  output: PropTypes.string,
+  result: PropTypes.string,
   splitColumns: PropTypes.bool,
 };
 
-Output.defaultProps = {
-  output: OUTPUT.OUTPUT_PAGE,
+Result.defaultProps = {
+  result: RESULT.RESULT_PAGE,
   splitColumns: false,
 };

@@ -15,6 +15,8 @@
 
 ## Bit bugs
 
+- [ ] New is broken
+- [ ] Open is broken / Palette is broken
 - [x] Make title a prop of Head, rather than multiple `title` els
 - [x] Handle 404 - and for missing /local/* entries
 - [x] Sticky quick setting layout

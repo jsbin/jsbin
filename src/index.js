@@ -22,7 +22,7 @@ import reducers from './reducers'; // Or wherever you keep your reducers
 import { defaultState as defaultSessions } from './reducers/session';
 import { defaultState as defaultApp } from './reducers/app';
 import * as MODES from './lib/cm-modes';
-import { OUTPUT_PAGE, OUTPUT_CONSOLE, changeOutput } from './actions/session';
+import { RESULT_PAGE, RESULT_CONSOLE, changeResult } from './actions/session';
 import { setSource } from './actions/app';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
@@ -63,13 +63,13 @@ const loadFromStorage = (localStorageKey, defaults = {}) => {
 // TODO consider looking at/using redux-persist, for now though, let's reinvent
 // some wheels!
 const initState = restoreSettings();
-const splitterWidth = loadFromStorage('splitter-width');
-if (splitterWidth) {
-  initState.session = {
-    ...defaultSessions,
-    splitterWidth,
-  };
-}
+const splitterWidth =
+  loadFromStorage('splitter-width') || defaultSessions.splitterWidth;
+initState.session = {
+  ...defaultSessions,
+  splitterWidth,
+  result: initState.app.result,
+};
 
 /** FIXME bad, this is messy and hacky */
 initState.user = {
@@ -81,39 +81,51 @@ if (!initState.user.settings) {
 
 initState.app = { ...defaultApp, ...initState.app };
 
-// NOTE I don't really know why I couldn't do
-// `createStore(reducers, applyMiddleware(...middleware))`
-// but it just didn't want to fly
-const finalCreateStore = compose(...middleware)(createStore);
-const store = finalCreateStore(reducers, initState);
-
-saveSettings(store);
-
 // FIXME move this out of index.js
 {
   const url = new URL(window.location.toString());
 
-  const showOutput = url.searchParams.get('output');
-  if (showOutput !== null) {
-    if (showOutput === '' || showOutput === 1) {
-      store.dispatch(changeOutput(OUTPUT_PAGE));
+  // I hate past me for doing this…well I hate PHP for making me do this
+  const display = decodeURIComponent(window.location.search.substring(1)).split(
+    ','
+  );
+
+  console.log(display);
+  console.log(display.includes('output'));
+
+  const showResult =
+    url.searchParams.get('output') || display.includes('output');
+  if (showResult !== null) {
+    if (showResult === '' || showResult === 1 || showResult === true) {
+      initState.session.result = RESULT_PAGE;
     }
   }
 
-  const showConsole = url.searchParams.get('console');
+  const showConsole =
+    url.searchParams.get('console') || display.includes('console');
   if (showConsole !== null) {
-    if (showConsole === '' || showConsole === 1) {
-      store.dispatch(changeOutput(OUTPUT_CONSOLE));
+    if (showConsole === '' || showConsole === 1 || showConsole === true) {
+      initState.session.result = RESULT_CONSOLE;
     }
   }
 
   Object.keys(MODES).forEach(mode => {
     const key = MODES[mode];
-    if (url.searchParams.get(key) !== null) {
-      store.dispatch(setSource(key));
+    if (url.searchParams.get(key) !== null || display.includes(key)) {
+      initState.app.source = key;
     }
   });
+
+  if (display.includes('js')) {
+    // super legacy 😢
+    initState.app.source = MODES.JAVASCRIPT;
+  }
 }
+
+const finalCreateStore = compose(...middleware)(createStore);
+const store = finalCreateStore(reducers, initState);
+
+saveSettings(store);
 
 const render = App => {
   ReactDOM.render(

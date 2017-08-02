@@ -1,6 +1,6 @@
 import { SAVE_SETTINGS } from '../actions/user';
 import { SET_OPTION } from '../actions/editor';
-import { CHANGE_OUTPUT } from '../actions/session';
+import { CHANGE_RESULT } from '../actions/session';
 import { TOGGLE_LAYOUT, SET_THEME, SHOW_WELCOME } from '../actions/app';
 import { insertChangeIntoUserSettings } from '../lib/settings';
 import { defaultUserSettings } from '../lib/Defaults';
@@ -26,8 +26,8 @@ export default function(state = defaultState, action) {
     case SET_THEME:
       settingsProp = 'app.theme';
       break;
-    case CHANGE_OUTPUT:
-      settingsProp = 'app.output';
+    case CHANGE_RESULT:
+      settingsProp = 'app.result';
       break;
     case TOGGLE_LAYOUT:
       settingsProp = 'app.splitColumns';

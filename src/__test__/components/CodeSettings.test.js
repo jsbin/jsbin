@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import React from 'react';
 import { mount } from 'enzyme';
 import expect from 'expect';
-import { OUTPUT_PAGE } from '../../actions/session';
+import { RESULT_PAGE } from '../../actions/session';
 const mockStore = configureMockStore();
 
 import CodeSettings from '../../containers/CodeSettings';
@@ -16,7 +16,7 @@ test('lineNumbers change trickles up to user settings', () => {
       source: 'javascript',
     },
     session: {
-      output: OUTPUT_PAGE,
+      result: RESULT_PAGE,
     },
   });
 

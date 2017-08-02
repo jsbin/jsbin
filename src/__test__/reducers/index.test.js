@@ -16,7 +16,7 @@ test('layout change multiple times to the same value does not corrupt', () => {
       splitColumns: true,
       syncSettings: false,
       source: 'html',
-      output: 'page',
+      result: 'page',
       useControl: false,
       splitColumns: false,
     },

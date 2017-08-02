@@ -1,5 +1,5 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SAVE, SET_OUTPUT } from '../actions/bin';
+import { SAVE, SET_RESULT } from '../actions/bin';
 import {
   SET_SPLITTER_WIDTH,
   DISMISS,
@@ -43,6 +43,7 @@ export default store => {
         const { editor, app } = getSettings(JSON.parse(event.newValue));
         // prevents the panel from switching
         delete app.source;
+        delete app.result;
         store.dispatch({ type: MASS_UPDATE, value: { editor, app } });
       }
     },
@@ -63,7 +64,7 @@ export default store => {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
     }
 
-    if (action.type === SAVE || (action.type === SET_OUTPUT && state.bin.id)) {
+    if (action.type === SAVE || (action.type === SET_RESULT && state.bin.id)) {
       save(state, store.dispatch);
     }
 

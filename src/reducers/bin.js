@@ -5,7 +5,7 @@ import {
   ERROR,
   SET_JS,
   SET_CSS,
-  SET_OUTPUT,
+  SET_RESULT,
   SET_BIN,
   GET_BIN,
   RESET,
@@ -16,7 +16,7 @@ const defaultState = {
   loading: true,
   id: null,
   revision: 1, // may drop this
-  output: '',
+  result: '',
   html: '',
   javascript: '',
   css: '',
@@ -75,8 +75,8 @@ export default function reducer(state = defaultState, action) {
     };
   }
 
-  if (type === SET_OUTPUT) {
-    return { ...state, output: code };
+  if (type === SET_RESULT) {
+    return { ...state, result: code };
   }
 
   if (type === SET_HTML) {

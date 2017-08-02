@@ -6,9 +6,9 @@ import { HotKeys } from 'react-hotkeys';
 import Cookies from 'js-cookie';
 
 import Welcome from '../containers/Welcome';
-import * as OUTPUT from '../actions/session';
+import * as RESULT from '../actions/session';
 import Panel from '../containers/Panel';
-import Output from '../containers/Output';
+import Result from '../containers/Result';
 import Head from './Head';
 import Palette from '../containers/Palette';
 import Loading from './Loading';
@@ -152,8 +152,8 @@ export default class App extends Component {
                 focus={!session.palette}
                 onRef={ref => (this.panel = ref)}
               />
-              {session.output !== OUTPUT.OUTPUT_NONE &&
-                <Output output={session.output} />}
+              {session.result !== RESULT.RESULT_NONE &&
+                <Result result={session.result} />}
             </Splitter>
           </div>
         </div>

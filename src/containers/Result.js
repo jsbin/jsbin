@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
-import Output from '../components/Output';
+import Result from '../components/Result';
 import { clearError, setError } from '../actions/session';
 
-const OutputContainer = connect(
+const ResultContainer = connect(
   ({ bin, session, app }) => ({
-    code: bin.output,
+    code: bin.result,
     bin,
     error: session.error,
     splitColumns: app.splitColumns,
   }),
   { clearError, setError }
-)(Output);
+)(Result);
 
-export default OutputContainer;
+export default ResultContainer;

@@ -8,10 +8,10 @@ import { Command } from './Symbols';
 // import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import {
-  OUTPUT_PAGE,
-  OUTPUT_CONSOLE,
-  OUTPUT_BOTH,
-  OUTPUT_NONE,
+  RESULT_PAGE,
+  RESULT_CONSOLE,
+  RESULT_BOTH,
+  RESULT_NONE,
 } from '../actions/session';
 
 import * as MODES from '../lib/cm-modes';
@@ -22,15 +22,15 @@ export default class CodeSettings extends React.Component {
   constructor(props) {
     super(props);
     this.changeSource = this.changeSource.bind(this);
-    this.changeOutput = this.changeOutput.bind(this);
+    this.changeResult = this.changeResult.bind(this);
     this.changeEditor = this.changeEditor.bind(this);
     this.changeApp = this.changeApp.bind(this);
     this.changeBin = this.changeBin.bind(this);
     this.state = { height: 0 };
   }
 
-  changeOutput(value) {
-    this.props.changeOutput(value);
+  changeResult(value) {
+    this.props.changeResult(value);
   }
 
   changeSource(value) {
@@ -65,7 +65,7 @@ export default class CodeSettings extends React.Component {
       lineWrapping,
       lineNumbers,
       source,
-      output,
+      result,
       splitColumns,
     } = this.props;
 
@@ -111,19 +111,19 @@ export default class CodeSettings extends React.Component {
 
     const resultOptions = [
       {
-        value: OUTPUT_PAGE,
+        value: RESULT_PAGE,
         label: 'Page',
       },
       {
-        value: OUTPUT_CONSOLE,
+        value: RESULT_CONSOLE,
         label: 'Console',
       },
       {
-        value: OUTPUT_BOTH,
+        value: RESULT_BOTH,
         label: 'Both',
       },
       {
-        value: OUTPUT_NONE,
+        value: RESULT_NONE,
         label: 'None',
       },
     ];
@@ -140,12 +140,12 @@ export default class CodeSettings extends React.Component {
             {...selectDefaults}
           />
         </label>
-        <label className="output grow">
+        <label className="result grow">
           <span onClick={e => this.result.focus()}>Result</span>
           <Select
             ref={e => (this.result = e)}
-            value={output}
-            onChange={this.changeOutput}
+            value={result}
+            onChange={this.changeResult}
             options={resultOptions}
             {...selectDefaults}
           />
@@ -231,13 +231,13 @@ CodeSettings.propTypes = {
   lineWrapping: PropTypes.bool.isRequired,
   lineNumbers: PropTypes.bool.isRequired,
   source: PropTypes.string.isRequired,
-  output: PropTypes.string,
+  result: PropTypes.string,
   // updated: PropTypes.string,
   splitColumns: PropTypes.bool,
-  toggleOutput: PropTypes.func,
+  toggleResult: PropTypes.func,
   set: PropTypes.func,
   setSource: PropTypes.func,
-  changeOutput: PropTypes.func,
+  changeResult: PropTypes.func,
   onRefresh: PropTypes.func,
   toggleLayout: PropTypes.func,
 };

@@ -1,10 +1,10 @@
 import {
-  CHANGE_OUTPUT,
-  OUTPUT_NONE,
+  CHANGE_RESULT,
+  RESULT_NONE,
   SET_SPLITTER_WIDTH,
   HIGHLIGHT_LINES,
-  TOGGLE_OUTPUT,
-  OUTPUT_PAGE,
+  TOGGLE_RESULT,
+  RESULT_PAGE,
   TRIGGER_PALETTE,
   SET_CURSOR,
   SET_ERROR,
@@ -23,8 +23,8 @@ const defaultCursorState = {
 };
 
 export const defaultState = {
-  output: OUTPUT_PAGE,
-  lastOutput: OUTPUT_NONE,
+  result: RESULT_PAGE,
+  lastResult: RESULT_NONE,
   highlightedLines: null,
   palette: false,
   error: null,
@@ -51,10 +51,10 @@ export default function reducer(state = defaultState, action) {
     return { ...state, splitterWidth: action.value };
   }
 
-  if (type === TOGGLE_OUTPUT) {
-    const output =
-      state.output === OUTPUT_NONE ? state.lastOutput : OUTPUT_NONE;
-    return { ...state, lastOutput: state.output, output };
+  if (type === TOGGLE_RESULT) {
+    const result =
+      state.result === RESULT_NONE ? state.lastResult : RESULT_NONE;
+    return { ...state, lastResult: state.result, result };
   }
 
   if (type === SET_ERROR) {
@@ -65,8 +65,8 @@ export default function reducer(state = defaultState, action) {
     return { ...state, error: null };
   }
 
-  if (type === CHANGE_OUTPUT) {
-    return { ...state, output: action.value };
+  if (type === CHANGE_RESULT) {
+    return { ...state, result: action.value };
   }
 
   if (type === SET_CURSOR) {

@@ -1,19 +1,19 @@
-export const CHANGE_OUTPUT = '@@session/CHANGE_OUTPUT';
+export const CHANGE_RESULT = '@@session/CHANGE_RESULT';
 export const TRIGGER_PALETTE = '@@session/TRIGGER_PALETTE';
 export const DISMISS = '@@session/DISMISS';
 export const SET_CURSOR = '@@session/SET_CURSOR';
 export const SET_ERROR = '@@session/SET_ERROR';
 export const CLEAR_ERROR = '@@session/CLEAR_ERROR';
-export const TOGGLE_OUTPUT = '@@session/TOGGLE_OUTPUT';
+export const TOGGLE_RESULT = '@@session/TOGGLE_RESULT';
 export const DIRTY = '@@session/DIRTY';
 export const SET_SPLITTER_WIDTH = '@@session/SET_SPLITTER_WIDTH';
 export const HIGHLIGHT_LINES = '@@session/HIGHLIGHT_LINES';
 
 // constants - not event types
-export const OUTPUT_NONE = 'OUTPUT_NONE';
-export const OUTPUT_CONSOLE = 'OUTPUT_CONSOLE';
-export const OUTPUT_PAGE = 'OUTPUT_PAGE';
-export const OUTPUT_BOTH = 'OUTPUT_BOTH';
+export const RESULT_NONE = 'none';
+export const RESULT_CONSOLE = 'console';
+export const RESULT_PAGE = 'page';
+export const RESULT_BOTH = 'both';
 
 export function setSplitterWidth(value) {
   return dispatch => {
@@ -26,9 +26,9 @@ export function setHighlightedLines(value = null) {
   return { type: HIGHLIGHT_LINES, value };
 }
 
-export function toggleOutput() {
+export function toggleResult() {
   return dispatch => {
-    dispatch({ type: TOGGLE_OUTPUT });
+    dispatch({ type: TOGGLE_RESULT });
     dispatch(setDirtyFlag(true));
   };
 }
@@ -37,9 +37,9 @@ export function setDirtyFlag(value = true) {
   return { type: DIRTY, value };
 }
 
-// note: value should be in OUTPUT_*
-export function changeOutput(value) {
-  return { type: CHANGE_OUTPUT, value };
+// note: value should be in RESULT_*
+export function changeResult(value) {
+  return { type: CHANGE_RESULT, value };
 }
 
 export function triggerPalette(show) {

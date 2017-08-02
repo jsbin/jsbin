@@ -45,7 +45,7 @@ export default class Palette extends React.Component {
     this.state = {
       commands,
       fuse: new Fuse(commands, fuseOptions),
-      filter: '> ',
+      filter: '',
       active: 0,
     };
   }
@@ -53,7 +53,7 @@ export default class Palette extends React.Component {
   reset() {
     const commands = Object.keys(allCommands).map(key => allCommands[key]);
     const fuse = new Fuse(commands, fuseOptions);
-    this.setState({ commands, fuse, filter: '> ' });
+    this.setState({ commands, fuse, filter: '' });
   }
 
   async onRun(command) {
@@ -86,7 +86,7 @@ export default class Palette extends React.Component {
       let { active, commands } = this.state;
       e.preventDefault();
       if (key === ENTER) {
-        this.setState({ filter: '> ' });
+        this.setState({ filter: '' });
         return this.onRun(commands[active]);
       }
 

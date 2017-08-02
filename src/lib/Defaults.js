@@ -38,7 +38,7 @@ export const settings = `{
   // - '${LIGHT}' (based on Devtools light)
   "app.theme": "${LIGHT}",
 
-  // Switches the view from columns to rows with output at the bottom
+  // Switches the view from columns to rows with result at the bottom
   "app.splitColumns": true,
 
   // Automatically upload settings to your account (requires PRO)
@@ -47,8 +47,8 @@ export const settings = `{
   // Default source panel. Values can be: 'html', 'css' and 'javascript'
   "app.source": "html",
 
-  // Default output panel. Values can be: 'page', 'console', 'both' and 'none'
-  "app.output": "page",
+  // Default result panel. Values can be: 'page', 'console', 'both' and 'none'
+  "app.result": "page",
   ${'\n  ' + macSpecificKeySwap + '\n'}
   // Preferred open panel when sharing a bin URL
   "share.panel": "javascript",

@@ -36,6 +36,7 @@ export default class Palette extends React.Component {
     this.onFilter = this.onFilter.bind(this);
     this.onRun = this.onRun.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.dismiss = this.dismiss.bind(this);
 
     this.focusTimer = null;
 
@@ -71,6 +72,10 @@ export default class Palette extends React.Component {
       this.props.insert(res);
     }
 
+    this.dismiss();
+  }
+
+  dismiss() {
     this.props.dismiss();
   }
 
@@ -156,7 +161,7 @@ export default class Palette extends React.Component {
     const start = active - 100 < 0 ? 0 : active - 100;
     const end = start + 100;
     return (
-      <div className="Palette">
+      <div className="Palette" onClick={this.dismiss}>
         <div className="inner">
           <input
             ref={e => (this.input = e)}

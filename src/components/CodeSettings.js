@@ -1,5 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+import { Command } from './Symbols';
+
 // import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import {
@@ -24,12 +29,12 @@ export default class CodeSettings extends React.Component {
     this.state = { height: 0 };
   }
 
-  changeOutput(e) {
-    this.props.changeOutput(e.target.value);
+  changeOutput(value) {
+    this.props.changeOutput(value);
   }
 
-  changeSource(e) {
-    this.props.setSource(e.target.value);
+  changeSource(value) {
+    this.props.setSource(value);
   }
 
   changeApp(property, value) {
@@ -38,6 +43,17 @@ export default class CodeSettings extends React.Component {
 
   changeEditor(property, value) {
     this.props.set(property, value);
+  }
+
+  optionRenderer(option) {
+    return (
+      <div className="Option">
+        <span>
+          {option.label}
+        </span>
+        {option.shortcut && option.shortcut}
+      </div>
+    );
   }
 
   changeBin(propery, value) {}
@@ -52,24 +68,87 @@ export default class CodeSettings extends React.Component {
       output,
       splitColumns,
     } = this.props;
+
+    const selectDefaults = {
+      autosize: false,
+      openOnFocus: true,
+      clearable: false,
+      searchable: false,
+      autoBlur: false,
+      simpleValue: true,
+      optionRenderer: this.optionRenderer,
+    };
+
+    const sourceOptions = [
+      {
+        value: MODES.HTML,
+        label: 'HTML',
+        shortcut: (
+          <kbd>
+            <Command /> 1
+          </kbd>
+        ),
+      },
+      {
+        value: MODES.JAVASCRIPT,
+        label: 'JavaScript',
+        shortcut: (
+          <kbd>
+            <Command /> 2
+          </kbd>
+        ),
+      },
+      {
+        value: MODES.CSS,
+        label: 'CSS',
+        shortcut: (
+          <kbd>
+            <Command /> 3
+          </kbd>
+        ),
+      },
+    ];
+
+    const resultOptions = [
+      {
+        value: OUTPUT_PAGE,
+        label: 'Page',
+      },
+      {
+        value: OUTPUT_CONSOLE,
+        label: 'Console',
+      },
+      {
+        value: OUTPUT_BOTH,
+        label: 'Both',
+      },
+      {
+        value: OUTPUT_NONE,
+        label: 'None',
+      },
+    ];
+
     return (
       <div className="CodeSettings">
         <label className="grow">
-          Source{' '}
-          <select value={source} onChange={this.changeSource}>
-            <option value={MODES.HTML}>HTML</option>
-            <option value={MODES.JAVASCRIPT}>JavaScript</option>
-            <option value={MODES.CSS}>CSS</option>
-          </select>
+          <span onClick={e => this.source.focus()}>Source</span>
+          <Select
+            ref={e => (this.source = e)}
+            value={source}
+            onChange={this.changeSource}
+            options={sourceOptions}
+            {...selectDefaults}
+          />
         </label>
         <label className="output grow">
-          Output{' '}
-          <select value={output} onChange={this.changeOutput}>
-            <option value={OUTPUT_PAGE}>Page</option>
-            <option value={OUTPUT_CONSOLE}>Console</option>
-            <option value={OUTPUT_BOTH}>Both</option>
-            <option value={OUTPUT_NONE}>None</option>
-          </select>
+          <span onClick={e => this.result.focus()}>Result</span>
+          <Select
+            ref={e => (this.result = e)}
+            value={output}
+            onChange={this.changeOutput}
+            options={resultOptions}
+            {...selectDefaults}
+          />
         </label>
         {/* <details>
           <summary>Metadata</summary>
@@ -85,7 +164,7 @@ export default class CodeSettings extends React.Component {
             />{' '}
           </label>
         </details> */}
-        <details>
+        <details open>
           <summary>Quick Settings</summary>
           <label>
             <input
@@ -111,17 +190,32 @@ export default class CodeSettings extends React.Component {
             Line wrap
           </label>
 
-          <label>
-            <input
-              name="splitColumns"
-              type="checkbox"
-              onChange={e => {
-                this.changeApp('splitColumns', e.target.checked);
-              }}
-              checked={splitColumns}
-            />{' '}
-            Vertical splitter
-          </label>
+          <div className="radio-group">
+            <label>
+              <input
+                type="radio"
+                name="splitColumns"
+                checked={splitColumns === true}
+                value="vertical"
+                onChange={e => {
+                  this.changeApp('splitColumns', e.target.value === 'vertical');
+                }}
+              />
+              Split vertically
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="splitColumns"
+                checked={splitColumns !== true}
+                value="vertical"
+                onChange={e => {
+                  this.changeApp('splitColumns', e.target.value !== 'vertical');
+                }}
+              />
+              horizontally
+            </label>
+          </div>
         </details>
 
         {/* {updated &&

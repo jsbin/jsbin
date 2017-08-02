@@ -11,33 +11,31 @@ body,
   font-size: $font-size-base;
 }
 
-#root {
-  @import "splitter";
+@import "splitter";
 
-  .JsBinApp {
-    height: 100%;
-  }
+.JsBinApp {
+  height: 100%;
+}
 
-  [tabindex] {
-    outline: none;
-  }
+[tabindex] {
+  outline: none;
+}
 
-  input {
-    border-radius: 1px;
-    border: 1px solid #03a9f4;
-    font-size: $font-size-base * 1.2;
-    padding: 5px;
-  }
+input {
+  border-radius: 1px;
+  border: 1px solid #03a9f4;
+  font-size: $font-size-base * 1.2;
+  padding: 5px;
+}
 
-  input[type="checkbox"],
-  input[type="radio"],
-  label {
-    cursor: pointer;
-  }
+input[type="checkbox"],
+input[type="radio"],
+label {
+  cursor: pointer;
+}
 
-  label {
-    user-select: none;
-  }
+label {
+  user-select: none;
 }
 
 .Error {
@@ -65,12 +63,13 @@ kbd {
   padding: 5px;
   border-radius: 3px;
   background: rgb(243, 243, 243);
-  /* border: 2px solid #fff; */
+  text-decoration: none;
 }
 
 p > kbd,
 td > kbd,
-li > kbd {
+li > kbd,
+button > kbd {
   box-shadow: .5px .5px 0 rgba(0, 0, 0, .2);
   border: 1px solid #ccc;
   margin: 0 4px;
@@ -78,10 +77,6 @@ li > kbd {
 
 kbd:first-child {
   margin-left: 10px;
-}
-
-kbd.symbol {
-  // font-family: monospace;
 }
 
 .theme-dark {

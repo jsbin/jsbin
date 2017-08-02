@@ -20,25 +20,29 @@ const getSettingsChange = (key, action, settings) => {
 
 export default function(state = defaultState, action) {
   const { type } = action;
-  let settingsProp = '';
+  let settingsProp = false;
 
   switch (type) {
-  case SET_THEME:
-    settingsProp = 'app.theme';
-    // falls through
-  case CHANGE_OUTPUT:
-    settingsProp = 'app.output';
-    // falls through
-  case TOGGLE_LAYOUT:
-    settingsProp = 'app.splitColumns';
-    // falls through
-  case SHOW_WELCOME:
-    if (!settingsProp) settingsProp = 'app.showWelcome';
+    case SET_THEME:
+      settingsProp = 'app.theme';
+      break;
+    case CHANGE_OUTPUT:
+      settingsProp = 'app.output';
+      break;
+    case TOGGLE_LAYOUT:
+      settingsProp = 'app.splitColumns';
+      break;
+    case SHOW_WELCOME:
+      settingsProp = 'app.showWelcome';
+      break;
+    default:
+  }
+
+  if (settingsProp) {
     return {
       ...state,
       settings: getSettingsChange(settingsProp, action, state.settings),
     };
-  default:
   }
 
   if (type === SET_OPTION && saveTriggerOptions.includes(action.option)) {

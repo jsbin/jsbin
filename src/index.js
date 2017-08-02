@@ -15,6 +15,7 @@ import { middleware as reduxPackMiddleware } from 'redux-pack';
 import App from './containers/App';
 import Settings from './containers/Settings';
 import Welcome from './containers/Welcome';
+import Login from './components/Login';
 
 // utils/store setup
 import restoreSettings, { getRawUserSettings } from './lib/settings';
@@ -134,6 +135,7 @@ const render = App => {
           <Route exact path="/" component={App} />
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/welcome" component={Welcome} />
+          <Route exact path="/login" component={Login} />
 
           <Route
             exact

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import * as RESULT from '../actions/session';
 import binToHTML from '../lib/BinToHTML';
-import Console from '../containers/Console';
 import '../css/Result.css';
 
 const STATIC = process.env.REACT_APP_STATIC;
@@ -27,7 +26,7 @@ export default class Result extends React.Component {
     this.updateResult = this.updateResult.bind(this);
     this.catchErrors = this.catchErrors.bind(this);
 
-    this.state = { guid: 0 };
+    this.state = { guid: 0, Console: null };
 
     this.iframe = makeIframe();
   }
@@ -176,7 +175,18 @@ export default class Result extends React.Component {
     }
   }
 
-  componentDidMount() {
+  async lazyLoad({ result }) {
+    if (this.state.Console) return;
+
+    if (result === RESULT.RESULT_BOTH || result === RESULT.RESULT_CONSOLE) {
+      const { default: Console } = await import('../containers/Console');
+      this.setState({ Console });
+      this.forceUpdate();
+    }
+  }
+
+  async componentDidMount() {
+    await this.lazyLoad(this.props);
     this.updateResult(this.props.result);
     window.addEventListener('storage', this.catchErrors, false);
   }
@@ -188,7 +198,9 @@ export default class Result extends React.Component {
     window.removeEventListener('storage', this.catchErrors, false);
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
+    await this.lazyLoad(nextProps);
+
     // multiple `if` statements so that I'm super sure what's happening
     if (this.props.code !== nextProps.code) {
       this.updateResult(nextProps.result);
@@ -209,7 +221,7 @@ export default class Result extends React.Component {
     return true;
   }
 
-  componentWillUpdate(nextProps) {
+  async componentWillUpdate(nextProps) {
     // check if the console needs to be rewired up
     if (nextProps.result !== this.props.result) {
       if (
@@ -222,7 +234,7 @@ export default class Result extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.result !== this.props.result) {
       // FIXME this doubles up when we show RESULT_BOTH
       this.updateResult(this.props.result);
@@ -231,6 +243,7 @@ export default class Result extends React.Component {
 
   render() {
     const { result, splitColumns } = this.props;
+    const { Console } = this.state;
     const hasConsole =
       result === RESULT.RESULT_CONSOLE || result === RESULT.RESULT_BOTH;
     const hasPage =
@@ -247,6 +260,7 @@ export default class Result extends React.Component {
         >
           {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&
+            Console &&
             <Console
               onRef={e => (this.console = e)}
               guid={this.state.guid}

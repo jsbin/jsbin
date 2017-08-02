@@ -192,6 +192,7 @@ export default class Palette extends React.Component {
                   onClick={() => this.onRun(command)}
                 >
                   {command.display || command.title}
+                  {command.shortcut && command.shortcut}
                 </li>
               )}
           </ul>

@@ -60,6 +60,14 @@
       padding: 10px;
       cursor: pointer;
       user-select: none;
+      position: relative;
+
+      kbd {
+        position: absolute;
+        right: 10px;
+        top: 4px;
+        margin-right: 0;
+      }
 
       &.active {
         background: rgba(0, 0, 0, 0.1);

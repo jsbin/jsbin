@@ -23,7 +23,11 @@ export const newBin = {
 
 export const save = {
   title: 'Save',
-  shortcut: null,
+  shortcut: (
+    <kbd>
+      <Command /> S
+    </kbd>
+  ),
   run: dispatch => {
     dispatch({ type: SAVE });
   },
@@ -150,6 +154,13 @@ export const welcome = {
 
 export const settings = {
   title: 'Settings',
+  shortcut: (
+    <kbd>
+      <Command />
+      <Shift />
+      {' ,'}
+    </kbd>
+  ),
   run: () => {
     // dispatch => dispatch(push('/settings')),
     window.open('/settings');

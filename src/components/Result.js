@@ -179,7 +179,9 @@ export default class Result extends React.Component {
     if (this.state.Console) return;
 
     if (result === RESULT.RESULT_BOTH || result === RESULT.RESULT_CONSOLE) {
-      const { default: Console } = await import('../containers/Console');
+      const {
+        default: Console,
+      } = await import(/* webpackChunkName: "console" */ '../containers/Console');
       this.setState({ Console });
       this.forceUpdate();
     }

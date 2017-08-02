@@ -43,13 +43,13 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   : {};
 
 function isExternal(module) {
-  var context = module.context;
+  const context = module.context;
 
   if (typeof context !== 'string') {
     return false;
   }
 
-  return context.indexOf('node_modules') !== -1;
+  return context.includes('codemirror');
 }
 
 // This is the production configuration.

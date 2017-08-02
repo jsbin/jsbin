@@ -22,6 +22,7 @@
 ## Themes
 
 - [ ] Dark loading gif
+- [ ] Dark welcome/document theme
 
 ## Console
 

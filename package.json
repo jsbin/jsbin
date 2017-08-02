@@ -43,6 +43,8 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
+    "preact": "^8.2.1",
+    "preact-compat": "^3.16.0",
     "prettier": "^1.5.3",
     "promise": "7.1.1",
     "prop-types": "^15.5.10",

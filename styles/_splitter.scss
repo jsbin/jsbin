@@ -1,18 +1,6 @@
 @import "vars";
 
-.theme-dark {
-  .splitter-layout {
-    & > .layout-splitter {
-      background-color: lighten($c-dark-theme-border, 50%);
-
-      &:hover {
-        border-color: lighten($c-dark-theme-border, 30%);
-      }
-    }
-  }
-}
-
-.theme-light .splitter-layout {
+.splitter-layout {
   height: calc(100% - #{$menu-height});
   & > .layout-splitter {
     background-color: #000;
@@ -53,6 +41,18 @@
 
       border-left: 0;
       border-right: 0;
+    }
+  }
+}
+
+.theme-dark {
+  .splitter-layout {
+    & > .layout-splitter {
+      background-color: lighten($c-dark-theme-border, 50%);
+
+      &:hover {
+        border-color: lighten($c-dark-theme-border, 30%);
+      }
     }
   }
 }

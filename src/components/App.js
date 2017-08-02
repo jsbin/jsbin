@@ -15,8 +15,8 @@ import Loading from './Loading';
 import Error from './GenericErrorPage';
 import { SET_HTML } from '../actions/bin';
 
-import '@remy/react-splitter-layout/src/stylesheets/index.css';
 import '../css/App.css';
+import '@remy/react-splitter-layout/src/stylesheets/index.css';
 
 const noop = () => {};
 

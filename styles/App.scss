@@ -2,6 +2,8 @@
 @import "normalize";
 @import "system-font";
 
+@import "button";
+
 html,
 body,
 #root {
@@ -9,10 +11,9 @@ body,
   overflow: hidden;
   font-family: system;
   font-size: $font-size-base;
-}
 
-@import "splitter";
-@import "button";
+  @import "splitter";
+}
 
 .JsBinApp {
   height: 100%;

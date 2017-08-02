@@ -164,7 +164,7 @@ export default class CodeSettings extends React.Component {
             />{' '}
           </label>
         </details> */}
-        <details open>
+        <details>
           <summary>Quick Settings</summary>
           <label>
             <input

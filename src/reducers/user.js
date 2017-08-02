@@ -26,9 +26,9 @@ export default function(state = defaultState, action) {
     case SET_THEME:
       settingsProp = 'app.theme';
       break;
-    case CHANGE_RESULT:
-      settingsProp = 'app.result';
-      break;
+    // case CHANGE_RESULT:
+    //   settingsProp = 'app.result';
+    //   break;
     case TOGGLE_LAYOUT:
       settingsProp = 'app.splitColumns';
       break;

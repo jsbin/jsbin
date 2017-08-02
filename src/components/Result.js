@@ -239,7 +239,7 @@ export default class Result extends React.Component {
     return (
       <div className="Result">
         <Splitter
-          vertical={!splitColumns}
+          vertical={splitColumns}
           percentage={true}
           secondaryInitialSize={50}
           primaryIndex={0}

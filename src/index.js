@@ -22,8 +22,7 @@ import reducers from './reducers'; // Or wherever you keep your reducers
 import { defaultState as defaultSessions } from './reducers/session';
 import { defaultState as defaultApp } from './reducers/app';
 import * as MODES from './lib/cm-modes';
-import { RESULT_PAGE, RESULT_CONSOLE, changeResult } from './actions/session';
-import { setSource } from './actions/app';
+import { RESULT_PAGE, RESULT_CONSOLE } from './actions/session';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
 
@@ -81,37 +80,37 @@ if (!initState.user.settings) {
 
 initState.app = { ...defaultApp, ...initState.app };
 
-// FIXME move this out of index.js
+// FIXME find a home for this code
 {
+  // check the url and select the right panels
   const url = new URL(window.location.toString());
+
+  const source = url.searchParams.get('source');
+  if (source) {
+    initState.app.source = source;
+  }
+
+  const result = url.searchParams.get('result');
+  if (result) {
+    initState.session.result = result;
+  }
 
   // I hate past me for doing this…well I hate PHP for making me do this
   const display = decodeURIComponent(window.location.search.substring(1)).split(
     ','
   );
 
-  console.log(display);
-  console.log(display.includes('output'));
-
-  const showResult =
-    url.searchParams.get('output') || display.includes('output');
-  if (showResult !== null) {
-    if (showResult === '' || showResult === 1 || showResult === true) {
-      initState.session.result = RESULT_PAGE;
-    }
+  if (display.includes('output')) {
+    initState.session.result = RESULT_PAGE;
   }
 
-  const showConsole =
-    url.searchParams.get('console') || display.includes('console');
-  if (showConsole !== null) {
-    if (showConsole === '' || showConsole === 1 || showConsole === true) {
-      initState.session.result = RESULT_CONSOLE;
-    }
+  if (display.includes('console')) {
+    initState.session.result = RESULT_CONSOLE;
   }
 
   Object.keys(MODES).forEach(mode => {
     const key = MODES[mode];
-    if (url.searchParams.get(key) !== null || display.includes(key)) {
+    if (display.includes(key)) {
       initState.app.source = key;
     }
   });

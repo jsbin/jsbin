@@ -5,6 +5,7 @@ import {
   DISMISS,
   triggerPalette,
   HIGHLIGHT_LINES,
+  CHANGE_RESULT,
 } from '../actions/session';
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/bin';
@@ -54,11 +55,7 @@ export default store => {
   return next => action => {
     const nextAction = next(action);
 
-    /** keeping this for future use so we can use state to save */
     const state = store.getState(); // new state after action was applied
-    if (action.type.startsWith('@@app/')) {
-      storeKV('jsbin.app', state.app);
-    }
 
     if (action.type === SET_SPLITTER_WIDTH) {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
@@ -75,8 +72,18 @@ export default store => {
     }
 
     // keep the URL in sync
-    if (action.type === SET_SOURCE) {
-      store.dispatch(replace('?' + action.value.toLowerCase()));
+    if (action.type === SET_SOURCE || action.type === CHANGE_RESULT) {
+      const qs = new URLSearchParams(window.location.search);
+      if (action.type === SET_SOURCE) {
+        qs.set('source', state.app.source);
+      } else {
+        qs.set('result', action.value);
+      }
+      store.dispatch(
+        replace({
+          search: qs.toString(),
+        })
+      );
     }
 
     if (action.type === HIGHLIGHT_LINES) {

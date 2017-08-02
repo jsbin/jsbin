@@ -26,9 +26,13 @@ export function setHighlightedLines(value = null) {
   return { type: HIGHLIGHT_LINES, value };
 }
 
+let last = RESULT_NONE;
 export function toggleResult() {
-  return dispatch => {
-    dispatch({ type: TOGGLE_RESULT });
+  return (dispatch, getState) => {
+    const { session } = getState();
+    const value = session.result;
+    dispatch(changeResult(value === RESULT_NONE ? last : RESULT_NONE));
+    last = value;
     dispatch(setDirtyFlag(true));
   };
 }

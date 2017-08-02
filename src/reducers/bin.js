@@ -1,4 +1,5 @@
 import { handle } from 'redux-pack';
+import * as defaults from '../lib/Defaults';
 
 import {
   SET_HTML,
@@ -13,13 +14,13 @@ import {
 } from '../actions/bin';
 
 const defaultState = {
-  loading: true,
+  loading: false,
   id: null,
   revision: 1, // may drop this
   result: '',
-  html: '',
-  javascript: '',
-  css: '',
+  html: defaults.html,
+  javascript: defaults.javascript,
+  css: defaults.css,
   error: null,
 };
 

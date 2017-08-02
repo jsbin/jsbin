@@ -59,6 +59,14 @@ export const open = {
   title: 'Open...',
   run: async () => {
     const keys = await idk.keys();
+    if (keys.length === 0) {
+      return [
+        {
+          title: `...you don't have any locally saved bins`,
+        },
+      ];
+    }
+
     return keys.map(key => ({
       title: key,
       run: dispatch => {

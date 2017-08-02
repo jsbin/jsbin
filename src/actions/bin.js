@@ -25,16 +25,19 @@ export function setError(value) {
   return { type: ERROR, value };
 }
 
-export function fetchDefault() {
-  return {
-    type: SET_BIN,
-    ...defaults,
+export function fetchNew() {
+  return dispatch => {
+    dispatch({ type: RESET });
+    dispatch({
+      type: SET_BIN,
+      ...defaults,
+    });
   };
 }
 
-export function reset() {
-  return { type: RESET };
-}
+// export function reset() {
+//   return { type: RESET };
+// }
 
 export function save() {
   return { type: SAVE };

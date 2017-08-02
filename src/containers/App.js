@@ -6,7 +6,7 @@ import {
   fetchBin,
   fetchGithub,
   fetchLocal,
-  fetchDefault as loadDefault,
+  fetchNew,
   setBin,
   setCode,
 } from '../actions/bin';
@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => {
         return dispatch(fetchLocal(params.localId));
       }
 
-      dispatch(loadDefault());
+      dispatch(fetchNew());
     },
   };
 };

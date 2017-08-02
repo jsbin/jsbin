@@ -15,8 +15,9 @@
 
 ## Bit bugs
 
-- [ ] New is broken
-- [ ] Open is broken / Palette is broken
+- [ ] If console is open by default, then it takes focus
+- [x] New is broken
+- [x] Open is broken / Palette is broken
 - [x] Make title a prop of Head, rather than multiple `title` els
 - [x] Handle 404 - and for missing /local/* entries
 - [x] Sticky quick setting layout

@@ -61,6 +61,10 @@ export default class Palette extends React.Component {
       return;
     }
 
+    if (!command.run) {
+      return this.dismiss();
+    }
+
     const res = await this.props.run(command, { ...this.props });
     if (Array.isArray(res)) {
       this.setState({ commands: res, fuse: new Fuse(res, fuseOptions) });

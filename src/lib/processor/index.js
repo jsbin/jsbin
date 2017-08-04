@@ -1,19 +1,35 @@
 import binToHTML from '../BinToHTML';
 import { JAVASCRIPT, HTML, CSS } from '../cm-modes';
 
-// the transform libraries are lazy loaded
-import markdown from './html/markdown';
+// When adding new processors, add it to this line, and add to the `targets`
+// object and the rest should hook up automatically.
+import * as markdown from './markdown';
 
 export const NONE = 'none';
-export const MARKDOWN = 'markdown';
 
 const targets = {
-  [MARKDOWN]: markdown,
+  [markdown.config.name]: markdown,
   [NONE]: source => source,
 };
 
 export function has(target) {
   return !!targets[target];
+}
+
+export function getAvailableProcessors(source) {
+  return Object.entries(source)
+    .filter(([key, target]) => {
+      return target.for === source;
+    })
+    .map(target => target.config);
+}
+
+const MODES = { JAVASCRIPT, HTML, CSS };
+export function getConfig(target) {
+  if (!targets[target]) {
+    return MODES[target];
+  }
+  return targets[target].config;
 }
 
 const last = {

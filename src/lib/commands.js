@@ -11,16 +11,16 @@ import {
 } from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
 import idk from 'idb-keyval';
-
-import { NONE, MARKDOWN } from '../lib/processor';
-
-import {
-  // JAVASCRIPT,
-  // CSS,
-  HTML,
-} from '../lib/cm-modes';
+import { JAVASCRIPT, CSS, HTML } from '../lib/cm-modes';
 
 import FileSaver from 'file-saver'; // @@ lazy load
+import { getAvailableProcessors, NONE } from '../lib/processor';
+
+const processors = {
+  [JAVASCRIPT]: getAvailableProcessors(JAVASCRIPT),
+  [CSS]: getAvailableProcessors(CSS),
+  [HTML]: getAvailableProcessors(HTML),
+};
 
 export const newBin = {
   title: 'New',
@@ -121,25 +121,17 @@ export const addLibrary = {
 
 export const changeLanguage = {
   title: 'Change language',
-  condition: ({ app }) => app.source === HTML,
+  condition: ({ app }) => processors[app.source].length > 0,
   run: (dispatch, { app }) => {
-    if (app.source === HTML) {
-      return [
-        {
-          title: 'HTML',
-          run: dispatch => dispatch(setProcessor(HTML, NONE)),
-        },
-        {
-          title: 'Markdown',
-          run: dispatch => dispatch(setProcessor(HTML, MARKDOWN)),
-        },
-      ];
-    }
-
     return [
       {
-        title: 'None available',
+        title: app.source, // FIXME need correct label
+        run: dispatch => dispatch(setProcessor(app.source, NONE)),
       },
+      ...processors[app.source].map(({ config }) => ({
+        title: config.name,
+        run: dispatch => dispatch(setProcessor(app.source, config.name)),
+      })),
     ];
   },
 };

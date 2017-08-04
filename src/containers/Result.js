@@ -5,6 +5,7 @@ import { clearError, setError } from '../actions/session';
 const ResultContainer = connect(
   ({ bin, session, app }) => ({
     code: bin.result,
+    source: app.source,
     bin,
     error: session.error,
     splitColumns: app.splitColumns,

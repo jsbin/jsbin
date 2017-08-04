@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import classnames from 'classnames';
 import 'react-select/dist/react-select.css';
 
 import { Command } from './Symbols';
@@ -47,7 +48,9 @@ export default class CodeSettings extends React.Component {
 
   optionRenderer(option) {
     return (
-      <div className="Option">
+      <div
+        className={classnames({ Option: true, processor: option.processor })}
+      >
         <span>
           {option.label}
         </span>
@@ -151,16 +154,16 @@ export default class CodeSettings extends React.Component {
           />
         </label>
         {/* <details>
-          <summary>Metadata</summary>
+          <summary>Processors &amp; Metadata</summary>
           <label className="grow">
-            Title
+            <span>Title</span>
             <input
               name="title"
               type="text"
               onChange={e => {
                 this.changeBin('title', e.target.value);
               }}
-              value={bin.title}
+              value={'My bin'}
             />{' '}
           </label>
         </details> */}

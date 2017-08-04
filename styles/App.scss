@@ -40,6 +40,10 @@ label {
   user-select: none;
 }
 
+summary {
+  user-select: none;
+}
+
 .Error {
   transition: opacity 100ms ease-in-out;
   color: rgb(231, 76, 60);

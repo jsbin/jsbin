@@ -1,7 +1,7 @@
 import React from 'react';
 import { push } from 'react-router-redux';
 import { Command, Shift, Backspace } from '../components/Symbols';
-import { RESET, SAVE, DELETE } from '../actions/bin';
+import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
 import {
   toggleResult,
@@ -10,7 +10,15 @@ import {
   RESULT_CONSOLE,
 } from '../actions/session';
 import BinToHTML from '../lib/BinToHTML';
-import idk from 'idb-keyval'; // FIXME lazy load candidate
+import idk from 'idb-keyval';
+
+import { NONE, MARKDOWN } from '../lib/processor';
+
+import {
+  // JAVASCRIPT,
+  // CSS,
+  HTML,
+} from '../lib/cm-modes';
 
 import FileSaver from 'file-saver'; // @@ lazy load
 
@@ -108,6 +116,31 @@ export const addLibrary = {
         run: run.bind(null, latest),
       }))
       .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
+  },
+};
+
+export const changeLanguage = {
+  title: 'Change language',
+  condition: ({ app }) => app.source === HTML,
+  run: (dispatch, { app }) => {
+    if (app.source === HTML) {
+      return [
+        {
+          title: 'HTML',
+          run: dispatch => dispatch(setProcessor(HTML, NONE)),
+        },
+        {
+          title: 'Markdown',
+          run: dispatch => dispatch(setProcessor(HTML, MARKDOWN)),
+        },
+      ];
+    }
+
+    return [
+      {
+        title: 'None available',
+      },
+    ];
   },
 };
 

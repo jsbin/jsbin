@@ -8,7 +8,7 @@ import {
   CHANGE_RESULT,
 } from '../actions/session';
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
-import { save } from '../lib/bin';
+import { save } from '../lib/save-bin';
 import getSettings from '../lib/settings';
 
 function storeKV(key, value) {

@@ -1,5 +1,8 @@
 import { handle } from 'redux-pack';
 import * as defaults from '../lib/Defaults';
+import * as MODES from '../lib/cm-modes';
+
+import { has as hasProcessor, NONE } from '../lib/processor';
 
 import {
   SET_HTML,
@@ -11,6 +14,7 @@ import {
   GET_BIN,
   RESET,
   SET_ID,
+  SET_PROCESSOR,
 } from '../actions/bin';
 
 const defaultState = {
@@ -24,8 +28,21 @@ const defaultState = {
   error: null,
 };
 
+Object.keys(MODES).forEach(mode => {
+  defaultState[`${MODES[mode]}-processor`] = NONE;
+});
+
 export default function reducer(state = defaultState, action) {
   const { type, code, payload } = action;
+
+  if (type === SET_PROCESSOR) {
+    const value = action.value;
+    if (!hasProcessor(value)) {
+      throw new Error(`unknown processor "${value}"`);
+    }
+
+    return { ...state, [action.source + '-processor']: value };
+  }
 
   if (type === RESET) {
     return defaultState;
@@ -55,9 +72,8 @@ export default function reducer(state = defaultState, action) {
         loading: false,
       }),
       success: prevState => {
-        const { html, css, javascript, id } = payload;
         // FIXME handle extra settings
-        return { ...prevState, html, css, id, javascript, loading: false };
+        return { ...prevState, ...payload, loading: false };
       },
       // on finish dispatch reset
       // finish: prevState => ({ ...prevState, isLoading: false }),

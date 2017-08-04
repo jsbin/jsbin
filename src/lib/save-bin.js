@@ -5,11 +5,13 @@ import { setError } from '../actions/session';
 import { setId } from '../actions/bin';
 
 export function save({ bin }, dispatch) {
-  const { html, javascript, css } = bin;
+  const copy = { ...bin };
+  delete copy.loading;
+  delete copy.error;
   const id = bin.id || uuid();
 
   return idb
-    .set(id, { html, javascript, css, id })
+    .set(id, copy)
     .then(() => {
       dispatch(replace(`/local/${id}${window.location.search}`));
       dispatch(setId(id));

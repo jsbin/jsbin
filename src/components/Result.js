@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import * as RESULT from '../actions/session';
-import binToHTML from '../lib/BinToHTML';
 import '../css/Result.css';
-
-const STATIC = process.env.REACT_APP_STATIC;
+import processor from '../lib/processor';
 
 function makeIframe() {
   const iframe = document.createElement('iframe');
-  iframe.src = STATIC + '/blank.html';
   iframe.hidden = true;
   iframe.name = 'JS Bin Result';
   iframe.className = 'Result';
@@ -51,7 +48,7 @@ export default class Result extends React.Component {
     }
   }
 
-  updateResult(result) {
+  async updateResult(result) {
     if (this.props.error) {
       // don't bother sending the state change if there's nothing to be done
       this.props.clearError();
@@ -61,7 +58,7 @@ export default class Result extends React.Component {
     const isBoth = result === RESULT.RESULT_BOTH;
     const isConsole = result === RESULT.RESULT_CONSOLE;
 
-    const { bin } = this.props;
+    const { bin, source } = this.props;
     let iframe = this.iframe;
 
     if (isBoth || isPage) {
@@ -92,40 +89,15 @@ export default class Result extends React.Component {
 
     const doc = iframe.contentDocument;
 
-    let i = 0; // track script tags and add inline source map
-
-    const html = bin.html.replace(
-      /<\/script>/g,
-      m => `//# sourceURL=your-scripts-${++i}.js${m}`
+    const { result: renderedDoc, insertJS, javascript } = await processor(
+      bin,
+      source
     );
 
     const guid = Math.random().toString();
     iframe.guid = guid;
 
     this.setState({ guid });
-
-    const insertJS = html.includes('%code%');
-
-    // this logic will allow us to track whether there's an error, the
-    // error is then passed through a localStorage event which is
-    // paired back up using the guid
-    const javascript = insertJS
-      ? `
-      try {
-        ${bin.javascript}
-      } catch (error) {
-        try { localStorage.setItem('jsbin.error', JSON.stringify({
-          name: error.name, message: error.message, stack: error.stack, guid: "${guid}"
-        })); } catch (E) {}
-        throw error;
-      } //# sourceURL=your-scripts-${++i}.js$`
-      : bin.javascript + `//# sourceURL=your-scripts-${i}.js$`;
-
-    const renderedDoc = binToHTML({
-      html,
-      javascript: insertJS ? javascript : '',
-      css: bin.css,
-    });
 
     doc.open();
     doc.write('');
@@ -189,7 +161,7 @@ export default class Result extends React.Component {
 
   async componentDidMount() {
     await this.lazyLoad(this.props);
-    this.updateResult(this.props.result);
+    await this.updateResult(this.props.result);
     window.addEventListener('storage', this.catchErrors, false);
   }
 
@@ -205,7 +177,7 @@ export default class Result extends React.Component {
 
     // multiple `if` statements so that I'm super sure what's happening
     if (this.props.code !== nextProps.code) {
-      this.updateResult(nextProps.result);
+      return this.updateResult(nextProps.result);
     }
   }
 
@@ -231,7 +203,7 @@ export default class Result extends React.Component {
         nextProps.result === RESULT.RESULT_CONSOLE
       ) {
         // blows up on "BOTH"
-        this.updateResult(nextProps.result);
+        return this.updateResult(nextProps.result);
       }
     }
   }
@@ -239,7 +211,7 @@ export default class Result extends React.Component {
   async componentDidUpdate(prevProps) {
     if (prevProps.result !== this.props.result) {
       // FIXME this doubles up when we show RESULT_BOTH
-      this.updateResult(this.props.result);
+      return this.updateResult(this.props.result);
     }
   }
 

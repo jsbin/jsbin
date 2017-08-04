@@ -13,6 +13,12 @@ export const DELETE = '@@bin/DELETE';
 export const ERROR = '@@bin/ERROR';
 export const GET_BIN = '@@bin/fetch/GET';
 
+export const SET_PROCESSOR = '@@bin/processor/SET';
+
+export function setProcessor(source, target) {
+  return { type: SET_PROCESSOR, source, value: target };
+}
+
 export function setBin({ id, html, css, javascript }) {
   return { type: SET_BIN, id, html, css, javascript };
 }

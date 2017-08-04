@@ -157,11 +157,6 @@ const render = App => {
           <Route exact path="/welcome" component={Welcome} />
           <Route exact path="/login" component={Login} />
 
-          <Route
-            exact
-            path="/404"
-            component={require('./components/GenericErrorPage').default}
-          />
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/gist/:gistId" component={App} />
           <Route exact path="/:bin/:version" component={App} />

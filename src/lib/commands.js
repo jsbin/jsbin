@@ -121,7 +121,7 @@ export const addLibrary = {
 
 export const changeLanguage = {
   title: 'Change language',
-  condition: ({ app }) => processors[app.source].length > 0,
+  condition: ({ app }) => processors[app.source].length > 1,
   run: (dispatch, { app }) => {
     return [
       ...processors[app.source].map(config => ({

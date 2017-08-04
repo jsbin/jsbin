@@ -1,5 +1,6 @@
 import * as Api from '../lib/Api';
 import * as defaults from '../lib/Defaults';
+import debounce from 'lodash.debounce';
 
 export const SET_BIN = '@@bin/set/BIN';
 export const SET_JS = '@@bin/set/JS';
@@ -70,6 +71,15 @@ export function fetchBin(id, revision = 'latest') {
   };
 }
 
+const updateResult = debounce(
+  (dispatch, code) =>
+    dispatch({
+      type: SET_RESULT,
+      code,
+    }),
+  1000
+);
+
 export function setCode(code, type) {
   return dispatch => {
     // , getState
@@ -81,14 +91,6 @@ export function setCode(code, type) {
     });
 
     // combine into the result… and put in separate function
-    return new Promise(resolve => {
-      const result = code;
-      resolve(
-        dispatch({
-          type: SET_RESULT,
-          code: result,
-        })
-      );
-    });
+    updateResult(dispatch, code);
   };
 }

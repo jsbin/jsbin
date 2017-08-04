@@ -68,6 +68,11 @@ export default class Result extends React.Component {
       }
     }
 
+    const { result: renderedDoc, insertJS, javascript } = await processor(
+      bin,
+      source
+    );
+
     // removing the iframe from the DOM completely resets the state and nukes
     // all running code
     if (iframe.parentNode) {
@@ -88,11 +93,6 @@ export default class Result extends React.Component {
     }
 
     const doc = iframe.contentDocument;
-
-    const { result: renderedDoc, insertJS, javascript } = await processor(
-      bin,
-      source
-    );
 
     const guid = Math.random().toString();
     iframe.guid = guid;
@@ -182,6 +182,10 @@ export default class Result extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    if (nextProps.code !== this.props.code) {
+      return true;
+    }
+
     if (nextProps.result !== this.props.result) {
       return true;
     }
@@ -209,7 +213,10 @@ export default class Result extends React.Component {
   }
 
   async componentDidUpdate(prevProps) {
-    if (prevProps.result !== this.props.result) {
+    if (
+      prevProps.result !== this.props.result ||
+      prevProps.code !== this.props.code
+    ) {
       // FIXME this doubles up when we show RESULT_BOTH
       return this.updateResult(this.props.result);
     }

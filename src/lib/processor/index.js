@@ -3,13 +3,19 @@ import { JAVASCRIPT, HTML, CSS } from '../cm-modes';
 
 // When adding new processors, add it to this line, and add to the `targets`
 // object and the rest should hook up automatically.
+import * as html from './html';
+import * as javascript from './javascript';
+import * as css from './css';
 import * as markdown from './markdown';
 
 export const NONE = 'none';
 
 const targets = {
+  [NONE]: { transform: source => source },
+  [html.config.name]: html,
+  [css.config.name]: css,
+  [javascript.config.name]: javascript,
   [markdown.config.name]: markdown,
-  [NONE]: source => source,
 };
 
 export function has(target) {
@@ -17,20 +23,18 @@ export function has(target) {
 }
 
 export function getAvailableProcessors(source) {
-  return Object.entries(source)
+  return Object.entries(targets)
     .filter(([key, target]) => {
-      return target.for === source;
+      if (key === NONE) return false;
+      return target.config.for === source;
     })
-    .map(target => target.config);
+    .map(([key, target]) => {
+      return target.config;
+    });
 }
 
-const MODES = { JAVASCRIPT, HTML, CSS };
-export function getConfig(target) {
-  if (!targets[target]) {
-    return MODES[target];
-  }
-  return targets[target].config;
-}
+// this is use for display purposes
+export const getConfig = target => targets[target].config;
 
 const last = {
   [JAVASCRIPT]: null,
@@ -49,7 +53,7 @@ export async function process(source, language, target) {
   let res = source;
 
   if (targets[target]) {
-    res = targets[target](source);
+    res = targets[target].transform(source);
   }
 
   last[language] = res;

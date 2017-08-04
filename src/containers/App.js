@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 
 import App from '../components/App';
 import {
@@ -63,7 +63,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(App)
+  // withRouter
+  App
 );
 
 export default AppContainer;

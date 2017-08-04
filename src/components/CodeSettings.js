@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import classnames from 'classnames';
 import 'react-select/dist/react-select.css';
+import { getConfig } from '../lib/processor';
 
 import { Command } from './Symbols';
 
@@ -64,7 +65,7 @@ export default class CodeSettings extends React.Component {
   render() {
     const {
       // updated,
-      // bin,
+      bin,
       lineWrapping,
       lineNumbers,
       source,
@@ -85,7 +86,7 @@ export default class CodeSettings extends React.Component {
     const sourceOptions = [
       {
         value: MODES.HTML,
-        label: 'HTML',
+        label: getConfig(bin[MODES.HTML + '-processor']).label,
         shortcut: (
           <kbd>
             <Command /> 1
@@ -94,7 +95,7 @@ export default class CodeSettings extends React.Component {
       },
       {
         value: MODES.JAVASCRIPT,
-        label: 'JavaScript',
+        label: getConfig(bin[MODES.JAVASCRIPT + '-processor']).label,
         shortcut: (
           <kbd>
             <Command /> 2
@@ -103,7 +104,7 @@ export default class CodeSettings extends React.Component {
       },
       {
         value: MODES.CSS,
-        label: 'CSS',
+        label: getConfig(bin[MODES.CSS + '-processor']).label,
         shortcut: (
           <kbd>
             <Command /> 3

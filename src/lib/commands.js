@@ -124,12 +124,8 @@ export const changeLanguage = {
   condition: ({ app }) => processors[app.source].length > 0,
   run: (dispatch, { app }) => {
     return [
-      {
-        title: app.source, // FIXME need correct label
-        run: dispatch => dispatch(setProcessor(app.source, NONE)),
-      },
-      ...processors[app.source].map(({ config }) => ({
-        title: config.name,
+      ...processors[app.source].map(config => ({
+        title: config.label,
         run: dispatch => dispatch(setProcessor(app.source, config.name)),
       })),
     ];

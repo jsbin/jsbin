@@ -2,7 +2,7 @@ import { handle } from 'redux-pack';
 import * as defaults from '../lib/Defaults';
 import * as MODES from '../lib/cm-modes';
 
-import { has as hasProcessor, NONE } from '../lib/processor';
+import { has as hasProcessor } from '../lib/processor';
 
 import {
   SET_HTML,
@@ -17,7 +17,7 @@ import {
   SET_PROCESSOR,
 } from '../actions/bin';
 
-const defaultState = {
+export const defaultState = {
   loading: false,
   id: null,
   revision: 1, // may drop this
@@ -28,8 +28,9 @@ const defaultState = {
   error: null,
 };
 
+// creates defaultState.html-processor = 'html' etc
 Object.keys(MODES).forEach(mode => {
-  defaultState[`${MODES[mode]}-processor`] = NONE;
+  defaultState[`${MODES[mode]}-processor`] = MODES[mode];
 });
 
 export default function reducer(state = defaultState, action) {

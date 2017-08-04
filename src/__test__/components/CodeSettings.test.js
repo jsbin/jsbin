@@ -4,6 +4,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import expect from 'expect';
 import { RESULT_PAGE } from '../../actions/session';
+import { defaultState as defaultBin } from '../../reducers/bin';
 const mockStore = configureMockStore();
 
 import CodeSettings from '../../containers/CodeSettings';
@@ -18,6 +19,7 @@ test('lineNumbers change trickles up to user settings', () => {
     session: {
       result: RESULT_PAGE,
     },
+    bin: defaultBin,
   });
 
   const component = mount(<CodeSettings lineNumbers={false} store={store} />);

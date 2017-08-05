@@ -77,7 +77,7 @@ const updateResult = debounce(
       type: SET_RESULT,
       code,
     }),
-  1000
+  500
 );
 
 export function setCode(code, type) {

@@ -1,9 +1,10 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.6",
+  "version": "5.0.0-alpha.7",
   "private": true,
   "dependencies": {
     "@remy/jsconsole": "^2.0.0-beta.11",
+    "@remy/less-plugin-sass2less": "^1.2.0",
     "@remy/react-splitter-layout": "^1.0.2",
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",
@@ -39,6 +40,7 @@
     "js-beautify": "^1.6.14",
     "js-cookie": "^2.1.4",
     "json-lint": "^0.1.0",
+    "less": "^2.7.2",
     "lodash.debounce": "^4.0.8",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
@@ -82,7 +84,8 @@
     "node-sass-chokidar": "0.0.3",
     "react-addons-perf": "^15.4.2",
     "react-test-renderer": "^15.6.1",
-    "redux-mock-store": "^1.2.3"
+    "redux-mock-store": "^1.2.3",
+    "worker-loader": "^0.8.1"
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",

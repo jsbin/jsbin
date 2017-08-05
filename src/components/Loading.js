@@ -39,7 +39,7 @@ export default class Loading extends React.Component {
 
   componentDidMount() {
     this.loadingTimer = setTimeout(() => {
-      this.loading.hidden = false;
+      if (this.loading) this.loading.hidden = false;
     }, 500);
     this.timer = setInterval(() => {
       const index = this.state.index + 1;

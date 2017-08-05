@@ -7,6 +7,7 @@ import * as html from './html';
 import * as javascript from './javascript';
 import * as css from './css';
 import * as markdown from './markdown';
+import * as less from './less';
 import * as scss from './scss';
 
 export const NONE = 'none';
@@ -17,6 +18,7 @@ const targets = {
   [css.config.name]: css,
   [javascript.config.name]: javascript,
   [markdown.config.name]: markdown,
+  [less.config.name]: less,
   [scss.config.name]: scss,
 };
 

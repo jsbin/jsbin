@@ -1,27 +1,30 @@
 import { CSS } from '../cm-modes';
 
-let last = '';
-let Sass = null;
+let result = '';
 
 export async function transform(source) {
-  if (Sass === null) {
-    Sass = await import(/* webpackChunkName: "sass" */ 'sass.js/dist/sass.js');
-    Sass.setWorkerUrl('/js/sass.worker.js');
+  const res = await fetch('https://sassy.glitch.me/', {
+    mode: 'cors',
+    method: 'post',
+    body: JSON.stringify({
+      source,
+      type: 'scss',
+    }),
+  });
+  if (res.status !== 200) {
+    console.log(new Error(res.status));
+    return result;
   }
 
-  return new Promise((resolve, reject) => {
-    const sass = new Sass();
+  const data = await res.json();
+  if (data.error) {
+    console.log(data.error.message);
+    return result;
+  }
 
-    sass.compile(source, result => {
-      if (result.status === 0) {
-        last = result.text;
-        return resolve(result.text);
-      }
+  result = data.result;
 
-      console.log(new Error(result.formatted));
-      resolve(last);
-    });
-  });
+  return result;
 }
 
 export const config = {

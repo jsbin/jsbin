@@ -32,8 +32,10 @@ function insert(source, needle, value) {
   return '';
 }
 
-function safeForHTML(s = '') {
-  return s.replace(/<\/script>/gi, '<\\/script>').replace(/<!--/g, '<\\!--');
+function safeForHTML(s) {
+  return (s || '')
+    .replace(/<\/script>/gi, '<\\/script>')
+    .replace(/<!--/g, '<\\!--');
 }
 
 export default function binToFile(bin, options = {}) {

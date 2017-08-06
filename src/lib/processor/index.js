@@ -96,8 +96,10 @@ export default async function transform(bin, currentSource) {
 }
 
 export function asHTML(bin) {
-  const { html, css } = bin;
+  let { html, css } = bin;
   const insertJS = html.includes('%code%');
+
+  html = html.replace(/<script\s/g, '<script crossorigin="anonymous" ');
 
   // this logic will allow us to track whether there's an error, the
   // error is then passed through a localStorage event which is

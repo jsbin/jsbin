@@ -91,31 +91,54 @@ export const open = {
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
-    const res = await fetch(
-      'https://api.cdnjs.com/libraries?fields=name,filename,version,keywords'
-    );
+    const res = await fetch('/libraries.json');
     const json = await res.json();
 
     const run = url => {
-      if (url.endsWith('.css')) {
-        return `<link rel="stylesheet" href="${url}" />`;
+      if (!Array.isArray(url)) {
+        url = [url];
       }
+      // if (url.endsWith('.css')) {
+      //   return `<link rel="stylesheet" href="${url}" />`;
+      // }
 
-      if (url.endsWith('.js')) {
-        return `<script src="${url}"></script>`;
-      }
-
-      return url;
+      return url.map(url => `<script src="${url}"></script>`).join('\n');
     };
 
-    return json.results
-      .map(({ name, version, keywords, latest }) => ({
-        title: name,
-        display: `${name} @ ${version}`,
-        meta: name + ' ' + keywords.join(' '),
-        run: run.bind(null, latest),
-      }))
-      .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1));
+    const results = [];
+    json.results.forEach(
+      ({ assets, version, name, keywords = null, latest }) => {
+        if (!keywords) keywords = [];
+
+        results.push({
+          title: name,
+          name,
+          display: `${name} @ ${version}`,
+          meta: name + ' ' + ' ' + keywords.join(' '),
+          run: run.bind(null, latest),
+        });
+
+        if (assets && assets[0].files.length > 1) {
+          const files = assets[0].files;
+          results.push({
+            title: name,
+            name,
+            display: `${name} (plus ${files.length -
+              1} extra assets) @ ${version}`,
+            meta: `${name} ${keywords.join(' ')}`,
+            run: run.bind(
+              null,
+              files.map(file => {
+                return `https://cdnjs.cloudflare.com/ajax/libs/${name}/${version}/${file}`;
+              })
+            ),
+          });
+        }
+      }
+    );
+    return results.sort(
+      (a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1)
+    );
   },
 };
 

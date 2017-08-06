@@ -102,8 +102,13 @@ export default class Result extends React.Component {
     doc.open();
     doc.write('');
 
-    iframe.contentWindow.addEventListener('error', frameError => {
-      const { error, message, lineno: line, colno: ch } = frameError;
+    iframe.contentWindow.addEventListener('error', (frameError, ...args) => {
+      let { error, message, lineno: line, colno: ch } = frameError;
+      if (error === null) {
+        // this is when the error is like "Script error."
+        error = { name: message };
+      }
+
       this.props.setError({
         name: error.name,
         message,

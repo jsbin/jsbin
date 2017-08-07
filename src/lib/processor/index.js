@@ -9,6 +9,7 @@ import * as css from './css';
 import * as markdown from './markdown';
 import * as less from './less';
 import * as scss from './scss';
+import * as babel from './babel';
 
 export const NONE = 'none';
 
@@ -20,6 +21,7 @@ const targets = {
   [markdown.config.name]: markdown,
   [less.config.name]: less,
   [scss.config.name]: scss,
+  [babel.config.name]: babel,
 };
 
 export function has(target) {

@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.10",
+  "version": "5.0.0-alpha.11",
   "private": true,
   "dependencies": {
     "@remy/jsconsole": "^2.0.0-beta.11",

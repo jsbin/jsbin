@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 
 import Layout from '../containers/PageLayout';
 
-import '../css/Button.css';
 import '../css/Login.css';
 
 class Login extends Component {

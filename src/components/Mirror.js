@@ -216,7 +216,7 @@ export default class Mirror extends React.Component {
       javascript: null,
     };
 
-    const mode = getConfig(processor).mode;
+    const mode = options.mode || getConfig(processor).mode;
 
     const extraKeys = { [`${cmCmd}-S`]: 'noop', ...(editor.extraKeys || {}) };
 

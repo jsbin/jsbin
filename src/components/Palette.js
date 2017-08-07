@@ -189,12 +189,6 @@ export default class Palette extends React.Component {
           />
           <ul ref={e => (this.commands = e)}>
             {commands
-              .filter(command => {
-                if (command.condition) {
-                  return command.condition({ app });
-                }
-                return true;
-              })
               .slice(start, end)
               .map((command, i) =>
                 <li
@@ -206,7 +200,13 @@ export default class Palette extends React.Component {
                   {command.display || command.title}
                   {command.shortcut && command.shortcut}
                 </li>
-              )}
+              )
+              .filter(command => {
+                if (command.condition) {
+                  return command.condition({ app });
+                }
+                return true;
+              })}
           </ul>
         </div>
       </div>

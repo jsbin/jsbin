@@ -1,6 +1,7 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
+import { getConfig } from '../lib/processor';
 
 import { cmCmd } from '../lib/is-mac';
 import * as MODES from '../lib/cm-modes';
@@ -206,7 +207,7 @@ export default class Mirror extends React.Component {
   }
 
   render() {
-    const { options, focus, editor, snippets, source } = this.props;
+    const { options, focus, editor, snippets, source, processor } = this.props;
     const { code } = this.state;
 
     const profiles = {
@@ -214,6 +215,8 @@ export default class Mirror extends React.Component {
       css: 'css',
       javascript: null,
     };
+
+    const mode = getConfig(processor).mode;
 
     const extraKeys = { [`${cmCmd}-S`]: 'noop', ...(editor.extraKeys || {}) };
 
@@ -235,6 +238,7 @@ export default class Mirror extends React.Component {
       ...editor,
       ...options,
       extraKeys,
+      mode,
     };
 
     return (

@@ -77,7 +77,6 @@ export default class Panel extends React.Component {
     const { editor, source, code } = this.props;
 
     const options = {
-      mode: source,
       fixedGutter: true,
       autoRefresh: true,
       ...editor,
@@ -85,15 +84,6 @@ export default class Panel extends React.Component {
 
     if (source === MODES.HTML) {
       options.autoCloseTags = true;
-      options.mode = {
-        name: 'htmlmixed',
-        scriptTypes: [
-          {
-            matches: /\/x-handlebars-template|\/x-mustache/i,
-            mode: null,
-          },
-        ],
-      };
     }
 
     const setTo = source => e => {

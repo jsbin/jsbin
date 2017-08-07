@@ -6,5 +6,13 @@ export const config = {
   name: HTML,
   label: 'HTML',
   for: HTML,
-  mode: HTML,
+  mode: {
+    name: 'htmlmixed',
+    scriptTypes: [
+      {
+        matches: /\/x-handlebars-template|\/x-mustache/i,
+        mode: null,
+      },
+    ],
+  },
 };

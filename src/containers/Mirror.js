@@ -17,12 +17,13 @@ const mapDispatchToProps = dispatch => {
 };
 
 const MirrorContainer = connect(
-  ({ editor, session, app, snippets }) => ({
+  ({ bin, editor, session, app, snippets }) => ({
     editor,
     session,
     app,
     dirty: session.dirty,
     source: app.source,
+    processor: bin[`${app.source}-processor`],
     snippets: snippets[app.source],
     error: session.error,
   }),

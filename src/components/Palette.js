@@ -37,6 +37,7 @@ export default class Palette extends React.Component {
     this.onRun = this.onRun.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.dismiss = this.dismiss.bind(this);
+    this.selectCommand = this.selectCommand.bind(this);
 
     this.focusTimer = null;
 
@@ -67,7 +68,11 @@ export default class Palette extends React.Component {
 
     const res = await this.props.run(command, { ...this.props });
     if (Array.isArray(res)) {
-      this.setState({ commands: res, fuse: new Fuse(res, fuseOptions) });
+      this.setState({
+        active: 0,
+        commands: res,
+        fuse: new Fuse(res, fuseOptions),
+      });
       return;
     }
 
@@ -83,6 +88,14 @@ export default class Palette extends React.Component {
     this.props.dismiss();
   }
 
+  selectCommand(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const { commands, active } = this.state;
+    this.setState({ filter: '' });
+    this.onRun(commands[active]);
+  }
+
   onKeyDown(e) {
     const key = e.which;
 
@@ -90,8 +103,7 @@ export default class Palette extends React.Component {
       let { active, commands } = this.state;
       e.preventDefault();
       if (key === ENTER) {
-        this.setState({ filter: '' });
-        return this.onRun(commands[active]);
+        return this.selectCommand(e);
       }
 
       if (key === UP) {
@@ -189,7 +201,7 @@ export default class Palette extends React.Component {
                   onMouseOver={() => this.setState({ active: i })}
                   className={classnames({ active: i === active })}
                   key={`command-${i}`}
-                  onClick={() => this.onRun(command)}
+                  onClick={this.selectCommand}
                 >
                   {command.display || command.title}
                   {command.shortcut && command.shortcut}

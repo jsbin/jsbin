@@ -3,6 +3,9 @@ import Dictionary from '../common/Dictionary';
 import * as keywords from '../common/keywords';
 import { TextUtils } from '../common/TextUtils';
 import { Keys } from '../common/Keys';
+import { CSS } from '../cm-modes';
+
+const isCSSWordChar = c => TextUtils.isWordChar(c) || c === '-';
 
 CodeMirror.defineOption('autocomplete', false, function(cm, value) {
   if (value === false) {
@@ -20,7 +23,6 @@ CodeMirror.defineOption('autocomplete', false, function(cm, value) {
 class Autocomplete {
   constructor(cm) {
     // methods
-    console.log('constructor autocomplete');
     this.change = this.change.bind(this);
     this.beforeChange = this.beforeChange.bind(this);
     this.cursorActivity = this.cursorActivity.bind(this);
@@ -61,6 +63,10 @@ class Autocomplete {
     this.currentHint = '';
     this.dictionary.reset();
     this.isWordChar = cm.getOption('isWordChar') || TextUtils.isWordChar;
+
+    if (this.cm.getOption('source') === CSS) {
+      this.isWordChar = isCSSWordChar;
+    }
 
     this.textToWords(cm.getValue(), this.isWordChar, word => {
       if (word.length && (word[0] < '0' || word[0] > '9')) {

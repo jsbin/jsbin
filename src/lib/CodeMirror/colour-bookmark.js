@@ -19,10 +19,12 @@ function trackColourChanges(cm, changes) {
 }
 
 export function findMarks(cm, from, to = from) {
-  return cm.findMarks(
-    new CodeMirror.Pos(from, 'before'),
-    new CodeMirror.Pos(to, 'after')
-  );
+  return cm
+    .findMarks(
+      new CodeMirror.Pos(from, 'before'),
+      new CodeMirror.Pos(to, 'after')
+    )
+    .filter(m => m.__type === 'color');
 }
 
 function addSwatchMark(cm, from, to) {
@@ -44,7 +46,8 @@ function addSwatchMark(cm, from, to) {
       widget.style.backgroundColor = colour;
 
       // FIXME I'd rather _update_ the widget, than remove and add
-      cm.setBookmark({ line, ch }, { widget });
+      const marker = cm.setBookmark({ line, ch }, { widget });
+      marker.__type = 'color';
 
       widget.onclick = e => {
         CodeMirror.signal(cm, 'openSwatch', cm, colour, e, { line, ch });

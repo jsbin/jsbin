@@ -16,7 +16,7 @@ export const javascript = [
   // other stuff
   'Promise class extends let const yield static async await setTimeout clearTimeout setInterval clearInterval requestAnimationFrame cancelAnimationFrame window document getElementById getElementsByTagName querySelector querySelectorAll',
   // bom
-  'decodeURIComponent confirm prompt alert encodeURIComponent encodeURI decodeURI escape unescape',
+  'console log trace resolve reject decodeURIComponent confirm prompt alert encodeURIComponent encodeURI decodeURI escape unescape',
   // handlers
   'onblur	onclick	onerror	onfocus onkeydown	onkeypress	onkeyup	onmouseover onload	onmouseup	onmousedown	onsubmit',
   // thingies

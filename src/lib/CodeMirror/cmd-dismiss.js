@@ -1,5 +1,6 @@
 import CodeMirror from 'codemirror';
-import * as CodeMirrorUtils from './Utils';
+
+// modified by Remy Sharp 2017-08-09
 
 // Copyright 2014 The Chromium Authors. All rights reserved.
 //
@@ -30,12 +31,9 @@ import * as CodeMirrorUtils from './Utils';
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 CodeMirror.commands.dismiss = function(codemirror) {
-  console.log('dismissing!');
   var selections = codemirror.listSelections();
   var selection = selections[0];
   if (selections.length === 1) {
-    if (CodeMirrorUtils.toRange(selection.anchor, selection.head).isEmpty())
-      return CodeMirror.Pass;
     codemirror.setSelection(selection.anchor, selection.anchor, {
       scroll: false,
     });

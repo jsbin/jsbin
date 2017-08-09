@@ -4,6 +4,7 @@ import {
   SET_SPLITTER_WIDTH,
   DISMISS,
   triggerPalette,
+  toggleSwatch,
   HIGHLIGHT_LINES,
   CHANGE_RESULT,
 } from '../actions/session';
@@ -94,6 +95,7 @@ export default store => {
     if (action.type === DISMISS) {
       // dismiss anything that can be dismissed
       store.dispatch(triggerPalette(false));
+      store.dispatch(toggleSwatch(false));
     }
 
     return nextAction;

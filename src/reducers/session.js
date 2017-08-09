@@ -8,6 +8,7 @@ import {
   TRIGGER_PALETTE,
   SET_CURSOR,
   SET_ERROR,
+  SWATCH_OPEN,
   CLEAR_ERROR,
   DIRTY,
 } from '../actions/session';
@@ -23,6 +24,7 @@ const defaultCursorState = {
 };
 
 export const defaultState = {
+  swatchOpen: false,
   result: RESULT_PAGE,
   lastResult: RESULT_NONE,
   highlightedLines: null,
@@ -37,6 +39,10 @@ export default function reducer(state = defaultState, action) {
   const { type } = action;
   if (type === RESET) {
     return { ...state, ...defaultCursorState, error: null };
+  }
+
+  if (type === SWATCH_OPEN) {
+    return { ...state, swatchOpen: action.value };
   }
 
   if (type === HIGHLIGHT_LINES) {

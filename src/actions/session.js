@@ -8,6 +8,7 @@ export const TOGGLE_RESULT = '@@session/TOGGLE_RESULT';
 export const DIRTY = '@@session/DIRTY';
 export const SET_SPLITTER_WIDTH = '@@session/SET_SPLITTER_WIDTH';
 export const HIGHLIGHT_LINES = '@@session/HIGHLIGHT_LINES';
+export const SWATCH_OPEN = '@@session/SWATCH_OPEN';
 
 // constants - not event types
 export const RESULT_NONE = 'none';
@@ -20,6 +21,10 @@ export function setSplitterWidth(value) {
     dispatch({ type: SET_SPLITTER_WIDTH, value });
     dispatch(setDirtyFlag(true));
   };
+}
+
+export function toggleSwatch(value) {
+  return { type: SWATCH_OPEN, value };
 }
 
 export function setHighlightedLines(value = null) {

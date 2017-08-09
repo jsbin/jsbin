@@ -4,10 +4,12 @@ import {
   setCursor,
   setDirtyFlag,
   setHighlightedLines,
+  toggleSwatch,
 } from '../actions/session';
 
 const mapDispatchToProps = dispatch => {
   return {
+    toggleSwatch: value => dispatch(toggleSwatch(!!value)),
     setHighlightedLines: lines => dispatch(setHighlightedLines(lines)),
     setCursor: ({ line, ch, source }) => {
       dispatch(setCursor(source, line, ch));

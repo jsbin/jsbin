@@ -1,37 +1,57 @@
 @import "vars";
 
+.widget-colour {
+  position: relative;
+  margin-left: 1px;
+  margin-right: 2px;
+  width: 10px;
+  height: 10px;
+  top: 1px;
+  display: inline-block;
+  user-select: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset;
+  line-height: 10px;
+  cursor: pointer;
+
+  &:after {
+    content: "";
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAIAAADZF8uwAAAAGUlEQVQYV2M4gwH+YwCGIasIUwhT25BVBADtzYNYrHvv4gAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+    background-size: contain;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+}
 .CodeMirror {
   font-family: $font-family-code;
   height: 100%;
   padding: 5px 10px 20px 0;
   font-size: $font-size-base;
   line-height: $font-line-height;
-
   .auto-complete-text {
     color: rgb(128, 128, 128);
   }
-
   .CodeMirror-linenumber {
     font-size: ($font-size-base - 2);
     line-height: 16px;
   }
-
   .CodeMirror-gutters {
     background: white;
     border-right: 0;
   }
-
   .CodeMirror-placeholder {
     color: #aaa;
   }
-
   // taken from lint.js
   /* The lint marker gutter */
   .CodeMirror-lint-markers {
     width: 16px;
   }
 }
-
 .CodeMirror-lint-tooltip {
   background-color: #efefef;
   border: 1px solid #ddd;
@@ -50,21 +70,17 @@
   transition: opacity .4s;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
 }
-
 .CodeMirror-lint-mark-error,
 .CodeMirror-lint-mark-warning {
   background-position: left bottom;
   background-repeat: repeat-x;
 }
-
 .CodeMirror-lint-mark-error {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJDw4cOCW1/KIAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAHElEQVQI12NggIL/DAz/GdA5/xkY/qPKMDAwAADLZwf5rvm+LQAAAABJRU5ErkJggg==");
 }
-
 ._CodeMirror-lint-mark-warning {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAADCAYAAAC09K7GAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9sJFhQXEbhTg7YAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAAMklEQVQI12NkgIIvJ3QXMjAwdDN+OaEbysDA4MPAwNDNwMCwiOHLCd1zX07o6kBVGQEAKBANtobskNMAAAAASUVORK5CYII=");
 }
-
 .CodeMirror-lint-marker-error,
 .CodeMirror-lint-marker-warning {
   background-position: center center;
@@ -76,24 +92,20 @@
   vertical-align: middle;
   position: relative;
 }
-
 // .CodeMirror-lint-message-error,
 // .CodeMirror-lint-message-warning {
-//   padding-left: 18px;
-//   background-position: top left;
-//   background-repeat: no-repeat;
+// padding-left: 18px;
+// background-position: top left;
+// background-repeat: no-repeat;
 // }
-
 ._CodeMirror-lint-marker-error,
 ._CodeMirror-lint-message-error {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAHlBMVEW7AAC7AACxAAC7AAC7AAAAAAC4AAC5AAD///+7AAAUdclpAAAABnRSTlMXnORSiwCK0ZKSAAAATUlEQVR42mWPOQ7AQAgDuQLx/z8csYRmPRIFIwRGnosRrpamvkKi0FTIiMASR3hhKW+hAN6/tIWhu9PDWiTGNEkTtIOucA5Oyr9ckPgAWm0GPBog6v4AAAAASUVORK5CYII=");
 }
-
 ._CodeMirror-lint-marker-warning,
 ._CodeMirror-lint-message-warning {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAANlBMVEX/uwDvrwD/uwD/uwD/uwD/uwD/uwD/uwD/uwD6twD/uwAAAADurwD2tQD7uAD+ugAAAAD/uwDhmeTRAAAADHRSTlMJ8mN1EYcbmiixgACm7WbuAAAAVklEQVR42n3PUQqAIBBFUU1LLc3u/jdbOJoW1P08DA9Gba8+YWJ6gNJoNYIBzAA2chBth5kLmG9YUoG0NHAUwFXwO9LuBQL1giCQb8gC9Oro2vp5rncCIY8L8uEx5ZkAAAAASUVORK5CYII=");
 }
-
 ._CodeMirror-lint-marker-multiple {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAAAAAC/v7914kyHAAAAAXRSTlMAQObYZgAAACNJREFUeNo1ioEJAAAIwmz/H90iFFSGJgFMe3gaLZ0od+9/AQZ0ADosbYraAAAAAElFTkSuQmCC");
   background-repeat: no-repeat;
@@ -101,19 +113,15 @@
   width: 100%;
   height: 100%;
 }
-
 .CodeMirror-linenumber {
   cursor: pointer;
 }
-
 .CodeMirror .text-editor-line-decoration {
   position: absolute;
 }
-
 .CodeMirror-linewidget {
   overflow: visible !important;
 }
-
 .CodeMirror .text-editor-line-decoration-wave {
   position: absolute;
   top: -2px;
@@ -125,23 +133,19 @@
   background-repeat: repeat-x;
   background-size: contain;
 }
-
 @media (-webkit-min-device-pixel-ratio: 1.1) {
   .CodeMirror .text-editor-line-decoration-wave {
     background-image: url(/errorWave_2x.png);
   }
 }
-
 .CodeMirror.highlight .CodeMirror-code {
   & > div:not(.CodeMirror-highlight-line) * {
     color: rgb(204, 204, 204) !important;
   }
-
   .CodeMirror-linenumber {
     color: rgb(158, 158, 158) !important;
   }
 }
-
 .theme-dark .CodeMirror.highlight .CodeMirror-code
   > div:not(.CodeMirror-highlight-line) * {
   color: #666 !important;

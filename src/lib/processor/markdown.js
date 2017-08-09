@@ -15,7 +15,7 @@ export const config = {
   mode: {
     name: 'gfm',
     tokenTypeOverrides: {
-      emoji: false,
+      emoji: true,
       taskLists: true,
       strikethrough: true,
       gitHubSpice: false,

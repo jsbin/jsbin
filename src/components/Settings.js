@@ -81,6 +81,17 @@ export default class Settings extends React.Component {
     //     this._dictionary.addWord(word);
     // });
 
+    // this._autocompleteController = new TextEditorAutocompleteController(
+    //   this,
+    //   cm,
+    //   {
+    //     suggestionsCallback: (...args) => {
+    //       console.log('suggestionsCallback', args);
+    //     },
+    //     isWordChar: this.isWordChar.bind(this),
+    //   }
+    // );
+
     this.refresh();
   }
 

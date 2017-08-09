@@ -1,10 +1,6 @@
 import React from 'react';
 import CodeMirror from 'react-codemirror';
 import PropTypes from 'prop-types';
-import { getConfig } from '../lib/processor';
-
-import { cmCmd } from '../lib/is-mac';
-import * as MODES from '../lib/cm-modes';
 
 // import 'codemirror/addon/hint/show-hint.js';
 // import 'codemirror/addon/hint/html-hint.js';
@@ -27,6 +23,8 @@ import 'codemirror/mode/jsx/jsx';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/xml/xml'; // html
 import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/markdown/markdown';
+import 'codemirror/mode/gfm/gfm';
 import 'codemirror/addon/display/autorefresh';
 
 // JS Bin specific addons
@@ -35,11 +33,21 @@ import '../lib/CodeMirror/cmd-dismiss';
 import '../lib/CodeMirror/cmd-snippets';
 import '../lib/CodeMirror/opt-styles';
 import '../lib/CodeMirror/ext-highlight-lines';
+import '../lib/CodeMirror/colour-bookmark';
 
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/addon/hint/show-hint.css';
 import '../css/CodeMirror.css';
 
+import { getConfig } from '../lib/processor';
+import Swatch from '../containers/Swatch';
+
+import { cmCmd } from '../lib/is-mac';
+import * as MODES from '../lib/cm-modes';
+import { regexp } from '../lib/common/colours';
+const colorRe = regexp();
+
+// this helps me debug
 CodeMirror.displayName = 'CodeMirror';
 
 export default class Mirror extends React.Component {
@@ -48,10 +56,12 @@ export default class Mirror extends React.Component {
     this.updateCode = this.updateCode.bind(this);
     this.onCursorActivity = this.onCursorActivity.bind(this);
     this.onChanges = this.onChanges.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
 
     this.refreshTimer = null;
     this.state = {
       code: props.code,
+      swatch: { color: '#fff', x: 0, y: 0, pos: null },
     };
   }
 
@@ -67,6 +77,27 @@ export default class Mirror extends React.Component {
     if (!changes.length) return;
   }
 
+  handleColorChange(update) {
+    const cm = this.CodeMirror.getCodeMirror();
+    const { r, g, b, a } = update.rgb;
+
+    const target = a < 1 ? `rgba(${r},${g},${b},${a})` : update.hex;
+    const pos = this.state.swatch.pos;
+    const line = cm.getLine(pos.line);
+    const res = colorRe.exec(line.toLowerCase());
+    colorRe.lastIndex = 0; // reset for later use
+
+    if (res === null) {
+      // shouldn't happen, but just in case
+      return;
+    }
+
+    cm.replaceRange(target, pos, {
+      line: pos.line,
+      ch: pos.ch + res[1].length,
+    });
+  }
+
   componentDidMount() {
     this.updateCursor(this.props);
     const cm = this.CodeMirror.getCodeMirror();
@@ -76,6 +107,18 @@ export default class Mirror extends React.Component {
       this.props.setHighlightedLines(cm.highlightLines().string || null);
     });
     cm.refresh();
+
+    cm.on('openSwatch', (cm, color, e, pos) => {
+      this.setState({
+        swatch: {
+          pos,
+          color,
+          x: e.pageX - 10,
+          y: e.pageY + 10,
+        },
+      });
+      this.props.toggleSwatch(true);
+    });
   }
 
   componentWillUnmount() {
@@ -89,6 +132,12 @@ export default class Mirror extends React.Component {
     const { source } = this.props;
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
+
+    // checking this option early allows us to unbind the change listener that
+    // will eventually fire when `cm.setValue` is called a little further on
+    if (source !== nextProps.source) {
+      cm.setOption('colours', nextProps.source === MODES.CSS);
+    }
 
     if (
       this.state.code !== nextProps.code &&
@@ -124,6 +173,8 @@ export default class Mirror extends React.Component {
       this.CodeMirror.focus();
     }
 
+    const cm = this.CodeMirror.getCodeMirror();
+
     // we listen for a dirty flag that triggers a CodeMirror repaint
     if (this.dirty) {
       this.refresh();
@@ -140,7 +191,6 @@ export default class Mirror extends React.Component {
       let { message, line, ch } = error;
       line = line - 1;
       ch = ch - 1;
-      const cm = this.CodeMirror.getCodeMirror();
 
       let element;
       if (this.errorMarker) {
@@ -241,15 +291,22 @@ export default class Mirror extends React.Component {
       mode,
     };
 
+    if (source === MODES.CSS) {
+      cmOptions.colours = true;
+    }
+
     return (
-      <CodeMirror
-        ref={e => (this.CodeMirror = e)}
-        value={code}
-        onCursorActivity={this.onCursorActivity}
-        onChange={this.updateCode}
-        options={cmOptions}
-        autoFocus={focus}
-      />
+      <div>
+        <CodeMirror
+          ref={e => (this.CodeMirror = e)}
+          value={code}
+          onCursorActivity={this.onCursorActivity}
+          onChange={this.updateCode}
+          options={cmOptions}
+          autoFocus={focus}
+        />
+        <Swatch onChange={this.handleColorChange} {...this.state.swatch} />
+      </div>
     );
   }
 }

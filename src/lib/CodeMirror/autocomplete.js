@@ -9,6 +9,10 @@ CodeMirror.defineOption('autocomplete', false, function(cm, value) {
     return;
   }
 
+  if (CodeMirror.autocomplete && CodeMirror.autocomplete.core) {
+    CodeMirror.autocomplete.core.disconnect();
+  }
+
   const autoComplete = new Autocomplete(cm);
   CodeMirror.registerHelper('autocomplete', 'core', autoComplete);
 });
@@ -16,14 +20,17 @@ CodeMirror.defineOption('autocomplete', false, function(cm, value) {
 class Autocomplete {
   constructor(cm) {
     // methods
+    console.log('constructor autocomplete');
     this.change = this.change.bind(this);
     this.beforeChange = this.beforeChange.bind(this);
     this.cursorActivity = this.cursorActivity.bind(this);
     this.keydown = this.keydown.bind(this);
+    this.clear = this.clear.bind(this);
 
     const hint = document.createElement('span');
     hint.className = 'widget-hint';
     this.hint = hint;
+    this.dictionary = new Dictionary();
     this.mark = null;
 
     this.cm = cm;
@@ -31,23 +38,28 @@ class Autocomplete {
     cm.on('keydown', this.keydown);
     cm.on('beforeChange', this.beforeChange);
     cm.on('cursorActivity', this.cursorActivity);
+    cm.on('mousedown', this.clear);
+
+    // this.watch = setInterval(() => console.log(this.currentHint), 1000);
 
     this.reset();
   }
 
   disconnect() {
     const cm = this.cm;
+    // clearInterval(this.watch);
     cm.off('change', this.change);
     cm.off('keydown', this.keydown);
     cm.off('beforeChange', this.beforeChange);
     cm.off('cursorActivity', this.cursorActivity);
+    cm.off('mousedown', this.clear);
   }
 
   reset() {
     const cm = this.cm;
-    this.clearMark();
+    this.clear();
     this.currentHint = '';
-    this.dictionary = new Dictionary();
+    this.dictionary.reset();
     this.isWordChar = cm.getOption('isWordChar') || TextUtils.isWordChar;
 
     this.textToWords(cm.getValue(), this.isWordChar, word => {
@@ -96,14 +108,14 @@ class Autocomplete {
   }
 
   dismiss() {
-    this.clearMark();
+    this.clear();
   }
 
   select() {
     if (!this.currentHint) return;
 
     this.cm.replaceRange(this.currentHint, this.cursor, this.cursor, '+input');
-    this.clearMark();
+    this.clear();
   }
 
   beforeChange(cm, change) {
@@ -123,7 +135,7 @@ class Autocomplete {
     // dismiss the current hint
 
     if (cursor.line !== this.cursor.line && cursor.ch !== this.cursor.ch) {
-      this.clearMark();
+      this.clear();
     }
 
     this.cursor = cursor;
@@ -140,13 +152,14 @@ class Autocomplete {
     cm.endOperation();
   }
 
-  clearMark() {
+  clear() {
     if (this.mark) this.mark.clear();
     this.hint.innerText = '';
+    this.currentHint = '';
   }
 
   showHint(from, to) {
-    this.clearMark();
+    this.clear();
     const cm = this.cm;
 
     // if at end of line, and have words to the left, then search the dictionary
@@ -164,6 +177,8 @@ class Autocomplete {
       }
       word = chr + word;
     }
+
+    // console.log('word: %s, %s', word, currentLine);
 
     if (!word) {
       return;

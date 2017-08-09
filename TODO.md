@@ -11,7 +11,7 @@
 - [ ] Pay/cancel/renew
 - [ ] Embeds work
 - [ ] Secure output
-- [ ] Processors?
+- [x] Processors
 
 ## Bit bugs
 
@@ -32,7 +32,7 @@
 
 ## Console
 
-- [ ] Can the code be run without a try/catch closure to expose the `const`?
+- [x] Can the code be run without a try/catch closure to expose the `const`? (no, tested)
 - [x] Console!
 - [x] Errors need to be passed into console too
 
@@ -50,7 +50,7 @@
 ## Larger tasks
 
 - [ ] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
-- [ ] Processors
+- [x] Processors
 - [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
 
 ## UI
@@ -76,7 +76,6 @@
 
 - [ ] Compile output document in web worker
 - [ ] Inject CSS, don't recompile
-- [ ] Background save of current state.
 
 ## Pages
 

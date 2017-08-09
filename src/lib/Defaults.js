@@ -61,7 +61,7 @@ export const settings = `{
   "editor.fontSize": 13,
 
   // The font family for the editor
-  "editor.fontFamily": "'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console",
+  "editor.fontFamily": "'SourceCodePro-Regular', menlo, monaco, Consolas, Lucida Console, monospace",
 
   // Whether to show line numbers to the left of the editor
   "editor.lineNumbers": true,

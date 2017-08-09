@@ -4,18 +4,7 @@ import Splitter from '@remy/react-splitter-layout';
 import * as RESULT from '../actions/session';
 import '../css/Result.css';
 import processor from '../lib/processor';
-
-function makeIframe() {
-  const iframe = document.createElement('iframe');
-  iframe.hidden = true;
-  iframe.name = 'JS Bin Result';
-  iframe.className = 'Result';
-  iframe.setAttribute(
-    'sandbox',
-    'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
-  );
-  return iframe;
-}
+import makeIframe from '../lib/makeIFrame';
 
 export default class Result extends React.Component {
   constructor(props) {

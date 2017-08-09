@@ -12,9 +12,10 @@ import {
 import BinToHTML from '../lib/BinToHTML';
 import idk from 'idb-keyval';
 import { JAVASCRIPT, CSS, HTML } from '../lib/cm-modes';
+import summary from './summary';
 
 import FileSaver from 'file-saver'; // @@ lazy load
-import { getAvailableProcessors, NONE } from '../lib/processor';
+import { getAvailableProcessors } from '../lib/processor';
 
 const processors = {
   [JAVASCRIPT]: getAvailableProcessors(JAVASCRIPT),
@@ -79,28 +80,36 @@ export const open = {
       ];
     }
 
-    return keys.map(key => ({
-      title: key,
-      run: dispatch => {
-        dispatch(push('/local/' + key));
-      },
-    }));
+    return Promise.all(
+      keys.map(key => {
+        return idk.get(key).then(res => {
+          let content = summary(res);
+
+          if (!content) {
+            content = key;
+          }
+
+          return {
+            title: content,
+            run: dispatch => {
+              dispatch(push('/local/' + key));
+            },
+          };
+        });
+      })
+    );
   },
 };
 
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
-    const res = await fetch('/libraries.json');
-    const json = await res.json();
+    const json = await import(/* webpackChunkName: "libraries" */ '../lib/libraries.json');
 
     const run = url => {
       if (!Array.isArray(url)) {
         url = [url];
       }
-      // if (url.endsWith('.css')) {
-      //   return `<link rel="stylesheet" href="${url}" />`;
-      // }
 
       return url.map(url => `<script src="${url}"></script>`).join('\n');
     };
@@ -114,7 +123,7 @@ export const addLibrary = {
           title: name,
           name,
           display: `${name} @ ${version}`,
-          meta: name + ' ' + ' ' + keywords.join(' '),
+          meta: `${name} ${keywords.join(' ')}`,
           run: run.bind(null, latest),
         });
 
@@ -152,6 +161,24 @@ export const changeLanguage = {
         run: dispatch => dispatch(setProcessor(app.source, config.name)),
       })),
     ];
+  },
+};
+
+export const exportToCodePen = {
+  title: 'Export to CodePen',
+  run: async (dispatch, { bin, user }) => {
+    if (!user.pro) {
+      return {
+        title: 'JS Bin license required, upgrade?',
+        run: dispatch => {
+          dispatch(push('/upgrade'));
+        },
+      };
+    }
+
+    const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
+
+    exporter.codepen(bin);
   },
 };
 

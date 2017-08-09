@@ -25,6 +25,7 @@ export const defaultState = {
   html: defaults.html,
   javascript: defaults.javascript,
   css: defaults.css,
+  updated: null,
   error: null,
 };
 
@@ -76,8 +77,6 @@ export default function reducer(state = defaultState, action) {
         // FIXME handle extra settings
         return { ...prevState, ...payload, loading: false };
       },
-      // on finish dispatch reset
-      // finish: prevState => ({ ...prevState, isLoading: false }),
     });
   }
 
@@ -97,16 +96,21 @@ export default function reducer(state = defaultState, action) {
     return { ...state, result: code };
   }
 
+  let key = null;
   if (type === SET_HTML) {
-    return { ...state, html: code };
+    key = MODES.HTML;
   }
 
   if (type === SET_CSS) {
-    return { ...state, css: code };
+    key = MODES.CSS;
   }
 
   if (type === SET_JS) {
-    return { ...state, javascript: code };
+    key = MODES.JAVASCRIPT;
+  }
+
+  if (key !== null) {
+    return { ...state, html: code, updated: new Date() };
   }
 
   return state;

@@ -89,15 +89,25 @@ export const open = {
             content = key;
           }
 
+          if (content.length > 100) {
+            content = content.substr(0, 99) + '…';
+          }
+
           return {
             title: content,
+            updated: res.updated,
             run: dispatch => {
               dispatch(push('/local/' + key));
             },
           };
         });
       })
-    );
+    ).then(bins => {
+      return bins.sort((a, b) => {
+        if (!a.updated) return 1;
+        return a.updated < b.updated ? 1 : -1;
+      });
+    });
   },
 };
 

@@ -110,7 +110,7 @@ export default function reducer(state = defaultState, action) {
   }
 
   if (key !== null) {
-    return { ...state, html: code, updated: new Date() };
+    return { ...state, [key]: code, updated: new Date() };
   }
 
   return state;

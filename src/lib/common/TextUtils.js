@@ -1,3 +1,5 @@
+import { TextRange } from './TextRange';
+
 /*
  * Copyright (C) 2013 Google Inc. All rights reserved.
  *
@@ -312,3 +314,5 @@ TextUtils.isMinified = function(text) {
   } while (--linesToCheck >= 0 && lastPosition < text.length);
   return false;
 };
+
+TextUtils.TextRange = TextRange;

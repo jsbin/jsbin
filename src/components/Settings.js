@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import { HotKeys } from 'react-hotkeys';
 // import stripComments from 'strip-json-comments';
+// import Dictionary from '../lib/common/Dictionary';
+// import TextEditorAutocompleteController from '../lib/TextEditor/AutoCompleteController';
 import Footer from '../components/Footer';
 import { Command } from './Symbols';
 import Mirror from '../components/Mirror'; // explicit about component
@@ -71,8 +73,6 @@ export default class Settings extends React.Component {
 
   componentDidMount() {
     // const cm = this.settings.CodeMirror.getCodeMirror();
-    // cm.on('changes', this.onChange);
-    // this._dictionary = new Dictionary();
 
     // const data = stripComments(defaults);
 

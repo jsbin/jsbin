@@ -34,6 +34,7 @@ import '../lib/CodeMirror/cmd-snippets';
 import '../lib/CodeMirror/opt-styles';
 import '../lib/CodeMirror/ext-highlight-lines';
 import '../lib/CodeMirror/colour-bookmark';
+import '../lib/CodeMirror/autocomplete';
 
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/addon/hint/show-hint.css';
@@ -146,6 +147,7 @@ export default class Mirror extends React.Component {
       this.setState({ code: nextProps.code });
       // FIXME I don't understand why I need to manually set this value since
       // react-codemirror already has these bits…
+      cm.setOption('source', nextProps.source);
       cm.setValue(nextProps.code);
     }
 
@@ -289,6 +291,7 @@ export default class Mirror extends React.Component {
       ...options,
       extraKeys,
       mode,
+      autocomplete: true,
     };
 
     if (source === MODES.CSS) {

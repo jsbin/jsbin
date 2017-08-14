@@ -2,6 +2,39 @@ import stripJsonComments from 'strip-json-comments';
 import { cmd, isMac } from './is-mac';
 import { LIGHT, DARK } from '../actions/app';
 
+export const emptyPage = `<style>
+body {
+	color: rgba(107,106,106,.6);
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 30px;
+  box-sizing: border-box;
+  line-height: 1.8;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+}
+</style>
+<body><p>Your page is currently empty.<br>Change the source to instantly see changes.</p>
+</body>`;
+
 export const html = `<!DOCTYPE html>
 <html>
 <head>

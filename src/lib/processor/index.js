@@ -10,6 +10,7 @@ import * as markdown from './markdown';
 import * as less from './less';
 import * as scss from './scss';
 import * as babel from './babel';
+import * as pug from './pug';
 
 export const NONE = 'none';
 
@@ -19,6 +20,7 @@ const targets = {
   [css.config.name]: css,
   [javascript.config.name]: javascript,
   [markdown.config.name]: markdown,
+  [pug.config.name]: pug,
   [less.config.name]: less,
   [scss.config.name]: scss,
   [babel.config.name]: babel,

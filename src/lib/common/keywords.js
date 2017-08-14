@@ -18,7 +18,7 @@ export const javascript = [
   // bom
   'console log trace resolve reject decodeURIComponent confirm prompt alert encodeURIComponent encodeURI decodeURI escape unescape',
   // handlers
-  'onblur	onclick	onerror	onfocus onkeydown	onkeypress	onkeyup	onmouseover onload	onmouseup	onmousedown	onsubmit',
+  'onblur onclick onerror onfocus onkeydown onkeypress onkeyup onmouseover onload onmouseup onmousedown onsubmit',
   // thingies
   'Array Date hasOwnProperty Infinity isFinite isNaN isPrototypeOf Math NaN Number Object String toString undefined valueOf',
 ].reduce((acc, curr) => {

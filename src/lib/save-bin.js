@@ -1,14 +1,24 @@
 import idb from 'idb-keyval';
+import Haikunator from 'haikunator';
 import { replace } from 'react-router-redux';
-import uuid from './uuid';
 import { setError } from '../actions/session';
 import { setId } from '../actions/bin';
+
+const slugger = new Haikunator({
+  defaults: {
+    // class defaults
+    tokenLength: 3,
+    tokenChars: 'ABCDEF0123456789',
+  },
+});
+
+const slug = () => slugger.haikunate();
 
 export function save({ bin }, dispatch) {
   const copy = { ...bin };
   delete copy.loading;
   delete copy.error;
-  const id = bin.id || uuid();
+  const id = bin.id || slug();
 
   return idb
     .set(id, copy)

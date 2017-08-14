@@ -5,6 +5,7 @@ import * as RESULT from '../actions/session';
 import '../css/Result.css';
 import processor from '../lib/processor';
 import makeIframe from '../lib/makeIFrame';
+import { emptyPage } from '../lib/Defaults';
 
 export default class Result extends React.Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export default class Result extends React.Component {
       }
     }
 
-    const { result: renderedDoc, insertJS, javascript } = await processor(
+    let { result: renderedDoc, insertJS, javascript } = await processor(
       bin,
       source
     );
@@ -124,6 +125,10 @@ export default class Result extends React.Component {
     // we write any content (to catch the console messaging).
     if (this.console && (isBoth || isConsole)) {
       this.console.rebind(iframe);
+    }
+
+    if (/<body>\s+<\/body>/im.test(renderedDoc)) {
+      renderedDoc = emptyPage;
     }
 
     // start writing the page. This will clear any existing document.

@@ -1,9 +1,9 @@
 import { HTML } from '../cm-modes';
 
 export async function transform(source) {
-  const pug = await import(/* webpackChunkName: "pug" */ 'pub');
   let res = source;
   try {
+    const pug = await import(/* webpackChunkName: "pug" */ 'pug');
     res = pug.render(source);
   } catch (e) {
     console.error(e);

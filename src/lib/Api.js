@@ -65,7 +65,7 @@ export const getFromGist = async id => {
       html,
       javascript,
       css,
-      id: 'gist-' + id,
+      // id: 'gist-' + id, // note: adding an ID means the bin will immediately save on change
       settings: settings.settings || {},
     };
   }

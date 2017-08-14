@@ -15,6 +15,7 @@
 
 ## Bit bugs
 
+- [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
 - [ ] Change settings, and in other panel change a setting and original settings are lost
 - [x] If console is open by default, then it takes focus
 - [x] New is broken

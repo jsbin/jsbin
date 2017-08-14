@@ -1,5 +1,13 @@
 import makeIframe from './makeIFrame';
 import { HTML, JAVASCRIPT, CSS } from './cm-modes';
+import Haikunator from 'haikunator';
+const slugger = new Haikunator({
+  defaults: {
+    // class defaults
+    tokenLength: 3,
+    tokenChars: 'ABCDEF0123456789',
+  },
+});
 
 // via https://stackoverflow.com/a/6660315/22617
 const scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -13,6 +21,59 @@ const scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
  */
 function pick(doc, selector, defaultValue = '', from = 'innerText') {
   return (doc.querySelector(selector) || { [from]: defaultValue }).innerText;
+}
+
+export async function gist(bin) {
+  let { id = slugger.haikunate(), html, javascript, css } = bin;
+
+  let htmlNoJS = html;
+  if (htmlNoJS.toLowerCase().includes('<script')) {
+    htmlNoJS = htmlNoJS.replace(scriptRegex, '');
+  }
+
+  const iframe = makeIframe();
+  document.body.appendChild(iframe);
+  const doc = iframe.contentDocument;
+  doc.open();
+  doc.write(htmlNoJS);
+  doc.close();
+
+  const title = pick(doc, 'title', bin.title || 'JS Bin');
+  const description = pick(doc, 'meta[name="description"', bin.description);
+  document.body.removeChild(iframe); // clean up
+
+  const res = await fetch('https://api.github.com/gists', {
+    method: 'POST',
+    // mode: 'no-cors',
+    headers: {
+      accept: 'application/vnd.github.v3+json',
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      description: title || description,
+      public: false,
+      files: {
+        [id + '.html']: {
+          content: html,
+        },
+        [id + '.js']: {
+          content: javascript,
+        },
+        [id + '.css']: {
+          content: css,
+        },
+      },
+    }),
+  });
+
+  if (res.status > 201) {
+    console.log('gist failed:' + res.status);
+    return;
+  }
+
+  const json = await res.json();
+  console.log(`gist: ${json.html_url}`);
+  return json.id;
 }
 
 export function codepen(bin) {
@@ -81,5 +142,3 @@ export function codepen(bin) {
   form.submit();
   document.body.removeChild(form);
 }
-
-export function gist(bin) {}

@@ -174,6 +174,15 @@ export const changeLanguage = {
   },
 };
 
+export const exportToGist = {
+  title: 'Export to Gist',
+  run: async (dispatch, { bin, user }) => {
+    const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
+    const id = await exporter.gist(bin);
+    dispatch(push(`/gist/${id}`));
+  },
+};
+
 export const exportToCodePen = {
   title: 'Export to CodePen',
   run: async (dispatch, { bin, user }) => {

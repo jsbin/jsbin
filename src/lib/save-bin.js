@@ -14,11 +14,16 @@ const slugger = new Haikunator({
 
 const slug = () => slugger.haikunate();
 
-export function save({ bin }, dispatch) {
+export async function save({ bin }, dispatch) {
   const copy = { ...bin };
   delete copy.loading;
   delete copy.error;
   const id = bin.id || slug();
+
+  // if (id.startsWith('gist/')) {
+  //   const { gist } = await import('./exporter.js');
+  //   return gist(bin);
+  // }
 
   return idb
     .set(id, copy)

@@ -10,6 +10,7 @@ import {
 import * as MODES from '../lib/cm-modes';
 
 export const defaultState = {
+  protectedKeys: [],
   showWelcome: true,
   theme: LIGHT,
   splitColumns: false,

@@ -1,5 +1,5 @@
 import stripJsonComments from 'strip-json-comments';
-import { cmd, isMac } from './is-mac';
+import { cmd, cmCmd, isMac } from './is-mac';
 import { LIGHT, DARK } from '../actions/app';
 
 export const emptyPage = `<style>
@@ -65,6 +65,14 @@ export const defaultUserSettings = `{
 
 }`;
 
+const protectedKeys = [
+  cmCmd + '-L',
+  cmCmd + '-T',
+  cmCmd + '-W',
+  cmCmd + '-J',
+  cmCmd + '-R',
+];
+
 export const settings = `{
   // Colour scheme used in jsbin. Values can be:
   // - '${DARK}' (based on Atom One Dark)
@@ -79,6 +87,10 @@ export const settings = `{
 
   // Default source panel. Values can be: 'html', 'css' and 'javascript'
   "app.source": "html",
+
+  // Prevent the following keys from being taken over, allowing browser to
+  // maintain it's default behaviour
+  "app.protectedKeys": ${JSON.stringify(protectedKeys)},
 
   // Default result panel. Values can be: 'page', 'console', 'both' and 'none'
   "app.result": "page",

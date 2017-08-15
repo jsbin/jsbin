@@ -102,6 +102,17 @@ export default class Mirror extends React.Component {
   componentDidMount() {
     this.updateCursor(this.props);
     const cm = this.CodeMirror.getCodeMirror();
+    const protectedKeys = this.props.app.protectedKeys;
+
+    if (protectedKeys.length) {
+      const map = protectedKeys.reduce((acc, curr) => {
+        acc[curr] = false;
+        return acc;
+      }, {});
+
+      cm.addKeyMap(map, true);
+    }
+
     cm.on('changes', this.onChanges);
 
     cm.on('highlightLines', () => {

@@ -44,7 +44,6 @@ export async function gist(bin) {
 
   const res = await fetch('https://api.github.com/gists', {
     method: 'POST',
-    // mode: 'no-cors',
     headers: {
       accept: 'application/vnd.github.v3+json',
       'content-type': 'application/json',
@@ -73,6 +72,7 @@ export async function gist(bin) {
 
   const json = await res.json();
   console.log(`gist: ${json.html_url}`);
+
   return json.id;
 }
 

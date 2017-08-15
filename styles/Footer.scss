@@ -16,6 +16,14 @@
     margin-top: 20px;
     opacity: 0.3;
     font-size: $font-size-base * .9;
+
+    > * {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
   ul {

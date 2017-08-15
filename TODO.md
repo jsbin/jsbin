@@ -15,6 +15,7 @@
 
 ## Bit bugs
 
+- [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
 - [ ] Change settings, and in other panel change a setting and original settings are lost
 - [x] If console is open by default, then it takes focus
@@ -68,6 +69,7 @@
 
 ## UX
 
+- [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))
 - [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
 - [ ] Investigate using blobs with scripts for real-time line number reports
@@ -86,6 +88,7 @@
 ## API
 
 - [x] Import from gists
+- [x] Export gist (currently anon only…)
 - [ ] Save online/share
 - [ ] Sync settings
 - [ ] Login / upgrade, etc

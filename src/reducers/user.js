@@ -1,4 +1,6 @@
-import { SAVE_SETTINGS } from '../actions/user';
+import decode from 'jwt-decode';
+
+import { SAVE_SETTINGS, SET_TOKEN } from '../actions/user';
 import { SET_OPTION } from '../actions/editor';
 import { TOGGLE_LAYOUT, SET_THEME, SHOW_WELCOME } from '../actions/app';
 import { insertChangeIntoUserSettings } from '../lib/settings';
@@ -7,6 +9,8 @@ import { defaultUserSettings } from '../lib/Defaults';
 const defaultState = {
   authenticated: false,
   username: 'anonymous',
+  github: null,
+  pro: false,
   token: null,
   settings: defaultUserSettings, // NOTE this is a JSON *string*
 };
@@ -52,6 +56,27 @@ export default function(state = defaultState, action) {
         action,
         state.settings
       ),
+    };
+  }
+
+  if (type === SET_TOKEN) {
+    const user = decode(action.value);
+    const {
+      username,
+      pro,
+      github,
+      // settings
+    } = user;
+
+    return {
+      ...state,
+      token: action.value,
+      ...{
+        username,
+        pro,
+        github,
+        // settings
+      },
     };
   }
 

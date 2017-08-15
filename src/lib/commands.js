@@ -1,5 +1,5 @@
 import React from 'react';
-import { push } from 'react-router-redux';
+import { push, replace } from 'react-router-redux';
 import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
@@ -179,7 +179,8 @@ export const exportToGist = {
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
     const id = await exporter.gist(bin);
-    dispatch(push(`/gist/${id}`));
+    // dispatch(setId(`gist/${id}`));
+    dispatch(replace(`/gist/${id}`));
   },
 };
 
@@ -255,6 +256,14 @@ export const settings = {
     // dispatch => dispatch(push('/settings')),
     window.open('/settings');
     return null;
+  },
+};
+
+export const account = {
+  title: 'Account',
+  condition: ({ user }) => !!user.username,
+  run: dispatch => {
+    dispatch(push('/account'));
   },
 };
 

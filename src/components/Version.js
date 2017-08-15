@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Version() {
   return (
-    <span className="Version">
+    <span>
       v{process.env.REACT_APP_VERSION}
     </span>
   );

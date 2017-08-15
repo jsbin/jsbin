@@ -1,17 +1,61 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { getInvoices } from '../../lib/Api';
 import format from 'date-fns/format';
 import Layout from '../../containers/PageLayout';
 import Head from '../../components/Head';
+import Error from '../../components/GenericErrorPage';
+import Loading from '../Loading';
 
 export default class License extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      invoices: null,
+      loading: true,
+      error: null,
+    };
+  }
+
+  async componentDidMount() {
+    let error = null;
+    let invoices = null;
+    try {
+      invoices = await getInvoices(this.props.user);
+    } catch (e) {
+      console.log(e);
+      error = {
+        status: e.status,
+        message: `Unable to load invoices: ${e.message}`,
+      };
+    }
+
+    if (invoices.status) {
+      error = invoices;
+      invoices = null;
+    }
+
+    this.setState({
+      invoices,
+      error,
+      loading: false,
+    });
+
+    console.log('did mount', invoices);
+  }
+
   render() {
-    const invoices = [
-      { id: 1, date: '2014-06-23' },
-      { id: 2, date: '2015-06-23' },
-      { id: 3, date: '2016-06-23' },
-      { id: 4, date: '2017-06-23' },
-    ];
+    const { invoices, loading, error } = this.state;
+
+    if (loading) {
+      return <Loading isLoading={true} />;
+    }
+
+    if (error) {
+      return <Error status={error.status} message={error.message} />;
+    }
+
     return (
       <Layout className="License">
         <Head title="Licence" />
@@ -27,7 +71,9 @@ export default class License extends Component {
               return (
                 <li key={i.id}>
                   <Link to={`/account/invoice/${i.id}`}>
-                    Invoice for {format(i.date, 'D MMMM, YYYY')} - 23 July, 2018
+                    Invoice for £{i.total.toFixed(0)} for the period {' '}
+                    {format(i.start, 'D MMMM, YYYY')} -{' '}
+                    {format(i.end, 'D MMMM, YYYY')}
                   </Link>
                 </li>
               );

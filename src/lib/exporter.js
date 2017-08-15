@@ -23,7 +23,7 @@ function pick(doc, selector, defaultValue = '', from = 'innerText') {
   return (doc.querySelector(selector) || { [from]: defaultValue }).innerText;
 }
 
-export async function gist(bin) {
+export async function gist(bin, user) {
   let { id = slugger.haikunate(), html, javascript, css } = bin;
 
   let htmlNoJS = html;
@@ -42,12 +42,18 @@ export async function gist(bin) {
   const description = pick(doc, 'meta[name="description"', bin.description);
   document.body.removeChild(iframe); // clean up
 
+  const headers = {
+    accept: 'application/vnd.github.v3+json',
+    'content-type': 'application/json',
+  };
+
+  if (user && user.githubToken) {
+    headers.authorization = `token ${user.githubToken}`;
+  }
+
   const res = await fetch('https://api.github.com/gists', {
     method: 'POST',
-    headers: {
-      accept: 'application/vnd.github.v3+json',
-      'content-type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       description: title || description,
       public: false,

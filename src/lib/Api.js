@@ -27,6 +27,13 @@ export const getInvoice = (id, user) => {
   });
 };
 
+export const getInvoices = user => {
+  return fetch(
+    `${API}/user/invoice/`,
+    settings({ token: user.token })
+  ).then(res => res.json());
+};
+
 export const getBin = (id, revision = 'latest') => {
   return fetch(`${API}/bin/${id}/${revision}`, settings()).then(res => {
     if (res.status !== 200) {

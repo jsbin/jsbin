@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import format from 'date-fns/format';
 import { getInvoice } from '../../lib/Api';
 import Layout from '../../containers/PageLayout';
-import Error from '../../components/GenericErrorPage';
 import Head from '../../components/Head';
+import Error from '../../components/GenericErrorPage';
 import Loading from '../Loading';
 import '../../css/Invoice.css';
 
-const percent = s => s;
-
 const dp2 = s => s.toFixed(2);
+const percent = (start, discount) => dp2(start / 100 * discount / 100);
 
 export default class Invoice extends Component {
   constructor(props) {
@@ -64,11 +63,11 @@ export default class Invoice extends Component {
       <Layout className="Invoice">
         <Head title={`Invoice - ${invoice.id}`} />
         <h1>
-          Invoice <small>{invoice.receipt_number}</small>
+          Invoice <small>#{invoice.receipt_number}</small>
         </h1>
 
         <h2>
-          {format(invoice.date, 'MMMM D, YYYY')}
+          {format(invoice.date * 1000, 'MMMM D, YYYY')}
         </h2>
 
         <table>
@@ -82,7 +81,13 @@ export default class Invoice extends Component {
                 <tr key={`line-${i}`}>
                   <td>
                     <strong>
-                      Subscription to {line.plan.name} (£{dp2(line.amount / 100)}/{line.plan.interval})
+                      {line.plan
+                        ? <span>
+                            Subscription to {line.plan.name} (£{dp2(line.amount / 100)}/{line.plan.interval}){' '}
+                          </span>
+                        : <span>
+                            {line.description}
+                          </span>}
                     </strong>
                   </td>
 
@@ -113,7 +118,7 @@ export default class Invoice extends Component {
                     invoice.subtotal,
                     invoice.discount.coupon.percent_off,
                     2
-                  )}}
+                  )}
                 </td>
               </tr>}
 

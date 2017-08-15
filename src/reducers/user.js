@@ -9,7 +9,7 @@ import { defaultUserSettings } from '../lib/Defaults';
 const defaultState = {
   authenticated: false,
   username: 'anonymous',
-  github: null,
+  githubToken: null,
   pro: false,
   token: null,
   settings: defaultUserSettings, // NOTE this is a JSON *string*
@@ -64,7 +64,7 @@ export default function(state = defaultState, action) {
     const {
       username,
       pro,
-      github,
+      githubToken,
       // settings
     } = user;
 
@@ -74,7 +74,7 @@ export default function(state = defaultState, action) {
       ...{
         username,
         pro,
-        github,
+        githubToken,
         // settings
       },
     };

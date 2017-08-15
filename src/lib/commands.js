@@ -178,7 +178,7 @@ export const exportToGist = {
   title: 'Export to Gist',
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
-    const id = await exporter.gist(bin);
+    const id = await exporter.gist(bin, user);
     // dispatch(setId(`gist/${id}`));
     dispatch(replace(`/gist/${id}`));
   },
@@ -264,6 +264,14 @@ export const account = {
   condition: ({ user }) => !!user.username,
   run: dispatch => {
     dispatch(push('/account'));
+  },
+};
+
+export const login = {
+  title: 'Login',
+  condition: ({ user }) => !user.username,
+  run: () => {
+    window.location = `${process.env.REACT_APP_API}/auth`;
   },
 };
 

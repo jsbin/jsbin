@@ -2,7 +2,7 @@
 
 ## In progress
 
-- [ ] Sign in (API, JWT)
+- [x] Sign in (API, JWT)
 - [x] Welcome
 
 ## Need for live
@@ -72,7 +72,7 @@
 - [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))
 - [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
-- [ ] Investigate using blobs with scripts for real-time line number reports
+- [x] Investigate using blobs with scripts for real-time line number reports
 - [ ] unfurl - can this even work if there's no dynamic server side?
 
 ## Lib

@@ -45,6 +45,28 @@ summary {
   user-select: none;
 }
 
+.warning-zone {
+  margin-top: 60px;
+  border: 1px solid rgb(232, 232, 186);
+  border-radius: 4px;
+  padding: 20px;
+  background: hsla(60, 70%, 90%, 0.6);
+  font-size: 0.9em;
+
+  small {
+    line-height: 18px;
+    display: block;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .Error {
   transition: opacity 100ms ease-in-out;
   color: rgb(231, 76, 60);

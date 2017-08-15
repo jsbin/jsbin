@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PageLayout from '../containers/PageLayout';
+import Layout from '../containers/PageLayout';
+import Head from '../components/Head';
 import Error from '../components/GenericErrorPage';
 
 import License from './Account/License';
@@ -37,7 +38,8 @@ export default class Account extends Component {
     }
 
     return (
-      <PageLayout className="Account">
+      <Layout className="Account">
+        <Head title="Account" />
         <h1>
           @{user.username}{' '}
         </h1>
@@ -60,7 +62,7 @@ export default class Account extends Component {
             <Link to="/account/delete">Delete account</Link>
           </li>
         </ul>
-      </PageLayout>
+      </Layout>
     );
   }
 }

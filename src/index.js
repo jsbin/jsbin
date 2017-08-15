@@ -174,7 +174,7 @@ const render = App => {
           <Route exact path="/settings" component={Settings} />
           <Route exact path="/welcome" component={Welcome} />
           <Route exact path="/login" component={Login} />
-          <Route path="/account/:subPage?/:filter?" component={Account} />
+          <Route path="/account/:subPage?/:id?" component={Account} />
 
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/gist/:gistId" component={App} />

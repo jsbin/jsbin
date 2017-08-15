@@ -7,7 +7,7 @@ const settings = ({ opts, token } = {}) => {
     // 'content-type': 'application/json'
   };
   if (token) {
-    headers.authorization = `Bearer ${token}`;
+    headers.Authorization = `Bearer ${token}`;
   }
 
   return {
@@ -15,6 +15,16 @@ const settings = ({ opts, token } = {}) => {
     headers,
     ...opts,
   };
+};
+
+export const getInvoice = (id, user) => {
+  return fetch(
+    `${API}/user/invoice/${id}`,
+    settings({ token: user.token })
+  ).then(res => {
+    console.log(res.status);
+    return res.json();
+  });
 };
 
 export const getBin = (id, revision = 'latest') => {

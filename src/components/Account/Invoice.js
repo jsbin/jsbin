@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import format from 'date-fns/format';
-import PageLayout from '../../containers/PageLayout';
+import { getInvoice } from '../../lib/Api';
+import Layout from '../../containers/PageLayout';
+import Error from '../../components/GenericErrorPage';
+import Head from '../../components/Head';
 import Loading from '../Loading';
 import '../../css/Invoice.css';
 
@@ -14,25 +17,32 @@ export default class Invoice extends Component {
     this.state = {
       loading: true,
       invoice: null,
+      error: null,
     };
   }
 
-  componentDidMount() {
-    const invoice = {
-      receipt_number: '#2039-1660',
-      date: '2017-08-15',
-      lines: {
-        data: [
-          {
-            plan: { name: 'Pro yearly', interval: 'year' },
+  async componentDidMount() {
+    let error = null;
+    let invoice = null;
+    const id = this.props.match.params.id;
+    try {
+      invoice = await getInvoice(id, this.props.user);
+    } catch (e) {
+      console.log(e);
+      error = {
+        status: e.status,
+        message: `Unable to load the specific invoice "${id}": ${e.message}`,
+      };
+    }
 
-            amount: 6000,
-          },
-        ],
-      },
-    };
+    if (invoice.status) {
+      error = invoice;
+      invoice = null;
+    }
+
     this.setState({
       invoice,
+      error,
       loading: false,
     });
 
@@ -40,14 +50,19 @@ export default class Invoice extends Component {
   }
 
   render() {
-    const { invoice, loading = true } = this.state;
+    const { invoice, loading = true, error } = this.state;
+
+    if (error) {
+      return <Error status={error.status} message={error.message} />;
+    }
 
     if (loading) {
       return <Loading isLoading={true} />;
     }
 
     return (
-      <PageLayout className="Invoice">
+      <Layout className="Invoice">
+        <Head title={`Invoice - ${invoice.id}`} />
         <h1>
           Invoice <small>{invoice.receipt_number}</small>
         </h1>
@@ -126,7 +141,7 @@ export default class Invoice extends Component {
             </small>
           </p>
         </footer>
-      </PageLayout>
+      </Layout>
     );
   }
 }

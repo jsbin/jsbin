@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
-import PageLayout from '../../containers/PageLayout';
+import Layout from '../../containers/PageLayout';
+import Head from '../../components/Head';
 
 export default class License extends Component {
   render() {
@@ -12,7 +13,8 @@ export default class License extends Component {
       { id: 4, date: '2017-06-23' },
     ];
     return (
-      <PageLayout className="License">
+      <Layout className="License">
+        <Head title="Licence" />
         <h1>Your JS Bin License</h1>
         <p>Level: pro</p>
         <p>Started: 19 December, 2014</p>
@@ -49,7 +51,7 @@ export default class License extends Component {
 
           <button>Delete my entire JS Bin account!</button>
         </div>
-      </PageLayout>
+      </Layout>
     );
   }
 }

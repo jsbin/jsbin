@@ -19,6 +19,7 @@ export default class Result extends React.Component {
   }
 
   catchErrors(event) {
+    return;
     if (event.key === 'jsbin.error') {
       // check if it came from _our_ iframe
       const data = JSON.parse(event.newValue);
@@ -38,17 +39,18 @@ export default class Result extends React.Component {
     }
   }
 
-  async updateResult(result) {
-    if (this.props.error) {
+  async updateResult(props) {
+    const { error, bin, source, result } = props;
+
+    if (error) {
       // don't bother sending the state change if there's nothing to be done
-      this.props.clearError();
+      props.clearError();
     }
 
     const isPage = result === RESULT.RESULT_PAGE;
     const isBoth = result === RESULT.RESULT_BOTH;
     const isConsole = result === RESULT.RESULT_CONSOLE;
 
-    const { bin, source } = this.props;
     let iframe = this.iframe;
 
     if (isBoth || isPage) {
@@ -144,6 +146,8 @@ export default class Result extends React.Component {
       script.src = URL.createObjectURL(blob);
       doc.documentElement.appendChild(script);
     }
+
+    console.log('rendered', javascript);
   }
 
   async lazyLoad({ result }) {
@@ -160,27 +164,32 @@ export default class Result extends React.Component {
 
   async componentDidMount() {
     await this.lazyLoad(this.props);
-    await this.updateResult(this.props.result);
-    window.addEventListener('storage', this.catchErrors, false);
+    await this.updateResult(this.props);
+    // window.addEventListener('storage', this.catchErrors, false);
   }
 
   componentWillUnmount() {
     if (this.iframe && this.iframe.parentNode) {
       this.iframe.parentNode.removeChild(this.iframe);
     }
-    window.removeEventListener('storage', this.catchErrors, false);
+    // window.removeEventListener('storage', this.catchErrors, false);
   }
 
   async componentWillReceiveProps(nextProps) {
     await this.lazyLoad(nextProps);
 
     // multiple `if` statements so that I'm super sure what's happening
-    if (this.props.code !== nextProps.code) {
-      return this.updateResult(nextProps.result);
-    }
+    // if (this.props.code !== nextProps.code) {
+    //   return this.updateResult(nextProps);
+    // }
   }
 
   shouldComponentUpdate(nextProps) {
+    console.log(
+      'before: %s, after: %s',
+      this.props.binLoading,
+      nextProps.binLoading
+    );
     if (nextProps.code !== this.props.code) {
       return true;
     }
@@ -199,25 +208,36 @@ export default class Result extends React.Component {
   }
 
   async componentWillUpdate(nextProps) {
-    // check if the console needs to be rewired up
-    if (nextProps.result !== this.props.result) {
-      if (
-        nextProps.result === RESULT.RESULT_BOTH ||
-        nextProps.result === RESULT.RESULT_CONSOLE
-      ) {
-        // blows up on "BOTH"
-        return this.updateResult(nextProps.result);
+    const newlyLoadedBin =
+      this.props.binLoading === true && nextProps.binLoading === false;
+    const resultChanged = nextProps.result !== this.props.result;
+    const resultVisible =
+      nextProps.result === RESULT.RESULT_BOTH ||
+      nextProps.result === RESULT.RESULT_CONSOLE;
+
+    console.log(
+      'newlyLoadedBin? %s, resultChanged: %s, resultVisible: %s',
+      newlyLoadedBin,
+      resultChanged,
+      resultVisible
+    );
+
+    if (newlyLoadedBin || resultChanged) {
+      if (resultVisible) {
+        // return this.updateResult(nextProps);
       }
     }
   }
 
   async componentDidUpdate(prevProps) {
+    // FIXME need more logic?
     if (
       prevProps.result !== this.props.result ||
       prevProps.code !== this.props.code
     ) {
       // FIXME this doubles up when we show RESULT_BOTH
-      return this.updateResult(this.props.result);
+      console.log('changed here', this.props.bin.javascript);
+      return this.updateResult(this.props);
     }
   }
 

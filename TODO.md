@@ -2,12 +2,11 @@
 
 ## In progress
 
-- [x] Sign in (API, JWT)
-- [x] Welcome
+- [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
 
 ## Need for live
 
-- [ ] Login
+- [x] Login (though wants some love)
 - [ ] Pay/cancel/renew
 - [ ] Embeds work
 - [ ] Secure output
@@ -15,7 +14,6 @@
 
 ## Bit bugs
 
-- [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
 - [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [ ] Change settings, and in other panel change a setting and original settings are lost (lopri)
 - [x] If console is open by default, then it takes focus
@@ -60,6 +58,7 @@
 - [ ] Share box
 - [ ] Some kind of notification system
 - [ ] Add meta data box
+- [x] Welcome
 - [x] Loading gif
 - [x] Import light + dark theme by default
 - [x] Completely dark theme
@@ -69,11 +68,13 @@
 
 ## UX
 
-- [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))
+- [ ] `:g` goto line
 - [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
-- [x] Investigate using blobs with scripts for real-time line number reports
 - [ ] unfurl - can this even work if there's no dynamic server side?
+- [x] Sign in (API, JWT)
+- [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))
+- [x] Investigate using blobs with scripts for real-time line number reports
 
 ## Lib
 

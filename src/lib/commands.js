@@ -54,9 +54,7 @@ export const del = {
   title: 'Delete',
   shortcut: (
     <kbd>
-      <Command />
-      <Shift />
-      <Backspace />
+      <Command /> <Shift /> <Backspace />
     </kbd>
   ),
   run: dispatch => {
@@ -75,7 +73,7 @@ export const open = {
     if (keys.length === 0) {
       return [
         {
-          title: `...you don't have any locally saved bins`,
+          title: `…you don't have any locally saved bins`,
         },
       ];
     }
@@ -179,7 +177,6 @@ export const exportToGist = {
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
     const id = await exporter.gist(bin, user);
-    // dispatch(setId(`gist/${id}`));
     dispatch(replace(`/gist/${id}`));
   },
 };
@@ -247,8 +244,7 @@ export const settings = {
   title: 'Settings',
   shortcut: (
     <kbd>
-      <Command />
-      <Shift />
+      <Command /> <Shift />
       {' ,'}
     </kbd>
   ),

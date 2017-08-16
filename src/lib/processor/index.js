@@ -91,6 +91,7 @@ export default async function transform(bin, currentSource) {
     getChange(currentSource, bin, CSS),
     getChange(currentSource, bin, JAVASCRIPT),
   ]).then(([html, css, javascript]) => {
+    console.log(bin, currentSource);
     return asHTML({
       html,
       css,

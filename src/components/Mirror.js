@@ -207,7 +207,7 @@ export default class Mirror extends React.Component {
     this.errorMarker = null;
 
     if (error) {
-      let { message = '', name = '', line, ch } = error;
+      let { message = '', line, ch } = error;
       line = line - 1;
       ch = ch - 1;
 

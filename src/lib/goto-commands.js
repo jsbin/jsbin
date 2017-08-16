@@ -5,7 +5,7 @@ import { setCursor } from '../actions/session';
 function gotoPanelAndCursor(dispatch, source, filter) {
   dispatch(setSource(source));
   if (filter.substr(1).includes(':')) {
-    const [_, line] = filter.substr(1).split(':');
+    const [, line] = filter.substr(1).split(':');
     dispatch(setCursor(source, parseInt(line.trim(), 0) - 1, 0));
   }
 }

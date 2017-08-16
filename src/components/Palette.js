@@ -4,11 +4,10 @@ import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 
 import * as allCommands from '../lib/commands';
+import * as gotoCommands from '../lib/goto-commands';
 import '../css/Palette.css';
 
-const UP = 38;
-const DOWN = 40;
-const ENTER = 13;
+import Keys from '../lib/common/Keys';
 
 const fuseOptions = {
   shouldSort: true,
@@ -66,7 +65,10 @@ export default class Palette extends React.Component {
       return this.dismiss();
     }
 
-    const res = await this.props.run(command, { ...this.props });
+    const res = await this.props.run(command, {
+      ...this.props,
+      filter: this.state.filter,
+    });
     if (Array.isArray(res)) {
       this.setState({
         active: 0,
@@ -93,22 +95,45 @@ export default class Palette extends React.Component {
     e.stopPropagation();
     const { commands, active } = this.state;
     this.setState({ filter: '' });
+
     this.onRun(commands[active]);
   }
 
   onKeyDown(e) {
     const key = e.which;
 
-    if (key === UP || key === DOWN || key === ENTER) {
+    const wanted = [
+      Keys.Up.code,
+      Keys.Down.code,
+      Keys.Enter.code,
+      Keys.Semicolon.code,
+    ];
+
+    if (wanted.includes(key)) {
       let { active, commands } = this.state;
+
+      // NOTE before preventDefault to allow the character to appear
+      if (key === Keys.Semicolon.code) {
+        const res = Object.keys(gotoCommands).map(key => gotoCommands[key]);
+        this.setState({
+          active: 0,
+          commands: res,
+          fuse: new Fuse(res, {
+            ...fuseOptions,
+            threshold: 1,
+          }),
+        });
+        return;
+      }
       e.preventDefault();
-      if (key === ENTER) {
+      if (key === Keys.Enter.code) {
         return this.selectCommand(e);
       }
 
-      if (key === UP) {
+      if (key === Keys.Up.code) {
         if (active > 0) active--;
       } else {
+        // down
         if (active < commands.length - 1) active++;
       }
 
@@ -131,6 +156,20 @@ export default class Palette extends React.Component {
 
     if (filter === '') {
       return this.reset();
+    }
+
+    if (filter.startsWith('+')) {
+      return this.setState({
+        commands: [
+          {
+            title: 'Add asset by URL…',
+            run: (dispatch, { filter }) =>
+              `<script src="${filter.substr(1)}"></script>`,
+          },
+        ],
+        filter,
+        active: 0,
+      });
     }
 
     const { fuse } = this.state;

@@ -40,3 +40,9 @@
     margin: 10px 0;
   }
 }
+
+.theme-dark {
+  .Footer a {
+    color: $c-dark-theme-text;
+  }
+}

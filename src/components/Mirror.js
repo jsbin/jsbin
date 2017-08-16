@@ -141,7 +141,7 @@ export default class Mirror extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { source } = this.props;
+    const { source, session } = this.props;
     const cm = this.CodeMirror.getCodeMirror();
     const { line, ch } = cm.getCursor();
 
@@ -172,6 +172,12 @@ export default class Mirror extends React.Component {
       // firstly save the cursor position
       this.props.setCursor({ source, line, ch });
       this.updateCursor(nextProps);
+    } else {
+      const cursorKey = 'cursor' + source;
+      const cursor = session[cursorKey];
+      if (cursor !== nextProps.session[cursorKey]) {
+        this.updateCursor(nextProps);
+      }
     }
 
     // we listen for a dirty flag that triggers a CodeMirror repaint
@@ -201,7 +207,7 @@ export default class Mirror extends React.Component {
     this.errorMarker = null;
 
     if (error) {
-      let { message, line, ch } = error;
+      let { message = '', name = '', line, ch } = error;
       line = line - 1;
       ch = ch - 1;
 
@@ -212,8 +218,8 @@ export default class Mirror extends React.Component {
         element = document.createElement('div');
         element.className = 'text-editor-line-decoration';
         element.innerHTML = `<div title="${message
-          .split(':')
-          .pop()
+          // .split(':')
+          // .pop()
           .trim()}" class="text-editor-line-decoration-wave"></div>`;
       }
 

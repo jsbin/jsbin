@@ -141,6 +141,21 @@
   background-repeat: repeat-x;
   background-size: contain;
 }
+
+.CodeMirror .text-editor-line-decoration-wave:after {
+  content: '';
+  display: block;
+  position: absolute;
+  background-size: contain;
+  top: -12px;
+  right: -14px;
+  width: 12px;
+  height: 12px;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(/error.svg);
+}
+
 @media (-webkit-min-device-pixel-ratio: 1.1) {
   .CodeMirror .text-editor-line-decoration-wave {
     background-image: url(/errorWave_2x.png);

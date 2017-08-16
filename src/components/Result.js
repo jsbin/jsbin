@@ -4,7 +4,7 @@ import Splitter from '@remy/react-splitter-layout';
 import * as RESULT from '../actions/session';
 import '../css/Result.css';
 import makeIframe from '../lib/makeIFrame';
-import { emptyPage } from '../lib/Defaults';
+import { emptyPage, html as defaultHTML } from '../lib/Defaults';
 
 let Console = null;
 
@@ -103,7 +103,7 @@ export default class Result extends React.Component {
       this.console.rebind(iframe);
     }
 
-    if (/<body>\s+<\/body>/im.test(renderedDoc)) {
+    if (renderedDoc.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '')) {
       renderedDoc = emptyPage;
     }
 
@@ -152,10 +152,12 @@ export default class Result extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.lazyLoad(nextProps);
-    if (
-      nextProps.result !== this.props.result ||
-      nextProps.renderResult !== this.props.renderResult
-    ) {
+
+    const result = nextProps.result !== this.props.result;
+    const renderResult = nextProps.renderResult !== this.props.renderResult;
+    const javascript = nextProps.javascript !== this.props.javascript;
+
+    if (result || renderResult || javascript) {
       return this.updateResult(nextProps);
     }
   }

@@ -38,7 +38,7 @@ export default class Panel extends React.Component {
   }
 
   updateHeight() {
-    let height = this.footer.offsetHeight;
+    let height = (this.footer ? this.footer : { offsetHeight: 0 }).offsetHeight;
     if (this.props.editor.splitColumns === true) {
       height += document.querySelector('.layout-pane-primary').offsetHeight;
     }

@@ -2,7 +2,6 @@
 
 ## In progress
 
-- [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
 
 ## Need for live
 
@@ -16,6 +15,7 @@
 
 - [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [ ] Change settings, and in other panel change a setting and original settings are lost (lopri)
+- [x] Open a bin with CSS + JS and it doesn't include that in the initial render
 - [x] If console is open by default, then it takes focus
 - [x] New is broken
 - [x] Open is broken / Palette is broken
@@ -68,10 +68,10 @@
 
 ## UX
 
-- [ ] `:g` goto line
 - [ ] Support shortcuts (based on lib/commands.js)
 - [ ] cmd+enter - run code with alerts, etc
 - [ ] unfurl - can this even work if there's no dynamic server side?
+- [x] `:g` goto line
 - [x] Sign in (API, JWT)
 - [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))
 - [x] Investigate using blobs with scripts for real-time line number reports
@@ -105,8 +105,7 @@
 ## Nice to have
 
 - [ ] Hold cmd and hover over keyword, it underlines, and clicking opens a sub panel below the line of code to http://docs.devdocs.io/javascript/global_objects/arraybuffer.html
-
-
+- [ ] i18n
 
 
 # The Remy User

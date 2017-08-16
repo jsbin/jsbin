@@ -1,7 +1,7 @@
 import idb from 'idb-keyval';
 import Haikunator from 'haikunator';
 import { replace } from 'react-router-redux';
-import { setError } from '../actions/session';
+// import { setError } from '../actions/session';
 import { setId } from '../actions/bin';
 
 const slugger = new Haikunator({
@@ -31,6 +31,6 @@ export async function save({ bin }, dispatch) {
     })
     .catch(e => {
       console.log(e);
-      dispatch(setError(e.message));
+      // dispatch(setError(e.message));
     });
 }

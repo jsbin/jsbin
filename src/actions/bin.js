@@ -1,7 +1,7 @@
 import * as Api from '../lib/Api';
-import * as defaults from '../lib/Defaults';
+import { html, javascript, css } from '../lib/Defaults';
 import * as MODES from '../lib/cm-modes';
-// import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce';
 import { process, asHTML } from '../lib/processor';
 
 import { SET_RESULT as SET_PROCESSOR_RESULT } from './processors';
@@ -43,7 +43,7 @@ export function save() {
 }
 
 export function fetchNew() {
-  return fetchSequence(Promise.resolve(defaults));
+  return fetchSequence(Promise.resolve({ html, javascript, css }));
 }
 
 export function fetchLocal(id) {
@@ -90,7 +90,7 @@ export function setCode(code, type) {
   };
 }
 
-const updateResult = async (dispatch, getState, type = SET_BIN) => {
+const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
   const { bin } = getState();
   let source = null;
   if (type === SET_HTML) {
@@ -144,4 +144,4 @@ const updateResult = async (dispatch, getState, type = SET_BIN) => {
   } else {
     // console.log('%cnot ready yet (%s)', 'font-weight: bold', length);
   }
-}; //, 500);
+}, 500);

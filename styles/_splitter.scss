@@ -54,5 +54,15 @@
         border-color: lighten($c-dark-theme-border, 30%);
       }
     }
+    &.splitter-layout-vertical > .layout-splitter {
+      border-top: 5px solid $c-dark-theme-bg;
+      border-bottom: 5px solid $c-dark-theme-bg;
+
+      &:hover {
+        transition: all 2s ease;
+        border-top: 5px solid lighten($c-dark-theme-border, 50%);
+        border-bottom: 5px solid lighten($c-dark-theme-border, 50%);
+      }
+    }
   }
 }

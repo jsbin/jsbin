@@ -173,7 +173,7 @@ export default class Palette extends React.Component {
 
   render() {
     const { filter, active, commands } = this.state;
-    const { app } = this.props;
+    const { app, user } = this.props;
     const start = active - 100 < 0 ? 0 : active - 100;
     const end = start + 100;
     return (
@@ -190,6 +190,12 @@ export default class Palette extends React.Component {
           <ul ref={e => (this.commands = e)}>
             {commands
               .slice(start, end)
+              .filter(command => {
+                if (command.condition) {
+                  return command.condition({ app, user });
+                }
+                return true;
+              })
               .map((command, i) =>
                 <li
                   onMouseOver={() => this.setState({ active: i })}
@@ -200,13 +206,7 @@ export default class Palette extends React.Component {
                   {command.display || command.title}
                   {command.shortcut && command.shortcut}
                 </li>
-              )
-              .filter(command => {
-                if (command.condition) {
-                  return command.condition({ app });
-                }
-                return true;
-              })}
+              )}
           </ul>
         </div>
       </div>

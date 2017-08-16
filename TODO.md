@@ -15,9 +15,9 @@
 
 ## Bit bugs
 
-- [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [ ] Open a bin with CSS + JS and it doesn't include that in the initial render
-- [ ] Change settings, and in other panel change a setting and original settings are lost
+- [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
+- [ ] Change settings, and in other panel change a setting and original settings are lost (lopri)
 - [x] If console is open by default, then it takes focus
 - [x] New is broken
 - [x] Open is broken / Palette is broken

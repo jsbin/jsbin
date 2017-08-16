@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Result from '../components/Result';
 import { clearError, setError } from '../actions/session';
+import { JAVASCRIPT } from '../lib/cm-modes';
 
 const ResultContainer = connect(
-  ({ bin, session, app }) => ({
-    code: bin.result,
-    source: app.source,
-    binLoading: bin.loading,
-    bin,
+  ({ bin, session, app, processors }) => ({
+    result: processors.result,
+    insertJS: processors.insertJS,
+    javascript: processors[`${JAVASCRIPT}-result`],
     error: session.error,
     splitColumns: app.splitColumns,
   }),

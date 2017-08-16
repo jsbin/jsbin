@@ -3,53 +3,32 @@ import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import * as RESULT from '../actions/session';
 import '../css/Result.css';
-import processor from '../lib/processor';
 import makeIframe from '../lib/makeIFrame';
 import { emptyPage } from '../lib/Defaults';
+
+let Console = null;
 
 export default class Result extends React.Component {
   constructor(props) {
     super(props);
     this.updateResult = this.updateResult.bind(this);
-    this.catchErrors = this.catchErrors.bind(this);
-
-    this.state = { guid: 0, Console: null };
+    this.state = { guid: 0, Console };
 
     this.iframe = makeIframe();
   }
 
-  catchErrors(event) {
-    return;
-    if (event.key === 'jsbin.error') {
-      // check if it came from _our_ iframe
-      const data = JSON.parse(event.newValue);
-      if (data.guid === this.iframe.guid) {
-        this.props.setError(data.message);
-        if (this.console) {
-          const value = new Error(data.message);
-          value.name = data.name;
-          value.stack = data.stack;
-          this.console.console.push({
-            error: true,
-            type: 'response',
-            value,
-          });
-        }
-      }
-    }
-  }
-
   async updateResult(props) {
-    const { error, bin, source, result } = props;
+    const { error, renderResult } = props;
+    let { result: renderedDoc, insertJS, javascript } = props;
 
     if (error) {
       // don't bother sending the state change if there's nothing to be done
       props.clearError();
     }
 
-    const isPage = result === RESULT.RESULT_PAGE;
-    const isBoth = result === RESULT.RESULT_BOTH;
-    const isConsole = result === RESULT.RESULT_CONSOLE;
+    const isPage = renderResult === RESULT.RESULT_PAGE;
+    const isBoth = renderResult === RESULT.RESULT_BOTH;
+    const isConsole = renderResult === RESULT.RESULT_CONSOLE;
 
     let iframe = this.iframe;
 
@@ -59,11 +38,6 @@ export default class Result extends React.Component {
         return;
       }
     }
-
-    let { result: renderedDoc, insertJS, javascript } = await processor(
-      bin,
-      source
-    );
 
     // removing the iframe from the DOM completely resets the state and nukes
     // all running code
@@ -146,17 +120,20 @@ export default class Result extends React.Component {
       script.src = URL.createObjectURL(blob);
       doc.documentElement.appendChild(script);
     }
-
-    console.log('rendered', javascript);
   }
 
-  async lazyLoad({ result }) {
-    if (this.state.Console) return;
+  async lazyLoad({ renderResult }) {
+    // only lazy load the console once during runtime.
+    if (this.state.Console !== null) return;
 
-    if (result === RESULT.RESULT_BOTH || result === RESULT.RESULT_CONSOLE) {
+    if (
+      renderResult === RESULT.RESULT_BOTH ||
+      renderResult === RESULT.RESULT_CONSOLE
+    ) {
       const {
-        default: Console,
+        default: console,
       } = await import(/* webpackChunkName: "console" */ '../containers/Console');
+      Console = console;
       this.setState({ Console });
       this.forceUpdate();
     }
@@ -165,89 +142,45 @@ export default class Result extends React.Component {
   async componentDidMount() {
     await this.lazyLoad(this.props);
     await this.updateResult(this.props);
-    // window.addEventListener('storage', this.catchErrors, false);
   }
 
   componentWillUnmount() {
     if (this.iframe && this.iframe.parentNode) {
       this.iframe.parentNode.removeChild(this.iframe);
     }
-    // window.removeEventListener('storage', this.catchErrors, false);
   }
 
-  async componentWillReceiveProps(nextProps) {
-    await this.lazyLoad(nextProps);
-
-    // multiple `if` statements so that I'm super sure what's happening
-    // if (this.props.code !== nextProps.code) {
-    //   return this.updateResult(nextProps);
-    // }
+  componentWillReceiveProps(nextProps) {
+    this.lazyLoad(nextProps);
+    if (
+      nextProps.result !== this.props.result ||
+      nextProps.renderResult !== this.props.renderResult
+    ) {
+      return this.updateResult(nextProps);
+    }
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log(
-      'before: %s, after: %s',
-      this.props.binLoading,
-      nextProps.binLoading
-    );
-    if (nextProps.code !== this.props.code) {
+    // if visible output panel has changed
+    const renderResult = nextProps.renderResult !== this.props.renderResult;
+    const splitColumns = nextProps.splitColumns !== this.props.splitColumns;
+    if (renderResult || splitColumns) {
       return true;
     }
 
-    if (nextProps.result !== this.props.result) {
-      return true;
-    }
-
-    // do not re-render if the code has changed, this happens inside of the
-    // iframe, and via the previous life cycle event: componentWillReceiveProps
-    if (this.code !== nextProps.code) {
-      return false;
-    }
-
-    return true;
-  }
-
-  async componentWillUpdate(nextProps) {
-    const newlyLoadedBin =
-      this.props.binLoading === true && nextProps.binLoading === false;
-    const resultChanged = nextProps.result !== this.props.result;
-    const resultVisible =
-      nextProps.result === RESULT.RESULT_BOTH ||
-      nextProps.result === RESULT.RESULT_CONSOLE;
-
-    console.log(
-      'newlyLoadedBin? %s, resultChanged: %s, resultVisible: %s',
-      newlyLoadedBin,
-      resultChanged,
-      resultVisible
-    );
-
-    if (newlyLoadedBin || resultChanged) {
-      if (resultVisible) {
-        // return this.updateResult(nextProps);
-      }
-    }
-  }
-
-  async componentDidUpdate(prevProps) {
-    // FIXME need more logic?
-    if (
-      prevProps.result !== this.props.result ||
-      prevProps.code !== this.props.code
-    ) {
-      // FIXME this doubles up when we show RESULT_BOTH
-      console.log('changed here', this.props.bin.javascript);
-      return this.updateResult(this.props);
-    }
+    // ignored: error, result
+    return false;
   }
 
   render() {
-    const { result, splitColumns } = this.props;
+    const { renderResult, splitColumns } = this.props;
     const { Console } = this.state;
     const hasConsole =
-      result === RESULT.RESULT_CONSOLE || result === RESULT.RESULT_BOTH;
+      renderResult === RESULT.RESULT_CONSOLE ||
+      renderResult === RESULT.RESULT_BOTH;
     const hasPage =
-      result === RESULT.RESULT_PAGE || result === RESULT.RESULT_BOTH;
+      renderResult === RESULT.RESULT_PAGE ||
+      renderResult === RESULT.RESULT_BOTH;
 
     return (
       <div className="Result">
@@ -273,15 +206,14 @@ export default class Result extends React.Component {
 }
 
 Result.propTypes = {
-  code: PropTypes.string.isRequired, // FIXME not entirely sure
-  bin: PropTypes.object.isRequired,
   setError: PropTypes.func,
   clearError: PropTypes.func,
-  result: PropTypes.string,
+  renderResult: PropTypes.string,
   splitColumns: PropTypes.bool,
 };
 
 Result.defaultProps = {
-  result: RESULT.RESULT_PAGE,
+  renderResult: RESULT.RESULT_PAGE,
+  result: '',
   splitColumns: false,
 };

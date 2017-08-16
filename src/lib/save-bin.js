@@ -20,16 +20,14 @@ export async function save({ bin }, dispatch) {
   delete copy.error;
   const id = bin.id || slug();
 
-  // if (id.startsWith('gist/')) {
-  //   const { gist } = await import('./exporter.js');
-  //   return gist(bin);
-  // }
-
   return idb
     .set(id, copy)
     .then(() => {
-      dispatch(replace(`/local/${id}${window.location.search}`));
-      dispatch(setId(id));
+      if (!bin.id) {
+        // assume we need to dispatch the change
+        dispatch(replace(`/local/${id}${window.location.search}`));
+        dispatch(setId(id));
+      }
     })
     .catch(e => {
       console.log(e);

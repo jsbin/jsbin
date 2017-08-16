@@ -13,7 +13,6 @@ import * as babel from './babel';
 // import * as pug from './pug';
 
 export const NONE = 'none';
-
 const targets = {
   [NONE]: { transform: source => source },
   [html.config.name]: html,
@@ -25,6 +24,18 @@ const targets = {
   [scss.config.name]: scss,
   [babel.config.name]: babel,
 };
+
+const last = {
+  [JAVASCRIPT]: null,
+  [CSS]: null,
+  [HTML]: null,
+};
+
+export function reset() {
+  last[JAVASCRIPT] = null;
+  last[HTML] = null;
+  last[CSS] = null;
+}
 
 export function has(target) {
   return !!targets[target];
@@ -43,12 +54,6 @@ export function getAvailableProcessors(source) {
 
 // this is use for display purposes
 export const getConfig = target => targets[target].config;
-
-const last = {
-  [JAVASCRIPT]: null,
-  [CSS]: null,
-  [HTML]: null,
-};
 
 /**
  * Processes the source from {language} to {language}, i.e. markdown to HTML
@@ -86,12 +91,12 @@ export function getChange(changed, bin, panel) {
  * @returns {string} combined HTML
  */
 export default async function transform(bin, currentSource) {
+  // FIXME unsure that transform is used at all any more.
   return Promise.all([
     getChange(currentSource, bin, HTML),
     getChange(currentSource, bin, CSS),
     getChange(currentSource, bin, JAVASCRIPT),
   ]).then(([html, css, javascript]) => {
-    console.log(bin, currentSource);
     return asHTML({
       html,
       css,
@@ -100,6 +105,14 @@ export default async function transform(bin, currentSource) {
   });
 }
 
+/**
+ *
+ * @param {Object} bin - The bin to convert to full HTML
+ * @param {string} bin.html - the html
+ * @param {string} bin.javascript - the javascript
+ * @param {string} bin.css - the css
+ * @returns {Object} { result, insertJS }
+ */
 export function asHTML(bin) {
   let { html, css } = bin;
   const insertJS = html.includes('%code%');

@@ -153,7 +153,7 @@ export default class App extends Component {
                 onRef={ref => (this.panel = ref)}
               />
               {session.result !== RESULT.RESULT_NONE &&
-                <Result result={session.result} />}
+                <Result renderResult={session.result} />}
             </Splitter>
           </div>
         </div>

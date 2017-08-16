@@ -6,7 +6,6 @@ import {
   fetchGithub,
   fetchLocal,
   fetchNew,
-  setBin,
   setCode,
 } from '../actions/bin';
 import {
@@ -40,7 +39,6 @@ const mapDispatchToProps = dispatch => {
     setDirtyFlag: value => dispatch(setDirtyFlag(value)),
     setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),
     dismiss: () => dispatch(dismiss()),
-    setBin: bin => dispatch(setBin(bin)),
     triggerPalette: value => dispatch(triggerPalette(value)),
     setSource: source => dispatch(setSource(source)),
     fetch: params => {

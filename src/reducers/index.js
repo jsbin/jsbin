@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import bin from './bin';
+import processors from './processors';
 import editor from './editor';
 import session from './session';
 import user from './user';
@@ -19,5 +20,6 @@ export default combineReducers({
   session,
   editor,
   bin,
+  processors,
   router: routerReducer,
 });

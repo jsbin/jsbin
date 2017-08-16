@@ -1,4 +1,3 @@
-import { handle } from 'redux-pack';
 import * as defaults from '../lib/Defaults';
 import * as MODES from '../lib/cm-modes';
 
@@ -11,14 +10,16 @@ import {
   SET_CSS,
   SET_RESULT,
   SET_BIN,
-  GET_BIN,
+  FETCH_BIN_FAILURE,
+  FETCH_BIN_SUCCESS,
+  FETCH_BIN_REQUEST,
   RESET,
   SET_ID,
   SET_PROCESSOR,
 } from '../actions/bin';
 
 export const defaultState = {
-  loading: false,
+  loading: true,
   id: null,
   revision: 1, // may drop this
   result: '',
@@ -35,10 +36,9 @@ Object.keys(MODES).forEach(mode => {
 });
 
 export default function reducer(state = defaultState, action) {
-  const { type, code, payload } = action;
+  const { type, code, value } = action;
 
   if (type === SET_PROCESSOR) {
-    const value = action.value;
     if (!hasProcessor(value)) {
       throw new Error(`unknown processor "${value}"`);
     }
@@ -46,49 +46,36 @@ export default function reducer(state = defaultState, action) {
     return { ...state, [action.source + '-processor']: value };
   }
 
+  if (type === FETCH_BIN_REQUEST) {
+    return { ...defaultState, loading: true };
+  }
+
+  if (type === FETCH_BIN_FAILURE) {
+    return { ...state, loading: false, error: value };
+  }
+
   if (type === RESET) {
     return defaultState;
   }
 
   if (type === ERROR) {
-    return { ...state, error: action.value };
+    return { ...state, error: value };
   }
 
   if (type === SET_ID) {
-    return { ...state, id: action.value };
+    return { ...state, id: value };
   }
 
-  if (type === GET_BIN) {
-    return handle(state, action, {
-      start: prevState => ({
-        ...prevState,
-        ...defaultState,
-        loading: true,
-      }),
-      failure: prevState => ({
-        ...prevState,
-        error:
-          payload instanceof Error
-            ? { message: payload.message, status: payload.status || 500 }
-            : payload,
-        loading: false,
-      }),
-      success: prevState => {
-        // FIXME handle extra settings
-        return { ...prevState, ...payload, loading: false };
-      },
-    });
+  if (type === FETCH_BIN_SUCCESS) {
+    return { ...state, error: null, loading: false };
   }
 
   if (type === SET_BIN) {
+    const loading = action.payload.loading;
     return {
-      ...state,
-      html: action.html,
-      css: action.css,
-      javascript: action.javascript,
-      id: action.url || action.id,
-      loading: action.loading === undefined ? false : action.loading,
-      error: action.error || null,
+      ...defaultState, // SET_BIN is also a total reset
+      ...action.payload,
+      loading: loading === undefined ? false : loading,
     };
   }
 

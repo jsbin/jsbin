@@ -41,8 +41,6 @@ export default class License extends Component {
       error,
       loading: false,
     });
-
-    console.log('did mount', invoices);
   }
 
   render() {

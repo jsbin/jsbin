@@ -1,5 +1,6 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SAVE, SET_RESULT } from '../actions/bin';
+import { SAVE } from '../actions/bin';
+import { SET_RESULT } from '../actions/processors';
 import { SET_TOKEN } from '../actions/user';
 import {
   SET_SPLITTER_WIDTH,

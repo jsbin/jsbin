@@ -1,6 +1,10 @@
 import * as Api from '../lib/Api';
 import * as defaults from '../lib/Defaults';
-import debounce from 'lodash.debounce';
+import * as MODES from '../lib/cm-modes';
+// import debounce from 'lodash.debounce';
+import { process, asHTML } from '../lib/processor';
+
+import { SET_RESULT as SET_PROCESSOR_RESULT } from './processors';
 
 export const SET_BIN = '@@bin/set/BIN';
 export const SET_JS = '@@bin/set/JS';
@@ -12,16 +16,14 @@ export const RESET = '@@bin/RESET';
 export const SAVE = '@@bin/SAVE';
 export const DELETE = '@@bin/DELETE';
 export const ERROR = '@@bin/ERROR';
-export const GET_BIN = '@@bin/fetch/GET';
-
 export const SET_PROCESSOR = '@@bin/processor/SET';
+
+export const FETCH_BIN_REQUEST = '@@bin/fetch/BIN_REQUEST';
+export const FETCH_BIN_SUCCESS = '@@bin/fetch/BIN_SUCCESS';
+export const FETCH_BIN_FAILURE = '@@bin/fetch/BIN_FAILURE';
 
 export function setProcessor(source, target) {
   return { type: SET_PROCESSOR, source, value: target };
-}
-
-export function setBin({ id, html, css, javascript }) {
-  return { type: SET_BIN, id, html, css, javascript };
 }
 
 export function setId(value) {
@@ -32,65 +34,114 @@ export function setError(value) {
   return { type: ERROR, value };
 }
 
-export function fetchNew() {
-  return dispatch => {
-    dispatch({ type: RESET });
-    dispatch({
-      type: SET_BIN,
-      ...defaults,
-    });
-  };
+export function reset() {
+  return { type: RESET };
 }
-
-// export function reset() {
-//   return { type: RESET };
-// }
 
 export function save() {
   return { type: SAVE };
 }
 
+export function fetchNew() {
+  return fetchSequence(Promise.resolve(defaults));
+}
+
 export function fetchLocal(id) {
-  return {
-    type: GET_BIN,
-    promise: Api.getLocal(id),
-  };
+  return fetchSequence(Api.getLocal(id));
 }
 
 export function fetchGithub(id) {
-  return {
-    type: GET_BIN,
-    promise: Api.getFromGist(id),
-  };
+  return fetchSequence(Api.getFromGist(id));
 }
 
 export function fetchBin(id, revision = 'latest') {
-  return {
-    type: GET_BIN,
-    promise: Api.getBin(id, revision),
+  return fetchSequence(Api.getBin(id, revision));
+}
+
+function fetchSequence(promise) {
+  return (dispatch, getState) => {
+    dispatch({ type: FETCH_BIN_REQUEST });
+
+    promise.then(
+      bin => {
+        dispatch({ type: SET_BIN, payload: bin });
+        dispatch({ type: FETCH_BIN_SUCCESS });
+        updateResult(dispatch, getState);
+      },
+      value => dispatch({ type: FETCH_BIN_FAILURE, value })
+    );
   };
 }
 
-const updateResult = debounce(
-  (dispatch, code) =>
-    dispatch({
-      type: SET_RESULT,
-      code,
-    }),
-  500
-);
-
+/**
+ * Set the code for a particular panel (HTML, CSS or JS)
+ * @param {String} code - user code
+ * @param {String} type - bin action type, must be SET_HTML, SET_CSS or SET_JS
+ */
 export function setCode(code, type) {
-  return dispatch => {
-    // , getState
-    // const allCode = getState().code;
-
+  return (dispatch, getState) => {
     dispatch({
       type,
       code,
     });
 
     // combine into the result… and put in separate function
-    updateResult(dispatch, code);
+    updateResult(dispatch, getState, type);
   };
 }
+
+const updateResult = async (dispatch, getState, type = SET_BIN) => {
+  const { bin } = getState();
+  let source = null;
+  if (type === SET_HTML) {
+    source = MODES.HTML;
+  }
+  if (type === SET_JS) {
+    source = MODES.JAVASCRIPT;
+  }
+  if (type === SET_CSS) {
+    source = MODES.CSS;
+  }
+
+  let promise;
+
+  const then = type => res => {
+    dispatch({
+      type: `@@processor/set/${type.toUpperCase()}`, // this feels…shoddy.
+      value: res,
+    });
+  };
+
+  if (source) {
+    promise = [
+      process(bin[source], source, bin[`${source}-processor`]).then(
+        then(source)
+      ),
+    ];
+  } else {
+    promise = Object.keys(MODES).map(key => {
+      const source = MODES[key];
+      return process(bin[source], source, bin[`${source}-processor`]).then(
+        then(source)
+      );
+    });
+  }
+
+  await Promise.all(promise);
+
+  const { processors } = getState();
+  const toRender = {
+    [MODES.HTML]: processors[`${MODES.HTML}-result`],
+    [MODES.CSS]: processors[`${MODES.CSS}-result`],
+    [MODES.JAVASCRIPT]: processors[`${MODES.JAVASCRIPT}-result`],
+  };
+
+  const length = Object.keys(toRender).filter(key => !!toRender[key]).length;
+
+  if (length === 3) {
+    const { result, insertJS } = asHTML(toRender);
+    dispatch({ type: SET_PROCESSOR_RESULT, result, insertJS });
+  } else {
+    // console.log('%cnot ready yet (%s)', 'font-weight: bold', length);
+  }
+}; //, 500);

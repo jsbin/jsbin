@@ -44,8 +44,6 @@ export default class Invoice extends Component {
       error,
       loading: false,
     });
-
-    console.log('did mount', invoice);
   }
 
   render() {

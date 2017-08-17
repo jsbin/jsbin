@@ -17,6 +17,12 @@ const settings = ({ opts, token } = {}) => {
   };
 };
 
+export const getBins = user => {
+  return fetch(`${API}/user/bins`, settings({ token: user.token })).then(res =>
+    res.json()
+  );
+};
+
 export const getInvoice = (id, user) => {
   return fetch(
     `${API}/user/invoice/${id}`,

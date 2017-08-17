@@ -1,6 +1,7 @@
 import React from 'react';
 import { push, replace } from 'react-router-redux';
 import distanceInWords from 'date-fns/distance_in_words';
+import { getBins } from './Api';
 import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
@@ -69,7 +70,7 @@ export const del = {
 
 export const open = {
   title: 'Open...',
-  run: async () => {
+  run: async (dispatch, { user }) => {
     const keys = await idk.keys();
     if (keys.length === 0) {
       return [
@@ -81,8 +82,44 @@ export const open = {
 
     const now = Date.now();
 
-    return Promise.all(
-      keys.map(key => {
+    const remoteBins = getBins(user).then(bins => {
+      if (!Array.isArray(bins)) {
+        return [];
+      }
+
+      return bins.map(bin => {
+        let content = bin.summary;
+        if (content.length > 100) {
+          content = content.substr(0, 99) + '…';
+        }
+
+        const display = (
+          <span>
+            <span
+              className="brick"
+              style={{
+                backgroundColor: `#${bin.id.toString().slice(-6)}`,
+              }}
+            />
+            {content}
+            <span className="updated">
+              {' '}{distanceInWords(now, bin.date, { addSuffix: true })}
+            </span>
+          </span>
+        );
+
+        return {
+          title: bin.title,
+          updated: bin.date,
+          display,
+          run: dispatch => dispatch(push(`/${bin.url}/${bin.revision}`)),
+        };
+      });
+    });
+
+    return Promise.all([
+      remoteBins,
+      ...keys.map(key => {
         return idk.get(key).then(res => {
           let content = summary(res);
 
@@ -95,9 +132,8 @@ export const open = {
           }
 
           const hex = (res.id || '').split('-').pop();
-          let display;
 
-          display = (
+          const display = (
             <span>
               {hex.length === 3 &&
                 <span
@@ -114,20 +150,22 @@ export const open = {
 
           return {
             title: content,
-            updated: res.updated,
+            updated: res.updated ? res.updated.toJSON() : null,
             display,
-            run: dispatch => {
-              dispatch(push('/local/' + key));
-            },
+            run: dispatch => dispatch(push('/local/' + key)),
           };
         });
+      }),
+    ])
+      .then(([remote, ...bins]) => {
+        return remote.concat(bins).sort((a, b) => {
+          if (!a.updated) return 1;
+          return a.updated < b.updated ? 1 : -1;
+        });
       })
-    ).then(bins => {
-      return bins.sort((a, b) => {
-        if (!a.updated) return 1;
-        return a.updated < b.updated ? 1 : -1;
+      .catch(e => {
+        console.log(e);
       });
-    });
   },
 };
 

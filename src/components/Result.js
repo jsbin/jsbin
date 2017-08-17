@@ -152,14 +152,6 @@ export default class Result extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.lazyLoad(nextProps);
-
-    const result = nextProps.result !== this.props.result;
-    const renderResult = nextProps.renderResult !== this.props.renderResult;
-    const javascript = nextProps.javascript !== this.props.javascript;
-
-    if (result || renderResult || javascript) {
-      return this.updateResult(nextProps);
-    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -171,7 +163,18 @@ export default class Result extends React.Component {
     }
 
     // ignored: error, result
+    const result = nextProps.result !== this.props.result;
+    const javascript = nextProps.javascript !== this.props.javascript;
+
+    if (result || renderResult || javascript) {
+      this.updateResult(nextProps);
+    }
+
     return false;
+  }
+
+  componentDidUpdate() {
+    this.updateResult(this.props);
   }
 
   render() {

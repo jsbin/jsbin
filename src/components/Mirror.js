@@ -14,6 +14,7 @@ import 'codemirror/keymap/emacs.js';
 // import 'codemirror/addon/lint/lint.js';
 // import 'codemirror/addon/lint/javascript-lint.js';
 
+import 'codemirror/addon/comment/comment.js';
 import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/fold/xml-fold';
 import 'codemirror/addon/edit/closebrackets';

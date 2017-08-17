@@ -125,6 +125,7 @@ export default class Palette extends React.Component {
         });
         return;
       }
+
       e.preventDefault();
       if (key === Keys.Enter.code) {
         return this.selectCommand(e);
@@ -215,6 +216,7 @@ export default class Palette extends React.Component {
     const { app, user } = this.props;
     const start = active - 100 < 0 ? 0 : active - 100;
     const end = start + 100;
+    // console.log(active, commands[active]);
     return (
       <div className="Palette" onClick={this.dismiss}>
         <div className="inner">
@@ -231,7 +233,7 @@ export default class Palette extends React.Component {
               .slice(start, end)
               .filter(command => {
                 if (command.condition) {
-                  return command.condition({ app, user });
+                  return command.condition({ ...this.props });
                 }
                 return true;
               })

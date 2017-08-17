@@ -19,7 +19,7 @@ import {
 } from '../actions/bin';
 
 export const defaultState = {
-  loading: true,
+  loading: false,
   id: null,
   revision: 1, // may drop this
   result: '',

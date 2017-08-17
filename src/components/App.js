@@ -6,6 +6,7 @@ import { HotKeys } from 'react-hotkeys';
 import Cookies from 'js-cookie';
 
 import Welcome from '../containers/Welcome';
+import Notification from '../containers/Notification';
 import * as RESULT from '../actions/session';
 import Panel from '../containers/Panel';
 import Result from '../containers/Result';
@@ -135,6 +136,7 @@ export default class App extends Component {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
+        <Notification />
         <div className={`JsBinApp theme-${theme}`}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />

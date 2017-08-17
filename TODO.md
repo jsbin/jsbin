@@ -2,7 +2,7 @@
 
 ## In progress
 
-- [ ] Meta data in open
+- [x] Meta data in open
 - [ ] Some kind of notification system
 
 ## Need for live

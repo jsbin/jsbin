@@ -10,7 +10,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const PaletteContainer = connect(
-  ({ bin, app, user }) => ({ bin, app, user }),
+  ({ bin, app, user, processors }) => ({ bin, app, user, processors }),
   mapDispatchToProps
 )(Palette);
 

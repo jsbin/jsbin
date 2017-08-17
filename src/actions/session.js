@@ -9,6 +9,8 @@ export const DIRTY = '@@session/DIRTY';
 export const SET_SPLITTER_WIDTH = '@@session/SET_SPLITTER_WIDTH';
 export const HIGHLIGHT_LINES = '@@session/HIGHLIGHT_LINES';
 export const SWATCH_OPEN = '@@session/SWATCH_OPEN';
+export const ADD_NOTIFICATION = '@@session/ADD_NOTIFICATION';
+export const DISMISS_NOTIFICATION = '@@session/DISMISS_NOTIFICATION';
 
 // constants - not event types
 export const RESULT_NONE = 'none';
@@ -16,11 +18,31 @@ export const RESULT_CONSOLE = 'console';
 export const RESULT_PAGE = 'page';
 export const RESULT_BOTH = 'both';
 
+// notification types
+export const ERROR = 'NOTIFICATION_ERROR';
+export const OK = 'NOTIFICATION_OK';
+export const CONFIRM = 'NOTIFICATION_CONFIRM';
+
 export function setSplitterWidth(value) {
   return dispatch => {
     dispatch({ type: SET_SPLITTER_WIDTH, value });
     dispatch(setDirtyFlag(true));
   };
+}
+
+const noop = () => {};
+
+/**
+ * create new notification
+ * @param {String} value - text for notification
+ * @param {String} notificationType - ERROR, OK, CONFIRM
+ */
+export function addNotification(value, notificationType = OK, callback = noop) {
+  return { type: ADD_NOTIFICATION, value, notificationType, callback };
+}
+
+export function dismissNotification(value) {
+  return { type: DISMISS_NOTIFICATION, value };
 }
 
 export function toggleSwatch(value) {

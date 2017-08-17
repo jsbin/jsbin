@@ -101,7 +101,8 @@ export function codepen(bin) {
   const description = pick(doc, 'meta[name="description"', bin.description);
   const tags = pick(doc, 'meta[name="keywords"', '')
     .split(',')
-    .map(s => s.trim());
+    .map(s => s.trim())
+    .filter(Boolean);
 
   const body = pick(doc, 'body', '', 'innerHTML');
   const head = pick(doc, 'head', '', 'innerHTML');

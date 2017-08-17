@@ -1,4 +1,5 @@
 import React from 'react';
+import copy from 'copy-to-clipboard';
 import { push, replace } from 'react-router-redux';
 import distanceInWords from 'date-fns/distance_in_words';
 import { getBins } from './Api';
@@ -46,9 +47,44 @@ export const save = {
 
 export const download = {
   title: 'Download',
-  run: (dispatch, { bin }) => {
-    const blob = new Blob([BinToHTML(bin)], { type: 'text/html' });
+  run: (dispatch, { bin, processors }) => {
+    const html = BinToHTML({
+      html: processors['html-result'],
+      javascript: processors['javascript-result'],
+      css: processors['css-result'],
+    });
+
+    const blob = new Blob([html], { type: 'text/html' });
     FileSaver.saveAs(blob, (bin.id || 'jsbin') + '.html');
+  },
+};
+
+export const copyToClip = {
+  title: 'Copy to clipboard',
+  run: ({ bin, app }) => {
+    copy(bin[app.source]);
+  },
+};
+
+export const copyTransformed = {
+  title: 'Copy compiled to clipboard',
+  condition: ({ bin, app }) => {
+    return bin[app.source + '-processor'] !== app.source;
+  },
+  run: (dispatch, { bin, app, processors }) => {
+    copy(processors[app.source + '-result']);
+  },
+};
+
+export const copyAll = {
+  title: 'Copy page result to clipboard',
+  run: (dispatch, { processors }) => {
+    const html = BinToHTML({
+      html: processors['html-result'],
+      javascript: processors['javascript-result'],
+      css: processors['css-result'],
+    });
+    copy(html);
   },
 };
 

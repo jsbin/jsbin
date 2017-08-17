@@ -1,0 +1,20 @@
+@import "vars";
+
+.Notification {
+  line-height: 1.4;
+  list-style: none;
+  position: absolute;
+  max-width: calc(100% - 80px);
+  margin: 0 40px;
+  display: flex;
+  flex-direction: row;
+  z-index: $z-top;
+  background: #fdfece;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border: 0px solid $c-divider;
+  border-top: 0;
+  padding: 15px;
+  box-shadow: 0 10px 6px -6px rgba(119, 119, 119, 0.80);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+}

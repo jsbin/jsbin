@@ -40,20 +40,26 @@ export default class Palette extends React.Component {
 
     this.focusTimer = null;
 
-    const commands = Object.keys(allCommands).map(key => allCommands[key]);
-
-    this.state = {
-      commands,
-      fuse: new Fuse(commands, fuseOptions),
-      filter: '',
-      active: 0,
-    };
+    this.state = this.reset(false);
   }
 
-  reset() {
-    const commands = Object.keys(allCommands).map(key => allCommands[key]);
+  reset(setState = true) {
+    const commands = Object.keys(allCommands)
+      .map(key => allCommands[key])
+      .filter(command => {
+        if (command.condition) {
+          return command.condition({ ...this.props });
+        }
+        return true;
+      });
+
     const fuse = new Fuse(commands, fuseOptions);
-    this.setState({ commands, fuse, filter: '' });
+    const state = { commands, fuse, filter: '', active: 0 };
+    if (!setState) {
+      this.setState(state);
+    }
+
+    return state;
   }
 
   async onRun(command) {
@@ -69,6 +75,7 @@ export default class Palette extends React.Component {
       ...this.props,
       filter: this.state.filter,
     });
+
     if (Array.isArray(res)) {
       this.setState({
         active: 0,
@@ -93,8 +100,9 @@ export default class Palette extends React.Component {
   selectCommand(e) {
     e.preventDefault();
     e.stopPropagation();
-    const { commands, active } = this.state;
     this.setState({ filter: '' });
+
+    const { commands, active } = this.state;
 
     this.onRun(commands[active]);
   }
@@ -225,29 +233,22 @@ export default class Palette extends React.Component {
             type="text"
             value={filter}
             autoFocus
+            onClick={e => e.stopPropagation()}
             onKeyDown={this.onKeyDown}
             onChange={this.onFilter}
           />
           <ul ref={e => (this.commands = e)}>
-            {commands
-              .slice(start, end)
-              .filter(command => {
-                if (command.condition) {
-                  return command.condition({ ...this.props });
-                }
-                return true;
-              })
-              .map((command, i) =>
-                <li
-                  onMouseOver={() => this.setState({ active: i })}
-                  className={classnames({ active: i === active })}
-                  key={`command-${i}`}
-                  onClick={this.selectCommand}
-                >
-                  {command.display || command.title}
-                  {command.shortcut && command.shortcut}
-                </li>
-              )}
+            {commands.slice(start, end).map((command, i) =>
+              <li
+                onMouseOver={() => this.setState({ active: i })}
+                className={classnames({ active: i === active })}
+                key={`command-${i}`}
+                onClick={this.selectCommand}
+              >
+                {command.display || command.title}
+                {command.shortcut && command.shortcut}
+              </li>
+            )}
           </ul>
         </div>
       </div>

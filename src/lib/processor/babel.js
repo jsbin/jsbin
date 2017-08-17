@@ -1,12 +1,67 @@
 import { JAVASCRIPT } from '../cm-modes';
 
+let Babel = null;
+const cache = {};
+let todo = [];
+
+// Simple plugin that converts every identifier to "LOL"
+const replaceImports = () => ({
+  visitor: {
+    ModuleDeclaration(path) {
+      const value = path.node.source.value;
+      if (cache[value]) {
+        path.node.source.value = cache[value];
+      }
+    },
+  },
+});
+
+const collectImports = () => ({
+  visitor: {
+    ModuleDeclaration(path) {
+      const moduleName = path.node.source.value;
+      if (!cache[moduleName]) {
+        const value = [moduleName];
+
+        if (!moduleName.startsWith('http')) {
+          value.push('https://unpkg.com/' + moduleName);
+        }
+        todo.push(value);
+      }
+    },
+  },
+});
+
+const getOutstandingPromises = async () => {
+  return Promise.all(
+    todo.map(([name, url = name]) => {
+      return fetch(url).then(res => (cache[name] = res.url));
+    })
+  );
+};
+
 export async function transform(source) {
-  const Babel = await import(/* webpackChunkName: "babel" */ 'babel-standalone');
+  if (Babel === null) {
+    Babel = await import(/* webpackChunkName: "babel" */ 'babel-standalone');
+    Babel.registerPlugin('collectImports', collectImports);
+    Babel.registerPlugin('replaceImports', replaceImports);
+  }
   let res = source;
   try {
+    Babel.transform(source, {
+      presets: ['es2015', 'react', 'stage-0'],
+      plugins: ['collectImports'],
+    });
+
+    await getOutstandingPromises();
+    todo = [];
+
     res =
       requires +
-      Babel.transform(source, { presets: ['es2015', 'react', 'stage-0'] }).code;
+      Babel.transform(source, {
+        presets: ['es2015', 'react', 'stage-0'],
+        plugins: ['replaceImports'],
+      }).code;
   } catch (e) {
     console.log(e);
   }

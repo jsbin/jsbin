@@ -1,25 +1,27 @@
 import { combineReducers } from 'redux';
 
-import bin from './bin';
-import processors from './processors';
-import editor from './editor';
-import session from './session';
-import user from './user';
 import app from './app';
+import bin from './bin';
+import editor from './editor';
 import javascript from './javascript';
+import notifications from './notifications';
+import processors from './processors';
+import { routerReducer } from 'react-router-redux';
+import session from './session';
 import share from './share';
 import snippets from './snippets';
-import { routerReducer } from 'react-router-redux';
+import user from './user';
 
 export default combineReducers({
-  user,
-  share,
-  snippets,
-  javascript,
   app,
-  session,
-  editor,
   bin,
+  editor,
+  javascript,
+  notifications,
   processors,
   router: routerReducer,
+  session,
+  share,
+  snippets,
+  user,
 });

@@ -45,6 +45,15 @@ summary {
   user-select: none;
 }
 
+.notification-list {
+  z-index: $z-top;
+
+  .notification-bar {
+    // left: initial !important;
+    // right: 1rem;
+  }
+}
+
 .warning-zone {
   margin-top: 60px;
   border: 1px solid rgb(232, 232, 186);

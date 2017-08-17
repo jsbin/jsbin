@@ -15,11 +15,16 @@ import {
   setCursor,
   setSplitterWidth,
 } from '../actions/session';
+import {
+  dismissNotification,
+  dismissAllNotifications,
+} from '../actions/notifications';
 
 import { setSource } from '../actions/app';
 
-const mapStateToProps = ({ bin, editor, session, app }) => {
+const mapStateToProps = ({ bin, editor, session, app, notifications }) => {
   return {
+    notifications,
     bin,
     editor,
     loading: bin.loading,
@@ -35,6 +40,8 @@ const mapStateToProps = ({ bin, editor, session, app }) => {
 const mapDispatchToProps = dispatch => {
   return {
     setCursor: (source, line, ch) => dispatch(setCursor(source, line, ch)),
+    dismissNotification: id => dispatch(dismissNotification(id)),
+    dismissAllNotifications: () => dispatch(dismissAllNotifications()),
     setCode: (code, panel) => dispatch(setCode(code, panel)),
     setDirtyFlag: value => dispatch(setDirtyFlag(value)),
     setSplitterWidth: pos => dispatch(setSplitterWidth(pos)),

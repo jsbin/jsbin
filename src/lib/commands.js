@@ -3,6 +3,7 @@ import copy from 'copy-to-clipboard';
 import { push, replace } from 'react-router-redux';
 import distanceInWords from 'date-fns/distance_in_words';
 import { getBins } from './Api';
+import { addNotification } from '../actions/notifications';
 import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
@@ -59,10 +60,14 @@ export const download = {
   },
 };
 
+const copyOk = dispatch =>
+  dispatch(addNotification('Copied 👍', { dismissAfter: 5 * 1000 }));
+
 export const copyToClip = {
   title: 'Copy to clipboard',
-  run: ({ bin, app }) => {
+  run: (dispatch, { bin, app }) => {
     copy(bin[app.source]);
+    copyOk(dispatch);
   },
 };
 
@@ -73,6 +78,7 @@ export const copyTransformed = {
   },
   run: (dispatch, { bin, app, processors }) => {
     copy(processors[app.source + '-result']);
+    copyOk(dispatch);
   },
 };
 
@@ -85,6 +91,7 @@ export const copyAll = {
       css: processors['css-result'],
     });
     copy(html);
+    copyOk(dispatch);
   },
 };
 
@@ -219,9 +226,11 @@ export const addLibrary = {
     };
 
     const results = [];
-    json.results.forEach(
-      ({ assets, version, name, keywords = null, latest }) => {
+    json.forEach(
+      ({ assets = [], version, name, keywords = null, filename }) => {
         if (!keywords) keywords = [];
+
+        const latest = `https://cdnjs.cloudflare.com/ajax/libs/${name}/${version}/${filename}`;
 
         results.push({
           title: name,
@@ -231,17 +240,16 @@ export const addLibrary = {
           run: run.bind(null, latest),
         });
 
-        if (assets && assets[0].files.length > 1) {
-          const files = assets[0].files;
+        if (assets.length) {
           results.push({
             title: name,
             name,
-            display: `${name} (plus ${files.length -
+            display: `${name} (plus ${assets.length -
               1} extra assets) @ ${version}`,
             meta: `${name} ${keywords.join(' ')}`,
             run: run.bind(
               null,
-              files.map(file => {
+              assets.map(file => {
                 return `https://cdnjs.cloudflare.com/ajax/libs/${name}/${version}/${file}`;
               })
             ),
@@ -273,6 +281,15 @@ export const exportToGist = {
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
     const id = await exporter.gist(bin, user);
+    dispatch(
+      addNotification(
+        <span>
+          <a target="_blank" href={`https://gist.github.com/${id}`}>
+            Gist successfully created
+          </a>
+        </span>
+      )
+    );
     dispatch(replace(`/gist/${id}`));
   },
 };

@@ -17,7 +17,7 @@ export default class Result extends React.Component {
     this.iframe = makeIframe();
   }
 
-  async updateResult(props) {
+  updateResult(props) {
     const { error, renderResult } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
 
@@ -135,13 +135,12 @@ export default class Result extends React.Component {
       } = await import(/* webpackChunkName: "console" */ '../containers/Console');
       Console = console;
       this.setState({ Console });
-      this.forceUpdate();
     }
   }
 
-  async componentDidMount() {
-    await this.lazyLoad(this.props);
-    await this.updateResult(this.props);
+  componentDidMount() {
+    this.lazyLoad(this.props);
+    this.updateResult(this.props);
   }
 
   componentWillUnmount() {

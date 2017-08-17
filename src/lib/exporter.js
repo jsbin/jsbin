@@ -73,7 +73,7 @@ export async function gist(bin, user) {
 
   if (res.status > 201) {
     console.log('gist failed:' + res.status);
-    return;
+    return false;
   }
 
   const json = await res.json();

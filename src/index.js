@@ -197,3 +197,10 @@ if (module.hot) {
 }
 
 registerServiceWorker();
+
+window.trigger = () => {
+  store.dispatch({
+    type: '@@notifications/ADD',
+    value: `This bin is now deleted. You can continue to edit, but once you leave the bin can't be retrieved`,
+  });
+};

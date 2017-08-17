@@ -2,6 +2,7 @@ import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SAVE } from '../actions/bin';
 import { SET_RESULT } from '../actions/processors';
 import { SET_TOKEN } from '../actions/user';
+import { dismissAllNotifications } from '../actions/notifications';
 import {
   SET_SPLITTER_WIDTH,
   DISMISS,
@@ -102,6 +103,7 @@ export default store => {
       // dismiss anything that can be dismissed
       store.dispatch(triggerPalette(false));
       store.dispatch(toggleSwatch(false));
+      // store.dispatch(dismissAllNotifications());
     }
 
     return nextAction;

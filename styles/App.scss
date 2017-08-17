@@ -1,1 +1,9 @@
 @import "defaults";
+
+.notification-bar-message {
+  z-index: $z-top;
+  color: $c-divider;
+  a {
+    color: $c-divider;
+  }
+}

@@ -4,9 +4,10 @@ import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
 import Cookies from 'js-cookie';
+import { NotificationStack } from 'react-notification';
 
 import Welcome from '../containers/Welcome';
-import Notification from '../containers/Notification';
+
 import * as RESULT from '../actions/session';
 import Panel from '../containers/Panel';
 import Result from '../containers/Result';
@@ -67,6 +68,7 @@ export default class App extends Component {
 
   dismiss(e) {
     e.preventDefault();
+    this.props.dismissAllNotifications();
     this.props.dismiss();
   }
 
@@ -107,6 +109,7 @@ export default class App extends Component {
     const { welcomeSeen } = this.state;
 
     if (!welcomeSeen) {
+      // FIXME lazy load welcome
       return <Welcome />;
     }
 
@@ -136,7 +139,6 @@ export default class App extends Component {
 
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
-        <Notification />
         <div className={`JsBinApp theme-${theme}`}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />
@@ -159,6 +161,12 @@ export default class App extends Component {
             </Splitter>
           </div>
         </div>
+        <NotificationStack
+          notifications={this.props.notifications}
+          onDismiss={e => {
+            this.props.dismissNotification(e.key);
+          }}
+        />
       </HotKeys>
     );
   }

@@ -2,13 +2,15 @@
 
 ## In progress
 
+- [ ] Meta data in open
+- [ ] Some kind of notification system
 
 ## Need for live
 
-- [x] Login (though wants some love)
 - [ ] Pay/cancel/renew
 - [ ] Embeds work
 - [ ] Secure output
+- [x] Login (though wants some love)
 - [x] Processors
 
 ## Bit bugs
@@ -50,8 +52,8 @@
 ## Larger tasks
 
 - [ ] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
-- [x] Processors
 - [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
+- [x] Processors
 
 ## UI
 

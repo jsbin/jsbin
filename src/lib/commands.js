@@ -1,5 +1,6 @@
 import React from 'react';
 import { push, replace } from 'react-router-redux';
+import distanceInWords from 'date-fns/distance_in_words';
 import { Command, Shift, Backspace } from '../components/Symbols';
 import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
@@ -78,6 +79,8 @@ export const open = {
       ];
     }
 
+    const now = Date.now();
+
     return Promise.all(
       keys.map(key => {
         return idk.get(key).then(res => {
@@ -91,9 +94,28 @@ export const open = {
             content = content.substr(0, 99) + '…';
           }
 
+          const hex = (res.id || '').split('-').pop();
+          let display;
+
+          display = (
+            <span>
+              {hex.length === 3 &&
+                <span
+                  className="brick"
+                  style={{ backgroundColor: `#${hex}` }}
+                />}
+              {content}
+              {res.updated &&
+                <span className="updated">
+                  {' '}{distanceInWords(now, res.updated, { addSuffix: true })}
+                </span>}
+            </span>
+          );
+
           return {
             title: content,
             updated: res.updated,
+            display,
             run: dispatch => {
               dispatch(push('/local/' + key));
             },

@@ -2,7 +2,6 @@
 
 ## In progress
 
-- [ ] Palette: "type `add`, then delete, you're left with `a`"
 
 
 ## Need for live
@@ -17,7 +16,7 @@
 
 - [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [ ] Change settings, and in other panel change a setting and original settings are lost (lopri)
-
+- [x] Palette: "type `add`, then delete, you're left with `a`"
 - [x] Totally wrong cdnjs files!!!
 - [x] Select last palette option is wrong
 - [x] Some kind of notification system

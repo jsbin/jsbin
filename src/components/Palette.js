@@ -55,7 +55,7 @@ export default class Palette extends React.Component {
 
     const fuse = new Fuse(commands, fuseOptions);
     const state = { commands, fuse, filter: '', active: 0 };
-    if (!setState) {
+    if (setState) {
       this.setState(state);
     }
 
@@ -221,10 +221,10 @@ export default class Palette extends React.Component {
 
   render() {
     const { filter, active, commands } = this.state;
-    const { app, user } = this.props;
+
     const start = active - 100 < 0 ? 0 : active - 100;
     const end = start + 100;
-    // console.log(active, commands[active]);
+
     return (
       <div className="Palette" onClick={this.dismiss}>
         <div className="inner">

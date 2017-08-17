@@ -136,12 +136,16 @@ const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
     [MODES.JAVASCRIPT]: processors[`${MODES.JAVASCRIPT}-result`],
   };
 
-  const length = Object.keys(toRender).filter(key => !!toRender[key]).length;
+  const length = Object.keys(toRender).filter(key => toRender[key] !== null)
+    .length;
 
   if (length === 3) {
     const { result, insertJS } = asHTML(toRender);
     dispatch({ type: SET_PROCESSOR_RESULT, result, insertJS });
   } else {
-    // console.log('%cnot ready yet (%s)', 'font-weight: bold', length);
+    const missing = Object.keys(toRender)
+      .filter(key => toRender[key] === null)
+      .join(', ');
+    console.log('%cnot ready yet (%s missing)', 'font-weight: bold', missing);
   }
 }, 500);

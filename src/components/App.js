@@ -21,8 +21,6 @@ import classnames from 'classnames';
 import '../css/App.css';
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
 
-// import { diff } from 'deep-object-diff';
-
 const Welcome = Loadable({
   loader: () => import('../containers/Welcome'),
   loading: Loading,
@@ -103,17 +101,6 @@ export default class App extends Component {
   componentDidMount() {
     this.props.setDirtyFlag();
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   const delta = diff(this.props, nextProps);
-  //   if (this.props.source !== nextProps.source) {
-  //     // handled by location change
-  //     return false;
-  //   }
-  //   console.log('should update?', delta);
-
-  //   return true;
-  // }
 
   render() {
     const {

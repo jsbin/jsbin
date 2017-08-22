@@ -16,9 +16,12 @@ import Loading from './Loading';
 import Loadable from 'react-loadable';
 import Error from './GenericErrorPage';
 import { SET_HTML } from '../actions/bin';
+import classnames from 'classnames';
 
 import '../css/App.css';
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
+
+// import { diff } from 'deep-object-diff';
 
 const Welcome = Loadable({
   loader: () => import('../containers/Welcome'),
@@ -101,6 +104,17 @@ export default class App extends Component {
     this.props.setDirtyFlag();
   }
 
+  // shouldComponentUpdate(nextProps) {
+  //   const delta = diff(this.props, nextProps);
+  //   if (this.props.source !== nextProps.source) {
+  //     // handled by location change
+  //     return false;
+  //   }
+  //   console.log('should update?', delta);
+
+  //   return true;
+  // }
+
   render() {
     const {
       bin,
@@ -144,9 +158,13 @@ export default class App extends Component {
       dismiss: this.dismiss,
     };
 
+    const className = classnames(['JsBinApp', `theme-${theme}`], {
+      embedded: session.embedded,
+    });
+
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
-        <div className={`JsBinApp theme-${theme}`}>
+        <div className={className}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />
           <div className="JsBinContainer">

@@ -8,6 +8,9 @@ import '../css/Result.css';
 import makeIframe from '../lib/makeIFrame';
 import { emptyPage, html as defaultHTML } from '../lib/Defaults';
 
+//https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState#Values
+const complete = 'complete';
+
 const Console = Loadable({
   loader: () =>
     import(/* webpackChunkName: "console" */ '../containers/Console'),
@@ -126,10 +129,33 @@ export default class Result extends React.Component {
     doc.close();
 
     if (!insertJS && javascript) {
-      const script = doc.createElement('script');
-      const blob = new Blob([javascript], { type: 'application/javascript' });
-      script.src = URL.createObjectURL(blob);
-      doc.documentElement.appendChild(script);
+      const build = () => {
+        const script = doc.createElement('script');
+        script.async = true;
+        script.defer = true;
+        const blob = new Blob([javascript], { type: 'application/javascript' });
+        script.src = URL.createObjectURL(blob);
+        doc.documentElement.appendChild(script);
+      };
+
+      // this is a wonderful quirk of readiness. what happens is if the HTML
+      // contains a script tag, it'll block rendering, but since it's inside
+      // an iframe, it's an async action whilst *this* code in the "main"
+      // thread continues execution. so if there's a script that doesn't
+      // complete by the time the `build` function inserts the script tag
+      // the iframe won't have created all the DOM nodes yet, and the script
+      // tag of the injected code ends up _before_ the actual DOM `body`
+      // element, causing errors. so we rely on the document ready state
+      // to be sure we're ready to inject.
+      if (doc.readyState === complete) {
+        build();
+      } else {
+        doc.onreadystatechange = () => {
+          if (doc.readyState === complete) {
+            build();
+          }
+        };
+      }
     }
   }
 

@@ -15,6 +15,10 @@
   }
 }
 
+.embedded .Panel .ReactCodeMirror {
+  padding-top: 0;
+}
+
 .Panel {
   // min-height: 100%;
   // padding-bottom: calc(100vh - #{$menu-height + $font-line-height + 5});
@@ -93,4 +97,8 @@
       }
     }
   }
+}
+
+.embedded .CodeSettings details {
+  display: none;
 }

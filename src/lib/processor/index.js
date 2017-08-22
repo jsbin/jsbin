@@ -123,7 +123,7 @@ export function asHTML(bin) {
   // error is then passed through a localStorage event which is
   // paired back up using the guid
   let i = 0;
-  const javascript = insertJS
+  let javascript = insertJS
     ? `
         try {
           ${bin.javascript}
@@ -134,6 +134,10 @@ export function asHTML(bin) {
           throw error;
         } //# sourceURL=your-scripts-${++i}.js$`
     : bin.javascript + `//# sourceURL=your-scripts-${i}.js$`;
+
+  if (bin.javascript.trim() === '') {
+    javascript = '';
+  }
 
   const result = binToHTML({
     html,

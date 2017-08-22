@@ -1,29 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
+import Loadable from 'react-loadable';
+
 import * as RESULT from '../actions/session';
 import '../css/Result.css';
 import makeIframe from '../lib/makeIFrame';
 import { emptyPage, html as defaultHTML } from '../lib/Defaults';
 
-let Console = null;
+const Console = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "console" */ '../containers/Console'),
+  loading: () => null,
+});
 
 export default class Result extends React.Component {
   constructor(props) {
     super(props);
     this.updateResult = this.updateResult.bind(this);
-    this.state = { guid: 0, Console };
+    this.state = { guid: 0 };
 
     this.iframe = makeIframe();
   }
 
   updateResult(props) {
-    const { error, renderResult } = props;
+    const { error, renderResult, html } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
 
     if (error) {
       // don't bother sending the state change if there's nothing to be done
       props.clearError();
+    }
+
+    if (!renderedDoc) {
+      // nothing to render so exit early
+      return;
     }
 
     const isPage = renderResult === RESULT.RESULT_PAGE;
@@ -103,7 +114,7 @@ export default class Result extends React.Component {
       this.console.rebind(iframe);
     }
 
-    if (renderedDoc.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '')) {
+    if (html.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '')) {
       renderedDoc = emptyPage;
     }
 
@@ -114,7 +125,7 @@ export default class Result extends React.Component {
     doc.write(renderedDoc);
     doc.close();
 
-    if (!insertJS) {
+    if (!insertJS && javascript) {
       const script = doc.createElement('script');
       const blob = new Blob([javascript], { type: 'application/javascript' });
       script.src = URL.createObjectURL(blob);
@@ -122,24 +133,7 @@ export default class Result extends React.Component {
     }
   }
 
-  async lazyLoad({ renderResult }) {
-    // only lazy load the console once during runtime.
-    if (this.state.Console !== null) return;
-
-    if (
-      renderResult === RESULT.RESULT_BOTH ||
-      renderResult === RESULT.RESULT_CONSOLE
-    ) {
-      const {
-        default: console,
-      } = await import(/* webpackChunkName: "console" */ '../containers/Console');
-      Console = console;
-      this.setState({ Console });
-    }
-  }
-
   componentDidMount() {
-    this.lazyLoad(this.props);
     this.updateResult(this.props);
   }
 
@@ -147,10 +141,6 @@ export default class Result extends React.Component {
     if (this.iframe && this.iframe.parentNode) {
       this.iframe.parentNode.removeChild(this.iframe);
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.lazyLoad(nextProps);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -178,7 +168,7 @@ export default class Result extends React.Component {
 
   render() {
     const { renderResult, splitColumns } = this.props;
-    const { Console } = this.state;
+
     const hasConsole =
       renderResult === RESULT.RESULT_CONSOLE ||
       renderResult === RESULT.RESULT_BOTH;
@@ -197,7 +187,6 @@ export default class Result extends React.Component {
         >
           {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&
-            Console &&
             <Console
               onRef={e => (this.console = e)}
               guid={this.state.guid}

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
 import Head from './Head';
@@ -54,7 +55,30 @@ class Welcome extends Component {
 
   render() {
     const { help, loadingHelp } = this.state;
-    const { showWelcome } = this.props;
+    const { showWelcome, match, location } = this.props;
+
+    const continueTo =
+      match.path !== '/' && match.path !== '/welcome'
+        ? <li>
+            <Link
+              onClick={this.welcomeSeen}
+              to={location.pathname + location.search}
+            >
+              <strong>
+                Continue to {match.url}
+              </strong>
+            </Link>
+          </li>
+        : null;
+
+    const newBin = (
+      <li>
+        <Link onClick={this.welcomeSeen} to="/">
+          {continueTo ? 'New Bin' : <strong>New bin</strong>}
+        </Link>
+      </li>
+    );
+
     return (
       <Layout className="Welcome">
         <Head title={`👋 JS Bin`} />
@@ -76,11 +100,8 @@ class Welcome extends Component {
             <div className="block flex">
               <h2>Get started</h2>
               <ul>
-                <li>
-                  <a onClick={this.welcomeSeen} href="/">
-                    <strong>New bin</strong>
-                  </a>
-                </li>
+                {continueTo}
+                {newBin}
                 <li>
                   <a href="/open">Open existing bin</a>
                 </li>

@@ -4,7 +4,7 @@ import { RESET, FETCH_BIN_REQUEST } from '../actions/bin';
 
 function addDefaultStates(obj, key, value) {
   Object.keys(MODES).forEach(mode => {
-    obj[`${key}-${MODES[mode]}`] = value(mode, MODES[mode]);
+    obj[`${MODES[mode]}-${key}`] = value(mode, MODES[mode]);
   });
 }
 

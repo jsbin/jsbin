@@ -8,7 +8,6 @@ import {
   ERROR,
   SET_JS,
   SET_CSS,
-  SET_RESULT,
   SET_BIN,
   FETCH_BIN_FAILURE,
   FETCH_BIN_SUCCESS,
@@ -22,7 +21,6 @@ export const defaultState = {
   loading: false,
   id: null,
   revision: 1, // may drop this
-  result: '',
   html: defaults.html,
   javascript: defaults.javascript,
   css: defaults.css,
@@ -77,10 +75,6 @@ export default function reducer(state = defaultState, action) {
       ...action.payload,
       loading: loading === undefined ? false : loading,
     };
-  }
-
-  if (type === SET_RESULT) {
-    return { ...state, result: code };
   }
 
   let key = null;

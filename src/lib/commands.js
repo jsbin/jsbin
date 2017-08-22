@@ -60,41 +60,6 @@ export const download = {
   },
 };
 
-const copyOk = dispatch =>
-  dispatch(addNotification('Copied 👍', { dismissAfter: 5 * 1000 }));
-
-export const copyToClip = {
-  title: 'Copy to clipboard',
-  run: (dispatch, { bin, app }) => {
-    copy(bin[app.source]);
-    copyOk(dispatch);
-  },
-};
-
-export const copyTransformed = {
-  title: 'Copy compiled to clipboard',
-  condition: ({ bin, app }) => {
-    return bin[app.source + '-processor'] !== app.source;
-  },
-  run: (dispatch, { bin, app, processors }) => {
-    copy(processors[app.source + '-result']);
-    copyOk(dispatch);
-  },
-};
-
-export const copyAll = {
-  title: 'Copy page result to clipboard',
-  run: (dispatch, { processors }) => {
-    const html = BinToHTML({
-      html: processors['html-result'],
-      javascript: processors['javascript-result'],
-      css: processors['css-result'],
-    });
-    copy(html);
-    copyOk(dispatch);
-  },
-};
-
 export const del = {
   title: 'Delete',
   shortcut: (
@@ -381,6 +346,41 @@ export const login = {
   condition: ({ user }) => user.username === 'anonymous',
   run: () => {
     window.location = `${process.env.REACT_APP_API}/auth`;
+  },
+};
+
+const copyOk = dispatch =>
+  dispatch(addNotification('Copied 👍', { dismissAfter: 5 * 1000 }));
+
+export const copyToClip = {
+  title: 'Copy to clipboard',
+  run: (dispatch, { bin, app }) => {
+    copy(bin[app.source]);
+    copyOk(dispatch);
+  },
+};
+
+export const copyTransformed = {
+  title: 'Copy compiled to clipboard',
+  condition: ({ bin, app }) => {
+    return bin[app.source + '-processor'] !== app.source;
+  },
+  run: (dispatch, { bin, app, processors }) => {
+    copy(processors[app.source + '-result']);
+    copyOk(dispatch);
+  },
+};
+
+export const copyAll = {
+  title: 'Copy page result to clipboard',
+  run: (dispatch, { processors }) => {
+    const html = BinToHTML({
+      html: processors['html-result'],
+      javascript: processors['javascript-result'],
+      css: processors['css-result'],
+    });
+    copy(html);
+    copyOk(dispatch);
   },
 };
 

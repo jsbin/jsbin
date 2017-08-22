@@ -11,7 +11,7 @@ import * as MODES from '../lib/cm-modes';
 
 export const defaultState = {
   protectedKeys: [],
-  showWelcome: true,
+  showWelcome: window.top === window, // unless we're embedded, show the welcome page
   theme: LIGHT,
   splitColumns: false,
   splitterWidth: 50,

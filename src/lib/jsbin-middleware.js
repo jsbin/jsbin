@@ -2,7 +2,6 @@ import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SAVE } from '../actions/bin';
 import { SET_RESULT } from '../actions/processors';
 import { SET_TOKEN } from '../actions/user';
-import { dismissAllNotifications } from '../actions/notifications';
 import {
   SET_SPLITTER_WIDTH,
   DISMISS,

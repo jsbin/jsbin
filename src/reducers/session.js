@@ -32,6 +32,7 @@ export const defaultState = {
   error: null,
   splitterWidth: 50,
   dirty: false,
+  embedded: window.top !== window,
   ...defaultCursorState,
 };
 

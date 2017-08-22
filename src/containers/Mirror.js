@@ -23,6 +23,7 @@ const MirrorContainer = connect(
     editor,
     session,
     app,
+    highlightedLines: session.highlightedLines,
     dirty: session.dirty,
     source: app.source,
     processor: bin[`${app.source}-processor`],

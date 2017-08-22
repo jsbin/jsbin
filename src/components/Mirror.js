@@ -56,7 +56,6 @@ export default class Mirror extends React.Component {
   constructor(props) {
     super(props);
     this.updateCode = this.updateCode.bind(this);
-    this.onCursorActivity = this.onCursorActivity.bind(this);
     this.onChanges = this.onChanges.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
 
@@ -65,14 +64,6 @@ export default class Mirror extends React.Component {
       code: props.code,
       swatch: { color: '#fff', x: 0, y: 0, pos: null },
     };
-  }
-
-  onCursorActivity(cm) {
-    // var shouldCloseAutocomplete = !(
-    //   cursor.line === this._queryRange.startLine &&
-    //   this._queryRange.startColumn <= cursor.ch &&
-    //   cursor.ch <= this._queryRange.endColumn
-    // );
   }
 
   onChanges(cm, changes) {
@@ -115,12 +106,9 @@ export default class Mirror extends React.Component {
     }
 
     cm.on('changes', this.onChanges);
-
     cm.on('highlightLines', () => {
       this.props.setHighlightedLines(cm.highlightLines().string || null);
     });
-    cm.refresh();
-
     cm.on('openSwatch', (cm, color, e, pos) => {
       this.setState({
         swatch: {
@@ -132,6 +120,13 @@ export default class Mirror extends React.Component {
       });
       this.props.toggleSwatch(true);
     });
+
+    const { highlightedLines } = this.props;
+    if (highlightedLines) {
+      cm.highlightLines(highlightedLines);
+    }
+
+    cm.refresh();
   }
 
   componentWillUnmount() {
@@ -321,7 +316,6 @@ export default class Mirror extends React.Component {
         <CodeMirror
           ref={e => (this.CodeMirror = e)}
           value={code}
-          onCursorActivity={this.onCursorActivity}
           onChange={this.updateCode}
           options={cmOptions}
           autoFocus={focus}

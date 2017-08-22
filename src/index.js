@@ -25,18 +25,30 @@ import { setToken } from './actions/user';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
 
-const getLoadable = component =>
-  Loadable({
-    loader: () => import('./containers/' + component),
-    loading: LoadingComponent,
-  });
-
-// main pages async loading 💪
-const App = getLoadable('App');
-const Settings = getLoadable('Settings');
-const Welcome = getLoadable('Welcome');
-const Login = getLoadable('Login');
-const Account = getLoadable('Account');
+// main pages async loading
+const App = Loadable({
+  loader: () => import(/* webpackChunkName: "app" */ './containers/App'),
+  loading: LoadingComponent,
+});
+const Settings = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "settings" */ './containers/Settings'),
+  loading: LoadingComponent,
+});
+const Welcome = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "welcome" */ './containers/Welcome'),
+  loading: LoadingComponent,
+});
+const Login = Loadable({
+  loader: () => import(/* webpackChunkName: "login" */ './containers/Login'),
+  loading: LoadingComponent,
+});
+const Account = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "account" */ './containers/Account'),
+  loading: LoadingComponent,
+});
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -90,12 +102,16 @@ if (!initState.user.settings) {
   delete initState.user;
 }
 
-initState.app = { ...defaultApp, ...initState.app };
+// now allow the URL settings to override if required
 
 // FIXME find a home for this code
 {
   // check the url and select the right panels
   const url = new URL(window.location.toString());
+
+  if (url.hash.substr(1).startsWith('L')) {
+    initState.session.highlightedLines = url.hash.substr(2);
+  }
 
   const source = url.searchParams.get('source');
   if (source) {
@@ -131,15 +147,26 @@ initState.app = { ...defaultApp, ...initState.app };
     // super legacy 😢
     initState.app.source = MODES.JAVASCRIPT;
   }
+
+  let settings = url.searchParams.get('settings');
+  if (settings) {
+    try {
+      settings = JSON.parse(settings);
+      initState.app = { ...initState.app, ...settings.app };
+    } catch (e) {
+      console.warn('error parsing settings from URL', e);
+    }
+  }
 }
+
+initState.app = { ...defaultApp, ...initState.app };
 
 const finalCreateStore = compose(...middleware)(createStore);
 const store = finalCreateStore(reducers, initState);
 
-// FIXME move
+// FIXME move to somewhere else
 {
   // restore user
-
   const url = new URL(window.location.toString());
   let token = url.searchParams.get('token');
   if (token) {

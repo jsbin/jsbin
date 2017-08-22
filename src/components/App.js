@@ -6,19 +6,23 @@ import { HotKeys } from 'react-hotkeys';
 import Cookies from 'js-cookie';
 import { NotificationStack } from 'react-notification';
 
-import Welcome from '../containers/Welcome';
-
 import * as RESULT from '../actions/session';
 import Panel from '../containers/Panel';
 import Result from '../containers/Result';
 import Head from './Head';
 import Palette from '../containers/Palette';
 import Loading from './Loading';
+import Loadable from 'react-loadable';
 import Error from './GenericErrorPage';
 import { SET_HTML } from '../actions/bin';
 
 import '../css/App.css';
 import '@remy/react-splitter-layout/src/stylesheets/index.css';
+
+const Welcome = Loadable({
+  loader: () => import('../containers/Welcome'),
+  loading: Loading,
+});
 
 const noop = () => {};
 
@@ -110,7 +114,9 @@ export default class App extends Component {
 
     if (!welcomeSeen) {
       // FIXME lazy load welcome
-      return <Welcome />;
+      return (
+        <Welcome match={this.props.match} location={this.props.location} />
+      );
     }
 
     if (loading) {

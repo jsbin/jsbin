@@ -2,20 +2,24 @@
 
 ## In progress
 
-
+- [ ] Embeds work
+- [ ] Secure output
+- [x] URL linking to highlighted lines
+- [x] From &result=page switch to console doesn't load up console
+- [x] Skip welcome if we're embedded
+- [x] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 
 ## Need for live
 
 - [ ] Pay/cancel/renew
-- [ ] Embeds work
-- [ ] Secure output
 - [x] Login (though wants some love)
 - [x] Processors
+- [ ] Analytics
 
 ## Bit bugs
 
-- [ ] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
-- [ ] Change settings, and in other panel change a setting and original settings are lost (lopri)
+- [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [x] Palette: "type `add`, then delete, you're left with `a`"
 - [x] Totally wrong cdnjs files!!!
 - [x] Select last palette option is wrong
@@ -31,9 +35,19 @@
 - [x] Quick commands aren't saving
 - [x] Change theme from palette doesn't save (because it toggles to unknown value)
 
+## Account
+
+- [ ] Clean up sign in
+- [ ] Purchase license
+- [ ] Refresh token
+- [ ] Prompt for license purchase
+- [ ] Upgrade pages
+- [ ] Handle subscription renewal
+- [ ] Validate session on load
+
 ## Themes
 
-- [ ] Dark loading gif
+- [ ] Dark loading gif (low priority)
 - [x] Dark welcome/document theme
 
 ## Console
@@ -62,8 +76,8 @@
 ## UI
 
 - [ ] Share box
-- [ ] Some kind of notification system
 - [ ] Add meta data box
+- [x] Some kind of notification system
 - [x] Welcome
 - [x] Loading gif
 - [x] Import light + dark theme by default
@@ -74,9 +88,11 @@
 
 ## UX
 
-- [ ] Support shortcuts (based on lib/commands.js)
+- [ ] ctrl+l to clear console
 - [ ] cmd+enter - run code with alerts, etc
+- [ ] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
 - [ ] unfurl - can this even work if there's no dynamic server side?
+- [ ] Template support
 - [x] `:g` goto line
 - [x] Sign in (API, JWT)
 - [x] Protect keybindings (ref [#3035](https://github.com/jsbin/jsbin/issues/3035))

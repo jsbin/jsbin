@@ -7,3 +7,16 @@
     color: $c-divider;
   }
 }
+
+.JsBinApp {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+
+  .JsBinContainer {
+    position: relative;
+    display: block;
+    flex-grow: 1;
+  }
+}

@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { NotificationStack } from 'react-notification';
 
 import * as RESULT from '../actions/session';
+import Advert from '../containers/Advert';
 import Panel from '../containers/Panel';
 import Result from '../containers/Result';
 import Head from './Head';
@@ -148,7 +149,7 @@ export default class App extends Component {
         <div className={`JsBinApp theme-${theme}`}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />
-          <div>
+          <div className="JsBinContainer">
             <Splitter
               vertical={!splitColumns}
               percentage={true}
@@ -166,6 +167,7 @@ export default class App extends Component {
                 <Result renderResult={session.result} />}
             </Splitter>
           </div>
+          <Advert />
         </div>
         <NotificationStack
           notifications={this.props.notifications}

@@ -18,7 +18,7 @@ import {
 } from '../actions/bin';
 
 export const defaultState = {
-  loading: false,
+  loading: true,
   id: null,
   revision: 1, // may drop this
   html: defaults.html,

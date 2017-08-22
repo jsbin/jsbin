@@ -4,10 +4,6 @@
 
 - [ ] Embeds work
 - [ ] Secure output
-- [x] URL linking to highlighted lines
-- [x] From &result=page switch to console doesn't load up console
-- [x] Skip welcome if we're embedded
-- [x] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 
 ## Need for live
 
@@ -20,6 +16,10 @@
 
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
+- [x] URL linking to highlighted lines
+- [x] From &result=page switch to console doesn't load up console
+- [x] Skip welcome if we're embedded
+- [x] Linking to an existing url (https://v5.jsbin.com/gist/07ba1ea3d53decd293f49e543894c938) for the first time gives me the welcome page, then I lose the link
 - [x] Palette: "type `add`, then delete, you're left with `a`"
 - [x] Totally wrong cdnjs files!!!
 - [x] Select last palette option is wrong

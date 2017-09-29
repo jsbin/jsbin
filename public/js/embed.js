@@ -1,5 +1,4 @@
 (function(window, document, undefined) {
-
   var addEventListener = window.addEventListener
     ? 'addEventListener'
     : 'attachEvent';
@@ -240,8 +239,8 @@
     var clone = iframe.cloneNode();
     var url = clone.getAttribute('data-url');
 
-    clone.src = url.split('&')[0];
-    clone._src = url.split('&')[0]; // support for google slide embed
+    clone.src = url; //.split('&')[0];
+    clone._src = url; //.split('&')[0]; // support for google slide embed
     iframe.parentNode.replaceChild(clone, iframe);
     hookMessaging(clone);
   }
@@ -264,8 +263,8 @@
     // track when it comes into view and reload
     if (inview(link, 100)) {
       // the iframe is full view, let's render it
-      iframe.src = url.split('&')[0];
-      iframe._src = url.split('&')[0]; // support for google slide embed
+      iframe.src = url; //.split('&')[0];
+      iframe._src = url; //.split('&')[0]; // support for google slide embed
       hookMessaging(iframe);
     } else {
       iframe.setAttribute('data-url', url);

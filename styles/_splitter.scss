@@ -1,7 +1,7 @@
 @import "vars";
 
 .splitter-layout {
-  height: calc(100% - #{$menu-height});
+  // height: calc(100% - #{$menu-height});
   & > .layout-splitter {
     background-color: #000;
     background-clip: padding-box; // this is important to the effect

@@ -14,6 +14,10 @@ import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/save-bin';
 import getSettings from '../lib/settings';
 
+// function refreshUserToken() {
+//   fetch('')
+// }
+
 function storeKV(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));

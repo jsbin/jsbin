@@ -17,27 +17,26 @@ const settings = ({ opts, token } = {}) => {
   };
 };
 
-export const getBins = user => {
-  return fetch(`${API}/user/bins`, settings({ token: user.token })).then(res =>
+export const refreshToken = ({ token }) => {
+  return fetch(`${API}/auth/refresh`, settings({ token })).then(res =>
     res.json()
   );
 };
 
-export const getInvoice = (id, user) => {
-  return fetch(
-    `${API}/user/invoice/${id}`,
-    settings({ token: user.token })
-  ).then(res => {
-    console.log(res.status);
-    return res.json();
-  });
+export const getBins = ({ token }) => {
+  return fetch(`${API}/user/bins`, settings({ token })).then(res => res.json());
 };
 
-export const getInvoices = user => {
-  return fetch(
-    `${API}/user/invoice/`,
-    settings({ token: user.token })
-  ).then(res => res.json());
+export const getInvoice = (id, { token }) => {
+  return fetch(`${API}/user/invoice/${id}`, settings({ token })).then(res =>
+    res.json()
+  );
+};
+
+export const getInvoices = ({ token }) => {
+  return fetch(`${API}/user/invoice/`, settings({ token })).then(res =>
+    res.json()
+  );
 };
 
 export const getBin = (id, revision = 'latest') => {

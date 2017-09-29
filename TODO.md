@@ -2,8 +2,8 @@
 
 ## In progress
 
-- [ ] Embeds work
 - [ ] Secure output
+- [x] Embeds work
 
 ## Need for live
 
@@ -14,6 +14,8 @@
 
 ## Bit bugs
 
+- [ ] Saving Markdown kills all the spaces
+- [ ] Resize the output, and When output is too big, it can't be scrolled vertically
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [x] URL linking to highlighted lines
@@ -44,6 +46,10 @@
 - [ ] Upgrade pages
 - [ ] Handle subscription renewal
 - [ ] Validate session on load
+
+## License
+
+
 
 ## Themes
 
@@ -119,10 +125,6 @@
 ## To be categorised
 
 - [ ] Help
-
-## Known issues
-
-- [ ] When output is too big, it can't be scrolled vertically?
 
 ## Nice to have
 

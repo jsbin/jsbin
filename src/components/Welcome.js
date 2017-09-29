@@ -73,9 +73,9 @@ class Welcome extends Component {
 
     const newBin = (
       <li>
-        <Link onClick={this.welcomeSeen} to="/">
+        <a onClick={this.welcomeSeen} href="/">
           {continueTo ? 'New Bin' : <strong>New bin</strong>}
-        </Link>
+        </a>
       </li>
     );
 

@@ -20,7 +20,7 @@ import reducers from './reducers'; // Or wherever you keep your reducers
 import { defaultState as defaultSessions } from './reducers/session';
 import { defaultState as defaultApp } from './reducers/app';
 import * as MODES from './lib/cm-modes';
-import { RESULT_PAGE, RESULT_CONSOLE } from './actions/session';
+import { RESULT_PAGE, RESULT_CONSOLE, RESULT_NONE } from './actions/session';
 import { setToken } from './actions/user';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
@@ -108,6 +108,7 @@ if (!initState.user.settings) {
 {
   // check the url and select the right panels
   const url = new URL(window.location.toString());
+  let hideResult = false;
 
   if (url.hash.substr(1).startsWith('L')) {
     initState.session.highlightedLines = url.hash.substr(2);
@@ -128,24 +129,31 @@ if (!initState.user.settings) {
     ','
   );
 
-  if (display.includes('output')) {
-    initState.session.result = RESULT_PAGE;
-  }
-
-  if (display.includes('console')) {
-    initState.session.result = RESULT_CONSOLE;
-  }
-
   Object.keys(MODES).forEach(mode => {
     const key = MODES[mode];
     if (display.includes(key)) {
       initState.app.source = key;
+      hideResult = true;
     }
   });
 
   if (display.includes('js')) {
     // super legacy 😢
     initState.app.source = MODES.JAVASCRIPT;
+  }
+
+  if (display.includes('output')) {
+    initState.session.result = RESULT_PAGE;
+    hideResult = false;
+  }
+
+  if (display.includes('console')) {
+    initState.session.result = RESULT_CONSOLE;
+    hideResult = false;
+  }
+
+  if (hideResult) {
+    initState.session.result = RESULT_NONE;
   }
 
   let settings = url.searchParams.get('settings');
@@ -205,8 +213,8 @@ const render = App => {
 
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/gist/:gistId" component={App} />
-          <Route exact path="/:bin/:version" component={App} />
-          <Route exact path="/:bin" component={App} />
+          <Route exact path="/:bin/:version/(embed|edit)?" component={App} />
+          <Route exact path="/:bin/(embed|edit)?" component={App} />
         </Switch>
       </ConnectedRouter>
     </Provider>,

@@ -15,6 +15,9 @@ body,
 
   @import "splitter";
 }
+#root > div {
+  height: 100%;
+}
 
 .JsBinApp {
   height: 100%;

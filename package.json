@@ -28,7 +28,9 @@
     "_preupdate": "node build/pre-update.js",
     "_postupdate": "node build/post-update.js commit",
     "_snyk-protect": "snyk protect",
-    "_prepublish": "npm run snyk-protect"
+    "_prepublish": "npm run snyk-protect",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "~0.1.22",
@@ -80,7 +82,8 @@
     "undefsafe": "0.0.3",
     "uuid": "^2.0.1",
     "validate-vat": "^0.3.2",
-    "validator": "^3.16.1"
+    "validator": "^3.16.1",
+    "snyk": "^1.42.3"
   },
   "devDependencies": {
     "glob": "^7.0.5",
@@ -156,5 +159,6 @@
     "supports-color": "3.2.3",
     "grunt-cli": "1.2.0",
     "findup-sync": "0.3.0"
-  }
+  },
+  "snyk": true
 }

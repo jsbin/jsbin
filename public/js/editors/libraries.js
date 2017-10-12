@@ -694,8 +694,12 @@ var libraries = [
     'label': 'GSAP 1.11.7'
   },
   {
-    'url': 'https://cdnjs.cloudflare.com/ajax/libs/phaser/2.0.5/phaser.min.js',
-    'label': 'Phaser 2.0.5'
+    'url': 'https://cdn.jsdelivr.net/phaser/latest/phaser.min.js',
+    'label': 'Phaser latest'
+  },
+  {
+    'url': 'https://cdn.jsdelivr.net/phaser/2.4.4/phaser.min.js',
+    'label': 'Phaser 2.4.4'
   },
   {
     'url': [

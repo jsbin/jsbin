@@ -31,7 +31,7 @@ export default class License extends Component {
       };
     }
 
-    if (invoices.status) {
+    if (!error && invoices.status) {
       error = invoices;
       invoices = null;
     }

@@ -150,6 +150,25 @@ class Welcome extends Component {
             </div>
           </div>
           <div className="col">
+            <div className="block important">
+              <h2>IMPORTANT</h2>
+              <p>
+                If you are visiting as "normal" jsbin.com is down, please
+                understand that this entire version of jsbin is in{' '}
+                <strong>alpha</strong>. Core functionality works, but a lot is
+                still a work in progress, including the links on this page!
+              </p>
+              <p>
+                The place to start is the <a href="/">New Bin</a> link on the
+                left.
+              </p>
+              <p>
+                <strong>
+                  Do not file issues against this version of jsbin, as they will
+                  be immediately closed.
+                </strong>
+              </p>
+            </div>
             <div className="block">
               <h2>Discover</h2>
 
@@ -160,7 +179,7 @@ class Welcome extends Component {
                 </p>
               </a>
 
-              <a href="/help/recording" className="discover">
+              <a hidden href="/help/recording" className="discover">
                 <h3>Help others with your steps</h3>
                 <p>
                   Recording the steps you make to explain changes and fixes you

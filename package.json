@@ -102,7 +102,7 @@
     "build-css": "node-sass-chokidar ./styles/ -o ./src/css/",
     "watch": "npm run build-css && node-sass-chokidar ./styles/ -o ./src/css/ --watch --recursive",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "npm run build && now build --name jsbin-v5 && now alias"
+    "deploy": "npm run build && s3_website push"
   },
   "jest": {
     "collectCoverageFrom": ["src/**/*.{js,jsx}"],

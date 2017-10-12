@@ -14,6 +14,7 @@
 
 ## Bit bugs
 
+- [ ] cmd+enter should re-run code
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output, and When output is too big, it can't be scrolled vertically
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)

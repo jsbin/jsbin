@@ -18,6 +18,20 @@
   flex-direction: column;
   height: 100%;
 
+  .important {
+    background: red;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    a {
+      font-weight: bold;
+    }
+
+    * {
+      color: white;
+    }
+  }
+
   main {
     display: flex;
     min-height: 100%;

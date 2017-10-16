@@ -17,6 +17,8 @@ const Console = Loadable({
   loading: () => null,
 });
 
+let scriptURL = null;
+
 export default class Result extends React.Component {
   constructor(props) {
     super(props);
@@ -130,12 +132,27 @@ export default class Result extends React.Component {
 
     if (!insertJS && javascript) {
       const build = () => {
+        if (scriptURL) {
+          // release the old URL
+          URL.revokeObjectURL(scriptURL);
+        }
+        const blob = new Blob([javascript], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+        scriptURL = url;
         const script = doc.createElement('script');
         script.async = true;
         script.defer = true;
-        const blob = new Blob([javascript], { type: 'application/javascript' });
-        script.src = URL.createObjectURL(blob);
+        script.src = url;
+        script.noModule = true;
         doc.documentElement.appendChild(script);
+
+        const scriptModule = doc.createElement('script');
+        scriptModule.async = true;
+        scriptModule.defer = true;
+        scriptModule.src = url;
+        scriptModule.type = 'module';
+        doc.documentElement.appendChild(scriptModule);
+
       };
 
       // this is a wonderful quirk of readiness. what happens is if the HTML

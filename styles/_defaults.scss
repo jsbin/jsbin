@@ -50,6 +50,7 @@ summary {
 
 .notification-list {
   z-index: $z-top;
+  position: absolute;
 
   .notification-bar {
     // left: initial !important;

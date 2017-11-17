@@ -11,14 +11,16 @@
 - [x] Login (though wants some love)
 - [x] Processors
 - [ ] Analytics
+- [ ] Loop protection (with babel rewrite)
 
 ## Bit bugs
 
 - [ ] cmd+enter should re-run code
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output, and When output is too big, it can't be scrolled vertically
-- [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
+- [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Notifications sit *under* the editor
 - [x] URL linking to highlighted lines
 - [x] From &result=page switch to console doesn't load up console
 - [x] Skip welcome if we're embedded
@@ -133,18 +135,18 @@
 - [ ] i18n
 
 
-# The Remy User
+## The Remy User
 
 Why build JS Bin V at all?
 
-## 1. I want to be able to try some code out and throw it away (out of mind).
+### 1. I want to be able to try some code out and throw it away (out of mind)
 
 This is achieve through local saving and potentially clearing my local browser cache.
 
-## 2. I want to be able to help other people with their code.
+### 2. I want to be able to help other people with their code
 
 I want to save a few steps from start of their code to the final code design and include notes on why I made changes.
 
-## 3. I want to practice coding and pull it up later in time.
+### 3. I want to practice coding and pull it up later in time
 
 I should be able to tag or describe a bin to find it again. Perhaps use code snippets to search, or have some visual way to find bins again - perhaps highlight a specific line? #metadata

@@ -5,12 +5,14 @@ import Mirror from '../containers/Mirror';
 
 import CodeSettings from '../containers/CodeSettings';
 import Footer from '../containers/Footer';
-import { Command, Shift } from './Symbols';
+import { Command, Ctrl, Shift } from './Symbols';
 
 import '../css/Panel.css';
 
 import * as MODES from '../lib/cm-modes';
 import { cmd } from '../lib/is-mac';
+
+const PaletteShortcut = () => <kbd>{ window.navigator.userAgent.toLowerCase().includes('firefox') ? <Ctrl /> : <Command />} <Shift /> P</kbd>
 
 const keyMap = {
   save: `${cmd}+s`,
@@ -121,9 +123,7 @@ export default class Panel extends React.Component {
               <p>
                 <button className="Button simple" onClick={this.triggerPalette}>
                   Show all commands
-                  <kbd>
-                    <Command /> <Shift /> P
-                  </kbd>
+                  <PaletteShortcut />
                 </button>
               </p>
             </Footer>

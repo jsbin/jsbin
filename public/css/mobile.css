@@ -24,14 +24,15 @@ main {
 }
 
 .bsaapi main {
-  height: calc(100% - 33px);
+  /* height: calc(100% - 33px); */
 }
 
 .bsaapi.toppanel main {
-  height: calc(100% - 233px);
+  /* height: calc(100% - 233px); */
 }
 
-body, html {
+body,
+html {
   overflow: hidden;
 }
 
@@ -61,14 +62,15 @@ body, html {
     display: none !important;
   }
 
-  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+  .toppanel #bin,
+  .toppanel #history,
+  .toppanel #history .preview {
     top: 44px;
   }
 
   body.toppanel {
     background-position: center;
   }
-
 
   #mobile-nav {
     left: -200px;
@@ -84,7 +86,7 @@ body, html {
 
   #mobile-nav:after {
     content: ' ';
-    box-shadow: 0px 0 3px 3px rgba(0,0,0,.1);
+    box-shadow: 0px 0 3px 3px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -107,19 +109,23 @@ body, html {
   }
 
   body main {
-     -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-     transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition: -webkit-transform 200ms
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   body.show-nav main {
-    -webkit-transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -webkit-transition: -webkit-transform 200ms
+      cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      -webkit-transform 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     -webkit-transform: translateX(200px);
-            transform: translateX(200px);
+    transform: translateX(200px);
   }
 
   #mobile-nav li a {
@@ -139,7 +145,7 @@ body, html {
 
   a.toppanel-logo {
     -webkit-transform: translate(-86px, 120px) scale(0.35);
-            transform: translate(-86px, 120px) scale(0.35);
+    transform: translate(-86px, 120px) scale(0.35);
   }
 
   #control {
@@ -262,8 +268,10 @@ body, html {
     display: inline-block !important;
   }
 
-  .toppanel #tip.notification, .toppanel #tip.error,
-  #tip.notification, #tip.error {
+  .toppanel #tip.notification,
+  .toppanel #tip.error,
+  #tip.notification,
+  #tip.error {
     top: 44px;
   }
 
@@ -295,26 +303,26 @@ body, html {
     list-style: none;
     margin: 0;
     padding: 0;
-    display:-webkit-box;
-    display:-ms-flexbox;
-    display:flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
     -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
+    flex-wrap: nowrap;
     -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -ms-flex-line-pack: center;
-        align-content: center;
+    align-content: center;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
   }
 
   .inline-menu li {
@@ -335,7 +343,7 @@ body, html {
 
   .inline-menu a:hover,
   .inline-menu .add-library:hover {
-    background: rgba(0,0,0,.05);
+    background: rgba(0, 0, 0, 0.05);
   }
 
   .inline-menu .add-library select {
@@ -344,8 +352,8 @@ body, html {
   }
 
   .inline-menu a:focus {
-    background: rgba(0,0,0,.1);
-/*     border-radius: 3px; */
+    background: rgba(0, 0, 0, 0.1);
+    /*     border-radius: 3px; */
   }
 
   #source {
@@ -421,7 +429,7 @@ body, html {
   #strip:before {
     position: absolute;
     content: ' ';
-    box-shadow: 0 0 20px 3px rgba(0,0,0,.15);
+    box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.15);
     right: 0;
     width: 0px;
     height: 100%;
@@ -449,7 +457,6 @@ body, html {
     padding: 5px;
     display: inline-block;
   }
-
 }
 
 @media all and (max-height: 410px) and (max-width: 640px) {
@@ -462,7 +469,9 @@ body, html {
     padding-top: 0;
   }
 
-  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+  .toppanel #bin,
+  .toppanel #history,
+  .toppanel #history .preview {
     top: 0;
   }
 
@@ -502,11 +511,12 @@ body, html {
     content: 'tablet';
   }
 
-  .toppanel #tip.notification, .toppanel #tip.error,
-  #tip.notification, #tip.error {
+  .toppanel #tip.notification,
+  .toppanel #tip.error,
+  #tip.notification,
+  #tip.error {
     top: 22px;
   }
-
 
   .toppanel-logo,
   .mobile .inline-menu,
@@ -515,7 +525,8 @@ body, html {
     display: none !important;
   }
 
-  #control, #control * {
+  #control,
+  #control * {
     height: 22px;
   }
 
@@ -524,14 +535,16 @@ body, html {
     height: 22px;
     line-height: 24px;
     padding-top: 0;
-/*     letter-spacing: 0.035rem; */
+    /*     letter-spacing: 0.035rem; */
   }
 
   #control #panels > a.button.hasContent {
-/*     letter-spacing: 0.01rem; */
+    /*     letter-spacing: 0.01rem; */
   }
 
-  .toppanel #bin, .toppanel #history, .toppanel #history .preview {
+  .toppanel #bin,
+  .toppanel #history,
+  .toppanel #history .preview {
     top: 22px;
   }
 
@@ -539,7 +552,8 @@ body, html {
     bottom: 0;
   }
 
-  #bin, #history {
+  #bin,
+  #history {
     top: 23px;
   }
 
@@ -587,6 +601,6 @@ body, html {
     left: 0;
     right: 0;
     bottom: 20px;
-/*     background: blue; */
+    /*     background: blue; */
   }
 }

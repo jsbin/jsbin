@@ -1,0 +1,22 @@
+<div id="bsaapi" class="cs__wrapper">
+  <a href="https://codesponsor.io" class="cs__blurb" target="_blank">
+    <strong>CodeSponsor.io</strong> <span> - get paid by adding one line of code to your README</span>
+  </a>
+  <img class="cs__pixel" />
+</div>
+<script>
+$(".cs__footer a").attr("href", "https://codesponsor.io/?utm_source=widget&utm_medium=banner&utm_campaign=" + "{{settings.[features ad code_sponsor_id]}}");
+$.ajax({
+  url: "https://app.codesponsor.io/p/" + "{{settings.[features ad code_sponsor_id]}}" + "/message.json",
+  method: "GET"
+}).done(function(results) {
+  $('body').addClass('bsaapi');
+  $(".cs__blurb").attr("href", results.link_href);
+  $(".cs__blurb strong").text(results.title);
+  $(".cs__blurb span").text(results.body);
+  $(".cs__pixel").attr("src", results.pixel_href);
+}).fail(function(args) {
+  $(".cs__blurb strong").text("CodeSponsor.io");
+  $(".cs__blurb span").text(" - get paid by adding one line of code to your README");
+});
+</script>

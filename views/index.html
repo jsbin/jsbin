@@ -219,23 +219,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{>infocard}}
 {{/unless}}
 
-{{#unless embed}}
-{{#feature request "!pro"}}
-{{#feature request "ad"}}
-<!-- this is here -->
-<script>
-(function () {
-  var container = document.createElement('div');
-  container.id = 'bsaapi';
-  document.body.appendChild(container);
-  var script = document.createElement('script');
-  script.src = '{{root}}/js/inject-back';
-  document.body.appendChild(script);
-})();
-</script>
-{{/feature}}
-{{/feature}}
-{{/unless}}
+<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 
 {{#feature request "offline"}}
 <script>
@@ -263,7 +247,6 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 {{/feature}}
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
 <script src="{{root}}/bin/user.js?{{bust}}"></script>
 {{!-- we use the passed in version of isProduction here, not the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
@@ -287,5 +270,13 @@ if ('serviceWorker' in navigator) {
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>
 {{/if}}
 </main>
+{{#unless embed}}
+{{#feature request "!pro"}}
+{{#feature request "ad"}}
+  {{>ad}}
+{{/feature}}
+{{/feature}}
+{{/unless}}
+
 </body>
 </html>

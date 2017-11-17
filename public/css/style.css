@@ -4782,7 +4782,7 @@ body.min #bin .editbox .CodeMirror pre {
 
 #bsaapi {
   box-sizing: border-box;
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   z-index: 5;
   padding: .5em 1em;
@@ -4799,7 +4799,7 @@ body.min #bin .editbox .CodeMirror pre {
   border-radius: 3px;
   background-color: #4caf50;
   color: #fff;
-  content: "Ad";
+  content: "Supporter";
 }
 
 #bsaapi a {
@@ -4813,4 +4813,9 @@ body.min #bin .editbox .CodeMirror pre {
 
 .fadeout {
   color: #ccc;
+}
+
+body.bsaapi {
+  display: flex;
+  flex-direction: column;
 }

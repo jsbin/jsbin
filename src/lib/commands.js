@@ -1,10 +1,11 @@
 import React from 'react';
 import copy from 'copy-to-clipboard';
+import Cookies from 'js-cookie';
 import { push, replace } from 'react-router-redux';
 import distanceInWords from 'date-fns/distance_in_words';
 import { getBins } from './Api';
 import { addNotification } from '../actions/notifications';
-import { Command, Shift, Backspace } from '../components/Symbols';
+import { Command, Shift, Backspace, Enter } from '../components/Symbols';
 import { RESET, SAVE, DELETE, setProcessor } from '../actions/bin';
 import { toggleLayout, toggleTheme } from '../actions/app';
 import {
@@ -13,6 +14,7 @@ import {
   RESULT_PAGE,
   RESULT_CONSOLE,
 } from '../actions/session';
+import { update } from '../actions/processors';
 import BinToHTML from '../lib/BinToHTML';
 import idk from 'idb-keyval';
 import { JAVASCRIPT, CSS, HTML } from '../lib/cm-modes';
@@ -57,6 +59,18 @@ export const download = {
 
     const blob = new Blob([html], { type: 'text/html' });
     FileSaver.saveAs(blob, (bin.id || 'jsbin') + '.html');
+  },
+};
+
+export const run = {
+  title: 'Run bin',
+  shortcut: (
+    <kbd>
+      <Command /> <Enter />
+    </kbd>
+  ),
+  run: dispatch => {
+    dispatch(update());
   },
 };
 
@@ -316,6 +330,15 @@ export const toggleThemeCmd = {
 export const welcome = {
   title: 'Help: Welcome',
   run: dispatch => dispatch(push('/welcome')),
+};
+
+// TODO remove once fully live
+export const eject = {
+  title: 'Revert to (old) JS Bin',
+  run: () => {
+    Cookies.remove('version');
+    window.location.reload();
+  },
 };
 
 export const settings = {

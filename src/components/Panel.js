@@ -12,14 +12,20 @@ import '../css/Panel.css';
 import * as MODES from '../lib/cm-modes';
 import { cmd } from '../lib/is-mac';
 
-const PaletteShortcut = () => <kbd>{ window.navigator.userAgent.toLowerCase().includes('firefox') ? <Ctrl /> : <Command />} <Shift /> P</kbd>
+const PaletteShortcut = () =>
+  <kbd>
+    {window.navigator.userAgent.toLowerCase().includes('firefox')
+      ? <Ctrl />
+      : <Command />}{' '}
+    <Shift /> P
+  </kbd>;
 
 const keyMap = {
-  save: `${cmd}+s`,
-  run: `${cmd}+enter`,
-  html: `${cmd}+1`,
-  css: `${cmd}+3`,
-  javascript: `${cmd}+2`,
+  save: `mod+s`,
+  update: `mod+enter`,
+  html: `mod+1`,
+  css: `mod+3`,
+  javascript: `mod+2`,
 };
 
 export default class Panel extends React.Component {
@@ -95,7 +101,7 @@ export default class Panel extends React.Component {
 
     const handlers = {
       save: this.saveCode,
-      run: this.saveCode,
+      update: this.props.update,
       html: setTo(MODES.HTML),
       javascript: setTo(MODES.JAVASCRIPT),
       css: setTo(MODES.CSS),

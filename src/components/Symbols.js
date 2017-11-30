@@ -17,6 +17,11 @@ export const Command = () =>
     {isMac ? '⌘' : 'Ctrl'}
   </span>;
 
+export const Enter = () =>
+  <span className={className}>
+    {'↵'}
+  </span>;
+
 export const Shift = () =>
   <span className={className}>
     {isMac ? '⇧' : 'Shift'}

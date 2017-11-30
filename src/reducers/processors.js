@@ -1,5 +1,11 @@
 import * as MODES from '../lib/cm-modes';
-import { SET_CSS, SET_HTML, SET_JS, SET_RESULT } from '../actions/processors';
+import {
+  SET_CSS,
+  SET_HTML,
+  SET_JS,
+  SET_RESULT,
+  UPDATE,
+} from '../actions/processors';
 import { RESET, FETCH_BIN_REQUEST } from '../actions/bin';
 
 function addDefaultStates(obj, key, value) {
@@ -11,6 +17,7 @@ function addDefaultStates(obj, key, value) {
 export const defaultState = {
   result: '',
   insertJS: false,
+  updated: 0,
 };
 
 addDefaultStates(defaultState, 'result', () => null);
@@ -33,6 +40,10 @@ export default function reducer(state = defaultState, action) {
 
   if (key !== null) {
     return { ...state, [`${key}-result`]: value };
+  }
+
+  if (type === UPDATE) {
+    return { ...state, updated: state.updated + 1 };
   }
 
   if (type === SET_RESULT) {

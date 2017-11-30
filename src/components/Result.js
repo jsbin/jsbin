@@ -152,7 +152,6 @@ export default class Result extends React.Component {
         scriptModule.src = url;
         scriptModule.type = 'module';
         doc.documentElement.appendChild(scriptModule);
-
       };
 
       // this is a wonderful quirk of readiness. what happens is if the HTML
@@ -198,7 +197,9 @@ export default class Result extends React.Component {
     const result = nextProps.result !== this.props.result;
     const javascript = nextProps.javascript !== this.props.javascript;
 
-    if (result || renderResult || javascript) {
+    const updated = nextProps.updated !== this.props.updated;
+
+    if (result || renderResult || javascript || updated) {
       this.updateResult(nextProps);
     }
 

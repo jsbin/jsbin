@@ -3,6 +3,7 @@ import { setCode, save } from '../actions/bin';
 import { setCursor, triggerPalette } from '../actions/session';
 import { SET_HTML, SET_JS, SET_CSS } from '../actions/bin';
 import { setSource } from '../actions/app';
+import { update } from '../actions/processors';
 import * as MODES from '../lib/cm-modes';
 
 import Panel from '../components/Panel';
@@ -14,10 +15,9 @@ const mapStateToProps = ({ bin = { html: '' }, editor, session, app }) => {
 const mapDispatchToProps = dispatch => {
   return {
     triggerPalette: value => dispatch(triggerPalette(value)),
-    setCursor: ({ line, ch, source }) => {
-      dispatch(setCursor(source, line, ch));
-    },
+    setCursor: ({ line, ch, source }) => dispatch(setCursor(source, line, ch)),
     save: () => dispatch(save()),
+    update: () => dispatch(update()),
     setSource: source => dispatch(setSource(source)),
     changeCode: (code, source) => {
       let type = SET_HTML;

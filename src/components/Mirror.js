@@ -240,13 +240,6 @@ export default class Mirror extends React.Component {
     // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
   }
 
-  _shouldComponentUpdate(nextProps) {
-    if (nextProps.dirty) {
-      return false;
-    }
-    return true;
-  }
-
   refresh() {
     this.refreshTimer = setTimeout(() => {
       this.CodeMirror.getCodeMirror().refresh();

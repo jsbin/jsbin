@@ -11,9 +11,7 @@ const mapDispatchToProps = dispatch => {
   return {
     toggleSwatch: value => dispatch(toggleSwatch(!!value)),
     setHighlightedLines: lines => dispatch(setHighlightedLines(lines)),
-    setCursor: ({ line, ch, source }) => {
-      dispatch(setCursor(source, line, ch));
-    },
+    setCursor: ({ line, ch, source }) => dispatch(setCursor(source, line, ch)),
     setDirtyFlag: flag => dispatch(setDirtyFlag(flag)),
   };
 };

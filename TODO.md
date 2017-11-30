@@ -15,7 +15,7 @@
 
 ## Bit bugs
 
-- [ ] cmd+enter should re-run code
+- [x] cmd+enter should re-run code
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output, and When output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?

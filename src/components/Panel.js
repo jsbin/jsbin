@@ -10,7 +10,7 @@ import { Command, Ctrl, Shift } from './Symbols';
 import '../css/Panel.css';
 
 import * as MODES from '../lib/cm-modes';
-import { cmd } from '../lib/is-mac';
+// import { cmd } from '../lib/is-mac';
 
 const PaletteShortcut = () =>
   <kbd>

@@ -69,9 +69,7 @@ export const run = {
       <Command /> <Enter />
     </kbd>
   ),
-  run: dispatch => {
-    dispatch(update());
-  },
+  run: dispatch => dispatch(update()),
 };
 
 export const del = {

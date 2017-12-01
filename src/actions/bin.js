@@ -63,7 +63,10 @@ function fetchSequence(promise) {
 
     promise.then(
       bin => {
-        const settings = { ...(bin.settings.processors || {}) };
+        if (!bin.settings) {
+          bin.settings = { processors: {} };
+        }
+        const settings = { ...bin.settings.processors };
         const reducedBin = { ...bin };
         delete reducedBin.settings;
         Object.values(MODES).forEach(mode => {

@@ -77,7 +77,8 @@ export const config = {
 
 // this is cheap support for require based on https://github.com/remy/require-for-dev
 // which frankly, I'm amazed actually works without any serious changes.
-const requires = `window.require = function (path) {
+const requires = `// this is cheap support for require based on https://github.com/remy/require-for-dev
+window.require = function (path) {
   'use strict';
   var xhr = new XMLHttpRequest();
   var root = location.pathname.split('/').slice(1, -1).join('/') + '/';
@@ -115,11 +116,11 @@ const requires = `window.require = function (path) {
   frame.contentWindow.exports = module.exports;
 
   // evaluate the code in the new iframe
-  frame.contentWindow.eval(code); // jshint ignore:line
+  frame.contentWindow.eval(code);
 
   // Note: we don't remove the iframe for two important reasons:
   // 1. Because removing the iframe strips running JavaScript from memory,
-  //    so function references we passed out via exports are losts.
+  //    so function references we passed out via exports are lost.
   // 2. Benefit of a cache: if the iframe exists, we just send back the exports.
 
   return module.exports;

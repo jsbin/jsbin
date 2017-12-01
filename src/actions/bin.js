@@ -63,7 +63,14 @@ function fetchSequence(promise) {
 
     promise.then(
       bin => {
-        dispatch({ type: SET_BIN, payload: bin });
+        const settings = { ...(bin.settings.processors || {}) };
+        const reducedBin = { ...bin };
+        delete reducedBin.settings;
+        Object.values(MODES).forEach(mode => {
+          reducedBin[`${mode}-processor`] = settings[mode] || mode;
+        });
+
+        dispatch({ type: SET_BIN, payload: reducedBin });
         dispatch({ type: FETCH_BIN_SUCCESS });
         updateResult(dispatch, getState);
       },

@@ -1,10 +1,17 @@
 @import "defaults";
 
+.notification-bar {
+  color: white !important;
+  background: rgb(67, 160, 71) !important;
+  padding: 1rem !important;
+  font-size: 1.2rem !important;
+  line-height: 1.4rem !important;
+}
+
 .notification-bar-message {
   z-index: $z-top;
-  color: $c-divider;
   a {
-    color: $c-divider;
+    color: white;
   }
 }
 

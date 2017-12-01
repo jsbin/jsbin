@@ -19,8 +19,6 @@ export function addNotification(value, props = {}, notificationType = OK) {
         props.onDismiss();
       }
 
-      console.log('>>>', this);
-
       dispatch(dismissNotification(this.key));
     };
 

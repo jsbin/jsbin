@@ -19,6 +19,7 @@ export default function reducer(state = defaultState, action) {
       {
         message: action.value,
         key,
+        // style: false,
         dismissAfter: false,
         ...action.props,
       },

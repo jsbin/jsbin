@@ -620,6 +620,13 @@ var libraries = [
     ],
     'label': 'Chartist.js latest'
   },
+    {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css'
+    ],
+    'label': 'Leaflet.js 1.2.0'
+  },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js',
     'label': 'Sammy 0.7.4'

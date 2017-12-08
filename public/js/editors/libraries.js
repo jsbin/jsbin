@@ -543,6 +543,13 @@ var libraries = [
     'label': 'Foundation 5.5.2'
   },
   {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js'
+    ],
+    'label': 'Foundation 6.4.3'
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
     'label': 'Handlebars.js 1.0.0'
   },

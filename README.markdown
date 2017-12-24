@@ -87,7 +87,7 @@ End points are:
 
 ## Backers
 
-[Become a backer]((https://opencollective.com/jsbin#backer)) and show your support to our open source project.
+[Become a backer]((https://opencollective.com/jsbin#backer)) and show your support for our open source project.
 
 
 ## Sponsors

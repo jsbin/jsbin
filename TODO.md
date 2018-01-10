@@ -7,7 +7,7 @@
 
 ## Need for live
 
-- [ ] Loop protection (with babel rewrite)
+- [/] Loop protection (with babel rewrite)
 - [ ] Pay/cancel/renew
 - [x] Login (though wants some love)
 - [x] Processors

@@ -3,7 +3,7 @@ const CDN = 'https://cdnjs.cloudflare.com/ajax/libs/';
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
-    const json = await import(/* webpackChunkName: "libraries" */ '../lib/libraries.json');
+    const json = await import(/* webpackChunkName: "libraries" */ '../../lib/libraries.json');
 
     const run = url => {
       if (!Array.isArray(url)) {

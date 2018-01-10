@@ -10,7 +10,7 @@ export const exportToCodePen = {
     //   };
     // }
 
-    const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
+    const exporter = await import(/* webpackChunkName: "exporter" */ '../../lib/exporter');
 
     exporter.codepen(bin);
   },

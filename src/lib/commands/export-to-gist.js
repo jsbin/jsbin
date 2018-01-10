@@ -5,7 +5,7 @@ import { addNotification } from '../../actions/notifications';
 export const exportToGist = {
   title: 'Export to Gist',
   run: async (dispatch, { bin, user }) => {
-    const exporter = await import(/* webpackChunkName: "exporter" */ '../lib/exporter');
+    const exporter = await import(/* webpackChunkName: "exporter" */ '../../lib/exporter');
     const id = await exporter.gist(bin, user);
     dispatch(
       addNotification(

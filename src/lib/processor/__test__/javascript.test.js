@@ -69,6 +69,23 @@ test('transform a while loop', async () => {
     return "∞"`;
 
   LP.hit = () => {};
-  const res = eval(`(${await build(code)})()`);
+  const res = await run(code);
   expect(res).toEqual('∞');
+});
+
+test('without deps', async () => {
+  const code = `var i = 0;
+    while (true) {
+      i++;
+    }
+
+    var j = 0;
+    while (true) {
+      j++;
+    }
+    return "∞"`;
+
+  LP.hit = () => {};
+  const res = await build(code);
+  console.log(res);
 });

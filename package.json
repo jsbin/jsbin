@@ -37,6 +37,7 @@
     "jwt-decode": "^2.2.0",
     "less": "^2.7.2",
     "lodash.debounce": "^4.0.8",
+    "loop-protect": "^2.1.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",

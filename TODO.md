@@ -7,19 +7,20 @@
 
 ## Need for live
 
-- [/] Loop protection (with babel rewrite)
 - [ ] Pay/cancel/renew
+- [ ] Analytics
+- [x] Loop protection (with babel rewrite)
 - [x] Login (though wants some love)
 - [x] Processors
-- [ ] Analytics
 
 ## Bit bugs
 
-- [x] cmd+enter should re-run code
+- [ ] Expose every feature through the palette
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output, and When output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] cmd+enter should re-run code
 - [x] Notifications sit *under* the editor
 - [x] URL linking to highlighted lines
 - [x] From &result=page switch to console doesn't load up console
@@ -78,7 +79,7 @@
 
 ## Larger tasks
 
-- [ ] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
+- [/] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
 - [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
 - [x] Processors
 
@@ -98,7 +99,7 @@
 ## UX
 
 - [ ] ctrl+l to clear console
-- [ ] cmd+enter - run code with alerts, etc
+- [/] cmd+enter - run code with alerts, etc
 - [ ] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
 - [ ] unfurl - can this even work if there's no dynamic server side?
 - [ ] Template support

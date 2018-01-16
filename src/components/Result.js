@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Splitter from '@remy/react-splitter-layout';
 import Loadable from 'react-loadable';
+import sourceMap from 'source-map';
 
 import * as RESULT from '../actions/session';
 import '../css/Result.css';
@@ -85,10 +86,20 @@ export default class Result extends React.Component {
     doc.write('');
 
     iframe.contentWindow.addEventListener('error', (frameError, ...args) => {
+      if (frameError.detail) { // handles custom emitted errors, like protect
+        frameError = frameError.detail;
+      }
       let { error, message, lineno: line, colno: ch } = frameError;
       if (error === null) {
         // this is when the error is like "Script error."
         error = { name: message };
+      }
+
+      if (javascript.map) {
+        const consumer = new sourceMap.SourceMapConsumer(javascript.map);
+        const original = consumer.originalPositionFor({ line, column: ch });
+        line = original.line;
+        ch = original.column;
       }
 
       this.props.setError({
@@ -136,7 +147,7 @@ export default class Result extends React.Component {
           // release the old URL
           URL.revokeObjectURL(scriptURL);
         }
-        const blob = new Blob([javascript], { type: 'application/javascript' });
+        const blob = new Blob([javascript.code], { type: 'application/javascript' });
         const url = URL.createObjectURL(blob);
         scriptURL = url;
         const script = doc.createElement('script');
@@ -227,7 +238,7 @@ export default class Result extends React.Component {
           percentage={true}
           secondaryInitialSize={50}
           primaryIndex={0}
-          onSize={() => {}}
+          onSize={() => { }}
         >
           {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&

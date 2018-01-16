@@ -126,18 +126,18 @@ export function asHTML(bin) {
   let javascript = insertJS
     ? `
         try {
-          ${bin.javascript}
+          ${bin.javascript.code}
         } catch (error) {
           try { localStorage.setItem('jsbin.error', JSON.stringify({
             name: error.name, message: error.message, stack: error.stack
           })); } catch (E) {}
           throw error;
         } //# sourceURL=your-scripts-${++i}.js$`
-    : bin.javascript + `//# sourceURL=your-scripts-${i}.js$`;
+    : bin.javascript; //.code + `//# sourceURL=your-scripts-${i}.js$`;
 
-  if (bin.javascript.trim() === '') {
-    javascript = '';
-  }
+  // if (bin.javascript.code.trim() === '') {
+  //   javascript = '';
+  // }
 
   const result = binToHTML({
     html,

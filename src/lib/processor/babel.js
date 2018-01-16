@@ -4,7 +4,6 @@ let Babel = null;
 const cache = {};
 let todo = [];
 
-// Simple plugin that converts every identifier to "LOL"
 const replaceImports = () => ({
   visitor: {
     ModuleDeclaration(path) {

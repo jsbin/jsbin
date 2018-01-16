@@ -1,5 +1,6 @@
 export * from './new-bin';
 export * from './save';
+export * from './open';
 export * from './download';
 export * from './run';
 export * from './del';

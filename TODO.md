@@ -20,6 +20,7 @@
 - [ ] Resize the output, and When output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Open missing
 - [x] cmd+enter should re-run code
 - [x] Notifications sit *under* the editor
 - [x] URL linking to highlighted lines

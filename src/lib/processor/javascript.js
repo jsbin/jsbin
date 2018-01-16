@@ -7,7 +7,7 @@ export const transform = async source => {
     !(source.includes('for') || source.includes('while')) ||
     source.includes('noprotect')
   ) {
-    return source;
+    return { code: source, map: null };
   }
 
   if (Babel === null) {

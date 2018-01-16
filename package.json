@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.20",
+  "version": "5.0.0-alpha.21",
   "private": true,
   "prettier": {
     "arrowParens": "avoid",
@@ -16,7 +16,7 @@
     "useTabs": false
   },
   "dependencies": {
-    "@remy/jsconsole": "^2.0.1-alpha.1",
+    "@remy/jsconsole": "^2.0.1-alpha.2",
     "@remy/react-splitter-layout": "^1.0.2",
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",
@@ -50,7 +50,7 @@
     "jwt-decode": "^2.2.0",
     "less": "^2.7.2",
     "lodash.debounce": "^4.0.8",
-    "loop-protect": "^2.1.0",
+    "loop-protect": "^2.1.4",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",

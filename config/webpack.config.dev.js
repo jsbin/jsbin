@@ -33,7 +33,7 @@ module.exports = {
   // This means they will be the "root" imports that are included in JS bundle.
   // The first two entry points enable "hot" CSS and auto-refreshes for JS.
   entry: {
-    // RS changes based on https://github.com/facebookincubator/create-react-app/issues/1084#issuecomment-349846916
+    // RS changes based on https://github.com/facebookincubator/create-react-app/issues/1084#issuecomment-308731651
     index: [
       // Include an alternative client for WebpackDevServer. A client's job is to
       // connect to WebpackDevServer by a socket and get notified about changes.

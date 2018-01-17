@@ -10,7 +10,7 @@ import {
 import { CHANGE_RESULT } from '../actions/session';
 
 let channel = null;
-Postmate.debug = true;
+// Postmate.debug = true;
 const RUNNER_URL = process.env.REACT_APP_RUNNER_URL || '/runner.html';
 
 export const subscriptions = [
@@ -21,6 +21,7 @@ export const subscriptions = [
   SET_RESULT,
   UPDATE,
   CHANGE_RESULT,
+  TOGGLE_LAYOUT,
 ];
 
 export const dispatch = (type, value) => {
@@ -29,8 +30,17 @@ export const dispatch = (type, value) => {
   }
 };
 
+let listenQueue = null;
+export const listen = handler => {
+  if (channel) {
+    return channel.on('dispatch', handler);
+  }
+
+  listenQueue = handler;
+};
+
 export class Parent {
-  constructor(container) {
+  constructor(container, initState) {
     // Kick off the handshake with the iFrame
     const handshake = new Postmate({
       container, // Element to inject frame into
@@ -41,12 +51,16 @@ export class Parent {
     handshake.then(c => {
       // Listen to a particular event from the channel
       channel = this.channel = c;
-      c.on('some-event', data => console.log(data));
-      c.on('dispatch', args => {
-        // …?
-      });
+      if (listenQueue) {
+        channel.on('dispatch', listenQueue);
+        listenQueue = null;
+      }
+
+      channel.call('initState', initState);
     });
   }
+
+  channel = null;
 
   remove() {
     if (this.ready()) {
@@ -77,16 +91,18 @@ export class Child {
 
   queue = [];
 
+  channel = null;
+
   ready() {
     return !!this.channel;
   }
 
-  dispatch(...args) {
+  dispatch(action) {
     if (!this.ready()) {
-      this.queue.push(args);
+      this.queue.push(action);
       return;
     }
 
-    this.channel.emit('dispatch', args);
+    this.channel.emit('dispatch', action);
   }
 }

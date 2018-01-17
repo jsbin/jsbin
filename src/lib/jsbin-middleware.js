@@ -59,6 +59,8 @@ export default store => {
     false
   );
 
+  runner.listen(action => store.dispatch(action));
+
   // return the middleware
   return next => action => {
     const nextAction = next(action);
@@ -111,7 +113,6 @@ export default store => {
     }
 
     if (runner.subscriptions.includes(action.type)) {
-      console.log('parent dispatching', action);
       runner.dispatch({ ...action });
     }
 

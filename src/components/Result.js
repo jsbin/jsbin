@@ -108,7 +108,7 @@ export default class Result extends React.Component {
         message,
         line,
         ch,
-        error,
+        // error,
       });
       if (this.console) {
         const value = new Error(message);
@@ -203,6 +203,7 @@ export default class Result extends React.Component {
     // if visible output panel has changed
     const renderResult = nextProps.renderResult !== this.props.renderResult;
     const splitColumns = nextProps.splitColumns !== this.props.splitColumns;
+
     if (renderResult || splitColumns) {
       return true;
     }

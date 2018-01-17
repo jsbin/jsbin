@@ -6,6 +6,7 @@ import { JAVASCRIPT, HTML } from '../lib/cm-modes';
 const ResultContainer = connect(
   ({ bin, session, app, processors }) => ({
     // stateToProps
+    renderResult: session.result,
     result: processors.result,
     updated: processors.updated,
     insertJS: processors.insertJS,

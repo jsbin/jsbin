@@ -1,18 +1,35 @@
 import { Child } from '../lib/runner-channel';
 
+import { SET_JS, SET_HTML, SET_RESULT } from '../actions/processors';
+import { CHANGE_RESULT } from '../actions/session';
+import { TOGGLE_LAYOUT } from '../actions/app';
+import { SET_ERROR, CLEAR_ERROR } from '../actions/session';
+
 export default store => {
   const channel = new Child({
     dispatch: action => store.dispatch(action),
+    initState: state => {
+      const {
+        html,
+        result,
+        insertJS,
+        javascript,
+        splitColumns,
+        renderResult,
+      } = state;
+      store.dispatch({ type: SET_JS, value: javascript });
+      store.dispatch({ type: SET_HTML, value: html });
+      store.dispatch({ type: SET_RESULT, result, insertJS });
+      store.dispatch({ type: TOGGLE_LAYOUT, value: splitColumns });
+      store.dispatch({ type: CHANGE_RESULT, value: renderResult });
+    },
   });
 
   return next => action => {
     const result = next(action);
 
-    const state = store.getState(); // new state after action was applied
-
-    if (state.xxxx) {
-      channel.dispatch(state.type, state.value);
-      // then dispatch a channel event
+    if ([SET_ERROR, CLEAR_ERROR].includes(action.type)) {
+      channel.dispatch(action);
     }
 
     return result;

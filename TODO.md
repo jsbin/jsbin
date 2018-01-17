@@ -2,7 +2,14 @@
 
 ## In progress
 
-- [ ] Secure output
+- [/] Secure output
+- [ ] Secure: show/hide output
+- [ ] Secure: test console works
+- [ ] Secure: build
+- [x] Secure: push errors back to editor
+- [x] Secure: change layout
+- [x] Secure: show/hide console
+- [x] Secure: reduce reducers
 - [x] Embeds work
 
 ## Need for live

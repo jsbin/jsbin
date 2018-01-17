@@ -55,7 +55,7 @@ function isExternal(module) {
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = {
+module.exports = (entry = 'index') => ({
   // Don't attempt to continue if there are any errors.
   bail: true,
   // We generate sourcemaps in production. This is slow but gives good results.
@@ -66,6 +66,7 @@ module.exports = {
     polyfills: require.resolve('./polyfills'),
     vendors: require.resolve('./vendor'),
     main: paths.appIndexJs,
+    runner: paths.appSrc + '/runner.js',
   },
   output: {
     // The build folder.
@@ -257,6 +258,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+      filename: 'index.html',
+      excludeChunks: ['runner'],
+      chunksSortMode: 'dependency',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
+    }),
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: paths.appHtml,
+      excludeChunks: ['main'],
+      filename: 'runner.html',
       chunksSortMode: 'dependency',
       minify: {
         removeComments: true,
@@ -351,4 +373,4 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
   },
-};
+});

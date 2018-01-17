@@ -18,7 +18,8 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.prod');
+const webpackConf = require('../config/webpack.config.prod');
+const config = webpackConf('index');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -49,7 +50,11 @@ measureFileSizesBeforeBuild(paths.appBuild)
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
-    return build(previousFileSizes);
+
+    return build(previousFileSizes, config);
+    // return build(previousFileSizes, config).then(res => {
+    //   return build(previousFileSizes, webpackConf('runner')).then(() => res);
+    // });
   })
   .then(
     ({ stats, previousFileSizes, warnings }) => {
@@ -100,7 +105,7 @@ measureFileSizesBeforeBuild(paths.appBuild)
   );
 
 // Create the production build and print the deployment instructions.
-function build(previousFileSizes) {
+function build(previousFileSizes, config) {
   console.log('Creating an optimized production build...');
 
   let compiler = webpack(config);

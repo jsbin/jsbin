@@ -1,10 +1,11 @@
 @import "vars";
 
-.layout-changing .Result {
+.layout-changing iframe {
   pointer-events: none;
 }
 
-.Result {
+.Result,
+.Runner iframe {
   border: 0;
   position: absolute;
   top: 0;

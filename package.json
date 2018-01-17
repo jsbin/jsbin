@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.21",
+  "version": "5.0.0-alpha.22",
   "private": true,
   "prettier": {
     "arrowParens": "avoid",
@@ -55,6 +55,7 @@
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
+    "postmate": "^1.1.9",
     "preact": "^8.2.7",
     "preact-compat": "^3.16.0",
     "prettier": "^1.5.3",
@@ -122,7 +123,8 @@
     "build-css": "node-sass-chokidar ./styles/ -o ./src/css/",
     "watch": "npm run build-css && node-sass-chokidar ./styles/ -o ./src/css/ --watch --recursive",
     "test": "node scripts/test.js --env=jsdom",
-    "deploy": "npm run build && s3_website push"
+    "deploy": "npm run build && s3_website push",
+    "alias-runner": "echo 'Running on localhost:'$(($(envy PORT)+1)); ssh -g -N -L $(($(envy PORT)+1)):localhost:$(envy PORT) localhost"
   },
   "jest": {
     "collectCoverageFrom": [

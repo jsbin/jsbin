@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, compose } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import runnerMiddleware from './lib/runner-middleware';
 import reducers from './reducers'; // Or wherever you keep your reducers
 
 import './css/App.css';
@@ -9,21 +10,7 @@ import '@remy/react-splitter-layout/src/stylesheets/index.css';
 
 import Result from './containers/Result';
 
-const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>JS Bin</title>
-</head>
-<body>
-<pre><code>
-  can I steal content?
-</code></pre>
-</body>
-</html>`;
-
-const middleware = [];
+const middleware = [applyMiddleware(runnerMiddleware)];
 
 if (window.__REDUX_DEVTOOLS_EXTENSION__) {
   middleware.push(window.__REDUX_DEVTOOLS_EXTENSION__());
@@ -35,7 +22,7 @@ const store = finalCreateStore(reducers);
 const render = App => {
   ReactDOM.render(
     <Provider store={store}>
-      <Result renderResult="both" result={html} html={html} />
+      <Result />
     </Provider>,
     document.getElementById('root')
   );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { LIGHT } from '../actions/app';
-// import Nav from './Nav'; // FIXME will need user data
 
 import '../css/App.css';
 import '../css/PageLayout.css';

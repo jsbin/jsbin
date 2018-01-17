@@ -56,11 +56,11 @@ module.exports = {
       // initialization, it doesn't blow up the WebpackDevServer client, and
       // changing JS code would still trigger a refresh.
     ],
-    'index-result': [
+    runner: [
       require.resolve('react-dev-utils/webpackHotDevClient'),
       require.resolve('./polyfills'),
       require.resolve('react-error-overlay'),
-      paths.appSrc + '/index-result.js',
+      paths.appSrc + '/runner.js',
     ],
   },
   output: {
@@ -235,9 +235,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      chunks: ['index-result'],
+      chunks: ['runner'],
       template: paths.appHtml,
-      filename: 'index-result.html',
+      filename: 'runner.html',
     }),
     // Add module names to factory functions so they appear in browser profiler.
     new webpack.NamedModulesPlugin(),

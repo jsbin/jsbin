@@ -13,6 +13,7 @@ import {
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/save-bin';
 import getSettings from '../lib/settings';
+import * as runner from '../lib/runner-channel';
 
 // function refreshUserToken() {
 //   fetch('')
@@ -107,6 +108,11 @@ export default store => {
       store.dispatch(triggerPalette(false));
       store.dispatch(toggleSwatch(false));
       // store.dispatch(dismissAllNotifications());
+    }
+
+    if (runner.subscriptions.includes(action.type)) {
+      console.log('parent dispatching', action);
+      runner.dispatch({ ...action });
     }
 
     return nextAction;

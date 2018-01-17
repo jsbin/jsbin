@@ -9,7 +9,7 @@ import { NotificationStack } from 'react-notification';
 import * as RESULT from '../actions/session';
 import Advert from '../containers/Advert';
 import Panel from '../containers/Panel';
-import Result from '../containers/Result';
+import Runner from '../containers/Runner';
 import Head from './Head';
 import Palette from '../containers/Palette';
 import Loading from './Loading';
@@ -169,7 +169,7 @@ export default class App extends Component {
                 onRef={ref => (this.panel = ref)}
               />
               {session.result !== RESULT.RESULT_NONE &&
-                <Result renderResult={session.result} />}
+                <Runner renderResult={session.result} />}
             </Splitter>
           </div>
           <Advert />

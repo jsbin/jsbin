@@ -30,7 +30,7 @@ export default class Result extends React.Component {
   }
 
   updateResult(props) {
-    const { error, renderResult, html } = props;
+    const { error, renderResult, html = '' } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
 
     if (error) {
@@ -86,7 +86,8 @@ export default class Result extends React.Component {
     doc.write('');
 
     iframe.contentWindow.addEventListener('error', (frameError, ...args) => {
-      if (frameError.detail) { // handles custom emitted errors, like protect
+      if (frameError.detail) {
+        // handles custom emitted errors, like protect
         frameError = frameError.detail;
       }
       let { error, message, lineno: line, colno: ch } = frameError;
@@ -147,7 +148,9 @@ export default class Result extends React.Component {
           // release the old URL
           URL.revokeObjectURL(scriptURL);
         }
-        const blob = new Blob([javascript.code], { type: 'application/javascript' });
+        const blob = new Blob([javascript.code], {
+          type: 'application/javascript',
+        });
         const url = URL.createObjectURL(blob);
         scriptURL = url;
         const script = doc.createElement('script');
@@ -238,7 +241,7 @@ export default class Result extends React.Component {
           percentage={true}
           secondaryInitialSize={50}
           primaryIndex={0}
-          onSize={() => { }}
+          onSize={() => {}}
         >
           {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&

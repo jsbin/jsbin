@@ -102,6 +102,7 @@
 ## UX
 
 - [ ] ctrl+l to clear console
+- [ ] open - can search by bin name
 - [/] cmd+enter - run code with alerts, etc
 - [ ] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
 - [ ] unfurl - can this even work if there's no dynamic server side?

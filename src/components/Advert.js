@@ -7,7 +7,6 @@ const AD_URL = process.env.REACT_APP_AD_URL;
 class Advert extends Component {
   constructor(props) {
     super(props);
-    this.fetchAd = this.fetchAd.bind(this);
     this.timer = null;
 
     this.state = {
@@ -15,7 +14,7 @@ class Advert extends Component {
     };
   }
 
-  fetchAd() {
+  fetchAd = () => {
     fetch(AD_URL).then(res => res.json()).then(res => {
       const ads = res.ads.filter(ad => ad.active);
       const ad = ads[(ads.length * Math.random()) | 0];
@@ -26,7 +25,7 @@ class Advert extends Component {
 
       this.timer = setTimeout(this.fetchAd, 10 * 60 * 1000); // every 10 minutes
     });
-  }
+  };
 
   componentDidMount() {
     this.fetchAd();

@@ -117,7 +117,8 @@
   "scripts": {
     "analyze": "source-map-explorer build/static/js/main.*",
     "start": "REACT_APP_VERSION=$npm_package_version node scripts/start.js",
-    "build": "REACT_APP_VERSION=$npm_package_version node scripts/build.js",
+    "build": "npm run build-css && npm run build-app",
+    "build-app": "REACT_APP_VERSION=$npm_package_version node scripts/build.js",
     "build-css": "node-sass-chokidar ./styles/ -o ./src/css/",
     "watch": "npm run build-css && node-sass-chokidar ./styles/ -o ./src/css/ --watch --recursive",
     "test": "node scripts/test.js --env=jsdom",

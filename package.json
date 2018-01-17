@@ -46,6 +46,7 @@
     "idb-keyval": "^2.3.0",
     "js-beautify": "^1.6.14",
     "js-cookie": "^2.1.4",
+    "jsbin-id": "^1.0.0",
     "json-lint": "^0.1.0",
     "jwt-decode": "^2.2.0",
     "less": "^2.7.2",

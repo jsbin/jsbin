@@ -2,13 +2,17 @@ import idk from 'idb-keyval'; // FIXME lazy load candidate
 
 const API = process.env.REACT_APP_API;
 
-const settings = ({ opts, token } = {}) => {
-  const headers = {
-    // 'content-type': 'application/json'
-  };
+const settings = ({ token, ...opts } = {}) => {
+  const headers = opts.headers || {};
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
+
+  console.log({
+    mode: 'cors',
+    headers,
+    ...opts,
+  })
 
   return {
     mode: 'cors',
@@ -25,6 +29,15 @@ export const refreshToken = ({ token }) => {
 
 export const getBins = ({ token }) => {
   return fetch(`${API}/user/bins`, settings({ token })).then(res => res.json());
+};
+
+export const createBin = (bin, { token }) => {
+  return fetch(`${API}/bin`, settings({
+    token,
+    headers: { 'content-type': 'application/json' },
+    method: 'POST',
+    body: JSON.stringify(bin),
+  })).then(res => res.json());
 };
 
 export const getInvoice = (id, { token }) => {

@@ -1,13 +1,7 @@
 import makeIframe from './makeIFrame';
+import slugger from 'jsbin-id';
 import { HTML, JAVASCRIPT, CSS } from './cm-modes';
-import Haikunator from 'haikunator';
-const slugger = new Haikunator({
-  defaults: {
-    // class defaults
-    tokenLength: 3,
-    tokenChars: 'ABCDEF0123456789',
-  },
-});
+import { createBin } from './Api';
 
 // via https://stackoverflow.com/a/6660315/22617
 const scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -23,9 +17,8 @@ function pick(doc, selector, defaultValue = '', from = 'innerText') {
   return (doc.querySelector(selector) || { [from]: defaultValue }).innerText;
 }
 
-export async function gist(bin, user) {
-  let { id = slugger.haikunate(), html, javascript, css } = bin;
-
+function getMetadata(bin) {
+  const { html } = bin;
   let htmlNoJS = html;
   if (htmlNoJS.toLowerCase().includes('<script')) {
     htmlNoJS = htmlNoJS.replace(scriptRegex, '');
@@ -41,6 +34,21 @@ export async function gist(bin, user) {
   const title = pick(doc, 'title', bin.title || 'JS Bin');
   const description = pick(doc, 'meta[name="description"', bin.description);
   document.body.removeChild(iframe); // clean up
+
+  return { title, description };
+}
+
+export async function jsbin(bin, user) {
+  let { id = slugger(), html, javascript, css } = bin;
+  const { title, description } = getMetadata(bin);
+
+  const res = await createBin(bin, user);
+  return res;
+}
+
+export async function gist(bin, user) {
+  let { id = slugger(), html, javascript, css } = bin;
+  const { title, description } = getMetadata(bin);
 
   const headers = {
     accept: 'application/vnd.github.v3+json',

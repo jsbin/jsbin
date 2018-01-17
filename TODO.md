@@ -16,10 +16,12 @@
 ## Bit bugs
 
 - [ ] Expose every feature through the palette
+- [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces
-- [ ] Resize the output, and When output is too big, it can't be scrolled vertically
+- [ ] Resize the output (when it's not scrollable), and when output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Import CSS and it's put as a script
 - [x] Open missing
 - [x] cmd+enter should re-run code
 - [x] Notifications sit *under* the editor

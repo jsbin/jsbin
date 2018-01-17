@@ -1,5 +1,8 @@
 const CDN = 'https://cdnjs.cloudflare.com/ajax/libs/';
 
+const toScript = url => `<script src="${url}"></script>`;
+const toLink = url => `<link rel="stylesheet" href="${url}">`;
+
 export const addLibrary = {
   title: 'Add library…',
   run: async () => {
@@ -10,7 +13,14 @@ export const addLibrary = {
         url = [url];
       }
 
-      return url.map(url => `<script src="${url}"></script>`).join('\n');
+      return url
+        .map(url => {
+          if (url.endsWith('.css')) {
+            return toLink(url);
+          }
+          return toScript(url);
+        })
+        .join('\n');
     };
 
     const results = [];

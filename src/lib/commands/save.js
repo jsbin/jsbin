@@ -42,3 +42,4 @@ export const share = {
     dispatch(replace(`/${id}`));
   },
 };
+

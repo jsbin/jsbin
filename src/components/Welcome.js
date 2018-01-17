@@ -153,10 +153,11 @@ class Welcome extends Component {
             <div className="block important">
               <h2>IMPORTANT</h2>
               <p>
-                If you are visiting as "normal" jsbin.com is down, please
-                understand that this entire version of jsbin is in{' '}
-                <strong>alpha</strong>. Core functionality works, but a lot is
-                still a work in progress, including the links on this page!
+                Please understand that this entire version of jsbin is in{' '}
+                <strong>
+                  <u>alpha</u>
+                </strong>. Core functionality works, but a lot is still a work
+                in progress, including the links on this page!
               </p>
               <p>
                 The place to start is the <a href="/">New Bin</a> link on the

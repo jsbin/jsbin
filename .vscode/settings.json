@@ -5,7 +5,7 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/src/css": true
+    "!**/src/css": true
   },
   "cSpell.words": [
     "Postmate",

@@ -29,6 +29,7 @@ export const publish = {
 
     const url = `${ORIGIN}/${id}`;
 
+    // if created…
     dispatch(
       addNotification(
         <span>

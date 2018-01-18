@@ -28,6 +28,7 @@
 - [ ] Resize the output (when it's not scrollable), and when output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Dark theme not working on console (needs to listen for theme event and add class)
 - [x] Import CSS and it's put as a script
 - [x] Open missing
 - [x] cmd+enter should re-run code
@@ -95,6 +96,7 @@
 
 ## UI
 
+- [ ] Let user decide where to save by default
 - [ ] Share box
 - [ ] Add meta data box
 - [x] Some kind of notification system

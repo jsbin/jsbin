@@ -23,6 +23,7 @@ export default class Runner extends React.Component {
       html,
       splitColumns,
       renderResult,
+      theme,
     } = this.props;
 
     this.child = new Parent(this.runner, {
@@ -33,6 +34,7 @@ export default class Runner extends React.Component {
       html,
       splitColumns,
       renderResult,
+      theme,
     });
   }
 

@@ -1,5 +1,5 @@
 import Postmate from 'postmate';
-import { TOGGLE_LAYOUT } from '../actions/app';
+import { TOGGLE_LAYOUT, SET_THEME } from '../actions/app';
 import {
   SET_CSS,
   SET_HTML,
@@ -22,6 +22,7 @@ export const subscriptions = [
   UPDATE,
   CHANGE_RESULT,
   TOGGLE_LAYOUT,
+  SET_THEME,
 ];
 
 export const dispatch = (type, value) => {

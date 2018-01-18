@@ -31,27 +31,23 @@ const keyMap = {
 export default class Panel extends React.Component {
   constructor(props) {
     super(props);
-    this.saveCode = this.saveCode.bind(this);
-    this.updateHeight = this.updateHeight.bind(this);
-    this.triggerPalette = this.triggerPalette.bind(this);
-
     this.state = {
       height: 0,
     };
   }
 
-  triggerPalette(e) {
+  triggerPalette = e => {
     e.preventDefault();
     this.props.triggerPalette(true);
-  }
+  };
 
-  updateHeight() {
+  updateHeight = () => {
     let height = (this.footer ? this.footer : { offsetHeight: 0 }).offsetHeight;
     if (this.props.editor.splitColumns === true) {
       height += document.querySelector('.layout-pane-primary').offsetHeight;
     }
     this.setState({ height });
-  }
+  };
 
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -76,10 +72,10 @@ export default class Panel extends React.Component {
     }
   }
 
-  saveCode(e) {
+  saveCode = e => {
     e.preventDefault(); // prevent showing the "save as" modal
     this.props.save();
-  }
+  };
 
   render() {
     const { editor, source, code } = this.props;

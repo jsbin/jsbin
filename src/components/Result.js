@@ -5,9 +5,11 @@ import Loadable from 'react-loadable';
 import sourceMap from 'source-map';
 
 import * as RESULT from '../actions/session';
-import '../css/Result.css';
 import makeIframe from '../lib/makeIFrame';
 import { emptyPage, html as defaultHTML } from '../lib/Defaults';
+
+import '../css/Result.css';
+import '../css/Themes.css';
 
 //https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState#Values
 const complete = 'complete';
@@ -204,7 +206,17 @@ export default class Result extends React.Component {
     const renderResult = nextProps.renderResult !== this.props.renderResult;
     const splitColumns = nextProps.splitColumns !== this.props.splitColumns;
 
-    if (renderResult || splitColumns) {
+    const theme = nextProps.theme !== this.props.theme;
+
+    if (theme) {
+      return true;
+    }
+
+    if (splitColumns) {
+      return false;
+    }
+
+    if (renderResult) {
       return true;
     }
 
@@ -222,11 +234,11 @@ export default class Result extends React.Component {
   }
 
   componentDidUpdate() {
-    this.updateResult(this.props);
+    // this.updateResult(this.props);
   }
 
   render() {
-    const { renderResult, splitColumns } = this.props;
+    const { renderResult, splitColumns, theme } = this.props;
 
     const hasConsole =
       renderResult === RESULT.RESULT_CONSOLE ||
@@ -236,7 +248,7 @@ export default class Result extends React.Component {
       renderResult === RESULT.RESULT_BOTH;
 
     return (
-      <div className="Result">
+      <div className={`Result theme-${theme}`}>
         <Splitter
           vertical={splitColumns}
           percentage={true}

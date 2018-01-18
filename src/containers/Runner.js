@@ -13,6 +13,7 @@ const RunnerContainer = connect(
     html: processors[`${HTML}-result`],
     error: session.error,
     splitColumns: app.splitColumns,
+    theme: app.theme,
   }),
   { clearError, setError } // propsToDispatch
 )(Runner);

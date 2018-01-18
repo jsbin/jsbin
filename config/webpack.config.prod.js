@@ -49,7 +49,7 @@ function isExternal(module) {
     return false;
   }
 
-  return context.includes('codemirror');
+  return context.includes('codemirror') || context.includes('lodash');
 }
 
 // This is the production configuration.
@@ -65,8 +65,8 @@ module.exports = (entry = 'index') => ({
   entry: {
     polyfills: require.resolve('./polyfills'),
     vendors: require.resolve('./vendor'),
-    main: paths.appIndexJs,
     runner: paths.appSrc + '/runner.js',
+    main: paths.appIndexJs,
   },
   output: {
     // The build folder.
@@ -242,11 +242,10 @@ module.exports = (entry = 'index') => ({
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendors', 'manifest'],
-      minChunks: Infinity,
-
-      // function(module) {
-      //   return isExternal(module);
-      // },
+      // children: true,
+      minChunks: function(module) {
+        return isExternal(module);
+      },
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

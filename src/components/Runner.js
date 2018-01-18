@@ -1,5 +1,6 @@
 import React from 'react';
 import { Parent } from '../lib/runner-channel';
+
 import '../css/Result.css';
 
 export default class Runner extends React.Component {

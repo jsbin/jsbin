@@ -243,9 +243,10 @@ module.exports = (entry = 'index') => ({
     new webpack.optimize.CommonsChunkPlugin({
       name: ['vendors', 'manifest'],
       // children: true,
-      minChunks: function(module) {
-        return isExternal(module);
-      },
+      minChunks: Infinity,
+      // function(module) {
+      //   return isExternal(module);
+      // },
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

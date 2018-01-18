@@ -16,11 +16,9 @@ class Advert extends Component {
 
   fetchAd = () => {
     fetch(AD_URL).then(res => res.json()).then(res => {
-      const ads = res.ads.filter(ad => ad.active);
-      const ad = ads[(ads.length * Math.random()) | 0];
       this.setState({
         loading: false,
-        ad,
+        ad: res,
       });
 
       this.timer = setTimeout(this.fetchAd, 10 * 60 * 1000); // every 10 minutes
@@ -28,7 +26,7 @@ class Advert extends Component {
   };
 
   componentDidMount() {
-    this.fetchAd();
+    if (AD_URL) this.fetchAd();
   }
 
   componentWillUnmount() {
@@ -40,25 +38,25 @@ class Advert extends Component {
 
     if (loading) return null;
 
-    const pixels = (ad.pixel || '').split('||');
-    const time = Math.round(Date.now() / 10000) | 0;
-    const images = pixels.map(pixel =>
-      <img
-        alt=""
-        key={pixel}
-        src={pixel.replace('[timestamp]', time)}
-        height="1"
-        width="1"
-        style={{ opacity: 0 }}
-      />
-    );
+    const pixels = ad.pixels
+      ? ad.pixels.map(pixel =>
+          <img
+            alt=""
+            key={pixel}
+            src={pixel}
+            height="1"
+            width="1"
+            style={{ opacity: 0 }}
+          />
+        )
+      : null;
 
     return (
       <div className="bsa">
-        <a href={ad.statlink} target="_blank">
-          {ad.title}: {ad.description}
+        <a href={ad.url} target="_blank">
+          <strong>{ad.title}:</strong> {ad.description}
         </a>
-        {images}
+        {pixels}
       </div>
     );
   }

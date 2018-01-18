@@ -8,12 +8,6 @@ const settings = ({ token, ...opts } = {}) => {
     headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log({
-    mode: 'cors',
-    headers,
-    ...opts,
-  })
-
   return {
     mode: 'cors',
     headers,
@@ -32,12 +26,15 @@ export const getBins = ({ token }) => {
 };
 
 export const createBin = (bin, { token }) => {
-  return fetch(`${API}/bin`, settings({
-    token,
-    headers: { 'content-type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify(bin),
-  })).then(res => res.json());
+  return fetch(
+    `${API}/bin`,
+    settings({
+      token,
+      headers: { 'content-type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(bin),
+    })
+  ).then(res => res.json());
 };
 
 export const getInvoice = (id, { token }) => {

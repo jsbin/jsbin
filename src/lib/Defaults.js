@@ -85,6 +85,9 @@ export const settings = `{
   // Automatically upload settings to your account (requires PRO)
   "app.syncSettings": false,
 
+  // Where to save on ${cmd} + S. Values can be: 'local', 'github', 'jsbin'
+  "app.defaultSave": "local",
+
   // Default source panel. Values can be: 'html', 'css' and 'javascript'
   "app.source": "html",
 

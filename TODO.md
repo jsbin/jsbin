@@ -2,10 +2,10 @@
 
 ## In progress
 
-- [/] Secure output
-- [ ] Secure: show/hide output
-- [ ] Secure: test console works
-- [ ] Secure: build
+- [x] Secure output
+- [x] Secure: show/hide output
+- [x] Secure: test console works
+- [x] Secure: build
 - [x] Secure: push errors back to editor
 - [x] Secure: change layout
 - [x] Secure: show/hide console

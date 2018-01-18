@@ -6,7 +6,7 @@ export const download = {
   run: (dispatch, { bin, processors }) => {
     const html = BinToHTML({
       html: processors['html-result'],
-      javascript: processors['javascript-result'],
+      javascript: processors['javascript-result'].code,
       css: processors['css-result'],
     });
 

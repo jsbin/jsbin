@@ -24,8 +24,8 @@ const keyMap = {
   save: `mod+s`,
   update: `mod+enter`,
   html: `mod+1`,
-  css: `mod+3`,
   javascript: `mod+2`,
+  css: `mod+3`,
 };
 
 export default class Panel extends React.Component {

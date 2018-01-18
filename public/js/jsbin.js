@@ -161,6 +161,7 @@ function exposeSettings() {
     });
     if (!jsbin.embed) {
       console.log('To edit settings, type this string into the console: ' + key);
+      console.log("Want to try out the alpha version 5 of jsbin? On https://jsbin.com, run the following code in your console:\n\ndocument.cookie = 'version=v5; domain=.jsbin.com'");
     }
   }
 }

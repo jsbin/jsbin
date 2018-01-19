@@ -145,6 +145,10 @@ export default class Result extends React.Component {
       renderedDoc = emptyPage;
     }
 
+    // strip autofocus from the markup, preventing the focus switching out of
+    // the editable area.
+    renderedDoc = renderedDoc.replace(/(<.*?\s)(autofocus)/g, '$1');
+
     // if we've already got a console reference AND we're showing the
     // console, then we rebind the console connections right before
     // we write any content (to catch the console messaging).
@@ -157,6 +161,8 @@ export default class Result extends React.Component {
     doc.write(renderedDoc);
     doc.close();
 
+    // note: insertJS is true only when %code% is present in the original
+    // markup - i.e. rarely since this harks back to 2008.
     if (!insertJS && javascript) {
       const build = () => {
         if (scriptURL) {

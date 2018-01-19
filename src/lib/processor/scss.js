@@ -18,7 +18,7 @@ export async function transform(source) {
 
   const data = await res.json();
   if (data.error) {
-    console.log(data.error.message);
+    console.log(data.error);
     return result;
   }
 

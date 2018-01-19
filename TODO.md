@@ -2,26 +2,27 @@
 
 ## In progress
 
-1. [x] Console isn't attached to iframe…
-2. [ ] Inject CSS, don't recompile
+- [x] Prevent initial focus on `autofocus`
+- [ ] Inject CSS, don't recompile
+- [x] Console isn't attached to iframe…
 
 ## Need for live
 
 - [ ] Pay/cancel/renew
-- [ ] Analytics
+- [/] Analytics
 - [x] Loop protection (with babel rewrite)
 - [x] Login (though wants some love)
 - [x] Processors
 
 ## Bit bugs
 
-- [x] Race condition in console: sometimes the console has finished loading before the Console component is loaded
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output (when it's not scrollable), and when output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Race condition in console: sometimes the console has finished loading before the Console component is loaded
 - [x] Dark theme not working on console (needs to listen for theme event and add class)
 - [x] Import CSS and it's put as a script
 - [x] Open missing
@@ -118,6 +119,7 @@
 - [ ] ctrl+l to clear console
 - [ ] open - can search by bin name
 - [/] cmd+enter - run code with alerts, etc
+- [ ] prevent alert, prompt, etc.
 - [ ] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
 - [ ] unfurl - can this even work if there's no dynamic server side?
 - [ ] Template support

@@ -1,0 +1,25 @@
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 30
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 7
+# Issues with these labels will never be considered stale
+exemptLabels:
+  - pinned
+  - security
+# Label to use when marking an issue as stale
+staleLabel: stale
+# Comment to post when marking an issue as stale. Set to `false` to disable
+markComment: >
+  This issue has been automatically marked as stale because it has not had
+  recent activity. More importantly, jsbin has been undergoing a massive
+  refactor by Remy, and a large number of issues have been resolved, but
+  with the growing 600+ open issues, the Stalebot (me), has been brought in
+  to try to manage the issues.
+
+  Keep an eye on jsbin.com blog posts and the @js_bin twitter account for
+  updates on the new version of jsbin ❤️
+
+  It will be closed next week if no further activity occurs. Thank you
+  for your contributions.
+# Comment to post when closing a stale issue. Set to `false` to disable
+closeComment: false

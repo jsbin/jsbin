@@ -25,9 +25,13 @@ export const subscriptions = [
   SET_THEME,
 ];
 
+const dispatchQueue = [];
+
 export const dispatch = (type, value) => {
   if (channel) {
     channel.call('dispatch', type, value);
+  } else {
+    dispatchQueue.push([type, value]);
   }
 };
 
@@ -57,7 +61,16 @@ export class Parent {
         listenQueue = null;
       }
 
-      channel.call('initState', initState);
+      channel.on('ready', () => {
+        channel.call('initState', initState);
+        if (dispatchQueue.length) {
+          let item = null;
+          // eslint-disable-next-line no-cond-assign
+          while ((item = dispatchQueue.shift())) {
+            dispatch(...item);
+          }
+        }
+      });
     });
   }
 

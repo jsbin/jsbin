@@ -206,27 +206,9 @@ export default class Result extends React.Component {
     const splitColumns = nextProps.splitColumns !== this.props.splitColumns;
     const theme = nextProps.theme !== this.props.theme;
 
-    // showingPage =
-    // - console -> page
-    // - console -> both
-    // - console -> none // noop
-    const showingPage =
-      this.props.renderResult === RESULT.RESULT_CONSOLE && renderResult;
-
-    console.log(
-      'showingPage: %s (before: %s, renderResult: %s)',
-      showingPage,
-      this.props.renderResult,
-      renderResult
-    );
-
     // only update the UI if something changed in the view
     // more specifically: don't re-render if the content of the iframe will change
     if (renderResult || theme || splitColumns) {
-      if (showingPage) {
-        this.updateResult(nextProps);
-      }
-
       return true;
     }
 
@@ -240,6 +222,26 @@ export default class Result extends React.Component {
     }
 
     return false;
+  }
+
+  componentDidUpdate(prevProps) {
+    /**
+     * this logic is required as the page is being shown for the first time,
+     * but the iframe has been removed. So we check if the component updated
+     * and if the props.renderResult satisfies any of the following rules,
+     * then it will update the result (effectively creating the rendered iframe)
+     *   showingPage =
+     *   - console -> page
+     *   - console -> both
+     *   - console -> none // noop
+     */
+    const renderResult = prevProps.renderResult !== this.props.renderResult;
+    const showingPage =
+      prevProps.renderResult === RESULT.RESULT_CONSOLE && renderResult;
+
+    if (showingPage) {
+      this.updateResult(this.props);
+    }
   }
 
   render() {

@@ -1,6 +1,32 @@
 import idk from 'idb-keyval'; // FIXME lazy load candidate
-
+import * as ALL_MODES from './cm-modes';
+const MODES = [ALL_MODES.HTML, ALL_MODES.CSS, ALL_MODES.JAVASCRIPT];
 const API = process.env.REACT_APP_API;
+
+// converts *-processor into the bin.settings object compatible with production
+export const getSettingsForBin = bin => {
+  const processors = MODES.reduce((acc, curr) => {
+    const value = bin[`${curr}-processor`];
+    if (value !== curr) {
+      acc[curr] = value;
+    }
+    return acc;
+  }, {});
+
+  return { processors };
+};
+
+export const convertSettingsToBinProcessors = settings => {
+  if (!settings) {
+    return { processors: {} };
+  }
+
+  const res = settings.processors || settings; // this is dodgy…
+  return MODES.reduce((acc, mode) => {
+    acc[`${mode}-processor`] = res[mode] || mode;
+    return acc;
+  }, {});
+};
 
 const settings = ({ token, ...opts } = {}) => {
   const headers = opts.headers || {};
@@ -90,7 +116,7 @@ export const getFromGist = async id => {
   const { files } = await res.json();
   const settings = getFileFromGist({ type: 'json', files, parse: true });
 
-  if (settings && settings.html) {
+  if (!files['jsbin-settings.json'] && settings && settings.html) {
     const { html = '', javascript = '', css = '' } = settings;
 
     return {

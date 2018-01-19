@@ -2,8 +2,9 @@
 
 ## In progress
 
-- [x] Prevent initial focus on `autofocus`
+- [ ] Local save is losing the language
 - [ ] Inject CSS, don't recompile
+- [x] Prevent initial focus on `autofocus`
 - [x] Console isn't attached to iframe…
 
 ## Need for live

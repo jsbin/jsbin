@@ -1,7 +1,7 @@
 import makeIframe from './makeIFrame';
 import slugger from 'jsbin-id';
 import { HTML, JAVASCRIPT, CSS } from './cm-modes';
-import { createBin } from './Api';
+import { createBin, getSettingsForBin } from './Api';
 
 // via https://stackoverflow.com/a/6660315/22617
 const scriptRegex = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
@@ -17,7 +17,7 @@ function pick(doc, selector, defaultValue = '', from = 'innerText') {
   return (doc.querySelector(selector) || { [from]: defaultValue }).innerText;
 }
 
-function getMetadata(bin) {
+function getMetadata(bin, defaultTitle = 'JS Bin') {
   const { html } = bin;
   let htmlNoJS = html;
   if (htmlNoJS.toLowerCase().includes('<script')) {
@@ -31,7 +31,7 @@ function getMetadata(bin) {
   doc.write(htmlNoJS);
   doc.close();
 
-  const title = pick(doc, 'title', bin.title || 'JS Bin');
+  const title = pick(doc, 'title', bin.title || defaultTitle);
   const description = pick(doc, 'meta[name="description"', bin.description);
   document.body.removeChild(iframe); // clean up
 
@@ -48,8 +48,8 @@ export async function jsbin(bin, user) {
 }
 
 export async function gist(bin, user) {
-  let { id = slugger(), html, javascript, css } = bin;
-  const { title, description } = getMetadata(bin);
+  const { id = slugger(), html, javascript, css } = bin;
+  const { title, description } = getMetadata(bin, id);
 
   const headers = {
     accept: 'application/vnd.github.v3+json',
@@ -60,23 +60,31 @@ export async function gist(bin, user) {
     headers.authorization = `token ${user.githubToken}`;
   }
 
+  const settings = getSettingsForBin(bin);
+
+  const files = {
+    [id + '.html']: {
+      content: html,
+    },
+    [id + '.js']: {
+      content: javascript,
+    },
+    [id + '.css']: {
+      content: css,
+    },
+  };
+
+  if (Object.keys(settings).length) {
+    files[`jsbin-settings.json`] = { content: JSON.stringify(settings) };
+  }
+
   const res = await fetch('https://api.github.com/gists', {
     method: 'POST',
     headers,
     body: JSON.stringify({
       description: title || description,
       public: false,
-      files: {
-        [id + '.html']: {
-          content: html,
-        },
-        [id + '.js']: {
-          content: javascript,
-        },
-        [id + '.css']: {
-          content: css,
-        },
-      },
+      files,
     }),
   });
 

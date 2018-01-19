@@ -99,6 +99,10 @@ export function setCode(code, type) {
   };
 }
 
+export function triggerUpdate() {
+  return (dispatch, getState) => updateResult(dispatch, getState);
+}
+
 const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
   const { bin } = getState();
   let source = null;

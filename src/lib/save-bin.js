@@ -15,7 +15,7 @@ const slugger = new Haikunator({
 const slug = () => slugger.haikunate();
 
 export async function save({ bin, app }, dispatch) {
-  console.log('defaultSave?', app.defaultSave);
+  // console.log('defaultSave?', app.defaultSave);
   const copy = { ...bin };
   delete copy.loading;
   delete copy.error;

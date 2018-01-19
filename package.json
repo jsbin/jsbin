@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.23",
+  "version": "5.0.0-alpha.24",
   "private": true,
   "prettier": {
     "arrowParens": "avoid",
@@ -16,7 +16,7 @@
     "useTabs": false
   },
   "dependencies": {
-    "@remy/jsconsole": "^2.0.1-alpha.2",
+    "@remy/jsconsole": "^2.0.2",
     "@remy/react-splitter-layout": "^1.0.2",
     "autoprefixer": "7.1.1",
     "babel-core": "6.25.0",

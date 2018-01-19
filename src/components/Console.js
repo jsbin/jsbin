@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Console } from '@remy/jsconsole'; // currently a singleton
-import Input from '@remy/jsconsole/dist/components/Input';
-import run, { bindConsole, setContainer } from '@remy/jsconsole/dist/lib/run';
-
+import {
+  Console, // singleton
+  Input,
+  run,
+  bindConsole,
+  setContainer,
+} from '@remy/jsconsole';
 import '@remy/jsconsole/dist/jsconsole.css';
 
 const history = [];
 
 export default class BinConsole extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onRun = this.onRun.bind(this);
-    this.rebind = this.rebind.bind(this);
-  }
-
-  async onRun(command) {
+  onRun = async command => {
     const console = this.console;
 
     console.push({
@@ -30,12 +27,12 @@ export default class BinConsole extends React.Component {
       type: 'response',
       ...res,
     });
-  }
+  };
 
-  rebind(container) {
+  rebind = container => {
     setContainer(container);
     bindConsole(this.console);
-  }
+  };
 
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
@@ -48,8 +45,6 @@ export default class BinConsole extends React.Component {
   componentWillUnmount() {
     this.props.onRef(undefined);
   }
-
-  // TODO on prop change, set container to prop
 
   render() {
     const commands = [];

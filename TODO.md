@@ -2,8 +2,8 @@
 
 ## In progress
 
-- [ ] Console isn't attached to iframe…
-- [ ] Inject CSS, don't recompile
+1. [/] Console isn't attached to iframe…
+2. [ ] Inject CSS, don't recompile
 
 ## Need for live
 
@@ -15,6 +15,7 @@
 
 ## Bit bugs
 
+- [x] Race condition in console: sometimes the console has finished loading before the Console component is loaded
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces

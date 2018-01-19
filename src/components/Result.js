@@ -30,6 +30,17 @@ export default class Result extends React.Component {
     this.iframe = makeIframe();
   }
 
+  rebindConsole = () => {
+    // we have:
+    // 1. console inserted
+    // 2. iframe is attached to the document
+    if (this.console && this.iframe.contentWindow) {
+      this.console.rebind(this.iframe);
+    } else {
+      // console.warn('Result::rebind (skip)');
+    }
+  };
+
   updateResult = props => {
     const { error, renderResult, html = '' } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
@@ -41,17 +52,19 @@ export default class Result extends React.Component {
 
     if (!renderedDoc) {
       // nothing to render so exit early
+      // console.warn('(exit)updateResult, no renderDoc', this.props);
       return;
     }
 
     const isPage = renderResult === RESULT.RESULT_PAGE;
     const isBoth = renderResult === RESULT.RESULT_BOTH;
-    const isConsole = renderResult === RESULT.RESULT_CONSOLE;
 
     let iframe = this.iframe;
 
     if (isBoth || isPage) {
+      // this.result = the div the iframe lives inside of
       if (!this.result) {
+        // console.warn('(exit)updateResult, no this.result');
         // then we're not ready for a render, so let's exit early
         return;
       }
@@ -60,6 +73,9 @@ export default class Result extends React.Component {
     // removing the iframe from the DOM completely resets the state and nukes
     // all running code
     if (iframe.parentNode) {
+      // console.warn(
+      //   'removing iframe from updateResult - but expect to reinsert'
+      // );
       iframe.parentNode.removeChild(iframe);
       this.iframe = iframe = makeIframe();
     }
@@ -125,16 +141,14 @@ export default class Result extends React.Component {
       }
     });
 
-    // if we've already got a console reference AND we're showing the
-    // console, then we rebind the console connections right before
-    // we write any content (to catch the console messaging).
-    if (this.console && (isBoth || isConsole)) {
-      this.console.rebind(iframe);
-    }
-
     if (html.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '')) {
       renderedDoc = emptyPage;
     }
+
+    // if we've already got a console reference AND we're showing the
+    // console, then we rebind the console connections right before
+    // we write any content (to catch the console messaging).
+    this.rebindConsole();
 
     // start writing the page. This will clear any existing document.
     // oddly this is around 40ms on a high end Mac, but .innerHTML is
@@ -158,15 +172,15 @@ export default class Result extends React.Component {
         script.async = true;
         script.defer = true;
         script.src = url;
-        script.noModule = true;
-        doc.documentElement.appendChild(script);
+        // script.noModule = true;
+        doc.body.appendChild(script);
 
-        const scriptModule = doc.createElement('script');
-        scriptModule.async = true;
-        scriptModule.defer = true;
-        scriptModule.src = url;
-        scriptModule.type = 'module';
-        doc.documentElement.appendChild(scriptModule);
+        // const scriptModule = doc.createElement('script');
+        // scriptModule.async = true;
+        // scriptModule.defer = true;
+        // scriptModule.src = url;
+        // scriptModule.type = 'module';
+        // doc.documentElement.appendChild(scriptModule);
       };
 
       // this is a wonderful quirk of readiness. what happens is if the HTML
@@ -217,7 +231,7 @@ export default class Result extends React.Component {
     const updated = nextProps.updated !== this.props.updated;
     // TODO CSS
 
-    if (result || renderResult || javascript || updated) {
+    if (result || javascript || updated) {
       this.updateResult(nextProps);
     }
 
@@ -241,6 +255,15 @@ export default class Result extends React.Component {
 
     if (showingPage) {
       this.updateResult(this.props);
+    }
+
+    // if the console was just shown for the first time, we need to rebind
+    // it to the iframe
+    const rebind =
+      renderResult && this.props.renderResult !== RESULT.RESULT_PAGE;
+
+    if (rebind) {
+      this.rebindConsole();
     }
   }
 
@@ -266,7 +289,10 @@ export default class Result extends React.Component {
           {hasPage && <div id="result" ref={e => (this.result = e)} />}
           {hasConsole &&
             <Console
-              onRef={e => (this.console = e)}
+              onRef={e => {
+                this.console = e;
+                this.updateResult(this.props);
+              }}
               guid={this.state.guid}
               container={this.iframe}
             />}

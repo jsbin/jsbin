@@ -599,6 +599,14 @@ var libraries = [
     'group': 'D3'
   },
   {
+    'url': [
+      'https://unpkg.com/mapbox-gl/dist/mapbox-gl.css',
+      'https://unpkg.com/mapbox-gl/dist/mapbox-gl.js'
+    ],
+    'label': 'Mapbox GL JS',
+    'group': 'Mapbox'
+  },
+  {
     'url': '//code.highcharts.com/highcharts.js',
     'label': 'Highcharts latest'
   },

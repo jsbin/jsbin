@@ -2,15 +2,8 @@
 
 ## In progress
 
-- [x] Secure output
-- [x] Secure: show/hide output
-- [x] Secure: test console works
-- [x] Secure: build
-- [x] Secure: push errors back to editor
-- [x] Secure: change layout
-- [x] Secure: show/hide console
-- [x] Secure: reduce reducers
-- [x] Embeds work
+- [ ] Console isn't attached to iframe…
+- [ ] Inject CSS, don't recompile
 
 ## Need for live
 
@@ -94,6 +87,17 @@
 - [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
 - [x] Processors
 
+## Security
+
+- [x] Secure output
+- [x] Secure: show/hide output
+- [x] Secure: test console works
+- [x] Secure: build
+- [x] Secure: push errors back to editor
+- [x] Secure: change layout
+- [x] Secure: show/hide console
+- [x] Secure: reduce reducers
+
 ## UI
 
 - [ ] Let user decide where to save by default
@@ -123,7 +127,7 @@
 
 ## Lib
 
-- [ ] Compile output document in web worker
+- [ ] Compile output document in web worker (nice to have)
 - [ ] Inject CSS, don't recompile
 
 ## Pages

@@ -25,13 +25,12 @@ let scriptURL = null;
 export default class Result extends React.Component {
   constructor(props) {
     super(props);
-    this.updateResult = this.updateResult.bind(this);
     this.state = { guid: 0 };
 
     this.iframe = makeIframe();
   }
 
-  updateResult(props) {
+  updateResult = props => {
     const { error, renderResult, html = '' } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
 
@@ -189,7 +188,7 @@ export default class Result extends React.Component {
         };
       }
     }
-  }
+  };
 
   componentDidMount() {
     this.updateResult(this.props);
@@ -208,15 +207,7 @@ export default class Result extends React.Component {
 
     const theme = nextProps.theme !== this.props.theme;
 
-    if (theme) {
-      return true;
-    }
-
-    if (splitColumns) {
-      return false;
-    }
-
-    if (renderResult) {
+    if (renderResult || theme || splitColumns) {
       return true;
     }
 
@@ -231,10 +222,6 @@ export default class Result extends React.Component {
     }
 
     return false;
-  }
-
-  componentDidUpdate() {
-    // this.updateResult(this.props);
   }
 
   render() {

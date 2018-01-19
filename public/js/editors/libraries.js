@@ -543,6 +543,13 @@ var libraries = [
     'label': 'Foundation 5.5.2'
   },
   {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css',
+      'https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js'
+    ],
+    'label': 'Foundation 6.4.3'
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.js',
     'label': 'Handlebars.js 1.0.0'
   },
@@ -612,6 +619,13 @@ var libraries = [
       '//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css'
     ],
     'label': 'Chartist.js latest'
+  },
+    {
+    'url': [
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css'
+    ],
+    'label': 'Leaflet.js 1.2.0'
   },
   {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/sammy.js/0.7.4/sammy.min.js',

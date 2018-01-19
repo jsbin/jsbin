@@ -98,8 +98,6 @@ export const settings = `{
   // Default result panel. Values can be: 'page', 'console', 'both' and 'none'
   "app.result": "page",
   ${'\n  ' + macSpecificKeySwap + '\n'}
-  // Preferred open panel when sharing a bin URL
-  "share.panel": "javascript",
 
   // Automatically run JavaScript in real-time. If set to "false", JavaScript
   // can be executed by using ${cmd} + enter

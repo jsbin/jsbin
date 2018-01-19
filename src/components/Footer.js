@@ -19,7 +19,11 @@ const Footer = ({ error, username, children }) => {
   if (/(alpha|beta)/.test(VERSION)) {
     issueLink = (
       <p>
-        <a href="https://github.com/jsbin/issues/issues" target="_blank">
+        <a
+          href="https://github.com/jsbin/issues/issues"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
           If you notice any problems, please file a new issue
         </a>
       </p>
@@ -29,10 +33,12 @@ const Footer = ({ error, username, children }) => {
   return (
     <footer className="Footer">
       {children}
-      <p className="Version">
-        {user} <Version />
+      <div className="Version">
+        <p>
+          {user} <Version />
+        </p>
         {issueLink}
-      </p>
+      </div>
       <p
         className={classnames({ Error: true, 'has-error': !!error })}
         title={

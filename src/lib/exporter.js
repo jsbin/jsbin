@@ -39,10 +39,11 @@ function getMetadata(bin) {
 }
 
 export async function jsbin(bin, user) {
-  let { id = slugger(), html, javascript, css } = bin;
+  let { id = slugger() } = bin;
   const { title, description } = getMetadata(bin);
 
-  const res = await createBin(bin, user);
+  // TODO send source *and* result
+  const res = await createBin({ ...bin, title, description, id }, user);
   return res;
 }
 

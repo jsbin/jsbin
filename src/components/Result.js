@@ -204,18 +204,36 @@ export default class Result extends React.Component {
     // if visible output panel has changed
     const renderResult = nextProps.renderResult !== this.props.renderResult;
     const splitColumns = nextProps.splitColumns !== this.props.splitColumns;
-
     const theme = nextProps.theme !== this.props.theme;
 
+    // showingPage =
+    // - console -> page
+    // - console -> both
+    // - console -> none // noop
+    const showingPage =
+      this.props.renderResult === RESULT.RESULT_CONSOLE && renderResult;
+
+    console.log(
+      'showingPage: %s (before: %s, renderResult: %s)',
+      showingPage,
+      this.props.renderResult,
+      renderResult
+    );
+
+    // only update the UI if something changed in the view
+    // more specifically: don't re-render if the content of the iframe will change
     if (renderResult || theme || splitColumns) {
+      if (showingPage) {
+        this.updateResult(nextProps);
+      }
+
       return true;
     }
 
-    // ignored: error, result
     const result = nextProps.result !== this.props.result;
     const javascript = nextProps.javascript !== this.props.javascript;
-
     const updated = nextProps.updated !== this.props.updated;
+    // TODO CSS
 
     if (result || renderResult || javascript || updated) {
       this.updateResult(nextProps);

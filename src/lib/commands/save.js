@@ -1,5 +1,5 @@
 import React from 'react';
-import { Command, Shift } from '../../components/Symbols';
+import { Command } from '../../components/Symbols';
 import { SAVE } from '../../actions/bin';
 import { addNotification } from '../../actions/notifications';
 import { replace } from 'react-router-redux';

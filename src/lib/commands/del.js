@@ -1,6 +1,6 @@
 import React from 'react';
 import { Command, Shift, Backspace } from '../../components/Symbols';
-import { DELETE } from '../../actions/bin';
+// import { DELETE } from '../../actions/bin';
 
 export const del = {
   title: 'Delete',
@@ -12,10 +12,10 @@ export const del = {
   run: dispatch => {
     alert('Not implemented yet');
     return;
-    if (
-      window.confirm('Are you sure you want to permanently delete this bin?')
-    ) {
-      dispatch({ type: DELETE });
-    }
+    // if (
+    //   window.confirm('Are you sure you want to permanently delete this bin?')
+    // ) {
+    //   dispatch({ type: DELETE });
+    // }
   },
 };

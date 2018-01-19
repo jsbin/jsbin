@@ -2,6 +2,23 @@ import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
 let Babel = null;
 
+function callback(lineno, colno) {
+  const message = `Exiting potential infinite loop on line ${lineno}`;
+  window.dispatchEvent(
+    new CustomEvent('error', {
+      detail: {
+        error: {
+          name: 'loopProtect',
+          stack: `Use // noprotect to disable JS Bin's loop protection`,
+        },
+        lineno,
+        colno,
+        message,
+      },
+    })
+  );
+}
+
 export const transform = async source => {
   const sourceFileName =
     (window.location.pathname.split('/').pop() || 'untitled') + '.js';
@@ -15,22 +32,6 @@ export const transform = async source => {
 
   if (Babel === null) {
     Babel = await import(/* webpackChunkName: "babel" */ 'babel-standalone');
-    const callback = (lineno, colno) => {
-      const message = `Exiting potential infinite loop on line ${lineno}`;
-      window.dispatchEvent(
-        new CustomEvent('error', {
-          detail: {
-            error: {
-              name: 'loopProtect',
-              stack: `Use // noprotect to disable JS Bin's loop protection`,
-            },
-            lineno,
-            colno,
-            message,
-          },
-        })
-      );
-    };
     Babel.registerPlugin('loopProtection', loopProtection(100, callback));
   }
 

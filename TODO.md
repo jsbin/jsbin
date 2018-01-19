@@ -2,7 +2,7 @@
 
 ## In progress
 
-1. [/] Console isn't attached to iframe…
+1. [x] Console isn't attached to iframe…
 2. [ ] Inject CSS, don't recompile
 
 ## Need for live

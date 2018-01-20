@@ -269,11 +269,18 @@ var processors = jsbin.processors = (function () {
 
         var result = ts.transpileModule(source, {
           compilerOptions: {
+           /*
+            TODO: Since the code is modified after the generation, source maps
+            will also have to be adjusted. I'm disabling them for now.
+
             inlineSourceMap: true,
             inlineSources: true,
+            */
+            module: ts.ModuleKind.System,
             target: ts.ScriptTarget.ES5
           },
           fileName: 'jsbin.ts',
+          moduleName: 'jsbin.ts',
           reportDiagnostics: true
         });
 
@@ -297,7 +304,8 @@ var processors = jsbin.processors = (function () {
               ' (' + diagnostic.file.fileName + ':'+line+':'+character+')';
           }).join('\n'));
         } else {
-          resolve(result.outputText);
+          var after = "System.import('jsbin.ts')";
+          resolve(result.outputText + after);
         }
       }
     }),

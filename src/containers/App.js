@@ -5,6 +5,7 @@ import {
   fetchBin,
   fetchGithub,
   fetchLocal,
+  fetchPost,
   fetchNew,
   setCode,
 } from '../actions/bin';
@@ -55,6 +56,10 @@ const mapDispatchToProps = dispatch => {
 
       if (params.gistId) {
         return dispatch(fetchGithub(params.gistId));
+      }
+
+      if (params.postId) {
+        return dispatch(fetchPost(params.postId));
       }
 
       if (params.localId) {

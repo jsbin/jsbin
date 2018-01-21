@@ -17,6 +17,7 @@
 
 ## Bit bugs
 
+- [ ] Babel parsing error when trying loop protect doesn't bubble up (see production)
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces

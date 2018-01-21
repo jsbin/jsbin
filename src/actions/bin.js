@@ -53,6 +53,10 @@ export function fetchGithub(id) {
   return fetchSequence(Api.getFromGist(id));
 }
 
+export function fetchPost(id) {
+  return fetchSequence(Api.getFromPost(id));
+}
+
 export function fetchBin(id, revision = 'latest') {
   return fetchSequence(Api.getBin(id, revision));
 }

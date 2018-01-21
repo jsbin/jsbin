@@ -2,6 +2,7 @@ import idk from 'idb-keyval'; // FIXME lazy load candidate
 import * as ALL_MODES from './cm-modes';
 const MODES = [ALL_MODES.HTML, ALL_MODES.CSS, ALL_MODES.JAVASCRIPT];
 const API = process.env.REACT_APP_API;
+const POST_API = process.env.REACT_APP_POST_API;
 
 // converts *-processor into the bin.settings object compatible with production
 export const getSettingsForBin = bin => {
@@ -14,6 +15,29 @@ export const getSettingsForBin = bin => {
   }, {});
 
   return { processors };
+};
+
+export const convertToStandardBin = ({ bin, processors }) => {
+  const settings = getSettingsForBin(bin);
+  const res = {
+    html: processors['html-result'],
+    javascript: processors['javascript-result'].code,
+    css: processors['css-result'],
+    ...settings,
+  };
+
+  const source = MODES.reduce((acc, curr) => {
+    if (res[curr] !== bin[curr]) {
+      acc[curr] = bin[curr];
+    }
+    return acc;
+  }, {});
+
+  if (Object.keys(source).length) {
+    res.source = source;
+  }
+
+  return res;
 };
 
 export const convertSettingsToBinProcessors = settings => {
@@ -86,6 +110,22 @@ export const getBin = (id, revision = 'latest') => {
 
     return res.json();
   });
+};
+
+export const getFromPost = async id => {
+  const res = await fetch(`${POST_API}/${id}.raw`, { mode: 'cors' });
+  if (res.status !== 200) {
+    const error = new Error(
+      'The content for this bin is missing, if you head back and re-submit, it should load.'
+    );
+    error.status = res.status;
+    throw error;
+  }
+
+  const data = await res.json();
+  const { html, javascript, css, settings } = data;
+
+  return { html, javascript, css, settings };
 };
 
 export const getLocal = async id => {

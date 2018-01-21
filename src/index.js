@@ -213,6 +213,7 @@ const render = App => {
 
           <Route exact path="/local/:localId" component={App} />
           <Route exact path="/gist/:gistId" component={App} />
+          <Route exact path="/post/:postId" component={App} />
           <Route exact path="/:bin/:version/(embed|edit)?" component={App} />
           <Route exact path="/:bin/(embed|edit)?" component={App} />
         </Switch>

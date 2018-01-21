@@ -1,5 +1,5 @@
 import copy from 'copy-to-clipboard';
-import BinToHTML from '../../lib/BinToHTML';
+import BinToHTML from 'bin-to-file';
 import { addNotification } from '../../actions/notifications';
 
 const copyOk = dispatch => {

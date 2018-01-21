@@ -1,4 +1,4 @@
-import binToHTML from '../BinToHTML';
+import binToHTML from 'bin-to-file';
 import { JAVASCRIPT, HTML, CSS } from '../cm-modes';
 
 // When adding new processors, add it to this line, and add to the `targets`

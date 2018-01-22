@@ -780,6 +780,11 @@ var libraries = [
     'group': 'Data structures'
   },
   {
+    'url': 'https://cdnjs.cloudflare.com/ajax/libs/seamless-immutable/7.1.2/seamless-immutable.production.min.js',
+    'label': 'Seamless Immutable 7.1.2',
+    'group': 'Data structures'
+  },
+  {
     'url': 'https://cdnjs.cloudflare.com/ajax/libs/mori/0.3.2/mori.js',
     'label': 'mori 0.3.2',
     'group': 'Data structures'

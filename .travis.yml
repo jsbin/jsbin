@@ -1,14 +1,13 @@
 language: node_js
 node_js:
-  - "0.10.40"
+  - "6"
 addons:
   sauce_connect: true
 before_script:
-  - npm install
-  - test "$TRAVIS_PULL_REQUEST" = "false" && npm start&
+  - test "$TRAVIS_PULL_REQUEST" = "false" && yarn start&
 script:
-  - npm test
-  - test "$TRAVIS_PULL_REQUEST" = "false" && npm run e2e-remote
+  - yarn test
+  - test "$TRAVIS_PULL_REQUEST" = "false" && yarn run e2e-remote
   - test "$TRAVIS_PULL_REQUEST" = "false" && pkill node || exit 0
 
 notifications:

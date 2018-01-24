@@ -234,10 +234,6 @@ export default class Mirror extends React.Component {
     if (this.errorMarker) {
       this.errorMarker.node.hidden = source !== MODES.JAVASCRIPT;
     }
-
-    // try to do auto complete on typing…
-    // const autocomplete = debounce(cm => cm.execCommand('autocomplete'), 500);
-    // this.CodeMirror.getCodeMirror().on('cursorActivity', autocomplete);
   }
 
   refresh() {

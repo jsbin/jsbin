@@ -1,4 +1,5 @@
-import idk from 'idb-keyval'; // FIXME lazy load candidate
+import slugger from 'jsbin-id';
+import idk from 'idb-keyval'; // lol: IDK … I don't know
 import * as ALL_MODES from './cm-modes';
 const MODES = [ALL_MODES.HTML, ALL_MODES.CSS, ALL_MODES.JAVASCRIPT];
 const API = process.env.REACT_APP_API;
@@ -138,6 +139,24 @@ export const getLocal = async id => {
     }
     return { ...res, id };
   });
+};
+
+export const setLocal = async bin => {
+  const { javascript, html, css, revision = 0 } = bin;
+  let id = bin.id || slugger();
+
+  const settings = getSettingsForBin(bin);
+
+  const copy = {
+    javascript,
+    revision: revision + 1,
+    html,
+    css,
+    id,
+    settings,
+  };
+
+  return idk.set(id, copy).then(() => copy);
 };
 
 export const getFromGist = async id => {

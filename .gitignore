@@ -18,6 +18,7 @@
 .env.production.local
 s3_website.yml
 .vscode/
+tmp/
 
 npm-debug.log*
 yarn-debug.log*

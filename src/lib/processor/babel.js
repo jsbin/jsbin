@@ -1,6 +1,6 @@
 import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
-import CustomError from '../custom-error';
+import { babelError } from '../custom-error';
 
 /**
  * IMPORTANT: this loop protection code is manually included in this file
@@ -29,11 +29,16 @@ let todo = [];
 
 // variableDeclaration
 
-const prependRequiredModules = () => ({
+const onProgramExit = () => ({
   visitor: {
     Program: {
       exit(programPath) {
         programPath.traverse({
+          DirectiveLiteral(path) {
+            // removes "use strict" to allow for intentional globals by user
+            programPath.node.directives.shift();
+          },
+
           CallExpression(path) {
             if (path.node.callee.name === 'require') {
               const value = path.node.arguments[0].value;
@@ -86,7 +91,7 @@ export async function transform(source) {
   if (Babel === null) {
     Babel = await import(/* webpackChunkName: "babel" */ 'babel-standalone');
     Babel.registerPlugin('collectImports', collectImports);
-    Babel.registerPlugin('replaceImports', prependRequiredModules);
+    Babel.registerPlugin('replaceImports', onProgramExit);
     Babel.registerPlugin('loopProtection', loopProtection(100, callback));
   }
   let res = source;
@@ -103,7 +108,7 @@ export async function transform(source) {
     res = Babel.transform(source, {
       presets: [
         () => ({
-          plugins: [prependRequiredModules],
+          plugins: [onProgramExit],
         }),
         'es2015',
         'react',
@@ -117,20 +122,7 @@ export async function transform(source) {
       sourceFileName,
     });
   } catch (e) {
-    const warning =
-      'Failed to compile - if this continues, please file a new issue and include this full source and configuration';
-    console.warn(warning);
-
-    const message = e.message.split('\n').shift();
-    throw new CustomError({
-      message,
-      detail: {
-        name: e.name,
-        message,
-        line: e.loc.line,
-        ch: e.loc.column,
-      },
-    });
+    babelError(e);
   }
 
   return { code: res.code, map: res.map };

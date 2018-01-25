@@ -1,6 +1,6 @@
 import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
-import CustomError from '../custom-error';
+import { babelError } from '../custom-error';
 let Babel = null;
 
 /**
@@ -67,20 +67,7 @@ export const transform = async source => {
       module: transformed.metadata.modules.imports.length > 0,
     };
   } catch (e) {
-    const warning =
-      'Failed to compile - if this continues, please file a new issue and include this full source and configuration';
-    console.warn(warning);
-
-    const message = e.message.split('\n').shift();
-    throw new CustomError({
-      message,
-      detail: {
-        name: e.name,
-        message,
-        line: e.loc.line,
-        ch: e.loc.column,
-      },
-    });
+    babelError(e);
   }
 
   return res;

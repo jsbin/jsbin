@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.27",
+  "version": "5.0.0-alpha.28",
   "private": true,
   "prettier": {
     "arrowParens": "avoid",

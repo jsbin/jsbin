@@ -2,8 +2,8 @@
 
 ## In progress
 
-- [ ] Local save is losing the language
 - [ ] Inject CSS, don't recompile
+- [x] Local save is losing the language
 - [x] Prevent initial focus on `autofocus`
 - [x] Console isn't attached to iframe…
 
@@ -17,13 +17,13 @@
 
 ## Bit bugs
 
-- [ ] Babel parsing error when trying loop protect doesn't bubble up (see production)
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces
 - [ ] Resize the output (when it's not scrollable), and when output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Babel parsing error when trying loop protect doesn't bubble up (see production)
 - [x] Race condition in console: sometimes the console has finished loading before the Console component is loaded
 - [x] Dark theme not working on console (needs to listen for theme event and add class)
 - [x] Import CSS and it's put as a script
@@ -87,6 +87,7 @@
 
 ## Larger tasks
 
+- [ ] a11y
 - [/] Embeds (support existing urls - or potentially use embed.js to redirect to different url)
 - [ ] Reinstate mobile mirror and mobile support (touch based, not keyboard)
 - [x] Processors
@@ -132,7 +133,7 @@
 
 ## Lib
 
-- [ ] Compile output document in web worker (nice to have)
+- [ ] Compile output document in web worker (nice to have) ([workerize](https://github.com/developit/workerize))
 - [ ] Inject CSS, don't recompile
 
 ## Pages
@@ -144,13 +145,14 @@
 
 - [x] Import from gists
 - [x] Export gist (currently anon only…)
-- [ ] Save online/share
+- [x] Save online/share
 - [ ] Sync settings
 - [ ] Login / upgrade, etc
 
 ## To be categorised
 
 - [ ] Help
+- [ ] Service worker to support /local/x.js requests
 
 ## Nice to have
 

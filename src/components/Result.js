@@ -114,11 +114,19 @@ export default class Result extends React.Component {
         error = { name: message };
       }
 
-      if (javascript.map && !frameError.custom) {
+      if (javascript.map && !frameError.custom && line > 0) {
         const consumer = new sourceMap.SourceMapConsumer(javascript.map);
         const original = consumer.originalPositionFor({ line, column: ch });
         line = original.line;
         ch = original.column;
+      }
+
+      if (line === 0) {
+        // this is a weird error that comes from the program, and not the source
+        // code. an example of this is if you do `import x from ''`, it gives
+        // line 0, ch 0 as the source. so for tidiness, I'll remove it.
+        line = null;
+        ch = null;
       }
 
       this.props.setError({
@@ -126,8 +134,8 @@ export default class Result extends React.Component {
         message,
         line,
         ch,
-        // error,
       });
+
       if (this.console) {
         const value = new Error(message);
         value.name = error.name;

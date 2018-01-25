@@ -1,6 +1,27 @@
 import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
-import callback from './loop-protect-callback';
+import CustomError from '../custom-error';
+
+/**
+ * IMPORTANT: this loop protection code is manually included in this file
+ * and not as an export from a common module because webpack runs on _this_
+ * code first, then the result is passed to the loop protection, which in
+ * turn can't reference the webpack transpiled code.
+ **/
+function callback(lineno, colno) {
+  const detail = {
+    error: {
+      name: 'loopProtect',
+      stack: `Use // noprotect to disable JS Bin's loop protection`,
+    },
+    lineno,
+    custom: true,
+    colno,
+    message: `Exiting potential infinite loop on line ${lineno}`,
+  };
+
+  window.dispatchEvent(new CustomEvent('error', { detail }));
+}
 
 let Babel = null;
 const cache = {};
@@ -90,16 +111,26 @@ export async function transform(source) {
       ],
       plugins: ['loopProtection'],
       ast: false,
-      minified: true,
+      // minified: true,
       sourceMap: 'both',
       sourceType: 'module',
       sourceFileName,
     });
   } catch (e) {
-    console.error(e.message);
-    res = {
-      code: `throw new Error("Failed to compile - if this continues, please file a new issue and include this full source and configuration")`,
-    };
+    const warning =
+      'Failed to compile - if this continues, please file a new issue and include this full source and configuration';
+    console.warn(warning);
+
+    const message = e.message.split('\n').shift();
+    throw new CustomError({
+      message,
+      detail: {
+        name: e.name,
+        message,
+        line: e.loc.line,
+        ch: e.loc.column,
+      },
+    });
   }
 
   return { code: res.code, map: res.map };

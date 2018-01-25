@@ -1,13 +1,13 @@
 import Postmate from 'postmate';
-import { TOGGLE_LAYOUT, SET_THEME } from '../actions/app';
+import { TOGGLE_LAYOUT, SET_THEME } from '../../actions/app';
 import {
   SET_CSS,
   SET_HTML,
   SET_JS,
   SET_RESULT,
   UPDATE,
-} from '../actions/processors';
-import { CHANGE_RESULT } from '../actions/session';
+} from '../../actions/processors';
+import { CHANGE_RESULT } from '../../actions/session';
 
 let channel = null;
 // Postmate.debug = true;

@@ -114,7 +114,7 @@ export default class Result extends React.Component {
         error = { name: message };
       }
 
-      if (javascript.map && error.name !== 'loopProtect') {
+      if (javascript.map && !frameError.custom) {
         const consumer = new sourceMap.SourceMapConsumer(javascript.map);
         const original = consumer.originalPositionFor({ line, column: ch });
         line = original.line;

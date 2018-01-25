@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import runnerMiddleware from './lib/runner-middleware';
+import runnerMiddleware from './lib/runner/middleware';
 import app from './reducers/app';
 import processors from './reducers/processors';
 import session from './reducers/session';

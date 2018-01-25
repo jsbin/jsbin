@@ -3,6 +3,7 @@ import { html, javascript, css } from '../lib/Defaults';
 import * as MODES from '../lib/cm-modes';
 import debounce from 'lodash.debounce';
 import { process, asHTML } from '../lib/processor';
+import { clearError, setError as codeError } from './session';
 
 import { SET_RESULT as SET_PROCESSOR_RESULT } from './processors';
 
@@ -144,7 +145,13 @@ const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
     });
   }
 
-  await Promise.all(promise);
+  try {
+    dispatch(clearError());
+    await Promise.all(promise);
+  } catch (e) {
+    dispatch(codeError(e.detail));
+    return;
+  }
 
   const { processors } = getState();
   const toRender = {

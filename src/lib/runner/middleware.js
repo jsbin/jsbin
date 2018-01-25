@@ -1,9 +1,8 @@
-import { Child } from '../lib/runner-channel';
-
-import { SET_JS, SET_HTML, SET_RESULT } from '../actions/processors';
-import { CHANGE_RESULT } from '../actions/session';
-import { TOGGLE_LAYOUT, SET_THEME } from '../actions/app';
-import { SET_ERROR, CLEAR_ERROR } from '../actions/session';
+import { Child } from './channel';
+import { SET_JS, SET_HTML, SET_RESULT } from '../../actions/processors';
+import { CHANGE_RESULT } from '../../actions/session';
+import { TOGGLE_LAYOUT, SET_THEME } from '../../actions/app';
+import { SET_ERROR, CLEAR_ERROR } from '../../actions/session';
 
 export default store => {
   const channel = new Child({

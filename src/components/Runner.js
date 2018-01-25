@@ -1,5 +1,5 @@
 import React from 'react';
-import { Parent } from '../lib/runner-channel';
+import { Parent } from '../lib/runner/channel';
 
 import '../css/Result.css';
 

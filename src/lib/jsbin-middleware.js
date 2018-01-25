@@ -13,7 +13,7 @@ import {
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/save-bin';
 import getSettings from '../lib/settings';
-import * as runner from '../lib/runner-channel';
+import * as runner from '../lib/runner/channel';
 
 // function refreshUserToken() {
 //   fetch('')

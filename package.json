@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.25",
+  "version": "5.0.0-alpha.26",
   "private": true,
   "prettier": {
     "arrowParens": "avoid",
@@ -52,7 +52,7 @@
     "jwt-decode": "^2.2.0",
     "less": "^2.7.2",
     "lodash.debounce": "^4.0.8",
-    "loop-protect": "^2.1.4",
+    "loop-protect": "^2.1.5",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",

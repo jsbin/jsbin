@@ -22,13 +22,6 @@ CodeMirror.defineOption('autocomplete', false, function(cm, value) {
 
 class Autocomplete {
   constructor(cm) {
-    // methods
-    this.change = this.change.bind(this);
-    this.beforeChange = this.beforeChange.bind(this);
-    this.cursorActivity = this.cursorActivity.bind(this);
-    this.keydown = this.keydown.bind(this);
-    this.clear = this.clear.bind(this);
-
     const hint = document.createElement('span');
     hint.className = 'widget-hint';
     this.hint = hint;
@@ -96,7 +89,7 @@ class Autocomplete {
     return this.cm.getRange({ line: from.line, ch: 0 }, { line: to.line });
   }
 
-  keydown(cm, event) {
+  keydown = (cm, event) => {
     if (!this.currentHint) {
       return;
     }
@@ -111,7 +104,7 @@ class Autocomplete {
       default:
         this.dismiss();
     }
-  }
+  };
 
   dismiss() {
     this.clear();
@@ -124,7 +117,7 @@ class Autocomplete {
     this.clear();
   }
 
-  beforeChange(cm, change) {
+  beforeChange = (cm, change) => {
     // clear the lines from change.from, and change.to
     const lines = this.getLines(change.from, change.to);
     this.textToWords(lines, this.isWordChar, word => {
@@ -134,9 +127,9 @@ class Autocomplete {
         }
       }
     });
-  }
+  };
 
-  cursorActivity() {
+  cursorActivity = () => {
     const cursor = this.cm.getCursor();
     // dismiss the current hint
 
@@ -145,9 +138,9 @@ class Autocomplete {
     }
 
     this.cursor = cursor;
-  }
+  };
 
-  change(cm, changes) {
+  change = (cm, changes) => {
     const { from, to, origin } = changes;
     if (origin === 'setValue') {
       this.reset();
@@ -156,13 +149,13 @@ class Autocomplete {
     this.cursor = this.cm.getCursor();
     this.showHint(from, to);
     cm.endOperation();
-  }
+  };
 
-  clear() {
+  clear = () => {
     if (this.mark) this.mark.clear();
     this.hint.innerText = '';
     this.currentHint = '';
-  }
+  };
 
   showHint(from, to) {
     this.clear();

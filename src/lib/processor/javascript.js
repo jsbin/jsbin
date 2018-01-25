@@ -1,30 +1,18 @@
 import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
+import callback from './loop-protect-callback';
 let Babel = null;
-
-function callback(lineno, colno) {
-  const message = `Exiting potential infinite loop on line ${lineno}`;
-  window.dispatchEvent(
-    new CustomEvent('error', {
-      detail: {
-        error: {
-          name: 'loopProtect',
-          stack: `Use // noprotect to disable JS Bin's loop protection`,
-        },
-        lineno,
-        colno,
-        message,
-      },
-    })
-  );
-}
 
 export const transform = async source => {
   const sourceFileName =
     (window.location.pathname.split('/').pop() || 'untitled') + '.js';
 
   if (
-    !(source.includes('for') || source.includes('while')) ||
+    !(
+      source.includes('for') ||
+      source.includes('import') ||
+      source.includes('while')
+    ) ||
     source.includes('noprotect')
   ) {
     return { code: `${source}\n//# sourceURL=${sourceFileName}`, map: null };
@@ -39,14 +27,27 @@ export const transform = async source => {
 
   try {
     const transformed = Babel.transform(source, {
-      plugins: ['loopProtection'],
       sourceMap: 'both',
-      sourceType: 'script',
+      plugins: ['loopProtection'],
+      // sourceType: this is a bit of a wild guess, but making it a module
+      // means that the console doesn't have access to variables inside
+      // this might lead to unexpected results for the user.
+      sourceType: source.includes('import') ? 'module' : 'script',
       sourceFileName,
+      ast: false,
+      minified: true,
     });
-    res = { code: transformed.code, map: transformed.map };
+
+    res = {
+      code: transformed.code,
+      map: transformed.map,
+      module: transformed.metadata.modules.imports.length > 0,
+    };
   } catch (e) {
     console.error(e.message);
+    res = {
+      code: `throw new Error("Failed to compile - if this continues, please file a new issue and include this full source and configuration")`,
+    };
   }
 
   return res;

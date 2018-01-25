@@ -108,12 +108,13 @@ export default class Result extends React.Component {
         frameError = frameError.detail;
       }
       let { error, message, lineno: line, colno: ch } = frameError;
+
       if (error === null) {
         // this is when the error is like "Script error."
         error = { name: message };
       }
 
-      if (javascript.map) {
+      if (javascript.map && error.name !== 'loopProtect') {
         const consumer = new sourceMap.SourceMapConsumer(javascript.map);
         const original = consumer.originalPositionFor({ line, column: ch });
         line = original.line;
@@ -178,15 +179,17 @@ export default class Result extends React.Component {
         script.async = true;
         script.defer = true;
         script.src = url;
-        // script.noModule = true;
+        script.noModule = javascript.module;
         doc.body.appendChild(script);
 
-        // const scriptModule = doc.createElement('script');
-        // scriptModule.async = true;
-        // scriptModule.defer = true;
-        // scriptModule.src = url;
-        // scriptModule.type = 'module';
-        // doc.documentElement.appendChild(scriptModule);
+        if (javascript.module) {
+          const scriptModule = doc.createElement('script');
+          scriptModule.async = true;
+          scriptModule.defer = true;
+          scriptModule.src = url;
+          scriptModule.type = 'module';
+          doc.documentElement.appendChild(scriptModule);
+        }
       };
 
       // this is a wonderful quirk of readiness. what happens is if the HTML

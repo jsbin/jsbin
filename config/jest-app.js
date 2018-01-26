@@ -16,7 +16,7 @@ import { defaultState as _processors } from '../src/reducers/processors';
 const _notifications = [];
 const _snippets = {};
 
-const mockStore = configureMockStore([thunk]);
+let mockStore;
 let store;
 let history;
 
@@ -30,8 +30,10 @@ export const prepareBeforeEach = (
     session = {},
     snippets = {},
     user = {},
+    middleware = [],
   } = {}
 ) => {
+  mockStore = configureMockStore([thunk, ...middleware]);
   history = createHistory();
   store = mockStore({
     app: { ..._app, ...app },

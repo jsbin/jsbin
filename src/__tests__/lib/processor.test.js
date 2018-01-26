@@ -32,5 +32,5 @@ it('returns the bin without corruption', async () => {
   };
   const res = await transform(bin, 'html');
 
-  expect(res.javascript).toInclude(javascript);
+  expect(res.javascript.code).toInclude(javascript);
 });

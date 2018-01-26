@@ -15,7 +15,19 @@ class Advert extends Component {
   }
 
   fetchAd = () => {
+    if (!AD_URL) {
+      return;
+    }
+
+    const { user = {} } = this.props;
+    if (user.pro) {
+      return;
+    }
+
+    console.log('fetch: %s', AD_URL);
+
     fetch(AD_URL).then(res => res.json()).then(res => {
+      console.log(AD_URL);
       this.setState({
         loading: false,
         ad: res,
@@ -26,7 +38,19 @@ class Advert extends Component {
   };
 
   componentDidMount() {
-    if (AD_URL) this.fetchAd();
+    this.fetchAd();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { user = {} } = nextProps;
+    if (user.pro) {
+      this.setState({
+        loading: true,
+        ad: null,
+      });
+    } else {
+      this.fetchAd();
+    }
   }
 
   componentWillUnmount() {

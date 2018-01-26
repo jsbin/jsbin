@@ -52,7 +52,7 @@
     "jwt-decode": "^2.2.0",
     "less": "^2.7.2",
     "lodash.debounce": "^4.0.8",
-    "loop-protect": "^2.1.5",
+    "loop-protect": "^2.1.6",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
@@ -132,7 +132,8 @@
       "src/**/*.{js,jsx}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/config/polyfills.js",
+      "<rootDir>/config/jest-setup.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.js?(x)",

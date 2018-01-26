@@ -6,12 +6,12 @@ import { TOGGLE_LAYOUT, SET_THEME, SHOW_WELCOME } from '../actions/app';
 import { insertChangeIntoUserSettings } from '../lib/settings';
 import { defaultUserSettings } from '../lib/Defaults';
 
-const defaultState = {
-  authenticated: false,
-  username: 'anonymous',
-  githubToken: null,
-  pro: false,
-  token: null,
+export const defaultState = {
+  // authenticated: false,
+  // username: 'anonymous',
+  // githubToken: null,
+  // pro: false,
+  // token: null,
   settings: defaultUserSettings, // NOTE this is a JSON *string*
 };
 
@@ -60,6 +60,11 @@ export default function(state = defaultState, action) {
   }
 
   if (type === SET_TOKEN) {
+    if (!action.value) {
+      // anything falsy will sign out
+      return defaultState;
+    }
+
     const user = decode(action.value);
     const {
       username,

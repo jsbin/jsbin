@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import Router from './Router';
 import { ConnectedRouter, routerMiddleware, replace } from 'react-router-redux';
 
 // middleware for store
@@ -25,28 +25,8 @@ import { setToken } from './actions/user';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
 
-// main pages async loading
 const App = Loadable({
   loader: () => import(/* webpackChunkName: "app" */ './containers/App'),
-  loading: LoadingComponent,
-});
-const Settings = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "settings" */ './containers/Settings'),
-  loading: LoadingComponent,
-});
-const Welcome = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "welcome" */ './containers/Welcome'),
-  loading: LoadingComponent,
-});
-const Login = Loadable({
-  loader: () => import(/* webpackChunkName: "login" */ './containers/Login'),
-  loading: LoadingComponent,
-});
-const Account = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "account" */ './containers/Account'),
   loading: LoadingComponent,
 });
 
@@ -204,19 +184,7 @@ const render = App => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/settings" component={Settings} />
-          <Route exact path="/welcome" component={Welcome} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/account/:subPage?/:id?" component={Account} />
-
-          <Route exact path="/local/:localId" component={App} />
-          <Route exact path="/gist/:gistId" component={App} />
-          <Route exact path="/post/:postId" component={App} />
-          <Route exact path="/:bin/:version/(embed|edit)?" component={App} />
-          <Route exact path="/:bin/(embed|edit)?" component={App} />
-        </Switch>
+        <Router App={App} />
       </ConnectedRouter>
     </Provider>,
     document.getElementById('root')

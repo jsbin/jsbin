@@ -25,6 +25,7 @@ export * from './eject';
 export * from './settings';
 export * from './account';
 export * from './login';
+export * from './logout';
 export * from './copy';
 
 /**

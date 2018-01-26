@@ -10,6 +10,7 @@ export const CONFIRM = 'NOTIFICATION_CONFIRM';
 /**
  * create new notification
  * @param {String} value - text for notification
+ * @param {Object} props
  * @param {String} notificationType - ERROR, OK, CONFIRM
  */
 export function addNotification(value, props = {}, notificationType = OK) {

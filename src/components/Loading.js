@@ -4,6 +4,7 @@ import Error from './GenericErrorPage';
 import '../css/Loading.css';
 
 const messages = [
+  // FIXME allow for a mix of messages before these kick in…
   'One sec...just firing up the dobberies',
   'Dobberies now on fire',
   `Seriously, I'm still loading, I *will* find your thing...`,

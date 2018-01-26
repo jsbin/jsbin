@@ -11,6 +11,7 @@
 
 - [ ] Pay/cancel/renew
 - [/] Analytics
+- [ ] Logout…!
 - [x] Loop protection (with babel rewrite)
 - [x] Login (though wants some love)
 - [x] Processors

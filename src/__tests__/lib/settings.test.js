@@ -13,7 +13,6 @@ it('parses current defaults', () => {
   expect(parsed).toIncludeKey('app');
   expect(parsed).toIncludeKey('editor');
   expect(parsed).toIncludeKey('snippets');
-  expect(parsed).toIncludeKey('share');
 });
 
 it('user settings merge process', () => {

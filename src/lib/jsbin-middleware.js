@@ -82,7 +82,14 @@ export default store => {
     }
 
     if (action.type === SET_TOKEN) {
-      storeKV('jsbin.user-token', action.value);
+      if (!action.value) {
+        // clear all storage
+        try {
+          localStorage.clear();
+        } catch (e) {}
+      } else {
+        storeKV('jsbin.user-token', action.value);
+      }
     }
 
     // keep the URL in sync

@@ -20,6 +20,11 @@ const ErrorPage = ({ children, message, status }) => {
       {children
         ? children
         : <img src="/images/favicon.svg" className="jsbin-error" alt="" />}
+      <p>
+        <strong>
+          <a href="/">Alternatively, click here to start a new bin</a>
+        </strong>
+      </p>
     </Layout>
   );
 };

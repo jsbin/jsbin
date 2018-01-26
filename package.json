@@ -2,6 +2,10 @@
   "name": "jsbin",
   "version": "5.0.0-alpha.28",
   "private": true,
+  "main": "scripts/main.js",
+  "files": [
+    "scripts/main.js"
+  ],
   "prettier": {
     "arrowParens": "avoid",
     "bracketSpacing": true,

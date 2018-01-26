@@ -1,6 +1,6 @@
 import { MASS_UPDATE } from '../actions/app';
 
-const defaultState = {
+export const defaultState = {
   javascript: { cl: 'console.log($0);' },
   css: {},
   html: {},

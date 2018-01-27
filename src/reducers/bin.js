@@ -18,7 +18,7 @@ import {
 } from '../actions/bin';
 
 export const defaultState = {
-  loading: false, // FIXME is this right???
+  loading: false, // FIXME when "true" app only mounts once…
   id: null,
   revision: 1, // may drop this
   html: defaults.html,

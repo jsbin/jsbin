@@ -7,6 +7,7 @@ import {
   UPDATE,
 } from '../actions/processors';
 import { RESET, FETCH_BIN_REQUEST } from '../actions/bin';
+import * as DEFAULTS from '../lib/Defaults';
 
 function addDefaultStates(obj, key, value) {
   Object.keys(MODES).forEach(mode => {
@@ -20,7 +21,7 @@ export const defaultState = {
   updated: 0,
 };
 
-addDefaultStates(defaultState, 'result', () => null);
+addDefaultStates(defaultState, 'result', (key, mode) => DEFAULTS[mode]);
 
 export default function reducer(state = defaultState, action) {
   const { type, value } = action;

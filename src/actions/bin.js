@@ -1,5 +1,4 @@
 import * as Api from '../lib/Api';
-import { html, javascript, css } from '../lib/Defaults';
 import * as MODES from '../lib/cm-modes';
 import debounce from 'lodash.debounce';
 import { process, asHTML } from '../lib/processor';
@@ -43,7 +42,7 @@ export function save() {
 }
 
 export function fetchNew() {
-  return fetchSequence(Promise.resolve({ html, javascript, css }));
+  return reset();
 }
 
 export function fetchLocal(id) {
@@ -66,7 +65,7 @@ function fetchSequence(promise) {
   return (dispatch, getState) => {
     dispatch({ type: FETCH_BIN_REQUEST });
 
-    promise.then(
+    return promise.then(
       bin => {
         if (!bin.settings) {
           bin.settings = { processors: {} };

@@ -24,13 +24,10 @@ class Advert extends Component {
       return;
     }
 
-    console.log('fetch: %s', AD_URL);
-
-    fetch(AD_URL).then(res => res.json()).then(res => {
-      console.log(AD_URL);
+    return fetch(AD_URL).then(res => res.json()).then(ad => {
       this.setState({
         loading: false,
-        ad: res,
+        ad,
       });
 
       this.timer = setTimeout(this.fetchAd, 10 * 60 * 1000); // every 10 minutes

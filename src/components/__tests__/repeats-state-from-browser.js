@@ -20,5 +20,5 @@ beforeEach(() => {
 test('state stack matches a browser', () => {
   const app = mount(App);
   expect(state.length).not.toBe(0);
-  expect(state.includes('@@processor/set/RESULT')).toBe(true);
+  expect(state.includes('@@bin/RESET')).toBe(true);
 });

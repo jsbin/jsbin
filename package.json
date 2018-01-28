@@ -132,6 +132,7 @@
     "alias-runner": "echo 'Running on localhost:'$(($(envy PORT)+1)); ssh -g -N -L $(($(envy PORT)+1)):localhost:$(envy PORT) localhost"
   },
   "jest": {
+    "clearMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ],

@@ -24,6 +24,7 @@
 - [ ] Resize the output (when it's not scrollable), and when output is too big, it can't be scrolled vertically
 - [ ] Why does the settings have 4 indents and save to 2? And the weird tabbing?
 - [ ] Change settings, and in other panel change a setting and original settings are lost (low priority)
+- [x] Make bin logo red when there's an error
 - [x] Babel parsing error when trying loop protect doesn't bubble up (see production)
 - [x] Race condition in console: sometimes the console has finished loading before the Console component is loaded
 - [x] Dark theme not working on console (needs to listen for theme event and add class)

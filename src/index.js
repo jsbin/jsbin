@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import Router from './Router';
-import Cookies from 'js-cookie';
 import { ConnectedRouter, routerMiddleware, replace } from 'react-router-redux';
 
 // middleware for store
@@ -90,10 +89,6 @@ if (!initState.user.settings) {
   // check the url and select the right panels
   const url = new URL(window.location.toString());
   let hideResult = false;
-
-  if (url.searchParams.get('try') === 'v5') {
-    Cookies.set('version', 'v5');
-  }
 
   if (url.hash.substr(1).startsWith('L')) {
     initState.session.highlightedLines = url.hash.substr(2);

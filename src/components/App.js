@@ -10,7 +10,7 @@ import * as RESULT from '../actions/session';
 import Advert from '../containers/Advert';
 import Panel from '../containers/Panel';
 import Runner from '../containers/Runner';
-import Head from './Head';
+import Head from '../containers/Head';
 import Palette from '../containers/Palette';
 import Loading from './Loading';
 import Loadable from 'react-loadable';

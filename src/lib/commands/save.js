@@ -25,8 +25,6 @@ export const publish = {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../../lib/exporter');
     const { id } = await exporter.jsbin(bin, user);
 
-    console.log(id);
-
     const url = `${ORIGIN}/${id}`;
 
     // if created…

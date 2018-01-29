@@ -4,7 +4,11 @@ import { Helmet } from 'react-helmet';
 
 const STATIC = process.env.REACT_APP_STATIC;
 
-const Head = ({ children, title = 'JS Bin' }) =>
+/* <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon-32x32.png?v=YAoG8Nr9v0">
+<link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/favicon-16x16.png?v=YAoG8Nr9v0">
+<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico?v=YAoG8Nr9v0"> */
+
+const Head = ({ children, title = 'JS Bin', error = false }) =>
   <Helmet>
     <meta charSet="utf-8" />
     <title>
@@ -15,7 +19,10 @@ const Head = ({ children, title = 'JS Bin' }) =>
       type="image/svg+xml"
       href={`${STATIC}/images/favicon.svg`}
     />
-    <link rel="shortcut icon" href={`${STATIC}/images/favicon.png`} />
+    <link
+      rel="shortcut icon"
+      href={`${STATIC}/images/favicon${error ? '-err' : ''}.png`}
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"

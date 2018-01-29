@@ -6,10 +6,12 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <title>JS Bin</title>
   <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,url"></script>
-
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+  <meta name="apple-mobile-web-app-title" content="JS Bin">
+  <meta name="application-name" content="JS Bin">
+  <meta name="theme-color" content="#ffffff">
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.

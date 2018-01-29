@@ -15,6 +15,7 @@ const ResultContainer = connect(
     error: session.error,
     splitColumns: app.splitColumns,
     theme: app.theme,
+    bin: bin || {},
   }),
   { clearError, setError } // propsToDispatch
 )(Result);

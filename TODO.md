@@ -11,13 +11,14 @@
 
 - [ ] Pay/cancel/renew
 - [/] Analytics
-- [ ] Logout…!
+- [x] Logout
 - [x] Loop protection (with babel rewrite)
 - [x] Login (though wants some love)
 - [x] Processors
 
 ## Bit bugs
 
+- [ ] new doesn't reset the previous result
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
 - [ ] Saving Markdown kills all the spaces

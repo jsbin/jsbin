@@ -154,6 +154,7 @@ export const setLocal = async bin => {
     css,
     id,
     settings,
+    updated: new Date(),
   };
 
   return idk.set(id, copy).then(() => copy);

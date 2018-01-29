@@ -1,5 +1,6 @@
 export const exportToCodePen = {
-  title: 'Export to CodePen',
+  title: 'Save to CodePen',
+  meta: 'export',
   run: async (dispatch, { bin, user }) => {
     // if (!user.pro) {
     //   return {

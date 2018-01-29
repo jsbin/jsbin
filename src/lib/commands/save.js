@@ -1,5 +1,5 @@
 import React from 'react';
-import { Command } from '../../components/Symbols';
+import { Command, Shift } from '../../components/Symbols';
 import { SAVE } from '../../actions/bin';
 import { addNotification } from '../../actions/notifications';
 import { replace } from 'react-router-redux';
@@ -7,7 +7,8 @@ import { replace } from 'react-router-redux';
 const ORIGIN = process.env.REACT_APP_ORIGIN || window.location.origin;
 
 export const save = {
-  title: 'Save',
+  title: 'Save offline',
+  meta: 'local locally',
   shortcut: (
     <kbd>
       <Command /> S
@@ -19,8 +20,14 @@ export const save = {
 };
 
 export const publish = {
-  title: 'Publish',
-  condition: ({ user }) => !!user.username && user.pro,
+  title: 'Save to JS Bin',
+  meta: 'publish',
+  shortcut: (
+    <kbd>
+      <Command /> <Shift /> S
+    </kbd>
+  ),
+  condition: ({ user }) => !!user.username,
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../../lib/exporter');
     const { id } = await exporter.jsbin(bin, user);

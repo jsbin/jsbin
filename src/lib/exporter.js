@@ -139,7 +139,7 @@ export function codepen(bin) {
     css_prefix: 'autoprefixer', // this should really be 'neither', but I'm being nice
     css_starter: 'neither',
     js: javascript,
-    html_pre_processor: bin[`${HTML}-processor`],
+    html_pre_processor: bin[`${HTML}-processor`], // html-processor
     css_pre_processor: bin[`${CSS}-processor`],
     js_pre_processor: bin[`${JAVASCRIPT}-processor`],
   };
@@ -148,7 +148,7 @@ export function codepen(bin) {
   if (penOptions.html_pre_processor === 'html')
     penOptions.html_pre_processor = 'none';
   if (penOptions.css_pre_processor === 'css')
-    penOptions.html_pre_processor = 'none';
+    penOptions.css_pre_processor = 'none';
   if (penOptions.js_pre_processor === 'javascript')
     penOptions.js_pre_processor = 'none';
 

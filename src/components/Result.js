@@ -6,7 +6,11 @@ import sourceMap from 'source-map';
 
 import * as RESULT from '../actions/session';
 import makeIframe from '../lib/makeIFrame';
-import { emptyPage, html as defaultHTML } from '../lib/Defaults';
+import {
+  emptyPage,
+  html as defaultHTML,
+  javascript as defaultJS,
+} from '../lib/Defaults';
 
 import '../css/Result.css';
 import '../css/Themes.css';
@@ -21,6 +25,7 @@ const Console = Loadable({
 });
 
 let scriptURL = null;
+let pageURL = null;
 
 export default class Result extends React.Component {
   constructor(props) {
@@ -99,8 +104,8 @@ export default class Result extends React.Component {
 
     this.setState({ guid });
 
-    doc.open();
-    doc.write('');
+    // doc.open();
+    // doc.write('');
 
     iframe.contentWindow.addEventListener('error', (frameError, ...args) => {
       if (frameError.detail) {
@@ -150,7 +155,11 @@ export default class Result extends React.Component {
       }
     });
 
-    if (html.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '')) {
+    if (
+      html.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '') &&
+      javascript.code !== defaultJS
+    ) {
+      console.log('has empty', html.replace(/\s/g, ''));
       renderedDoc = emptyPage;
     }
 
@@ -167,8 +176,18 @@ export default class Result extends React.Component {
     // oddly this is around 40ms on a high end Mac, but .innerHTML is
     // way faster, but doesn't actually get rendered…nor does it execute
     // the JavaScript, so we'll stick with the baddie that is .write.
-    doc.write(renderedDoc);
-    doc.close();
+    // doc.write(renderedDoc);
+    // doc.close();
+    if (pageURL) {
+      // release the old URL
+      URL.revokeObjectURL(pageURL);
+    }
+    const blob = new Blob([renderedDoc], {
+      type: 'text/html',
+    });
+    const url = URL.createObjectURL(blob);
+    pageURL = url;
+    iframe.src = url;
 
     // note: insertJS is true only when %code% is present in the original
     // markup - i.e. rarely since this harks back to 2008.

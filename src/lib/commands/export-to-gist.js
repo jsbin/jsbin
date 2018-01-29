@@ -3,7 +3,8 @@ import { replace } from 'react-router-redux';
 import { addNotification, ERROR } from '../../actions/notifications';
 
 export const exportToGist = {
-  title: 'Export to Gist',
+  title: 'Save to Gist',
+  meta: 'export gist',
   run: async (dispatch, { bin, user }) => {
     const exporter = await import(/* webpackChunkName: "exporter" */ '../../lib/exporter');
     const id = await exporter.gist(bin, user);

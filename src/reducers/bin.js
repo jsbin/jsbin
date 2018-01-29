@@ -20,7 +20,7 @@ import {
 export const defaultState = {
   loading: false, // FIXME when "true" app only mounts once…
   id: null,
-  revision: 1, // may drop this
+  revision: 0, // may drop this
   html: defaults.html,
   javascript: defaults.javascript,
   css: defaults.css,

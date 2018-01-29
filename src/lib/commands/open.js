@@ -68,7 +68,7 @@ export const open = {
             content = content.substr(0, 99) + '…';
           }
 
-          const hex = (res.id || '').split('-').pop();
+          const hex = (res.url || '').split('-').pop();
 
           const display = (
             <span>

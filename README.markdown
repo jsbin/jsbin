@@ -1,3 +1,9 @@
+**IMPORTANT:** this current version of jsbin (v4.x.x) is no longer actively maintained and the new version of jsbin (v5) is currently in active development. This means that pretty much all the docs in this repo will be soon out of date. Please be warned ❤️
+
+☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️
+
+---
+
 # JS Bin
 
 JS Bin is an open source collaborative web development debugging tool.
@@ -5,10 +11,6 @@ JS Bin is an open source collaborative web development debugging tool.
 ## If you use JS Bin locally...
 
 It likely means you're not going to subscribe as a pro user - which is how we're sustaining our project, which is cool, but [please consider donating via Gratipay here](https://gratipay.com/jsbin/).
-
-## IMPORTANT NOTICE
-
-Current documentation does not reflect jsbin@4.0.0 - this is a work in progress and community support is welcome to update how to use locally. ❤️
 
 ## What can JS Bin do?
 

@@ -10,5 +10,8 @@ export default function makeIframe(
     'sandbox',
     'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
   );
+  iframe.setAttribute(
+    'allow',
+    'geolocation; midi; camera; microphone; speaker;' );
   return iframe;
 }

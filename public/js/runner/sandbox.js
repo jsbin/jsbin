@@ -26,6 +26,7 @@ var sandbox = (function () {
     // iframe.src = window.location.origin + '/runner-inner';
     iframe.setAttribute('sandbox', 'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts');
     iframe.setAttribute('frameBorder', '0');
+    iframe.setAttribute('allow', 'geolocation; midi; camera; microphone; speaker;');
     iframe.setAttribute('name', 'JS Bin Output ');
     iframe.id = sandbox.guid++;
     // sandbox.active = iframe;

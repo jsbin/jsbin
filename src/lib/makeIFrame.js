@@ -12,7 +12,11 @@ export default function makeIframe(
   );
   iframe.setAttribute(
     'allow',
+<<<<<<< HEAD
     'geolocation microphone camera midi encrypted-media'
   );
+=======
+    'geolocation; midi; camera; microphone; speaker;' );
+>>>>>>> fbfb488110c289b32ea91ee4ed2be632836ec65a
   return iframe;
 }

@@ -169,7 +169,7 @@ Why build JS Bin V at all?
 
 ### 1. I want to be able to try some code out and throw it away (out of mind)
 
-This is achieve through local saving and potentially clearing my local browser cache.
+This is achieved through local saving and potentially clearing my local browser cache.
 
 ### 2. I want to be able to help other people with their code
 

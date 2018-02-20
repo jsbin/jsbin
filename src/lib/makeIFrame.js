@@ -10,5 +10,9 @@ export default function makeIframe(
     'sandbox',
     'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
   );
+  iframe.setAttribute(
+    'allow',
+    'geolocation microphone camera midi encrypted-media'
+  );
   return iframe;
 }

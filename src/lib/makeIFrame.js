@@ -1,3 +1,5 @@
+export const allow = 'geolocation; midi; camera; microphone; speaker;';
+
 export default function makeIframe(
   name = 'JS Bin Output',
   className = 'Result'
@@ -10,13 +12,6 @@ export default function makeIframe(
     'sandbox',
     'allow-modals allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts'
   );
-  iframe.setAttribute(
-    'allow',
-<<<<<<< HEAD
-    'geolocation microphone camera midi encrypted-media'
-  );
-=======
-    'geolocation; midi; camera; microphone; speaker;' );
->>>>>>> fbfb488110c289b32ea91ee4ed2be632836ec65a
+  iframe.setAttribute('allow', allow);
   return iframe;
 }

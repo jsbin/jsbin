@@ -1,4 +1,5 @@
 import Postmate from 'postmate';
+import { allow } from '../makeIFrame';
 import { TOGGLE_LAYOUT, SET_THEME } from '../../actions/app';
 import {
   SET_CSS,
@@ -54,6 +55,7 @@ export class Parent {
 
     // When parent <-> child handshake is complete, data may be requested from the child
     handshake.then(c => {
+      c.frame.setAttribute('allow', allow);
       // Listen to a particular event from the channel
       channel = this.channel = c;
       if (listenQueue) {

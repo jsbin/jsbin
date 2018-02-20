@@ -80,7 +80,7 @@
     "undefsafe": "0.0.3",
     "uuid": "^2.0.1",
     "validate-vat": "^0.3.2",
-    "validator": "^3.16.1"
+    "validator": "^9.4.1"
   },
   "devDependencies": {
     "glob": "^7.0.5",

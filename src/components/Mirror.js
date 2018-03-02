@@ -278,8 +278,6 @@ export default class Mirror extends React.Component {
       ...(editor.extraKeys || {}),
     };
 
-    console.log(extraKeys);
-
     const cmOptions = {
       source,
       theme: this.props.app.theme,

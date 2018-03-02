@@ -22,7 +22,7 @@ const PaletteShortcut = () =>
 
 const keyMap = {
   save: `mod+s`,
-  update: `mod+enter`,
+  update: [`mod+enter`, 'shift+enter'],
   html: `mod+1`,
   javascript: `mod+2`,
   css: `mod+3`,

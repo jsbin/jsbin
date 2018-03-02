@@ -272,7 +272,13 @@ export default class Mirror extends React.Component {
 
     const mode = options.mode || getConfig(processor).mode;
 
-    const extraKeys = { [`${cmCmd}-S`]: 'noop', ...(editor.extraKeys || {}) };
+    const extraKeys = {
+      'Shift-Enter': 'noop',
+      [`${cmCmd}-S`]: 'noop',
+      ...(editor.extraKeys || {}),
+    };
+
+    console.log(extraKeys);
 
     const cmOptions = {
       source,

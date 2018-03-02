@@ -25,7 +25,6 @@ const Console = Loadable({
 });
 
 let scriptURL = null;
-let pageURL = null; // FIXME linting issue
 
 export default class Result extends React.Component {
   constructor(props) {

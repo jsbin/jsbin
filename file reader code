@@ -1,0 +1,25 @@
+
+		window.previewFile = function() {
+			var file = $('#idDocumentUpload')[0].files[0];
+			var size = parseInt(file.size / 1024);
+			var reader = new FileReader();
+			reader.readAsBinaryString(file);
+			reader.onload = function() {
+				var file_data = btoa(reader.result);
+				document.newDocumentData = {
+					"FILE_DATA": file_data,
+					"FILENAME": file.name,
+					"MIME_TYPE": file.type,
+					"SIZE": file.size
+				}
+				sap.ui.getCore().byId('idAttachmentCreate').setText(file.name)
+
+			}
+		}
+		if (document.getElementById('idDocumentUpload') == null)
+			$('body').append(
+				'<input type="file" id="idDocumentUpload" onchange="window.previewFile	()" style="width: 0px; height: 0px; overflow: hidden;">'
+			)
+		$('#idDocumentUpload').trigger('click');
+		// 			}
+	

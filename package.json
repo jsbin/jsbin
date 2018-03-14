@@ -1,6 +1,6 @@
 {
   "name": "jsbin",
-  "version": "5.0.0-alpha.31",
+  "version": "5.0.0-alpha.32",
   "private": true,
   "main": "scripts/main.js",
   "files": [

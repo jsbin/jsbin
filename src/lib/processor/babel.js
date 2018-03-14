@@ -20,7 +20,7 @@ function callback(lineno, colno) {
     message: `Exiting potential infinite loop on line ${lineno}`,
   };
 
-  window.dispatchEvent(new CustomEvent('error', { detail }));
+  self.dispatchEvent(new CustomEvent('error', { detail }));
 }
 
 let Babel = null;

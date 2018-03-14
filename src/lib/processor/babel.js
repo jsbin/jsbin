@@ -20,6 +20,7 @@ function callback(lineno, colno) {
     message: `Exiting potential infinite loop on line ${lineno}`,
   };
 
+  // eslint-disable-next-line no-restricted-globals
   self.dispatchEvent(new CustomEvent('error', { detail }));
 }
 

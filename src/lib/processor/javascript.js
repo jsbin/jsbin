@@ -23,6 +23,8 @@ function callback(lineno, colno) {
 
   // important: this code is run inside the runner - but it's assigned from the
   // outer frame (Result)
+
+  // eslint-disable-next-line no-restricted-globals
   self.dispatchEvent(new CustomEvent('error', { detail }));
 }
 

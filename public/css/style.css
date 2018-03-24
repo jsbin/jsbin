@@ -4772,11 +4772,11 @@ body.min #bin .editbox .CodeMirror pre {
 #mobile-nav,
 .mobile-nav-trigger {display: none;}
 
-#bsaapi {
+#codefund_ad {
   display: none;
 }
 
-.bsaapi #bsaapi {
+.bsaapi #codefund_ad {
   display: block;
 }
 

@@ -24,7 +24,7 @@ main {
 }
 
 .bsaapi main {
-  /* height: calc(100% - 33px); */
+  height: calc(100% - 33px);
 }
 
 .bsaapi.toppanel main {

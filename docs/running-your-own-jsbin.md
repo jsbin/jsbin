@@ -2,11 +2,10 @@
 
 JS Bin is a [Node](http://nodejs.org) project.
 
-Install in 3 simple steps:
+Install in 2 steps:
 
 1. Installing code
 2. Configuration
-3. Database
 
 For the simplest install process we recommend using Node with SQLite.
 

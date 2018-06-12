@@ -1,64 +1,75 @@
-{ "features": [
-  {
-    "name": "Support JS Bin's continued operation",
-    "user": "pro",
-    "tip": "Help keep JS Bin online, working, and awesome"
-  },
-  {
-    "name": "Asset uploading",
-    "user": "pro",
-    "tip": "Just drag and drop assets into your bins for quick & easy use"
-  },
-  {
-    "name": "Private bins",
-    "user": "pro",
-    "tip": "Keep your ideas private, and easily toggle privacy"
-  },
-  {
-    "name": "Embeds: SSL & custom CSS",
-    "user": "pro",
-    "tip": "SSL support, complete CSS customisation and control over editor settings"
-  },
-  {
-    "name": "Dropbox sync",
-    "user": "pro",
-    "tip": "Every bin, backed up to your Dropbox"
-  },
-  {
-    "name": "Vanity URLs",
-    "user": "pro",
-    "tip": "Show off your Pro status with you.jsbin.com"
-  },
-  {
-    "name": "Email support",
-    "user": "pro",
-    "tip": "For private support requests"
-  },
-  {
-    "name": "Full, unmodified output",
-    "user": "free",
-    "tip": "Perfect for testing viewports on mobile and more"
-  },
-  {
-    "name": "Save bins to Gist",
-    "user": "free",
-    "tip": "Export the complete HTML to a Gist"
-  },
-  {
-    "name": "Codecasting (unlimited)",
-    "user": "anon",
-    "tip": "Allow viewers to watch you code, in real-time"
-  },
-  {
-    "name": "Live reload (unlimited)",
-    "user": "anon",
-    "tip": "Output live reloads as you code, in real-time"
-  },
-  {
-    "name": "Custom starting code",
-    "user": "anon",
-    "tip": "Start with only a doctype? Set your \"new\" template"
-  }
-],
-"tweets": ["499277531313631233", "492754486319140865", "492058646118158336", "491948444165365761", "491946894051270656", "491945957450612736", "459041574043664384", "450920759402434561"]
+{
+  "features": [
+    {
+      "name": "Support JS Bin's continued operation",
+      "user": "pro",
+      "tip": "Help keep JS Bin online, working, and awesome"
+    },
+    {
+      "name": "Asset uploading",
+      "user": "pro",
+      "tip": "Just drag and drop assets into your bins for quick & easy use"
+    },
+    {
+      "name": "Private bins",
+      "user": "pro",
+      "tip": "Keep your ideas private, and easily toggle privacy"
+    },
+    {
+      "name": "Embeds & custom CSS",
+      "user": "pro",
+      "tip":
+        "SSL and non SSL embeds, complete CSS customisation and control over editor settings"
+    },
+    {
+      "name": "Dropbox sync",
+      "user": "pro",
+      "tip": "Every bin, backed up to your Dropbox"
+    },
+    {
+      "name": "Vanity URLs",
+      "user": "pro",
+      "tip": "Show off your Pro status with you.jsbin.com"
+    },
+    {
+      "name": "Email support",
+      "user": "pro",
+      "tip": "For private support requests"
+    },
+    {
+      "name": "Full, unmodified output",
+      "user": "free",
+      "tip": "Perfect for testing viewports on mobile and more"
+    },
+    {
+      "name": "Save bins to Gist",
+      "user": "free",
+      "tip": "Export the complete HTML to a Gist"
+    },
+    {
+      "name": "Codecasting (unlimited)",
+      "user": "anon",
+      "tip": "Allow viewers to watch you code, in real-time"
+    },
+    {
+      "name": "Live reload (unlimited)",
+      "user": "anon",
+      "tip": "Output live reloads as you code, in real-time"
+    },
+    {
+      "name": "Custom starting code",
+      "user": "anon",
+      "tip": "Start with only a doctype? Set your \"new\" template"
+    }
+  ],
+  "tweets": [
+    "499277531313631233",
+    "492754486319140865",
+    "492058646118158336",
+    "491948444165365761",
+    "491946894051270656",
+    "491945957450612736",
+    "459041574043664384",
+    "450920759402434561"
+  ]
 }

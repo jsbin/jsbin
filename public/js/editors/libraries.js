@@ -822,6 +822,11 @@ var libraries = [
     'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
     'label': 'Velocity UI Pack 1.2.3',
     'group': 'Velocity'
+  },
+  {
+    'url': '//cdnjs.cloudflare.com/ajax/libs/expect.js/0.3.1/index.min.js',
+    'label': 'Expect 0.3.1',
+    'group': 'Expect'
   }
 ];
 

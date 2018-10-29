@@ -105,7 +105,7 @@ jQuery(function ($) {
   var $ccynote = $('.ccy-note');
 
   $.ajax({
-    url: 'http://data.fixer.io/api/latest?access_key=2bb802a604d137b91529c32e63849ae5&symbols=USD,GBP&format=1',
+    url: 'https://data.fixer.io/api/latest?access_key=2bb802a604d137b91529c32e63849ae5&symbols=USD,GBP&format=1',
     dataType: 'jsonp',
     success: function (data) {
       var rates = data.rates;

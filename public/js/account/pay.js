@@ -82,10 +82,14 @@ jQuery(function ($) {
   price.discount.value = price.discount.el.data('price') * 1;
 
   var fx = {
-    USD: { rate: 0, symbol: '$' },
-    EUR: { rate: 0, symbol: '€' },
+    USD: { rate: 1 / 0.888684 / (1 / 1.138751), symbol: '$' },
+    EUR: { rate: 1 / 0.888684, symbol: '€' },
     GBP: { rate: 1, symbol: '£' }
   };
+
+  // fx.EUR.rate = 1 / 0.888684;
+  // fx.USD.rate = 1 / 0.888684 / (1 / 1.138751);
+
 
   function updatePricesTo(ccy) {
     var yearly = price.yearly.value * fx[ccy].rate;
@@ -104,22 +108,13 @@ jQuery(function ($) {
 
   var $ccynote = $('.ccy-note');
 
-  $.ajax({
-    url: 'https://data.fixer.io/api/latest?access_key=2bb802a604d137b91529c32e63849ae5&symbols=USD,GBP&format=1',
-    dataType: 'jsonp',
-    success: function (data) {
-      var rates = data.rates;
-      fx.EUR.rate = 1 / rates.GBP;
-      fx.USD.rate = fx.EUR.rate / (1 / rates.USD);
-
-      // every other day chose USD for pricing
-      var useUSD = (new Date()).getDay() % 2;
-      if (useUSD === 0) {
-        analytics.experiment('usd-pricing');
-        $('.ccy input[value=USD]').click();
-      }
-    },
-  });
+  // var rates = {
+  //   "USD": 1.138751,
+  //   "GBP": 0.888684,
+  //   "EUR": 1
+  //   };
+  fx.EUR.rate = 1 / 0.888684;
+  fx.USD.rate = fx.EUR.rate / (1 / 1.138751);
 
   $('.ccy input').change(function () {
     var ccy = this.value;

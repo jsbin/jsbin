@@ -47,8 +47,6 @@ export default function reducer(state = defaultState, action) {
   }
 
   if (type === CLEAR_PREVIEWS) {
-    console.log('clear');
-
     return { ...state, previews: [] };
   }
 

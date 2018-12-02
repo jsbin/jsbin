@@ -147,7 +147,11 @@ class Autocomplete {
     }
     cm.startOperation();
     this.cursor = this.cm.getCursor();
-    this.showHint(from, to);
+
+    if (cm.getTokenAt(this.cursor).type !== 'comment') {
+      this.showHint(from, to);
+    }
+
     cm.endOperation();
   };
 

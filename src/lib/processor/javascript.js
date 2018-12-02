@@ -29,14 +29,16 @@ function callback(lineno, colno) {
   self.dispatchEvent(new CustomEvent('error', { detail }));
 }
 
-function capturePreview(id, value) {
+function capturePreview(id, value, preview) {
   const detail = {
     id,
-    value,
+    value: preview != null ? JSON.stringify(preview) : value,
   };
 
-  // eslint-disable-next-line no-restricted-globals
-  self.dispatchEvent(new CustomEvent('preview', { detail }));
+  if (preview !== null) {
+    // eslint-disable-next-line no-restricted-globals
+    self.dispatchEvent(new CustomEvent('preview', { detail }));
+  }
   return value;
 }
 

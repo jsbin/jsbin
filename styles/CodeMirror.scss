@@ -8,12 +8,15 @@
   color: #aaa;
 }
 
-.widget-preview {
-  &:after {
+.widget-preview:after {
     content: attr(data-value);
     padding-left: 10px;
+    font-style: italic;
     color: rgba(0, 0, 200, 0.6);
-  }
+}
+
+.theme-dark .widget-preview:after {
+  color: rgb(129, 212, 250);
 }
 
 .widget-colour {

@@ -10,26 +10,51 @@ const getNodeBody = path => {
     ];
   }
 
+  if (type === 'ReturnStatement') {
+    return [node.argument, path.get('argument')];
+  }
+
   if (type === 'ExpressionStatement') {
+    path.___touched = true;
     return [node.expression, path.get('expression')];
   }
+
+  return [node, path];
 };
 
-const capturePreviewTransform = t => ({
+const capturePreviewTransform = ({ types: t, transform }) => ({
   exit(path) {
     if (path.___touched) return;
     const { trailingComments } = path.node;
     if (trailingComments) {
-      const transform = trailingComments.find(comment => {
-        return comment.value.trim() === '?';
+      const comment = trailingComments.find(comment => {
+        return comment.value.trim().startsWith('?');
       });
 
-      if (transform) {
+      if (comment) {
         const [BODY, source] = getNodeBody(path);
 
+        let previewValue = t.identifier('undefined');
+
+        const match = comment.value.match(/\s*\?(.*)$/);
+
+        if (match && match[1].trim()) {
+          try {
+            previewValue = transform(
+              `(()=>{try { return ${match[1]} } catch(e){} return null})()`,
+              { ast: true }
+            ).ast.program.body[0].expression;
+          } catch (e) {
+            previewValue = t.nullLiteral();
+          }
+        }
+
+        console.log('preview', previewValue);
+
         const fn = t.callExpression(t.identifier(captureFnName), [
-          t.numericLiteral(transform.loc.start.line - 1),
+          t.numericLiteral(comment.loc.start.line - 1),
           BODY,
+          previewValue,
         ]);
 
         source.replaceWith(fn);
@@ -40,8 +65,9 @@ const capturePreviewTransform = t => ({
 });
 
 export default function preview(callback) {
-  return ({ types, transform }) => {
-    const callbackNode = transform(callback, { ast: true }).ast.program.body[0];
+  return babel => {
+    const callbackNode = babel.transform(callback, { ast: true }).ast.program
+      .body[0];
 
     captureFnName = callbackNode.id.name;
 
@@ -58,8 +84,12 @@ export default function preview(callback) {
             programPath.node.directives.unshift(callbackNode);
           },
         },
-        VariableDeclaration: capturePreviewTransform(types),
-        ExpressionStatement: capturePreviewTransform(types),
+        VariableDeclaration: capturePreviewTransform(babel),
+        ExpressionStatement: capturePreviewTransform(babel),
+        BinaryExpression: capturePreviewTransform(babel),
+        ReturnStatement: capturePreviewTransform(babel),
+        LogicalExpression: capturePreviewTransform(babel),
+        CallExpression: capturePreviewTransform(babel),
       },
     };
   };

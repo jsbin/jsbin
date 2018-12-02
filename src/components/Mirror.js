@@ -149,7 +149,11 @@ export default class Mirror extends React.Component {
       cm.setOption('preview', nextProps.source === MODES.JAVASCRIPT);
     }
 
-    if (source === nextProps.source && nextProps.previews.length) {
+    if (
+      source === nextProps.source &&
+      nextProps.previews &&
+      nextProps.previews.length
+    ) {
       nextProps.previews.forEach(p => {
         cm.updatePreview(p.id, p.value);
       });

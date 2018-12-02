@@ -1,6 +1,6 @@
 import CodeMirror from 'codemirror';
 
-const regexp = new RegExp(`//\\s*?`, 'g'); // get a singleton copy
+const regexp = new RegExp(`//\\s*\\?`, 'g'); // get a singleton copy
 
 const previews = {};
 
@@ -45,8 +45,6 @@ function addPreviewMarker(cm, from, to) {
     let res = regexp.exec(text.toLowerCase());
 
     while (res) {
-      const ch = res.index;
-
       const widget = document.createElement('span');
       widget.id = `live-preview${line}`;
       widget.className = 'widget-preview';
@@ -55,7 +53,7 @@ function addPreviewMarker(cm, from, to) {
       previews[line] = widget;
 
       // FIXME I'd rather _update_ the widget, than remove and add
-      const marker = cm.setBookmark({ line, ch: ch + 10 }, { widget });
+      const marker = cm.setBookmark({ line, ch: text.length }, { widget });
       marker.__type = 'previewMarker';
 
       res = regexp.exec(text);

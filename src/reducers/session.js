@@ -11,6 +11,8 @@ import {
   SWATCH_OPEN,
   CLEAR_ERROR,
   DIRTY,
+  CLEAR_PREVIEWS,
+  SET_PREVIEW,
 } from '../actions/session';
 
 import { RESET } from '../actions/bin';
@@ -32,14 +34,29 @@ export const defaultState = {
   error: null,
   splitterWidth: 50,
   dirty: false,
+  previews: [],
   embedded: window.top !== window,
   ...defaultCursorState,
 };
 
 export default function reducer(state = defaultState, action) {
   const { type } = action;
+
   if (type === RESET) {
     return { ...state, ...defaultCursorState, error: null };
+  }
+
+  if (type === CLEAR_PREVIEWS) {
+    console.log('clear');
+
+    return { ...state, previews: [] };
+  }
+
+  if (type === SET_PREVIEW) {
+    return {
+      ...state,
+      previews: [...state.previews, { id: action.id, value: action.value }],
+    };
   }
 
   if (type === SWATCH_OPEN) {

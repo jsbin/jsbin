@@ -8,6 +8,14 @@
   color: #aaa;
 }
 
+.widget-preview {
+  &:after {
+    content: attr(data-value);
+    padding-left: 10px;
+    color: rgba(0, 0, 200, 0.6);
+  }
+}
+
 .widget-colour {
   position: relative;
   margin-left: 1px;
@@ -45,7 +53,7 @@
   }
   .CodeMirror-linenumber {
     font-size: ($font-size-base - 2);
-    line-height: 16px;
+    line-height: ($font-size-base * 2);
   }
   .CodeMirror-gutters {
     background: white;

@@ -1,8 +1,13 @@
 import { Child } from './channel';
 import { SET_JS, SET_HTML, SET_RESULT } from '../../actions/processors';
-import { CHANGE_RESULT } from '../../actions/session';
+import {
+  CHANGE_RESULT,
+  SET_PREVIEW,
+  CLEAR_PREVIEWS,
+  SET_ERROR,
+  CLEAR_ERROR,
+} from '../../actions/session';
 import { TOGGLE_LAYOUT, SET_THEME } from '../../actions/app';
-import { SET_ERROR, CLEAR_ERROR } from '../../actions/session';
 
 export default store => {
   const channel = new Child({
@@ -29,7 +34,11 @@ export default store => {
   return next => action => {
     const result = next(action);
 
-    if ([SET_ERROR, CLEAR_ERROR].includes(action.type)) {
+    if (
+      [SET_ERROR, CLEAR_ERROR, SET_PREVIEW, CLEAR_PREVIEWS].includes(
+        action.type
+      )
+    ) {
       channel.dispatch(action);
     }
 

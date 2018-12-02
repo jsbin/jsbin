@@ -9,12 +9,22 @@ export const DIRTY = '@@session/DIRTY';
 export const SET_SPLITTER_WIDTH = '@@session/SET_SPLITTER_WIDTH';
 export const HIGHLIGHT_LINES = '@@session/HIGHLIGHT_LINES';
 export const SWATCH_OPEN = '@@session/SWATCH_OPEN';
+export const SET_PREVIEW = '@@session/SET_PREVIEW';
+export const CLEAR_PREVIEWS = '@@session/CLEAR_PREVIEWS';
 
 // constants - not event types
 export const RESULT_NONE = 'none';
 export const RESULT_CONSOLE = 'console';
 export const RESULT_PAGE = 'page';
 export const RESULT_BOTH = 'both';
+
+export function setPreview({ id, value }) {
+  return { type: SET_PREVIEW, id, value };
+}
+
+export function clearPreviews() {
+  return { type: CLEAR_PREVIEWS };
+}
 
 export function setSplitterWidth(value) {
   return dispatch => {

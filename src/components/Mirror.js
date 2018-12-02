@@ -35,6 +35,7 @@ import '../lib/CodeMirror/cmd-snippets';
 import '../lib/CodeMirror/opt-styles';
 import '../lib/CodeMirror/ext-highlight-lines';
 import '../lib/CodeMirror/colour-bookmark';
+import '../lib/CodeMirror/preview-markers';
 import '../lib/CodeMirror/autocomplete';
 
 import 'codemirror/lib/codemirror.css';
@@ -133,7 +134,7 @@ export default class Mirror extends React.Component {
     if (this.errorMarker) {
       this.errorMarker.clear();
     }
-    clearTimeout(this.refreshTimer);
+    if (this.refreshTimer) clearTimeout(this.refreshTimer);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -145,6 +146,13 @@ export default class Mirror extends React.Component {
     // will eventually fire when `cm.setValue` is called a little further on
     if (source !== nextProps.source) {
       cm.setOption('colours', nextProps.source === MODES.CSS);
+      cm.setOption('preview', nextProps.source === MODES.JAVASCRIPT);
+    }
+
+    if (source === nextProps.source && nextProps.previews.length) {
+      nextProps.previews.forEach(p => {
+        cm.updatePreview(p.id, p.value);
+      });
     }
 
     if (
@@ -302,6 +310,10 @@ export default class Mirror extends React.Component {
 
     if (source === MODES.CSS) {
       cmOptions.colours = true;
+    }
+
+    if (source === MODES.JAVASCRIPT) {
+      cmOptions.preview = true;
     }
 
     return (

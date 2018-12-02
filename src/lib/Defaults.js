@@ -51,7 +51,7 @@ export const css = `* {
   font-family: sans-serif;
 }`;
 
-export const javascript = `// here be your javascript
+export const javascript = `console.clear()
 `;
 
 const macSpecificKeySwap = isMac

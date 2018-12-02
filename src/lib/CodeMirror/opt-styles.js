@@ -4,7 +4,8 @@ CodeMirror.defineOption('fontSize', 13, function(cm, value) {
   value = parseFloat(value, 10);
   const style = document.createElement('style');
   style.innerHTML = `.CodeMirror { font-size: ${value}px; line-height: ${value *
-    1.3}px; } .CodeMirror-linenumber { line-height: ${value * 1.3}px }`;
+    1.3}px; } .CodeMirror .CodeMirror-linenumber { line-height: ${value *
+    1.4}px; font-size: ${value * 0.8}px; }`;
   document.head.appendChild(style);
 });
 

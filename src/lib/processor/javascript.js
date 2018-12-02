@@ -1,5 +1,6 @@
 import { JAVASCRIPT } from '../cm-modes';
 import loopProtection from 'loop-protect';
+import preview from './transform/preview';
 import { babelError } from '../custom-error';
 let Babel = null;
 
@@ -28,6 +29,17 @@ function callback(lineno, colno) {
   self.dispatchEvent(new CustomEvent('error', { detail }));
 }
 
+function capturePreview(id, value) {
+  const detail = {
+    id,
+    value,
+  };
+
+  // eslint-disable-next-line no-restricted-globals
+  self.dispatchEvent(new CustomEvent('preview', { detail }));
+  return value;
+}
+
 export const transform = async source => {
   const sourceFileName =
     (window.location.pathname.split('/').pop() || 'untitled') + '.js';
@@ -36,7 +48,9 @@ export const transform = async source => {
     !(
       source.includes('for') ||
       source.includes('import') ||
-      source.includes('while')
+      source.includes('while') ||
+      source.includes('// ?') ||
+      source.includes('//?')
     ) ||
     source.includes('noprotect')
   ) {
@@ -46,6 +60,7 @@ export const transform = async source => {
   if (Babel === null) {
     Babel = await import(/* webpackChunkName: "babel" */ 'babel-standalone');
     Babel.registerPlugin('loopProtection', loopProtection(100, callback));
+    Babel.registerPlugin('preview', preview(capturePreview));
   }
 
   let res = source;
@@ -53,7 +68,7 @@ export const transform = async source => {
   try {
     const transformed = Babel.transform(source, {
       sourceMap: 'both',
-      plugins: ['loopProtection'],
+      plugins: ['loopProtection', 'preview'],
       // sourceType: this is a bit of a wild guess, but making it a module
       // means that the console doesn't have access to variables inside
       // this might lead to unexpected results for the user.

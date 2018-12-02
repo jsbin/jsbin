@@ -1,6 +1,11 @@
 import { connect } from 'react-redux';
 import Result from '../components/Result';
-import { clearError, setError } from '../actions/session';
+import {
+  clearError,
+  setError,
+  setPreview,
+  clearPreviews,
+} from '../actions/session';
 import { JAVASCRIPT, HTML } from '../lib/cm-modes';
 
 const ResultContainer = connect(
@@ -17,7 +22,12 @@ const ResultContainer = connect(
     theme: app.theme,
     bin: bin || {},
   }),
-  { clearError, setError } // propsToDispatch
+  {
+    clearError,
+    setError,
+    setPreview,
+    clearPreviews,
+  } // propsToDispatch
 )(Result);
 
 export default ResultContainer;

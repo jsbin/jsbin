@@ -106,6 +106,12 @@ export default class Result extends React.Component {
     doc.open();
     doc.write('');
 
+    props.clearPreviews();
+
+    iframe.contentWindow.addEventListener('preview', event => {
+      props.setPreview(event.detail);
+    });
+
     iframe.contentWindow.addEventListener('error', (frameError, ...args) => {
       if (frameError.detail) {
         // handles custom emitted errors, like protect
@@ -158,7 +164,7 @@ export default class Result extends React.Component {
       html.replace(/\s/g, '') === defaultHTML.replace(/\s/g, '') &&
       javascript.code !== defaultJS
     ) {
-      console.log('has empty', html.replace(/\s/g, ''));
+      // console.log('has empty', html.replace(/\s/g, ''));
       renderedDoc = emptyPage;
     }
 

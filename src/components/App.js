@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Splitter from '@remy/react-splitter-layout';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
+import * as commands from '../lib/commands';
 import Cookies from 'js-cookie';
 import { NotificationStack } from 'react-notification';
 
@@ -48,8 +49,40 @@ export default class App extends Component {
   }
 
   componentWillMount() {
-    const { match } = this.props;
-    this.props.fetch(match.params);
+    const { match, user } = this.props;
+    this.props.fetch(match.params, user);
+
+    this.keyMap = {
+      // intentionally supporting both
+      openPalette: [`command+shift+p`, `ctrl+shift+p`],
+      dismiss: 'escape',
+    };
+
+    this.keyHandlers = {
+      openPalette: this.triggerPalette,
+      dismiss: this.dismiss,
+    };
+
+    const used = Object.keys(this.keyMap).map(key => this.keyMap[key]);
+
+    const toMap = Object.keys(commands).filter(key => !!commands[key].shortcut);
+    toMap.forEach(key => {
+      const command = commands[key];
+      if (used.includes(command.shortcut)) {
+        console.warn(
+          `command shortcut conflict on ${key} "${command.display}" ${command.shortcut}`
+        );
+        return;
+      }
+      used.push(command.shortcut);
+      this.keyMap[key] = command.shortcut;
+      this.keyHandlers[key] = () => {
+        if (command.condition) {
+          if (!command.condition(this.props)) return;
+        }
+        this.props.dispatchTo(command.run, this.props);
+      };
+    });
   }
 
   insertCode(string) {
@@ -94,7 +127,7 @@ export default class App extends Component {
       this.props.match.url !== prevProps.match.url &&
       this.props.history.action !== 'REPLACE'
     ) {
-      return this.props.fetch(this.props.match.params);
+      return this.props.fetch(this.props.match.params, this.props.user);
     }
   }
 
@@ -134,23 +167,12 @@ export default class App extends Component {
       return <Error {...bin.error} />;
     }
 
-    const keyMap = {
-      // intentionally supporting both
-      openPalette: [`command+shift+p`, `ctrl+shift+p`],
-      dismiss: 'escape',
-    };
-
-    const handlers = {
-      openPalette: this.triggerPalette,
-      dismiss: this.dismiss,
-    };
-
     const className = classnames(['JsBinApp', `theme-${theme}`], {
       embedded: session.embedded,
     });
 
     return (
-      <HotKeys keyMap={keyMap} handlers={handlers}>
+      <HotKeys keyMap={this.keyMap} handlers={this.keyHandlers}>
         <div className={className}>
           {session.palette && <Palette insert={this.insertCode} />}
           <Head />

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <script src="https://unpkg.com/memfetch@1.1.2/dist/index.js"></script>
+  <title>Spectrum mem visualiser</title>
+<style id="jsbin-css">
+pre {
+	font-family: 'Commodore-64-Angled', 'ZX-Spectrum', monospace;
+  letter-spacing: 0px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(204, 204, 204);
+  padding: 10px;
+  display: block;
+  margin: 0 auto;
+  max-width: 600px;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 27px;
+  font-size: 24px;
+
+  display: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+_body {
+  background: url(http://localhost:5000/old-tv.jpg) no-repeat center;
+  background-position: center;
+  background-size: 1248px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+/*   background: url(http://localhost:5000/old-tv.svg) no-repeat center; */
+  background-position: center;
+  background-size: 512px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fdfdfd;
+  background-image: linear-gradient(to bottom, #cfd9df 0%, #e2ebf0 100%);
+}
+
+canvas {
+	background: #fff;
+  border: 10px solid black;
+  display: block;
+  border-radius: 0px;
+
+  transform: scale(1);
+  image-rendering: pixelated;
+}
+</style>
+</head>
+<body>
+<canvas></canvas>
+  <script id="memory" type="memory">
+4000	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4008	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4010	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4018	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4020	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4028	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4030	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4038	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4040	DEFB $00,$00,$00,$00,$00,$00,$3F,$FF
+4048	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+4050	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+4058	DEFB $FF,$FC,$00,$00,$00,$00,$00,$00
+4060	DEFB $00,$00,$00,$00,$00,$00,$3C,$3F
+4068	DEFB $FF,$FC,$3F,$C3,$FC,$00,$3C,$3F
+4070	DEFB $C0,$03,$C3,$C0,$3F,$FC,$3F,$FF
+4078	DEFB $FC,$3C,$00,$00,$00,$00,$00,$00
+4080	DEFB $00,$00,$00,$00,$00,$00,$3C,$3C
+4088	DEFB $00
+
+408C	DEFB $C0,$00,$00,$00,$03,$C0,$3F,$C3
+4094	DEFB $FC,$3C,$3C,$00,$3C,$3C,$00,$00
+409C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+40A4	DEFB $00,$00,$3C,$3F,$FF,$FC,$3F,$C0
+40AC	DEFB $00,$3F,$C0,$00,$3F,$FC,$00,$00
+40B4	DEFB $3F,$FC,$3F,$FF,$FC,$3C,$00,$00
+40BC	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+40C4	DEFB $00,$00,$3F,$FF,$FF,$FF,$FF,$C0
+40CC	DEFB $00,$3C,$3C,$03,$FF,$C3,$FF,$FC
+40D4	DEFB $00,$3F,$FF,$FF,$FF,$FC,$00,$00
+40DC	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+40E4	DEFB $00,$00,$3C,$03,$C3,$C3,$C3,$C0
+40EC	DEFB $3F,$FC,$3C,$00,$03,$FF,$FC,$00
+40F4	DEFB $3C,$03,$FC,$3C,$3F,$FC,$00,$00
+40FC	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4104	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+410C	DEFB $00,$20,$00,$00,$00,$00,$00,$00
+4114	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+411C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4124	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+412C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4134	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+413C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4144	DEFB $00,$00,$3F,$FF,$FF,$FF,$FF,$FF
+414C	DEFB $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+4154	DEFB $FF,$FF,$FF,$FF,$FF,$FC,$00,$00
+415C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4164	DEFB $00,$00,$3C,$3F,$FF,$FC,$3F,$C3
+416C	DEFB $FC,$00,$3C,$3F,$C0,$03,$C3,$C0
+4174	DEFB $3F,$FC,$3F,$FF,$FC,$3C,$00,$00
+417C	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+4184	DEFB $00,$00,$3C,$3C,$00
+551A	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+5522	DEFB $00,$00,$00,$00,$3C,$00,$00,$00
+552A	DEFB $3C,$3C,$00,$3F,$FF,$FF,$FC,$00
+5532	DEFB $00,$3F,$FC,$FA,$3C,$00,$3C,$3C
+553A	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+5542	DEFB $00,$00,$00,$00,$3C,$3C,$00,$3C
+554A	DEFB $3C,$00,$3F,$FF,$C0,$00,$3F,$FF
+5552	DEFB $C0,$3C,$00,$00,$00,$3F,$C0,$3C
+555A	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+5562	DEFB $00,$00,$00,$00,$00,$F0,$F0,$00
+556A	DEFB $F0,$FF,$0F,$0F,$FF,$0F,$F0,$0F
+5572	DEFB $F0,$F0,$F0,$F0,$FF,$00,$0F,$00
+557A	DEFB $F0,$00,$00,$00,$00,$00,$00,$00
+5582	DEFB $00,$00,$00,$00,$3C,$00,$00,$00
+558A	DEFB $3F,$C3,$C0,$00,$03,$C0,$3F,$C0
+5592	DEFB $3C,$3F,$FC,$3F,$FF,$FF,$FC,$3C
+559A	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55A2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55AA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55B2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55BA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55C2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55CA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55D2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55DA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55E2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55EA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55F2	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+55FA	DEFB $00,$00,$00,$00,$00,$00,$00,$00
+5602	DEFB $00,$00,$00,$00
+
+</script>
+<!--boot js--><script id="jsbin-javascript" defer>const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+const w = canvas.width = 256;
+const h = canvas.height = 192;
+
+function put(ctx, imageData, x, y) {
+  ctx.putImageData(imageData, x, y);
+}
+
+function block(index, byte) {
+  const third = index >> 11; // 0..2047, 2048..4095, 4096..6143
+  const imageData = new Uint8ClampedArray(4 * 8); // 1x8 pixel array
+
+  for (let j = 7; j >= 0; j--) {
+    // determines bit for i, based on MSb
+    const bit = (byte & (1 << j)) === 0 ? 0 : 255;
+    imageData.set([bit, bit, bit, 255], (7 - j) * 4); // place the bits forward
+  }
+
+  const x = index % 32;
+  const y = ((index >> 5) * 8) % 64 + third * 56; // this is the y coord
+  const offset = index >> 8;
+
+  put(ctx, new ImageData(imageData, 8, 1), x * 8, y + offset);
+}
+
+// 32 bytes on 192 rows
+
+
+function drawMemory(memory) {
+	memory.map((line, i) => {
+    line.bytes.map((byte, i) => {
+			block((line.address + i) - 0x4000, byte);
+    });
+  });
+}
+
+async function getData() {
+  const res = await fetch('http://localhost:53107/bander-memory.tap');
+  const data = await res.arrayBuffer();
+
+  console.log('worked', data.byteLength)
+
+  const bytes = Array.from(data).reduce((acc, curr, i) => {
+    if (!acc[acc.length - 1].bytes) {
+      acc[acc.length - 1] = { bytes: [], address: 0x4000 + i };
+    }
+
+    if (i % 8 !== 0) {
+      acc[acc.length - 1].bytes.push(curr);
+    }
+
+    return acc;
+  }, []);
+
+  drawMemory(bytes);
+}
+
+function parse(data) {
+  const lines = data
+  	.split('\n')
+  	.map(_ => _.replace(/;.*$/, '').trim()) // remove comments
+  	.filter(Boolean) // strip empty lines
+  	.map(line => {
+      const [address, cmd, memory] = line.split(/\s+/);
+
+      const bytes = memory.split(',').map(_ => parseInt(_.substring(1), 16))
+
+      return {
+        address: parseInt(address.replace(/^b/, ''), 16),
+        bytes,
+      }
+    });
+
+  return lines; //? lines[0]
+}
+
+// const data = parse(document.querySelector('#memory').innerText.trim());
+
+// drawMemory(data);
+getData();
+
+
+
+</script>
+</body>
+</html>

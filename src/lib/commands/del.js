@@ -1,14 +1,8 @@
-import React from 'react';
-import { Command, Shift, Backspace } from '../../components/Symbols';
 // import { DELETE } from '../../actions/bin';
 
 export const del = {
   title: 'Delete',
-  shortcut: (
-    <kbd>
-      <Command /> <Shift /> <Backspace />
-    </kbd>
-  ),
+  shortcut: 'command+shift+backspace',
   run: dispatch => {
     alert('Not implemented yet');
     return;

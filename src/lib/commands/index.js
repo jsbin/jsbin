@@ -11,6 +11,7 @@ export * from './export-to-codepen';
 
 export * from './show-console.js';
 export * from './show-page.js';
+export * from './show-both.js';
 export * from './show-toggle-result';
 
 export * from './split-right';

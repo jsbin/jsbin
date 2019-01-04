@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import App from '../components/App';
 import {
   fetchBin,
+  fetchGist,
   fetchGithub,
   fetchLocal,
   fetchPost,
@@ -23,10 +24,19 @@ import {
 
 import { setSource } from '../actions/app';
 
-const mapStateToProps = ({ bin, editor, session, app, notifications }) => {
+const mapStateToProps = ({
+  user,
+  bin,
+  editor,
+  session,
+  app,
+  notifications,
+  processors,
+}) => {
   return {
     notifications,
     bin,
+    processors,
     editor,
     loading: bin.loading,
     session,
@@ -34,12 +44,14 @@ const mapStateToProps = ({ bin, editor, session, app, notifications }) => {
     splitColumns: app.splitColumns,
     result: session.result,
     theme: app.theme,
+    user,
     showWelcome: app.showWelcome,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+    dispatchTo: (fn, args) => fn(dispatch, args),
     setCursor: (source, line, ch) => dispatch(setCursor(source, line, ch)),
     dismissNotification: id => dispatch(dismissNotification(id)),
     dismissAllNotifications: () => dispatch(dismissAllNotifications()),
@@ -49,13 +61,18 @@ const mapDispatchToProps = dispatch => {
     dismiss: () => dispatch(dismiss()),
     triggerPalette: value => dispatch(triggerPalette(value)),
     setSource: source => dispatch(setSource(source)),
-    fetch: params => {
+    fetch: (params, user) => {
       if (params.bin) {
+        if (params.bin.includes(':')) {
+          const [owner, id] = params.bin.split(':');
+          return dispatch(fetchGithub(user, owner, id, params.version));
+        }
+
         return dispatch(fetchBin(params.bin, params.version));
       }
 
       if (params.gistId) {
-        return dispatch(fetchGithub(params.gistId));
+        return dispatch(fetchGist(params.gistId));
       }
 
       if (params.postId) {

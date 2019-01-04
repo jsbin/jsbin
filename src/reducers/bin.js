@@ -9,6 +9,7 @@ import {
   SET_JS,
   SET_CSS,
   SET_BIN,
+  SET_SHA,
   FETCH_BIN_FAILURE,
   FETCH_BIN_SUCCESS,
   FETCH_BIN_REQUEST,
@@ -24,6 +25,7 @@ export const defaultState = {
   html: defaults.html,
   javascript: defaults.javascript,
   css: defaults.css,
+  sha: null,
   updated: null,
   error: null,
 };
@@ -75,6 +77,10 @@ export default function reducer(state = defaultState, action) {
       ...action.payload,
       loading: loading === undefined ? false : loading,
     };
+  }
+
+  if (type === SET_SHA) {
+    return { ...state, sha: value };
   }
 
   let key = null;

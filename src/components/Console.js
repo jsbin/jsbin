@@ -64,6 +64,8 @@ export default class BinConsole extends React.Component {
             history.push(cmd);
           }}
           onClear={() => {
+            window.top.console.log('>>>>>>>');
+            debugger;
             this.console.clear();
           }}
         />

@@ -1,9 +1,12 @@
 import slugger from 'jsbin-id';
 import idk from 'idb-keyval'; // lol: IDK … I don't know
 import * as ALL_MODES from './cm-modes';
+import fileToBin from './file-to-bin';
 const MODES = [ALL_MODES.HTML, ALL_MODES.CSS, ALL_MODES.JAVASCRIPT];
 const API = process.env.REACT_APP_API;
 const POST_API = process.env.REACT_APP_POST_API;
+
+export const GH_API = 'https://api.github.com';
 
 // converts *-processor into the bin.settings object compatible with production
 export const getSettingsForBin = bin => {
@@ -20,12 +23,18 @@ export const getSettingsForBin = bin => {
 
 export const convertToStandardBin = ({ bin, processors }) => {
   const settings = getSettingsForBin(bin);
-  const res = {
-    html: processors['html-result'],
-    javascript: processors['javascript-result'].code,
-    css: processors['css-result'],
-    ...settings,
-  };
+
+  const res = MODES.reduce(
+    (acc, curr) => {
+      if (curr === bin[`${curr}-processor`]) {
+        acc[curr] = bin[curr];
+      } else {
+        acc[curr] = processors[`${curr}-result`];
+      }
+      return acc;
+    },
+    { ...settings }
+  );
 
   const source = MODES.reduce((acc, curr) => {
     if (res[curr] !== bin[curr]) {
@@ -101,7 +110,7 @@ export const getInvoices = ({ token }) => {
 };
 
 export const getBin = (id, revision = 'latest') => {
-  return fetch(`${API}/bin/${id}/${revision}`, settings()).then(res => {
+  return fetch(`${API}/bin/${id}/${revision}`, settings()).then(async res => {
     if (res.status !== 200) {
       // this is a bit sucky, but redux-pack expect an object not a first class
       // error to be rejected
@@ -109,7 +118,8 @@ export const getBin = (id, revision = 'latest') => {
       return Promise.reject({ status: res.status });
     }
 
-    return res.json();
+    const json = await res.json();
+    return json;
   });
 };
 
@@ -158,6 +168,61 @@ export const setLocal = async bin => {
   };
 
   return idk.set(id, copy).then(() => copy);
+};
+
+function b64DecodeUnicode(str) {
+  // Going backwards: from bytestream, to percent-encoding, to original string.
+  return decodeURIComponent(
+    atob(str)
+      .split('')
+      .map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join('')
+  );
+}
+
+export const getFromGithub = async (user, owner, id, revision) => {
+  // FIXME
+  console.warn(
+    'revision (%s) not currently supported, loading latest',
+    revision
+  );
+
+  const headers = {
+    Authorization: `token ${user.githubToken}`,
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (!user.githubToken) {
+    delete headers.Authorization;
+  }
+
+  const res = await fetch(
+    `${GH_API}/repos/${owner}/bins/contents/${id}/index.html`,
+    {
+      mode: 'cors',
+      headers,
+    }
+  );
+  const json = await res.json();
+
+  const content = b64DecodeUnicode(json.content);
+
+  const bin = fileToBin(content);
+  bin.url = id;
+  bin.revision = revision;
+  bin.id = id;
+
+  console.log(content);
+
+  if (bin.settings && bin.settings.processors) {
+    Object.keys(bin.settings.processors).forEach(key => {
+      bin[key] = bin.source[bin.settings.processors[key]];
+    });
+  }
+
+  return { ...bin, sha: json.sha };
 };
 
 export const getFromGist = async id => {

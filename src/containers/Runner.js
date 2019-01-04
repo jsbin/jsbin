@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Runner from '../components/Runner';
 import { clearError, setError } from '../actions/session';
-import { JAVASCRIPT, HTML } from '../lib/cm-modes';
+import { JAVASCRIPT, HTML, CSS } from '../lib/cm-modes';
 
 const RunnerContainer = connect(
   ({ bin, session, app, processors }) => ({
@@ -11,6 +11,7 @@ const RunnerContainer = connect(
     insertJS: processors.insertJS,
     javascript: processors[`${JAVASCRIPT}-result`],
     html: processors[`${HTML}-result`],
+    css: processors[`${CSS}-result`],
     error: session.error,
     splitColumns: app.splitColumns,
     theme: app.theme,

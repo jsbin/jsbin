@@ -38,6 +38,10 @@ export function saveSettings(store) {
     current = select(store.getState());
 
     if (previous !== current) {
+      if (previous) {
+        console.count('save settings');
+        console.log(store.getState().user);
+      }
       storeKV('jsbin.user.settings', current);
     }
   });
@@ -120,6 +124,7 @@ export default store => {
     }
 
     if (runner.subscriptions.includes(action.type)) {
+      console.log('dispatching action %s', action.type);
       runner.dispatch({ ...action });
     }
 

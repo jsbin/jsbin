@@ -11,6 +11,7 @@ export const SET_JS = '@@bin/set/JS';
 export const SET_HTML = '@@bin/set/HTML';
 export const SET_CSS = '@@bin/set/CSS';
 export const SET_ID = '@@bin/set/ID';
+export const SET_SHA = '@@bin/set/SHA';
 export const RESET = '@@bin/RESET';
 export const SAVE = '@@bin/SAVE';
 export const DELETE = '@@bin/DELETE';
@@ -27,6 +28,10 @@ export function setProcessor(source, target) {
 
 export function setId(value) {
   return { type: SET_ID, value };
+}
+
+export function setSha(value) {
+  return { type: SET_SHA, value };
 }
 
 export function setError(value) {
@@ -49,8 +54,12 @@ export function fetchLocal(id) {
   return fetchSequence(Api.getLocal(id));
 }
 
-export function fetchGithub(id) {
+export function fetchGist(id) {
   return fetchSequence(Api.getFromGist(id));
+}
+
+export function fetchGithub(owner, id, revision) {
+  return fetchSequence(Api.getFromGithub(owner, id, revision));
 }
 
 export function fetchPost(id) {
@@ -162,6 +171,13 @@ const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
   const length = Object.keys(toRender).filter(key => toRender[key] !== null)
     .length;
 
+  console.log('to render: %s', length, source);
+
+  if (source === MODES.CSS) {
+    console.log('skipping full render');
+
+    return;
+  }
   if (length === 3) {
     const { result, insertJS } = asHTML(toRender);
     dispatch({ type: SET_PROCESSOR_RESULT, result, insertJS });

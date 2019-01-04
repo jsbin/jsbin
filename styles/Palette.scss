@@ -80,6 +80,10 @@
         right: 10px;
         top: 4px;
         margin-right: 0;
+
+        span {
+          padding: 0 1px;
+        }
       }
 
       &.active {

@@ -2,22 +2,18 @@
 
 ## In progress
 
-- [ ] Inject CSS, don't recompile
+- [ ] Add github permissions to sign in
+- [x] Inject CSS, don't recompile
+- [x] Fix download/export when no processor (i.e. includes JS twice)
 - [x] Local save is losing the language
 - [x] Prevent initial focus on `autofocus`
 - [x] Console isn't attached to iframe…
 
-## Need for live
-
-- [ ] Pay/cancel/renew
-- [/] Analytics
-- [x] Logout
-- [x] Loop protection (with babel rewrite)
-- [x] Login (though wants some love)
-- [x] Processors
-
 ## Bit bugs
 
+- [ ] Console clear doesn't work
+- [ ] "Continue to edit" doesn't work
+- [ ] Undo doesn't quite work - because reused editor
 - [ ] new doesn't reset the previous result
 - [ ] Expose every feature through the palette
 - [ ] `white-space` in CSS puts colour picker on `white`
@@ -51,6 +47,15 @@
 - [x] Sticky quick setting layout
 - [x] Quick commands aren't saving
 - [x] Change theme from palette doesn't save (because it toggles to unknown value)
+
+## Need for live
+
+- [ ] Pay/cancel/renew
+- [/] Analytics
+- [x] Logout
+- [x] Loop protection (with babel rewrite)
+- [x] Login (though wants some love)
+- [x] Processors
 
 ## Account
 
@@ -110,7 +115,7 @@
 
 - [ ] Let user decide where to save by default
 - [ ] Share box
-- [ ] Add meta data box
+- [ ] Add meta data box (and export to README.md in root)
 - [x] Some kind of notification system
 - [x] Welcome
 - [x] Loading gif
@@ -126,7 +131,7 @@
 - [ ] open - can search by bin name
 - [/] cmd+enter - run code with alerts, etc
 - [ ] prevent alert, prompt, etc.
-- [ ] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
+- [x] Bus to handle keyboard shortcuts (that accepts dispatch and state aka: thunk)
 - [ ] unfurl - can this even work if there's no dynamic server side?
 - [ ] Template support
 - [x] `:g` goto line

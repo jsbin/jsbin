@@ -1,6 +1,7 @@
 import { parse, settings as defaultSettings } from './Defaults';
 import stripJsonComments from 'strip-json-comments';
 import { js as tidy } from 'js-beautify';
+import { GH_API } from './Api';
 
 /**
  * Merged user settings (from localStorage) and default settings
@@ -28,6 +29,29 @@ export default function main(settings = getRawUserSettings()) {
  */
 export function getRawUserSettings() {
   return JSON.parse(localStorage.getItem('jsbin.user.settings') || 'null');
+}
+
+/**
+ * Exports user settings to github
+ *
+ * @param {Object} user
+ */
+export function exportUserSettings(user = {}) {
+  const { githubToken, githubUsername = 'remy' } = user;
+  if (!githubToken) {
+    return;
+  }
+  fetch(`${GH_API}/repos/${githubUsername}/bins/contents/user-settings.json5`, {
+    mode: 'cors',
+    method: 'put',
+    body: JSON.stringify({}),
+    headers: {
+      Authorization: `token ${githubToken}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  })
+    .then(res => res.json())
+    .then(json => console.log(json));
 }
 
 /**

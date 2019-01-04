@@ -5,9 +5,9 @@ import Fuse from 'fuse.js';
 
 import * as allCommands from '../lib/commands';
 import * as gotoCommands from '../lib/goto-commands';
-import '../css/Palette.css';
-
 import Keys from '../lib/common/Keys';
+import ShortcutKeys from './ShortcutKeys';
+import '../css/Palette.css';
 
 const fuseOptions = {
   shouldSort: true,
@@ -246,7 +246,8 @@ export default class Palette extends React.Component {
                 onClick={this.selectCommand}
               >
                 {command.display || command.title}
-                {command.shortcut && command.shortcut}
+                {command.shortcut &&
+                  <ShortcutKeys shortcut={command.shortcut} />}
               </li>
             )}
           </ul>

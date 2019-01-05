@@ -17,6 +17,7 @@ export const SAVE = '@@bin/SAVE';
 export const DELETE = '@@bin/DELETE';
 export const ERROR = '@@bin/ERROR';
 export const SET_PROCESSOR = '@@bin/processor/SET';
+export const UPDATE_SOURCE = '@@bin/update/SOURCE';
 
 export const FETCH_BIN_REQUEST = '@@bin/fetch/BIN_REQUEST';
 export const FETCH_BIN_SUCCESS = '@@bin/fetch/BIN_SUCCESS';
@@ -171,13 +172,12 @@ const updateResult = debounce(async (dispatch, getState, type = SET_BIN) => {
   const length = Object.keys(toRender).filter(key => toRender[key] !== null)
     .length;
 
-  console.log('to render: %s', length, source);
-
+  dispatch({ type: UPDATE_SOURCE });
   if (source === MODES.CSS) {
-    console.log('skipping full render');
-
+    // console.log('skipping full render');
     return;
   }
+
   if (length === 3) {
     const { result, insertJS } = asHTML(toRender);
     dispatch({ type: SET_PROCESSOR_RESULT, result, insertJS });

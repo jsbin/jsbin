@@ -49,8 +49,6 @@ export default class Result extends React.Component {
     const { error, renderResult, html = '' } = props;
     let { result: renderedDoc, insertJS, javascript } = props;
 
-    console.log('updateResult called', props);
-
     if (error) {
       // don't bother sending the state change if there's nothing to be done
       props.clearError();

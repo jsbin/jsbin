@@ -2,7 +2,7 @@
 
 ## In progress
 
-- [ ] Add github permissions to sign in
+- [/] Add github permissions to sign in
 - [x] Inject CSS, don't recompile
 - [x] Fix download/export when no processor (i.e. includes JS twice)
 - [x] Local save is losing the language
@@ -11,6 +11,7 @@
 
 ## Bit bugs
 
+- [ ] Auth process shouldn't pass token via url - it should be given a single use token
 - [ ] Console clear doesn't work
 - [ ] "Continue to edit" doesn't work
 - [ ] Undo doesn't quite work - because reused editor
@@ -142,7 +143,7 @@
 ## Lib
 
 - [ ] Compile output document in web worker (nice to have) ([workerize](https://github.com/developit/workerize))
-- [ ] Inject CSS, don't recompile
+- [x] Inject CSS, don't recompile
 
 ## Pages
 

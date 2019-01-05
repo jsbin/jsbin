@@ -1,6 +1,5 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
-import { SAVE } from '../actions/bin';
-import { SET_RESULT } from '../actions/processors';
+import { SAVE, UPDATE_SOURCE } from '../actions/bin';
 import { SET_TOKEN } from '../actions/user';
 import {
   SET_SPLITTER_WIDTH,
@@ -75,7 +74,10 @@ export default store => {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
     }
 
-    if (action.type === SAVE || (action.type === SET_RESULT && state.bin.id)) {
+    if (
+      action.type === SAVE ||
+      (action.type === UPDATE_SOURCE && state.bin.id)
+    ) {
       save(state, store.dispatch);
     }
 
@@ -124,7 +126,6 @@ export default store => {
     }
 
     if (runner.subscriptions.includes(action.type)) {
-      console.log('dispatching action %s', action.type);
       runner.dispatch({ ...action });
     }
 

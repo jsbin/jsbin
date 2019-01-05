@@ -24,6 +24,7 @@ import { RESULT_PAGE, RESULT_CONSOLE, RESULT_NONE } from './actions/session';
 import { setToken } from './actions/user';
 import registerServiceWorker from './registerServiceWorker';
 import jsbinMiddleware, { saveSettings } from './lib/jsbin-middleware';
+import { getAuthToken } from './lib/Api';
 
 const App = Loadable({
   loader: () => import(/* webpackChunkName: "app" */ './containers/App'),
@@ -153,7 +154,7 @@ const finalCreateStore = compose(...middleware)(createStore);
 const store = finalCreateStore(reducers, initState);
 
 // FIXME move to somewhere else
-{
+(async () => {
   // restore user
   const url = new URL(window.location.toString());
   let token = url.searchParams.get('token');
@@ -165,6 +166,12 @@ const store = finalCreateStore(reducers, initState);
         search: qs.toString(),
       })
     );
+    const res = await getAuthToken({ token });
+    if (res.token) {
+      token = res.token;
+    } else {
+      token = null;
+    }
   } else {
     try {
       token = JSON.parse(localStorage.getItem('jsbin.user-token'));
@@ -176,7 +183,7 @@ const store = finalCreateStore(reducers, initState);
   if (token) {
     store.dispatch(setToken(token));
   }
-}
+})();
 
 saveSettings(store);
 

@@ -31,7 +31,7 @@ export const saveToGithub = {
   run: async (dispatch, { bin, user, processors }) => {
     const standardBin = convertToStandardBin({ bin, processors });
     const id = bin.id || slugger();
-    const owner = user.githubUsername || 'remy';
+    const owner = user.githubUsername || user.username;
     const repo = 'bins';
     const message = '🏗 jsbin release';
 

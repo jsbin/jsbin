@@ -5,9 +5,8 @@ import { mount } from 'enzyme';
 import expect from 'expect';
 import { RESULT_PAGE } from '../../actions/session';
 import { defaultState as defaultBin } from '../../reducers/bin';
-const mockStore = configureMockStore();
-
 import CodeSettings from '../../containers/CodeSettings';
+const mockStore = configureMockStore();
 
 test('lineNumbers change trickles up to user settings', () => {
   const store = mockStore({

@@ -11,6 +11,8 @@ describe('file to bin', () => {
 
   test('from github', () => {
     const res = fileToBin(source);
-    expect(res.javascript).not.toBe('');
+
+    expect(res.html).not.toBe('');
+    expect(res.html).not.toContain('<!--boot');
   });
 });

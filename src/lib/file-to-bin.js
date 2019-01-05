@@ -1,4 +1,4 @@
-const reJS = /<script id="jsbin-javascript".*>([\s\S]+?)<\/script>\n?/;
+const reJS = /(?:<!--boot js-->\n?)?<script id="jsbin-javascript".*>([\s\S]+?)<\/script>\n*/;
 const reCSS = /<style id="jsbin-css">\s([\s\S]+?)<\/style>\n?/;
 const reProcessors = /<script id="jsbin-source-([a-z]+)?" type="text\/source-([a-z]+)">([\s\S]+?)<\/script>\n?/g;
 const reMeta = new RegExp('<!-- jsbin -->.*<!-- /jsbin -->\\n', 'gm');

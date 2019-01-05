@@ -81,6 +81,15 @@ export const refreshToken = ({ token }) => {
   );
 };
 
+export const getAuthToken = ({ token }) => {
+  return fetch(`${API}/auth/token`, {
+    body: JSON.stringify({ token }),
+    headers: { 'content-type': 'application/json' },
+    method: 'POST',
+    mode: 'cors',
+  }).then(res => res.json());
+};
+
 export const getBins = ({ token }) => {
   return fetch(`${API}/user/bins`, settings({ token })).then(res => res.json());
 };
@@ -213,8 +222,6 @@ export const getFromGithub = async (user, owner, id, revision) => {
   bin.url = id;
   bin.revision = revision;
   bin.id = id;
-
-  console.log(content);
 
   if (bin.settings && bin.settings.processors) {
     Object.keys(bin.settings.processors).forEach(key => {

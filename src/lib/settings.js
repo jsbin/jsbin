@@ -37,7 +37,7 @@ export function getRawUserSettings() {
  * @param {Object} user
  */
 export function exportUserSettings(user = {}) {
-  const { githubToken, githubUsername = 'remy' } = user;
+  const { githubToken, githubUsername = user.username } = user;
   if (!githubToken) {
     return;
   }

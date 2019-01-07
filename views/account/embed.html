@@ -1,8 +1,8 @@
 {{> account_sidebar}}
-<link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
-<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/lib/codemirror.css{{cacheBust}}">
-{{#if user.settings.editor.theme}}<link rel="stylesheet" href="{{static}}/js/vendor/codemirror4/theme/{{user.settings.editor.theme}}.css{{cacheBust}}">{{/if}}
-<link rel="stylesheet" href="{{static}}/css/jsbin-cm-theme.css{{cacheBust}}">
+<link rel="stylesheet" href="/css/font.css{{cacheBust}}">
+<link rel="stylesheet" href="/js/vendor/codemirror4/lib/codemirror.css{{cacheBust}}">
+{{#if user.settings.editor.theme}}<link rel="stylesheet" href="/js/vendor/codemirror4/theme/{{user.settings.editor.theme}}.css{{cacheBust}}">{{/if}}
+<link rel="stylesheet" href="/css/jsbin-cm-theme.css{{cacheBust}}">
 <form>
 <h1>Embed Style {{#feature request "!pro"}}
   <a href="/upgrade"><span class="pro-required">Pro</span></a>{{/feature}}</h1>
@@ -130,11 +130,11 @@
 
     <input type="hidden" id="_csrf" name="_csrf" value="{{token}}">
 </form>
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/vendor/codemirror4/lib/codemirror.js"></script>
-<script src="{{static}}/js/vendor/codemirror4/mode/css/css.js"></script>
-<script src="{{root}}/bin/user.js"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/vendor/codemirror4/lib/codemirror.js"></script>
+<script src="/js/vendor/codemirror4/mode/css/css.js"></script>
+<script src="/bin/user.js"></script>
 <script>
 var embed = {{{dump user.embed null}}};
 </script>
-<script src="{{static}}/js/account/embed-settings.js{{cacheBust}}"></script>
+<script src="/js/account/embed-settings.js{{cacheBust}}"></script>

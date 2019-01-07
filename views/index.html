@@ -3,38 +3,38 @@
 <head>
   <meta charset=utf-8>
   <title>JS Bin - Collaborative JavaScript Debugging</title>
-  <link rel="alternate" type="application/json+oembed" href="{{root}}/oembed?url={{root}}{{request.url}}">
-  <link rel="icon" href="{{static}}/images/favicon.png">
-  <link rel="stylesheet" href="{{static}}/js/vendor/codemirror5/lib/codemirror.css{{cacheBust}}">
-  <link rel="stylesheet" href="{{static}}/css/style.css{{cacheBust}}">
-  <link rel="stylesheet" href="{{static}}/css/themes.css{{cacheBust}}">
+  <link rel="alternate" type="application/json+oembed" href="/oembed?url={{request.url}}">
+  <link rel="icon" href="/images/favicon.png">
+  <link rel="stylesheet" href="/js/vendor/codemirror5/lib/codemirror.css{{cacheBust}}">
+  <link rel="stylesheet" href="/css/style.css{{cacheBust}}">
+  <link rel="stylesheet" href="/css/themes.css{{cacheBust}}">
   {{#feature request "mobile"}}
   {{#unless embed}}
-  <link rel="manifest" href="{{root}}/manifest.json">
+  <link rel="manifest" href="/manifest.json">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="{{static}}/css/mobile.css{{cacheBust}}">
+  <link rel="stylesheet" href="/css/mobile.css{{cacheBust}}">
   {{/unless}}
   {{/feature}}
   {{#if userCSS}}<style>{{{userCSS}}}</style>{{/if}}
-  <link rel="stylesheet" href="{{static}}/css/font.css{{cacheBust}}">
+  <link rel="stylesheet" href="/css/font.css{{cacheBust}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   {{#if custom_css}}<link rel="stylesheet" href="{{makeURL custom_css static}}{{cacheBust}}">{{/if}}
-  {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="{{static}}/css/editor-layout.css{{cacheBust}}">{{/equal}}
-  <!--[if lte IE 9 ]><link rel="stylesheet" href="{{static}}/css/ie.css{{cacheBust}}"><![endif]-->
+  {{#equal editorLayout "0"}}{{else}}<link rel="stylesheet" href="/css/editor-layout.css{{cacheBust}}">{{/equal}}
+  <!--[if lte IE 9 ]><link rel="stylesheet" href="/css/ie.css{{cacheBust}}"><![endif]-->
   {{#if is_production}}
     {{> analytics}}
   {{/if}}
   <meta id="app-description" name="description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{#if bin}}
-  <meta property="og:url" content="{{root}}{{code_id_path}}/edit" />
+  <meta property="og:url" content="{{code_id_path}}/edit" />
   <meta property="og:title" content="JS Bin" />
   <meta property="og:description" content="Sample of the bin: {{bin.metadata.summary}}" />
   {{else}}
-  <meta property="og:url" content="{{root}}" />
+  <meta property="og:url" content="" />
   <meta property="og:title" content="JS Bin" />
   <meta property="og:description" content="A live pastebin for HTML, CSS & JavaScript and a range of processors, including SCSS, CoffeeScript, Jade and more..." />
   {{/if}}
-  <meta property="og:image" content="{{static}}/images/logo.png" />
+  <meta property="og:image" content="/images/logo.png" />
   </head>
 <!--[if lt IE 7]>  <body class="source ie ie6"> <![endif]-->
 <!--[if IE 7]>     <body class="source ie ie7"> <![endif]-->
@@ -67,8 +67,8 @@ if(top != self) {
   </picture> Account</a>
   <div class="dropdown dd-right" id="profile">
     <div class="dropdowncontent">
-      <div class="large-gravatar"><object data="{{static}}/images/default-avatar.min.svg?{name}&{{version}}" type="image/svg+xml">
-    <img src="{{static}}/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
+      <div class="large-gravatar"><object data="/images/default-avatar.min.svg?{name}&{{version}}" type="image/svg+xml">
+    <img src="/images/default-avatar.min.svg?{{version}}"></object><picture class="large-gravatar">
     <source srcset="{large_avatar} 1x, {large_avatar}?&s=240 2x">
     <img class="large-gravatar" src="{large_avatar}">
   </picture></div>
@@ -77,14 +77,14 @@ if(top != self) {
       </span>
 
       <ul>
-        <li><a href="{{root}}/account/profile">Profile</a></li>
-        <li><a href="{{root}}/account/editor">Editor settings</a></li>
-        <li><a href="{{root}}/account/preferences">Preferences</a></li>
-        <li><a href="{{root}}/logout">Logout</a></li>
+        <li><a href="/account/profile">Profile</a></li>
+        <li><a href="/account/editor">Editor settings</a></li>
+        <li><a href="/account/preferences">Preferences</a></li>
+        <li><a href="/logout">Logout</a></li>
       </ul>
 
     </div>
-    <a href="{{root}}/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
+    <a href="/upgrade" class="gopro">Support JS Bin: upgrade to PRO</a>
   </div>
 </script>
 <div id="bin" class="stretch" style="opacity: 0; filter:alpha(opacity=0);">
@@ -176,7 +176,7 @@ if(top != self) {
           <button id="runwithalerts" title="ctrl + enter
 Include alerts, prompts &amp; confirm boxes">Run with JS</button>
           <label>Auto-run JS<input type="checkbox" id="enablejs"></label>
-          <a target="_blank" title="Live preview" id="jsbinurl" class="{{#unless code_id}}hidden{{/unless}}" href="{{code_id_path}}"><img src="{{static}}/images/popout.png"></a>
+          <a target="_blank" title="Live preview" id="jsbinurl" class="{{#unless code_id}}hidden{{/unless}}" href="{{code_id_path}}"><img src="/images/popout.png"></a>
         </span>
         <span class="size"></span>
       </div>
@@ -202,7 +202,7 @@ Include alerts, prompts &amp; confirm boxes">Run with JS</button>
 {{>infocard}}
 {{/unless}}
 
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
 
 {{#feature request "offline"}}
 <script>
@@ -230,15 +230,15 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 {{/feature}}
-<script src="{{root}}/bin/user.js?{{bust}}"></script>
+<script src="/bin/user.js?{{bust}}"></script>
 {{!-- we use the passed in version of isProduction here, not the app global as we need to be able to switch it - even when in production --}}
 {{#if isProduction}}
-<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
-<script async defer src="{{root}}/bin/start.js?{{bust}}"></script>
+<script src="/js/prod/jsbin-{{version}}.min.js"></script>
+<script async defer src="/bin/start.js?{{bust}}"></script>
 {{else}}{{!- if development, we need include the user code first, otherwise last --}}
-<script src="{{root}}/bin/start.js?{{bust}}"></script>
+<script src="/bin/start.js?{{bust}}"></script>
   {{#if concat}}
-<script src="{{static}}/js/prod/jsbin-{{version}}.js"></script>
+<script src="/js/prod/jsbin-{{version}}.js"></script>
   {{else}}
   {{#scripts}}<script src="{{../static}}{{.}}{{cacheBust}}"></script>{{/scripts}}
   {{/if}}
@@ -246,8 +246,8 @@ if ('serviceWorker' in navigator) {
 {{/if}}
 {{#if live}}
 {{!- the `live` value is never true now, and loaded from source --}}
-<!-- <script src="{{static}}/js/vendor/eventsource.js{{cacheBust}}"></script>
-<script src="{{static}}/js/spike.js{{cacheBust}}"></script> -->
+<!-- <script src="/js/vendor/eventsource.js{{cacheBust}}"></script>
+<script src="/js/spike.js{{cacheBust}}"></script> -->
 {{/if}}
 {{#if custom_js}}
 <script src="{{makeURL custom_js static}}{{cacheBust}}"></script>

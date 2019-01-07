@@ -70,9 +70,9 @@
   {{#feature request "upgrade"}}
   {{#feature request "dropbox"}}
     {{#if user.dropbox_token}}
-    <li class="link-container success"><strong>Dropbox automatic exporting</strong> &ndash; complete &#10004; (<a href="{{root}}/auth/dropbox">re-link</a>)</li>
+    <li class="link-container success"><strong>Dropbox automatic exporting</strong> &ndash; complete &#10004; (<a href="/auth/dropbox">re-link</a>)</li>
     {{else}}
-    <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="{{root}}/auth/dropbox">link your Dropbox account</a></li>
+    <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/auth/dropbox">link your Dropbox account</a></li>
     {{/if}}
   {{else}}
   <li class="link-container"><strong>Export your bins to Dropbox</strong> &ndash; <a href="/upgrade"><span class="pro-required">Pro</span></a> <a href="/upgrade">account required</a></li>
@@ -80,6 +80,6 @@
   {{/feature}}
   </ul>
 </section>
-<link href="{{static}}/css/account-profile.css" rel="stylesheet" type="text/css"/>
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/account/account-settings.js{{cacheBust}}"></script>
+<link href="/css/account-profile.css" rel="stylesheet" type="text/css"/>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/account/account-settings.js{{cacheBust}}"></script>

@@ -5,13 +5,13 @@
     <title>{{#if title}}{{title}} - {{/if}}Account Management</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="{{description}}">
-    <link rel="icon" href="{{static}}/images/favicon.png">
+    <link rel="icon" href="/images/favicon.png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans:700,400" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{static}}/css/help.css{{cacheBust}}">
+    <link rel="stylesheet" href="/css/help.css{{cacheBust}}">
     <script>
-      var jsbin = { "static": "{{static}}", version: "{{version}}" };
+      var jsbin = { "static": "", version: "{{version}}" };
     </script>
-    <script src="{{static}}/js/vendor/html5shiv.min.js{{cacheBust}}"></script>
+    <script src="/js/vendor/html5shiv.min.js{{cacheBust}}"></script>
     {{#if is_production}}
       {{> analytics}}
     {{/if}}
@@ -19,12 +19,12 @@
   <body>
     <div id="container">
       <header>
-      <div class="inner"><a id="back" href="{{root}}"><span class="morewords">Back to JS Bin</span></a>
+      <div class="inner"><a id="back" href=""><span class="morewords">Back to JS Bin</span></a>
         <nav>
           <span class="status">Settings saved</span>
-          <a class="selected" href="{{root}}/account">Account</a>
-          <a href="{{root}}/blog">Blog</a>
-          <a href="{{root}}/help">Help</a>
+          <a class="selected" href="/account">Account</a>
+          <a href="/blog">Blog</a>
+          <a href="/help">Help</a>
         </nav>
       </div>
       </header>
@@ -43,7 +43,7 @@
     <footer id="footer">
     <div class="inner">
       <ul class="notable">
-        <li><a href="{{root}}/about">About</a>
+        <li><a href="/about">About</a>
         </li>
         <li><a href="http://github.com/jsbin">Github</a>
         </li>
@@ -64,7 +64,7 @@
     <script>
       var $document = $(document); // for chrome/tips.js
     </script>
-    <script src="{{static}}/js/chrome/last-bin.js{{cacheBust}}"></script>
-    <script src="{{static}}/js/chrome/tips.js{{cacheBust}}"></script>
+    <script src="/js/chrome/last-bin.js{{cacheBust}}"></script>
+    <script src="/js/chrome/tips.js{{cacheBust}}"></script>
   </body>
 </html>

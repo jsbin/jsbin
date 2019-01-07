@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
-<link rel="stylesheet" type="text/css" href="{{static}}/css/upgrade.css{{cacheBust}}"/>
+<link rel="stylesheet" href="/css/login.css{{cacheBust}}">
+<link rel="stylesheet" type="text/css" href="/css/upgrade.css{{cacheBust}}"/>
 
 {{#if_all is_production analyticsId testUnlimited}}
 <script>
@@ -19,19 +19,19 @@ ga('send', 'event', 'experiment', 'testUnlimited');
         <div class="upgrade-details">
           <h3>1. Sign in</h3>
           <div class="upgrade-signin-wrapper">
-            <a class="btn-github" href="{{root}}/auth/github">
-              <img src="{{static}}/images/github-32.png" alt="">
+            <a class="btn-github" href="/auth/github">
+              <img src="/images/github-32.png" alt="">
               Login or Register via GitHub
             </a>
             <span class="login-group">
               or
-              <a class="btn-login" href="{{root}}/login" id="btn-login">sign in with your email address</a>
+              <a class="btn-login" href="/login" id="btn-login">sign in with your email address</a>
             </span>
           </div>
 
           <div class="form-container login" id="form-login">
             <div class="tabs">
-              <a class="tab register" href="{{root}}/register">
+              <a class="tab register" href="/register">
                 <span>New to JS Bin</span>
                 Register
               </a>
@@ -56,7 +56,7 @@ ga('send', 'event', 'experiment', 'testUnlimited');
             <div class="upgrade-center">
               <span class="login-group">
                 or
-                <a class="btn-login" href="{{root}}/auth/github">sign in via GitHub</a>
+                <a class="btn-login" href="/auth/github">sign in via GitHub</a>
               </span>
             </div>
           </div>
@@ -114,7 +114,7 @@ ga('send', 'event', 'experiment', 'testUnlimited');
  Stripe.setPublishableKey('{{stripe.key}}');
  // ...
 </script>
-<script src="{{static}}/js/vendor/polyfills.js{{cacheBust}}"></script>
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/vendor/jquery.payment.js{{cacheBust}}"></script>
-<script src="{{static}}/js/account/pay.js{{cacheBust}}"></script>
+<script src="/js/vendor/polyfills.js{{cacheBust}}"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/vendor/jquery.payment.js{{cacheBust}}"></script>
+<script src="/js/account/pay.js{{cacheBust}}"></script>

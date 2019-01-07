@@ -1,35 +1,35 @@
-<link rel="stylesheet" href="{{static}}/css/login.css{{cacheBust}}">
+<link rel="stylesheet" href="/css/login.css{{cacheBust}}">
 
 <div id="login-register-page" class="form-container {{show}}">
   <div class="tabs register">
-    <a class="tab register" href="{{root}}/register">
+    <a class="tab register" href="/register">
       <span>New to JS Bin</span>
       Register
     </a>
-    <a class="tab login" href="{{root}}/login">
+    <a class="tab login" href="/login">
       <span>Existing users</span>
       Login
     </a>
   </div>
   <div class="info {{#if flash}}active{{/if}}"><p>{{{flash}}}</p></div>
-  <form action="{{root}}/register" method="post" class="register">
+  <form action="/register" method="post" class="register">
     {{> register}}
     <input type="hidden" name="_csrf" value="{{token}}">
     <input type="hidden" name="referrer" value="{{referrer}}">
   </form>
-  <form action="{{root}}/login" method="post" class="login{{#if forgotten}} forgotten{{/if}}" id="login">
+  <form action="/login" method="post" class="login{{#if forgotten}} forgotten{{/if}}" id="login">
     {{> login}}
     <input type="hidden" name="_csrf" value="{{token}}">
     <input type="hidden" name="referrer" value="{{referrer}}">
   </form>
 
 </div>
-<a class="btn-github" href="{{root}}/auth/github">
-  <img src="{{static}}/images/github-32.png" alt="">
+<a class="btn-github" href="/auth/github">
+  <img src="/images/github-32.png" alt="">
   Login or Register via GitHub
 </a>
 
 
-<script src="{{static}}/js/vendor/polyfills.js{{cacheBust}}"></script>
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/login.js{{cacheBust}}"></script>
+<script src="/js/vendor/polyfills.js{{cacheBust}}"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/login.js{{cacheBust}}"></script>

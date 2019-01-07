@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="/css/login.css">
 <div class="form-container">
   <div class="tabs">
-    <a class="tab tab-selected" href="{{root}}/login">Login</a>
+    <a class="tab tab-selected" href="/login">Login</a>
     <a class="tab" href="/register">Signup</a>
   </div>
-  <form action="{{root}}/login" method="post" class="login">
+  <form action="/login" method="post" class="login">
     <div>
       <label>Username or Email<br>
       <input name="username" type="text"></label>
@@ -16,10 +16,10 @@
     <div>
       <input type=submit value="Log in">
       <input type="hidden" name="_csrf" value="{{token}}">
-      <a id="lostpass" href="{{root}}/forgot">Reset password</a>
+      <a id="lostpass" href="/forgot">Reset password</a>
     </div>
   </form>
 </div>
-<link rel="stylesheet" href="{{static}}/css/login.css">
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/chrome/login.js"></script>
+<link rel="stylesheet" href="/css/login.css">
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/chrome/login.js"></script>

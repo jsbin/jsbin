@@ -3,10 +3,10 @@
 <head>
 <meta charset=utf-8 />
 <title>JS Bin - Collaborative JavaScript Debugging</title>
-<link rel="icon" href="{{static}}/images/favicon.png">
-<link rel="stylesheet" href="{{static}}/css/style.css?{{version}}" type="text/css">
-{{#custom_css}}<link rel="stylesheet" href="{{static}}/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
-<!--[if lte IE 8 ]><link rel="stylesheet" href="{{static}}/css/ie.css?{{version}}" type="text/css"><![endif]-->
+<link rel="icon" href="/images/favicon.png">
+<link rel="stylesheet" href="/css/style.css?{{version}}" type="text/css">
+{{#custom_css}}<link rel="stylesheet" href="/{{custom_css}}?{{version}}" type="text/css">{{/custom_css}}
+<!--[if lte IE 8 ]><link rel="stylesheet" href="/css/ie.css?{{version}}" type="text/css"><![endif]-->
 </head>
 <!--[if lt IE 7 ]><body class="source ie ie6 ready"><![endif]-->
 <!--[if lt IE 8 ]><body class="source ie ie7 ready"><![endif]-->
@@ -17,13 +17,13 @@
 </script>
 {{^is_production}}
 {{#scripts}}
-<script src="{{static}}/js/vendor/jquery-1.11.0.js"></script>
-<script src="{{static}}{{.}}"></script>
+<script src="/js/vendor/jquery-1.11.0.js"></script>
+<script src="{{.}}"></script>
 {{/scripts}}
 {{/is_production}}
 {{#is_production}}
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/prod/jsbin-{{version}}.min.js"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/prod/jsbin-{{version}}.min.js"></script>
 {{{analytics}}}
 {{/is_production}}
 {{{list_history}}}

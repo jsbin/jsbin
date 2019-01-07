@@ -1,31 +1,31 @@
-<link rel="stylesheet" href="{{static}}/css/account.css{{cacheBust}}">
+<link rel="stylesheet" href="/css/account.css{{cacheBust}}">
 <div id="sidebar">
   <div class="sidebar-btn-group">
-    <a class="sidebar-btn" href="{{root}}/account/profile">Profile</a>
-    <a class="sidebar-btn" href="{{root}}/account/editor">Editor settings</a>
-    <a class="sidebar-btn" href="{{root}}/account/preferences">Preferences</a>
-    <a class="sidebar-btn" href="{{root}}/account/embed">Embed Style</a>
+    <a class="sidebar-btn" href="/account/profile">Profile</a>
+    <a class="sidebar-btn" href="/account/editor">Editor settings</a>
+    <a class="sidebar-btn" href="/account/preferences">Preferences</a>
+    <a class="sidebar-btn" href="/account/embed">Embed Style</a>
     {{#feature request "assets"}}
-    <a class="sidebar-btn" href="{{root}}/account/assets">Assets</a>
+    <a class="sidebar-btn" href="/account/assets">Assets</a>
     {{/feature}}
   </div>
   <div class="sidebar-btn-group">
   {{#feature request "upgrade"}}
     {{#feature request "pro"}}
-    <a class="sidebar-btn" href="{{root}}/account/subscription">Subscription</a>
+    <a class="sidebar-btn" href="/account/subscription">Subscription</a>
     {{else}}
       {{#feature request "upgradeWithFeatures"}}
-    <a class="sidebar-btn" href="{{root}}/upgrade">Upgrade</a>
+    <a class="sidebar-btn" href="/upgrade">Upgrade</a>
       {{else}}
-    <a class="sidebar-btn" href="{{root}}/account/upgrade/pay">Upgrade</a>
+    <a class="sidebar-btn" href="/account/upgrade/pay">Upgrade</a>
       {{/feature}}
     {{/feature}}
   {{/feature}}
-    <a class="sidebar-btn" href="{{root}}/account/delete">Delete your account</a>
+    <a class="sidebar-btn" href="/account/delete">Delete your account</a>
   </div>
 
   {{#feature request "admin"}}
-    <a class="sidebar-btn" href="{{root}}/admin">Admin</a>
+    <a class="sidebar-btn" href="/admin">Admin</a>
   {{/feature}}
 </div>
 <script>

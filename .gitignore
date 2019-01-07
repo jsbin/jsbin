@@ -1,4 +1,5 @@
 .vscode/
+/config
 logs
 logs/*
 config.*.json

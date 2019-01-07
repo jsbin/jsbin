@@ -24,10 +24,10 @@
 {{#if settings.is_production}}
   <script>
   if ('serviceWorker' in navigator && location.origin.indexOf('null') !== -1) {
-    navigator.serviceWorker.register('{{root}}/sw-runner.js', { scope: '/' });
+    navigator.serviceWorker.register('/sw-runner.js', { scope: '/' });
   }
   </script>
-  <script src="{{static}}/js/prod/runner-{{settings.version}}.min.js"></script>
+  <script src="/js/prod/runner-{{settings.version}}.min.js"></script>
   {{{analytics}}}
 {{else}}
   {{#scripts}}<script src="{{../static}}{{.}}"></script>

@@ -2,7 +2,7 @@
 
 <h1>Your Pro Subscription</h1>
 
-<img class="powered-by-stripe" alt="Powered By Stripe" src="{{static}}/images/stripe.png" width="119">
+<img class="powered-by-stripe" alt="Powered By Stripe" src="/images/stripe.png" width="119">
 <section id="content">
   {{#subscription}}
   <pre>Plan: {{plan.name}}{{#if cancel_at_period_end}} (cancelled on {{#stripeTimestampAsDate canceled_at "D MMMM, YYYY"}}{{/stripeTimestampAsDate}}){{/if}}
@@ -81,9 +81,9 @@ Started: {{#stripeTimestampAsDate start "D MMMM, YYYY"}}{{/stripeTimestampAsDate
 <script>
 Stripe.setPublishableKey('{{stripe.key}}');
 </script>
-<script src="{{static}}/js/vendor/jquery-1.11.0.min.js"></script>
-<script src="{{static}}/js/vendor/jquery.payment.js{{cacheBust}}"></script>
-<script src="{{static}}/js/account/subscription.js{{cachebust}}"></script>
+<script src="/js/vendor/jquery-1.11.0.min.js"></script>
+<script src="/js/vendor/jquery.payment.js{{cacheBust}}"></script>
+<script src="/js/account/subscription.js{{cachebust}}"></script>
 <script>
 $('#cancel').on('submit', function (event) {
   var result = prompt("Enter your username to confirm the cancellation\n(it's \"{{@root.username}}\" by the way).\n\nWe'll miss you :(");

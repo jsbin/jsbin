@@ -8,8 +8,10 @@ npm install --dev
 npm run build
 
 # 不使用docker（需2、3完成后）
-# 运行服务
+# 运行服务 方式1
 ./bin/jsbin
+# 运行服务 方式2
+npm start
 
 # 构建docker镜像
 docker build -t jsbin-local .

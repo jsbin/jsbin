@@ -1,5 +1,9 @@
 var libraries = [
   {
+  'url': 'https://wzrd.in/standalone/deep-freeze@latest',
+  'label': 'deepFreeze'
+  },
+  {
     'url': 'https://code.jquery.com/jquery-git.js',
     'label': 'jQuery WIP (via git)',
     'group': 'jQuery'

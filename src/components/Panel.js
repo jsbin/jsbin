@@ -104,6 +104,8 @@ export default class Panel extends React.Component {
       css: setTo(MODES.CSS),
     };
 
+    // style={{scrollSnapAlign: 'end'}}
+
     return (
       <HotKeys keyMap={keyMap} handlers={handlers}>
         <div
@@ -113,7 +115,7 @@ export default class Panel extends React.Component {
           ref={e => (this.el = e)}
           className="Panel"
         >
-          <div className="AppFooter" style={{scrollSnapAlign: 'end'}}>
+          <div className="AppFooter">
             <CodeSettings />
           </div>
           <Mirror

@@ -51,7 +51,8 @@
     font-size: $font-size-base + 2;
 
     .last-saved {
-      // color:
+      margin-left: 16px;
+      opacity: 0.5;
     }
 
     label {
@@ -73,6 +74,7 @@
     }
 
     label.grow {
+      align-items: center;
       display: flex;
       flex-direction: row;
       margin-bottom: 10px;

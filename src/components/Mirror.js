@@ -320,8 +320,9 @@ export default class Mirror extends React.Component {
       cmOptions.preview = true;
     }
 
+    //  style={{scrollSnapAlign: 'start'}}
     return (
-      <div style={{scrollSnapAlign: 'start'}}>
+      <div>
         <CodeMirror
           ref={e => (this.CodeMirror = e)}
           value={code}

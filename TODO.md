@@ -11,7 +11,7 @@
 
 ## Bit bugs
 
-- [ ] Auth process shouldn't pass token via url - it should be given a single use token
+- [x] Auth process shouldn't pass token via url - it should be given a single use token
 - [ ] Console clear doesn't work
 - [ ] "Continue to edit" doesn't work
 - [ ] Undo doesn't quite work - because reused editor
@@ -51,7 +51,7 @@
 
 ## Need for live
 
-- [ ] Pay/cancel/renew
+- [?] Pay/cancel/renew
 - [/] Analytics
 - [x] Logout
 - [x] Loop protection (with babel rewrite)
@@ -155,7 +155,7 @@
 - [x] Import from gists
 - [x] Export gist (currently anon only…)
 - [x] Save online/share
-- [ ] Sync settings
+- [x] Sync settings
 - [ ] Login / upgrade, etc
 
 ## To be categorised

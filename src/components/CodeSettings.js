@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import ms from 'ms';
 import classnames from 'classnames';
 import 'react-select/dist/react-select.css';
 import { getConfig } from '../lib/processor';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import { Command } from './Symbols';
-
-// import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import {
   RESULT_PAGE,
@@ -25,9 +23,7 @@ class Updated extends React.Component {
     super(props);
     this.timer = null;
     this.state = {
-      words: distanceInWordsToNow(props.updated, {
-        includeSeconds: true,
-      })
+      words: ms(Date.now() - new Date(props.updated).getTime())
     }
 
     this.updateTimer = this.updateTimer.bind(this);
@@ -36,9 +32,7 @@ class Updated extends React.Component {
   updateTimer() {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
-      this.setState({ words: distanceInWordsToNow(this.props.updated, {
-        includeSeconds: true,
-      })})
+      this.setState({ words: ms(Date.now() - new Date(this.props.updated).getTime())})
     }, 5000);
   }
 
@@ -47,13 +41,11 @@ class Updated extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('setting timer');
-
     this.updateTimer();
   }
 
   render() {
-    return <small className="last-saved">Last saved: {this.state.words} ago</small>
+    return <small className="last-saved">Saved {this.state.words} ago</small>
   }
 
 
@@ -99,7 +91,7 @@ export default class CodeSettings extends React.Component {
     );
   }
 
-  changeBin(propery, value) {}
+  changeBin(property, value) {}
 
   render() {
     const {
@@ -182,6 +174,9 @@ export default class CodeSettings extends React.Component {
             options={sourceOptions}
             {...selectDefaults}
           />
+
+        {updated ?
+          <Updated updated={updated}/> : <small className="last-saved">Not saved yet</small>}
         </label>
         <label className="result grow">
           <span onClick={e => this.result.focus()}>Result</span>
@@ -246,9 +241,6 @@ export default class CodeSettings extends React.Component {
             </label>
           </div>
         </details>
-
-        {updated &&
-          <Updated updated={updated}/>}
       </div>
     );
   }

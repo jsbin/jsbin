@@ -1,15 +1,45 @@
 @import "button";
 
-.Login {
-  max-width: 400px;
+main {
+  height: 100;
+}
 
-  height: 100%;
+.Login {
+  max-width: 512px;
+  margin: 0 auto;
+  // height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
+
   > div {
+    border: 2px solid rgb(33, 150, 243);;
+    border-radius: 8px;
+    padding: 40px;
     width: 100%;
     height: 100%;
+  }
+
+  h2 {
+    margin: 32px 0;
+  }
+
+  .login-btn {
+    margin-bottom: 40px;
+    display: block;
+    text-align: center;
+    transition: all 100ms ease-out;
+    border: 2px solid rgb(33, 150, 243);
+    font-size: 110%;
+    padding: 16px;
+
+    &:hover {
+      font-size: 112%;
+      transform: translateY(-1px);
+      border: 2px solid rgb(33, 150, 243);
+      background: rgba(0, 0, 0, 0);
+      color: rgb(33, 150, 243);
+    }
   }
 }

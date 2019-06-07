@@ -11,6 +11,10 @@ import { encodeForGithub } from './github';
 let settingsSha = null;
 
 export const restoreSettingsFromGithub = async (dispatch, user) => {
+  if (!user || !user.username) {
+    return;
+  }
+
   const res = await getContentFromGithub({
     githubToken: user.githubToken,
     url: `/repos/${user.username}/bins/contents/.jsbin.settings.json`,
@@ -18,11 +22,7 @@ export const restoreSettingsFromGithub = async (dispatch, user) => {
 
   try {
     const settings = parse(res.decoded);
-
     settingsSha = res.sha;
-
-
-    console.log('settings: %s', JSON.stringify(settings, 0, 2));
 
     if (settings !== null) {
 

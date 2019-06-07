@@ -7,11 +7,6 @@ import { insertChangeIntoUserSettings } from '../lib/settings';
 import { defaultUserSettings } from '../lib/Defaults';
 
 export const defaultState = {
-  // authenticated: false,
-  // username: 'anonymous',
-  // githubToken: null,
-  // pro: false,
-  // token: null,
   settings: defaultUserSettings, // NOTE this is a JSON *string*
 };
 

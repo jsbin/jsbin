@@ -33,6 +33,8 @@
   .AppFooter {
     opacity: 0.3;
     transition: opacity ease-out 100ms;
+    position: relative;
+    z-index: 999;
 
     &:hover {
       opacity: 1;
@@ -41,12 +43,16 @@
 
   .CodeSettings {
     margin: 20px;
-    margin-top: 60px;
+    // margin-top: 60px;
     // border: 1px solid #ccc;
     border-radius: 2px;
     background: #eee;
     padding: 20px;
     font-size: $font-size-base + 2;
+
+    .last-saved {
+      // color:
+    }
 
     label {
       display: block;

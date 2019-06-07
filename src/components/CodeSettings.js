@@ -4,7 +4,7 @@ import Select from 'react-select';
 import classnames from 'classnames';
 import 'react-select/dist/react-select.css';
 import { getConfig } from '../lib/processor';
-
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import { Command } from './Symbols';
 
 // import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
@@ -19,6 +19,45 @@ import {
 import * as MODES from '../lib/cm-modes';
 
 const noop = () => {};
+
+class Updated extends React.Component {
+  constructor(props) {
+    super(props);
+    this.timer = null;
+    this.state = {
+      words: distanceInWordsToNow(props.updated, {
+        includeSeconds: true,
+      })
+    }
+
+    this.updateTimer = this.updateTimer.bind(this);
+  }
+
+  updateTimer() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.setState({ words: distanceInWordsToNow(this.props.updated, {
+        includeSeconds: true,
+      })})
+    }, 5000);
+  }
+
+  componentDidMount() {
+    this.updateTimer();
+  }
+
+  componentDidUpdate() {
+    console.log('setting timer');
+
+    this.updateTimer();
+  }
+
+  render() {
+    return <small className="last-saved">Last saved: {this.state.words} ago</small>
+  }
+
+
+}
 
 export default class CodeSettings extends React.Component {
   constructor(props) {
@@ -64,7 +103,7 @@ export default class CodeSettings extends React.Component {
 
   render() {
     const {
-      // updated,
+      updated,
       bin,
       lineWrapping,
       lineNumbers,
@@ -94,8 +133,8 @@ export default class CodeSettings extends React.Component {
         ),
       },
       {
-        value: MODES.JAVASCRIPT,
-        label: getConfig(bin[MODES.JAVASCRIPT + '-processor']).label,
+        value: MODES.CSS,
+        label: getConfig(bin[MODES.CSS + '-processor']).label,
         shortcut: (
           <kbd>
             <Command /> 2
@@ -103,8 +142,8 @@ export default class CodeSettings extends React.Component {
         ),
       },
       {
-        value: MODES.CSS,
-        label: getConfig(bin[MODES.CSS + '-processor']).label,
+        value: MODES.JAVASCRIPT,
+        label: getConfig(bin[MODES.JAVASCRIPT + '-processor']).label,
         shortcut: (
           <kbd>
             <Command /> 3
@@ -154,20 +193,6 @@ export default class CodeSettings extends React.Component {
             {...selectDefaults}
           />
         </label>
-        {/* <details>
-          <summary>Processors &amp; Metadata</summary>
-          <label className="grow">
-            <span>Title</span>
-            <input
-              name="title"
-              type="text"
-              onChange={e => {
-                this.changeBin('title', e.target.value);
-              }}
-              value={'My bin'}
-            />{' '}
-          </label>
-        </details> */}
         <details>
           <summary>Quick Settings</summary>
           <label>
@@ -222,10 +247,8 @@ export default class CodeSettings extends React.Component {
           </div>
         </details>
 
-        {/* {updated &&
-          `Last saved: ${distanceInWordsToNow(updated, {
-            includeSeconds: true,
-          })}`} */}
+        {updated &&
+          <Updated updated={updated}/>}
       </div>
     );
   }

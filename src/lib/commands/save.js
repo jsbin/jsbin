@@ -28,7 +28,7 @@ export const saveToGithub = {
   meta: 'publish git github',
   shortcut: 'command+shift+s',
   condition: ({ user, bin }) => !!user.githubToken,
-  run: async (dispatch, { bin, user, processors }) => {
+  run: async (dispatch, { bin, user, processors, app }) => {
     const standardBin = convertToStandardBin({ bin, processors });
     const id = bin.id || slugger();
     const owner = user.githubUsername || user.username;
@@ -38,7 +38,8 @@ export const saveToGithub = {
     const result = binToHTML(standardBin);
 
     // const url = `https://jsbin.me/${owner}:${id}`;
-    const url = `https://${owner}.github.io/${repo}/${id}/`;
+    const defaultBase = `https://${owner}.github.io/${repo}`;
+    const url = `${app.baseUrl || defaultBase}/${id}/`;
 
     const content = encodeForGithub(result);
 

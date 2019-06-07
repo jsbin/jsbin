@@ -24,8 +24,8 @@ const keyMap = {
   save: `mod+s`,
   update: [`mod+enter`, 'shift+enter'],
   html: `mod+1`,
-  javascript: `mod+2`,
-  css: `mod+3`,
+  css: `mod+2`,
+  javascript: `mod+3`,
 };
 
 export default class Panel extends React.Component {
@@ -51,6 +51,7 @@ export default class Panel extends React.Component {
 
   componentDidMount() {
     if (this.props.onRef) this.props.onRef(this);
+    // this.ref.parentNode.style.scrollSnapType = 'y mandatory';
     if (this.props.session.dirty) {
       this.updateHeight();
     }
@@ -112,6 +113,9 @@ export default class Panel extends React.Component {
           ref={e => (this.el = e)}
           className="Panel"
         >
+          <div className="AppFooter" style={{scrollSnapAlign: 'end'}}>
+            <CodeSettings />
+          </div>
           <Mirror
             changeCode={this.props.changeCode}
             ref={e => (this.Mirror = e)}
@@ -120,7 +124,6 @@ export default class Panel extends React.Component {
             options={options}
           />
           <div className="AppFooter" ref={e => (this.footer = e)}>
-            <CodeSettings />
             <Footer>
               <p>
                 <button className="Button simple" onClick={this.triggerPalette}>

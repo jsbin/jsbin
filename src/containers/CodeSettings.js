@@ -10,6 +10,7 @@ const mapStateToProps = ({ editor, session, app, bin }) => ({
   source: app.source,
   result: session.result,
   splitColumns: app.splitColumns,
+  updated: bin.updated,
   bin,
 });
 

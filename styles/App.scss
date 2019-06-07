@@ -27,3 +27,7 @@
     flex-grow: 1;
   }
 }
+
+.layout-pane-primary {
+  scroll-snap-type: y mandatory;
+}

@@ -11,7 +11,10 @@ import {
 } from '../actions/session';
 import { SET_SOURCE, MASS_UPDATE } from '../actions/app';
 import { save } from '../lib/save-bin';
-import getSettings from '../lib/settings';
+import getSettings, {
+  exportUserSettings,
+  restoreSettingsFromGithub,
+} from '../lib/settings';
 import * as runner from '../lib/runner/channel';
 
 // function refreshUserToken() {
@@ -29,6 +32,8 @@ function storeKV(key, value) {
 export function saveSettings(store) {
   const select = state => state.user.settings;
 
+  restoreSettingsFromGithub(store.dispatch, store.getState().user);
+
   // returns `unsubscribe`
   let current;
   store.subscribe(() => {
@@ -38,8 +43,7 @@ export function saveSettings(store) {
 
     if (previous !== current) {
       if (previous) {
-        console.count('save settings');
-        console.log(store.getState().user);
+        exportUserSettings(store.getState().user);
       }
       storeKV('jsbin.user.settings', current);
     }

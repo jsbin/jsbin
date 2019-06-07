@@ -191,34 +191,38 @@ function b64DecodeUnicode(str) {
   );
 }
 
-export const getFromGithub = async (user, owner, id, revision) => {
+export const getContentFromGithub = async ({ githubToken, url }) => {
+  const headers = {
+    Authorization: `token ${githubToken}`,
+    Accept: 'application/vnd.github.v3+json',
+  };
+
+  if (!githubToken) {
+    delete headers.Authorization;
+  }
+
+  const res = await fetch(`${GH_API}${url}`, {
+    mode: 'cors',
+    headers,
+  });
+  const json = await res.json();
+
+  return { decoded: b64DecodeUnicode(json.content), ...json };
+};
+
+export const getFromGithub = async ({ githubToken }, owner, id, revision) => {
   // FIXME
   console.warn(
     'revision (%s) not currently supported, loading latest',
     revision
   );
 
-  const headers = {
-    Authorization: `token ${user.githubToken}`,
-    Accept: 'application/vnd.github.v3+json',
-  };
+  const content = await getContentFromGithub({
+    githubToken,
+    url: `/repos/${owner}/bins/contents/${id}/index.html`,
+  });
 
-  if (!user.githubToken) {
-    delete headers.Authorization;
-  }
-
-  const res = await fetch(
-    `${GH_API}/repos/${owner}/bins/contents/${id}/index.html`,
-    {
-      mode: 'cors',
-      headers,
-    }
-  );
-  const json = await res.json();
-
-  const content = b64DecodeUnicode(json.content);
-
-  const bin = fileToBin(content);
+  const bin = fileToBin(content.decoded);
   bin.url = id;
   bin.revision = revision;
   bin.id = id;
@@ -229,7 +233,7 @@ export const getFromGithub = async (user, owner, id, revision) => {
     });
   }
 
-  return { ...bin, sha: json.sha };
+  return { ...bin, sha: content.sha };
 };
 
 export const getFromGist = async id => {

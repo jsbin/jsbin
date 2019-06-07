@@ -321,7 +321,7 @@ export default class Mirror extends React.Component {
     }
 
     return (
-      <div>
+      <div style={{scrollSnapAlign: 'start'}}>
         <CodeMirror
           ref={e => (this.CodeMirror = e)}
           value={code}

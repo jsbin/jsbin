@@ -6,22 +6,9 @@ import { replace } from 'react-router-redux';
 import { SAVE, setId, setSha } from '../../actions/bin';
 import { convertToStandardBin, GH_API } from '../Api';
 import { addNotification } from '../../actions/notifications';
+import { encodeForGithub } from '../github';
 
 const ORIGIN = process.env.REACT_APP_ORIGIN || window.location.origin;
-
-function encodeForGithub(str) {
-  // first we use encodeURIComponent to get percent-encoded UTF-8,
-  // then we convert the percent encodings into raw bytes which
-  // can be fed into btoa.
-  return btoa(
-    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(
-      match,
-      p1
-    ) {
-      return String.fromCharCode('0x' + p1);
-    })
-  );
-}
 
 export const saveToGithub = {
   title: 'Save to GitHub',

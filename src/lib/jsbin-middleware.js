@@ -1,6 +1,6 @@
 import { replace, LOCATION_CHANGE } from 'react-router-redux';
 import { SAVE, UPDATE_SOURCE } from '../actions/bin';
-import { SET_TOKEN } from '../actions/user';
+import { SET_TOKEN, SAVE_SETTINGS } from '../actions/user';
 import {
   SET_SPLITTER_WIDTH,
   DISMISS,
@@ -43,7 +43,7 @@ export function saveSettings(store) {
 
     if (previous !== current) {
       if (previous) {
-        exportUserSettings(store.getState().user);
+        // exportUserSettings(store.getState().user);
       }
       storeKV('jsbin.user.settings', current);
     }
@@ -76,6 +76,10 @@ export default store => {
 
     if (action.type === SET_SPLITTER_WIDTH) {
       storeKV('jsbin.splitter-width', state.session.splitterWidth);
+    }
+
+    if (action.type === SAVE_SETTINGS) {
+      exportUserSettings(state.user);
     }
 
     if (

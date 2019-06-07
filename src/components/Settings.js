@@ -170,7 +170,7 @@ export default class Settings extends React.Component {
                 code={user.settings}
                 editor={editor}
               />
-              <Footer error={error}>
+              <Footer error={error} username={user.username}>
                 <p>
                   <button className="Button simple" onClick={this.save}>
                     Save settings

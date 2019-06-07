@@ -6,19 +6,26 @@ import { GH_API, getContentFromGithub } from './Api';
 import { massUpdate } from '../actions/app';
 import { saveSettings } from '../actions/user';
 import { addNotification } from '../actions/notifications';
+import { encodeForGithub } from './github';
+
+let settingsSha = null;
 
 export const restoreSettingsFromGithub = async (dispatch, user) => {
   const res = await getContentFromGithub({
     githubToken: user.githubToken,
-    url: `/repos/${user.username}/bins/contents/_jsbin.settings.json`,
+    url: `/repos/${user.username}/bins/contents/.jsbin.settings.json`,
   });
 
   try {
     const settings = parse(res.decoded);
 
+    settingsSha = res.sha;
+
+
     console.log('settings: %s', JSON.stringify(settings, 0, 2));
 
     if (settings !== null) {
+
       dispatch(massUpdate(merge(parse(defaultSettings), settings)));
       dispatch(saveSettings(res.decoded));
     }
@@ -64,33 +71,32 @@ export function getRawUserSettings() {
  * @param {Object} user
  */
 export function exportUserSettings(user = {}) {
-  return;
-  // const { githubToken, githubUsername = user.username, settings } = user;
-  // if (!githubToken) {
-  //   return;
-  // }
-  // fetch(
-  //   `${GH_API}/repos/${githubUsername}/bins/contents/.jsbin.settings.json`,
-  //   {
-  //     mode: 'cors',
-  //     method: 'put',
-  //     body: settings,
-  //     headers: {
-  //       Authorization: `token ${githubToken}`,
-  //       Accept: 'application/vnd.github.v3+json',
-  //     },
-  //   }
-  // )
-  //   .then(res => {
-  //     if (res.status !== 200) {
-  //       throw new Error('sha required');
-  //     }
-  //     return res.json();
-  //   })
-  //   .catch(e => {
-  //     console.log(e.message);
-  //   })
-  //   .then(json => console.log(json));
+  const { githubToken, githubUsername = user.username, settings } = user;
+  if (!githubToken) {
+    return;
+  }
+  fetch(
+    `${GH_API}/repos/${githubUsername}/bins/contents/.jsbin.settings.json`,
+    {
+      mode: 'cors',
+      method: 'put',
+      body: JSON.stringify({ content: encodeForGithub(settings), sha: settingsSha, message: 'settings update', owner: githubUsername}),
+      headers: {
+        Authorization: `token ${githubToken}`,
+        Accept: 'application/vnd.github.v3+json',
+      },
+    }
+  )
+    .then(res => {
+      if (res.status !== 200) {
+        throw new Error('sha required');
+      }
+      return res.json();
+    })
+    .catch(e => {
+      console.log(e.message);
+    })
+    .then(json => console.log(json));
 }
 
 /**

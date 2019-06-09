@@ -39,7 +39,6 @@
     "css-loader": "0.28.4",
     "date-fns": "^1.28.5",
     "dotenv": "4.0.0",
-    "emmet-codemirror": "^1.2.5",
     "eslint-loader": "1.7.1",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",

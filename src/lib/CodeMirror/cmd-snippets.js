@@ -50,6 +50,7 @@ CodeMirror.defineExtension('snippets', function({ cm }) {
       }
       return;
     });
+    return;
   }
   return CodeMirror.Pass;
 });
@@ -60,7 +61,11 @@ CodeMirror.commands.snippets = function(cm) {
 
   if (res === CodeMirror.Pass && source !== MODES.JAVASCRIPT) {
     // try with emmet
-    // emmet.expand_abbreviation_with_tab
+    const isEmmet = CodeMirror.commands.emmetExpandAbbreviation(cm);
+    // check if it's an empty tab or an emmet tab
+    if (isEmmet === true) {
+      return;
+    }
   }
   return res;
 };

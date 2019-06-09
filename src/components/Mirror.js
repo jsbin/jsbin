@@ -37,6 +37,7 @@ import '../lib/CodeMirror/ext-highlight-lines';
 import '../lib/CodeMirror/colour-bookmark';
 import '../lib/CodeMirror/preview-markers';
 import '../lib/CodeMirror/autocomplete';
+import '../lib/CodeMirror/emmet';
 
 import 'codemirror/lib/codemirror.css';
 // import 'codemirror/addon/hint/show-hint.css';

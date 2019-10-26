@@ -1,3 +1,4 @@
+import * as serviceWorker from './serviceWorker';
 var glob = require('glob');
 var path = require('path');
 
@@ -43,3 +44,4 @@ module.exports = {
   },
   "custom_assertions_path": "test/e2e/assertions"
 };
+serviceWorker.unregister();

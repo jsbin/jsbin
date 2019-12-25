@@ -14,4 +14,4 @@
 - Include jQuery and it goes to shit
 - Restored panels always maximise
 - Layout of profile when logged in wrong
-- Dynamically change "create milestone" to "save" for first run in IE8 - then refresh should yeild a checksum
+- Dynamically change "create milestone" to "save" for first run in IE8 - then refresh should yield a checksum

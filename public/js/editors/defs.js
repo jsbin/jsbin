@@ -84,7 +84,7 @@ ternBasicDefs[0] = ({
       "toLocaleString": {
         "!type": "fn() -> string",
         "!url": "https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/toLocaleString",
-        "!doc": "Returns a string representing the object. This method is meant to be overriden by derived objects for locale-specific purposes."
+        "!doc": "Returns a string representing the object. This method is meant to be overridden by derived objects for locale-specific purposes."
       },
       "valueOf": {
         "!type": "fn() -> number",

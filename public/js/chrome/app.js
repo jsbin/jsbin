@@ -12,7 +12,7 @@ if (/gist\/.*/.test(window.location.pathname)) {
   }
 }
 
-// prevent the app from accidently getting scrolled out of view
+// prevent the app from accidentally getting scrolled out of view
 if (!jsbin.mobile) document.body.onscroll = window.onscroll = function () {
   if (document.body.scrollTop !== 0) {
     window.scrollTo(0,0);

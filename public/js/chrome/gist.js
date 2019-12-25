@@ -133,7 +133,7 @@ var Gist = (function () { // jshint ignore:line
       console.error(error.stack);
     });
 
-    // return false becuase there's weird even stuff going on. ask @rem.
+    // return false because there's weird even stuff going on. ask @rem.
     return false;
   });
 

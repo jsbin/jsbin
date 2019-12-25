@@ -75,7 +75,7 @@
 
     // fromPopstate is true when we call click in handlePopstateChanges
     // If a user navigated back, to register, it would then set pushState
-    // to register, leaving teh user stuck on that page.
+    // to register, leaving the user stuck on that page.
     if (!fromPopstate && pushState) {
       event.preventDefault();
       pushState(path);

@@ -487,7 +487,7 @@ var panelInit = {
   html: function () {
     var init = function () {
       // set cursor position on first blank line
-      // 1. read all the inital lines
+      // 1. read all the initial lines
       var lines = this.editor.getValue().split('\n'),
           blank = -1;
       lines.forEach(function (line, i) {

@@ -37,7 +37,7 @@ createEmail({
 ## `sendEmail`
 
 This function returns a promise, which you can use to check for the success or error of the email being sent.
-This function takes an object which you can create yourself but it is reccomended that you pass it the return
+This function takes an object which you can create yourself but it is recommended that you pass it the return
 value of a call to `createEmail`
 
 # Email

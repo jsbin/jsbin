@@ -2,7 +2,7 @@
 
 Let's say you've started afresh on jsbin.com. You're welcomed with either your own saved template or the default empty HTML page.
 
-**As soon as you start typing** you recieve your own URL and revision (revision 1) for that code. Let's say that url is `jsbin.com/abcde/1/`
+**As soon as you start typing** you receive your own URL and revision (revision 1) for that code. Let's say that url is `jsbin.com/abcde/1/`
 
 If you continue to type, all your changes are saved under revision 1 of `abcde`.
 

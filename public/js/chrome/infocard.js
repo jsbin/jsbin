@@ -8,7 +8,7 @@
     /*global spinner, $, jsbin, prettyDate, EventSource, throttle, $document, analytics, throttle*/
     'use strict';
 
-    // don't insert this on embeded views
+    // don't insert this on embedded views
     if (jsbin.embed) {
       return;
     }

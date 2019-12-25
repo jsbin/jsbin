@@ -586,7 +586,7 @@ var jsconsole = {
     } else if (data.type && data.type == 'info') {
       window.top.info(data.response);
     } else {
-      if (data.cmd.indexOf('console.log') === -1) data.response = data.response.substr(1, data.response.length - 2); // fiddle to remove the [] around the repsonse
+      if (data.cmd.indexOf('console.log') === -1) data.response = data.response.substr(1, data.response.length - 2); // fiddle to remove the [] around the response
       echo(data.cmd);
       log(data.response, 'response');
     }

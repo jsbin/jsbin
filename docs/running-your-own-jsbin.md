@@ -83,7 +83,7 @@ Now the `jsbin` node process is listening on port 8000, but the client facing ur
 
 ### Building for production
 
-JS Bin's build process uses Grunt, so assuming you've cloned a copy, you will need the dev dependancies and the grunt cli:
+JS Bin's build process uses Grunt, so assuming you've cloned a copy, you will need the dev dependencies and the grunt cli:
 
     $ npm install -g grunt-cli
     $ npm install --dev

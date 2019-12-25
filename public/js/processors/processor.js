@@ -149,7 +149,7 @@ var processors = jsbin.processors = (function () {
       return extendFn(proxyCallback, processorData);
     };
 
-    // Processor fucntion also has the important data on it
+    // Processor function also has the important data on it
     return extendFn(loadProcessor, processorData);
   };
 

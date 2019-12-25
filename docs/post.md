@@ -37,7 +37,7 @@ JS Bin can do this. Simply point the device or browser to your full preview URL 
 
 The URL structure even has a shortcut if you're [registered](http://jsbin.com/#register) you can always point the URL to [http://jsbin.com/<username>/last](http://jsbin.com/rem/last) and it'll pull up the last bin you've worked on.
 
-Along with live remote rendering, I've been working with the Adobe Shadow team and they've gone ahead and built in compatability with JS Bin directly into Shadow. This  simply means that when you visit jsbin.com on your desktop, Shadow will automatically show you the rendered output ([here's a demo with their beta software]()).
+Along with live remote rendering, I've been working with the Adobe Shadow team and they've gone ahead and built in compatibility with JS Bin directly into Shadow. This  simply means that when you visit jsbin.com on your desktop, Shadow will automatically show you the rendered output ([here's a demo with their beta software]()).
 
 ### How the live stuff works
 
@@ -47,7 +47,7 @@ As you type, we send an Ajax save request (after an idle time of 200ms). On the 
 
 When viewing the CodeCasting URL or the live remote rendering, each user is connected to our Spike program. This listens for the event that says a bin has changed, and when that happens, it just finds all the users watching a particular url, and sends them the updated panel (so we only send the CSS panel if the CSS panel changed).
 
-An [EventSource](http://html5doctor.com/server-sent-events/) maintains a persistent connection with the server and is listening for those events in the browser. When the event is recieved, depending on the content type, it'll either inject the content live, or refresh the page giving you the latest code.
+An [EventSource](http://html5doctor.com/server-sent-events/) maintains a persistent connection with the server and is listening for those events in the browser. When the event is received, depending on the content type, it'll either inject the content live, or refresh the page giving you the latest code.
 
 
 

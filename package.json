@@ -77,7 +77,7 @@
     "stripe": "~2.7.3",
     "stylus": "^0.54.5",
     "then-fs": "^2.0.0",
-    "undefsafe": "0.0.3",
+    "undefsafe": "2.0.3",
     "uuid": "^2.0.1",
     "validate-vat": "^0.3.2",
     "validator": "^3.16.1"

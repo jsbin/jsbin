@@ -740,6 +740,11 @@ var libraries = [
     'label': 'Blaze CSS (latest)'
   },
   {
+    'url': 'https://unpkg.com/rxjs@6.5.5/bundles/rxjs.umd.min.js',
+    'label': 'RxJS 6.5.5',
+    'group': 'RxJS'
+  },
+  {
     'url': 'https://unpkg.com/@reactivex/rxjs@5.0.3/dist/global/Rx.js',
     'label': 'RxJS 5.0.3',
     'group': 'RxJS'

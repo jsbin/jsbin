@@ -635,6 +635,10 @@ var libraries = [
     'label': 'TwitterLib'
   },
   {
+    'url': 'https://unpkg.com/eventemitter3@latest/umd/eventemitter3.min.js',
+    'label': 'EventEmitter3'
+  },
+  {
     'url': '//jashkenas.github.io/underscore/underscore-min.js',
     'label': 'underscore'
   },

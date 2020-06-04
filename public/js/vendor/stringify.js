@@ -18,7 +18,7 @@ var stringify = (function () {
    * Goes 2 levels deep.
    */
   return function stringify(o, visited, buffer) {
-    var i, vi, type = '', parts = [], circular = false;
+    var i, vi, type = '', parts = [];
     buffer = buffer || '';
     visited = visited || [];
 

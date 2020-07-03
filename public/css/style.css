@@ -4772,50 +4772,68 @@ body.min #bin .editbox .CodeMirror pre {
 #mobile-nav,
 .mobile-nav-trigger {display: none;}
 
-#codefund_ad {
-  display: none;
+
+/* ea: it's in the … footer */
+#ea-wrapper * {
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif
 }
 
-.bsaapi #codefund_ad {
-  display: block;
-}
-
-#bsaapi {
+.ea-placement {
+  font-family: inherit;
+  border-color: #bfbfbf;
+	background-color: #eee;
   box-sizing: border-box;
-  /* position: absolute; */
+  position: fixed;
   bottom: 0;
-  z-index: 5;
-  padding: .5em 1em;
+  left: 0;
+  z-index: 5000;
+  padding: 10px 20px 12px;
   width: 100%;
-  border-top: solid 1px #bfbfbf;
-  background-color: #eeeeee;
-  text-align: center;
+/*   border-color: currentcolor transparent transparent; */
+  border-top: 1px solid #bfbfbf;
   line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
 }
 
-#bsaapi a:before {
-  margin-right: 4px;
+#ea-wrapper .ea-content a:first-of-type::before {
+  margin-right: 8px;
   padding: 2px 6px;
   border-radius: 3px;
+  content: "Ad";
   background-color: #4caf50;
-  color: #fff;
-  content: "Supporter";
+	color: #fff;
 }
 
-#bsaapi a {
-  color: inherit;
+#ea-wrapper .ea-content a:first-of-type {
+  color: rgba(0,0,0,.6);
   text-decoration: none;
+  box-shadow: none;
+  font-size: 14px;
 }
 
-#bsaapi a:hover {
-  color: inherit;
+#ea-wrapper .ea-pixel {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  border-style: none;
+  position: fixed;
 }
 
-.fadeout {
-  color: #ccc;
-}
-
-body.bsaapi {
+.ea-callout {
   display: flex;
   flex-direction: column;
+  vertical-align: center;
+  justify-content: center;
+}
+
+.ea-callout,
+.ea-callout a {
+  color: rgba(0,0,0,.5);
+  font-size: 11px;
+  line-height: 22px;
+  text-decoration: none;
+  box-shadow: none;
+  line-height: 1.4;
 }

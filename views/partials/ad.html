@@ -1,7 +1,8 @@
-  <script src="https://codefund.io/scripts/22e88dc3-30f2-451b-a14e-d257c1395ef1/embed.js?template=bottom-bar"></script>
-  <div id="codefund_ad"></div>
+  <div id="ea-wrapper"></div>
   <script>
-  $('body').addClass('bsaapi');</script>
+  $.getJSON('https://server.ethicalads.io/api/v1/decision/?publisher=jsbin&ad_types=text-v1&format=jsonp&div_ids=jsbin', function (data) {
+    $('#ea-wrapper').html(data);
+  });</script>
 {{!--
 
   <a href="https://terminal.training?utm_source=jsbin&utm_medium=banner&utm_campaign=flash-sale" class="cs__blurb" target="_blank">

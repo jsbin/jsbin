@@ -1,7 +1,7 @@
   <div id="ea-wrapper"></div>
   <script>
   $.getJSON('https://server.ethicalads.io/api/v1/decision/?publisher=jsbin&ad_types=text-v1&format=jsonp&div_ids=jsbin&callback=?', function (data) {
-    $('#ea-wrapper').html(data);
+    $('#ea-wrapper').html(data.html);
   });</script>
 {{!--
 

@@ -15,7 +15,7 @@ html.debug:before {
 main {
   display: block;
   position: relative;
-  height: 100%;
+  height: calc(100% - 43px);
 }
 
 .toppanel main {

@@ -68,7 +68,7 @@
     "passport-dropbox-oauth2": "~0.1.5",
     "passport-github": "~0.1.5",
     "promise": "~5.0.0",
-    "pug": "^2.0.0-beta6",
+    "pug": "^3.0.1",
     "replify": "~1.2.0",
     "request": "^2.81.0",
     "semver": "^5.0.3",

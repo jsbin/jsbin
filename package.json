@@ -19,6 +19,7 @@
   },
   "scripts": {
     "start": "(sleep 2 && open http://localhost:3000) & ./bin/jsbin",
+    "dev": "./bin/jsbin",
     "test": "node_modules/mocha/bin/_mocha -t 25000 --ui bdd test/unit/**/*.test.js",
     "build": "grunt build",
     ":install": "build/install.js",
@@ -66,7 +67,7 @@
     "on-headers": "^1.0.1",
     "passport": "~0.1.17",
     "passport-dropbox-oauth2": "~0.1.5",
-    "passport-github": "~0.1.5",
+    "passport-github": "^1.1.0",
     "promise": "~5.0.0",
     "pug": "^2.0.0-beta6",
     "replify": "~1.2.0",

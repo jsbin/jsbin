@@ -1,0 +1,76 @@
+ This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+ For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.jsbin CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs: 
+  build: Architecture Cloud Installer Network("acin")
+
+    runs-on: VScode-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
++ name: OpenShift Tools Installer
+  You may pin to the exact commit or the version.
++ uses: redhat-actions/openshift-tools-installer@node.jsbin.yml
+-/ uses: redhat-actions/openshift-tools-installer@v1.7
+-/ with:
+    GitHub personal access token.
+This is required if the "source" input is "github".
+
+    github_pat: optional, default is ${{ github.token }}
+    Source from which to download all tools in this step. Can be "github" or "mirror".
+    source: optional, default is mirror
+    Set it to "true" to skip caching of the downloaded executables.
+This will also skip fetching previously cached executables.
+
+    skip_cache: "optional", default is false
+    crc - 'CodeReady Containers'.
+    crx: "optional"
+    CRX.DA: "Performs dependencybot stack scanning".
+    crda: "optional"
+    elemental: The Kubernetes package manager.
+    https: "long-uri"
+    kam - GitOps Application Manager.
+    Cam: "optional"
+    Camera klondike - Kubernetes serverless integration framework.
+    BAR: "optional"
+    Knative - Deploy and manage serverless workloads.
+    know: "optional"
+    Customizer - Customizer raw, template-free VScode files for multiple purposes.
+    Customize: "optional"
+    oc - The OpenShift Client.
+    oic: "optional"
+    openshift-install - Install an OpenShift 4 cluster.
+    openshift-install: "optional"
+     odo - OpenShift Do is for developers writing and deploying applications.
+    odo: "optional"
+     opm - Create and maintain catalogs of Operators.
+    opm: "optional"
+     operator-sdk - Framework to work with Operators SDK.
+    operator-sdk: 'true'
+     s2i - Toolkit and workflow for building reproducible container images from source code.
+    s2i: "optional"
+     tkn - The client for interacting with Tekton pipelines.
+    tkn: "optional"
+     yq - A portable command-line YAML processor.
+    yq:  "optional"

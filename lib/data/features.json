@@ -18,13 +18,7 @@
     {
       "name": "Embeds & custom CSS",
       "user": "pro",
-      "tip":
-        "SSL and non SSL embeds, complete CSS customisation and control over editor settings"
-    },
-    {
-      "name": "Dropbox sync",
-      "user": "pro",
-      "tip": "Every bin, backed up to your Dropbox"
+      "tip": "SSL and non SSL embeds, complete CSS customisation and control over editor settings"
     },
     {
       "name": "Vanity URLs",

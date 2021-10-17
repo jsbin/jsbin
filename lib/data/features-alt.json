@@ -8,18 +8,12 @@
     {
       "name": "<strong>Unlimited</strong> embeds, with custom theming",
       "user": "pro",
-      "tip":
-        "SSL and non-SSL support, complete CSS customisation and control over editor settings"
+      "tip": "SSL and non-SSL support, complete CSS customisation and control over editor settings"
     },
     {
       "name": "<strong>1GB storage</strong> for your uploaded assets",
       "user": "pro",
       "tip": "Just drag and drop assets into your bins for quick & easy use"
-    },
-    {
-      "name": "<strong>Unlimited</strong> dropbox sync",
-      "user": "pro",
-      "tip": "Every bin, backed up to your Dropbox"
     },
     {
       "name": "Unique vanity URLs",

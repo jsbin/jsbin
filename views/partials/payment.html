@@ -10,8 +10,8 @@
 <section class="payment-type">
   <span class="label">Plan</span>
   <div class="options">
-    <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly <span data-price="99.99" id="price-yearly">£99<small>.99</small></span><small>+VAT</small> <span class="highlight">&ndash; saving <span data-price="55" id="discount">£55</span></span> </label>
-    <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly <span id="price-monthly" data-price="12.99">£12<small>.99</small></span><small>+VAT</small></label>
+    <label class="hasinput" for="yearly"><input id="yearly" type="radio" name="subscription" {{#equal values.subscription "yearly"}}checked{{/equal}}{{#unless values.subscription}}checked{{/unless}} value="yearly">Yearly <span data-price="99.99" id="price-yearly">£99<small>.99</small></span> <span class="highlight">&ndash; saving <span data-price="55" id="discount">£55</span></span> </label>
+    <label class="hasinput" for="monthly"><input id="monthly" {{#equal values.subscription "monthly"}}checked{{/equal}} type="radio" name="subscription" value="monthly">Monthly <span id="price-monthly" data-price="12.99">£12<small>.99</small></span></label>
   </div>
 </section>
 
@@ -45,7 +45,7 @@
   </div>
 </div>
 
-<section class="buyer-type">
+<!-- <section class="buyer-type">
   <input id="business" type="checkbox" name="buyer_type" {{#equal values.buyer_type "business"}}checked{{/equal}} value="business">
   <label for="business">Paying as a business</label>
 </section>
@@ -66,7 +66,7 @@
     <br>
   </div>
   <small class="fadeout">Powered by <a href="https://taxtools.io">taxtools.io</a></small>
-</section>
+</section> -->
 
 
 <section>
@@ -78,5 +78,5 @@
   <p class="options ccy"><small><span class="ccy-legend">Show currency in</span> <label for="ccy-gbp"><input type="radio" value="GBP" name="ccy" checked id="ccy-gbp"> GBP</label> <label for="ccy-usd"><input type="radio" value="USD" name="ccy" id="ccy-usd"> USD</label> <label for="ccy-eur"><input type="radio" name="ccy" value="EUR" id="ccy-eur"> EUR</label></small></p>
   <p class="ccy-note" hidden><small>Note that you will be invoiced in GBP, and that non-GBP prices are approximated using Google forex rates.</small></p>
 
-  <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p>
+  <!-- <p><small>Note that VAT does not apply outside the European Union. If your EU company is registered for VAT outside the UK, then VAT will not be added.</small></p> -->
 </section>

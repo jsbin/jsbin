@@ -21,37 +21,37 @@ It likely means you're not going to subscribe as a pro user - which is how we're
 * Processors, including: coffee-script, LESS, Markdown and Jade.
 * Debug remote Ajax calls
 
-Find out more about JS Bin's features via the [YouTube JS Bin playlist](http://jsbin.com/videos).
+Find out more about JS Bin's features via the [YouTube JS Bin playlist](https://jsbin.com/videos).
 
 ## Who built this?
 
-JS Bin was built by [Remy Sharp](http://remysharp.com) and is completely open source and available at [http://github.com/jsbin/jsbin](http://github.com/jsbin/jsbin). You can also follow [@rem](http://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.
+JS Bin was built by [Remy Sharp](https://remysharp.com) and is completely open source and available at [https://github.com/jsbin/jsbin](https://github.com/jsbin/jsbin). You can also follow [@rem](https://twitter.com/rem) on Twitter where he'll tweet about JavaScript, HTML 5 and other such gems.
 
-If you would like to work with Remy and his company, [Left Logic](http://leftlogic.com) on a front end development project, [please get in touch](http://leftlogic.com/contact?message=Found%20through%20jsbin.com).
+If you would like to work with Remy and his company, [Left Logic](https://leftlogic.com) on a front end development project, [please get in touch](https://leftlogic.com/contact?message=Found%20through%20jsbin.com).
 
-UX was kindly donated by [Danny Hope](http://yandleblog.com) who also tweets as [@yandle](http://twitter.com/yandle).
+UX was kindly donated by [Danny Hope](https://yandleblog.com) who also tweets as [@yandle](https://twitter.com/yandle).
 
-The vast majority of the port from PHP to Node in June 2012 was done by [Aron Carroll](http://aroncarroll.com/) who also plays in github as [@aron](http://github.com/aron).
+The vast majority of the port from PHP to Node in June 2012 was done by [Aron Carroll](https://aroncarroll.com/) who also plays in github as [@aron](https://github.com/aron).
 
 ## A short history
 
-[JS Bin](http://jsbin.com) is a webapp specifically designed to help JavaScript and CSS folk test snippets of code, within some context, and debug the code collaboratively.
+[JS Bin](https://jsbin.com) is a webapp specifically designed to help JavaScript and CSS folk test snippets of code, within some context, and debug the code collaboratively.
 
 JS Bin allows you to edit and test JavaScript and HTML (reloading the URL also maintains the state of your code - new tabs doesn't). Once you're happy you can save, and send the URL to a peer for review or help. They can then make further changes saving anew if required.
 
-The original idea spawned from a conversation with another developer in trying to help him debug an Ajax issue. The original aim was to build it using Google's app engine, but in the end, it was [John Resig](http://ejohn.org)'s [Learning app](http://ejohn.org/apps/learn) that inspired me to build the whole solution in JavaScript with liberal dashes of jQuery and a tiny bit of LAMP for the saving process.
+The original idea spawned from a conversation with another developer in trying to help him debug an Ajax issue. The original aim was to build it using Google's app engine, but in the end, it was [John Resig](https://johnresig.com)'s [Learning app](https://johnresig.com/apps/learn) that inspired me to build the whole solution in JavaScript with liberal dashes of jQuery and a tiny bit of LAMP for the saving process.
 
-[Version 1](http://1.jsbin.com) of [JS Bin](http://www.flickr.com/photos/remysharp/4284906136) took me the best part of 4 hours to develop [back in 2008](http://remysharp.com/2008/10/06/js-bin-for-collaborative-javascript-debugging/), but [version 2](http://2.jsbin.com) was been rewritten from the ground up and is completely [open source](http://github.com/remy/jsbin).
+[Version 1](https://1.jsbin.com) of [JS Bin](https://www.flickr.com/photos/remysharp/4284906136) took me the best part of 4 hours to develop [back in 2008](https://remysharp.com/2008/10/06/js-bin-for-collaborative-javascript-debugging/), but [version 2](https://2.jsbin.com) was been rewritten from the ground up and is completely [open source](https://github.com/remy/jsbin).
 
 ## Build Process
 
-JS Bin has been designed to work both online at [jsbin.com](http://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](http://twitter.com/js_bin) on twitter).
+JS Bin has been designed to work both online at [jsbin.com](https://jsbin.com) but also in your own locally hosted environment - or even live in your own site (if you do host it as a utility, do let us know by pinging [@js_bin](https://twitter.com/js_bin) on twitter).
 
 Historically JS Bin was built on PHP, but has since moved to Node. The PHP flavour is no longer supported, however everything else [released in v3.0.0](https://github.com/jsbin/jsbin/tags) of JS Bin is available in both, but all releases after are only supported in the Node environment. Your PHP mileage may vary!
 
 For detailed instructions on how to build JS Bin please see the [running your own JS Bin document](/docs/running-your-own-jsbin.md).
 
-If you install [Node.js](http://nodejs.org) installation is easy:
+If you install [Node.js](https://nodejs.org) installation is easy:
 
     $ npm install -g jsbin
     $ jsbin

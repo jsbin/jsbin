@@ -822,6 +822,10 @@ var libraries = [
     'url': '//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js',
     'label': 'Velocity UI Pack 1.2.3',
     'group': 'Velocity'
+  },
+  {
+    'url'  : 'https://github.com/pirple/Keeping-Up-With-the-Javascripts.git',
+    'label': 'ES6 / Bable'
   }
 ];
 

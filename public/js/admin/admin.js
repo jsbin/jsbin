@@ -31,7 +31,7 @@
       complete: function (jqXHR) {
         var data = $.parseJSON(jqXHR.responseText) || {};
         if (jqXHR.status === 200) {
-          $responseFeedback.show().text('Bin flagged succesfully');
+          $responseFeedback.show().text('Bin flagged successfully');
         }
         if (jqXHR.status === 400 && data.all) {
           $responseFeedback.show().text(data.all);

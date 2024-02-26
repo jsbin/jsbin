@@ -10,7 +10,7 @@ JS Bin is an open source collaborative web development debugging tool.
 
 ## If you use JS Bin locally...
 
-It likely means you're not going to subscribe as a pro user - which is how we're sustaining our project, which is cool, but [please consider donating via Gratipay here](https://gratipay.com/jsbin/).
+It likely means you're not going to subscribe as a pro user - which is how we're sustaining our project, which is cool, but [please consider donating via OpenCollective here](https://opencollective.com/jsbin/contribute).
 
 ## What can JS Bin do?
 
@@ -89,9 +89,9 @@ End points are:
 
 ## Backers
 
-[Become a backer]((https://opencollective.com/jsbin#backer)) and show your support to our open source project.
+[Become a backer]((https://opencollective.com/jsbin/contribute)) and show your support to our open source project.
 
 
 ## Sponsors
 
-Does your company use JS Bin? Ask your manager or marketing team if your company would be interested in supporting our project. Support will allow the maintainers to dedicate more time for maintenance and new features for everyone. Also, your company's logo will show [on GitHub](https://github.com/jsbin/jsbin#readme) --who doesn't want a little extra exposure?  [Here's the info](https://opencollective.com/jsbin#sponsor).
+Does your company use JS Bin? Ask your manager or marketing team if your company would be interested in supporting our project. Support will allow the maintainers to dedicate more time for maintenance and new features for everyone. Also, your company's logo will show [on GitHub](https://github.com/jsbin/jsbin#readme) --who doesn't want a little extra exposure?  [Here's the info](https://opencollective.com/jsbin/contribute).

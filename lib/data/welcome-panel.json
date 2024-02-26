@@ -57,11 +57,11 @@
   },
   "twitter": {
     "title": "Donate to JS Bin ❤",
-    "link": "https://gratipay.com/jsbin",
+    "link": "https://opencollective.com/jsbin/contribute",
     "data": [
       {
         "title": "Support JS Bin to keep the project open source & MIT for all",
-        "link": "https://gratipay.com/jsbin"
+        "link": "https://opencollective.com/jsbin/contribute"
       },
       {
         "title": "Follow @js_bin on twitter",

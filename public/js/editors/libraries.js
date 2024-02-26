@@ -5,8 +5,8 @@ var libraries = [
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.1.0.js',
-    'label': 'jQuery 3.1.0',
+    'url': 'https://code.jquery.com/jquery-3.6.0.js',
+    'label': 'jQuery 3.6.0',
     'group': 'jQuery'
   },
   {
@@ -156,11 +156,10 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/jquery.min.js',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
-      'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
+      'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css',
+      'https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js'
     ],
-    'label': 'Bootstrap Latest',
+    'label': 'Bootstrap 5',
     'group': 'Bootstrap'
   },
   {

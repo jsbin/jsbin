@@ -48,7 +48,7 @@
     "denodeify": "^1.2.1",
     "dropbox": "~0.10.2",
     "express": "^4.15.2",
-    "express-hbs": "^1.0.3",
+    "express-hbs": "^2.3.5",
     "express-session": "^1.14.2",
     "feature-gateway": "0.0.4",
     "file-db": "0.0.2",

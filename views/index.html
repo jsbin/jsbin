@@ -44,7 +44,7 @@
 {{#unless embed}}
 <script>
 if(top != self) {
-  window.location = location.pathname.split('/').slice(0, -1).concat(['embed']).join('/') + (location.search ? location.search : '');
+  window.location = window.location.origin + location.pathname.split('/').slice(0, -1).concat(['embed']).join('/') + (location.search ? location.search : '');
   document.write('<' + '!--');
 }
 </script>

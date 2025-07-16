@@ -1,12 +1,47 @@
 var libraries = [
   {
-    'url': 'https://code.jquery.com/jquery-git.js',
-    'label': 'jQuery WIP (via git)',
+    'url': 'https://releases.jquery.com/git/jquery-git.js',
+    'label': 'jQuery 4.x WIP (via git)',
     'group': 'jQuery'
   },
   {
-    'url': 'https://code.jquery.com/jquery-3.1.0.js',
-    'label': 'jQuery 3.1.0',
+    'url': 'https://releases.jquery.com/git/jquery-3.x-git.js',
+    'label': 'jQuery 3.x WIP (via git)',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.7.1.js',
+    'label': 'jQuery 3.7.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.6.4.js',
+    'label': 'jQuery 3.6.4',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.5.1.js',
+    'label': 'jQuery 3.5.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.4.1.js',
+    'label': 'jQuery 3.4.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.3.1.js',
+    'label': 'jQuery 3.3.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.2.1.js',
+    'label': 'jQuery 3.2.1',
+    'group': 'jQuery'
+  },
+  {
+    'url': 'https://code.jquery.com/jquery-3.1.1.js',
+    'label': 'jQuery 3.1.1',
     'group': 'jQuery'
   },
   {
@@ -66,9 +101,9 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/ui/jquery-ui-git.css',
-      'https://code.jquery.com/jquery-git.js',
-      'https://code.jquery.com/ui/jquery-ui-git.js'
+      'https://releases.jquery.com/git/ui/jquery-ui-git.css',
+      'https://releases.jquery.com/git/jquery-git.js',
+      'https://releases.jquery.com/git/ui/jquery-ui-git.js'
     ],
     'label': 'jQuery UI WIP (via git)',
     'group': 'jQuery UI'
@@ -78,6 +113,15 @@ var libraries = [
       'https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css',
       'https://code.jquery.com/jquery-3.1.0.js',
       'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
+    ],
+    'label': 'jQuery UI 1.12.1',
+    'group': 'jQuery UI'
+  },
+  {
+    'url': [
+      'https://code.jquery.com/ui/1.13.3/themes/smoothness/jquery-ui.css',
+      'https://code.jquery.com/jquery-3.7.1.js',
+      'https://code.jquery.com/ui/1.13.3/jquery-ui.js'
     ],
     'label': 'jQuery UI 1.12.1',
     'group': 'jQuery UI'
@@ -112,7 +156,7 @@ var libraries = [
   {
     'url': [
       'https://code.jquery.com/mobile/git/jquery.mobile-git.css',
-      'https://code.jquery.com/jquery-1.11.3.js',
+      'https://code.jquery.com/jquery-1.11.4.js',
       'https://code.jquery.com/mobile/git/jquery.mobile-git.js'
     ],
     'label': 'jQuery Mobile WIP (via git)',
@@ -120,11 +164,11 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.css',
-      'https://code.jquery.com/jquery-1.11.3.js',
-      'https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.js'
+      'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.2.css',
+      'https://code.jquery.com/jquery-1.11.4.js',
+      'https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.2.js'
     ],
-    'label': 'jQuery Mobile 1.4.2',
+    'label': 'jQuery Mobile 1.4.5',
     'group': 'jQuery Mobile'
   },
   {
@@ -156,16 +200,16 @@ var libraries = [
   },
   {
     'url': [
-      'https://code.jquery.com/jquery.min.js',
+      'https://code.jquery.com/jquery-1.11.4.min.js',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css',
       'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'
     ],
-    'label': 'Bootstrap Latest',
+    'label': 'Bootstrap 3.3.6',
     'group': 'Bootstrap'
   },
   {
     'url': [
-      'https://code.jquery.com/jquery.min.js',
+      'https://code.jquery.com/jquery-1.11.4.min.js',
       'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css',
       'https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js'
     ],
